@@ -4,6 +4,15 @@
 
 클론을 받은 **로컬 경로는 PC마다 달라도** 됩니다. 스크립트가 `git` 저장소 루트를 자동으로 찾습니다.
 
+### 팀 반영 브랜치
+
+| 브랜치                           | 용도                           |
+| -------------------------------- | ------------------------------ |
+| `main` (GitHub framework)        | 개인 개발·푸시                 |
+| **`feature/yh.eun`** (팀 GitLab) | 팀 공유·MR용 (**여기에 push**) |
+
+`master`에는 push하지 않습니다. 스크립트 기본값도 `feature/yh.eun`입니다.
+
 ---
 
 ## 저장소 역할
@@ -63,10 +72,10 @@ git push origin main
 
 ## npm 명령어 요약
 
-| 명령                     | 언제 쓰나            | 하는 일                                                         |
-| ------------------------ | -------------------- | --------------------------------------------------------------- |
-| `npm run sync:team`      | **매주·수시**        | GitHub framework 최신을 가져와 `master` 브랜치·작업 트리를 맞춤 |
-| `npm run sync:team:init` | **팀 클론 최초 1회** | 팀 저장소 파일·`.git` 이력을 framework 기준으로 **통째 교체**   |
+| 명령                     | 언제 쓰나            | 하는 일                                                                 |
+| ------------------------ | -------------------- | ----------------------------------------------------------------------- |
+| `npm run sync:team`      | **매주·수시**        | GitHub framework 최신을 가져와 `feature/yh.eun` 브랜치·작업 트리를 맞춤 |
+| `npm run sync:team:init` | **팀 클론 최초 1회** | 팀 저장소 파일·`.git` 이력을 framework 기준으로 **통째 교체**           |
 
 선택 환경 변수:
 
@@ -74,7 +83,7 @@ git push origin main
 | --------------------- | ------------------------------------------ | ------------------------------------------ |
 | `FRAMEWORK_REPO`      | `https://github.com/yheun03/framework.git` | 개인 framework URL                         |
 | `FRAMEWORK_BRANCH`    | `main`                                     | 가져올 브랜치                              |
-| `TEAM_BRANCH`         | `master`                                   | 팀 저장소에서 맞출 브랜치                  |
+| `TEAM_BRANCH`         | `feature/yh.eun`                           | 팀 저장소에서 맞출 브랜치                  |
 | `KEEP_NODE_MODULES=1` | (없음)                                     | 설정 시 `git clean` 때 `node_modules` 유지 |
 
 ```bash
@@ -147,9 +156,9 @@ npm run sync:team:init
 1. GitHub에서 framework를 임시 클론
 2. 팀 클론의 기존 파일·`.git` 제거 후 framework 이력으로 교체
 3. `origin`은 **팀 GitLab URL 유지**
-4. `framework` remote 추가 후 `master` ← `framework/main` 정렬
+4. `framework` remote 추가 후 `feature/yh.eun` ← `framework/main` 정렬
 
-완료 후 로컬 `master`에 framework 커밋 **177개 분량의 이력**이 올라와 있어야 합니다.
+완료 후 로컬 `feature/yh.eun`에 framework 커밋 이력이 올라와 있어야 합니다.
 
 ```bash
 git log --oneline -5
@@ -163,10 +172,10 @@ git rev-list --count HEAD
 로컬 이력이 팀 서버와 완전히 다르므로 **force push**가 필요합니다.
 
 ```bash
-git push -u origin master --force
+git push -u origin feature/yh.eun --force
 ```
 
-> `develop`, `feature/*` 등 다른 브랜치는 팀 정책에 맞게 별도 정리하세요.
+> 팀 공유 브랜치는 **`feature/yh.eun`** 입니다. `master`에 push하지 마세요.
 
 ---
 
@@ -185,14 +194,14 @@ git status
 git log --oneline -3
 
 # 3) 팀 GitLab에 올리기
-git push origin master --force
+git push origin feature/yh.eun --force
 ```
 
 `sync:team` 내부 동작:
 
 1. `origin` URL(팀 Git) 저장
 2. `framework` remote로 GitHub fetch
-3. `master`를 `framework/main`과 동일 커밋으로 `reset --hard`
+3. `feature/yh.eun`을 `framework/main`과 동일 커밋으로 `reset --hard`
 4. 추적되지 않은 파일 정리 (`git clean -fdx`)
 5. `origin` URL이 바뀌었으면 팀 URL로 복구
 
@@ -205,7 +214,7 @@ git push origin master --force
 [ ] 팀 client 클론으로 이동
 [ ] npm run sync:team
 [ ] git log / git status 확인
-[ ] git push origin master --force
+[ ] git push origin feature/yh.eun --force
 [ ] (필요 시) 팀원에게 반영 알림
 ```
 
@@ -251,7 +260,7 @@ git remote set-url origin https://git.jonsoft.co.kr/devops/client.git
 
 ### Q. force push가 무서워요
 
-팀 `master` 이력을 framework 이력으로 **덮어쓰는** 작업이라 필요합니다.  
+`feature/yh.eun` 이력을 framework 최신으로 **덮어쓰는** 작업이라 필요합니다.  
 팀원과 **동기화 타이밍**을 맞추거나, 팀 정책에 맞는 브랜치 전략을 쓰세요.
 
 ---
