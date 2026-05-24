@@ -12,7 +12,7 @@
  * 환경 변수 (선택):
  *   FRAMEWORK_REPO      기본 https://github.com/yheun03/framework.git
  *   FRAMEWORK_BRANCH    기본 main
- *   TEAM_BRANCH         기본 master
+ *   TEAM_BRANCH         기본 feature/yh.eun
  *   KEEP_NODE_MODULES=1 clean 시 node_modules 유지
  *
  * 주의: 이 스크립트는 framework(GitHub)에 커밋·푸시된 뒤 sync해야
@@ -26,7 +26,7 @@ import { join } from 'node:path';
 
 const FRAMEWORK_REPO = process.env.FRAMEWORK_REPO || 'https://github.com/yheun03/framework.git';
 const FRAMEWORK_BRANCH = process.env.FRAMEWORK_BRANCH || 'main';
-const TEAM_BRANCH = process.env.TEAM_BRANCH || 'master';
+const TEAM_BRANCH = process.env.TEAM_BRANCH || 'feature/yh.eun';
 const KEEP_NODE_MODULES = process.env.KEEP_NODE_MODULES === '1';
 const isInit = process.argv.includes('--init');
 
@@ -88,15 +88,17 @@ function alignTeamBranch(repoRoot) {
         process.exit(1);
     }
 
-    const hasBranch = runQuiet(`git show-ref --verify refs/heads/${TEAM_BRANCH}`, repoRoot);
-    if (hasBranch) {
-        run(`git checkout ${TEAM_BRANCH}`, { cwd: repoRoot });
-    } else {
-        run(`git checkout -b ${TEAM_BRANCH} ${ref}`, { cwd: repoRoot });
+    const current = runQuiet('git branch --show-current', repoRoot);
+    if (current && current !== TEAM_BRANCH) {
+        console.log(`  브랜치 전환: ${current} → ${TEAM_BRANCH}`);
     }
 
+    // 일반 checkout은 로컬 수정 중이면 실패 → -f로 강제 전환
+    run(`git branch -f ${TEAM_BRANCH} ${ref}`, { cwd: repoRoot });
+    run(`git checkout -f ${TEAM_BRANCH}`, { cwd: repoRoot });
     run(`git reset --hard ${ref}`, { cwd: repoRoot });
     clearBranchUpstream(repoRoot);
+    tryRun(`git branch --set-upstream-to=origin/${TEAM_BRANCH} ${TEAM_BRANCH}`, repoRoot);
     cleanUntracked(repoRoot);
 }
 
@@ -109,7 +111,12 @@ function printSummary(repoRoot) {
     console.log(`커밋 수: ${count ?? '?'}`);
     console.log(`최신: ${latest ?? '(없음)'}`);
     console.log(`팀 origin: ${runQuiet('git remote get-url origin', repoRoot)}`);
-    console.log('\n팀 서버 반영: git push -u origin master --force');
+    const branch = runQuiet('git branch --show-current', repoRoot);
+    console.log(`\n팀 서버 반영: git push -u origin ${TEAM_BRANCH} --force`);
+    console.log(`(현재 브랜치: ${branch ?? '?'})`);
+    if (branch && branch !== TEAM_BRANCH) {
+        console.warn(`⚠ 현재 ${branch}에 있습니다. push 전에 git checkout ${TEAM_BRANCH} 하세요.`);
+    }
 }
 
 const repoRoot = runQuiet('git rev-parse --show-toplevel');
