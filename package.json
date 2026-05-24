@@ -14,7 +14,9 @@
         "generate": "nuxt generate",
         "generate:gh-pages": "NUXT_APP_BASE_URL=/framework/ nuxt generate && gh-pages -d .output/public --dotfiles",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "sync:team": "node scripts/sync-team-repo.mjs",
+        "sync:team:init": "node scripts/sync-team-repo.mjs --init"
     },
     "dependencies": {
         "@ag-grid-community/locale": "^33.3.2",
