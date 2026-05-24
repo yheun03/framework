@@ -112,3 +112,4 @@ const data = await api.get<MyType>('/api/menus');
 - 2026-04-28: `pages/demos/demo-modal.vue`에 이미지/PDF 뷰어 예제를 추가해 업로드 컴포넌트 밖에서도 뷰어 모달 사용 방식을 바로 확인할 수 있게 했습니다.
 - 2026-04-28: `AppTable` 기본 stacked 컬럼 폭과 `AppTableField`의 select/email 처리 로직을 보정해 빈 값 placeholder와 이메일 입력 레이아웃이 의도대로 동작하게 했습니다.
 - 2026-04-29: navigation/LNB를 `features/navigation`에서 `core`로 재흡수했습니다. 메뉴 seed는 `core/store/navigation.ts`로 이동해 static prerender에서 `/api/menus` 의존성을 제거했습니다.
+- 2026-05-24: Jonsoft 로고·`/jonsoft-framework/` base를 Framework·`/framework/`로 정리하고, GitHub Actions(`gh-pages.yml`)로 Pages 자동 배포를 추가했습니다.

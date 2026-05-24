@@ -7,6 +7,16 @@ export default defineNuxtConfig({
         // GitHub Pages: https://yheun03.github.io/framework/ → base는 /framework/
         // 다른 base는 빌드 시 NUXT_APP_BASE_URL 로 지정 (package.json의 generate:gh-pages).
         baseURL: process.env.NUXT_APP_BASE_URL || '/framework/',
+        head: {
+            title: 'Framework',
+            htmlAttrs: { lang: 'ko' },
+            link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+        },
+    },
+
+    site: {
+        url: 'https://yheun03.github.io',
+        name: 'Framework',
     },
 
     modules: ['@pinia/nuxt'],
