@@ -4,8 +4,8 @@ import type { Locale } from '~/core/i18n';
 
 export type AppTheme = 'light' | 'dark';
 
-const LOCALE_KEY = 'jonsoft:locale';
-const THEME_KEY = 'jonsoft:theme';
+const LOCALE_KEY = 'framework:locale';
+const THEME_KEY = 'framework:theme';
 
 export const usePreferencesStore = defineStore('preferences', () => {
     const locale = ref<Locale>('ko');

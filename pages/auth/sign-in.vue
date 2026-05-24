@@ -6,11 +6,11 @@
                     <div class="login__logo" aria-hidden="true">
                         <Icon icon="mdi:application-braces-outline" />
                     </div>
-                    <p class="login__tagline">워크스페이스 + UI 데모를 위한 Jonsoft Framework</p>
+                    <p class="login__tagline">워크스페이스 + UI 데모를 위한 Framework</p>
                 </div>
 
                 <p class="login__copyright">
-                    © {{ new Date().getFullYear() }} Jonsoft Framework. All rights reserved.
+                    © {{ new Date().getFullYear() }} Framework. All rights reserved.
                 </p>
             </div>
         </section>

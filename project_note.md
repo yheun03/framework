@@ -1,4 +1,4 @@
-# Jonsoft Framework 프로젝트 노트
+# Framework 프로젝트 노트
 
 Nuxt 3 + Pinia + Axios 기반의 워크스페이스/컴포넌트 데모 프로젝트입니다.  
 이 문서는 유지보수에 필요한 핵심만 짧게 정리합니다.
@@ -20,6 +20,10 @@ Nuxt 3 + Pinia + Axios 기반의 워크스페이스/컴포넌트 데모 프로�
 - 빌드: `npm run build`
 - 미리보기: `npm run preview`
 - 정적 생성: `npm run generate`
+- GitHub Pages 배포: `npm run generate:gh-pages`
+
+배포 URL: [https://yheun03.github.io/framework/](https://yheun03.github.io/framework/)  
+(`NUXT_APP_BASE_URL=/framework/`, `nuxt.config.ts`의 `app.baseURL`과 동일)
 
 ---
 
