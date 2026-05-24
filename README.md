@@ -239,7 +239,8 @@ git push origin feature/yh.eun --force
 ### Q. `sync:team` 후에 추가한 로컬 파일이 사라졌어요
 
 `git reset --hard`와 `git clean -fdx` 때문에 **GitHub framework에 없는 파일**은 제거됩니다.  
-팀에 반영할 변경은 반드시 **개인 repo에 먼저 커밋·푸시**하세요.
+팀에 반영할 변경은
+반드시 **개인 repo에 먼저 커밋·푸시**하세요.
 
 ### Q. `node_modules`를 매번 지우기 싫어요
 
