@@ -1,7 +1,8 @@
 {
-    "name": "jonsoft-framework",
+    "name": "framework",
     "version": "0.0.1",
     "private": true,
+    "homepage": "https://yheun03.github.io/framework/",
     "type": "module",
     "engines": {
         "node": ">=20 <23"
@@ -11,7 +12,7 @@
         "clean": "rm -rf .nuxt .output node_modules/.vite",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
-        "generate:gh-pages": "NUXT_APP_BASE_URL=/jonsoft-framework/ nuxt generate && gh-pages -d .output/public --nojekyll --dotfiles",
+        "generate:gh-pages": "NUXT_APP_BASE_URL=/framework/ nuxt generate && gh-pages -d .output/public --nojekyll --dotfiles",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare"
     },

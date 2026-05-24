@@ -6,7 +6,7 @@
                     <span class="home__brand-icon" aria-hidden="true">
                         <Icon icon="mdi:application-braces-outline" />
                     </span>
-                    <span class="home__brand-name">Jonsoft Framework</span>
+                    <span class="home__brand-name">Framework</span>
                 </div>
                 <NuxtLink class="home__signin" to="/auth/sign-in">Sign in</NuxtLink>
             </div>
@@ -52,7 +52,7 @@
             </section>
 
             <footer class="home__footer">
-                <p>© {{ currentYear }} Jonsoft Framework. All rights reserved.</p>
+                <p>© {{ currentYear }} Framework. All rights reserved.</p>
             </footer>
         </main>
     </div>
