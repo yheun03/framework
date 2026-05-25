@@ -36,8 +36,8 @@
 
 <script setup lang="ts">
 import logoSvg from '~/assets/icons/logo.svg?raw'
-import { useI18nText } from '~/core/composables/useI18nText'
-import { useNavigation } from '~/core/composables/useNavigation'
+import { useI18nText } from '~/composables/useI18nText'
+import { useNavigation } from '~/composables/useNavigation'
 
 const { headerActions, menuTree, getIconSvg } = useNavigation()
 const { t } = useI18nText()

@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AppTableCell, AppTableRow } from '~/core/type/table';
+import type { AppTableCell, AppTableRow } from '~/types/table';
 
 type AppTableProps = {
     title?: string;

@@ -183,8 +183,8 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
-import type { AppGridSearchField } from '~/core/type/grid-search'
-import { useAgGridRegistry } from '~/core/composables/useAgGridRegistry'
+import type { AppGridSearchField } from '~/types/grid-search'
+import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
 
 const props = withDefaults(
     defineProps<{

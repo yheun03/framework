@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { useAgGridRegistry } from '~/core/composables/useAgGridRegistry'
-import { useAgGridExcelExport } from '~/core/composables/useAgGridExcelExport'
+import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
+import { useAgGridExcelExport } from '~/composables/useAgGridExcelExport'
 
 const target = inject<string>('appGridTarget')
 

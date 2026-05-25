@@ -29,7 +29,7 @@ const En = {
     'nav.demo.modal': 'Modal Demo',
     'nav.demo.table': 'Table Demo',
     'nav.demo.section': 'Section Demo',
-    'nav.demo.accordian': 'Accordion Demo',
+    'nav.demo.accordion': 'Accordion Demo',
     'nav.demo.tabs': 'Tabs Demo',
     'nav.demo.form': 'Form Demo',
     'nav.demo.pagination': 'Pagination Demo',
@@ -62,8 +62,8 @@ const En = {
         'Demo page that showcases all cell types supported by AppTableField at once. Each row renders cell.type in the th and the corresponding field component in the td.',
     'demo.section.title': 'AppSection',
     'demo.section.desc': 'Demo page that showcases all section types supported by AppSection at once.',
-    'demo.accordian.title': 'AppAccordion',
-    'demo.accordian.desc': 'Demo page that showcases all accordion types supported by AppAccordion at once.',
+    'demo.accordion.title': 'AppAccordion',
+    'demo.accordion.desc': 'Demo page that showcases all accordion types supported by AppAccordion at once.',
     'demo.tabs.title': 'AppTabs',
     'demo.tabs.desc': 'Demo page that showcases all tabs types supported by AppTabs at once.',
     'demo.form.title': 'AppForm',
@@ -72,8 +72,6 @@ const En = {
     'demo.pagination.desc': 'Demo page that showcases all pagination types supported by AppPagination at once.',
     'demo.textArea.title': 'AppTextarea',
     'demo.textArea.desc': 'Demo page that showcases all textarea types supported by AppTextarea at once.',
-    'demo.accordion.title': 'AppAccordion',
-    'demo.accordion.desc': 'Demo page that showcases all accordion types supported by AppAccordion at once.',
 };
 
 export default En;

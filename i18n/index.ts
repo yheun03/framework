@@ -1,5 +1,5 @@
-import En from './En';
-import Ko from './Ko';
+import En from './en';
+import Ko from './ko';
 
 export type Locale = 'ko' | 'en';
 type Dictionary = Record<string, string>;

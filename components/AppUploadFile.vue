@@ -73,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModalViewer } from '~/core/composables/useModalViewer'
+import { useModalViewer } from '~/composables/useModalViewer'
 
 type AppUploadFileValue = string | AppUploadFileItem
 type AppUploadFileModelValue = AppUploadFileValue | AppUploadFileValue[] | null

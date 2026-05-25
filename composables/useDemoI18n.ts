@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { useI18nText } from '~/core/composables/useI18nText';
+import { useI18nText } from '~/composables/useI18nText';
 
 export function useDemoI18n(key: string) {
     const { t } = useI18nText();

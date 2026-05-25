@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useI18nText } from '~/core/composables/useI18nText';
-import type { NavigationMenu } from '~/core/type/navigation';
+import { useI18nText } from '~/composables/useI18nText';
+import type { NavigationMenu } from '~/types/navigation';
 
 type MutableNavigationMenu = Omit<NavigationMenu, 'children'> & {
     children?: MutableNavigationMenu[];
@@ -153,8 +153,8 @@ const MENU_SEED: MenuSeedEntity[] = [
         parentId: 'MENU_020000',
         depth: 2,
         order: 13,
-        to: '/demos/demo-accordian',
-        labelKey: 'nav.demo.accordian',
+        to: '/demos/demo-accordion',
+        labelKey: 'nav.demo.accordion',
         isActive: true,
     },
     {

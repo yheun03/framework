@@ -27,11 +27,11 @@ export default defineNuxtConfig({
     ],
 
     imports: {
-        dirs: ['~/core/composables'],
+        dirs: ['~/composables'],
     },
 
     pinia: {
-        storesDirs: ['~/core/store'],
+        storesDirs: ['~/stores'],
     },
 
     components: [
@@ -43,14 +43,14 @@ export default defineNuxtConfig({
         { path: '~/components', pathPrefix: true },
     ],
 
-    // 실무형 구조: 플러그인을 core 내부에서 명시 로딩
+    // 플러그인 실행 순서를 명확히 하기 위해 명시 로딩
     plugins: [
-        '~/core/plugins/preferences.client',
-        '~/core/plugins/axios',
-        '~/core/plugins/iconify',
-        '~/core/plugins/ag-grid.client',
-        '~/core/plugins/route-tabs.client',
-        '~/core/plugins/global-css-no-inline.client',
+        '~/plugins/preferences.client',
+        '~/plugins/axios',
+        '~/plugins/iconify',
+        '~/plugins/ag-grid.client',
+        '~/plugins/route-tabs.client',
+        '~/plugins/global-css-no-inline.client',
     ],
 
     vite: {
@@ -90,6 +90,6 @@ export default defineNuxtConfig({
     // GitHub Pages 배포 대응
     nitro: {
         preset: 'static',
-        scanDirs: ['core/api/server'],
+        scanDirs: ['server'],
     },
 });
