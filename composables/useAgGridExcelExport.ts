@@ -1,5 +1,5 @@
 import type { GridApi } from 'ag-grid-community';
-import { useApi } from '~/core/composables/useApi';
+import { useApi } from '~/composables/useApi';
 
 type ExportColumn = { field: string; headerName: string };
 type ExportRow = Record<string, unknown>;

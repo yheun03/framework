@@ -1,4 +1,4 @@
-import { useApiClient } from '~/core/api/http/useApiClient';
+import { useApiClient } from '~/services/api/useApiClient';
 
 export const useApi = () => {
     return useApiClient();

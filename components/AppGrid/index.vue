@@ -9,7 +9,7 @@ defineOptions({
 })
 import { AgGridVue } from 'ag-grid-vue3'
 import type { GridOptions, GridReadyEvent, FilterChangedEvent } from 'ag-grid-community'
-import { useAgGridRegistry } from '~/core/composables/useAgGridRegistry'
+import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
 
 const { register } = useAgGridRegistry()
 

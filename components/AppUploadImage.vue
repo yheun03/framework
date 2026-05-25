@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModalViewer } from '~/core/composables/useModalViewer'
+import { useModalViewer } from '~/composables/useModalViewer'
 
 type ReadMode = 'dataUrl' | 'objectUrl'
 type AppImageUploadValue = string | AppImageUploadItem

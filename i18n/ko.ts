@@ -29,7 +29,7 @@ const Ko = {
     'nav.demo.modal': '모달 데모',
     'nav.demo.table': '테이블 데모',
     'nav.demo.section': '섹션 데모',
-    'nav.demo.accordian': '아코디언 데모',
+    'nav.demo.accordion': '아코디언 데모',
     'nav.demo.tabs': '탭 데모',
     'nav.demo.form': '폼 데모',
     'nav.demo.pagination': '페이지네이션 데모',
@@ -62,8 +62,8 @@ const Ko = {
         'AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각 행의 th에는 cell.type이, td에는 해당 타입의 컴포넌트가 렌더링됩니다.',
     'demo.section.title': 'AppSection',
     'demo.section.desc': 'AppSection 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
-    'demo.accordian.title': 'AppAccordion',
-    'demo.accordian.desc': 'AppAccordion 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
+    'demo.accordion.title': 'AppAccordion',
+    'demo.accordion.desc': 'AppAccordion 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
     'demo.tabs.title': 'AppTabs',
     'demo.tabs.desc': 'AppTabs 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
     'demo.form.title': 'AppForm',
@@ -72,8 +72,6 @@ const Ko = {
     'demo.pagination.desc': 'AppPagination 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
     'demo.textArea.title': 'AppTextarea',
     'demo.textArea.desc': 'AppTextarea 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
-    'demo.accordion.title': 'AppAccordion',
-    'demo.accordion.desc': 'AppAccordion 컴포넌트의 모든 속성을 한 화면에서 확인합니다.',
 };
 
 export default Ko;

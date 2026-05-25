@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 import AppModalBase from './AppModalBase.vue'
-import type { ModalBaseProps, ModalCloseEvent, ModalViewCloseReason } from '~/core/type/modal'
+import type { ModalBaseProps, ModalCloseEvent, ModalViewCloseReason } from '~/types/modal'
 
 const props = withDefaults(
     defineProps<ModalBaseProps & {

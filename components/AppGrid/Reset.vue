@@ -3,7 +3,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { useAgGridRegistry } from '~/core/composables/useAgGridRegistry'
+import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
 
 const target = inject<string>('appGridTarget')
 
