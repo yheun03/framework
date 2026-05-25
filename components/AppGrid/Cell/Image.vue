@@ -1,22 +1,9 @@
 <template>
-    <div
-        class="app-grid-cell-image"
-        @dragenter.stop
-        @dragover.stop
-        @dragleave.stop
-        @drop.stop
-    >
-        <AppUploadImage
-            v-model="value"
-            :multiple="imageOptions.multiple"
-            :max-count="imageOptions.maxCount"
-            :accept="imageOptions.accept"
-            :hint="imageOptions.hint"
-            :trigger-text="imageOptions.triggerText"
-            :allow-drop="imageOptions.allowDrop"
-            :max-size-bytes="imageOptions.maxSizeBytes"
-            :read-mode="imageOptions.readMode"
-        />
+    <div class="app-grid-cell-image" @dragenter.stop @dragover.stop @dragleave.stop @drop.stop>
+        <AppUploadImage v-model="value" :multiple="imageOptions.multiple" :max-count="imageOptions.maxCount"
+            :accept="imageOptions.accept" :hint="imageOptions.hint" :trigger-text="imageOptions.triggerText"
+            :allow-drop="imageOptions.allowDrop" :max-size-bytes="imageOptions.maxSizeBytes"
+            :read-mode="imageOptions.readMode" />
     </div>
 </template>
 

@@ -27,25 +27,36 @@ Nuxt 3 + Pinia + Axios 기반의 워크스페이스/컴포넌트 데모 프로�
 
 ---
 
-## 3) 핵심 디렉터리
+## 3) 폴더 가이드
 
 ```text
-composables/           # composable helpers (화면/컴포넌트 조합)
-i18n/                  # i18n 사전(Dictionary)
-plugins/               # Nuxt 플러그인 (프로젝트 공통 주입)
-router/                # 라우트 메타/가시성/라벨 정책
-server/api/            # Nitro API route handlers
-services/api/          # useApiClient (axios/$api + server local fetch)
-stores/                # Pinia stores
-types/                 # 전역 타입(모듈 선언 포함)
+app.vue                # 앱 최상위 래퍼. 전역 모달/레이아웃 연결만 둡니다.
+assets/                # SCSS, 폰트, 아이콘 원본. 런타임에서 직접 호출하는 정적 파일은 public/에 둡니다.
+components/            # 재사용 UI 컴포넌트. 업무 데이터 호출이나 라우팅 정책은 넣지 않습니다.
+composables/           # 화면/컴포넌트 조합 로직. Nuxt auto-import 대상입니다.
+i18n/                  # 현재 프로젝트의 간단한 메시지 사전. 키 추가는 ko/en을 같이 맞춥니다.
+layouts/               # 페이지 공통 레이아웃. 기본 레이아웃은 layouts/default.vue입니다.
+pages/                 # Nuxt file-based routing 화면. URL 구조와 파일명이 직접 연결됩니다.
+plugins/               # Nuxt 플러그인. axios, iconify, client-only 초기화처럼 앱 시작 시 필요한 코드만 둡니다.
+public/                # 빌드 후 그대로 배포되는 정적 파일. 예: favicon, 샘플 PDF.
+router/                # 라우트 표시/탭 제목 같은 라우팅 정책 유틸.
+server/api/            # Nitro 서버 API route handlers. 파일명이 HTTP endpoint가 됩니다.
+stores/                # Pinia store. 상태, 캐시, 로딩, 액션을 관리합니다.
+types/                 # 여러 영역에서 공유하는 타입과 모듈 선언.
+scripts/               # 저장소 운영/동기화용 Node 스크립트.
 ```
 
-기타 주요 루트:
+컴포넌트 하위 폴더 규칙:
 
-- `components/`: 공통 UI 컴포넌트
-- `pages/`: 화면
-- `layouts/`: 앱 레이아웃
-- `assets/`: SCSS, 아이콘, 폰트
+- `components/Table`, `components/Section`, `components/Layout`, `components/Modal`은 Nuxt 설정에서 prefix 없이 자동 등록합니다.
+- `components/AppGrid`처럼 기능 단위 컴포넌트는 폴더로 묶고, 진입점이 있으면 `index.vue`를 사용합니다.
+- 루트 단일 컴포넌트는 `AppButton.vue`처럼 `App` prefix를 유지합니다.
+
+페이지 규칙:
+
+- `pages/demos/*`는 컴포넌트 사용 예시입니다. 실제 업무 화면과 공통 컴포넌트 로직을 섞지 않습니다.
+- 파일명은 라우트가 되므로 오탈자 없이 kebab-case를 사용합니다. 예: `demo-accordion.vue`.
+- 새 페이지가 LNB에 보여야 하면 `stores/navigation.ts`의 `MENU_SEED`와 `i18n/*`의 label key를 함께 추가합니다.
 
 ---
 
@@ -53,7 +64,8 @@ types/                 # 전역 타입(모듈 선언 포함)
 
 - 공통 규칙: **직접 Axios 인스턴스 사용 금지**, `useApi()` 사용
 - 엔드포인트 표기: `/api/*`
-- 서버/클라이언트 환경 차이는 `services/api/useApiClient.ts`에서 처리
+- 서버/클라이언트 환경 차이는 `composables/useApi.ts`에서 처리
+- Axios 인스턴스 설정은 `plugins/axios.ts`에서만 바꿉니다.
 
 예시:
 
@@ -76,7 +88,7 @@ const data = await api.get<MyType>('/api/menus');
 
 - 메뉴 타입 단일 소스: `types/navigation.ts`
 - 메뉴 트리/번역 처리(및 seed 생성): `stores/navigation.ts`
-- 내비게이션 바인딩: `composables/useNavigation.ts`
+- 내비게이션 렌더링: `components/Layout/LayoutNav.vue`
 - 라우트 제목/가시성 규칙: `router/index.ts`
 - 탭 동기화: `plugins/route-tabs.client.ts`
 
@@ -96,9 +108,19 @@ const data = await api.get<MyType>('/api/menus');
 - 새 기능 추가 위치
     - 라우트/정책: `router`
     - Nuxt 플러그인/주입: `plugins`
-    - 외부 연동(HTTP/서버 API): `services/api`
+    - 클라이언트 API 호출: `composables/useApi.ts`
+    - 서버 API 엔드포인트: `server/api`
     - 상태 관리: `stores`
     - 전역 타입/모듈 선언: `types`
+
+---
+
+## 9) 통폐합 기준
+
+- 단순히 다른 함수를 한 번 감싸는 composable은 만들지 않습니다. 호출부가 하나뿐이면 호출부에 직접 둡니다.
+- 서버 API 호출 공통 로직은 `useApi()` 하나로 모읍니다.
+- store는 여러 화면에서 공유되는 상태가 있을 때만 만듭니다. 한 화면 안에서 끝나는 상태는 page/component 내부에 둡니다.
+- 타입은 두 곳 이상에서 공유되거나 public prop/event 계약이면 `types/`로 올립니다. 한 컴포넌트 전용 타입은 해당 `.vue` 안에 둡니다.
 
 ---
 
@@ -111,3 +133,4 @@ const data = await api.get<MyType>('/api/menus');
 - 2026-04-28: `AppTable` 기본 stacked 컬럼 폭과 `AppTableField`의 select/email 처리 로직을 보정해 빈 값 placeholder와 이메일 입력 레이아웃이 의도대로 동작하게 했습니다.
 - 2026-04-29: navigation/LNB를 공통 구조로 재흡수했습니다. 메뉴 seed는 `stores/navigation.ts`로 이동해 static prerender에서 `/api/menus` 의존성을 제거했습니다.
 - 2026-05-24: Jonsoft 로고·`/jonsoft-framework/` base를 Framework·`/framework/`로 정리하고, GitHub Actions(`gh-pages.yml`)로 Pages 자동 배포를 추가했습니다.
+- 2026-05-25: `core` 구조를 Nuxt 루트 구조로 분리하고, 얇은 래퍼였던 `useApiClient`/`useNavigation`과 미사용 `useModalStack`을 통폐합했습니다.

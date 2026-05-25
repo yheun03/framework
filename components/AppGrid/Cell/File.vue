@@ -1,21 +1,8 @@
 <template>
-    <div
-        class="app-grid-cell-file"
-        @dragenter.stop
-        @dragover.stop
-        @dragleave.stop
-        @drop.stop
-    >
-        <AppUploadFile
-            v-model="value"
-            :multiple="fileOptions.multiple"
-            :max-count="fileOptions.maxCount"
-            :accept="fileOptions.accept"
-            :hint="fileOptions.hint"
-            :trigger-text="fileOptions.triggerText"
-            :allow-drop="fileOptions.allowDrop"
-            :max-size-bytes="fileOptions.maxSizeBytes"
-        />
+    <div class="app-grid-cell-file" @dragenter.stop @dragover.stop @dragleave.stop @drop.stop>
+        <AppUploadFile v-model="value" :multiple="fileOptions.multiple" :max-count="fileOptions.maxCount"
+            :accept="fileOptions.accept" :hint="fileOptions.hint" :trigger-text="fileOptions.triggerText"
+            :allow-drop="fileOptions.allowDrop" :max-size-bytes="fileOptions.maxSizeBytes" />
     </div>
 </template>
 

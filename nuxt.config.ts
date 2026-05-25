@@ -26,14 +26,6 @@ export default defineNuxtConfig({
         '~/assets/scss/main.scss',
     ],
 
-    imports: {
-        dirs: ['~/composables'],
-    },
-
-    pinia: {
-        storesDirs: ['~/stores'],
-    },
-
     components: [
         { path: '~/components/Table', pathPrefix: false },
         { path: '~/components/Section', pathPrefix: false },
@@ -90,6 +82,5 @@ export default defineNuxtConfig({
     // GitHub Pages 배포 대응
     nitro: {
         preset: 'static',
-        scanDirs: ['server'],
     },
 });

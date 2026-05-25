@@ -35,10 +35,17 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import logoSvg from '~/assets/icons/logo.svg?raw'
 import { useI18nText } from '~/composables/useI18nText'
-import { useNavigation } from '~/composables/useNavigation'
+import { useNavigationStore } from '~/stores/navigation'
+import { NAVIGATION_HEADER_ACTIONS } from '~/types/navigation'
 
-const { headerActions, menuTree, getIconSvg } = useNavigation()
 const { t } = useI18nText()
+const navigationStore = useNavigationStore()
+const { menuTree } = storeToRefs(navigationStore)
+const headerActions = NAVIGATION_HEADER_ACTIONS
+const getIconSvg = () => null
+
+callOnce('navigation:menus', () => navigationStore.fetchMenus())
 </script>

@@ -8,26 +8,26 @@
 
 .app-icon {
 
-    /* ----------------------------------------
+  /* ----------------------------------------
      Base
   ---------------------------------------- */
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-    flex-shrink: 0;
-    line-height: 0;
+  flex-shrink: 0;
+  line-height: 0;
 
-    /* ----------------------------------------
+  /* ----------------------------------------
      Icon Source
   ---------------------------------------- */
 
-    svg,
-    img {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
+  svg,
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 
 }
