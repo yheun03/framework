@@ -61,7 +61,8 @@
                             검색 필드 정의 (<code>fields</code>)
                         </h2>
                         <p class="page-demo-card__desc">
-                            <code>AppGridSearchField</code> 배열 — <code>type</code>, <code>label</code>, <code>filterField</code>,
+                            <code>AppGridSearchField</code> 배열 — <code>type</code>, <code>label</code>,
+                            <code>filterField</code>,
                             <code>selectInput</code>, <code>numberRange</code> 등 속성을 한눈에 확인할 수 있습니다.
                         </p>
                         <pre class="page-demo-output">{{ searchFieldsOutput }}</pre>

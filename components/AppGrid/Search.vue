@@ -4,9 +4,8 @@
             <dl v-if="layoutType(f) === 'input'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)"
-                        :type="inputNativeType(f)" :placeholder="f.placeholder"
-                        :readonly="f.readonly" :disabled="f.disabled"
+                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                        :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
                         @update:model-value="(v) => setField(f.field, v)" />
                 </dd>
             </dl>
@@ -24,15 +23,15 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput size="sm" type="number" :name="f.numberRange.minKey"
-                        :model-value="stringField(f.numberRange.minKey)" :placeholder="'최소'"
-                        :min="f.inputMin" :max="f.inputMax" :step="f.step" :readonly="f.readonly"
-                        :disabled="f.disabled" class="app-grid-search__range-part"
+                        :model-value="stringField(f.numberRange.minKey)" :placeholder="'최소'" :min="f.inputMin"
+                        :max="f.inputMax" :step="f.step" :readonly="f.readonly" :disabled="f.disabled"
+                        class="app-grid-search__range-part"
                         @update:model-value="(v) => setField(f.numberRange!.minKey, v)" />
                     <span class="app-grid-search__range-sep">~</span>
                     <AppInput size="sm" type="number" :name="f.numberRange.maxKey"
-                        :model-value="stringField(f.numberRange.maxKey)" :placeholder="'최대'"
-                        :min="f.inputMin" :max="f.inputMax" :step="f.step" :readonly="f.readonly"
-                        :disabled="f.disabled" class="app-grid-search__range-part"
+                        :model-value="stringField(f.numberRange.maxKey)" :placeholder="'최대'" :min="f.inputMin"
+                        :max="f.inputMax" :step="f.step" :readonly="f.readonly" :disabled="f.disabled"
+                        class="app-grid-search__range-part"
                         @update:model-value="(v) => setField(f.numberRange!.maxKey, v)" />
                 </dd>
             </dl>
@@ -54,10 +53,9 @@
             <dl v-else-if="layoutType(f) === 'input_button'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)"
-                        :type="inputNativeType(f)" :placeholder="f.placeholder" :readonly="f.readonly"
-                        :disabled="f.disabled" class="app-grid-search__select-input-text"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                        :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
+                        class="app-grid-search__select-input-text" @update:model-value="(v) => setField(f.field, v)" />
                     <AppButton size="sm" variant="outline" type="button" :disabled="f.disabled"
                         @click="emitFieldAction(f)">
                         {{ f.buttonText ?? '실행' }}
@@ -68,10 +66,9 @@
             <dl v-else-if="layoutType(f) === 'input_text_row'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)"
-                        :type="inputNativeType(f)" :placeholder="f.placeholder" :readonly="f.readonly"
-                        :disabled="f.disabled" class="app-grid-search__select-input-text"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                        :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
+                        class="app-grid-search__select-input-text" @update:model-value="(v) => setField(f.field, v)" />
                     <span v-if="f.suffixText" class="app-grid-search__suffix">{{ f.suffixText }}</span>
                 </dd>
             </dl>
@@ -92,7 +89,8 @@
                 <dd class="app-grid-search__dd">
                     <AppSelect size="sm" :name="f.field" :model-value="selectField(f.field)" :options="f.options"
                         :placeholder="f.placeholderSelect ?? f.placeholder ?? '선택하세요'" :readonly="f.readonly"
-                        :disabled="f.disabled" @update:model-value="(v) => setField(f.field, v)" @change="applySearch" />
+                        :disabled="f.disabled" @update:model-value="(v) => setField(f.field, v)"
+                        @change="applySearch" />
                 </dd>
             </dl>
 
@@ -103,8 +101,7 @@
                         :model-value="selectField(f.selectInput.columnKey)" :options="f.selectInput.options"
                         :placeholder="f.placeholderSelect ?? '컬럼'" class="app-grid-search__select-input-select"
                         @update:model-value="(v) => setField(f.selectInput!.columnKey, v)" @change="applySearch" />
-                    <AppInput size="sm" :name="f.selectInput.textKey"
-                        :model-value="stringField(f.selectInput.textKey)"
+                    <AppInput size="sm" :name="f.selectInput.textKey" :model-value="stringField(f.selectInput.textKey)"
                         :placeholder="f.placeholderInput ?? f.placeholder ?? '검색어'"
                         class="app-grid-search__select-input-text"
                         @update:model-value="(v) => setField(f.selectInput!.textKey, v)" />
@@ -164,9 +161,9 @@
             <dl v-else-if="layoutType(f) === 'range_calendar_minmax'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="rangeField(f.field)" mode="range" :min="f.min"
-                        :max="f.max" :placeholder="f.placeholder ?? '기간 선택 (min/max)'" :disabled="f.disabled"
-                        :readonly="f.readonly" @update:model-value="(v) => setField(f.field, v)" />
+                    <AppDatePicker size="sm" :model-value="rangeField(f.field)" mode="range" :min="f.min" :max="f.max"
+                        :placeholder="f.placeholder ?? '기간 선택 (min/max)'" :disabled="f.disabled" :readonly="f.readonly"
+                        @update:model-value="(v) => setField(f.field, v)" />
                 </dd>
             </dl>
         </template>
