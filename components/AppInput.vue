@@ -20,16 +20,16 @@
                 @input="onInput" />
 
             <!-- clear -->
-            <button v-if="clearable && modelValue" class="app-input__icon app-input__icon--right" type="button"
+            <AppButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right" unstyled type="button"
                 @click="clear">
                 <Icon icon="mdi:close" />
-            </button>
+            </AppButton>
 
             <!-- password toggle -->
-            <button v-if="passwordToggle" class="app-input__icon app-input__icon--right" type="button"
+            <AppButton v-if="passwordToggle" class="app-input__icon app-input__icon--right" unstyled type="button"
                 @click="togglePassword">
                 <Icon :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'" />
-            </button>
+            </AppButton>
 
             <!-- slot right -->
             <span v-if="hasIconRight" class="app-input__icon app-input__icon--right">

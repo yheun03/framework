@@ -47,8 +47,20 @@
         padding: 16px var(--layout-nav-header-padding-x) 10px;
     }
 
+    &__brand {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8px;
+    }
+
     &__logo {
         padding: 0;
+    }
+
+    &__mobile-close {
+        display: none;
+        color: $gray-0;
     }
 
     &__actions {
@@ -331,17 +343,12 @@
 .nav-logo {
     &__mark {
         display: block;
-        width: 100%;
+        width: 40px;
+        height: 40px;
+        color: $gray-0;
 
-        svg {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        svg,
-        svg * {
-            fill: $gray-0;
+        path {
+            fill: currentColor;
         }
     }
 }

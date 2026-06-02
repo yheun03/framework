@@ -10,20 +10,22 @@
                 </template>
             </AppButton>
 
-            <component :is="linkTag" v-bind="linkAttrs" class="layout-nav__link" role="menuitem"
+            <AppButton v-bind="linkAttrs" unstyled class="layout-nav__link" role="menuitem"
                 :aria-haspopup="hasChildren ? 'true' : undefined"
                 :aria-expanded="hasChildren ? String(open) : undefined" @click="onClickRow">
-                <span v-if="iconSvg" class="layout-nav__icon app-icon" aria-hidden="true" v-html="iconSvg" />
+                <span v-if="item.icon" class="layout-nav__icon app-icon" aria-hidden="true">
+                    <Icon :icon="item.icon" />
+                </span>
 
                 <span class="layout-nav__label">
                     {{ item.label }}
                 </span>
-            </component>
+            </AppButton>
         </div>
 
         <ul v-if="hasChildren" v-show="open" :id="submenuId" class="layout-nav__sublist" role="menu"
             :aria-label="`${item.label} submenu`">
-            <LayoutNavItem v-for="child in item.children" :key="child.id" :item="child" :get-icon-svg="getIconSvg" />
+            <LayoutNavItem v-for="child in item.children" :key="child.id" :item="child" />
         </ul>
     </li>
 </template>
@@ -33,10 +35,7 @@ import type { NavigationMenu } from '~/types/navigation'
 
 const props = defineProps<{
     item: NavigationMenu
-    getIconSvg: (icon?: string) => string | null
 }>()
-
-const NuxtLinkComp = resolveComponent('NuxtLink')
 
 const hasChildren = computed(() => Boolean(props.item.children?.length))
 const hasLink = computed(() => Boolean(props.item.to?.trim()))
@@ -44,7 +43,6 @@ const isExternalLink = computed(() => Boolean(props.item.newTab && hasLink.value
 const isButtonRow = computed(() => !hasLink.value)
 
 const submenuId = computed(() => `submenu-${props.item.id}`)
-const iconSvg = computed(() => props.getIconSvg(props.item.icon))
 
 const itemClasses = computed(() => [
     `layout-nav__item--depth-${props.item.depth}`,
@@ -56,18 +54,6 @@ const itemClasses = computed(() => [
 const itemStyle = computed(() => ({
     '--indent': `${(props.item.depth - 1) * 20}px`,
 }))
-
-const linkTag = computed(() => {
-    if (isButtonRow.value) {
-        return 'button'
-    }
-
-    if (isExternalLink.value) {
-        return 'a'
-    }
-
-    return NuxtLinkComp
-})
 
 const linkAttrs = computed(() => {
     if (isButtonRow.value) {

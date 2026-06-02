@@ -143,4 +143,15 @@
 
     }
 
+    /* ----------------------------------------
+     Actions
+  ---------------------------------------- */
+
+    &__actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        padding-right: 8px;
+    }
+
 }

@@ -4,7 +4,7 @@
             'is-open': isOpen(item.id),
             'is-disabled': item.disabled,
         }">
-            <button :id="getTriggerId(item.id)" type="button" class="app-accordion__trigger" :disabled="item.disabled"
+            <AppButton :id="getTriggerId(item.id)" unstyled type="button" class="app-accordion__trigger" :disabled="item.disabled"
                 :aria-expanded="isOpen(item.id)" :aria-controls="getPanelId(item.id)" @click="toggleItem(item.id)">
                 <div class="app-accordion__trigger-content">
                     <div class="app-accordion__text">
@@ -21,7 +21,7 @@
                         <Icon icon="mdi:chevron-down" />
                     </span>
                 </div>
-            </button>
+            </AppButton>
 
             <div v-show="isOpen(item.id)" :id="getPanelId(item.id)" class="app-accordion__panel" role="region"
                 :aria-labelledby="getTriggerId(item.id)">
