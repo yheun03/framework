@@ -1,5 +1,5 @@
 <template>
-    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes"
+    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
         :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
         :tabindex="tabIndex" @click="onClick">
         <slot v-if="unstyled" />
@@ -36,6 +36,7 @@ const buttonEl = ref<HTMLElement | null>(null)
 
 type ButtonVariant = 'fill' | 'outline'
 type ButtonShape = 'square' | 'round' | 'pill'
+type CssSize = number | string
 type ButtonTone =
     | 'primary'
     | 'secondary'
@@ -59,6 +60,8 @@ const props = withDefaults(
         shape?: ButtonShape
         tone?: ButtonTone
         size?: ButtonSize
+        width?: CssSize
+        height?: CssSize
 
         disabled?: boolean
         loading?: boolean
@@ -71,6 +74,8 @@ const props = withDefaults(
         shape: 'round',
         tone: 'gray',
         size: 'md',
+        width: undefined,
+        height: undefined,
         newTab: false,
         disabled: false,
         loading: false,
@@ -107,10 +112,12 @@ const tag = computed(() => {
 ------------------------------------------------------- */
 
 const componentAttrs = computed(() => {
+    const { class: _class, style: _style, ...passthroughAttrs } = attrs
+
     if (props.to) {
         return {
             to: props.to,
-            ...attrs
+            ...passthroughAttrs
         }
     }
 
@@ -119,14 +126,36 @@ const componentAttrs = computed(() => {
             href: props.href,
             target: props.newTab ? '_blank' : undefined,
             rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...attrs
+            ...passthroughAttrs
         }
     }
 
     return {
         type: props.type,
         disabled: isDisabled.value,
-        ...attrs
+        ...passthroughAttrs
+    }
+})
+
+const mergedStyles = computed(() => [
+    attrs.style as string | Record<string, string> | undefined,
+    syncedSizeStyles.value,
+])
+
+function toCssSize(value?: CssSize) {
+    if (value == null || value === '') return undefined
+    return typeof value === 'number' ? `${value}px` : value
+}
+
+const syncedSizeStyles = computed(() => {
+    const width = toCssSize(props.width)
+    const height = toCssSize(props.height)
+
+    return {
+        width,
+        minWidth: width,
+        height,
+        minHeight: height,
     }
 })
 

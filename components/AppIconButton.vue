@@ -1,5 +1,5 @@
 <template>
-    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="styles"
+    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
         :aria-label="ariaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="onClick">
         <slot>
             <Icon v-if="icon" :icon="icon" />
@@ -28,6 +28,7 @@ type IconButtonTone =
     | 'info'
 
 type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type CssSize = number | string
 
 const props = withDefaults(
     defineProps<{
@@ -42,6 +43,8 @@ const props = withDefaults(
         tone?: IconButtonTone
         buttonSize?: IconButtonSize | number
         iconSize?: IconButtonSize | number
+        width?: CssSize
+        height?: CssSize
         disabled?: boolean
     }>(),
     {
@@ -51,6 +54,8 @@ const props = withDefaults(
         tone: 'gray',
         buttonSize: 'md',
         iconSize: 'md',
+        width: undefined,
+        height: undefined,
         newTab: false,
         disabled: false,
     },
@@ -70,10 +75,12 @@ const tag = computed(() => {
 })
 
 const componentAttrs = computed(() => {
+    const { class: _class, style: _style, ...passthroughAttrs } = attrs
+
     if (props.to) {
         return {
             to: props.to,
-            ...attrs,
+            ...passthroughAttrs,
         }
     }
 
@@ -82,14 +89,14 @@ const componentAttrs = computed(() => {
             href: props.href,
             target: props.newTab ? '_blank' : undefined,
             rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...attrs,
+            ...passthroughAttrs,
         }
     }
 
     return {
         type: props.type,
         disabled: props.disabled,
-        ...attrs,
+        ...passthroughAttrs,
     }
 })
 
@@ -128,6 +135,29 @@ const styles = computed(() => ({
     '--icon-button-size': sizeToCss(props.buttonSize, buttonSizeMap),
     '--icon-size': sizeToCss(props.iconSize, iconSizeMap),
 }))
+
+function toCssSize(value?: CssSize) {
+    if (value == null || value === '') return undefined
+    return typeof value === 'number' ? `${value}px` : value
+}
+
+const syncedSizeStyles = computed(() => {
+    const width = toCssSize(props.width)
+    const height = toCssSize(props.height)
+
+    return {
+        width,
+        minWidth: width,
+        height,
+        minHeight: height,
+    }
+})
+
+const mergedStyles = computed(() => [
+    attrs.style as string | Record<string, string> | undefined,
+    syncedSizeStyles.value,
+    styles.value,
+])
 
 const classes = computed(() => [
     'app-icon-button',

@@ -146,7 +146,7 @@
                     <h2 class="page-demo-card__title">Icon</h2>
 
                     <p class="page-demo-hint">
-                        AppTextButton은 텍스트 버튼에 보조 아이콘을 붙일 때 사용합니다.
+                        AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.
                     </p>
 
                     <div class="page-demo-row">
@@ -183,19 +183,19 @@
                         <li><b>button-size</b> : 클릭 영역 크기</li>
                         <li><b>icon-size</b> : 아이콘 시각 크기</li>
                         <li><b>icon</b> : Iconify 아이콘 이름</li>
+                        <li><b>width / height</b> : 가로/세로 지정 + min-size 자동 동기화</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xs"
-                            icon-size="xs" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="md"
-                            icon-size="md" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xl"
-                            icon-size="lg" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :button-size="44"
-                            :icon-size="18" variant="soft" tone="primary" />
-                        <AppIconButton icon="mdi:trash-can-outline" ariaLabel="삭제" :button-size="36"
-                            :icon-size="18" variant="outline" tone="danger" />
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xs" icon-size="xs" />
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="md" icon-size="md" />
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xl" icon-size="lg" />
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :button-size="44" :icon-size="18"
+                            variant="soft" tone="primary" />
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :width="80" :height="30"
+                            :icon-size="18" variant="soft" tone="secondary" />
+                        <AppIconButton icon="mdi:trash-can-outline" ariaLabel="삭제" :button-size="36" :icon-size="18"
+                            variant="outline" tone="danger" />
                     </div>
                 </section>
 
@@ -260,6 +260,35 @@
                             Block
                         </AppButton>
 
+                    </div>
+                </section>
+
+                <section class="page-demo-card">
+                    <h2 class="page-demo-card__title">Custom Size</h2>
+                    <p class="page-demo-hint">
+                        AppButton / AppTextButton / AppIconButton은 width/height 속성으로 가로/세로와 min-size를 함께 지정할 수 있습니다.
+                    </p>
+
+                    <ul class="page-demo-hint-list">
+                        <li><b>width</b> : width + min-width 동기화</li>
+                        <li><b>height</b> : height + min-height 동기화</li>
+                    </ul>
+
+                    <div class="page-demo-row">
+                        <AppButton variant="fill" :width="120" :height="36">
+                            Fill 120x36
+                        </AppButton>
+                        <AppButton variant="outline" width="140px" height="30px">
+                            Outline 140x30
+                        </AppButton>
+                        <AppTextButton :width="110" :height="32">
+                            Text 110x32
+                        </AppTextButton>
+                        <AppTextButton variant="underline" :width="120" :height="28">
+                            Underline 120x28
+                        </AppTextButton>
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="커스텀 아이콘 버튼" :width="72" :height="30"
+                            :icon-size="16" variant="outline" tone="primary" />
                     </div>
                 </section>
 

@@ -4,6 +4,7 @@
         :is="tag"
         v-bind="componentAttrs"
         :class="classes"
+        :style="mergedStyles"
         :aria-disabled="ariaDisabled"
         :aria-busy="loading ? 'true' : undefined"
         :tabindex="tabIndex"
@@ -34,6 +35,7 @@ const attrs = useAttrs()
 const buttonEl = ref<HTMLElement | null>(null)
 
 type TextButtonVariant = 'text' | 'underline'
+type CssSize = number | string
 type TextButtonTone =
     | 'primary'
     | 'secondary'
@@ -54,6 +56,8 @@ const props = withDefaults(
         variant?: TextButtonVariant
         tone?: TextButtonTone
         size?: TextButtonSize
+        width?: CssSize
+        height?: CssSize
         disabled?: boolean
         loading?: boolean
     }>(),
@@ -62,6 +66,8 @@ const props = withDefaults(
         variant: 'text',
         tone: 'gray',
         size: 'md',
+        width: undefined,
+        height: undefined,
         newTab: false,
         disabled: false,
         loading: false,
@@ -83,10 +89,12 @@ const tag = computed(() => {
 })
 
 const componentAttrs = computed(() => {
+    const { class: _class, style: _style, ...passthroughAttrs } = attrs
+
     if (props.to) {
         return {
             to: props.to,
-            ...attrs,
+            ...passthroughAttrs,
         }
     }
 
@@ -95,14 +103,36 @@ const componentAttrs = computed(() => {
             href: props.href,
             target: props.newTab ? '_blank' : undefined,
             rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...attrs,
+            ...passthroughAttrs,
         }
     }
 
     return {
         type: props.type,
         disabled: isDisabled.value,
-        ...attrs,
+        ...passthroughAttrs,
+    }
+})
+
+const mergedStyles = computed(() => [
+    attrs.style as string | Record<string, string> | undefined,
+    syncedSizeStyles.value,
+])
+
+function toCssSize(value?: CssSize) {
+    if (value == null || value === '') return undefined
+    return typeof value === 'number' ? `${value}px` : value
+}
+
+const syncedSizeStyles = computed(() => {
+    const width = toCssSize(props.width)
+    const height = toCssSize(props.height)
+
+    return {
+        width,
+        minWidth: width,
+        height,
+        minHeight: height,
     }
 })
 
