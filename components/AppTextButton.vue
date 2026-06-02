@@ -1,15 +1,6 @@
 <template>
-    <component
-        ref="buttonEl"
-        :is="tag"
-        v-bind="componentAttrs"
-        :class="classes"
-        :style="mergedStyles"
-        :aria-disabled="ariaDisabled"
-        :aria-busy="loading ? 'true' : undefined"
-        :tabindex="tabIndex"
-        @click="onClick"
-    >
+    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
+        :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined" :tabindex="tabIndex" @click="onClick">
         <span v-if="loading" class="app-button__spinner" aria-hidden="true" />
 
         <i v-else-if="$slots.iconLeft" class="app-button__icon app-button__icon--left" aria-hidden="true">
