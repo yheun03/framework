@@ -8,8 +8,8 @@
         },
     ]">
         <div ref="tabListRef" class="app-tabs__list" role="tablist" :aria-orientation="orientation">
-            <button v-for="(item, index) in enabledAwareItems" :id="getTabId(item.id)" :key="item.id"
-                ref="tabButtonRefs" type="button" class="app-tabs__tab" role="tab" :class="{
+            <AppButton v-for="(item, index) in enabledAwareItems" :id="getTabId(item.id)" :key="item.id"
+                ref="tabButtonRefs" unstyled type="button" class="app-tabs__tab" role="tab" :class="{
                     'is-active': isActive(item.id),
                     'is-disabled': item.disabled,
                 }" :disabled="item.disabled" :aria-selected="isActive(item.id)" :aria-controls="getPanelId(item.id)"
@@ -32,7 +32,7 @@
                 <span v-if="item.badge" class="app-tabs__tab-badge">
                     {{ item.badge }}
                 </span>
-            </button>
+            </AppButton>
         </div>
 
         <div class="app-tabs__panels">
@@ -59,6 +59,9 @@ type TabInitialActive = 'first' | 'none'
 type TabVariant = 'line' | 'box' | 'pill'
 type TabSize = 'sm' | 'md' | 'lg'
 type TabOrientation = 'horizontal' | 'vertical'
+type AppButtonRef = {
+    focus: () => void
+}
 
 export type AppTabItem = {
     id: string | number
@@ -101,7 +104,7 @@ const emit = defineEmits<{
 }>()
 
 const tabListRef = ref<HTMLElement | null>(null)
-const tabButtonRefs = ref<HTMLButtonElement[]>([])
+const tabButtonRefs = ref<AppButtonRef[]>([])
 
 const normalizedItems = computed(() => props.items ?? [])
 
@@ -189,8 +192,9 @@ function getPanelId(id: string | number) {
 
 function focusTabByIndex(index: number) {
     const target = tabButtonRefs.value[index]
+    const item = normalizedItems.value[index]
 
-    if (!target || target.disabled) return
+    if (!target || item?.disabled) return
 
     target.focus()
 }

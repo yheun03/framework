@@ -8,9 +8,9 @@
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <button class="route-tabs__close" type="button" aria-label="탭 닫기" @click="(e) => onClose(e, t.key)">
+                    <AppButton class="route-tabs__close" unstyled type="button" aria-label="탭 닫기" @click="(e) => onClose(e, t.key)">
                         <Icon class="route-tabs__close-icon" icon="mdi:close" />
-                    </button>
+                    </AppButton>
                 </li>
             </ul>
         </div>

@@ -1,0 +1,299 @@
+@use "../abstract" as *;
+
+/* =========================================
+   Responsive Layout
+   320 mobile / tablet / desktop / wide desktop
+========================================= */
+
+:root {
+    --layout-page-inline: 20px;
+    --layout-page-block: 20px;
+    --layout-card-padding: 16px;
+    --layout-page-gap: 20px;
+    --layout-aside-width: 360px;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    :root {
+        --width-sidebar: 224px;
+        --layout-page-inline: 18px;
+        --layout-page-block: 18px;
+        --layout-page-gap: 18px;
+        --layout-aside-width: 300px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1679px) {
+    :root {
+        --width-sidebar: 260px;
+        --layout-page-inline: 20px;
+        --layout-page-block: 20px;
+        --layout-aside-width: 360px;
+    }
+}
+
+@media (min-width: 1680px) {
+    :root {
+        --width-sidebar: 288px;
+        --layout-page-inline: 24px;
+        --layout-page-block: 24px;
+        --layout-page-gap: 24px;
+        --layout-aside-width: 400px;
+    }
+}
+
+.layout {
+    &__nav,
+    &__main,
+    &__content {
+        min-width: 0;
+    }
+}
+
+.page-demo {
+    padding: var(--layout-page-block) var(--layout-page-inline);
+
+    &-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(280px, var(--layout-aside-width));
+        gap: var(--layout-page-gap);
+    }
+
+    &-card {
+        padding: var(--layout-card-padding);
+    }
+}
+
+@media (min-width: 1680px) {
+    .page-demo {
+        max-width: 1480px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .page-demo {
+        max-width: none;
+
+        &-layout {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        &-aside__sticky {
+            position: static;
+            top: auto;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    :root {
+        --width-sidebar: min(284px, calc(100vw - 24px));
+        --layout-page-inline: 14px;
+        --layout-page-block: 14px;
+        --layout-card-padding: 14px;
+        --layout-page-gap: 14px;
+    }
+
+    .layout {
+        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "mobile-bar"
+            "main";
+
+        &__mobile-bar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+        }
+
+        &__nav {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: var(--layout-nav-z-index);
+            width: var(--width-sidebar);
+            max-width: calc(100vw - 24px);
+            transform: translateX(calc(-100% - 1px));
+            transition: transform 0.22s ease;
+            box-shadow: 18px 0 36px rgba($gray-900, 0.22);
+        }
+
+        &--nav-open {
+            .layout__nav {
+                transform: translateX(0);
+            }
+        }
+
+        &__nav-dim {
+            position: fixed;
+            inset: 0;
+            z-index: calc(var(--layout-nav-z-index) - 1);
+            display: block;
+            border: 0;
+            background: rgba($gray-900, 0.42);
+        }
+
+        &__main {
+            min-height: 0;
+        }
+
+        &__page-bottom-fixed__content {
+            flex-wrap: wrap;
+            padding: 10px 12px;
+        }
+
+        &__page-bottom-fixed__right {
+            width: 100%;
+            margin-left: 0;
+            justify-content: flex-end;
+        }
+    }
+
+    .layout-nav {
+        min-height: 100dvh;
+
+        &__header {
+            padding-top: 12px;
+        }
+
+        &__brand {
+            display: flex;
+        }
+
+        &__mobile-close {
+            display: inline-flex;
+        }
+    }
+
+    .nav-logo__mark {
+        width: 40px;
+        height: 40px;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .route-tabs {
+        min-height: 38px;
+        grid-template-columns: minmax(0, 1fr) auto;
+
+        &__list {
+            padding: 10px 10px 0;
+        }
+
+        &__tab {
+            max-width: 176px;
+        }
+
+        &__actions {
+            padding-right: 6px;
+        }
+    }
+
+    .page-demo {
+        min-width: 0;
+
+        &__header {
+            gap: 6px;
+        }
+
+        &__title {
+            @include font(t5, rg);
+        }
+
+        &-main,
+        &-stack,
+        &-card,
+        &-row,
+        &-controls,
+        &-actions {
+            min-width: 0;
+        }
+
+        &-row,
+        &-controls,
+        &-actions {
+            align-items: stretch;
+        }
+
+        &-row > *,
+        &-controls > * {
+            min-width: 0;
+        }
+
+        &-grid {
+            gap: 10px;
+        }
+
+        &-prop-row {
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        &-output {
+            max-height: 320px;
+        }
+    }
+
+    .app-pagination {
+        align-items: stretch;
+
+        &__controls {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        &__size {
+            width: 100%;
+        }
+    }
+
+    .app-file-upload,
+    .app-image-upload {
+        &__item {
+            grid-template-columns: auto minmax(0, 1fr);
+        }
+
+        &__item-actions {
+            grid-column: 1 / -1;
+            justify-content: flex-end;
+        }
+
+        &__meta {
+            flex-wrap: wrap;
+            row-gap: 2px;
+        }
+    }
+}
+
+@media (max-width: 374px) {
+    :root {
+        --layout-page-inline: 10px;
+        --layout-page-block: 12px;
+        --layout-card-padding: 12px;
+        --layout-page-gap: 12px;
+    }
+
+    .route-tabs {
+        &__tab {
+            max-width: 132px;
+        }
+
+        &__item {
+            gap: 4px;
+            padding-inline: 8px 6px;
+        }
+
+        &__actions {
+            display: none;
+        }
+    }
+
+    .page-demo-actions {
+        gap: 8px;
+    }
+}

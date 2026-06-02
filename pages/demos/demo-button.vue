@@ -127,16 +127,6 @@
                         버튼 색상 스타일
                     </p>
 
-                    <ul class="page-demo-hint-list">
-                        <li>primary</li>
-                        <li>secondary</li>
-                        <li>gray</li>
-                        <li>danger</li>
-                        <li>warning</li>
-                        <li>success</li>
-                        <li>info</li>
-                    </ul>
-
                     <div class="page-demo-row">
                         <AppButton variant="fill" tone="primary">Primary</AppButton>
                         <AppButton variant="fill" tone="secondary">Secondary</AppButton>

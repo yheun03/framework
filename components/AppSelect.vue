@@ -17,7 +17,7 @@
         </label>
 
         <div class="form-field__control app-select__control">
-            <button :id="selectId" class="app-select__trigger" type="button" :name="name" :disabled="disabled"
+            <AppButton :id="selectId" class="app-select__trigger" unstyled type="button" :name="name" :disabled="disabled"
                 :aria-invalid="state === 'error'" :aria-describedby="describedBy" :aria-expanded="isOpen"
                 :aria-readonly="readonly || undefined" aria-haspopup="listbox" @click="toggle">
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
@@ -26,13 +26,10 @@
 
                 <span class="app-select__icon app-select__icon--right" aria-hidden="true">
                     <slot name="iconRight">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
+                        <Icon icon="mdi:chevron-down" />
                     </slot>
                 </span>
-            </button>
+            </AppButton>
 
             <ul v-if="isOpen" class="app-select__menu" role="listbox">
                 <li v-if="placeholder && !required" class="app-select__option"

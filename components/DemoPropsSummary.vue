@@ -1,31 +1,29 @@
 <template>
-    <section v-if="summary" class="page-demo-card" aria-label="컴포넌트 속성 요약">
-        <div class="page-demo-card__header">
-            <h2 class="page-demo-card__title">Props</h2>
-            <p class="page-demo-card__desc">
-                {{ summary.description }}
-            </p>
-        </div>
-
-        <div class="page-demo-prop-table">
-            <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row">
-                <code class="page-demo-prop-name">{{ prop.name }}</code>
-                <span class="page-demo-prop-desc">{{ prop.description }}</span>
+    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" mode="multiple"
+        initial-open="none" aria-label="컴포넌트 속성 요약">
+        <template #props>
+            <div class="page-demo-prop-table">
+                <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row">
+                    <code class="page-demo-prop-name">{{ prop.name }}</code>
+                    <span class="page-demo-prop-desc">{{ prop.description }}</span>
+                </div>
             </div>
-        </div>
+        </template>
 
-        <div v-if="summary.values?.length" class="page-demo-stack">
+        <template #values>
             <p class="page-demo-prop-note">주요 값</p>
             <div class="page-demo-prop-chip-list">
                 <code v-for="value in summary.values" :key="value" class="page-demo-prop-chip">
                     {{ value }}
                 </code>
             </div>
-        </div>
-    </section>
+        </template>
+    </AppAccordion>
 </template>
 
 <script setup lang="ts">
+import type { AppAccordionItem } from '~/components/AppAccordion.vue'
+
 type DemoProp = {
     name: string
     description: string
@@ -231,4 +229,28 @@ const summaries: Record<string, DemoSummary> = {
 
 const demoKey = computed(() => String(route.path.split('/').pop() ?? ''))
 const summary = computed(() => summaries[demoKey.value])
+
+const summaryItems = computed<AppAccordionItem[]>(() => {
+    if (!summary.value) return []
+
+    const items: AppAccordionItem[] = [
+        {
+            id: 'props',
+            title: 'Props',
+            desc: summary.value.description,
+            slot: 'props',
+        },
+    ]
+
+    if (summary.value.values?.length) {
+        items.push({
+            id: 'values',
+            title: 'Values',
+            desc: '주요 옵션 값만 확인합니다.',
+            slot: 'values',
+        })
+    }
+
+    return items
+})
 </script>

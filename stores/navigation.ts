@@ -20,7 +20,7 @@ type MenuSeedEntity = {
 };
 
 const MENU_SEED: MenuSeedEntity[] = [
-    { id: 'MENU_010000', parentId: null, depth: 1, order: 1, to: '/', labelKey: 'nav.home', isActive: true },
+    { id: 'MENU_010000', parentId: null, depth: 1, order: 1, to: '/', labelKey: 'nav.home', icon: 'mdi:home-outline', isActive: true },
     {
         id: 'MENU_010100',
         parentId: null,
@@ -28,9 +28,10 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 2,
         to: '/workspace',
         labelKey: 'nav.workspace',
+        icon: 'mdi:view-dashboard-outline',
         isActive: true,
     },
-    { id: 'MENU_020000', parentId: null, depth: 1, order: 3, to: '', labelKey: 'nav.demos', isActive: true },
+    { id: 'MENU_020000', parentId: null, depth: 1, order: 3, to: '', labelKey: 'nav.demos', icon: 'mdi:widgets-outline', isActive: true },
     {
         id: 'MENU_020001',
         parentId: 'MENU_020000',
@@ -200,6 +201,7 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 4,
         to: '/settings',
         labelKey: 'nav.settings',
+        icon: 'mdi:cog-outline',
         isActive: true,
     },
 ];

@@ -13,16 +13,55 @@
 ========================================= */
 
 .layout {
+    --layout-mobile-bar-height: 52px;
+    --layout-content-padding: 0;
+    --layout-nav-z-index: 40;
+
     /* ----------------------------------------
      Container
   ---------------------------------------- */
     display: grid;
     height: 100dvh;
-    grid-template-rows: auto 1fr;
+    min-width: 0;
+    overflow: hidden;
+    grid-template-rows: 1fr;
     grid-template-columns: var(--width-sidebar) 1fr;
     grid-template-areas:
-        "header header"
         "nav main";
+
+    /* ----------------------------------------
+     Mobile Bar
+  ---------------------------------------- */
+    &__mobile-bar {
+        display: none;
+        grid-area: mobile-bar;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        min-height: var(--layout-mobile-bar-height);
+        padding: 6px 10px;
+        border-bottom: 1px solid $gray-200;
+        background: $gray-0;
+    }
+
+    &__nav-toggle {
+        color: $gray-800;
+
+        svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+
+    &__mobile-title {
+        min-width: 0;
+        color: $gray-900;
+        @include font(b2, sb);
+    }
+
+    &__nav-dim {
+        display: none;
+    }
 
 
     /* ----------------------------------------
@@ -38,6 +77,7 @@
   ---------------------------------------- */
     &__nav {
         grid-area: nav;
+        min-width: 0;
     }
 
 
@@ -47,6 +87,7 @@
     &__main {
         grid-area: main;
         min-height: 0;
+        min-width: 0;
         display: grid;
         grid-template-rows: auto 1fr auto;
         overflow: hidden;
@@ -70,7 +111,9 @@
   ---------------------------------------- */
     &__content {
         min-height: 0;
+        min-width: 0;
         overflow: auto;
+        padding: var(--layout-content-padding);
 
     }
 

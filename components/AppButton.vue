@@ -1,7 +1,10 @@
 <template>
-    <component :is="tag" v-bind="componentAttrs" :class="classes" :style="customSizeStyle"
+    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="customSizeStyle"
         :aria-label="ariaLabelComputed" :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
         :tabindex="tabIndex" @click="onClick">
+        <slot v-if="unstyled" />
+
+        <template v-else>
         <!-- loading -->
         <span v-if="loading" class="app-button__spinner" aria-hidden="true" />
 
@@ -19,11 +22,17 @@
         <i v-if="$slots.iconRight && !loading" class="app-button__icon app-button__icon--right" aria-hidden="true">
             <slot name="iconRight" />
         </i>
+        </template>
     </component>
 </template>
 
 <script setup lang="ts">
+defineOptions({
+    inheritAttrs: false,
+})
+
 const attrs = useAttrs()
+const buttonEl = ref<HTMLElement | null>(null)
 
 type ButtonVariant = 'fill' | 'outline' | 'text' | 'underline'
 type ButtonShape = 'square' | 'round' | 'pill'
@@ -60,6 +69,7 @@ const props = withDefaults(
         loading?: boolean
         block?: boolean
         iconOnly?: boolean
+        unstyled?: boolean
         ariaLabel?: string
     }>(),
     {
@@ -72,7 +82,8 @@ const props = withDefaults(
         disabled: false,
         loading: false,
         block: false,
-        iconOnly: false
+        iconOnly: false,
+        unstyled: false
     }
 )
 
@@ -132,6 +143,7 @@ const componentAttrs = computed(() => {
 ------------------------------------------------------- */
 
 const ariaLabelComputed = computed(() => {
+    if (props.ariaLabel) return props.ariaLabel
     if (!props.iconOnly) return undefined
     return props.ariaLabel
 })
@@ -151,6 +163,7 @@ const tabIndex = computed(() => {
 ------------------------------------------------------- */
 
 const customSizeStyle = computed(() => {
+    if (props.unstyled) return
     if (!props.customSize) return
 
     return {
@@ -163,20 +176,31 @@ const customSizeStyle = computed(() => {
    classes
 ------------------------------------------------------- */
 
-const classes = computed(() => [
-    'app-button',
-    `app-button--variant-${props.variant}`,
-    `app-button--shape-${props.shape}`,
-    `app-button--size-${props.size}`,
-    `app-button--tone-${props.tone}`,
-    {
-        'app-button--icon-only': props.iconOnly,
-        'app-button--disabled': isDisabled.value,
-        'app-button--loading': props.loading,
-        'app-button--block': props.block,
-        'app-button--custom': !!props.customSize
+const classes = computed(() => {
+    if (props.unstyled) {
+        return [
+            'app-button-unstyled',
+            {
+                'is-disabled': isDisabled.value,
+            }
+        ]
     }
-])
+
+    return [
+        'app-button',
+        `app-button--variant-${props.variant}`,
+        `app-button--shape-${props.shape}`,
+        `app-button--size-${props.size}`,
+        `app-button--tone-${props.tone}`,
+        {
+            'app-button--icon-only': props.iconOnly,
+            'app-button--disabled': isDisabled.value,
+            'app-button--loading': props.loading,
+            'app-button--block': props.block,
+            'app-button--custom': !!props.customSize
+        }
+    ]
+})
 
 /* -------------------------------------------------------
    click
@@ -191,4 +215,12 @@ function onClick(e: MouseEvent) {
 
     emit('click', e)
 }
+
+function focus() {
+    buttonEl.value?.focus()
+}
+
+defineExpose({
+    focus,
+})
 </script>
