@@ -190,6 +190,8 @@
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
+                    <DemoPropsSummary />
+
                     <section class="page-demo-card">
                         <h2 class="page-demo-card__title">Actions</h2>
                         <div class="page-demo-actions">

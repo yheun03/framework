@@ -264,6 +264,7 @@
             <aside class="page-demo-aside">
 
                 <div class="page-demo-aside__sticky">
+                    <DemoPropsSummary />
 
                     <section class="page-demo-card">
                         <h2 class="page-demo-card__title">Actions</h2>

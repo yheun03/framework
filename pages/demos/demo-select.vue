@@ -70,6 +70,8 @@
             <!-- STATE PANEL -->
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
+                    <DemoPropsSummary />
+
                     <section class="page-demo-card">
                         <h2 class="page-demo-card__title"> Current Value </h2>
                         <pre class="page-demo-output">{{ output }}                        </pre>
@@ -148,4 +150,4 @@ const output = computed(() =>
 )
 </script>
 
-<!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
+<!-- demo 공통 스타일은 assets/scss/pages/demo.scss 에서 관리 -->

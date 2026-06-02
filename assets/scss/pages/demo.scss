@@ -1,0 +1,277 @@
+@use "../abstract" as *;
+
+/* =========================================
+   Demo Page Styles
+   설명: 컴포넌트 데모 페이지 공통 레이아웃
+   네임스페이스: .page-demo
+========================================= */
+
+.page-demo {
+    width: 100%;
+    max-width: 1280px;
+    padding: 20px;
+
+    &__header {
+        display: grid;
+        gap: 8px;
+        padding: 4px 0 8px;
+    }
+
+    &__title {
+        @include font(t5, rg);
+        margin: 0;
+    }
+
+    &__desc,
+    &-card__desc {
+        @include font(b4, rg);
+        margin: 0;
+        color: rgba($gray-900, .7);
+        line-height: 1.65;
+    }
+
+    &-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 20px;
+        align-items: start;
+    }
+
+    &-main {
+        display: grid;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    &-aside {
+        min-width: 0;
+
+        &__sticky {
+            position: sticky;
+            top: 16px;
+            display: grid;
+            gap: 16px;
+        }
+    }
+
+    &-card {
+        display: grid;
+        gap: 12px;
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid $gray-200;
+        border-radius: 8px;
+        background: $gray-0;
+
+        &__title {
+            @include font(b3, rg);
+            margin: 0;
+        }
+
+        &__header {
+            display: grid;
+            gap: 6px;
+        }
+    }
+
+    &-actions,
+    &-row,
+    &-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    &-row,
+    &-controls {
+        gap: 12px;
+    }
+
+    &-compare {
+        display: grid;
+        gap: 12px;
+
+        &__title {
+            @include font(b4, rg);
+            margin: 0;
+            color: $gray-900;
+        }
+    }
+
+    &-stack {
+        display: grid;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    &-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    &-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        --ag-border-radius: 8px;
+
+        &>[class*="ag-"] {
+            grid-column: span 3;
+        }
+    }
+
+    &-control {
+        display: grid;
+        gap: 6px;
+
+        &__label {
+            @include font(b3, rg);
+            color: $gray-800;
+        }
+
+        &__range {
+            width: 100%;
+        }
+
+        &__value {
+            @include font(c2, rg);
+            color: rgba($gray-900, .7);
+        }
+    }
+
+    &-hint,
+    &-hint-list,
+    &-prop-table,
+    &-prop-note {
+        @include font(c2, rg);
+        color: rgba($gray-900, .7);
+    }
+
+    &-hint {
+        margin: 0;
+    }
+
+    &-hint-list {
+        display: grid;
+        gap: 6px;
+        margin: 0;
+        padding: 10px 12px 10px 28px;
+        border-radius: 8px;
+        background: rgba($gray-900, .035);
+    }
+
+    &-prop-table {
+        display: grid;
+        gap: 0;
+        overflow: hidden;
+        border: 1px solid $gray-200;
+        border-radius: 8px;
+    }
+
+    &-prop-row {
+        display: grid;
+        grid-template-columns: minmax(92px, .8fr) minmax(0, 1.2fr);
+        gap: 10px;
+        padding: 10px 12px;
+        border-top: 1px solid $gray-200;
+
+        &:first-child {
+            border-top: 0;
+        }
+    }
+
+    &-prop-name {
+        min-width: 0;
+        color: $gray-900;
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    &-prop-desc {
+        min-width: 0;
+        word-break: keep-all;
+        overflow-wrap: anywhere;
+    }
+
+    &-prop-chip-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    &-prop-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 3px 8px;
+        border: 1px solid $gray-200;
+        border-radius: 999px;
+        background: rgba($gray-900, .025);
+        color: $gray-800;
+        @include font(c2, rg);
+    }
+
+    &-output {
+        @include font(c2, rg);
+        max-height: calc(100dvh - 220px);
+        margin: 0;
+        padding: 12px;
+        overflow: auto;
+        border-radius: 8px;
+        background: rgba($gray-900, .04);
+    }
+
+    &-icon {
+        display: inline-flex;
+        width: 16px;
+        height: 16px;
+    }
+
+    &-chart-box {
+        padding: 8px;
+        border: 1px solid $gray-200;
+        border-radius: 8px;
+        background: $gray-0;
+    }
+
+    &-grid-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    &-fallback {
+        display: grid;
+        height: 320px;
+        place-items: center;
+        border: 1px solid $gray-200;
+        border-radius: 8px;
+        color: rgba($gray-900, .7);
+    }
+}
+
+@media (max-width: 900px) {
+    .page-demo {
+        padding: 16px;
+
+        &-layout {
+            grid-template-columns: 1fr;
+        }
+
+        &-aside__sticky {
+            position: static;
+            top: auto;
+        }
+
+        &-grid {
+            grid-template-columns: 1fr;
+
+            &>[class*="ag-"] {
+                grid-column: span 1;
+            }
+        }
+    }
+}
