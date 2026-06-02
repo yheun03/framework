@@ -6,7 +6,7 @@
                 <input ref="fileInput" class="app-image-upload__input" type="file" :accept="accept" :multiple="multiple"
                     :disabled="disabled" @change="onFileChange" />
 
-                <AppButton unstyled type="button" class="app-image-upload__trigger" :disabled="disabled" @click="openFile">
+                <component :is="'button'" type="button" class="app-image-upload__trigger" :disabled="disabled" @click="openFile">
                     <span class="app-image-upload__trigger-icon" aria-hidden="true">
                         <Icon icon="mdi:image-plus" />
                     </span>
@@ -18,7 +18,7 @@
                     <span class="app-image-upload__trigger-subtext">
                         {{ helperText }}
                     </span>
-                </AppButton>
+                </component>
             </div>
 
             <div class="app-image-upload__actions">
