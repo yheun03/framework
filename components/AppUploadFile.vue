@@ -51,10 +51,10 @@
                 </div>
 
                 <div class="app-file-upload__item-actions">
-                    <AppButton v-if="isPdfItem(uploadItem)" variant="text" size="sm" aria-label="PDF 미리보기"
+                    <AppTextButton v-if="isPdfItem(uploadItem)" size="sm" aria-label="PDF 미리보기"
                         @click="previewPdf(uploadItem)">
                         미리보기
-                    </AppButton>
+                    </AppTextButton>
 
                     <AppIconButton icon="mdi:close" aria-label="파일 삭제" :button-size="28" :icon-size="16"
                         :disabled="disabled" @click="removeItem(uploadItem.id)" />

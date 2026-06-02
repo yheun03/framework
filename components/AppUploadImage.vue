@@ -55,12 +55,12 @@
                 </div>
 
                 <div class="app-image-upload__item-actions">
-                    <AppButton v-if="uploadItem.url" variant="text" size="sm" aria-label="이미지 미리보기"
+                    <AppTextButton v-if="uploadItem.url" size="sm" aria-label="이미지 미리보기"
                         @click="previewItem(uploadItem)">
                         미리보기
-                    </AppButton>
+                    </AppTextButton>
 
-                    <AppIconButton icon="mdi:close" aria-label="파일 삭제" :button-size="28" :icon-size="16"
+                    <AppIconButton icon="mdi:close" ariaLabel="파일 삭제" :button-size="28" :icon-size="16"
                         :disabled="disabled" @click="removeItem(uploadItem.id)" />
                 </div>
             </li>

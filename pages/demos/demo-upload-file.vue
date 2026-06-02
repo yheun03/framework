@@ -24,9 +24,9 @@
                                         샘플 파일
                                     </AppButton>
 
-                                    <AppButton size="sm" variant="text" :disabled="!basic.file" @click="clearBasic">
+                                    <AppTextButton size="sm" :disabled="!basic.file" @click="clearBasic">
                                         값 비우기
-                                    </AppButton>
+                                    </AppTextButton>
                                 </div>
                             </div>
                         </div>
@@ -47,10 +47,10 @@
                                         샘플 파일
                                     </AppButton>
 
-                                    <AppButton size="sm" variant="text" :disabled="!multiple.files.length"
+                                    <AppTextButton size="sm" :disabled="!multiple.files.length"
                                         @click="clearMultiple">
                                         값 비우기
-                                    </AppButton>
+                                    </AppTextButton>
                                 </div>
                             </div>
                         </div>
@@ -107,14 +107,14 @@
 
                             <div class="page-demo-stack">
                                 <div class="page-demo-actions">
-                                    <AppButton size="sm" variant="text" @click="toggleDisabled">
+                                    <AppTextButton size="sm" @click="toggleDisabled">
                                         disabled: {{ disabled.value ? 'ON' : 'OFF' }}
-                                    </AppButton>
+                                    </AppTextButton>
 
-                                    <AppButton size="sm" variant="text" :disabled="!disabled.file"
+                                    <AppTextButton size="sm" :disabled="!disabled.file"
                                         @click="clearDisabled">
                                         값 비우기
-                                    </AppButton>
+                                    </AppTextButton>
                                 </div>
                             </div>
                         </div>
@@ -134,9 +134,9 @@
                                     샘플 파일 일괄 적용
                                 </AppButton>
 
-                                <AppButton variant="text" @click="resetAll">
+                                <AppTextButton @click="resetAll">
                                     초기화
-                                </AppButton>
+                                </AppTextButton>
                             </div>
                         </template>
 

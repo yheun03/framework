@@ -31,9 +31,9 @@
                                     샘플 이미지
                                 </AppButton>
 
-                                <AppButton size="sm" variant="text" :disabled="!basic.imageUrl" @click="clearBasic">
+                                <AppTextButton size="sm" :disabled="!basic.imageUrl" @click="clearBasic">
                                     값 비우기
-                                </AppButton>
+                                </AppTextButton>
                             </div>
                         </div>
                     </div>
@@ -56,13 +56,13 @@
                                     샘플 이미지
                                 </AppButton>
 
-                                <AppButton size="sm" variant="text" @click="toggleDisabled">
+                                <AppTextButton size="sm" @click="toggleDisabled">
                                     disabled: {{ state.disabled ? 'ON' : 'OFF' }}
-                                </AppButton>
+                                </AppTextButton>
 
-                                <AppButton size="sm" variant="text" :disabled="!state.imageUrl" @click="clearState">
+                                <AppTextButton size="sm" :disabled="!state.imageUrl" @click="clearState">
                                     값 비우기
-                                </AppButton>
+                                </AppTextButton>
                             </div>
 
                             <div class="page-demo-hint">
@@ -93,10 +93,10 @@
                                     샘플 이미지
                                 </AppButton>
 
-                                <AppButton size="sm" variant="text" :disabled="!multiple.images.length"
+                                <AppTextButton size="sm" :disabled="!multiple.images.length"
                                     @click="clearMultiple">
                                     값 비우기
-                                </AppButton>
+                                </AppTextButton>
                             </div>
                         </div>
                     </div>
@@ -199,9 +199,9 @@
                                 샘플 이미지 일괄 적용
                             </AppButton>
 
-                            <AppButton variant="text" @click="resetAll">
+                            <AppTextButton @click="resetAll">
                                 초기화
-                            </AppButton>
+                            </AppTextButton>
                         </div>
                     </section>
 

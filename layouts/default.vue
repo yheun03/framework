@@ -1,12 +1,12 @@
 <template>
     <div class="layout" :class="{ 'layout--nav-open': isNavOpen }">
         <div class="layout__mobile-bar">
-            <AppButton class="layout__nav-toggle" variant="text" size="sm" aria-label="메뉴 열기" @click="openNav">
+            <AppTextButton class="layout__nav-toggle" size="sm" aria-label="메뉴 열기" @click="openNav">
                 <template #iconLeft>
                     <Icon icon="mdi:menu" />
                 </template>
                 메뉴
-            </AppButton>
+            </AppTextButton>
 
             <strong class="layout__mobile-title">Framework</strong>
         </div>

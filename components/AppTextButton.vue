@@ -1,28 +1,27 @@
 <template>
-    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes"
-        :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
-        :tabindex="tabIndex" @click="onClick">
-        <slot v-if="unstyled" />
-
-        <template v-else>
-        <!-- loading -->
+    <component
+        ref="buttonEl"
+        :is="tag"
+        v-bind="componentAttrs"
+        :class="classes"
+        :aria-disabled="ariaDisabled"
+        :aria-busy="loading ? 'true' : undefined"
+        :tabindex="tabIndex"
+        @click="onClick"
+    >
         <span v-if="loading" class="app-button__spinner" aria-hidden="true" />
 
-        <!-- left icon -->
         <i v-else-if="$slots.iconLeft" class="app-button__icon app-button__icon--left" aria-hidden="true">
             <slot name="iconLeft" />
         </i>
 
-        <!-- label -->
         <span v-if="$slots.default" class="app-button__label">
             <slot />
         </span>
 
-        <!-- right icon -->
         <i v-if="$slots.iconRight && !loading" class="app-button__icon app-button__icon--right" aria-hidden="true">
             <slot name="iconRight" />
         </i>
-        </template>
     </component>
 </template>
 
@@ -34,9 +33,8 @@ defineOptions({
 const attrs = useAttrs()
 const buttonEl = ref<HTMLElement | null>(null)
 
-type ButtonVariant = 'fill' | 'outline'
-type ButtonShape = 'square' | 'round' | 'pill'
-type ButtonTone =
+type TextButtonVariant = 'text' | 'underline'
+type TextButtonTone =
     | 'primary'
     | 'secondary'
     | 'gray'
@@ -44,39 +42,30 @@ type ButtonTone =
     | 'warning'
     | 'success'
     | 'info'
-
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-type ButtonType = 'button' | 'submit' | 'reset'
+type TextButtonSize = 'sm' | 'md' | 'lg'
+type TextButtonType = 'button' | 'submit' | 'reset'
 
 const props = withDefaults(
     defineProps<{
-        type?: ButtonType
+        type?: TextButtonType
         to?: string
         href?: string
         newTab?: boolean
-
-        variant?: ButtonVariant
-        shape?: ButtonShape
-        tone?: ButtonTone
-        size?: ButtonSize
-
+        variant?: TextButtonVariant
+        tone?: TextButtonTone
+        size?: TextButtonSize
         disabled?: boolean
         loading?: boolean
-        block?: boolean
-        unstyled?: boolean
     }>(),
     {
         type: 'button',
-        variant: 'outline',
-        shape: 'round',
+        variant: 'text',
         tone: 'gray',
         size: 'md',
         newTab: false,
         disabled: false,
         loading: false,
-        block: false,
-        unstyled: false
-    }
+    },
 )
 
 const emit = defineEmits<{
@@ -84,17 +73,8 @@ const emit = defineEmits<{
 }>()
 
 const NuxtLinkComp = resolveComponent('NuxtLink')
-
-/* -------------------------------------------------------
-   상태
-------------------------------------------------------- */
-
 const isDisabled = computed(() => props.disabled || props.loading)
 const isLink = computed(() => !!props.to || !!props.href)
-
-/* -------------------------------------------------------
-   component tag
-------------------------------------------------------- */
 
 const tag = computed(() => {
     if (props.to) return NuxtLinkComp
@@ -102,15 +82,11 @@ const tag = computed(() => {
     return 'button'
 })
 
-/* -------------------------------------------------------
-   attributes
-------------------------------------------------------- */
-
 const componentAttrs = computed(() => {
     if (props.to) {
         return {
             to: props.to,
-            ...attrs
+            ...attrs,
         }
     }
 
@@ -119,14 +95,14 @@ const componentAttrs = computed(() => {
             href: props.href,
             target: props.newTab ? '_blank' : undefined,
             rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...attrs
+            ...attrs,
         }
     }
 
     return {
         type: props.type,
         disabled: isDisabled.value,
-        ...attrs
+        ...attrs,
     }
 })
 
@@ -140,33 +116,16 @@ const tabIndex = computed(() => {
     return undefined
 })
 
-const classes = computed(() => {
-    if (props.unstyled) {
-        return [
-            'app-button-unstyled',
-            {
-                'is-disabled': isDisabled.value,
-            }
-        ]
-    }
-
-    return [
-        'app-button',
-        `app-button--variant-${props.variant}`,
-        `app-button--shape-${props.shape}`,
-        `app-button--size-${props.size}`,
-        `app-button--tone-${props.tone}`,
-        {
-            'app-button--disabled': isDisabled.value,
-            'app-button--loading': props.loading,
-            'app-button--block': props.block,
-        }
-    ]
-})
-
-/* -------------------------------------------------------
-   click
-------------------------------------------------------- */
+const classes = computed(() => [
+    'app-button',
+    `app-button--variant-${props.variant}`,
+    `app-button--size-${props.size}`,
+    `app-button--tone-${props.tone}`,
+    {
+        'app-button--disabled': isDisabled.value,
+        'app-button--loading': props.loading,
+    },
+])
 
 function onClick(e: MouseEvent) {
     if (isDisabled.value) {
