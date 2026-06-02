@@ -34,7 +34,7 @@ defineOptions({
 const attrs = useAttrs()
 const buttonEl = ref<HTMLElement | null>(null)
 
-type ButtonVariant = 'fill' | 'outline' | 'text' | 'underline'
+type ButtonVariant = 'fill' | 'outline'
 type ButtonShape = 'square' | 'round' | 'pill'
 type ButtonTone =
     | 'primary'

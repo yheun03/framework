@@ -134,9 +134,9 @@
                             최상단 모달 닫기
                         </AppButton>
 
-                        <AppButton variant="text" @click="handleClearAll">
+                        <AppTextButton @click="handleClearAll">
                             전체 모달 닫기
-                        </AppButton>
+                        </AppTextButton>
                     </div>
                 </section>
             </main>

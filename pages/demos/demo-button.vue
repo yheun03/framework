@@ -18,21 +18,21 @@
                     <h2 class="page-demo-card__title">Variant</h2>
 
                     <p class="page-demo-hint">
-                        버튼의 기본 스타일을 정의합니다.
+                        버튼 유형별 기본 스타일을 정의합니다.
                     </p>
 
                     <ul class="page-demo-hint-list">
-                        <li><b>fill</b> : 배경 채움 버튼</li>
-                        <li><b>outline</b> : 테두리 버튼</li>
-                        <li><b>text</b> : 배경 없는 텍스트 버튼</li>
-                        <li><b>underline</b> : 링크 스타일 버튼</li>
+                        <li><b>fill</b> : 배경 채움 버튼 (AppButton)</li>
+                        <li><b>outline</b> : 테두리 버튼 (AppButton)</li>
+                        <li><b>text</b> : 배경 없는 텍스트 버튼 (AppTextButton)</li>
+                        <li><b>underline</b> : 링크 스타일 버튼 (AppTextButton)</li>
                     </ul>
 
                     <div class="page-demo-row">
                         <AppButton variant="fill" @click="log('fill')">fill</AppButton>
                         <AppButton variant="outline" @click="log('outline')">outline</AppButton>
-                        <AppButton variant="text" @click="log('text')">text</AppButton>
-                        <AppButton variant="underline" @click="log('underline')">underline</AppButton>
+                        <AppTextButton @click="log('text')">text</AppTextButton>
+                        <AppTextButton variant="underline" @click="log('underline')">underline</AppTextButton>
                     </div>
                 </section>
 
@@ -80,15 +80,15 @@
                     </p>
 
                     <div class="page-demo-row">
-                        <AppButton variant="text" size="sm">SM</AppButton>
-                        <AppButton variant="text" size="md">MD</AppButton>
-                        <AppButton variant="text" size="lg">LG</AppButton>
+                        <AppTextButton size="sm">SM</AppTextButton>
+                        <AppTextButton size="md">MD</AppTextButton>
+                        <AppTextButton size="lg">LG</AppTextButton>
                     </div>
 
                     <div class="page-demo-row">
-                        <AppButton variant="underline" size="sm">SM</AppButton>
-                        <AppButton variant="underline" size="md">MD</AppButton>
-                        <AppButton variant="underline" size="lg">LG</AppButton>
+                        <AppTextButton variant="underline" size="sm">SM</AppTextButton>
+                        <AppTextButton variant="underline" size="md">MD</AppTextButton>
+                        <AppTextButton variant="underline" size="lg">LG</AppTextButton>
                     </div>
                 </section>
 
@@ -146,7 +146,7 @@
                     <h2 class="page-demo-card__title">Icon</h2>
 
                     <p class="page-demo-hint">
-                        AppButton은 텍스트 버튼에 보조 아이콘을 붙일 때 사용합니다.
+                        AppTextButton은 텍스트 버튼에 보조 아이콘을 붙일 때 사용합니다.
                     </p>
 
                     <div class="page-demo-row">
@@ -186,15 +186,15 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xs"
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xs"
                             icon-size="xs" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="md"
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="md"
                             icon-size="md" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xl"
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xl"
                             icon-size="lg" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :button-size="44"
+                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :button-size="44"
                             :icon-size="18" variant="soft" tone="primary" />
-                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36"
+                        <AppIconButton icon="mdi:trash-can-outline" ariaLabel="삭제" :button-size="36"
                             :icon-size="18" variant="outline" tone="danger" />
                     </div>
                 </section>
@@ -207,7 +207,7 @@
                     <h2 class="page-demo-card__title">Link</h2>
 
                     <p class="page-demo-hint">
-                        AppButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.
+                        AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.
                     </p>
 
                     <ul class="page-demo-hint-list">
@@ -218,13 +218,13 @@
 
                     <div class="page-demo-row">
 
-                        <AppButton variant="text" to="/demos/demo-input">
+                        <AppTextButton to="/demos/demo-input">
                             내부 라우팅
-                        </AppButton>
+                        </AppTextButton>
 
-                        <AppButton variant="text" href="https://example.com" new-tab>
+                        <AppTextButton href="https://example.com" new-tab>
                             외부 링크
-                        </AppButton>
+                        </AppTextButton>
 
                     </div>
                 </section>
