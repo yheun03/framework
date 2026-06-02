@@ -10,32 +10,32 @@
         </div>
 
         <div class="app-pagination__controls">
-            <AppButton unstyled type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="첫 페이지"
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="첫 페이지"
                 @click="setPage(1)">
                 <Icon icon="mdi:chevron-double-left" />
-            </AppButton>
+            </component>
 
-            <AppButton unstyled type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="이전 페이지"
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="이전 페이지"
                 @click="setPage(page - 1)">
                 <Icon icon="mdi:chevron-left" />
-            </AppButton>
+            </component>
 
-            <AppButton v-for="pageNumber in visiblePages" :key="pageNumber" unstyled type="button"
+            <component :is="'button'" v-for="pageNumber in visiblePages" :key="pageNumber" type="button"
                 class="app-pagination__button app-pagination__page" :class="{ 'is-active': pageNumber === page }"
                 :disabled="disabled" :aria-current="pageNumber === page ? 'page' : undefined"
                 @click="setPage(pageNumber)">
                 {{ pageNumber }}
-            </AppButton>
+            </component>
 
-            <AppButton unstyled type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="다음 페이지"
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="다음 페이지"
                 @click="setPage(page + 1)">
                 <Icon icon="mdi:chevron-right" />
-            </AppButton>
+            </component>
 
-            <AppButton unstyled type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="마지막 페이지"
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="마지막 페이지"
                 @click="setPage(totalPages)">
                 <Icon icon="mdi:chevron-double-right" />
-            </AppButton>
+            </component>
         </div>
 
         <div v-if="showPageSize" class="app-pagination__size">

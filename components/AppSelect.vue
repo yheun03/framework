@@ -17,7 +17,7 @@
         </label>
 
         <div class="form-field__control app-select__control">
-            <AppButton :id="selectId" class="app-select__trigger" unstyled type="button" :name="name" :disabled="disabled"
+            <component :is="'button'" :id="selectId" class="app-select__trigger" type="button" :name="name" :disabled="disabled"
                 :aria-invalid="state === 'error'" :aria-describedby="describedBy" :aria-expanded="isOpen"
                 :aria-readonly="readonly || undefined" aria-haspopup="listbox" @click="toggle">
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
@@ -29,7 +29,7 @@
                         <Icon icon="mdi:chevron-down" />
                     </slot>
                 </span>
-            </AppButton>
+            </component>
 
             <ul v-if="isOpen" class="app-select__menu" role="listbox">
                 <li v-if="placeholder && !required" class="app-select__option"
