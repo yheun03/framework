@@ -10,20 +10,19 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <!-- LINEAR DISPLAY -->
                 <section class="page-demo-card">
                     <h2 class="page-demo-card__title">
-                        Linear Display
+                        Progress Bar
                     </h2>
 
                     <p class="page-demo-card__desc">
-                        선형 프로그레스의 기본 표시 예시입니다.
+                        표시 전용 진행률은 AppProgressBar를 사용합니다.
                     </p>
 
                     <div class="page-demo-stack">
-                        <AppProgress :value="linearDisplayValue" variant="linear" />
+                        <AppProgressBar :value="linearDisplayValue" label="단일 값" show-value />
 
-                        <AppProgress :value="linearRangeDisplay.end" :range="linearRangeDisplay" variant="linear" />
+                        <AppProgressBar :range="linearRangeDisplay" label="범위 값" show-value />
 
                         <div class="page-demo-hint">
                             {{ linearRangeDisplay.start }}% ~ {{ linearRangeDisplay.end }}%
@@ -31,22 +30,20 @@
                     </div>
                 </section>
 
-                <!-- LINEAR DRAG -->
                 <section class="page-demo-card">
                     <h2 class="page-demo-card__title">
-                        Linear Drag Control
+                        Progress Slider
                     </h2>
 
                     <p class="page-demo-card__desc">
-                        드래그로 단일 값과 범위를 조정할 수 있습니다.
+                        드래그 조작이 필요한 진행률은 AppProgressSlider로 분리했습니다.
                     </p>
 
                     <div class="page-demo-stack">
-                        <AppProgress v-model:value="linearControlValue" variant="linear" mode="control-single"
-                            label="단일 값" :show-label="true" />
+                        <AppProgressSlider v-model:value="linearControlValue" label="단일 값" show-value />
 
-                        <AppProgress :value="linearControlRange.end" :range="linearControlRange" variant="linear"
-                            mode="control-range" @update:range="onUpdateLinearRange" />
+                        <AppProgressSlider :range="linearControlRange" mode="range"
+                            @update:range="handleLinearRangeUpdate" />
 
                         <div class="page-demo-hint">
                             {{ linearControlRange.start }}% ~ {{ linearControlRange.end }}%
@@ -86,7 +83,7 @@
                             label="속도" />
 
                         <AppProgressGauge :range="gaugeControlRange" type="semi-doughnut-range" mode="control-range"
-                            label="권장 범위" @update:range="onUpdateGaugeRange" />
+                            label="권장 범위" @update:range="handleGaugeRangeUpdate" />
                     </div>
                 </section>
 
@@ -101,8 +98,7 @@
                     </p>
 
                     <div class="page-demo-grid">
-                        <AppProgress :value="disabledLinearValue" variant="linear" mode="control-single"
-                            label="Disabled Linear" :show-label="true" disabled />
+                        <AppProgressSlider :value="disabledLinearValue" label="Disabled Linear" show-value disabled />
 
                         <AppProgressGauge :value="disabledGaugeValue" type="gauge" mode="control-single"
                             label="Disabled Gauge" disabled />
@@ -162,12 +158,12 @@ const gaugeControlRange = reactive({
 const disabledLinearValue = 40
 const disabledGaugeValue = 55
 
-function onUpdateLinearRange(value: { start: number; end: number }) {
+function handleLinearRangeUpdate(value: { start: number; end: number }) {
     linearControlRange.start = value.start
     linearControlRange.end = value.end
 }
 
-function onUpdateGaugeRange(value: { start: number; end: number }) {
+function handleGaugeRangeUpdate(value: { start: number; end: number }) {
     gaugeControlRange.start = value.start
     gaugeControlRange.end = value.end
 }

@@ -2,7 +2,7 @@
     <div :class="rootClasses">
         <div class="app-progress-gauge__svg-wrap">
             <svg ref="svgEl" class="app-progress-gauge__svg" viewBox="0 0 120 70" role="img" :aria-label="ariaLabel"
-                @pointerdown="onTrackPointerDown">
+                @pointerdown="handleTrackPointerDown">
                 <!-- track -->
                 <path class="app-progress-gauge__track" :d="trackPath" :stroke-width="strokeWidth" />
 
@@ -15,11 +15,11 @@
                 <!-- range handles -->
                 <circle v-if="showRangeHandles" class="app-progress-gauge__handle app-progress-gauge__handle--start"
                     :cx="rangeStartPoint.x" :cy="rangeStartPoint.y" r="4"
-                    @pointerdown.stop="onHandlePointerDown('start', $event)" />
+                    @pointerdown.stop="handleRangeHandlePointerDown('start', $event)" />
 
                 <circle v-if="showRangeHandles" class="app-progress-gauge__handle app-progress-gauge__handle--end"
                     :cx="rangeEndPoint.x" :cy="rangeEndPoint.y" r="4"
-                    @pointerdown.stop="onHandlePointerDown('end', $event)" />
+                    @pointerdown.stop="handleRangeHandlePointerDown('end', $event)" />
 
                 <!-- needle -->
                 <line v-if="showValueNeedle" class="app-progress-gauge__needle" :x1="center.x" :y1="center.y"
@@ -404,7 +404,7 @@ function updateByPointer(event: PointerEvent) {
     })
 }
 
-function onPointerMove(event: PointerEvent) {
+function handlePointerMove(event: PointerEvent) {
     updateByPointer(event)
 }
 
@@ -412,7 +412,7 @@ function stopDragging() {
     activeHandle = null
     isDragging = false
 
-    window.removeEventListener('pointermove', onPointerMove)
+    window.removeEventListener('pointermove', handlePointerMove)
     window.removeEventListener('pointerup', stopDragging)
     window.removeEventListener('pointercancel', stopDragging)
 }
@@ -425,7 +425,7 @@ function startDragging(handle: Exclude<ActiveHandle, null>, event: PointerEvent)
     activeHandle = handle
     isDragging = true
 
-    window.addEventListener('pointermove', onPointerMove)
+    window.addEventListener('pointermove', handlePointerMove)
     window.addEventListener('pointerup', stopDragging)
     window.addEventListener('pointercancel', stopDragging)
 
@@ -442,7 +442,7 @@ function findNearestRangeHandle(nextValue: number): 'start' | 'end' {
 /* -------------------------------------------------------------------------- */
 /* handlers */
 /* -------------------------------------------------------------------------- */
-function onTrackPointerDown(event: PointerEvent) {
+function handleTrackPointerDown(event: PointerEvent) {
     if (props.disabled || props.mode === 'display') {
         return
     }
@@ -461,7 +461,7 @@ function onTrackPointerDown(event: PointerEvent) {
     }
 }
 
-function onHandlePointerDown(handle: 'start' | 'end', event: PointerEvent) {
+function handleRangeHandlePointerDown(handle: 'start' | 'end', event: PointerEvent) {
     if (!isControlRange.value || props.disabled) {
         return
     }

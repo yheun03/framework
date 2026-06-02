@@ -1,6 +1,6 @@
 <template>
     <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
-        :aria-label="ariaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="onClick">
+        :aria-label="ariaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="handleClick">
         <slot>
             <Icon v-if="icon" :icon="icon" />
         </slot>
@@ -169,7 +169,7 @@ const classes = computed(() => [
     },
 ])
 
-function onClick(e: MouseEvent) {
+function handleClick(e: MouseEvent) {
     if (props.disabled) {
         e.preventDefault()
         e.stopPropagation()
