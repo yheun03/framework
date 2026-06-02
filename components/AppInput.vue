@@ -20,16 +20,13 @@
                 @input="onInput" />
 
             <!-- clear -->
-            <AppButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right" unstyled type="button"
-                @click="clear">
-                <Icon icon="mdi:close" />
-            </AppButton>
+            <AppIconButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right"
+                icon="mdi:close" aria-label="입력값 지우기" button-size="md" icon-size="md" @click="clear" />
 
             <!-- password toggle -->
-            <AppButton v-if="passwordToggle" class="app-input__icon app-input__icon--right" unstyled type="button"
-                @click="togglePassword">
-                <Icon :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'" />
-            </AppButton>
+            <AppIconButton v-if="passwordToggle" class="app-input__icon app-input__icon--right"
+                :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'" aria-label="비밀번호 표시 전환" button-size="md"
+                icon-size="md" @click="togglePassword" />
 
             <!-- slot right -->
             <span v-if="hasIconRight" class="app-input__icon app-input__icon--right">

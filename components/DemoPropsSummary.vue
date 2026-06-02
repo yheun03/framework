@@ -39,15 +39,17 @@ const route = useRoute()
 
 const summaries: Record<string, DemoSummary> = {
     'demo-button': {
-        description: '버튼의 형태, 크기, 이동 방식, 상태를 조합합니다.',
+        description: '라벨이 있는 액션 버튼과 아이콘 전용 액션 버튼을 역할별로 구분합니다.',
         props: [
-            { name: 'variant', description: 'fill, outline, text, underline 스타일' },
-            { name: 'size', description: 'xs부터 xl 또는 custom 크기' },
-            { name: 'tone', description: '색상 의미와 강조도' },
+            { name: 'AppButton.variant', description: '라벨 버튼의 강조 방식: fill, outline, text, underline' },
+            { name: 'AppButton.size', description: '라벨 버튼의 표준 크기: xs, sm, md, lg, xl' },
+            { name: 'AppButton.iconLeft / iconRight', description: '텍스트 옆에 붙는 보조 아이콘 슬롯' },
+            { name: 'AppIconButton.buttonSize', description: '아이콘 전용 버튼의 클릭 영역 크기' },
+            { name: 'AppIconButton.iconSize', description: '아이콘 자체의 시각 크기' },
             { name: 'to / href', description: 'NuxtLink 또는 a 태그 전환' },
             { name: 'disabled / loading', description: '클릭 불가와 로딩 상태' },
         ],
-        values: ['fill', 'outline', 'text', 'underline', 'primary', 'danger'],
+        values: ['AppButton', 'AppIconButton', 'fill', 'outline', 'plain', 'soft'],
     },
     'demo-input': {
         description: '텍스트 입력 필드의 라벨, 상태, 아이콘, 제약을 다룹니다.',

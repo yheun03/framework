@@ -31,6 +31,16 @@ $btn-text-sizes: (
     sm: (font:btn4, weight:rg)
 );
 
+$icon-button-tones: (
+    "primary": $primary-500,
+    "secondary": $gray-700,
+    "gray": $gray-700,
+    "danger": $status-error,
+    "warning": $status-warning,
+    "success": $status-success,
+    "info": $status-info
+);
+
 /* =========================================================
    Variant
 ========================================================= */
@@ -320,25 +330,97 @@ $btn-text-sizes: (
         min-width: 0;
     }
 
-    &--icon-only {
+}
 
-        padding: 0;
-        gap: 0;
+/* =========================================================
+   Icon Button
+========================================================= */
 
-        @each $size, $data in $btn-sizes {
+.app-icon-button {
+    --icon-button-size: 32px;
+    --icon-size: 16px;
+    --icon-button-color: #{$gray-700};
+    --icon-button-bg: transparent;
+    --icon-button-border: transparent;
+    --icon-button-bg-hover: #{rgba($gray-900, .06)};
+    --icon-button-bg-active: #{rgba($gray-900, .1)};
+    --icon-button-focus: #{$primary-300};
 
-            &.app-button--size-#{$size} {
-                width: map.get($data, height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: var(--icon-button-size);
+    height: var(--icon-button-size);
+    padding: 0;
+    border: 1px solid var(--icon-button-border);
+    background: var(--icon-button-bg);
+    color: var(--icon-button-color);
+    cursor: pointer;
+    appearance: none;
+    text-decoration: none;
+    transition:
+        background-color .15s,
+        border-color .15s,
+        color .15s,
+        opacity .15s;
+
+    svg {
+        display: block;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        color: currentColor;
+    }
+
+    &:hover {
+        background: var(--icon-button-bg-hover);
+    }
+
+    &:active {
+        background: var(--icon-button-bg-active);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--icon-button-focus);
+        outline-offset: 2px;
+    }
+
+    &--shape-square {
+        border-radius: 0;
+    }
+
+    &--shape-round {
+        border-radius: 6px;
+    }
+
+    &--shape-pill {
+        border-radius: 999px;
+    }
+
+    &--disabled {
+        opacity: .45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    @each $tone, $color in $icon-button-tones {
+        &--tone-#{$tone} {
+            --icon-button-color: #{$color};
+            --icon-button-focus: #{color.adjust($color, $lightness: 18%)};
+
+            &.app-icon-button--variant-soft {
+                --icon-button-bg: #{rgba($color, .08)};
+                --icon-button-bg-hover: #{rgba($color, .12)};
+                --icon-button-bg-active: #{rgba($color, .18)};
             }
 
+            &.app-icon-button--variant-outline {
+                --icon-button-border: #{rgba($color, .6)};
+                --icon-button-bg-hover: #{rgba($color, .08)};
+                --icon-button-bg-active: #{rgba($color, .14)};
+            }
         }
-
     }
-
-    &--custom {
-        padding: 0
-    }
-
 }
 
 /* =========================================================
