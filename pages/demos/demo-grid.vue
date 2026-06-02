@@ -46,6 +46,8 @@
 
             <aside class="page-demo-aside" aria-label="검색 상태 패널">
                 <div class="page-demo-aside__sticky page-demo-stack">
+                    <DemoPropsSummary />
+
                     <section class="page-demo-card">
                         <h2 class="page-demo-card__title">
                             검색 폼 값 (v-model)
