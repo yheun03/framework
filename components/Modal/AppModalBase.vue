@@ -11,12 +11,8 @@
                     </slot>
                 </div>
 
-                <AppButton v-if="closable" class="app-modal__close" variant="text" size="custom"
-                    :custom-size="{ width: 34, height: 34 }" aria-label="닫기" @click="emitClose('close')">
-                    <template #iconLeft>
-                        <Icon icon="mdi:close" />
-                    </template>
-                </AppButton>
+                <AppIconButton v-if="closable" class="app-modal__close" icon="mdi:close" aria-label="닫기"
+                    :button-size="34" :icon-size="18" @click="emitClose('close')" />
             </header>
 
             <section class="app-modal__body">

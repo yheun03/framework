@@ -1,14 +1,9 @@
 <template>
     <li class="layout-nav__item" role="none" :class="itemClasses" :style="itemStyle">
         <div class="layout-nav__row">
-            <AppButton v-if="hasChildren" class="layout-nav__toggle" variant="text" size="custom"
-                :custom-size="{ width: 24, height: 24 }" ariaLabel="메뉴 펼치기/접기" :aria-expanded="open"
-                :aria-controls="submenuId" @click.stop="toggleOpen">
-                <template #iconLeft>
-                    <Icon class="layout-nav__toggle-icon" :class="{ 'is-open': open }" icon="mdi:chevron-right"
-                        aria-hidden="true" />
-                </template>
-            </AppButton>
+            <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
+                icon="mdi:chevron-right" aria-label="메뉴 펼치기/접기" :button-size="24" :icon-size="16" :aria-expanded="open"
+                :aria-controls="submenuId" @click.stop="toggleOpen" />
 
             <AppButton v-bind="linkAttrs" unstyled class="layout-nav__link" role="menuitem"
                 :aria-haspopup="hasChildren ? 'true' : undefined"

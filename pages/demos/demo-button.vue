@@ -146,7 +146,7 @@
                     <h2 class="page-demo-card__title">Icon</h2>
 
                     <p class="page-demo-hint">
-                        iconLeft / iconRight 슬롯을 통해 아이콘을 추가할 수 있습니다.
+                        AppButton은 텍스트 버튼에 보조 아이콘을 붙일 때 사용합니다.
                     </p>
 
                     <div class="page-demo-row">
@@ -165,13 +165,37 @@
                             </template>
                         </AppButton>
 
-                        <AppButton variant="text" size="custom" :custom-size="{ width: 24, height: 24 }" icon-only
-                            aria-label="아이콘 버튼">
-                            <template #iconLeft>
-                                <Icon icon="mdi:star-outline" />
-                            </template>
-                        </AppButton>
+                    </div>
+                </section>
 
+                <!-- -------------------------------------------------- -->
+                <!-- Icon Button -->
+                <!-- -------------------------------------------------- -->
+
+                <section class="page-demo-card">
+                    <h2 class="page-demo-card__title">Icon Button</h2>
+
+                    <p class="page-demo-hint">
+                        아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘 크기를 따로 지정할 수 있습니다.
+                    </p>
+
+                    <ul class="page-demo-hint-list">
+                        <li><b>button-size</b> : 클릭 영역 크기</li>
+                        <li><b>icon-size</b> : 아이콘 시각 크기</li>
+                        <li><b>icon</b> : Iconify 아이콘 이름</li>
+                    </ul>
+
+                    <div class="page-demo-row">
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xs"
+                            icon-size="xs" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="md"
+                            icon-size="md" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xl"
+                            icon-size="lg" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :button-size="44"
+                            :icon-size="18" variant="soft" tone="primary" />
+                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36"
+                            :icon-size="18" variant="outline" tone="danger" />
                     </div>
                 </section>
 
@@ -220,7 +244,6 @@
                         <li><b>disabled</b> : 클릭 불가</li>
                         <li><b>loading</b> : spinner 표시</li>
                         <li><b>block</b> : width 100%</li>
-                        <li><b>custom-size</b> : 사용자 정의 크기</li>
                     </ul>
 
                     <div class="page-demo-row">
@@ -235,13 +258,6 @@
 
                         <AppButton block>
                             Block
-                        </AppButton>
-
-                        <AppButton variant="text" size="custom" :custom-size="{ width: 40, height: 40 }"
-                            aria-label="아이콘 버튼">
-                            <template #iconLeft>
-                                <Icon icon="mdi:star-outline" />
-                            </template>
                         </AppButton>
 
                     </div>

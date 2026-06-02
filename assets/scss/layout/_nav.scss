@@ -22,9 +22,10 @@
     color: $gray-0;
 
     /* ----------------------------------------
-       AppButton override
+       Button override
     ---------------------------------------- */
-    .app-button {
+    .app-button,
+    .app-icon-button {
         border-radius: 6px;
         color: $gray-0;
 
@@ -277,8 +278,12 @@
         width: var(--layout-nav-toggle-size);
         height: var(--layout-nav-toggle-size);
 
-        &.app-button--text {
-            color: $gray-0;
+        svg {
+            transition: transform 0.16s ease-out;
+        }
+
+        &.is-open svg {
+            transform: rotate(90deg);
         }
     }
 
@@ -358,7 +363,8 @@
 ========================================= */
 
 .nav-action {
-    &.app-button {
+    &.app-button,
+    &.app-icon-button {
         color: $gray-0;
     }
 

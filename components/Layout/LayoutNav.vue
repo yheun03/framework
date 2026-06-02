@@ -6,21 +6,13 @@
                     <Icon class="nav-logo__mark" icon="mdi:application-braces-outline" />
                 </div>
 
-                <AppButton class="layout-nav__mobile-close" variant="text" size="custom"
-                    :custom-size="{ width: 36, height: 36 }" icon-only aria-label="메뉴 닫기" @click="emit('close')">
-                    <template #iconLeft>
-                        <Icon icon="mdi:close" />
-                    </template>
-                </AppButton>
+                <AppIconButton class="layout-nav__mobile-close" icon="mdi:close" aria-label="메뉴 닫기"
+                    :button-size="36" :icon-size="18" @click="emit('close')" />
             </div>
 
             <div class="layout-nav__actions" :aria-label="t('nav.demos')">
-                <AppButton v-for="action in headerActions" :key="action.label" class="nav-action" variant="text"
-                    size="custom" :custom-size="{ width: 32, height: 32 }" :ariaLabel="action.label">
-                    <template #iconLeft>
-                        <Icon :icon="action.icon" aria-hidden="true" />
-                    </template>
-                </AppButton>
+                <AppIconButton v-for="action in headerActions" :key="action.label" class="nav-action"
+                    :icon="action.icon" :aria-label="action.label" button-size="md" icon-size="lg" />
             </div>
         </div>
 
@@ -33,12 +25,8 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppButton class="nav-action" variant="text" size="custom" :custom-size="{ width: 32, height: 32 }"
-                :ariaLabel="t('settings.title')" to="/settings">
-                <template #iconLeft>
-                    <Icon icon="mdi:cog-outline" aria-hidden="true" />
-                </template>
-            </AppButton>
+            <AppIconButton class="nav-action" icon="mdi:cog-outline" :aria-label="t('settings.title')"
+                button-size="md" icon-size="lg" to="/settings" />
         </div>
     </nav>
 </template>

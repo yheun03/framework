@@ -8,31 +8,18 @@
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppButton class="route-tabs__close" unstyled type="button" aria-label="탭 닫기" @click="(e) => onClose(e, t.key)">
-                        <Icon class="route-tabs__close-icon" icon="mdi:close" />
-                    </AppButton>
+                    <AppIconButton class="route-tabs__close" icon="mdi:close" aria-label="탭 닫기"
+                        :button-size="20" :icon-size="12" @click="(e) => onClose(e, t.key)" />
                 </li>
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppButton variant="text" size="custom" :custom-size="{ width: 28, height: 28 }" icon-only
-                aria-label="왼쪽 탭으로 이동" @click="moveToLeftTab">
-                <template #iconLeft>
-                    <Icon width="20" icon="mdi:chevron-left" />
-                </template>
-            </AppButton>
-            <AppButton variant="text" size="custom" :custom-size="{ width: 28, height: 28 }" icon-only
-                aria-label="오른쪽 탭으로 이동" @click="moveToRightTab">
-                <template #iconLeft>
-                    <Icon width="20" icon="mdi:chevron-right" />
-                </template>
-            </AppButton>
-            <AppButton variant="text" size="custom" :custom-size="{ width: 28, height: 28 }" icon-only
-                aria-label="다른 탭 닫기" @click="closeOtherTabs">
-                <template #iconLeft>
-                    <Icon width="20" icon="mdi:close" />
-                </template>
-            </AppButton>
+            <AppIconButton icon="mdi:chevron-left" aria-label="왼쪽 탭으로 이동" :button-size="28"
+                :icon-size="20" @click="moveToLeftTab" />
+            <AppIconButton icon="mdi:chevron-right" aria-label="오른쪽 탭으로 이동" :button-size="28"
+                :icon-size="20" @click="moveToRightTab" />
+            <AppIconButton icon="mdi:close" aria-label="다른 탭 닫기" :button-size="28" :icon-size="20"
+                @click="closeOtherTabs" />
         </div>
     </div>
 </template>

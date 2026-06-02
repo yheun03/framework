@@ -1,6 +1,6 @@
 <template>
-    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="customSizeStyle"
-        :aria-label="ariaLabelComputed" :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
+    <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes"
+        :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
         :tabindex="tabIndex" @click="onClick">
         <slot v-if="unstyled" />
 
@@ -45,7 +45,7 @@ type ButtonTone =
     | 'success'
     | 'info'
 
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'custom'
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 type ButtonType = 'button' | 'submit' | 'reset'
 
 const props = withDefaults(
@@ -60,17 +60,10 @@ const props = withDefaults(
         tone?: ButtonTone
         size?: ButtonSize
 
-        customSize?: {
-            width: number
-            height?: number
-        }
-
         disabled?: boolean
         loading?: boolean
         block?: boolean
-        iconOnly?: boolean
         unstyled?: boolean
-        ariaLabel?: string
     }>(),
     {
         type: 'button',
@@ -82,7 +75,6 @@ const props = withDefaults(
         disabled: false,
         loading: false,
         block: false,
-        iconOnly: false,
         unstyled: false
     }
 )
@@ -138,16 +130,6 @@ const componentAttrs = computed(() => {
     }
 })
 
-/* -------------------------------------------------------
-   accessibility
-------------------------------------------------------- */
-
-const ariaLabelComputed = computed(() => {
-    if (props.ariaLabel) return props.ariaLabel
-    if (!props.iconOnly) return undefined
-    return props.ariaLabel
-})
-
 const ariaDisabled = computed(() => {
     if (!isLink.value) return undefined
     return isDisabled.value ? 'true' : undefined
@@ -157,24 +139,6 @@ const tabIndex = computed(() => {
     if (isLink.value && isDisabled.value) return -1
     return undefined
 })
-
-/* -------------------------------------------------------
-   custom size
-------------------------------------------------------- */
-
-const customSizeStyle = computed(() => {
-    if (props.unstyled) return
-    if (!props.customSize) return
-
-    return {
-        width: `${props.customSize.width}px`,
-        height: `${props.customSize.height ?? props.customSize.width}px`
-    }
-})
-
-/* -------------------------------------------------------
-   classes
-------------------------------------------------------- */
 
 const classes = computed(() => {
     if (props.unstyled) {
@@ -193,11 +157,9 @@ const classes = computed(() => {
         `app-button--size-${props.size}`,
         `app-button--tone-${props.tone}`,
         {
-            'app-button--icon-only': props.iconOnly,
             'app-button--disabled': isDisabled.value,
             'app-button--loading': props.loading,
             'app-button--block': props.block,
-            'app-button--custom': !!props.customSize
         }
     ]
 })
