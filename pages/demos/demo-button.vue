@@ -29,10 +29,10 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppButton variant="fill" @click="log('fill')">fill</AppButton>
-                        <AppButton variant="outline" @click="log('outline')">outline</AppButton>
-                        <AppTextButton @click="log('text')">text</AppTextButton>
-                        <AppTextButton variant="underline" @click="log('underline')">underline</AppTextButton>
+                        <AppButton variant="fill" @click="handleLogClick('fill')">fill</AppButton>
+                        <AppButton variant="outline" @click="handleLogClick('outline')">outline</AppButton>
+                        <AppTextButton @click="handleLogClick('text')">text</AppTextButton>
+                        <AppTextButton variant="underline" @click="handleLogClick('underline')">underline</AppTextButton>
                     </div>
                 </section>
 
@@ -187,14 +187,14 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xs" icon-size="xs" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="md" icon-size="md" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" button-size="xl" icon-size="lg" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :button-size="44" :icon-size="18"
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xs" icon-size="xs" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="md" icon-size="md" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xl" icon-size="lg" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :button-size="44" :icon-size="18"
                             variant="soft" tone="primary" />
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="즐겨찾기" :width="80" :height="30"
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :width="80" :height="30"
                             :icon-size="18" variant="soft" tone="secondary" />
-                        <AppIconButton icon="mdi:trash-can-outline" ariaLabel="삭제" :button-size="36" :icon-size="18"
+                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36" :icon-size="18"
                             variant="outline" tone="danger" />
                     </div>
                 </section>
@@ -287,7 +287,7 @@
                         <AppTextButton variant="underline" :width="120" :height="28">
                             Underline 120x28
                         </AppTextButton>
-                        <AppIconButton icon="mdi:star-outline" ariaLabel="커스텀 아이콘 버튼" :width="72" :height="30"
+                        <AppIconButton icon="mdi:star-outline" aria-label="커스텀 아이콘 버튼" :width="72" :height="30"
                             :icon-size="16" variant="outline" tone="primary" />
                     </div>
                 </section>
@@ -305,7 +305,7 @@
                         <h2 class="page-demo-card__title">Actions</h2>
 
                         <div class="page-demo-actions">
-                            <AppButton variant="fill" @click="clear">
+                            <AppButton variant="fill" @click="handleClearClick">
                                 로그 비우기
                             </AppButton>
                         </div>
@@ -334,11 +334,11 @@ const { title, description } = useDemoI18n('button')
 type LogItem = { t: number; message: string }
 const logs = ref<LogItem[]>([])
 
-function log(message: string) {
+function handleLogClick(message: string) {
     logs.value = [{ t: Date.now(), message }, ...logs.value].slice(0, 30)
 }
 
-function clear() {
+function handleClearClick() {
     logs.value = []
 }
 

@@ -1,27 +1,27 @@
 <template>
     <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
         :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
-        :tabindex="tabIndex" @click="onClick">
+        :tabindex="tabIndex" @click="handleClick">
         <slot v-if="unstyled" />
 
         <template v-else>
-        <!-- loading -->
-        <span v-if="loading" class="app-button__spinner" aria-hidden="true" />
+            <!-- loading -->
+            <span v-if="loading" class="app-button__spinner" aria-hidden="true" />
 
-        <!-- left icon -->
-        <i v-else-if="$slots.iconLeft" class="app-button__icon app-button__icon--left" aria-hidden="true">
-            <slot name="iconLeft" />
-        </i>
+            <!-- left icon -->
+            <i v-else-if="$slots.iconLeft" class="app-button__icon app-button__icon--left" aria-hidden="true">
+                <slot name="iconLeft" />
+            </i>
 
-        <!-- label -->
-        <span v-if="$slots.default" class="app-button__label">
-            <slot />
-        </span>
+            <!-- label -->
+            <span v-if="$slots.default" class="app-button__label">
+                <slot />
+            </span>
 
-        <!-- right icon -->
-        <i v-if="$slots.iconRight && !loading" class="app-button__icon app-button__icon--right" aria-hidden="true">
-            <slot name="iconRight" />
-        </i>
+            <!-- right icon -->
+            <i v-if="$slots.iconRight && !loading" class="app-button__icon app-button__icon--right" aria-hidden="true">
+                <slot name="iconRight" />
+            </i>
         </template>
     </component>
 </template>
@@ -197,7 +197,7 @@ const classes = computed(() => {
    click
 ------------------------------------------------------- */
 
-function onClick(e: MouseEvent) {
+function handleClick(e: MouseEvent) {
     if (isDisabled.value) {
         e.preventDefault()
         e.stopPropagation()

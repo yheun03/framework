@@ -41,15 +41,16 @@ const summaries: Record<string, DemoSummary> = {
     'demo-button': {
         description: '라벨이 있는 액션 버튼과 아이콘 전용 액션 버튼을 역할별로 구분합니다.',
         props: [
-            { name: 'AppButton.variant', description: '라벨 버튼의 강조 방식: fill, outline, text, underline' },
+            { name: 'AppButton.variant', description: '라벨 버튼의 강조 방식: fill, outline' },
             { name: 'AppButton.size', description: '라벨 버튼의 표준 크기: xs, sm, md, lg, xl' },
             { name: 'AppButton.iconLeft / iconRight', description: '텍스트 옆에 붙는 보조 아이콘 슬롯' },
+            { name: 'AppTextButton.variant', description: '텍스트 액션 표현: text, underline' },
             { name: 'AppIconButton.buttonSize', description: '아이콘 전용 버튼의 클릭 영역 크기' },
             { name: 'AppIconButton.iconSize', description: '아이콘 자체의 시각 크기' },
             { name: 'to / href', description: 'NuxtLink 또는 a 태그 전환' },
             { name: 'disabled / loading', description: '클릭 불가와 로딩 상태' },
         ],
-        values: ['AppButton', 'AppIconButton', 'fill', 'outline', 'plain', 'soft'],
+        values: ['AppButton', 'AppTextButton', 'AppIconButton', 'fill', 'outline', 'text', 'underline', 'plain', 'soft'],
     },
     'demo-input': {
         description: '텍스트 입력 필드의 라벨, 상태, 아이콘, 제약을 다룹니다.',
@@ -84,14 +85,15 @@ const summaries: Record<string, DemoSummary> = {
         values: ['line', 'bar', 'doughnut', 'semi-doughnut', 'pie'],
     },
     'demo-progress': {
-        description: '진행률 표시와 게이지 표시 방식을 비교합니다.',
+        description: '표시용 바, 조작용 슬라이더, 게이지를 역할별로 비교합니다.',
         props: [
-            { name: 'value', description: '현재 진행률' },
-            { name: 'max', description: '진행률 기준 최대값' },
-            { name: 'label', description: '표시 라벨' },
-            { name: 'showValue', description: '값 노출 여부' },
-            { name: 'size / tone', description: '크기와 색상 의미' },
+            { name: 'AppProgressBar.value / range', description: '표시 전용 단일 값 또는 범위 값' },
+            { name: 'AppProgressSlider.value / range', description: '드래그로 변경하는 단일 값 또는 범위 값' },
+            { name: 'AppProgressGauge.type', description: 'gauge, semi-doughnut-range 표시 타입' },
+            { name: 'mode', description: 'display, control-single, control-range 조작 방식' },
+            { name: 'label / showValue', description: '라벨과 값 노출 여부' },
         ],
+        values: ['AppProgressBar', 'AppProgressSlider', 'AppProgressGauge', 'single', 'range'],
     },
     'demo-datepicker': {
         description: '날짜 선택 모드와 입력 상태를 조합합니다.',

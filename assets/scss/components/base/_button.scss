@@ -185,46 +185,18 @@ $icon-button-tones: (
        Button Size (fill / outline only)
     ------------------------------------------------ */
 
-    &:not(.app-button--variant-text):not(.app-button--variant-underline) {
+    @each $size, $data in $btn-sizes {
 
-        @each $size, $data in $btn-sizes {
+        &.app-button--size-#{$size} {
 
-            &.app-button--size-#{$size} {
+            min-width: map.get($data, min-width);
+            height: map.get($data, height);
 
-                min-width: map.get($data, min-width);
-                height: map.get($data, height);
+            padding-inline: map.get($data, padding);
+            gap: map.get($data, gap);
 
-                padding-inline: map.get($data, padding);
-                gap: map.get($data, gap);
-
-                @include font(map.get($data, font),
-                    map.get($data, weight));
-
-            }
-
-        }
-
-    }
-
-    /* ------------------------------------------------
-       Inline Button
-    ------------------------------------------------ */
-
-    &--variant-text,
-    &--variant-underline {
-
-        padding: 0;
-        min-width: auto;
-        height: auto;
-
-        @each $size, $data in $btn-text-sizes {
-
-            &.app-button--size-#{$size} {
-
-                @include font(map.get($data, font),
-                    map.get($data, weight));
-
-            }
+            @include font(map.get($data, font),
+                map.get($data, weight));
 
         }
 
@@ -282,14 +254,6 @@ $icon-button-tones: (
                 @include btn-variant(outline, $color)
             }
 
-            &.app-button--variant-text {
-                @include btn-variant(text, $color)
-            }
-
-            &.app-button--variant-underline {
-                @include btn-variant(underline, $color)
-            }
-
         }
 
     }
@@ -330,6 +294,104 @@ $icon-button-tones: (
         min-width: 0;
     }
 
+}
+
+/* =========================================================
+   Text Button
+========================================================= */
+
+.app-text-button {
+    --btn-bg: transparent;
+    --btn-fg:#{$gray-700};
+    --btn-bd: transparent;
+    --btn-bg-hover: transparent;
+    --btn-bg-active: transparent;
+    --btn-fg-hover: var(--btn-fg);
+    --btn-fg-active: var(--btn-fg);
+    --btn-focus:#{$primary-300};
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: auto;
+    height: auto;
+    padding: 0;
+    border: 1px solid transparent;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        color .15s,
+        opacity .15s;
+
+    &:hover {
+        color: var(--btn-fg-hover);
+    }
+
+    &:active {
+        color: var(--btn-fg-active);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--btn-focus);
+        outline-offset: 2px;
+    }
+
+    &--variant-text {
+        @include btn-variant(text, $gray-700);
+    }
+
+    &--variant-underline {
+        @include btn-variant(underline, $gray-700);
+    }
+
+    @each $tone, $color in $btn-tones {
+        &--tone-#{$tone} {
+            &.app-text-button--variant-text {
+                @include btn-variant(text, $color);
+            }
+
+            &.app-text-button--variant-underline {
+                @include btn-variant(underline, $color);
+            }
+        }
+    }
+
+    @each $size, $data in $btn-text-sizes {
+        &--size-#{$size} {
+            @include font(map.get($data, font),
+                map.get($data, weight));
+        }
+    }
+
+    &--disabled {
+        opacity: .45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    &--loading {
+        cursor: progress;
+    }
+
+    &__icon {
+        @extend .app-icon;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+    }
 }
 
 /* =========================================================
@@ -427,7 +489,8 @@ $icon-button-tones: (
    Spinner
 ========================================================= */
 
-.app-button__spinner {
+.app-button__spinner,
+.app-text-button__spinner {
     width: 16px;
     height: 16px;
     border: 2px solid currentColor;
