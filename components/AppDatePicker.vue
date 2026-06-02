@@ -31,6 +31,7 @@ import flatpickr from 'flatpickr'
 import type { Instance as FlatpickrInstance } from 'flatpickr/dist/types/instance'
 import type { Options as FlatpickrOptions } from 'flatpickr/dist/types/options'
 import 'flatpickr/dist/flatpickr.css'
+import { Korean } from 'flatpickr/dist/l10n/ko.js'
 
 export type DateRangeValue = {
     start: string | null
@@ -157,6 +158,7 @@ function buildOptions(): Partial<FlatpickrOptions> {
         dateFormat: format,
         allowInput: false,
         disableMobile: true,
+        locale: Korean,
         minDate: props.min,
         maxDate: props.max,
         clickOpens: !props.disabled && !props.readonly,
