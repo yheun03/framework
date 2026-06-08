@@ -1,23 +1,18 @@
 <template>
-    <AppSelect v-model="value" :options="options" size="sm" />
+    <div class="app-grid-cell-control">
+        <AppSelect v-model="value" :options="options" size="sm" />
+    </div>
 </template>
 
 <script setup lang="ts">
+import { useCellRendererValue } from './useCellRendererValue'
 
 const props = defineProps({
     params: Object
 })
 
 const params = props.params
-
-const options =
-    params?.colDef?.cellRendererParams?.options ?? []
-
-const value = computed({
-    get: () => params?.value,
-    set: (v) => {
-        params?.node?.setDataValue(params?.column?.getColId(), v)
-    }
-})
+const { rendererParams, value } = useCellRendererValue<string | number | boolean | null>(params)
+const options = computed(() => rendererParams.value.options ?? [])
 
 </script>

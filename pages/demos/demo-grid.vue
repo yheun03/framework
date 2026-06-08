@@ -16,7 +16,7 @@
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid1" class="page-demo-grid" :row-data="rows1" :column-defs="columns1"
-                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" row-selection="multiple"
+                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" :row-selection="multiRowSelection"
                             animate-rows :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
                 </DemoAccordionSection> <!-- GRID 2 -->
@@ -30,7 +30,7 @@
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="columns2"
-                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" row-selection="multiple"
+                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" :row-selection="multiRowSelection"
                             animate-rows :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
                 </DemoAccordionSection> <!-- GRID 3 -->
@@ -46,6 +46,18 @@
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight" animate-rows
                             :style="{ height: '320px', width: '100%' }" />
+                    </ClientOnly>
+                </DemoAccordionSection>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">셀 렌더러 인풋 예제</h2>
+                    </template>
+                    <AppGridToolbar target="grid4">
+                        <AppGridDownload />
+                    </AppGridToolbar>
+                    <ClientOnly>
+                        <AppGrid grid-id="grid4" class="page-demo-grid" :row-data="rows4" :column-defs="columns4"
+                            :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows />
                     </ClientOnly>
                 </DemoAccordionSection>
             </main>
@@ -106,6 +118,8 @@ import type { AppGridSearchField, DateRangeValue } from '~/types/grid-search'
 import AppGridCellSelect from '~/components/AppGrid/Cell/Select.vue'
 import AppGridCellInput from '~/components/AppGrid/Cell/Input.vue'
 import AppGridCellChoice from '~/components/AppGrid/Cell/Choice.vue'
+import AppGridCellTextarea from '~/components/AppGrid/Cell/Textarea.vue'
+import AppGridCellDatePicker from '~/components/AppGrid/Cell/DatePicker.vue'
 import AppGridCellImage from '~/components/AppGrid/Cell/Image.vue'
 import AppGridCellFile from '~/components/AppGrid/Cell/File.vue'
 
@@ -303,6 +317,21 @@ const defaultColDef: ColDef = {
     resizable: true
 }
 
+const inputExampleColDef: ColDef = {
+    minWidth: 140,
+    sortable: true,
+    filter: true,
+    resizable: true
+}
+
+const multiRowSelection = {
+    mode: 'multiRow',
+    checkboxes: true,
+    headerCheckbox: true
+} as const
+
+const listValueFormatter = (params: any) => Array.isArray(params.value) ? params.value.join(', ') : ''
+
 
 /* GRID 1 column */
 
@@ -311,9 +340,7 @@ const columns1: ColDef[] = [
     {
         field: 'id',
         headerName: 'ID',
-        width: 80,
-        checkboxSelection: true,
-        headerCheckboxSelection: true
+        width: 80
     },
 
     {
@@ -324,7 +351,7 @@ const columns1: ColDef[] = [
     {
         field: 'department',
         headerName: '부서',
-        filter: 'agSetColumnFilter'
+        filter: 'agTextColumnFilter'
     },
 
     {
@@ -373,9 +400,7 @@ const columns2: ColDef[] = [
     {
         field: 'orderId',
         headerName: '주문번호',
-        width: 120,
-        checkboxSelection: true,
-        headerCheckboxSelection: true
+        width: 120
     },
 
     {
@@ -445,6 +470,7 @@ const columns3: ColDef[] = [
         headerName: '상세이미지',
         width: 260,
         cellRenderer: AppGridCellImage,
+        valueFormatter: listValueFormatter,
         cellRendererParams: {
             triggerText: '상세 이미지 업로드',
             hint: '최대 4개',
@@ -471,6 +497,7 @@ const columns3: ColDef[] = [
         headerName: '첨부파일',
         width: 260,
         cellRenderer: AppGridCellFile,
+        valueFormatter: listValueFormatter,
         cellRendererParams: {
             triggerText: '첨부파일 업로드',
             hint: '최대 3개',
@@ -482,7 +509,11 @@ const columns3: ColDef[] = [
 
     {
         field: 'product',
-        headerName: '상품명'
+        headerName: '상품명',
+        cellRenderer: AppGridCellInput,
+        cellRendererParams: {
+            placeholder: '상품명 입력'
+        }
     },
 
     {
@@ -499,7 +530,11 @@ const columns3: ColDef[] = [
 
     {
         field: 'price',
-        headerName: '가격'
+        headerName: '가격',
+        cellRenderer: AppGridCellInput,
+        cellRendererParams: {
+            type: 'number'
+        }
     },
 
     {
@@ -510,6 +545,47 @@ const columns3: ColDef[] = [
             type: 'number',
             min: 0,
             max: 100
+        }
+    },
+
+    {
+        field: 'releaseDate',
+        headerName: '출시일',
+        width: 150,
+        cellRenderer: AppGridCellDatePicker,
+        cellRendererParams: {
+            min: '2026-01-01',
+            max: '2026-12-31',
+            placeholder: '출시일 선택'
+        }
+    },
+
+    {
+        field: 'displayOptions',
+        headerName: '노출 옵션',
+        width: 180,
+        cellRenderer: AppGridCellChoice,
+        valueFormatter: listValueFormatter,
+        suppressHeaderMenuButton: true,
+        sortable: false,
+        filter: false,
+        cellRendererParams: {
+            type: 'checkbox',
+            options: [
+                { label: '메인', value: 'main' },
+                { label: '추천', value: 'recommend' }
+            ]
+        }
+    },
+
+    {
+        field: 'memo',
+        headerName: '메모',
+        width: 220,
+        cellRenderer: AppGridCellTextarea,
+        cellRendererParams: {
+            rows: 2,
+            placeholder: '메모 입력'
         }
     },
 
@@ -526,6 +602,102 @@ const columns3: ColDef[] = [
                 { label: '판매중', value: '판매중' },
                 { label: '품절', value: '품절' }
             ]
+        }
+    }
+
+]
+
+
+/* GRID 4 column */
+
+const columns4: ColDef[] = [
+
+    {
+        field: 'text',
+        headerName: 'Text Input',
+        width: 180,
+        cellRenderer: AppGridCellInput,
+        cellRendererParams: {
+            placeholder: '텍스트 입력'
+        }
+    },
+
+    {
+        field: 'number',
+        headerName: 'Number Input',
+        width: 160,
+        cellRenderer: AppGridCellInput,
+        cellRendererParams: {
+            type: 'number'
+        }
+    },
+
+    {
+        field: 'select',
+        headerName: 'Select',
+        width: 180,
+        cellRenderer: AppGridCellSelect,
+        cellRendererParams: {
+            options: [
+                { label: '대기', value: '대기' },
+                { label: '진행', value: '진행' },
+                { label: '완료', value: '완료' }
+            ]
+        }
+    },
+
+    {
+        field: 'date',
+        headerName: 'DatePicker',
+        width: 160,
+        cellRenderer: AppGridCellDatePicker,
+        cellRendererParams: {
+            placeholder: '날짜 선택'
+        }
+    },
+
+    {
+        field: 'radio',
+        headerName: 'Radio',
+        width: 180,
+        cellRenderer: AppGridCellChoice,
+        sortable: false,
+        filter: false,
+        cellRendererParams: {
+            type: 'radio',
+            options: [
+                { label: 'Y', value: 'Y' },
+                { label: 'N', value: 'N' }
+            ]
+        }
+    },
+
+    {
+        field: 'checkbox',
+        headerName: 'Checkbox',
+        width: 220,
+        cellRenderer: AppGridCellChoice,
+        valueFormatter: listValueFormatter,
+        sortable: false,
+        filter: false,
+        cellRendererParams: {
+            type: 'checkbox',
+            options: [
+                { label: 'SMS', value: 'sms' },
+                { label: 'Email', value: 'email' }
+            ]
+        }
+    },
+
+    {
+        field: 'textarea',
+        headerName: 'Textarea',
+        width: 240,
+        autoHeight: true,
+        cellRenderer: AppGridCellTextarea,
+        cellRendererParams: {
+            rows: 2,
+            placeholder: '내용 입력'
         }
     }
 
@@ -579,6 +751,9 @@ const rows3 = [
         category: '전자기기',
         price: 1200000,
         stock: 12,
+        releaseDate: '2026-01-20',
+        displayOptions: ['main'],
+        memo: '프로모션 대상',
         state: '품절'
     },
 
@@ -600,6 +775,9 @@ const rows3 = [
         category: '주변기기',
         price: 120000,
         stock: 34,
+        releaseDate: '2026-02-25',
+        displayOptions: ['recommend'],
+        memo: '키 배열 확인 필요',
         state: '품절'
     },
 
@@ -618,6 +796,9 @@ const rows3 = [
         category: '주변기기',
         price: 35000,
         stock: 50,
+        releaseDate: '2026-03-02',
+        displayOptions: ['main', 'recommend'],
+        memo: '인기 상품',
         state: '판매중'
     },
 
@@ -641,6 +822,9 @@ const rows3 = [
         category: '전자기기',
         price: 420000,
         stock: 7,
+        releaseDate: '2026-03-12',
+        displayOptions: [],
+        memo: '재입고 예정',
         state: '품절'
     },
 
@@ -655,7 +839,47 @@ const rows3 = [
         category: '전자기기',
         price: 780000,
         stock: 9,
+        releaseDate: '2026-03-22',
+        displayOptions: ['recommend'],
+        memo: '',
         state: '판매중'
+    }
+
+]
+
+
+/* GRID 4 data */
+
+const rows4 = [
+
+    {
+        text: '기본 텍스트',
+        number: 10,
+        select: '대기',
+        date: '2026-04-01',
+        radio: 'Y',
+        checkbox: ['sms'],
+        textarea: '셀 안에서 textarea를 확인합니다.'
+    },
+
+    {
+        text: '수정 가능',
+        number: 25,
+        select: '진행',
+        date: '2026-04-15',
+        radio: 'N',
+        checkbox: ['sms', 'email'],
+        textarea: '여러 인풋 렌더러를 같은 방식으로 사용합니다.'
+    },
+
+    {
+        text: '',
+        number: 0,
+        select: '완료',
+        date: null,
+        radio: 'Y',
+        checkbox: [],
+        textarea: ''
     }
 
 ]

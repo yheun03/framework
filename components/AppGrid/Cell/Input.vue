@@ -1,20 +1,18 @@
 <template>
-    <AppInput v-model="value" size="sm" :type="params?.colDef?.cellRendererParams?.type || 'text'" />
+    <div class="app-grid-cell-control">
+        <AppInput v-model="value" size="sm" :type="rendererParams.type || 'text'"
+            :placeholder="rendererParams.placeholder || ''" />
+    </div>
 </template>
 
 <script setup lang="ts">
+import { useCellRendererValue } from './useCellRendererValue'
 
 const props = defineProps({
     params: Object
 })
 
 const params = props.params
-
-const value = computed({
-    get: () => params?.value,
-    set: (v) => {
-        params?.node?.setDataValue(params?.column?.getColId(), v)
-    }
-})
+const { rendererParams, value } = useCellRendererValue<string | number | null>(params)
 
 </script>

@@ -56,6 +56,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
+const APP_SELECT_CLOSE_ALL_EVENT = 'app-select:close-all'
+
 export type AppSelectOption = {
     value: string | number | boolean | null
     label: string
@@ -138,13 +140,19 @@ function onDocumentKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape') close()
 }
 
+function onCloseAll() {
+    close()
+}
+
 onMounted(() => {
     document.addEventListener('mousedown', onDocumentClick)
     document.addEventListener('keydown', onDocumentKeydown)
+    window.addEventListener(APP_SELECT_CLOSE_ALL_EVENT, onCloseAll)
 })
 
 onBeforeUnmount(() => {
     document.removeEventListener('mousedown', onDocumentClick)
     document.removeEventListener('keydown', onDocumentKeydown)
+    window.removeEventListener(APP_SELECT_CLOSE_ALL_EVENT, onCloseAll)
 })
 </script>

@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+import { useCellRendererValue } from './useCellRendererValue'
+
 type FileCellValue =
     | string
     | {
@@ -44,6 +46,7 @@ const props = defineProps({
 })
 
 const params = props.params
+const { value } = useCellRendererValue<FileCellValue>(params)
 
 const fileOptions = computed<FileCellParams>(() => ({
     multiple: Boolean(params?.colDef?.cellRendererParams?.multiple),
@@ -54,14 +57,4 @@ const fileOptions = computed<FileCellParams>(() => ({
     allowDrop: params?.colDef?.cellRendererParams?.allowDrop ?? true,
     maxSizeBytes: params?.colDef?.cellRendererParams?.maxSizeBytes,
 }))
-
-const value = computed({
-    get: (): FileCellValue => params?.value,
-    set: (v: FileCellValue) => {
-        params?.node?.setDataValue(
-            params?.column?.getColId(),
-            v,
-        )
-    },
-})
 </script>
