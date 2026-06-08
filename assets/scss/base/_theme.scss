@@ -13,13 +13,13 @@
     background: $gray-900;
 }
 
-:root[data-theme='dark'] .page-demo-card {
+:root[data-theme='dark'] :where(.page-demo-card, .page-demo-accordion .app-accordion__item) {
     background: $gray-800;
     border-color: $gray-700;
 }
 
 :root[data-theme='dark'] .page-demo__title,
-:root[data-theme='dark'] .page-demo-card__title {
+:root[data-theme='dark'] :where(.page-demo-card__title, .page-demo-accordion .app-accordion__title) {
     color: $gray-50;
 }
 

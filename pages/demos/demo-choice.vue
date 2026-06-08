@@ -11,15 +11,19 @@
                 </header>
 
                 <!-- CHECKBOX -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Checkbox
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Checkbox
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         checkbox는 uiType(a / b)와 size(md / sm) 조합으로 사용할 수 있습니다.
                         A 타입은 각진 형태, B 타입은 round 형태를 제공합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
@@ -82,18 +86,22 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- RADIO -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Radio
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Radio
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         radio는 uiType(a / b)와 size(md / sm) 조합으로 사용할 수 있습니다.
                         A 타입은 흰 배경 + 검은 dot, B 타입은 검은 배경 + 흰 dot 구조입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
@@ -160,18 +168,22 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CHIP FILTER -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Chip Filter
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Chip Filter
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         다중 선택 가능한 태그/필터 UI 패턴입니다.
                         checkbox + chip variant 조합으로 사용합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-row">
@@ -187,18 +199,22 @@
                                 label="Outline B" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CHIP RADIO GROUP -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Chip Radio Group
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Chip Radio Group
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         탭, 세그먼트 버튼, 단일 선택 필터처럼 사용하는 패턴입니다.
                         radio + chip variant 조합으로 사용합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-row">
@@ -217,17 +233,21 @@
                                 variant="ghost" label="리스트형" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- STATE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        State
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            State
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         hint와 state를 함께 사용해 상태 메시지를 표시합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <AppChoice v-model="state.error" type="checkbox" label="Error" hint="에러 메시지" state="error" />
@@ -238,17 +258,21 @@
                         <AppChoice v-model="state.success" type="checkbox" label="Success" hint="선택 가능"
                             state="success" />
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         checkbox / radio / chip 계열 각각의 비활성 상태를 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <AppChoice v-model="disabled.checkbox" type="checkbox" label="Disabled Checkbox" hint="선택 불가"
@@ -273,7 +297,7 @@
                                 value="option-b" variant="fill" label="Disabled Fill B" disabled />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -281,13 +305,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

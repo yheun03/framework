@@ -77,19 +77,19 @@
     &-accordion {
         gap: 12px;
 
-        .app-accordion__item {
+        :where(.app-accordion__item) {
             border-radius: 8px;
         }
 
-        .app-accordion__trigger {
+        :where(.app-accordion__trigger) {
             padding: 16px;
         }
 
-        .app-accordion__title {
+        :where(.app-accordion__title) {
             @include font(b3, rg);
         }
 
-        .app-accordion__panel-inner {
+        :where(.app-accordion__panel-inner) {
             display: grid;
             gap: 12px;
             padding: 16px;

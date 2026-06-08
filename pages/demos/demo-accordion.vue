@@ -11,28 +11,36 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         기본적인 multiple 아코디언 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppAccordion :items="basicItems" mode="multiple" initial-open="none"
                         v-model:open-ids="basicOpenIds" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- OPEN MODE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Open Mode
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Open Mode
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         한 개만 열리는 single 모드와 여러 개를 자유롭게 여는 multiple 모드를 비교합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -49,17 +57,21 @@
                                 v-model:open-ids="multipleModeOpenIds" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- INITIAL OPEN -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Initial Open
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Initial Open
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         페이지 최초 진입 시 none / first / all 상태를 확인할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -80,49 +92,61 @@
                             <AppAccordion :items="initialItems" mode="multiple" initial-open="all" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DEFAULT OPEN IDS -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Default Open Ids
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Default Open Ids
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         defaultOpenIds로 특정 패널만 기본 열림 상태로 지정할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppAccordion :items="defaultItems" mode="multiple"
                         :default-open-ids="['default-2', 'default-3']" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled 항목은 열고 닫을 수 없습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppAccordion :items="disabledItems" mode="multiple" initial-open="first"
                         v-model:open-ids="disabledOpenIds" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- COMPONENT RENDER -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Renderer / Component
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Renderer / Component
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         bodyRenderer와 component 기반 렌더링을 함께 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppAccordion :items="rendererItems" mode="multiple" initial-open="first"
                         v-model:open-ids="rendererOpenIds" />
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -130,13 +154,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

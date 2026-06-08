@@ -11,14 +11,18 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         가장 기본적인 DatePicker 사용 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="basic.single" label="단일 날짜" placeholder="날짜를 선택하세요"
@@ -42,17 +46,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- MODE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Mode
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Mode
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         single / range / multiple 모드를 제어합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="modes.single" mode="single" label="Single" hint="하나의 날짜 선택">
@@ -73,17 +81,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Size
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Size
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         DatePicker의 높이를 제어합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="sizes.xs" size="xs" label="XS">
@@ -110,17 +122,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SHAPE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Shape
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Shape
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         DatePicker의 border 스타일을 제어합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="shapes.square" shape="square" label="Square">
@@ -147,17 +163,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- STATE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        State
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            State
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         입력 상태에 따른 스타일을 제공합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="states.error" label="Error" state="error" hint="에러 메시지">
@@ -178,17 +198,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED & READONLY -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled &amp; Readonly
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled &amp; Readonly
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         선택 불가 또는 읽기 전용 상태를 제어합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="disabledValue" label="Disabled" disabled hint="비활성 상태">
@@ -202,17 +226,21 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CONSTRAINTS -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Constraints
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Constraints
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="constraints.single" label="Min / Max" :min="min" :max="max"
@@ -229,7 +257,7 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -238,13 +266,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

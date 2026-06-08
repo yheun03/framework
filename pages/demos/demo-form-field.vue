@@ -11,31 +11,39 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         label, description, hint를 가진 기본 FormField 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="이름" description="사용자의 실명을 입력합니다." hint="한글 또는 영문 이름을 입력하세요.">
                         <template #default="{ id, describedby }">
                             <AppInput :id="id" v-model="name" placeholder="이름 입력" :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- REQUIRED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Required
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Required
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         required 상태에서는 label 옆에 필수 표시가 노출됩니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="이메일" required hint="업무용 이메일을 입력하세요.">
                         <template #default="{ id, describedby }">
@@ -43,17 +51,21 @@
                                 :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- OPTIONAL -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Optional
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Optional
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         optionalText로 선택 입력 필드를 표시할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="닉네임" optional-text="선택 입력" hint="입력하지 않아도 됩니다.">
                         <template #default="{ id, describedby }">
@@ -61,17 +73,21 @@
                                 :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- ERROR -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Error
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Error
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         error가 있으면 hint 대신 error message가 표시됩니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="비밀번호" required hint="8자 이상 입력하세요." :error="passwordError">
                         <template #default="{ id, invalid, describedby }">
@@ -79,17 +95,21 @@
                                 :invalid="invalid" :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled 상태의 label, description, message 표현을 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="부서" disabled description="비활성 상태의 필드입니다." hint="현재 수정할 수 없습니다.">
                         <template #default="{ id, disabled, describedby }">
@@ -97,17 +117,21 @@
                                 :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SLOT LABEL -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Label Slot
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Label Slot
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         label slot으로 커스텀 라벨을 렌더링할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField hint="slot label 예시입니다.">
                         <template #label>
@@ -122,7 +146,7 @@
                                 :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -130,13 +154,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

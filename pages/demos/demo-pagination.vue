@@ -11,42 +11,54 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         page, pageSize, total을 사용하는 기본 페이지네이션입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppPagination v-model:page="basicPage" v-model:page-size="basicPageSize" :total="basicTotal"
                         @change="onChange('basic', $event)" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- PAGE SIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Page Size Options
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Page Size Options
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         pageSizeOptions로 페이지 크기 선택 목록을 변경합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppPagination v-model:page="pageSizePage" v-model:page-size="pageSize" :total="pageSizeTotal"
                         :page-size-options="[5, 10, 30, 50]" @change="onChange('pageSize', $event)" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SIBLING COUNT -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Sibling Count
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Sibling Count
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         현재 페이지 주변에 노출할 페이지 개수를 조절합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -65,17 +77,21 @@
                                 @change="onChange('siblingTwo', $event)" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Size
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Size
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         sm / md 크기를 비교합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -94,35 +110,43 @@
                                 @change="onChange('medium', $event)" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- HIDE OPTIONS -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Hide Total / Page Size
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Hide Total / Page Size
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         showTotal, showPageSize 옵션으로 보조 영역을 숨길 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppPagination v-model:page="simplePage" v-model:page-size="simplePageSize" :total="simpleTotal"
                         :show-total="false" :show-page-size="false" @change="onChange('simple', $event)" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled 상태에서는 페이지를 변경할 수 없습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppPagination v-model:page="disabledPage" v-model:page-size="disabledPageSize"
                         :total="disabledTotal" disabled />
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -130,13 +154,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

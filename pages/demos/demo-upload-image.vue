@@ -11,11 +11,15 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Basic</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Basic</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-row">
                         <AppUploadImage v-model="basic.imageUrl" @change="onBasicChange" @error="onError"
@@ -37,14 +41,18 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- STATE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">State & Control</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">State & Control</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled 상태와 외부 제어 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-row">
                         <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" @change="onStateChange"
@@ -70,14 +78,18 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- MULTIPLE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Multiple</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Multiple</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-row">
                         <AppUploadImage v-model="multiple.images" multiple :max-count="3" @change="onMultipleChange"
@@ -100,14 +112,18 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- READ MODE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Read Mode</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Read Mode</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         <code>readMode="dataUrl"</code> 와 <code>readMode="objectUrl"</code> 차이를 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
@@ -128,14 +144,18 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DRAG & DROP -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Drag & Drop</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Drag & Drop</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         <code>allowDrop</code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
@@ -156,14 +176,18 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- FILE RULES -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">File Rules</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">File Rules</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         파일 형식과 최대 용량 제한 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
@@ -184,7 +208,7 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -192,8 +216,10 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">Actions</h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">Actions</h2>
+                        </template>
                         <div class="page-demo-actions">
                             <AppButton variant="fill" @click="setAllSamples">
                                 샘플 이미지 일괄 적용
@@ -203,12 +229,14 @@
                                 초기화
                             </AppTextButton>
                         </div>
-                    </section>
+                    </DemoAccordionSection>
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">Current Value</h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">Current Value</h2>
+                        </template>
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

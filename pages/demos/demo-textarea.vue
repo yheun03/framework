@@ -11,27 +11,35 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         기본 textarea 입력 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- WITH FORM FIELD -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        With FormField
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            With FormField
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         AppFormField와 함께 label, hint, error를 연결합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다." :error="contentError">
                         <template #default="{ id, invalid, describedby }">
@@ -39,17 +47,21 @@
                                 show-count clearable :invalid="invalid" :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Size
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Size
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         sm / md / lg 크기를 비교합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -70,17 +82,21 @@
                             <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- RESIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Resize
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Resize
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         resize 옵션별 textarea 크기 조절 방식을 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -109,17 +125,21 @@
                             <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- STATES -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        States
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            States
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled, readonly, invalid 상태를 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -140,21 +160,25 @@
                             <AppTextarea v-model="invalidValue" invalid placeholder="invalid textarea" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- COUNT / CLEAR -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Count / Clear
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Count / Clear
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         글자 수 표시와 clearable 옵션을 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
                         clearable />
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -162,13 +186,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>
