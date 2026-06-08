@@ -8,6 +8,8 @@
 </template>
 
 <script setup lang="ts">
+import { useCellRendererValue } from './useCellRendererValue'
+
 type ReadMode = 'dataUrl' | 'objectUrl'
 type ImageCellValue =
     | string
@@ -49,6 +51,7 @@ const props = defineProps({
 })
 
 const params = props.params
+const { value } = useCellRendererValue<ImageCellValue>(params)
 
 const imageOptions = computed<ImageCellParams>(() => ({
     multiple: Boolean(params?.colDef?.cellRendererParams?.multiple),
@@ -60,20 +63,5 @@ const imageOptions = computed<ImageCellParams>(() => ({
     maxSizeBytes: params?.colDef?.cellRendererParams?.maxSizeBytes,
     readMode: params?.colDef?.cellRendererParams?.readMode,
 }))
-
-const value = computed({
-
-    get: (): ImageCellValue => params?.value,
-
-    set: (v: ImageCellValue) => {
-
-        params?.node?.setDataValue(
-            params?.column?.getColId(),
-            v
-        )
-
-    }
-
-})
 
 </script>

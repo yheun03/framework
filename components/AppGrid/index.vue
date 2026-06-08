@@ -1,5 +1,5 @@
 <template>
-    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="['ag-theme-quartz', attrs.class]"
+    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses"
         @grid-ready="onGridReady" />
 </template>
 
@@ -8,15 +8,39 @@ defineOptions({
     ssr: false
 })
 import { AgGridVue } from 'ag-grid-vue3'
-import type { GridOptions, GridReadyEvent, FilterChangedEvent } from 'ag-grid-community'
+import type { ColDef, GridApi, GridOptions, GridReadyEvent, FilterChangedEvent, BodyScrollEvent } from 'ag-grid-community'
 import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
 
+const APP_SELECT_CLOSE_ALL_EVENT = 'app-select:close-all'
 const { register } = useAgGridRegistry()
 
 const { $agGridLocale } = useNuxtApp()
 const attrs = useAttrs()
+const gridApi = ref<GridApi | null>(null)
+const props = withDefaults(
+    defineProps<{
+        autoHeight?: boolean
+        headerHeight?: number
+        rowHeight?: number
+    }>(),
+    {
+        autoHeight: false,
+        headerHeight: 40,
+        rowHeight: 48
+    }
+)
+
+function closeOpenSelects() {
+    window.dispatchEvent(new Event(APP_SELECT_CLOSE_ALL_EVENT))
+}
+
+function onBodyScroll() {
+    closeOpenSelects()
+}
 
 function onGridReady(e: GridReadyEvent) {
+    gridApi.value = e.api
+    e.api.addEventListener('bodyScroll', onBodyScroll as (event: BodyScrollEvent) => void)
 
     const id = e.api.getGridId()
 
@@ -26,6 +50,37 @@ function onGridReady(e: GridReadyEvent) {
     }
 
     register(id, e.api)
+}
+
+onBeforeUnmount(() => {
+    gridApi.value?.removeEventListener('bodyScroll', onBodyScroll as (event: BodyScrollEvent) => void)
+})
+
+function normalizeColumnDefs(columnDefs?: ColDef[]) {
+    if (!Array.isArray(columnDefs)) return columnDefs
+
+    return columnDefs.map((col) => {
+        if (!col.cellRenderer || col.cellDataType !== undefined) return col
+
+        return {
+            ...col,
+            cellDataType: false,
+            valueFormatter: col.valueFormatter ?? ((params) => {
+                if (params.value == null) return ''
+                if (Array.isArray(params.value)) return params.value.join(', ')
+                if (typeof params.value === 'object') return ''
+
+                return String(params.value)
+            })
+        }
+    })
+}
+
+function normalizeDefaultColDef(defaultColDef?: ColDef) {
+    return {
+        cellDataType: false,
+        ...defaultColDef
+    }
 }
 
 /* attrs -> grid-id 전달 */
@@ -39,12 +94,23 @@ const gridAttrs = computed(() => {
         class: __,
         gridId,
         'grid-id': gridIdKebab,
+        domLayout,
+        rowHeight,
+        getRowHeight,
+        columnDefs,
+        'column-defs': columnDefsKebab,
+        defaultColDef,
+        'default-col-def': defaultColDefKebab,
+        onFilterChanged,
         ...rest
     } = a
 
     const id = gridId ?? gridIdKebab
+    const normalizedColumnDefs = normalizeColumnDefs(columnDefs ?? columnDefsKebab)
+    const normalizedDefaultColDef = normalizeDefaultColDef(defaultColDef ?? defaultColDefKebab)
 
     return {
+        ...rest,
 
         overlayLoadingTemplate:
             '<div class="ag-overlay-loading">로딩중...</div>',
@@ -52,8 +118,12 @@ const gridAttrs = computed(() => {
         overlayNoRowsTemplate:
             '<div class="ag-overlay-no-rows">검색된 결과가 없습니다</div>',
 
-        rowHeight: rest.rowHeight ?? 42,
-        getRowHeight: rest.getRowHeight,
+        domLayout: props.autoHeight ? 'autoHeight' : domLayout,
+        headerHeight: a.headerHeight ?? props.headerHeight,
+        rowHeight: rowHeight ?? props.rowHeight,
+        getRowHeight,
+        defaultColDef: normalizedDefaultColDef,
+        ...(normalizedColumnDefs ? { columnDefs: normalizedColumnDefs } : {}),
 
         onFilterChanged(params: FilterChangedEvent) {
 
@@ -65,13 +135,25 @@ const gridAttrs = computed(() => {
                 api.hideOverlay()
             }
 
+            if (typeof onFilterChanged === 'function') {
+                onFilterChanged(params)
+            }
+
         },
 
-        ...rest,
         gridId: id
     }
 
 })
+
+const gridClasses = computed(() => [
+    'ag-theme-quartz',
+    'app-grid',
+    {
+        'app-grid--auto-height': props.autoHeight
+    },
+    attrs.class
+])
 
 const localeText = computed<GridOptions['localeText']>(() => {
     return (attrs.localeText as GridOptions['localeText']) ?? $agGridLocale
