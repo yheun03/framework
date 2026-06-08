@@ -11,27 +11,35 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Basic
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Basic
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         기본적인 line 탭 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTabs :items="basicItems" variant="line" v-model:active-id="basicActiveId" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- VARIANT -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Variant
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Variant
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         line / box / pill 스타일을 비교합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -52,43 +60,55 @@
                             <AppTabs :items="variantItems" variant="pill" v-model:active-id="pillActiveId" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DEFAULT ACTIVE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Default Active Id
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Default Active Id
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTabs :items="defaultItems" variant="line" default-active-id="default-2" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         disabled 탭은 선택할 수 없습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTabs :items="disabledItems" variant="box" v-model:active-id="disabledActiveId" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- SIZE -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Size
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Size
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         sm / md / lg 크기를 비교합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -109,31 +129,39 @@
                             <AppTabs :items="sizeItems" size="lg" variant="pill" />
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- VERTICAL -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Vertical
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Vertical
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         orientation을 vertical로 지정한 좌측 탭 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTabs :items="verticalItems" orientation="vertical" variant="line"
                         v-model:active-id="verticalActiveId" />
-                </section>
+                </DemoAccordionSection>
 
                 <!-- COMPONENT RENDER -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Renderer / Component
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Renderer / Component
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         bodyRenderer와 component 기반 렌더링을 함께 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <AppTabs :items="rendererItems" variant="line" v-model:active-id="rendererActiveId">
                         <template #custom="{ item }">
@@ -145,7 +173,7 @@
                             </div>
                         </template>
                     </AppTabs>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -153,13 +181,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

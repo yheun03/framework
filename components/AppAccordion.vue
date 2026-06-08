@@ -8,13 +8,21 @@
                 :aria-expanded="isOpen(item.id)" :aria-controls="getPanelId(item.id)" @click="toggleItem(item.id)">
                 <div class="app-accordion__trigger-content">
                     <div class="app-accordion__text">
-                        <strong class="app-accordion__title">
-                            {{ item.title }}
-                        </strong>
+                        <div class="app-accordion__title">
+                            <slot v-if="item.titleSlot" :name="item.titleSlot" :item="item" />
+
+                            <strong v-else>
+                                {{ item.title }}
+                            </strong>
+                        </div>
 
                         <p v-if="item.desc" class="app-accordion__desc">
                             {{ item.desc }}
                         </p>
+
+                        <div v-else-if="item.descSlot" class="app-accordion__desc">
+                            <slot :name="item.descSlot" :item="item" />
+                        </div>
                     </div>
 
                     <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
@@ -50,7 +58,9 @@ type AccordionInitialOpen = 'none' | 'first' | 'all'
 export type AppAccordionItem = {
     id: string | number
     title: string
+    titleSlot?: string
     desc?: string
+    descSlot?: string
     disabled?: boolean
     slot?: string
     bodyRenderer?: AccordionRenderer

@@ -10,14 +10,18 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Progress Bar
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Progress Bar
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         표시 전용 진행률은 AppProgressBar를 사용합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <AppProgressBar :value="linearDisplayValue" label="단일 값" show-value />
@@ -28,16 +32,20 @@
                             {{ linearRangeDisplay.start }}% ~ {{ linearRangeDisplay.end }}%
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Progress Slider
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Progress Slider
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         드래그 조작이 필요한 진행률은 AppProgressSlider로 분리했습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-stack">
                         <AppProgressSlider v-model:value="linearControlValue" label="단일 값" show-value />
@@ -49,34 +57,42 @@
                             {{ linearControlRange.start }}% ~ {{ linearControlRange.end }}%
                         </div>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- GAUGE DISPLAY -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Gauge Display
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Gauge Display
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         반원 게이지와 반도넛 범위의 기본 표시 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppProgressGauge :value="gaugeDisplayValue" type="gauge" label="속도" />
 
                         <AppProgressGauge :range="gaugeRangeDisplay" type="semi-doughnut-range" label="권장 범위" />
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- GAUGE DRAG -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Gauge Drag Control
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Gauge Drag Control
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         드래그로 게이지 값과 반도넛 범위를 조정할 수 있습니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppProgressGauge v-model:value="gaugeControlValue" type="gauge" mode="control-single"
@@ -85,17 +101,21 @@
                         <AppProgressGauge :range="gaugeControlRange" type="semi-doughnut-range" mode="control-range"
                             label="권장 범위" @update:range="handleGaugeRangeUpdate" />
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- DISABLED -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">
-                        Disabled
-                    </h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">
+                            Disabled
+                        </h2>
+                    </template>
 
-                    <p class="page-demo-card__desc">
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         비활성 상태를 확인합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-grid">
                         <AppProgressSlider :value="disabledLinearValue" label="Disabled Linear" show-value disabled />
@@ -103,7 +123,7 @@
                         <AppProgressGauge :value="disabledGaugeValue" type="gauge" mode="control-single"
                             label="Disabled Gauge" disabled />
                     </div>
-                </section>
+                </DemoAccordionSection>
 
             </main>
 
@@ -111,13 +131,15 @@
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            Current Value
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                Current Value
+                            </h2>
+                        </template>
 
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

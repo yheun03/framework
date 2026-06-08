@@ -12,11 +12,15 @@
                 </header>
 
                 <!-- BASIC -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Basic</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Basic</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlert">
@@ -31,14 +35,18 @@
                             Custom 열기
                         </AppButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- ALERT -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Alert Props</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Alert Props</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         title, message, confirmText, closeOnDim, closeOnEsc, closable 조합 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlertBasic">
@@ -57,14 +65,18 @@
                             Alert 중첩 열기
                         </AppButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CONFIRM -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Confirm Props</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Confirm Props</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         confirmText, cancelText, closeOnDim, closeOnEsc, closable 조합 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenConfirmBasic">
@@ -83,15 +95,19 @@
                             Confirm 중첩 열기
                         </AppButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CUSTOM -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Custom Modal</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Custom Modal</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         component와 componentProps를 전달해 원하는 내용을 렌더링하는 방식입니다.
                         실무에서는 별도 컴포넌트 전달 방식이 유지보수에 유리합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenCustom">
@@ -102,14 +118,18 @@
                             Custom 중첩 열기
                         </AppButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- VIEWER -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Viewer Modal</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Viewer Modal</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenImageViewer">
@@ -120,14 +140,18 @@
                             PDF 뷰어 열기
                         </AppButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
 
                 <!-- CONTROL -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">Store Control</h2>
-                    <p class="page-demo-card__desc">
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">Store Control</h2>
+                    </template>
+                    <template #desc>
+                        <p class="page-demo-card__desc">
                         스토어 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.
-                    </p>
+                        </p>
+                    </template>
 
                     <div class="page-demo-actions">
                         <AppButton variant="outline" @click="handleCloseTop">
@@ -138,17 +162,19 @@
                             전체 모달 닫기
                         </AppTextButton>
                     </div>
-                </section>
+                </DemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">Current Value</h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">Current Value</h2>
+                        </template>
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>

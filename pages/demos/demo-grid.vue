@@ -6,8 +6,10 @@
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
                 </header> <!-- GRID 1 -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">사용자 목록</h2>
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">사용자 목록</h2>
+                    </template>
                     <AppGridToolbar target="grid1">
                         <AppGridSearch v-model="search1" :fields="searchFields1" />
                         <AppGridDownload />
@@ -17,9 +19,11 @@
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight" row-selection="multiple"
                             animate-rows :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </section> <!-- GRID 2 -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">주문 목록</h2>
+                </DemoAccordionSection> <!-- GRID 2 -->
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">주문 목록</h2>
+                    </template>
                     <AppGridToolbar target="grid2">
                         <AppGridSearch v-model="search2" :fields="searchFields2" />
                         <AppGridDownload />
@@ -29,9 +33,11 @@
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight" row-selection="multiple"
                             animate-rows :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </section> <!-- GRID 3 -->
-                <section class="page-demo-card">
-                    <h2 class="page-demo-card__title">상품 조회 (단순 그리드)</h2>
+                </DemoAccordionSection> <!-- GRID 3 -->
+                <DemoAccordionSection>
+                    <template #title>
+                        <h2 class="page-demo-card__title">상품 조회 (단순 그리드)</h2>
+                    </template>
                     <AppGridToolbar target="grid3">
                         <AppGridSearch v-model="search3" :fields="searchFields3" />
                         <AppGridDownload />
@@ -41,34 +47,42 @@
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight" animate-rows
                             :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </section>
+                </DemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="검색 상태 패널">
                 <div class="page-demo-aside__sticky page-demo-stack">
                     <DemoPropsSummary />
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            검색 폼 값 (v-model)
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                검색 폼 값 (v-model)
+                            </h2>
+                        </template>
+                        <template #desc>
                         <p class="page-demo-card__desc">
-                            각 그리드 <code>AppGridSearch</code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.
+                        각 그리드 <code>AppGridSearch</code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.
                         </p>
+                        </template>
                         <pre class="page-demo-output">{{ searchStateOutput }}</pre>
-                    </section>
+                    </DemoAccordionSection>
 
-                    <section class="page-demo-card">
-                        <h2 class="page-demo-card__title">
-                            검색 필드 정의 (<code>fields</code>)
-                        </h2>
+                    <DemoAccordionSection>
+                        <template #title>
+                            <h2 class="page-demo-card__title">
+                                검색 필드 정의 (<code>fields</code>)
+                            </h2>
+                        </template>
+                        <template #desc>
                         <p class="page-demo-card__desc">
-                            <code>AppGridSearchField</code> 배열 — <code>type</code>, <code>label</code>,
-                            <code>filterField</code>,
-                            <code>selectInput</code>, <code>numberRange</code> 등 속성을 한눈에 확인할 수 있습니다.
+                        <code>AppGridSearchField</code> 배열 — <code>type</code>, <code>label</code>,
+                        <code>filterField</code>,
+                        <code>selectInput</code>, <code>numberRange</code> 등 속성을 한눈에 확인할 수 있습니다.
                         </p>
+                        </template>
                         <pre class="page-demo-output">{{ searchFieldsOutput }}</pre>
-                    </section>
+                    </DemoAccordionSection>
                 </div>
             </aside>
         </div>
