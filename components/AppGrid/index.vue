@@ -95,8 +95,15 @@ const gridAttrs = computed(() => {
         gridId,
         'grid-id': gridIdKebab,
         domLayout,
+        'dom-layout': domLayoutKebab,
+        headerHeight,
+        'header-height': headerHeightKebab,
         rowHeight,
+        'row-height': rowHeightKebab,
         getRowHeight,
+        'get-row-height': getRowHeightKebab,
+        rowSelection,
+        'row-selection': rowSelectionKebab,
         columnDefs,
         'column-defs': columnDefsKebab,
         defaultColDef,
@@ -108,6 +115,11 @@ const gridAttrs = computed(() => {
     const id = gridId ?? gridIdKebab
     const normalizedColumnDefs = normalizeColumnDefs(columnDefs ?? columnDefsKebab)
     const normalizedDefaultColDef = normalizeDefaultColDef(defaultColDef ?? defaultColDefKebab)
+    const resolvedDomLayout = domLayout ?? domLayoutKebab
+    const resolvedGetRowHeight = getRowHeight ?? getRowHeightKebab
+    const resolvedHeaderHeight = headerHeight ?? headerHeightKebab
+    const resolvedRowHeight = rowHeight ?? rowHeightKebab
+    const resolvedRowSelection = rowSelection ?? rowSelectionKebab
 
     return {
         ...rest,
@@ -118,10 +130,11 @@ const gridAttrs = computed(() => {
         overlayNoRowsTemplate:
             '<div class="ag-overlay-no-rows">검색된 결과가 없습니다</div>',
 
-        domLayout: props.autoHeight ? 'autoHeight' : domLayout,
-        headerHeight: a.headerHeight ?? props.headerHeight,
-        rowHeight: rowHeight ?? props.rowHeight,
-        getRowHeight,
+        domLayout: props.autoHeight ? 'autoHeight' : resolvedDomLayout,
+        headerHeight: resolvedHeaderHeight ?? props.headerHeight,
+        rowHeight: resolvedRowHeight ?? props.rowHeight,
+        getRowHeight: resolvedGetRowHeight,
+        ...(resolvedRowSelection ? { rowSelection: resolvedRowSelection } : {}),
         defaultColDef: normalizedDefaultColDef,
         ...(normalizedColumnDefs ? { columnDefs: normalizedColumnDefs } : {}),
 

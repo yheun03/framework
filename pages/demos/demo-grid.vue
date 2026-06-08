@@ -44,8 +44,7 @@
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
-                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" animate-rows
-                            :style="{ height: '320px', width: '100%' }" />
+                            :default-col-def="defaultColDef" auto-height animate-rows />
                     </ClientOnly>
                 </DemoAccordionSection>
                 <DemoAccordionSection>
@@ -457,6 +456,7 @@ const columns3: ColDef[] = [
         field: 'productImage',
         headerName: '대표이미지',
         width: 220,
+        autoHeight: true,
         cellRenderer: AppGridCellImage,
         cellRendererParams: {
             triggerText: '대표 이미지 업로드',
@@ -469,6 +469,7 @@ const columns3: ColDef[] = [
         field: 'productGallery',
         headerName: '상세이미지',
         width: 260,
+        autoHeight: true,
         cellRenderer: AppGridCellImage,
         valueFormatter: listValueFormatter,
         cellRendererParams: {
@@ -483,6 +484,7 @@ const columns3: ColDef[] = [
         field: 'manualFile',
         headerName: '매뉴얼',
         width: 240,
+        autoHeight: true,
         cellRenderer: AppGridCellFile,
         cellRendererParams: {
             triggerText: '매뉴얼 업로드',
@@ -496,6 +498,7 @@ const columns3: ColDef[] = [
         field: 'attachments',
         headerName: '첨부파일',
         width: 260,
+        autoHeight: true,
         cellRenderer: AppGridCellFile,
         valueFormatter: listValueFormatter,
         cellRendererParams: {
