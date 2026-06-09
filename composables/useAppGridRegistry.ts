@@ -2,7 +2,7 @@ import type { GridApi } from 'ag-grid-community';
 
 const registry = new Map<string, GridApi>();
 
-export function useAgGridRegistry() {
+export function useAppGridRegistry() {
     function register(id: string, api: GridApi) {
         registry.set(id, api);
     }

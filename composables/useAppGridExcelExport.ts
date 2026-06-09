@@ -1,8 +1,6 @@
 import type { GridApi } from 'ag-grid-community';
 import { useApi } from '~/composables/useApi';
-
-type ExportColumn = { field: string; headerName: string };
-type ExportRow = Record<string, unknown>;
+import type { AppGridExportColumn, AppGridExportRow } from '~/types/app-grid-export';
 
 function pad2(n: number) {
     return String(n).padStart(2, '0');
@@ -17,29 +15,29 @@ function makeExportFileName(base: string) {
     return `${base}_${makeTimestamp()}`;
 }
 
-function getColumns<T>(api: GridApi<T>): ExportColumn[] {
+function getColumns<T>(api: GridApi<T>): AppGridExportColumn[] {
     return api.getAllDisplayedColumns().map((col) => ({
         field: col.getColId(),
         headerName: (col.getColDef().headerName as string) || col.getColId(),
     }));
 }
 
-function getDisplayedRows<T>(api: GridApi<T>): ExportRow[] {
-    const rows: ExportRow[] = [];
+function getDisplayedRows<T>(api: GridApi<T>): AppGridExportRow[] {
+    const rows: AppGridExportRow[] = [];
     const count = api.getDisplayedRowCount();
     for (let i = 0; i < count; i++) {
         const node = api.getDisplayedRowAtIndex(i);
-        if (node?.data) rows.push(node.data as ExportRow);
+        if (node?.data) rows.push(node.data as AppGridExportRow);
     }
     return rows;
 }
 
-function getDisplayedSelectedRows<T>(api: GridApi<T>): ExportRow[] {
-    const rows: ExportRow[] = [];
+function getDisplayedSelectedRows<T>(api: GridApi<T>): AppGridExportRow[] {
+    const rows: AppGridExportRow[] = [];
     const count = api.getDisplayedRowCount();
     for (let i = 0; i < count; i++) {
         const node = api.getDisplayedRowAtIndex(i);
-        if (node?.isSelected() && node.data) rows.push(node.data as ExportRow);
+        if (node?.isSelected() && node.data) rows.push(node.data as AppGridExportRow);
     }
     return rows;
 }
@@ -53,14 +51,14 @@ async function downloadBlobAsFile(blob: Blob, filename: string) {
     URL.revokeObjectURL(url);
 }
 
-export function useAgGridExcelExport(options?: { origin?: string }) {
+export function useAppGridExcelExport(options?: { origin?: string }) {
     const origin = options?.origin ?? 'A1';
     const api = useApi();
 
     async function requestExcelDownload(params: {
         gridId: string;
-        columns: ExportColumn[];
-        rows: ExportRow[];
+        columns: AppGridExportColumn[];
+        rows: AppGridExportRow[];
         fileNameBase?: string;
         sheetName?: string;
     }) {

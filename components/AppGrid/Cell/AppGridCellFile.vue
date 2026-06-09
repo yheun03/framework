@@ -42,10 +42,10 @@ type FileCellParams = {
     maxSizeBytes?: number
 }
 
-const props = defineProps<AppGridCellRendererProps>()
+const props = defineProps<AppGridCellRendererProps<FileCellValue, FileCellParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<FileCellValue>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<FileCellValue, FileCellParams>(params)
 
 const fileOptions = computed<FileCellParams>(() => ({
     multiple: Boolean(rendererParams.value.multiple),

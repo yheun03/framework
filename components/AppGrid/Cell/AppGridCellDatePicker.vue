@@ -10,11 +10,17 @@ import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
 
 type DatePickerModelValue = string | string[] | DateRangeValue | null | undefined
+type DatePickerRendererParams = {
+    mode?: 'single' | 'multiple' | 'range'
+    min?: string
+    max?: string
+    placeholder?: string
+}
 
-const props = defineProps<AppGridCellRendererProps>()
+const props = defineProps<AppGridCellRendererProps<DatePickerModelValue, DatePickerRendererParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<DatePickerModelValue>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<DatePickerModelValue, DatePickerRendererParams>(params)
 
 const mode = computed(() => rendererParams.value.mode ?? 'single')
 const min = computed(() => rendererParams.value.min)

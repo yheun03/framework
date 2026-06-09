@@ -8,10 +8,10 @@ defineOptions({
 })
 import { AgGridVue } from 'ag-grid-vue3'
 import type { ColDef, GridApi, GridOptions, GridReadyEvent, FilterChangedEvent, BodyScrollEvent } from 'ag-grid-community'
-import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
+import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
 
 const APP_SELECT_CLOSE_ALL_EVENT = 'app-select:close-all'
-const { register } = useAgGridRegistry()
+const { register } = useAppGridRegistry()
 
 const { $agGridLocale } = useNuxtApp()
 const attrs = useAttrs()
@@ -86,7 +86,7 @@ function normalizeDefaultColDef(defaultColDef?: ColDef) {
 
 const gridAttrs = computed(() => {
 
-    const a = attrs as Record<string, any>
+    const a = attrs as Record<string, unknown>
 
     const {
         localeText: _,

@@ -3,18 +3,10 @@
  * POST body: { gridId: string, columns: { field: string, headerName: string }[], rows: Record<string, unknown>[] }
  */
 import * as XLSX from 'xlsx';
-
-interface ExportExcelBody {
-    gridId: string;
-    columns: { field: string; headerName: string }[];
-    rows: Record<string, unknown>[];
-    fileName?: string;
-    sheetName?: string;
-    origin?: string;
-}
+import type { AppGridExportRequestBody } from '~/types/app-grid-export';
 
 export default defineEventHandler(async (event) => {
-    const body = await readBody<ExportExcelBody>(event);
+    const body = await readBody<AppGridExportRequestBody>(event);
     if (!body?.gridId || !Array.isArray(body.columns) || !Array.isArray(body.rows)) {
         throw createError({
             statusCode: 400,

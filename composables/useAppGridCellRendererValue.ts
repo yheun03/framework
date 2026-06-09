@@ -1,11 +1,13 @@
 import type { AppGridCellRendererParams } from '~/types/app-grid-cell';
 
-export function useAppGridCellRendererValue<T = unknown>(params?: AppGridCellRendererParams) {
-    const rendererParams = computed(() => params?.colDef?.cellRendererParams ?? {});
+export function useAppGridCellRendererValue<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>>(
+    params?: AppGridCellRendererParams<Value, RendererParams>,
+) {
+    const rendererParams = computed<RendererParams>(() => (params?.colDef?.cellRendererParams ?? {}) as RendererParams);
 
-    const value = computed<T>({
-        get: () => params?.value as T,
-        set: (v: T) => {
+    const value = computed<Value>({
+        get: () => params?.value as Value,
+        set: (v: Value) => {
             params?.node?.setDataValue?.(params?.column?.getColId?.(), v);
         },
     });

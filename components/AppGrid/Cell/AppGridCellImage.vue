@@ -47,10 +47,10 @@ type ImageCellParams = {
     readMode?: ReadMode
 }
 
-const props = defineProps<AppGridCellRendererProps>()
+const props = defineProps<AppGridCellRendererProps<ImageCellValue, ImageCellParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<ImageCellValue>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<ImageCellValue, ImageCellParams>(params)
 
 const imageOptions = computed<ImageCellParams>(() => ({
     multiple: Boolean(rendererParams.value.multiple),
