@@ -14,13 +14,13 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
-import { useAgGridExcelExport } from '~/composables/useAgGridExcelExport'
+import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
+import { useAppGridExcelExport } from '~/composables/useAppGridExcelExport'
 
 const target = inject<string>('appGridTarget')
 
-const { getApi } = useAgGridRegistry()
-const { exportDisplayed, exportDisplayedSelected } = useAgGridExcelExport()
+const { getApi } = useAppGridRegistry()
+const { exportDisplayed, exportDisplayedSelected } = useAppGridExcelExport()
 
 async function downloadAll() {
 

@@ -3,11 +3,11 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
+import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
 
 const target = inject<string>('appGridTarget')
 
-const { getApi } = useAgGridRegistry()
+const { getApi } = useAppGridRegistry()
 
 
 </script>

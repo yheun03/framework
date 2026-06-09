@@ -20,11 +20,15 @@ type ChoiceOption = {
     label: string
     value: string | number
 }
+type ChoiceRendererParams = {
+    options?: ChoiceOption[]
+    type?: ChoiceType
+}
 
-const props = defineProps<AppGridCellRendererProps>()
+const props = defineProps<AppGridCellRendererProps<ChoiceValue | Array<string | number>, ChoiceRendererParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<ChoiceValue | Array<string | number>>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<ChoiceValue | Array<string | number>, ChoiceRendererParams>(params)
 const options = computed<ChoiceOption[]>(() => rendererParams.value.options ?? [])
 const type = computed<ChoiceType>(() => rendererParams.value.type ?? 'radio')
 

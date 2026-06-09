@@ -1,7 +1,7 @@
-export type AppGridCellRendererParams = {
-    value?: unknown;
+export type AppGridCellRendererParams<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>> = {
+    value?: Value;
     colDef?: {
-        cellRendererParams?: Record<string, any>;
+        cellRendererParams?: RendererParams;
     };
     node?: {
         id?: string;
@@ -12,6 +12,6 @@ export type AppGridCellRendererParams = {
     };
 };
 
-export type AppGridCellRendererProps = {
-    params: AppGridCellRendererParams;
+export type AppGridCellRendererProps<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>> = {
+    params: AppGridCellRendererParams<Value, RendererParams>;
 };

@@ -149,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AppTableCell } from '~/types/table'
+import type { AppTableCell } from '~/types/app-table'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
 import {
     getModelValue,

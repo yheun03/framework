@@ -183,8 +183,8 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
-import type { AppGridSearchField } from '~/types/grid-search'
-import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
+import type { AppGridSearchField } from '~/types/app-grid-search'
+import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
 import {
     includesArrayValue,
     toBooleanModelValue,
@@ -217,7 +217,7 @@ const target = inject<string>('appGridTarget')
 
 const root = ref<HTMLElement | null>(null)
 
-const { getApi } = useAgGridRegistry()
+const { getApi } = useAppGridRegistry()
 
 type NormalizedSearchField = AppGridSearchField & {
     fieldKey: string

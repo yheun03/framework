@@ -8,10 +8,16 @@
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
 import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 
-const props = defineProps<AppGridCellRendererProps>()
+type TextareaRendererParams = {
+    rows?: number
+    resize?: string
+    placeholder?: string
+}
+
+const props = defineProps<AppGridCellRendererProps<string | number | null, TextareaRendererParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<string | number | null>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<string | number | null, TextareaRendererParams>(params)
 
 const rows = computed(() => rendererParams.value.rows ?? 2)
 const resize = computed(() => rendererParams.value.resize ?? 'none')

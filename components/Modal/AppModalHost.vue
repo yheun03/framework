@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { useModalStore } from '~/stores/modal'
-import type { ModalItem, ModalViewCloseReason } from '~/types/modal'
+import type { ModalItem, ModalViewCloseReason } from '~/types/app-modal'
 
 const modalStore = useModalStore()
 

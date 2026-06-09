@@ -8,9 +8,18 @@
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
 import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 
-const props = defineProps<AppGridCellRendererProps>()
+type SelectOption = {
+    label: string
+    value: string | number | boolean | null
+    disabled?: boolean
+}
+type SelectRendererParams = {
+    options?: SelectOption[]
+}
+
+const props = defineProps<AppGridCellRendererProps<string | number | boolean | null, SelectRendererParams>>()
 
 const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<string | number | boolean | null>(params)
-const options = computed(() => rendererParams.value.options ?? [])
+const { rendererParams, value } = useAppGridCellRendererValue<string | number | boolean | null, SelectRendererParams>(params)
+const options = computed<SelectOption[]>(() => rendererParams.value.options ?? [])
 </script>

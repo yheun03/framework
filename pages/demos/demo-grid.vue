@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import type { ColDef } from 'ag-grid-community'
 
-import type { AppGridSearchField, DateRangeValue } from '~/types/grid-search'
+import type { AppGridSearchField, DateRangeValue } from '~/types/app-grid-search'
 
 import AppGridCellSelect from '~/components/AppGrid/Cell/AppGridCellSelect.vue'
 import AppGridCellInput from '~/components/AppGrid/Cell/AppGridCellInput.vue'
