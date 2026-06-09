@@ -9,19 +9,7 @@
                 </header>
 
                 <!-- LINE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Line Variants
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Line Variants" desc="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
                     <div class="page-demo-grid">
                         <client-only>
                             <AppChart class="page-demo-chart-box" type="line" :data="lineData" />
@@ -39,22 +27,11 @@
                             <AppChart class="page-demo-chart-box" type="line" :data="multiLineData2" />
                         </client-only>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CHART TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Bar / Doughnut / Semi Doughnut / Pie
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        막대형, 도넛형, 반도넛형, 원형 차트 구성을 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Bar / Doughnut / Semi Doughnut / Pie"
+                    desc="막대형, 도넛형, 반도넛형, 원형 차트 구성을 확인합니다.">
                     <div class="page-demo-grid">
                         <client-only>
                             <AppChart class="page-demo-chart-box" type="bar" :data="barData" />
@@ -73,22 +50,16 @@
                             <AppChart class="page-demo-chart-box" type="pie" :data="pieData" :height="220" />
                         </client-only>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                Current Value
-                            </h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

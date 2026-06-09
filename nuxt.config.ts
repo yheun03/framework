@@ -31,8 +31,11 @@ export default defineNuxtConfig({
         { path: '~/components/Section', pathPrefix: false },
         { path: '~/components/Layout', pathPrefix: false },
         { path: '~/components/Modal', pathPrefix: false },
-        // 모든 전역 컴포넌트를 components 루트에서 자동 등록
-        { path: '~/components', pathPrefix: true },
+        { path: '~/components/AppGrid', pathPrefix: false },
+        { path: '~/components/AppProgress', pathPrefix: false },
+        { path: '~/pages/demos/Page_demo/content', pathPrefix: false },
+        // components 루트 단일 컴포넌트만 자동 등록
+        { path: '~/components', pathPrefix: true, pattern: '*.vue' },
     ],
 
     // 플러그인 실행 순서를 명확히 하기 위해 명시 로딩

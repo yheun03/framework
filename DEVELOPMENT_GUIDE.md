@@ -28,7 +28,10 @@ plugins/      Nuxt 앱 초기화/주입
 ## 3. Component 규칙
 
 - 공통 컴포넌트명은 `App` prefix를 사용합니다. 예: `AppButton.vue`
-- 기능 단위 컴포넌트는 폴더로 묶습니다. 예: `components/AppGrid`
+- 기능 단위 컴포넌트는 폴더로 묶습니다. 예: `components/AppGrid`, `components/AppProgress`
+- 폴더 안 컴포넌트도 파일명에 폴더명을 포함합니다. 예: `AppGridDownload.vue`, `AppGridCellInput.vue`
+- `index.vue`, `Download.vue`, `Reset.vue`처럼 단독으로 의미가 겹치는 파일명은 사용하지 않습니다.
+- `components/` 안에는 `.vue` 컴포넌트만 둡니다. 타입은 `types/`, 재사용 로직은 `composables/` 또는 `utils/`로 분리합니다.
 - 컴포넌트는 UI 표현과 이벤트 전달에 집중합니다.
 - API 호출, 복잡한 상태, 공통 계산 로직은 컴포넌트 안에 직접 넣지 않습니다.
 - prop/event 타입은 컴포넌트 전용이면 해당 파일 안에 두고, 공유되면 `types/`로 분리합니다.
@@ -89,6 +92,8 @@ const data = await api.get<MyType>('/api/example');
 - `pages/` 파일명은 URL이 되므로 kebab-case를 사용합니다.
 - demo 페이지는 컴포넌트 사용 예시만 담당합니다.
 - 실제 업무 로직과 demo 전용 상태를 섞지 않습니다.
+- 특정 page 안에서만 쓰는 modal, renderer, content는 `Page_페이지명/modal`, `Page_페이지명/renderer`, `Page_페이지명/content` 폴더에 둡니다.
+- page 전용 파일명도 폴더 역할이 보이도록 `PageDemoModalRendererExample.vue`처럼 작성합니다.
 - 새 페이지가 LNB에 필요하면 navigation store와 i18n label을 함께 추가합니다.
 
 ## 11. i18n 규칙

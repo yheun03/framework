@@ -11,58 +11,23 @@
                 </header>
 
                 <!-- BASIC -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Basic
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        기본 textarea 입력 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Basic" desc="기본 textarea 입력 예시입니다.">
                     <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- WITH FORM FIELD -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            With FormField
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        AppFormField와 함께 label, hint, error를 연결합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="With FormField"
+                    desc="AppFormField와 함께 label, hint, error를 연결합니다.">
                     <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다." :error="contentError">
                         <template #default="{ id, invalid, describedby }">
                             <AppTextarea :id="id" v-model="content" placeholder="문의 내용을 입력하세요." :max-length="200"
                                 show-count clearable :invalid="invalid" :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- SIZE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Size
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        sm / md / lg 크기를 비교합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
@@ -82,22 +47,10 @@
                             <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- RESIZE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Resize
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        resize 옵션별 textarea 크기 조절 방식을 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Resize" desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
@@ -125,22 +78,10 @@
                             <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" />
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- STATES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            States
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        disabled, readonly, invalid 상태를 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="States" desc="disabled, readonly, invalid 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">disabled</div>
@@ -160,41 +101,23 @@
                             <AppTextarea v-model="invalidValue" invalid placeholder="invalid textarea" />
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- COUNT / CLEAR -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Count / Clear
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        글자 수 표시와 clearable 옵션을 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Count / Clear" desc="글자 수 표시와 clearable 옵션을 확인합니다.">
                     <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
                         clearable />
-                </DemoAccordionSection>
+                </AppSection>
 
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                Current Value
-                            </h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

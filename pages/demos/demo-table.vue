@@ -8,13 +8,7 @@
                 </header>
 
                 <!-- BASIC TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Basic Types
-                        </h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Basic Types">
                     <p class="page-demo__desc">
                         AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다.
                         각 행의 <code>th</code>에는 <code>cell.type</code>이, <code>td</code>에는 해당 타입의 컴포넌트가 렌더링됩니다.
@@ -22,95 +16,37 @@
 
                     <AppTable :model-value="basicForm" :rows="basicRows" title="Basic" default-label-width="160px"
                         @update:model-value="updateBasicForm" @field-action="handleFieldAction" />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- BUTTON TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Button Types
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        button / input_button / input_button-text / input-text / text-button 타입 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Button Types"
+                    desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
                     <AppTable :model-value="buttonForm" :rows="buttonRows" title="Button Variants"
                         default-label-width="160px" @update:model-value="updateButtonForm"
                         @field-action="handleFieldAction" />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CHOICE TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Choice Types
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        radio / checkbox 타입 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
                     <AppTable :model-value="choiceForm" :rows="choiceRows" title="Choice" default-label-width="160px"
                         @update:model-value="updateChoiceForm" @field-action="handleFieldAction" />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- DATE TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Date Types
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        date / range_date 타입 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
                     <AppTable :model-value="dateForm" :rows="dateRows" title="Date" default-label-width="160px"
                         @update:model-value="updateDateForm" @field-action="handleFieldAction" />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CONTACT TYPES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Contact Types
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        phone / email 타입 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
                     <AppTable :model-value="contactForm" :rows="contactRows" title="Contact" default-label-width="160px"
                         @update:model-value="updateContactForm" @field-action="handleFieldAction" />
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- STATE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Readonly / Disabled
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        readonly / disabled 상태 확인용 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Readonly / Disabled"
+                    desc="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
                         <AppTable :model-value="stateForm" :rows="stateRows" title="Readonly"
                             default-label-width="160px" readonly @update:model-value="updateStateForm"
@@ -120,22 +56,16 @@
                             default-label-width="160px" disabled @update:model-value="updateDisabledForm"
                             @field-action="handleFieldAction" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                Current Value
-                            </h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

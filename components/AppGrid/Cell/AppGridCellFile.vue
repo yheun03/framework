@@ -1,25 +1,23 @@
 <template>
-    <div class="app-grid-cell-image" @dragenter.stop @dragover.stop @dragleave.stop @drop.stop>
-        <AppUploadImage v-model="value" :multiple="imageOptions.multiple" :max-count="imageOptions.maxCount"
-            :accept="imageOptions.accept" :hint="imageOptions.hint" :trigger-text="imageOptions.triggerText"
-            :allow-drop="imageOptions.allowDrop" :max-size-bytes="imageOptions.maxSizeBytes"
-            :read-mode="imageOptions.readMode" />
+    <div class="app-grid-cell-file" @dragenter.stop @dragover.stop @dragleave.stop @drop.stop>
+        <AppUploadFile v-model="value" :multiple="fileOptions.multiple" :max-count="fileOptions.maxCount"
+            :accept="fileOptions.accept" :hint="fileOptions.hint" :trigger-text="fileOptions.triggerText"
+            :allow-drop="fileOptions.allowDrop" :max-size-bytes="fileOptions.maxSizeBytes" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
+import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
+import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 
-type ReadMode = 'dataUrl' | 'objectUrl'
-type ImageCellValue =
+type FileCellValue =
     | string
     | {
         id: string
         name: string
         type: string
         size: number
-        url: string
-        alt?: string
+        path?: string
         file?: File
         source?: 'sample' | 'upload'
     }
@@ -28,14 +26,13 @@ type ImageCellValue =
         name: string
         type: string
         size: number
-        url: string
-        alt?: string
+        path?: string
         file?: File
         source?: 'sample' | 'upload'
     }>
     | null
 
-type ImageCellParams = {
+type FileCellParams = {
     multiple?: boolean
     maxCount?: number
     accept?: string
@@ -43,15 +40,14 @@ type ImageCellParams = {
     triggerText?: string
     allowDrop?: boolean
     maxSizeBytes?: number
-    readMode?: ReadMode
 }
 
 const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
-const { rendererParams, value } = useCellRendererValue<ImageCellValue>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<FileCellValue>(params)
 
-const imageOptions = computed<ImageCellParams>(() => ({
+const fileOptions = computed<FileCellParams>(() => ({
     multiple: Boolean(rendererParams.value.multiple),
     maxCount: rendererParams.value.maxCount,
     accept: rendererParams.value.accept,
@@ -59,6 +55,5 @@ const imageOptions = computed<ImageCellParams>(() => ({
     triggerText: rendererParams.value.triggerText,
     allowDrop: rendererParams.value.allowDrop ?? true,
     maxSizeBytes: rendererParams.value.maxSizeBytes,
-    readMode: rendererParams.value.readMode,
 }))
 </script>

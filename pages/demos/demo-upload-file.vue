@@ -7,8 +7,7 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <AppAccordion class="page-demo-accordion" :items="demoSections" mode="multiple"
-                    initial-open="none">
+                <AppAccordion class="page-demo-accordion" :items="demoSections" mode="multiple" initial-open="none">
                     <template #basic>
                         <div class="page-demo-row">
                             <AppUploadFile v-model="basic.file" @change="onBasicChange" @error="onError"
@@ -34,8 +33,8 @@
 
                     <template #multiple>
                         <div class="page-demo-row">
-                            <AppUploadFile v-model="multiple.files" multiple :max-count="4"
-                                @change="onMultipleChange" @error="onError" @remove="onRemove" />
+                            <AppUploadFile v-model="multiple.files" multiple :max-count="4" @change="onMultipleChange"
+                                @error="onError" @remove="onRemove" />
 
                             <div class="page-demo-stack">
                                 <div class="page-demo-hint">
@@ -47,8 +46,7 @@
                                         샘플 파일
                                     </AppButton>
 
-                                    <AppTextButton size="sm" :disabled="!multiple.files.length"
-                                        @click="clearMultiple">
+                                    <AppTextButton size="sm" :disabled="!multiple.files.length" @click="clearMultiple">
                                         값 비우기
                                     </AppTextButton>
                                 </div>
@@ -59,8 +57,8 @@
                     <template #drop>
                         <div class="page-demo-grid">
                             <div class="page-demo-stack">
-                                <AppUploadFile v-model="drop.enabled" :allow-drop="true"
-                                    @change="onDropEnabledChange" @error="onError" />
+                                <AppUploadFile v-model="drop.enabled" :allow-drop="true" @change="onDropEnabledChange"
+                                    @error="onError" />
 
                                 <div class="page-demo-hint">
                                     드롭 가능 상태입니다.
@@ -102,8 +100,8 @@
 
                     <template #disabled>
                         <div class="page-demo-row">
-                            <AppUploadFile v-model="disabled.file" :disabled="disabled.value"
-                                @change="onDisabledChange" @error="onError" />
+                            <AppUploadFile v-model="disabled.file" :disabled="disabled.value" @change="onDisabledChange"
+                                @error="onError" />
 
                             <div class="page-demo-stack">
                                 <div class="page-demo-actions">
@@ -111,8 +109,7 @@
                                         disabled: {{ disabled.value ? 'ON' : 'OFF' }}
                                     </AppTextButton>
 
-                                    <AppTextButton size="sm" :disabled="!disabled.file"
-                                        @click="clearDisabled">
+                                    <AppTextButton size="sm" :disabled="!disabled.file" @click="clearDisabled">
                                         값 비우기
                                     </AppTextButton>
                                 </div>
@@ -124,7 +121,7 @@
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
                     <AppAccordion class="page-demo-accordion" :items="asideSections" mode="multiple"
                         initial-open="none">

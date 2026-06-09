@@ -13,19 +13,8 @@
                     </p>
                 </header>
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Basic Section
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        AppSection의 기본 Header / Body / Footer 구성입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Basic Section"
+                    desc="AppSection의 기본 Header / Body / Footer 구성입니다.">
                     <AppSection class="section-demo__section-demo" title="Account Summary" desc="기본 column, gap=12">
                         <AppSectionHeader>
                             <div class="section-demo-box section-demo-box--header">
@@ -48,21 +37,9 @@
                             </div>
                         </AppSectionFooter>
                     </AppSection>
-                </DemoAccordionSection>
+                </AppSection>
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Wrapper Column
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        AppSectionWrapper 세로 배치 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Wrapper Column" desc="AppSectionWrapper 세로 배치 예시입니다.">
                     <AppSectionWrapper class="section-demo__wrapper-demo" title="Project Status"
                         desc="direction='column' / gap='24'" direction="column" :gap="24">
                         <template #header>
@@ -90,21 +67,10 @@
                             </AppSectionBody>
                         </AppSection>
                     </AppSectionWrapper>
-                </DemoAccordionSection>
+                </AppSection>
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Wrapper Row + Ratio
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        AppSectionWrapper 가로 배치와 ratio, gap 조합 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Wrapper Row + Ratio"
+                    desc="AppSectionWrapper 가로 배치와 ratio, gap 조합 예시입니다.">
                     <AppSectionWrapper class="section-demo__wrapper-demo" title="Dashboard Layout"
                         desc="direction='row' / ratio='2fr 1fr' / gap='20'" direction="row" :ratio="[2, 1]" :gap="20">
                         <template #header>
@@ -132,21 +98,10 @@
                             </AppSectionBody>
                         </AppSection>
                     </AppSectionWrapper>
-                </DemoAccordionSection>
+                </AppSection>
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">
-                            Section Row + Repeat
-                        </h2>
-                    </template>
-
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        AppSection 내부 row 배치와 반복 렌더링을 함께 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Section Row + Repeat"
+                    desc="AppSection 내부 row 배치와 반복 렌더링을 함께 확인합니다.">
                     <AppSectionWrapper class="section-demo__wrapper-demo" title="Weekly Tasks" desc="반복 section 예시"
                         direction="column" :gap="16">
                         <AppSection v-for="item in repeatedSections" :key="item.id" class="section-demo__section-demo"
@@ -166,22 +121,16 @@
                             </AppSectionBody>
                         </AppSection>
                     </AppSectionWrapper>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                Structure Info
-                            </h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Structure Info">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

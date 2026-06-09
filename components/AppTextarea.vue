@@ -15,8 +15,8 @@
             @focus="isFocused = true" @blur="isFocused = false" />
 
         <div v-if="showCount || clearable" class="app-textarea__footer">
-            <AppButton v-if="clearable && modelValue && !disabled && !readonly" unstyled type="button" class="app-textarea__clear"
-                @click="clearValue">
+            <AppButton v-if="clearable && modelValue && !disabled && !readonly" unstyled type="button"
+                class="app-textarea__clear" @click="clearValue">
                 지우기
             </AppButton>
 
