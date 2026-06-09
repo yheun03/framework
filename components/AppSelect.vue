@@ -17,9 +17,9 @@
         </label>
 
         <div class="form-field__control app-select__control">
-            <component :is="'button'" :id="selectId" class="app-select__trigger" type="button" :name="name" :disabled="disabled"
-                :aria-invalid="state === 'error'" :aria-describedby="describedBy" :aria-expanded="isOpen"
-                :aria-readonly="readonly || undefined" aria-haspopup="listbox" @click="toggle">
+            <component :is="'button'" :id="selectId" class="app-select__trigger" type="button" :name="name"
+                :disabled="disabled" :aria-invalid="state === 'error'" :aria-describedby="describedBy"
+                :aria-expanded="isOpen" :aria-readonly="readonly || undefined" aria-haspopup="listbox" @click="toggle">
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
                     {{ selectedOption?.label ?? placeholder }}
                 </span>

@@ -1,6 +1,6 @@
 <template>
-    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" mode="multiple"
-        initial-open="none" aria-label="컴포넌트 속성 요약">
+    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" mode="multiple" initial-open="none"
+        aria-label="컴포넌트 속성 요약">
         <template #props>
             <div class="page-demo-prop-table">
                 <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row">

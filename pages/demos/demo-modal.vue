@@ -12,16 +12,8 @@
                 </header>
 
                 <!-- BASIC -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Basic</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Basic"
+                    desc="가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlert">
                             Alert 열기
@@ -35,19 +27,11 @@
                             Custom 열기
                         </AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- ALERT -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Alert Props</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        title, message, confirmText, closeOnDim, closeOnEsc, closable 조합 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Alert Props"
+                    desc="title, message, confirmText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlertBasic">
                             기본 Alert
@@ -65,19 +49,11 @@
                             Alert 중첩 열기
                         </AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CONFIRM -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Confirm Props</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        confirmText, cancelText, closeOnDim, closeOnEsc, closable 조합 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Confirm Props"
+                    desc="confirmText, cancelText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenConfirmBasic">
                             기본 Confirm
@@ -95,20 +71,11 @@
                             Confirm 중첩 열기
                         </AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CUSTOM -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Custom Modal</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        component와 componentProps를 전달해 원하는 내용을 렌더링하는 방식입니다.
-                        실무에서는 별도 컴포넌트 전달 방식이 유지보수에 유리합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Custom Modal"
+                    desc="component와 componentProps를 전달해 원하는 내용을 렌더링하는 방식입니다. 실무에서는 별도 컴포넌트 전달 방식이 유지보수에 유리합니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenCustom">
                             Custom 열기
@@ -118,19 +85,11 @@
                             Custom 중첩 열기
                         </AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- VIEWER -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Viewer Modal</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Viewer Modal"
+                    desc="이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenImageViewer">
                             이미지 뷰어 열기
@@ -140,19 +99,11 @@
                             PDF 뷰어 열기
                         </AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- CONTROL -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Store Control</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        스토어 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Store Control"
+                    desc="스토어 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="outline" @click="handleCloseTop">
                             최상단 모달 닫기
@@ -162,19 +113,16 @@
                             전체 모달 닫기
                         </AppTextButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">Current Value</h2>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>
@@ -184,7 +132,7 @@
 <script setup lang="ts">
 import { useModalViewer } from '~/composables/useModalViewer'
 import { useModalStore } from '~/stores/modal'
-import ModalRendererExample from '~/pages/demos/modal/ModalRendererExample.vue'
+import PageDemoModalRendererExample from '~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue'
 
 const { title } = useDemoI18n('modal')
 const modalStore = useModalStore()
@@ -367,7 +315,7 @@ function handleOpenCustom() {
         type: 'custom',
         title: '커스텀 모달',
         width: '640px',
-        component: ModalRendererExample,
+        component: PageDemoModalRendererExample,
         componentProps: {
             lastAction: lastAction.value,
             onAction: () => {
@@ -393,7 +341,7 @@ function handleOpenNestedCustom() {
         type: 'custom',
         title: '1차 Custom',
         keepOnConfirm: true,
-        component: ModalRendererExample,
+        component: PageDemoModalRendererExample,
         componentProps: {
             lastAction: lastAction.value,
             onAction: () => {
@@ -404,7 +352,7 @@ function handleOpenNestedCustom() {
                     type: 'custom',
                     title: '2차 Custom',
                     width: '520px',
-                    component: ModalRendererExample,
+                    component: PageDemoModalRendererExample,
                     componentProps: {
                         lastAction: 'nested custom open',
                         onAction: () => {

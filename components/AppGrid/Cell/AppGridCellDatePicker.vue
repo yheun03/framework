@@ -5,12 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
+import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
+import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
+import type { DateRangeValue } from '~/components/AppDatePicker.vue'
+
+type DatePickerModelValue = string | string[] | DateRangeValue | null | undefined
 
 const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
-const { rendererParams, value } = useCellRendererValue(params)
+const { rendererParams, value } = useAppGridCellRendererValue<DatePickerModelValue>(params)
 
 const mode = computed(() => rendererParams.value.mode ?? 'single')
 const min = computed(() => rendererParams.value.min)

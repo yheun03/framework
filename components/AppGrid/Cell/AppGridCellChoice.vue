@@ -11,14 +11,22 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
+import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
+import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
+
+type ChoiceType = 'checkbox' | 'radio'
+type ChoiceValue = string | number | boolean | null
+type ChoiceOption = {
+    label: string
+    value: string | number
+}
 
 const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
-const { rendererParams, value } = useCellRendererValue(params)
-const options = computed(() => rendererParams.value.options ?? [])
-const type = computed(() => rendererParams.value.type ?? 'radio')
+const { rendererParams, value } = useAppGridCellRendererValue<ChoiceValue | Array<string | number>>(params)
+const options = computed<ChoiceOption[]>(() => rendererParams.value.options ?? [])
+const type = computed<ChoiceType>(() => rendererParams.value.type ?? 'radio')
 
 const radioName = computed(() => `${params.column?.getColId?.()}-${params.node?.id}`)
 
@@ -29,14 +37,14 @@ function setCellValue(v: unknown) {
     )
 }
 
-function choiceValue(optionValue: string | number) {
+function choiceValue(optionValue: string | number): ChoiceValue {
     if (type.value === 'checkbox') {
         return Array.isArray(value.value)
             ? value.value.includes(optionValue)
             : Boolean(value.value)
     }
 
-    return value.value
+    return Array.isArray(value.value) ? null : value.value
 }
 
 function updateChoiceValue(optionValue: string | number, checkedValue: unknown) {

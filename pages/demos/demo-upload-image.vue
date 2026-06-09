@@ -11,16 +11,8 @@
                 </header>
 
                 <!-- BASIC -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Basic</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Basic"
+                    desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="basic.imageUrl" @change="onBasicChange" @error="onError"
                             @remove="onRemove" />
@@ -41,19 +33,10 @@
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- STATE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">State & Control</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        disabled 상태와 외부 제어 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" @change="onStateChange"
                             @error="onError" />
@@ -78,19 +61,10 @@
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- MULTIPLE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Multiple</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="multiple.images" multiple :max-count="3" @change="onMultipleChange"
                             @error="onError" @remove="onRemove" />
@@ -105,26 +79,17 @@
                                     샘플 이미지
                                 </AppButton>
 
-                                <AppTextButton size="sm" :disabled="!multiple.images.length"
-                                    @click="clearMultiple">
+                                <AppTextButton size="sm" :disabled="!multiple.images.length" @click="clearMultiple">
                                     값 비우기
                                 </AppTextButton>
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- READ MODE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Read Mode</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        <code>readMode="dataUrl"</code> 와 <code>readMode="objectUrl"</code> 차이를 확인합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Read Mode"
+                    desc="&lt;code>readMode=&quot;dataUrl&quot;&lt;/code> 와 &lt;code>readMode=&quot;objectUrl&quot;&lt;/code> 차이를 확인합니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="readMode.dataUrlImage" read-mode="dataUrl"
@@ -144,19 +109,11 @@
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- DRAG & DROP -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Drag & Drop</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        <code>allowDrop</code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Drag &amp; Drop"
+                    desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="drop.enabled" :allow-drop="true" @change="onDropEnabledChange"
@@ -176,19 +133,10 @@
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- FILE RULES -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">File Rules</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">
-                        파일 형식과 최대 용량 제한 예시입니다.
-                        </p>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp"
@@ -208,18 +156,15 @@
                             </div>
                         </div>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">Actions</h2>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="Actions">
                         <div class="page-demo-actions">
                             <AppButton variant="fill" @click="setAllSamples">
                                 샘플 이미지 일괄 적용
@@ -229,14 +174,11 @@
                                 초기화
                             </AppTextButton>
                         </div>
-                    </DemoAccordionSection>
+                    </AppSection>
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">Current Value</h2>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

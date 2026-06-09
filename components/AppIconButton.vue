@@ -1,6 +1,6 @@
 <template>
     <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
-        :aria-label="ariaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="handleClick">
+        :aria-label="resolvedAriaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="handleClick">
         <slot>
             <Icon v-if="icon" :icon="icon" />
         </slot>
@@ -35,7 +35,8 @@ type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 const props = withDefaults(
     defineProps<{
         icon?: string
-        ariaLabel: string
+        ariaLabel?: string
+        'aria-label'?: string
         type?: IconButtonType
         to?: string
         href?: string
@@ -66,6 +67,8 @@ const props = withDefaults(
 const emit = defineEmits<{
     click: [MouseEvent]
 }>()
+
+const resolvedAriaLabel = computed(() => props.ariaLabel ?? props['aria-label'] ?? attrs['aria-label'] as string | undefined)
 
 const { tag, componentAttrs, ariaDisabled, tabIndex, handleClick } = useButtonAction({
     attrs,

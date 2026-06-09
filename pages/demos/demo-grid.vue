@@ -6,38 +6,31 @@
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
                 </header> <!-- GRID 1 -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">사용자 목록</h2>
-                    </template>
+                <AppSection class="page-demo-accordion" title="사용자 목록">
                     <AppGridToolbar target="grid1">
                         <AppGridSearch v-model="search1" :fields="searchFields1" />
                         <AppGridDownload />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid1" class="page-demo-grid" :row-data="rows1" :column-defs="columns1"
-                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" :row-selection="multiRowSelection"
-                            animate-rows :style="{ height: '320px', width: '100%' }" />
+                            :default-col-def="defaultColDef" :get-row-height="getRowHeight"
+                            :row-selection="multiRowSelection" animate-rows
+                            :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </DemoAccordionSection> <!-- GRID 2 -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">주문 목록</h2>
-                    </template>
+                </AppSection> <!-- GRID 2 -->
+                <AppSection class="page-demo-accordion" title="주문 목록">
                     <AppGridToolbar target="grid2">
                         <AppGridSearch v-model="search2" :fields="searchFields2" />
                         <AppGridDownload />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="columns2"
-                            :default-col-def="defaultColDef" :get-row-height="getRowHeight" :row-selection="multiRowSelection"
-                            animate-rows :style="{ height: '320px', width: '100%' }" />
+                            :default-col-def="defaultColDef" :get-row-height="getRowHeight"
+                            :row-selection="multiRowSelection" animate-rows
+                            :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </DemoAccordionSection> <!-- GRID 3 -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">상품 조회 (단순 그리드)</h2>
-                    </template>
+                </AppSection> <!-- GRID 3 -->
+                <AppSection class="page-demo-accordion" title="상품 조회 (단순 그리드)">
                     <AppGridToolbar target="grid3">
                         <AppGridSearch v-model="search3" :fields="searchFields3" />
                         <AppGridDownload />
@@ -46,11 +39,8 @@
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
                             :default-col-def="defaultColDef" auto-height animate-rows />
                     </ClientOnly>
-                </DemoAccordionSection>
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">셀 렌더러 인풋 예제</h2>
-                    </template>
+                </AppSection>
+                <AppSection class="page-demo-accordion" title="셀 렌더러 인풋 예제">
                     <AppGridToolbar target="grid4">
                         <AppGridDownload />
                     </AppGridToolbar>
@@ -58,42 +48,22 @@
                         <AppGrid grid-id="grid4" class="page-demo-grid" :row-data="rows4" :column-defs="columns4"
                             :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows />
                     </ClientOnly>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="검색 상태 패널">
                 <div class="page-demo-aside__sticky page-demo-stack">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                검색 폼 값 (v-model)
-                            </h2>
-                        </template>
-                        <template #desc>
-                        <p class="page-demo-card__desc">
-                        각 그리드 <code>AppGridSearch</code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.
-                        </p>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="검색 폼 값 (v-model)"
+                        desc="각 그리드 &lt;code>AppGridSearch&lt;/code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.">
                         <pre class="page-demo-output">{{ searchStateOutput }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">
-                                검색 필드 정의 (<code>fields</code>)
-                            </h2>
-                        </template>
-                        <template #desc>
-                        <p class="page-demo-card__desc">
-                        <code>AppGridSearchField</code> 배열 — <code>type</code>, <code>label</code>,
-                        <code>filterField</code>,
-                        <code>selectInput</code>, <code>numberRange</code> 등 속성을 한눈에 확인할 수 있습니다.
-                        </p>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="검색 필드 정의 (&lt;code>fields&lt;/code>)"
+                        desc="&lt;code>AppGridSearchField&lt;/code> 배열 — &lt;code>type&lt;/code>, &lt;code>label&lt;/code>, &lt;code>filterField&lt;/code>, &lt;code>selectInput&lt;/code>, &lt;code>numberRange&lt;/code> 등 속성을 한눈에 확인할 수 있습니다.">
                         <pre class="page-demo-output">{{ searchFieldsOutput }}</pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>
@@ -114,13 +84,13 @@ import type { ColDef } from 'ag-grid-community'
 
 import type { AppGridSearchField, DateRangeValue } from '~/types/grid-search'
 
-import AppGridCellSelect from '~/components/AppGrid/Cell/Select.vue'
-import AppGridCellInput from '~/components/AppGrid/Cell/Input.vue'
-import AppGridCellChoice from '~/components/AppGrid/Cell/Choice.vue'
-import AppGridCellTextarea from '~/components/AppGrid/Cell/Textarea.vue'
-import AppGridCellDatePicker from '~/components/AppGrid/Cell/DatePicker.vue'
-import AppGridCellImage from '~/components/AppGrid/Cell/Image.vue'
-import AppGridCellFile from '~/components/AppGrid/Cell/File.vue'
+import AppGridCellSelect from '~/components/AppGrid/Cell/AppGridCellSelect.vue'
+import AppGridCellInput from '~/components/AppGrid/Cell/AppGridCellInput.vue'
+import AppGridCellChoice from '~/components/AppGrid/Cell/AppGridCellChoice.vue'
+import AppGridCellTextarea from '~/components/AppGrid/Cell/AppGridCellTextarea.vue'
+import AppGridCellDatePicker from '~/components/AppGrid/Cell/AppGridCellDatePicker.vue'
+import AppGridCellImage from '~/components/AppGrid/Cell/AppGridCellImage.vue'
+import AppGridCellFile from '~/components/AppGrid/Cell/AppGridCellFile.vue'
 
 const { title, description } = useDemoI18n('grid')
 

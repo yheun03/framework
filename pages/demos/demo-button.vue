@@ -14,11 +14,7 @@
                 <!-- Variant -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Variant</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Variant">
                     <p class="page-demo-hint">
                         버튼 유형별 기본 스타일을 정의합니다.
                     </p>
@@ -34,19 +30,16 @@
                         <AppButton variant="fill" @click="handleLogClick('fill')">fill</AppButton>
                         <AppButton variant="outline" @click="handleLogClick('outline')">outline</AppButton>
                         <AppTextButton @click="handleLogClick('text')">text</AppTextButton>
-                        <AppTextButton variant="underline" @click="handleLogClick('underline')">underline</AppTextButton>
+                        <AppTextButton variant="underline" @click="handleLogClick('underline')">underline
+                        </AppTextButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Size -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Size</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Size">
                     <p class="page-demo-hint">
                         버튼 크기를 정의합니다.
                     </p>
@@ -94,17 +87,13 @@
                         <AppTextButton variant="underline" size="md">MD</AppTextButton>
                         <AppTextButton variant="underline" size="lg">LG</AppTextButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Shape -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Shape</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Shape">
                     <p class="page-demo-hint">
                         버튼 모서리 스타일
                     </p>
@@ -120,17 +109,13 @@
                         <AppButton variant="fill" shape="round">Round</AppButton>
                         <AppButton variant="fill" shape="pill">Pill</AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Tone -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Tone</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Tone">
                     <p class="page-demo-hint">
                         버튼 색상 스타일
                     </p>
@@ -144,17 +129,13 @@
                         <AppButton variant="fill" tone="success">Success</AppButton>
                         <AppButton variant="fill" tone="info">Info</AppButton>
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Icon</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Icon">
                     <p class="page-demo-hint">
                         AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.
                     </p>
@@ -176,17 +157,13 @@
                         </AppButton>
 
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon Button -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Icon Button</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Icon Button">
                     <p class="page-demo-hint">
                         아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘 크기를 따로 지정할 수 있습니다.
                     </p>
@@ -209,17 +186,13 @@
                         <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36" :icon-size="18"
                             variant="outline" tone="danger" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Link -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Link</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="Link">
                     <p class="page-demo-hint">
                         AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.
                     </p>
@@ -241,17 +214,13 @@
                         </AppTextButton>
 
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- State -->
                 <!-- -------------------------------------------------- -->
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">State</h2>
-                    </template>
-
+                <AppSection class="page-demo-accordion" title="State">
                     <p class="page-demo-hint">
                         버튼 상태
                     </p>
@@ -277,12 +246,9 @@
                         </AppButton>
 
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Custom Size</h2>
-                    </template>
+                <AppSection class="page-demo-accordion" title="Custom Size">
                     <p class="page-demo-hint">
                         AppButton / AppTextButton / AppIconButton은 width/height 속성으로 가로/세로와 min-size를 함께 지정할 수 있습니다.
                     </p>
@@ -308,7 +274,7 @@
                         <AppIconButton icon="mdi:star-outline" aria-label="커스텀 아이콘 버튼" :width="72" :height="30"
                             :icon-size="16" variant="outline" tone="primary" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
             </main>
 
@@ -317,29 +283,21 @@
             <aside class="page-demo-aside">
 
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">Actions</h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Actions">
                         <div class="page-demo-actions">
                             <AppButton variant="fill" @click="handleClearClick">
                                 로그 비우기
                             </AppButton>
                         </div>
-                    </DemoAccordionSection>
+                    </AppSection>
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title">Click Log</h2>
-                        </template>
-
+                    <AppSection class="page-demo-accordion" title="Click Log">
                         <pre class="page-demo-output">
                 {{ output }}
             </pre>
-                    </DemoAccordionSection>
+                    </AppSection>
 
                 </div>
 

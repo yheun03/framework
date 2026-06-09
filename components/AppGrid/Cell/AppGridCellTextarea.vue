@@ -5,12 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
+import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
+import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 
 const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
-const { rendererParams, value } = useCellRendererValue<string | number | null>(params)
+const { rendererParams, value } = useAppGridCellRendererValue<string | number | null>(params)
 
 const rows = computed(() => rendererParams.value.rows ?? 2)
 const resize = computed(() => rendererParams.value.resize ?? 'none')

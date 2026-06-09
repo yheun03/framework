@@ -6,45 +6,27 @@
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
                 </header> <!-- BASIC -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title"> Basic </h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc"> 가장 기본적인 Select 사용 예시입니다. </p>
-                    </template>
+                <AppSection class="page-demo-accordion" title="Basic" desc="가장 기본적인 Select 사용 예시입니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="basic.department" label="부서" placeholder="부서를 선택하세요" hint="부서를 선택해주세요"
                             :options="departmentOptions" />
                         <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :options="jobOptions" />
                         <AppSelect v-model="basic.country" placeholder="국가 선택" :options="countryOptions" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- SIZE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Size</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">Select의 높이를 제어합니다.</p>
-                    </template>
+                <AppSection class="page-demo-accordion" title="Size" desc="Select의 높이를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect size="xs" label="XS" v-model="sizes.xs" :options="departmentOptions" />
                         <AppSelect size="sm" label="SM" v-model="sizes.sm" :options="departmentOptions" />
                         <AppSelect size="md" label="MD" v-model="sizes.md" :options="departmentOptions" />
                         <AppSelect size="lg" label="LG" v-model="sizes.lg" :options="departmentOptions" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- SHAPE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">Shape</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc">Select의 border 스타일을 제어합니다.</p>
-                    </template>
+                <AppSection class="page-demo-accordion" title="Shape" desc="Select의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect shape="square" label="Square" v-model="shape.square" :options="departmentOptions" />
                         <AppSelect shape="round" label="Round" v-model="shape.round" :options="departmentOptions" />
@@ -52,16 +34,10 @@
                         <AppSelect shape="underline" label="Underline" v-model="shape.underline"
                             :options="departmentOptions" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- STATE -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title">State</h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc"> 선택 상태에 따른 스타일을 제공합니다. </p>
-                    </template>
+                <AppSection class="page-demo-accordion" title="State" desc="선택 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지"
                             :options="departmentOptions" />
@@ -70,34 +46,25 @@
                         <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능"
                             :options="departmentOptions" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
 
                 <!-- DISABLED -->
-                <DemoAccordionSection>
-                    <template #title>
-                        <h2 class="page-demo-card__title"> Disabled </h2>
-                    </template>
-                    <template #desc>
-                        <p class="page-demo-card__desc"> 선택 불가 상태를 제어합니다. </p>
-                    </template>
+                <AppSection class="page-demo-accordion" title="Disabled" desc="선택 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태"
                             :options="departmentOptions" />
                     </div>
-                </DemoAccordionSection>
+                </AppSection>
             </main>
 
             <!-- STATE PANEL -->
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
-                    <DemoPropsSummary />
+                    <PageDemoPropsSummary />
 
-                    <DemoAccordionSection>
-                        <template #title>
-                            <h2 class="page-demo-card__title"> Current Value </h2>
-                        </template>
+                    <AppSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}                        </pre>
-                    </DemoAccordionSection>
+                    </AppSection>
                 </div>
             </aside>
         </div>

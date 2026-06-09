@@ -1,6 +1,5 @@
 import type { Component } from 'vue';
 
-export type ModalType = 'alert' | 'confirm' | 'custom';
 export type ModalCloseReason = 'esc' | 'backdrop' | 'close' | 'cancel' | 'confirm';
 
 export type ModalViewCloseReason = Extract<ModalCloseReason, 'esc' | 'backdrop' | 'close'>;
@@ -15,23 +14,6 @@ export type ModalCommonOptions = {
     closeOnEsc?: boolean;
     keepOnConfirm?: boolean;
     onClose?: (reason?: ModalCloseReason) => void;
-};
-
-export type ModalBaseProps = {
-    id: number;
-    title?: string;
-    width?: string;
-    height?: string;
-    zIndex?: number;
-    overlay?: boolean;
-    closable?: boolean;
-    closeOnDim?: boolean;
-    closeOnEsc?: boolean;
-    isTop?: boolean;
-};
-
-export type ModalCloseEvent = {
-    (e: 'modal-close', id: number, reason?: ModalViewCloseReason): void;
 };
 
 export type AlertModalInput = ModalCommonOptions & {
