@@ -25,9 +25,7 @@
 </template>
 
 <script setup lang="ts">
-type SectionDirection = 'row' | 'column'
-type SectionRatio = number[] | string | null
-type SectionGap = number | string
+import { normalizeSectionGap, normalizeSectionRatio, type SectionDirection, type SectionRatio, type SectionGap } from '~/utils/section'
 
 const slots = useSlots()
 
@@ -48,28 +46,14 @@ const props = withDefaults(
     },
 )
 
-function normalizeGap(value: number | string) {
-    return typeof value === 'number' ? `${value}px` : value
-}
-
-function normalizeRatio(value: SectionRatio) {
-    if (!value) return undefined
-
-    if (Array.isArray(value)) {
-        return value.map((item) => `${item}fr`).join(' ')
-    }
-
-    return value
-}
-
 const hasHeader = computed(() => !!props.title || !!props.desc || !!slots.header)
 
 const wrapperClassName = computed(() => `app-section-wrapper--${props.direction}`)
 
 const wrapperStyle = computed(() => {
     return {
-        '--app-section-wrapper-gap': normalizeGap(props.gap as SectionGap),
-        '--app-section-wrapper-template': normalizeRatio(props.ratio),
+        '--app-section-wrapper-gap': normalizeSectionGap(props.gap as SectionGap),
+        '--app-section-wrapper-template': normalizeSectionRatio(props.ratio),
     }
 })
 </script>

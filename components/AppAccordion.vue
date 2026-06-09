@@ -34,7 +34,7 @@
             <div v-show="isOpen(item.id)" :id="getPanelId(item.id)" class="app-accordion__panel" role="region"
                 :aria-labelledby="getTriggerId(item.id)">
                 <div class="app-accordion__panel-inner">
-                    <component :is="getRendererComponent(item)" v-if="getRendererComponent(item)" />
+                    <component :is="item.rendererComponent" v-if="item.rendererComponent" />
 
                     <slot v-else-if="item.slot" :name="item.slot" :item="item" />
 
@@ -89,7 +89,12 @@ const emit = defineEmits<{
     (e: 'toggle', payload: { id: string | number; open: boolean }): void
 }>()
 
-const normalizedItems = computed(() => props.items ?? [])
+const normalizedItems = computed(() =>
+    (props.items ?? []).map((item) => ({
+        ...item,
+        rendererComponent: getRendererComponent(item),
+    })),
+)
 
 const isControlled = computed(() => Array.isArray(props.openIds))
 

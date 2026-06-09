@@ -18,10 +18,7 @@
 </template>
 
 <script setup lang="ts">
-type ProgressRange = {
-    start: number
-    end: number
-}
+import { normalizeProgressRange, type ProgressRange } from '~/utils/progress'
 
 const props = withDefaults(
     defineProps<{
@@ -39,32 +36,7 @@ const props = withDefaults(
     },
 )
 
-function normalizeValue(value: number) {
-    const next = Number(value)
-
-    if (Number.isNaN(next)) return 0
-
-    return Math.min(100, Math.max(0, Math.round(next)))
-}
-
-function normalizeRange(range?: ProgressRange): ProgressRange {
-    if (!range) {
-        return {
-            start: 0,
-            end: normalizeValue(props.value),
-        }
-    }
-
-    const start = normalizeValue(range.start)
-    const end = normalizeValue(range.end)
-
-    return {
-        start: Math.min(start, end),
-        end: Math.max(start, end),
-    }
-}
-
-const normalizedRange = computed(() => normalizeRange(props.range))
+const normalizedRange = computed(() => normalizeProgressRange(props.range, {}, props.value))
 const displayEnd = computed(() => normalizedRange.value.end)
 const showHeader = computed(() => !!props.label || props.showValue)
 

@@ -8,6 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import { toCssSize, toSyncedSizeStyles, type CssSize } from '~/utils/css'
+import { useButtonAction } from '~/composables/useButtonAction'
+
 defineOptions({
     inheritAttrs: false,
 })
@@ -28,7 +31,6 @@ type IconButtonTone =
     | 'info'
 
 type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-type CssSize = number | string
 
 const props = withDefaults(
     defineProps<{
@@ -65,54 +67,19 @@ const emit = defineEmits<{
     click: [MouseEvent]
 }>()
 
-const NuxtLinkComp = resolveComponent('NuxtLink')
-const isLink = computed(() => !!props.to || !!props.href)
-
-const tag = computed(() => {
-    if (props.to) return NuxtLinkComp
-    if (props.href) return 'a'
-    return 'button'
-})
-
-const componentAttrs = computed(() => {
-    const { class: _class, style: _style, ...passthroughAttrs } = attrs
-
-    if (props.to) {
-        return {
-            to: props.to,
-            ...passthroughAttrs,
-        }
-    }
-
-    if (props.href) {
-        return {
-            href: props.href,
-            target: props.newTab ? '_blank' : undefined,
-            rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...passthroughAttrs,
-        }
-    }
-
-    return {
-        type: props.type,
-        disabled: props.disabled,
-        ...passthroughAttrs,
-    }
-})
-
-const ariaDisabled = computed(() => {
-    if (!isLink.value) return undefined
-    return props.disabled ? 'true' : undefined
-})
-
-const tabIndex = computed(() => {
-    if (isLink.value && props.disabled) return -1
-    return undefined
+const { tag, componentAttrs, ariaDisabled, tabIndex, handleClick } = useButtonAction({
+    attrs,
+    type: () => props.type,
+    to: () => props.to,
+    href: () => props.href,
+    newTab: () => props.newTab,
+    disabled: () => props.disabled,
+    onClick: (event) => emit('click', event),
 })
 
 function sizeToCss(size: IconButtonSize | number, map: Record<IconButtonSize, number>) {
-    if (typeof size === 'number') return `${size}px`
-    return `${map[size]}px`
+    if (typeof size === 'number') return toCssSize(size)
+    return toCssSize(map[size])
 }
 
 const buttonSizeMap: Record<IconButtonSize, number> = {
@@ -136,22 +103,7 @@ const styles = computed(() => ({
     '--icon-size': sizeToCss(props.iconSize, iconSizeMap),
 }))
 
-function toCssSize(value?: CssSize) {
-    if (value == null || value === '') return undefined
-    return typeof value === 'number' ? `${value}px` : value
-}
-
-const syncedSizeStyles = computed(() => {
-    const width = toCssSize(props.width)
-    const height = toCssSize(props.height)
-
-    return {
-        width,
-        minWidth: width,
-        height,
-        minHeight: height,
-    }
-})
+const syncedSizeStyles = computed(() => toSyncedSizeStyles(props.width, props.height))
 
 const mergedStyles = computed(() => [
     attrs.style as string | Record<string, string> | undefined,
@@ -168,16 +120,6 @@ const classes = computed(() => [
         'app-icon-button--disabled': props.disabled,
     },
 ])
-
-function handleClick(e: MouseEvent) {
-    if (props.disabled) {
-        e.preventDefault()
-        e.stopPropagation()
-        return
-    }
-
-    emit('click', e)
-}
 
 function focus() {
     buttonEl.value?.focus()

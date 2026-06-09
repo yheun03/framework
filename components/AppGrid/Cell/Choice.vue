@@ -11,23 +11,20 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue } from './useCellRendererValue'
+import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
 
-const props = defineProps({
-    params: Object
-})
+const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
 const { rendererParams, value } = useCellRendererValue(params)
 const options = computed(() => rendererParams.value.options ?? [])
 const type = computed(() => rendererParams.value.type ?? 'radio')
 
-const radioName =
-    `${params?.column?.getColId()}-${params?.node?.id}`
+const radioName = computed(() => `${params.column?.getColId?.()}-${params.node?.id}`)
 
 function setCellValue(v: unknown) {
-    params?.node?.setDataValue(
-        params?.column?.getColId(),
+    params.node?.setDataValue?.(
+        params.column?.getColId?.(),
         v
     )
 }
@@ -57,5 +54,4 @@ function updateChoiceValue(optionValue: string | number, checkedValue: unknown) 
 
     setCellValue(current)
 }
-
 </script>

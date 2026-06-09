@@ -1,61 +1,62 @@
 <template>
     <div ref="root" class="app-grid-search" @keydown.enter.prevent="applySearch" @change="handleAutoSearch">
-        <template v-for="f in fields" :key="fieldKey(f)">
-            <dl v-if="layoutType(f) === 'input'" class="app-grid-search__dl">
+        <template v-for="f in searchFields" :key="f.fieldKey">
+            <dl v-if="f.layoutType === 'input'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                        @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'textarea'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'textarea'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppTextarea size="sm" :model-value="stringField(f.field)" :rows="f.rows ?? 3"
+                    <AppTextarea size="sm" :model-value="getStringValue(f.field)" :rows="f.rows ?? 3"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                        @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'number_range' && f.numberRange" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'number_range' && f.numberRange" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput size="sm" type="number" :name="f.numberRange.minKey"
-                        :model-value="stringField(f.numberRange.minKey)" :placeholder="'최소'" :min="f.inputMin"
+                        :model-value="getStringValue(f.numberRange.minKey)" :placeholder="'최소'" :min="f.inputMin"
                         :max="f.inputMax" :step="f.step" :readonly="f.readonly" :disabled="f.disabled"
                         class="app-grid-search__range-part"
-                        @update:model-value="(v) => setField(f.numberRange!.minKey, v)" />
+                        @update:model-value="(v) => setFieldValue(f.numberRange!.minKey, v)" />
                     <span class="app-grid-search__range-sep">~</span>
                     <AppInput size="sm" type="number" :name="f.numberRange.maxKey"
-                        :model-value="stringField(f.numberRange.maxKey)" :placeholder="'최대'" :min="f.inputMin"
+                        :model-value="getStringValue(f.numberRange.maxKey)" :placeholder="'최대'" :min="f.inputMin"
                         :max="f.inputMax" :step="f.step" :readonly="f.readonly" :disabled="f.disabled"
                         class="app-grid-search__range-part"
-                        @update:model-value="(v) => setField(f.numberRange!.maxKey, v)" />
+                        @update:model-value="(v) => setFieldValue(f.numberRange!.maxKey, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'split_inputs' && f.splitInput?.keys?.length" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'split_inputs' && f.splitInput?.keys?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <template v-for="(sk, i) in f.splitInput.keys" :key="sk">
-                        <AppInput size="sm" :name="sk" :model-value="stringField(sk)"
+                        <AppInput size="sm" :name="sk" :model-value="getStringValue(sk)"
                             :placeholder="f.splitInput.placeholders?.[i] ?? ''" :readonly="f.readonly"
                             :disabled="f.disabled" class="app-grid-search__split-part"
-                            @update:model-value="(v) => setField(sk, v)" />
-                        <span v-if="rawFieldType(f) === 'email' && i < f.splitInput.keys.length - 1"
+                            @update:model-value="(v) => setFieldValue(sk, v)" />
+                        <span v-if="f.rawFieldType === 'email' && i < f.splitInput.keys.length - 1"
                             class="app-grid-search__split-sep">@</span>
                     </template>
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'input_button'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'input_button'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
-                        class="app-grid-search__select-input-text" @update:model-value="(v) => setField(f.field, v)" />
+                        class="app-grid-search__select-input-text"
+                        @update:model-value="(v) => setFieldValue(f.field, v)" />
                     <AppButton size="sm" variant="outline" type="button" :disabled="f.disabled"
                         @click="emitFieldAction(f)">
                         {{ f.buttonText ?? '실행' }}
@@ -63,20 +64,21 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'input_text_row'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'input_text_row'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="stringField(f.field)" :type="inputNativeType(f)"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
-                        class="app-grid-search__select-input-text" @update:model-value="(v) => setField(f.field, v)" />
+                        class="app-grid-search__select-input-text"
+                        @update:model-value="(v) => setFieldValue(f.field, v)" />
                     <span v-if="f.suffixText" class="app-grid-search__suffix">{{ f.suffixText }}</span>
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'text_button'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'text_button'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <span class="app-grid-search__suffix">{{ f.suffixText ?? stringField(f.field) }}</span>
+                    <span class="app-grid-search__suffix">{{ f.suffixText ?? getStringValue(f.field) }}</span>
                     <AppButton size="sm" variant="outline" type="button" :disabled="f.disabled"
                         @click="emitFieldAction(f)">
                         {{ f.buttonText ?? '실행' }}
@@ -84,86 +86,87 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'select' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'select' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppSelect size="sm" :name="f.field" :model-value="selectField(f.field)" :options="f.options"
+                    <AppSelect size="sm" :name="f.field" :model-value="getSelectValue(f.field)" :options="f.options"
                         :placeholder="f.placeholderSelect ?? f.placeholder ?? '선택하세요'" :readonly="f.readonly"
-                        :disabled="f.disabled" @update:model-value="(v) => setField(f.field, v)"
+                        :disabled="f.disabled" @update:model-value="(v) => setFieldValue(f.field, v)"
                         @change="applySearch" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'select_input' && f.selectInput" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'select_input' && f.selectInput" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppSelect size="sm" :name="f.selectInput.columnKey"
-                        :model-value="selectField(f.selectInput.columnKey)" :options="f.selectInput.options"
+                        :model-value="getSelectValue(f.selectInput.columnKey)" :options="f.selectInput.options"
                         :placeholder="f.placeholderSelect ?? '컬럼'" class="app-grid-search__select-input-select"
-                        @update:model-value="(v) => setField(f.selectInput!.columnKey, v)" @change="applySearch" />
-                    <AppInput size="sm" :name="f.selectInput.textKey" :model-value="stringField(f.selectInput.textKey)"
+                        @update:model-value="(v) => setFieldValue(f.selectInput!.columnKey, v)" @change="applySearch" />
+                    <AppInput size="sm" :name="f.selectInput.textKey"
+                        :model-value="getStringValue(f.selectInput.textKey)"
                         :placeholder="f.placeholderInput ?? f.placeholder ?? '검색어'"
                         class="app-grid-search__select-input-text"
-                        @update:model-value="(v) => setField(f.selectInput!.textKey, v)" />
+                        @update:model-value="(v) => setFieldValue(f.selectInput!.textKey, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'radio' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'radio' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
                         <AppChoice v-for="opt in f.options" :key="String(opt.value)" size="sm"
-                            :model-value="choiceScalar(f.field)" type="radio" :name="f.field" :value="opt.value"
+                            :model-value="getChoiceValue(f.field)" type="radio" :name="f.field" :value="opt.value"
                             :label="opt.label" :disabled="opt.disabled"
-                            @update:model-value="(v) => setField(f.field, v)" />
+                            @update:model-value="(v) => setFieldValue(f.field, v)" />
                     </div>
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'checkbox' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'checkbox' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
                         <AppChoice v-for="opt in f.options" :key="String(opt.value)" size="sm" type="checkbox"
-                            :model-value="includesCheckbox(f.field, opt.value)" :label="opt.label"
+                            :model-value="hasCheckboxValue(f.field, opt.value)" :label="opt.label"
                             :disabled="opt.disabled"
-                            @update:model-value="(checked) => toggleCheckbox(f.field, opt.value, checked)" />
+                            @update:model-value="(checked) => toggleCheckboxValue(f.field, opt.value, checked)" />
                     </div>
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'toggle'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'toggle'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppChoice size="sm" type="checkbox" :model-value="booleanField(f.field)" :disabled="f.disabled"
-                        :readonly="f.readonly" @update:model-value="(v) => setField(f.field, v)" />
+                    <AppChoice size="sm" type="checkbox" :model-value="getBooleanValue(f.field)" :disabled="f.disabled"
+                        :readonly="f.readonly" @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'calendar'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="calendarField(f.field)" mode="single" :min="f.min"
+                    <AppDatePicker size="sm" :model-value="getDateValue(f.field)" mode="single" :min="f.min"
                         :max="f.max" :placeholder="f.placeholder ?? '날짜 선택'" :disabled="f.disabled"
-                        :readonly="f.readonly" @update:model-value="(v) => setField(f.field, v)" />
+                        :readonly="f.readonly" @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'range_calendar'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'range_calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="rangeField(f.field)" mode="range"
+                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range"
                         :placeholder="f.placeholder ?? '기간 선택'" :disabled="f.disabled" :readonly="f.readonly"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                        @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'range_calendar_minmax'" class="app-grid-search__dl">
+            <dl v-else-if="f.layoutType === 'range_calendar_minmax'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="rangeField(f.field)" mode="range" :min="f.min" :max="f.max"
-                        :placeholder="f.placeholder ?? '기간 선택 (min/max)'" :disabled="f.disabled" :readonly="f.readonly"
-                        @update:model-value="(v) => setField(f.field, v)" />
+                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range" :min="f.min"
+                        :max="f.max" :placeholder="f.placeholder ?? '기간 선택 (min/max)'" :disabled="f.disabled"
+                        :readonly="f.readonly" @update:model-value="(v) => setFieldValue(f.field, v)" />
                 </dd>
             </dl>
         </template>
@@ -182,6 +185,16 @@ import { inject } from 'vue'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
 import type { AppGridSearchField } from '~/types/grid-search'
 import { useAgGridRegistry } from '~/composables/useAgGridRegistry'
+import {
+    includesArrayValue,
+    toBooleanModelValue,
+    toChoiceModelValue,
+    toDateModelValue,
+    toRangeModelValue,
+    toSelectModelValue,
+    toStringModelValue,
+    toggleArrayValue,
+} from '~/utils/model-value'
 
 const props = withDefaults(
     defineProps<{
@@ -205,6 +218,13 @@ const target = inject<string>('appGridTarget')
 const root = ref<HTMLElement | null>(null)
 
 const { getApi } = useAgGridRegistry()
+
+type NormalizedSearchField = AppGridSearchField & {
+    fieldKey: string
+    rawFieldType: string
+    layoutType: string
+    inputNativeType: string
+}
 
 function fieldKey(f: AppGridSearchField) {
     return f.id ?? f.field
@@ -240,6 +260,16 @@ function inputNativeType(f: AppGridSearchField): string {
     return 'text'
 }
 
+const searchFields = computed<NormalizedSearchField[]>(() =>
+    props.fields.map((field) => ({
+        ...field,
+        fieldKey: fieldKey(field),
+        rawFieldType: rawFieldType(field),
+        layoutType: layoutType(field),
+        inputNativeType: inputNativeType(field),
+    })),
+)
+
 function emitFieldAction(f: AppGridSearchField) {
     emit('field-action', f)
 }
@@ -260,67 +290,40 @@ function modelKeysForField(f: AppGridSearchField): string[] {
     return [f.field]
 }
 
-function stringField(key: string): string {
-    const v = model.value[key]
-    if (v === null || v === undefined) return ''
-    return String(v)
+function getStringValue(key: string): string {
+    return toStringModelValue(model.value[key])
 }
 
-function selectField(key: string): string | number | boolean | null {
-    const v = model.value[key]
-    if (v === undefined) return null
-    return v as string | number | boolean
+function getSelectValue(key: string): string | number | boolean | null {
+    return toSelectModelValue(model.value[key])
 }
 
-function choiceScalar(key: string): string | number | boolean | null {
-    const v = model.value[key]
-    if (v === undefined || v === null) return null
-    if (typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') return v
-    return null
+function getChoiceValue(key: string): string | number | boolean | null {
+    return toChoiceModelValue(model.value[key])
 }
 
-function booleanField(key: string): boolean {
-    return Boolean(model.value[key])
+function getBooleanValue(key: string): boolean {
+    return toBooleanModelValue(model.value[key])
 }
 
-function calendarField(key: string): string | null {
-    const v = model.value[key]
-    if (v === null || v === undefined) return null
-    if (typeof v === 'string') return v
-    return null
+function getDateValue(key: string): string | null {
+    return toDateModelValue(model.value[key])
 }
 
-function rangeField(key: string): DateRangeValue | null {
-    const v = model.value[key]
-    if (v && typeof v === 'object' && 'start' in (v as object) && 'end' in (v as object)) {
-        return v as DateRangeValue
-    }
-
-    return null
+function getRangeValue(key: string): DateRangeValue | null {
+    return toRangeModelValue<DateRangeValue>(model.value[key])
 }
 
-function includesCheckbox(field: string, optionValue: string | number): boolean {
-    const cur = model.value[field]
-    if (!Array.isArray(cur)) return false
-    return cur.includes(optionValue)
+function hasCheckboxValue(field: string, optionValue: string | number): boolean {
+    return includesArrayValue(model.value[field], optionValue)
 }
 
-function setField(key: string, v: unknown) {
+function setFieldValue(key: string, v: unknown) {
     model.value[key] = v
 }
 
-function toggleCheckbox(field: string, optionValue: string | number, checked: unknown) {
-    const cur = model.value[field]
-    const next = Array.isArray(cur) ? [...cur] : []
-
-    if (checked) {
-        if (!next.includes(optionValue)) next.push(optionValue)
-    } else {
-        const i = next.indexOf(optionValue)
-        if (i > -1) next.splice(i, 1)
-    }
-
-    model.value[field] = next
+function toggleCheckboxValue(field: string, optionValue: string | number, checked: unknown) {
+    model.value[field] = toggleArrayValue(model.value[field], optionValue, checked)
 }
 
 function handleAutoSearch(e: Event) {

@@ -49,15 +49,11 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
+import { normalizeProgressRange, normalizeProgressValue, type ProgressRange } from '~/utils/progress'
 
 type GaugeType = 'gauge' | 'semi-doughnut-range'
 type GaugeMode = 'display' | 'control-single' | 'control-range'
 type ActiveHandle = 'value' | 'start' | 'end' | null
-
-type ProgressRange = {
-    start: number
-    end: number
-}
 
 const VIEWBOX_WIDTH = 120
 const VIEWBOX_HEIGHT = 70
@@ -107,42 +103,6 @@ const svgEl = ref<SVGSVGElement | null>(null)
 /* -------------------------------------------------------------------------- */
 /* utils */
 /* -------------------------------------------------------------------------- */
-function clamp(value: number, min: number, max: number) {
-    const next = Number(value)
-
-    if (Number.isNaN(next)) {
-        return min
-    }
-
-    return Math.min(max, Math.max(min, next))
-}
-
-function roundByStep(value: number, step: number) {
-    if (step <= 0) {
-        return value
-    }
-
-    return Math.round(value / step) * step
-}
-
-function normalizeValue(value: number, min: number, max: number, step: number) {
-    return roundByStep(clamp(value, min, max), step)
-}
-
-function normalizeRange(range: ProgressRange | undefined, min: number, max: number, step: number): ProgressRange {
-    if (!range) {
-        return { start: min, end: min }
-    }
-
-    const start = normalizeValue(range.start, min, max, step)
-    const end = normalizeValue(range.end, min, max, step)
-
-    return {
-        start: Math.min(start, end),
-        end: Math.max(start, end),
-    }
-}
-
 function polarToCartesian(cx: number, cy: number, radius: number, angle: number) {
     const rad = (angle * Math.PI) / 180
 
@@ -187,12 +147,12 @@ const bounds = computed(() => ({
 
 const normalizedValue = computed(() => {
     const { min, max, step } = bounds.value
-    return normalizeValue(props.value, min, max, step)
+    return normalizeProgressValue(props.value, { min, max, step })
 })
 
 const normalizedRange = computed(() => {
     const { min, max, step } = bounds.value
-    return normalizeRange(props.range, min, max, step)
+    return normalizeProgressRange(props.range, { min, max, step })
 })
 
 const isGauge = computed(() => props.type === 'gauge')
@@ -335,7 +295,7 @@ function angleToValue(angle: number) {
     const { min, max, step } = bounds.value
     const rawValue = min + ratio * (max - min)
 
-    return normalizeValue(rawValue, min, max, step)
+    return normalizeProgressValue(rawValue, { min, max, step })
 }
 
 function pointToValue(event: PointerEvent) {
@@ -347,7 +307,7 @@ function pointToValue(event: PointerEvent) {
 /* -------------------------------------------------------------------------- */
 function emitSingleValue(next: number) {
     const { min, max, step } = bounds.value
-    const normalized = normalizeValue(next, min, max, step)
+    const normalized = normalizeProgressValue(next, { min, max, step })
 
     if (normalized !== normalizedValue.value) {
         emit('update:value', normalized)
@@ -356,7 +316,7 @@ function emitSingleValue(next: number) {
 
 function emitRangeValue(next: ProgressRange) {
     const { min, max, step } = bounds.value
-    const normalized = normalizeRange(next, min, max, step)
+    const normalized = normalizeProgressRange(next, { min, max, step })
 
     if (
         normalized.start !== normalizedRange.value.start ||

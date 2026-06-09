@@ -78,20 +78,20 @@
 </template>
 
 <script setup lang="ts">
-import type { AppTableCell, AppTableRow } from '~/types/table';
+import type { AppTableCell, AppTableRow } from '~/types/table'
 
 type AppTableProps = {
-    title?: string;
-    description?: string;
-    rows?: AppTableRow[];
-    modelValue: Record<string, unknown>;
-    colWidths?: string[];
-    readonly?: boolean;
-    disabled?: boolean;
-    defaultLabelWidth?: string;
-    layout?: 'inline' | 'stacked';
-    stackedLabelWidth?: string;
-};
+    title?: string
+    description?: string
+    rows?: AppTableRow[]
+    modelValue: Record<string, unknown>
+    colWidths?: string[]
+    readonly?: boolean
+    disabled?: boolean
+    defaultLabelWidth?: string
+    layout?: 'inline' | 'stacked'
+    stackedLabelWidth?: string
+}
 
 const props = withDefaults(
     defineProps<AppTableProps>(),
