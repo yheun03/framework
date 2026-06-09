@@ -11,11 +11,12 @@ import type { ColDef, GridApi, GridOptions, GridReadyEvent, FilterChangedEvent, 
 import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
 
 const APP_SELECT_CLOSE_ALL_EVENT = 'app-select:close-all'
-const { register } = useAppGridRegistry()
+const { register, unregister } = useAppGridRegistry()
 
 const { $agGridLocale } = useNuxtApp()
 const attrs = useAttrs()
 const gridApi = ref<GridApi | null>(null)
+const registeredGridId = ref<string | null>(null)
 const props = withDefaults(
     defineProps<{
         autoHeight?: boolean
@@ -49,10 +50,14 @@ function onGridReady(e: GridReadyEvent) {
     }
 
     register(id, e.api)
+    registeredGridId.value = id
 }
 
 onBeforeUnmount(() => {
     gridApi.value?.removeEventListener('bodyScroll', onBodyScroll as (event: BodyScrollEvent) => void)
+    if (registeredGridId.value) {
+        unregister(registeredGridId.value)
+    }
 })
 
 function normalizeColumnDefs(columnDefs?: ColDef[]) {
