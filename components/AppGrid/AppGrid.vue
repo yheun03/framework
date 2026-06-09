@@ -82,9 +82,13 @@ function normalizeDefaultColDef(defaultColDef?: ColDef) {
     }
 }
 
+function resolveNumberAttr(value: unknown, fallback: number): number {
+    return typeof value === 'number' ? value : fallback
+}
+
 /* attrs -> grid-id 전달 */
 
-const gridAttrs = computed(() => {
+const gridAttrs = computed((): GridOptions => {
 
     const a = attrs as Record<string, unknown>
 
@@ -111,14 +115,14 @@ const gridAttrs = computed(() => {
         ...rest
     } = a
 
-    const id = gridId ?? gridIdKebab
-    const normalizedColumnDefs = normalizeColumnDefs(columnDefs ?? columnDefsKebab)
-    const normalizedDefaultColDef = normalizeDefaultColDef(defaultColDef ?? defaultColDefKebab)
-    const resolvedDomLayout = domLayout ?? domLayoutKebab
+    const id = (gridId ?? gridIdKebab) as string | undefined
+    const normalizedColumnDefs = normalizeColumnDefs((columnDefs ?? columnDefsKebab) as ColDef[] | undefined)
+    const normalizedDefaultColDef = normalizeDefaultColDef((defaultColDef ?? defaultColDefKebab) as ColDef | undefined)
+    const resolvedDomLayout = (domLayout ?? domLayoutKebab) as GridOptions['domLayout']
     const resolvedGetRowHeight = getRowHeight ?? getRowHeightKebab
     const resolvedHeaderHeight = headerHeight ?? headerHeightKebab
     const resolvedRowHeight = rowHeight ?? rowHeightKebab
-    const resolvedRowSelection = rowSelection ?? rowSelectionKebab
+    const resolvedRowSelection = (rowSelection ?? rowSelectionKebab) as GridOptions['rowSelection']
 
     return {
         ...rest,
@@ -130,9 +134,9 @@ const gridAttrs = computed(() => {
             '<div class="ag-overlay-no-rows">검색된 결과가 없습니다</div>',
 
         domLayout: props.autoHeight ? 'autoHeight' : resolvedDomLayout,
-        headerHeight: resolvedHeaderHeight ?? props.headerHeight,
-        rowHeight: resolvedRowHeight ?? props.rowHeight,
-        getRowHeight: resolvedGetRowHeight,
+        headerHeight: resolveNumberAttr(resolvedHeaderHeight, props.headerHeight),
+        rowHeight: resolveNumberAttr(resolvedRowHeight, props.rowHeight),
+        getRowHeight: resolvedGetRowHeight as GridOptions['getRowHeight'],
         ...(resolvedRowSelection ? { rowSelection: resolvedRowSelection } : {}),
         defaultColDef: normalizedDefaultColDef,
         ...(normalizedColumnDefs ? { columnDefs: normalizedColumnDefs } : {}),
@@ -154,7 +158,7 @@ const gridAttrs = computed(() => {
         },
 
         gridId: id
-    }
+    } as GridOptions
 
 })
 
