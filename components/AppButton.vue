@@ -1,7 +1,7 @@
 <template>
     <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
-        :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined"
-        :tabindex="tabIndex" @click="handleClick">
+        :aria-disabled="ariaDisabled" :aria-busy="loading ? 'true' : undefined" :tabindex="tabIndex"
+        @click="handleClick">
         <slot v-if="unstyled" />
 
         <template v-else>
@@ -27,6 +27,9 @@
 </template>
 
 <script setup lang="ts">
+import { toSyncedSizeStyles, type CssSize } from '~/utils/css'
+import { useButtonAction } from '~/composables/useButtonAction'
+
 defineOptions({
     inheritAttrs: false,
 })
@@ -36,7 +39,6 @@ const buttonEl = ref<HTMLElement | null>(null)
 
 type ButtonVariant = 'fill' | 'outline'
 type ButtonShape = 'square' | 'round' | 'pill'
-type CssSize = number | string
 type ButtonTone =
     | 'primary'
     | 'secondary'
@@ -88,53 +90,24 @@ const emit = defineEmits<{
     click: [MouseEvent]
 }>()
 
-const NuxtLinkComp = resolveComponent('NuxtLink')
-
 /* -------------------------------------------------------
    상태
 ------------------------------------------------------- */
 
 const isDisabled = computed(() => props.disabled || props.loading)
-const isLink = computed(() => !!props.to || !!props.href)
-
-/* -------------------------------------------------------
-   component tag
-------------------------------------------------------- */
-
-const tag = computed(() => {
-    if (props.to) return NuxtLinkComp
-    if (props.href) return 'a'
-    return 'button'
-})
 
 /* -------------------------------------------------------
    attributes
 ------------------------------------------------------- */
 
-const componentAttrs = computed(() => {
-    const { class: _class, style: _style, ...passthroughAttrs } = attrs
-
-    if (props.to) {
-        return {
-            to: props.to,
-            ...passthroughAttrs
-        }
-    }
-
-    if (props.href) {
-        return {
-            href: props.href,
-            target: props.newTab ? '_blank' : undefined,
-            rel: props.newTab ? 'noopener noreferrer' : undefined,
-            ...passthroughAttrs
-        }
-    }
-
-    return {
-        type: props.type,
-        disabled: isDisabled.value,
-        ...passthroughAttrs
-    }
+const { tag, componentAttrs, ariaDisabled, tabIndex, handleClick } = useButtonAction({
+    attrs,
+    type: () => props.type,
+    to: () => props.to,
+    href: () => props.href,
+    newTab: () => props.newTab,
+    disabled: () => isDisabled.value,
+    onClick: (event) => emit('click', event),
 })
 
 const mergedStyles = computed(() => [
@@ -142,32 +115,7 @@ const mergedStyles = computed(() => [
     syncedSizeStyles.value,
 ])
 
-function toCssSize(value?: CssSize) {
-    if (value == null || value === '') return undefined
-    return typeof value === 'number' ? `${value}px` : value
-}
-
-const syncedSizeStyles = computed(() => {
-    const width = toCssSize(props.width)
-    const height = toCssSize(props.height)
-
-    return {
-        width,
-        minWidth: width,
-        height,
-        minHeight: height,
-    }
-})
-
-const ariaDisabled = computed(() => {
-    if (!isLink.value) return undefined
-    return isDisabled.value ? 'true' : undefined
-})
-
-const tabIndex = computed(() => {
-    if (isLink.value && isDisabled.value) return -1
-    return undefined
-})
+const syncedSizeStyles = computed(() => toSyncedSizeStyles(props.width, props.height))
 
 const classes = computed(() => {
     if (props.unstyled) {
@@ -192,20 +140,6 @@ const classes = computed(() => {
         }
     ]
 })
-
-/* -------------------------------------------------------
-   click
-------------------------------------------------------- */
-
-function handleClick(e: MouseEvent) {
-    if (isDisabled.value) {
-        e.preventDefault()
-        e.stopPropagation()
-        return
-    }
-
-    emit('click', e)
-}
 
 function focus() {
     buttonEl.value?.focus()

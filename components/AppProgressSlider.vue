@@ -21,13 +21,9 @@
 import noUiSlider from 'nouislider'
 import type { API as NoUiSliderApi } from 'nouislider'
 import 'nouislider/dist/nouislider.css'
+import { isSameProgressRange, normalizeProgressRange, normalizeProgressValue, type ProgressRange } from '~/utils/progress'
 
 type ProgressSliderMode = 'single' | 'range'
-
-type ProgressRange = {
-    start: number
-    end: number
-}
 
 const props = withDefaults(
     defineProps<{
@@ -55,39 +51,10 @@ const emit = defineEmits<{
 const singleSliderEl = ref<HTMLElement | null>(null)
 const rangeSliderEl = ref<HTMLElement | null>(null)
 
-function normalizeValue(value: number) {
-    const next = Number(value)
-
-    if (Number.isNaN(next)) return 0
-
-    return Math.min(100, Math.max(0, Math.round(next)))
-}
-
-function normalizeRange(range?: ProgressRange): ProgressRange {
-    if (!range) {
-        return {
-            start: 0,
-            end: 0,
-        }
-    }
-
-    const start = normalizeValue(range.start)
-    const end = normalizeValue(range.end)
-
-    return {
-        start: Math.min(start, end),
-        end: Math.max(start, end),
-    }
-}
-
-function isSameRange(a: ProgressRange, b: ProgressRange) {
-    return a.start === b.start && a.end === b.end
-}
-
 const isSingleMode = computed(() => props.mode === 'single')
 const isRangeMode = computed(() => props.mode === 'range')
-const singleValue = computed(() => normalizeValue(props.value))
-const normalizedRange = computed(() => normalizeRange(props.range))
+const singleValue = computed(() => normalizeProgressValue(props.value))
+const normalizedRange = computed(() => normalizeProgressRange(props.range))
 
 const rootClasses = computed(() => [
     'app-progress-slider',
@@ -114,7 +81,7 @@ function createSliderManager() {
     }
 
     function handleSingleSliderChange(values: (number | string)[]) {
-        const next = normalizeValue(Number(values[0]))
+        const next = normalizeProgressValue(Number(values[0]))
 
         if (next !== singleValue.value) {
             emit('update:value', next)
@@ -122,12 +89,12 @@ function createSliderManager() {
     }
 
     function handleRangeSliderChange(values: (number | string)[]) {
-        const next = normalizeRange({
+        const next = normalizeProgressRange({
             start: Number(values[0]),
             end: Number(values[1]),
         })
 
-        if (!isSameRange(next, normalizedRange.value)) {
+        if (!isSameProgressRange(next, normalizedRange.value)) {
             emit('update:range', next)
         }
     }
@@ -157,7 +124,7 @@ function createSliderManager() {
             const raw = singleSlider.get()
             const current = Number(Array.isArray(raw) ? raw[0] : raw)
 
-            if (!Number.isNaN(current) && normalizeValue(current) !== singleValue.value) {
+            if (!Number.isNaN(current) && normalizeProgressValue(current) !== singleValue.value) {
                 singleSlider.set([singleValue.value])
             }
         }
@@ -190,13 +157,13 @@ function createSliderManager() {
         } else {
             const raw = rangeSlider.get()
             const current = Array.isArray(raw)
-                ? normalizeRange({
+                ? normalizeProgressRange({
                     start: Number(raw[0]),
                     end: Number(raw[1]),
                 })
                 : normalizedRange.value
 
-            if (!isSameRange(current, normalizedRange.value)) {
+            if (!isSameProgressRange(current, normalizedRange.value)) {
                 rangeSlider.set([normalizedRange.value.start, normalizedRange.value.end])
             }
         }

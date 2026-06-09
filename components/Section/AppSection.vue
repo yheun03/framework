@@ -19,9 +19,7 @@
 </template>
 
 <script setup lang="ts">
-type SectionDirection = 'row' | 'column'
-type SectionRatio = number[] | string | null
-type SectionGap = number | string
+import { normalizeSectionGap, normalizeSectionRatio, type SectionDirection, type SectionRatio, type SectionGap } from '~/utils/section'
 
 const props = withDefaults(
     defineProps<{
@@ -40,28 +38,14 @@ const props = withDefaults(
     },
 )
 
-function normalizeGap(value: number | string) {
-    return typeof value === 'number' ? `${value}px` : value
-}
-
-function normalizeRatio(value: SectionRatio) {
-    if (!value) return undefined
-
-    if (Array.isArray(value)) {
-        return value.map((item) => `${item}fr`).join(' ')
-    }
-
-    return value
-}
-
 const hasDefaultHeader = computed(() => !!props.title || !!props.desc)
 
 const sectionClassName = computed(() => `app-section--${props.direction}`)
 
 const sectionStyle = computed(() => {
     return {
-        '--app-section-gap': normalizeGap(props.gap as SectionGap),
-        '--app-section-template': normalizeRatio(props.ratio),
+        '--app-section-gap': normalizeSectionGap(props.gap as SectionGap),
+        '--app-section-template': normalizeSectionRatio(props.ratio),
     }
 })
 </script>

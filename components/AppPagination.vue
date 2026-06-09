@@ -10,13 +10,13 @@
         </div>
 
         <div class="app-pagination__controls">
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="첫 페이지"
-                @click="setPage(1)">
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
+                aria-label="첫 페이지" @click="setPage(1)">
                 <Icon icon="mdi:chevron-double-left" />
             </component>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage" aria-label="이전 페이지"
-                @click="setPage(page - 1)">
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
+                aria-label="이전 페이지" @click="setPage(page - 1)">
                 <Icon icon="mdi:chevron-left" />
             </component>
 
@@ -27,13 +27,13 @@
                 {{ pageNumber }}
             </component>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="다음 페이지"
-                @click="setPage(page + 1)">
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
+                aria-label="다음 페이지" @click="setPage(page + 1)">
                 <Icon icon="mdi:chevron-right" />
             </component>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage" aria-label="마지막 페이지"
-                @click="setPage(totalPages)">
+            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
+                aria-label="마지막 페이지" @click="setPage(totalPages)">
                 <Icon icon="mdi:chevron-double-right" />
             </component>
         </div>

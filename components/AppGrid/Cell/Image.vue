@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue } from './useCellRendererValue'
+import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
 
 type ReadMode = 'dataUrl' | 'objectUrl'
 type ImageCellValue =
@@ -46,22 +46,19 @@ type ImageCellParams = {
     readMode?: ReadMode
 }
 
-const props = defineProps({
-    params: Object
-})
+const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
-const { value } = useCellRendererValue<ImageCellValue>(params)
+const { rendererParams, value } = useCellRendererValue<ImageCellValue>(params)
 
 const imageOptions = computed<ImageCellParams>(() => ({
-    multiple: Boolean(params?.colDef?.cellRendererParams?.multiple),
-    maxCount: params?.colDef?.cellRendererParams?.maxCount,
-    accept: params?.colDef?.cellRendererParams?.accept,
-    hint: params?.colDef?.cellRendererParams?.hint,
-    triggerText: params?.colDef?.cellRendererParams?.triggerText,
-    allowDrop: params?.colDef?.cellRendererParams?.allowDrop ?? true,
-    maxSizeBytes: params?.colDef?.cellRendererParams?.maxSizeBytes,
-    readMode: params?.colDef?.cellRendererParams?.readMode,
+    multiple: Boolean(rendererParams.value.multiple),
+    maxCount: rendererParams.value.maxCount,
+    accept: rendererParams.value.accept,
+    hint: rendererParams.value.hint,
+    triggerText: rendererParams.value.triggerText,
+    allowDrop: rendererParams.value.allowDrop ?? true,
+    maxSizeBytes: rendererParams.value.maxSizeBytes,
+    readMode: rendererParams.value.readMode,
 }))
-
 </script>

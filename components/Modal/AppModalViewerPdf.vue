@@ -10,7 +10,8 @@
                     {{ pageNumber }} / {{ pageCount || '-' }}
                 </span>
 
-                <AppButton variant="outline" size="sm" :disabled="isBusy || pageNumber >= pageCount" @click="goToNextPage">
+                <AppButton variant="outline" size="sm" :disabled="isBusy || pageNumber >= pageCount"
+                    @click="goToNextPage">
                     다음
                 </AppButton>
             </div>

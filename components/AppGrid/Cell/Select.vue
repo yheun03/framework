@@ -5,14 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useCellRendererValue } from './useCellRendererValue'
+import { useCellRendererValue, type AppGridCellRendererProps } from './useCellRendererValue'
 
-const props = defineProps({
-    params: Object
-})
+const props = defineProps<AppGridCellRendererProps>()
 
 const params = props.params
 const { rendererParams, value } = useCellRendererValue<string | number | boolean | null>(params)
 const options = computed(() => rendererParams.value.options ?? [])
-
 </script>

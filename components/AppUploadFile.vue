@@ -6,7 +6,8 @@
                 <input ref="fileInput" class="app-file-upload__input" type="file" :accept="accept" :multiple="multiple"
                     :disabled="disabled" @change="onFileChange" />
 
-                <component :is="'button'" type="button" class="app-file-upload__trigger" :disabled="disabled" @click="openFile">
+                <component :is="'button'" type="button" class="app-file-upload__trigger" :disabled="disabled"
+                    @click="openFile">
                     <span class="app-file-upload__trigger-icon" aria-hidden="true">
                         <Icon icon="mdi:file-upload-outline" />
                     </span>
@@ -70,6 +71,7 @@
 
 <script setup lang="ts">
 import { useModalViewer } from '~/composables/useModalViewer'
+import { buildUploadHelperText, createUploadId, formatBytes, isAcceptedUploadType } from '~/utils/upload'
 
 type AppUploadFileValue = string | AppUploadFileItem
 type AppUploadFileModelValue = AppUploadFileValue | AppUploadFileValue[] | null
@@ -153,38 +155,15 @@ const items = computed<AppUploadFileItem[]>(() => {
     )
 })
 
-const helperText = computed(() => {
-    const rules: string[] = []
-
-    if (props.accept) {
-        rules.push(`허용 형식: ${props.accept}`)
-    }
-
-    if (props.maxSizeBytes) {
-        rules.push(`최대 용량: ${formatBytes(props.maxSizeBytes)}`)
-    }
-
-    if (props.multiple && props.maxCount) {
-        rules.push(`최대 ${props.maxCount}개`)
-    }
-
-    return rules.join(' / ')
-})
+const helperText = computed(() => buildUploadHelperText(props))
 
 function createId() {
-    return `file-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+    return createUploadId('file')
 }
 
 function openFile() {
     if (props.disabled) return
     fileInput.value?.click()
-}
-
-function formatBytes(bytes: number) {
-    if (!bytes && bytes !== 0) return '-'
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
 function emitValue(nextItems: AppUploadFileItem[]) {
@@ -200,32 +179,8 @@ function error(message: string, detail?: unknown) {
     emit('error', { message, detail })
 }
 
-function isAcceptedType(file: File) {
-    if (!props.accept || props.accept === '*/*') return true
-
-    const acceptList = props.accept
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean)
-
-    if (!acceptList.length) return true
-
-    return acceptList.some((accept) => {
-        if (accept.endsWith('/*')) {
-            const baseType = accept.replace('/*', '')
-            return file.type.startsWith(`${baseType}/`)
-        }
-
-        if (accept.startsWith('.')) {
-            return file.name.toLowerCase().endsWith(accept.toLowerCase())
-        }
-
-        return file.type === accept
-    })
-}
-
 async function shouldAccept(file: File) {
-    if (!isAcceptedType(file)) {
+    if (!isAcceptedUploadType(file, props.accept)) {
         error('허용되지 않는 파일 형식입니다.', {
             accept: props.accept,
             type: file.type,

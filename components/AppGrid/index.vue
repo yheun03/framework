@@ -1,6 +1,5 @@
 <template>
-    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses"
-        @grid-ready="onGridReady" />
+    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses" @grid-ready="onGridReady" />
 </template>
 
 <script setup lang="ts">

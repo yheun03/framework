@@ -6,8 +6,8 @@
                     <Icon class="nav-logo__mark" icon="mdi:application-braces-outline" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" icon="mdi:close" aria-label="메뉴 닫기"
-                    :button-size="36" :icon-size="18" @click="emit('close')" />
+                <AppIconButton class="layout-nav__mobile-close" icon="mdi:close" aria-label="메뉴 닫기" :button-size="36"
+                    :icon-size="18" @click="emit('close')" />
             </div>
 
             <div class="layout-nav__actions" :aria-label="t('nav.demos')">
@@ -25,8 +25,8 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppIconButton class="nav-action" icon="mdi:cog-outline" :aria-label="t('settings.title')"
-                button-size="md" icon-size="lg" to="/settings" />
+            <AppIconButton class="nav-action" icon="mdi:cog-outline" :aria-label="t('settings.title')" button-size="md"
+                icon-size="lg" to="/settings" />
         </div>
     </nav>
 </template>

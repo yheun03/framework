@@ -38,7 +38,7 @@
         <div class="app-tabs__panels">
             <div v-for="item in normalizedItems" v-show="isActive(item.id)" :id="getPanelId(item.id)" :key="item.id"
                 class="app-tabs__panel" role="tabpanel" :aria-labelledby="getTabId(item.id)" :tabindex="0">
-                <component :is="getRendererComponent(item)" v-if="getRendererComponent(item)" />
+                <component :is="item.rendererComponent" v-if="item.rendererComponent" />
 
                 <slot v-else-if="item.slot" :name="item.slot" :item="item" />
 
@@ -104,7 +104,12 @@ const emit = defineEmits<{
 const tabListRef = ref<HTMLElement | null>(null)
 const tabButtonRefs = ref<TabButtonRef[]>([])
 
-const normalizedItems = computed(() => props.items ?? [])
+const normalizedItems = computed(() =>
+    (props.items ?? []).map((item) => ({
+        ...item,
+        rendererComponent: getRendererComponent(item),
+    })),
+)
 
 const enabledAwareItems = computed(() => normalizedItems.value)
 
