@@ -1,3 +1,7 @@
+/**
+ * AppModal 관련 모달 타입을 관리하는 공통 타입 정의 파일입니다.
+ */
+
 import type { Component } from 'vue';
 
 export type ModalCloseReason = 'esc' | 'backdrop' | 'close' | 'cancel' | 'confirm';

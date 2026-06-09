@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18nText } from '~/composables/useI18nText';
-import type { NavigationMenu } from '~/types/app-navigation';
+import type { NavigationMenu } from '~/types/appNavigation';
 
 type MutableNavigationMenu = Omit<NavigationMenu, 'children'> & {
     children?: MutableNavigationMenu[];

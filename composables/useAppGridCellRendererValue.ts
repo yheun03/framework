@@ -1,4 +1,4 @@
-import type { AppGridCellRendererParams } from '~/types/app-grid-cell';
+import type { AppGridCellRendererParams } from '~/types/appGrid';
 
 export function useAppGridCellRendererValue<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>>(
     params?: AppGridCellRendererParams<Value, RendererParams>,

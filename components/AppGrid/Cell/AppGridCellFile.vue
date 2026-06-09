@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
-import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
+import type { AppGridCellRendererProps } from '~/types/appGrid'
 
 type FileCellValue =
     | string

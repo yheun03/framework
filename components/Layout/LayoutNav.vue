@@ -35,7 +35,7 @@
 import { storeToRefs } from 'pinia'
 import { useI18nText } from '~/composables/useI18nText'
 import { useNavigationStore } from '~/stores/navigation'
-import { NAVIGATION_HEADER_ACTIONS } from '~/types/app-navigation'
+import { NAVIGATION_HEADER_ACTIONS } from '~/types/appNavigation'
 
 const emit = defineEmits<{
     close: []

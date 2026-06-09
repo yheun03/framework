@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenu } from '~/types/app-navigation'
+import type { NavigationMenu } from '~/types/appNavigation'
 
 const props = defineProps<{
     item: NavigationMenu

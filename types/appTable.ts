@@ -1,3 +1,7 @@
+/**
+ * AppTable 폼 테이블 컴포넌트 타입을 관리하는 공통 타입 정의 파일입니다.
+ */
+
 export type AppTableOption = {
     label: string;
     value: string | number | boolean | null;
