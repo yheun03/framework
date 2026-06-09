@@ -1,3 +1,6 @@
+/**
+ * 모달 뷰어 열기/닫기와 표시 상태를 관리하는 composable 파일입니다.
+ */
 import AppModalViewerPdf from '~/components/Modal/AppModalViewerPdf.vue';
 import AppModalViewerImage from '~/components/Modal/AppModalViewerImage.vue';
 import { useModalStore } from '~/stores/modal';

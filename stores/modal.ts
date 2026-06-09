@@ -1,3 +1,6 @@
+/**
+ * 모달 표시 상태와 모달 옵션을 관리하는 Pinia store 파일입니다.
+ */
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import type { AlertModalItem, ConfirmModalItem, CustomModalItem, ModalCloseReason, ModalItem, ModalOpenPayload } from '~/types/appModal';

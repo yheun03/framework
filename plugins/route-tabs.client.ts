@@ -1,4 +1,4 @@
-import { useRouteTabsStore } from '~/stores/route-tabs';
+import { useRouteTabsStore } from '~/stores/routeTabs';
 import { useNavigationStore } from '~/stores/navigation';
 import { getRouteTitle, isVisibleRoute } from '~/router';
 import type { RouteLocationNormalized } from 'vue-router';

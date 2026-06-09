@@ -1,3 +1,6 @@
+/**
+ * AppGrid 데이터를 Excel 파일로보내기 위한 composable 파일입니다.
+ */
 import type { GridApi } from 'ag-grid-community';
 import { useApi } from '~/composables/useApi';
 import type { AppGridExportColumn, AppGridExportRow } from '~/types/appGrid';

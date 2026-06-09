@@ -1,3 +1,6 @@
+/**
+ * 다국어 텍스트 값을 안전하게 가져오기 위한 composable 파일입니다.
+ */
 import { storeToRefs } from 'pinia';
 import { I18N_MESSAGES } from '~/i18n';
 import { usePreferencesStore } from '~/stores/preferences';

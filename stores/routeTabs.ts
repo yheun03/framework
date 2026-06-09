@@ -1,3 +1,6 @@
+/**
+ * 라우트 탭 목록과 활성 탭 상태를 관리하는 Pinia store 파일입니다.
+ */
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 

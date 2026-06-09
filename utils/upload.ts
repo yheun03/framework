@@ -1,3 +1,6 @@
+/**
+ * 파일 업로드 값 변환과 파일 정보 처리에 사용하는 공통 유틸 함수 파일입니다.
+ */
 export function createUploadId(prefix: string) {
     return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }

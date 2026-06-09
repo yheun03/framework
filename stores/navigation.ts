@@ -1,3 +1,6 @@
+/**
+ * 네비게이션 메뉴와 활성 경로 상태를 관리하는 Pinia store 파일입니다.
+ */
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useI18nText } from '~/composables/useI18nText';

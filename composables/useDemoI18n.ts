@@ -1,3 +1,6 @@
+/**
+ * 데모 화면의 다국어 텍스트 처리를 위한 composable 파일입니다.
+ */
 import { computed } from 'vue';
 import { useI18nText } from '~/composables/useI18nText';
 

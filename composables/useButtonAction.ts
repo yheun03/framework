@@ -1,3 +1,6 @@
+/**
+ * 버튼 클릭 액션과 라우팅/이벤트 처리를 관리하는 composable 파일입니다.
+ */
 import { computed, resolveComponent } from 'vue';
 
 type ButtonActionOptions = {
