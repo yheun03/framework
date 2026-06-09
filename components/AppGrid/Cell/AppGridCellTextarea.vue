@@ -10,7 +10,7 @@ import type { AppGridCellRendererProps } from '~/types/app-grid-cell'
 
 type TextareaRendererParams = {
     rows?: number
-    resize?: string
+    resize?: 'none' | 'vertical' | 'horizontal' | 'both'
     placeholder?: string
 }
 

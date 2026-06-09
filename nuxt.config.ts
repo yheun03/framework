@@ -14,11 +14,6 @@ export default defineNuxtConfig({
         },
     },
 
-    site: {
-        url: 'https://yheun03.github.io',
-        name: 'Framework',
-    },
-
     modules: ['@pinia/nuxt'],
     css: [
         // AG Grid 테마 CSS는 전역 link 로드로 고정 (dev 인라인 주입 최소화)
