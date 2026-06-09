@@ -25,24 +25,18 @@ function getColumns<T>(api: GridApi<T>): AppGridExportColumn[] {
     }));
 }
 
-function getDisplayedRows<T>(api: GridApi<T>): AppGridExportRow[] {
+function getDisplayedRows<T>(api: GridApi<T>, filter?: (index: number) => boolean): AppGridExportRow[] {
     const rows: AppGridExportRow[] = [];
     const count = api.getDisplayedRowCount();
     for (let i = 0; i < count; i++) {
         const node = api.getDisplayedRowAtIndex(i);
-        if (node?.data) rows.push(node.data as AppGridExportRow);
+        if (node?.data && (!filter || filter(i))) rows.push(node.data as AppGridExportRow);
     }
     return rows;
 }
 
 function getDisplayedSelectedRows<T>(api: GridApi<T>): AppGridExportRow[] {
-    const rows: AppGridExportRow[] = [];
-    const count = api.getDisplayedRowCount();
-    for (let i = 0; i < count; i++) {
-        const node = api.getDisplayedRowAtIndex(i);
-        if (node?.isSelected() && node.data) rows.push(node.data as AppGridExportRow);
-    }
-    return rows;
+    return getDisplayedRows(api, (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected());
 }
 
 async function downloadBlobAsFile(blob: Blob, filename: string) {

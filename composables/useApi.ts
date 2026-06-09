@@ -5,6 +5,7 @@ import type { AxiosRequestConfig } from 'axios';
 
 type RequestConfig = AxiosRequestConfig;
 type FetchResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'stream';
+type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 function isServerLocalRequest(url: string): boolean {
     return Boolean(import.meta.server && url.startsWith('/'));
@@ -28,54 +29,43 @@ function toFetchOptions(config?: RequestConfig) {
 export function useApi() {
     const { $api } = useNuxtApp();
 
-    async function get<T>(url: string, config?: RequestConfig): Promise<T> {
+    async function request<T, B = Record<string, unknown> | BodyInit | null>(method: RequestMethod, url: string, body?: B, config?: RequestConfig): Promise<T> {
         if (isServerLocalRequest(url)) {
             const response = await $fetch(url, {
-                method: 'GET',
+                method,
+                ...(body !== undefined ? { body: body as BodyInit | Record<string, unknown> | null } : {}),
                 ...toFetchOptions(config),
             });
             return response as T;
         }
-        const { data } = await $api.get<T>(toAxiosUrl(url), config);
+
+        const axiosUrl = toAxiosUrl(url);
+        const { data } =
+            method === 'GET'
+                ? await $api.get<T>(axiosUrl, config)
+                : method === 'POST'
+                  ? await $api.post<T>(axiosUrl, body, config)
+                  : method === 'PUT'
+                    ? await $api.put<T>(axiosUrl, body, config)
+                    : await $api.delete<T>(axiosUrl, config);
+
         return data;
+    }
+
+    async function get<T>(url: string, config?: RequestConfig): Promise<T> {
+        return request<T>('GET', url, undefined, config);
     }
 
     async function post<T, B = Record<string, unknown> | BodyInit | null>(url: string, body?: B, config?: RequestConfig): Promise<T> {
-        if (isServerLocalRequest(url)) {
-            const response = await $fetch(url, {
-                method: 'POST',
-                body: body as BodyInit | Record<string, unknown> | null | undefined,
-                ...toFetchOptions(config),
-            });
-            return response as T;
-        }
-        const { data } = await $api.post<T>(toAxiosUrl(url), body, config);
-        return data;
+        return request<T, B>('POST', url, body, config);
     }
 
     async function put<T, B = Record<string, unknown> | BodyInit | null>(url: string, body?: B, config?: RequestConfig): Promise<T> {
-        if (isServerLocalRequest(url)) {
-            const response = await $fetch(url, {
-                method: 'PUT',
-                body: body as BodyInit | Record<string, unknown> | null | undefined,
-                ...toFetchOptions(config),
-            });
-            return response as T;
-        }
-        const { data } = await $api.put<T>(toAxiosUrl(url), body, config);
-        return data;
+        return request<T, B>('PUT', url, body, config);
     }
 
     async function remove<T>(url: string, config?: RequestConfig): Promise<T> {
-        if (isServerLocalRequest(url)) {
-            const response = await $fetch(url, {
-                method: 'DELETE',
-                ...toFetchOptions(config),
-            });
-            return response as T;
-        }
-        const { data } = await $api.delete<T>(toAxiosUrl(url), config);
-        return data;
+        return request<T>('DELETE', url, undefined, config);
     }
 
     return {
