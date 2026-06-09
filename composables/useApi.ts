@@ -1,3 +1,6 @@
+/**
+ * Nuxt 앱에서 공통 API 클라이언트를 사용하기 위한 composable 파일입니다.
+ */
 import type { AxiosRequestConfig } from 'axios';
 
 type RequestConfig = AxiosRequestConfig;

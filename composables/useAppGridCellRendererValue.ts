@@ -1,3 +1,6 @@
+/**
+ * AppGrid cell renderer의 표시 값을 계산하는 composable 파일입니다.
+ */
 import type { AppGridCellRendererParams } from '~/types/appGrid';
 
 export function useAppGridCellRendererValue<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>>(

@@ -1,3 +1,6 @@
+/**
+ * 진행률 값 계산과 표시 처리에 사용하는 공통 유틸 함수 파일입니다.
+ */
 export type ProgressRange = {
     start: number;
     end: number;

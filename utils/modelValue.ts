@@ -1,3 +1,6 @@
+/**
+ * v-model 값 변환과 동기화 처리에 사용하는 공통 유틸 함수 파일입니다.
+ */
 export type SelectModelValue = string | number | boolean | null;
 export type ChoiceModelValue = string | number | boolean | null;
 

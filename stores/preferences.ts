@@ -1,3 +1,6 @@
+/**
+ * 사용자 화면 설정 및 환경설정 상태를 관리하는 Pinia store 파일입니다.
+ */
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Locale } from '~/i18n';

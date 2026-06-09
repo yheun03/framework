@@ -161,7 +161,7 @@ import {
     toScalarStringModelValue,
     toSelectModelValue,
     toggleArrayValue,
-} from '~/utils/model-value'
+} from '~/utils/modelValue'
 
 const props = withDefaults(
     defineProps<{

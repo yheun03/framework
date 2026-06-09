@@ -1,8 +1,8 @@
 /**
- * 그리드 현재 표시 데이터(필터/정렬 반영)를 엑셀 파일로 다운로드
- * POST body: { gridId: string, columns: { field: string, headerName: string }[], rows: Record<string, unknown>[] }
+ * 서버 API 요청을 처리하는 Nitro route handler 파일입니다.
+ * POST /api/export/excel — 그리드 표시 데이터를 엑셀 파일로 다운로드합니다.
  */
-import * as XLSX from 'xlsx';
+import { buildGridExcelBuffer, resolveGridExcelFilename } from '~/utils/gridExcelWorkbook';
 import type { AppGridExportRequestBody } from '~/types/appGrid';
 
 export default defineEventHandler(async (event) => {
@@ -14,31 +14,8 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    const { gridId, columns, rows } = body;
-    const headerRow = columns.map((c) => c.headerName || c.field);
-    const dataRows = rows.map((row) =>
-        columns.map((col) => {
-            const v = row[col.field];
-            if (v === null || v === undefined) return '';
-            return v;
-        }),
-    );
-
-    const aoa = [headerRow, ...dataRows];
-    const origin = (body.origin || 'A1').toUpperCase();
-    if (!/^[A-Z]+[1-9]\d*$/.test(origin)) {
-        throw createError({ statusCode: 400, message: 'origin 형식이 올바르지 않습니다. 예: A1, B3' });
-    }
-
-    const ws = XLSX.utils.aoa_to_sheet([], {});
-    XLSX.utils.sheet_add_aoa(ws, aoa, { origin });
-    const wb = XLSX.utils.book_new();
-    const sheetName = (body.sheetName || gridId || 'export').slice(0, 31);
-    XLSX.utils.book_append_sheet(wb, ws, sheetName);
-    const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' }) as unknown;
-
-    const baseName = (body.fileName || gridId || 'export').replace(/[\\/:*?"<>|]/g, '_');
-    const filename = baseName.toLowerCase().endsWith('.xlsx') ? baseName : `${baseName}.xlsx`;
+    const buffer = buildGridExcelBuffer(body);
+    const filename = resolveGridExcelFilename(body);
     const encoded = encodeURIComponent(filename);
 
     // Nitro/h3 환경에서 헤더 헬퍼(setResponseHeader)가 타입에 없을 수 있어

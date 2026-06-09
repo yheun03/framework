@@ -1,3 +1,6 @@
+/**
+ * 작업 영역의 UI 상태와 공통 화면 상태를 관리하는 Pinia store 파일입니다.
+ */
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
