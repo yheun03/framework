@@ -40,7 +40,7 @@ export default defineNuxtConfig({
         '~/plugins/iconify',
         '~/plugins/ag-grid.client',
         '~/plugins/route-tabs.client',
-        '~/plugins/dev-css-inline-cleanup.client',
+        '~/plugins/removeViteDuplicateStyles.client',
     ],
 
     vite: {

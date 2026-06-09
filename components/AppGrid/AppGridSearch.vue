@@ -183,7 +183,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import type { DateRangeValue } from '~/components/AppDatePicker.vue'
-import type { AppGridSearchField } from '~/types/app-grid-search'
+import type { AppGridSearchField } from '~/types/appGrid'
 import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
 import {
     includesArrayValue,

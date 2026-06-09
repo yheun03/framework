@@ -3,7 +3,7 @@
  * POST body: { gridId: string, columns: { field: string, headerName: string }[], rows: Record<string, unknown>[] }
  */
 import * as XLSX from 'xlsx';
-import type { AppGridExportRequestBody } from '~/types/app-grid-export';
+import type { AppGridExportRequestBody } from '~/types/appGrid';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody<AppGridExportRequestBody>(event);

@@ -1,3 +1,41 @@
+/**
+ * AppGrid 관련 cell, search, export 타입을 관리하는 공통 타입 정의 파일입니다.
+ */
+
+export type AppGridCellRendererParams<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>> = {
+    value?: Value;
+    colDef?: {
+        cellRendererParams?: RendererParams;
+    };
+    node?: {
+        id?: string;
+        setDataValue?: (key: string | undefined, value: unknown) => void;
+    };
+    column?: {
+        getColId?: () => string;
+    };
+};
+
+export type AppGridCellRendererProps<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>> = {
+    params: AppGridCellRendererParams<Value, RendererParams>;
+};
+
+export type AppGridExportColumn = {
+    field: string;
+    headerName: string;
+};
+
+export type AppGridExportRow = Record<string, unknown>;
+
+export type AppGridExportRequestBody = {
+    gridId: string;
+    columns: AppGridExportColumn[];
+    rows: AppGridExportRow[];
+    fileName?: string;
+    sheetName?: string;
+    origin?: string;
+};
+
 export type { DateRangeValue } from '~/components/AppDatePicker.vue';
 
 /**

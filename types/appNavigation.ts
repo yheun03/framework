@@ -1,3 +1,7 @@
+/**
+ * AppNavigation 관련 네비게이션 메뉴 타입을 관리하는 공통 타입 정의 파일입니다.
+ */
+
 export interface NavigationMenu {
     id: string;
     parentId?: string | null;

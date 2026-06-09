@@ -1,6 +1,6 @@
 import type { GridApi } from 'ag-grid-community';
 import { useApi } from '~/composables/useApi';
-import type { AppGridExportColumn, AppGridExportRow } from '~/types/app-grid-export';
+import type { AppGridExportColumn, AppGridExportRow } from '~/types/appGrid';
 
 function pad2(n: number) {
     return String(n).padStart(2, '0');
