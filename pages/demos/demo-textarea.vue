@@ -202,6 +202,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 텍스트에어리어 데모 화면의 입력 값과 검증 상태를 관리하는 페이지 컴포넌트입니다.
+ */
 const { title, description } = useDemoI18n("textarea");
 
 const basicValue = ref("");

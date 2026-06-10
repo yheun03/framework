@@ -16,11 +16,10 @@
           </p>
 
           <AppTable
-            :model-value="basicForm"
+            v-model="basicForm"
             :rows="basicRows"
             title="Basic"
             default-label-width="160px"
-            @update:model-value="updateBasicForm"
             @field-action="handleFieldAction"
           />
         </AppSection>
@@ -32,11 +31,10 @@
           desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다."
         >
           <AppTable
-            :model-value="buttonForm"
+            v-model="buttonForm"
             :rows="buttonRows"
             title="Button Variants"
             default-label-width="160px"
-            @update:model-value="updateButtonForm"
             @field-action="handleFieldAction"
           />
         </AppSection>
@@ -48,11 +46,10 @@
           desc="radio / checkbox 타입 예시입니다."
         >
           <AppTable
-            :model-value="choiceForm"
+            v-model="choiceForm"
             :rows="choiceRows"
             title="Choice"
             default-label-width="160px"
-            @update:model-value="updateChoiceForm"
             @field-action="handleFieldAction"
           />
         </AppSection>
@@ -64,11 +61,10 @@
           desc="date / range_date 타입 예시입니다."
         >
           <AppTable
-            :model-value="dateForm"
+            v-model="dateForm"
             :rows="dateRows"
             title="Date"
             default-label-width="160px"
-            @update:model-value="updateDateForm"
             @field-action="handleFieldAction"
           />
         </AppSection>
@@ -80,11 +76,10 @@
           desc="phone / email 타입 예시입니다."
         >
           <AppTable
-            :model-value="contactForm"
+            v-model="contactForm"
             :rows="contactRows"
             title="Contact"
             default-label-width="160px"
-            @update:model-value="updateContactForm"
             @field-action="handleFieldAction"
           />
         </AppSection>
@@ -97,22 +92,20 @@
         >
           <div class="page-demo-stack">
             <AppTable
-              :model-value="stateForm"
+              v-model="stateForm"
               :rows="stateRows"
               title="Readonly"
               default-label-width="160px"
               readonly
-              @update:model-value="updateStateForm"
               @field-action="handleFieldAction"
             />
 
             <AppTable
-              :model-value="disabledForm"
+              v-model="disabledForm"
               :rows="disabledRows"
               title="Disabled"
               default-label-width="160px"
               disabled
-              @update:model-value="updateDisabledForm"
               @field-action="handleFieldAction"
             />
           </div>
@@ -160,7 +153,7 @@ const checkboxOptions: AppTableOption[] = [
 const basicForm = ref<Record<string, unknown>>({
   textValue: "텍스트 값",
   inputValue: "",
-  selectValue: null,
+  handleSelectValue: null,
   textareaValue: "",
 });
 
@@ -231,7 +224,7 @@ const basicRows: AppTableRow[] = [
     cells: [
       {
         label: "select",
-        key: "selectValue",
+        key: "handleSelectValue",
         type: "select",
         placeholder: "선택하세요.",
         options: selectOptions,
@@ -461,38 +454,12 @@ const disabledRows: AppTableRow[] = [
   },
 ];
 
-function updateBasicForm(next: Record<string, unknown>) {
-  basicForm.value = next;
-}
-
-function updateButtonForm(next: Record<string, unknown>) {
-  buttonForm.value = next;
-}
-
-function updateChoiceForm(next: Record<string, unknown>) {
-  choiceForm.value = next;
-}
-
-function updateDateForm(next: Record<string, unknown>) {
-  dateForm.value = next;
-}
-
-function updateContactForm(next: Record<string, unknown>) {
-  contactForm.value = next;
-}
-
-function updateStateForm(next: Record<string, unknown>) {
-  stateForm.value = next;
-}
-
-function updateDisabledForm(next: Record<string, unknown>) {
-  disabledForm.value = next;
-}
-
+/* event handlers */
 function handleFieldAction(cell: unknown) {
   void cell;
 }
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

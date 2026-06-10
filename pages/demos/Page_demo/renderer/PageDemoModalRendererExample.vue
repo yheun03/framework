@@ -17,12 +17,14 @@
 /**
  * 모달 렌더러 데모에서 전달받은 액션과 중첩 알림 실행을 관리하는 예제 컴포넌트입니다.
  */
+
 const props = defineProps<{
   lastAction: string;
   onAction?: () => void;
   onNestedAlert?: () => void;
 }>();
 
+/* event handlers */
 function handleActionClick() {
   props.onAction?.();
 }

@@ -68,11 +68,14 @@
                   :readonly="readonly"
                   :disabled="disabled"
                   @update-field="handleUpdateField"
-                  @field-action="emitFieldAction"
+                  @field-action="handleFieldAction"
                 />
               </td>
             </template>
-          </tr>
+
+
+
+</tr>
         </tbody>
       </table>
 
@@ -131,7 +134,7 @@
                   :readonly="readonly"
                   :disabled="disabled"
                   @update-field="handleUpdateField"
-                  @field-action="emitFieldAction"
+                  @field-action="handleFieldAction"
                 />
               </td>
             </tr>
@@ -342,7 +345,7 @@ function getTdClasses(cell: AppTableCell) {
   ];
 }
 
-function emitFieldAction(cell: AppTableCell) {
+function handleFieldAction(cell: AppTableCell) {
   emit("field-action", cell);
 }
 

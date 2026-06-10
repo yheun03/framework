@@ -53,7 +53,7 @@ const radioName = computed(
   () => `${params.column?.getColId?.()}-${params.node?.id}`,
 );
 
-function setCellValue(v: unknown) {
+function handleCellValueChange(v: unknown) {
   params.node?.setDataValue?.(params.column?.getColId?.(), v);
 }
 
@@ -72,7 +72,7 @@ function updateChoiceValue(
   checkedValue: unknown,
 ) {
   if (type.value !== "checkbox") {
-    setCellValue(checkedValue);
+    handleCellValueChange(checkedValue);
     return;
   }
 
@@ -83,6 +83,6 @@ function updateChoiceValue(
   if (checked && !exists) current.push(optionValue);
   if (!checked && exists) current.splice(current.indexOf(optionValue), 1);
 
-  setCellValue(current);
+  handleCellValueChange(current);
 }
 </script>

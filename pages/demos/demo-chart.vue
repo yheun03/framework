@@ -109,13 +109,19 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 차트 데모 화면의 차트 데이터와 출력 상태를 관리하는 페이지 컴포넌트입니다.
+ */
 import type { ChartData } from "chart.js";
 
+/* stores/composables */
 const { title, description } = useDemoI18n("chart");
 
+/* constants */
 const lineLabels = ["1월", "2월", "3월", "4월", "5월", "6월"];
 const pieLabels = ["A", "B", "C", "D"];
 
+/* computed */
 const lineData = computed<ChartData<"line">>(() => ({
   labels: lineLabels,
   datasets: [

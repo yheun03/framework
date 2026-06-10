@@ -148,16 +148,42 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * modal host와 store 기반으로 Alert / Confirm / Custom 모달을 여는 데모 페이지 컴포넌트입니다.
+ */
+
+/* imports */
 import { useModalViewer } from "~/composables/useModalViewer";
 import { useModalStore } from "~/stores/modal";
 import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
 
+/* stores/composables */
 const { title } = useDemoI18n("modal");
 const modalStore = useModalStore();
 const { openImageViewer, openPdfViewer } = useModalViewer();
 
+/* ref/reactive state */
 const lastAction = ref("-");
 
+/* computed */
+const output = computed(() =>
+  JSON.stringify(
+    {
+      modalCount: modalStore.modals.length,
+      topModalId: modalStore.topModalId,
+      modalIds: modalStore.modals.map((modal) => ({
+        id: modal.id,
+        type: modal.type,
+        title: modal.title ?? "",
+      })),
+      lastAction: lastAction.value,
+    },
+    null,
+    2,
+  ),
+);
+
+/* event handlers */
 function handleOpenAlert() {
   handleOpenAlertBasic();
 }
@@ -169,7 +195,7 @@ function handleOpenAlertBasic() {
     onConfirm: () => {
       lastAction.value = "alert:confirm";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `alert:close:${reason ?? "unknown"}`;
     },
   });
@@ -186,7 +212,7 @@ function handleOpenAlertNoClose() {
     onConfirm: () => {
       lastAction.value = "alert:no-close:confirm";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `alert:no-close:${reason ?? "unknown"}`;
     },
   });
@@ -201,7 +227,7 @@ function handleOpenAlertCustomText() {
     onConfirm: () => {
       lastAction.value = "alert:custom-text:confirm";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `alert:custom-text:${reason ?? "unknown"}`;
     },
   });
@@ -225,12 +251,12 @@ function handleOpenNestedAlert() {
         onConfirm: () => {
           lastAction.value = "alert:nested:top-confirm";
         },
-        onClose: (reason) => {
+        handleTabClose: (reason) => {
           lastAction.value = `alert:nested:top-close:${reason ?? "unknown"}`;
         },
       });
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `alert:nested:close:${reason ?? "unknown"}`;
     },
   });
@@ -256,7 +282,7 @@ function handleOpenConfirmBasic() {
     onCancel: () => {
       lastAction.value = "confirm:cancel";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `confirm:close:${reason ?? "unknown"}`;
     },
   });
@@ -274,7 +300,7 @@ function handleOpenConfirmNoDimClose() {
     onCancel: () => {
       lastAction.value = "confirm:no-dim:cancel";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `confirm:no-dim:close:${reason ?? "unknown"}`;
     },
   });
@@ -292,7 +318,7 @@ function handleOpenConfirmNoEscClose() {
     onCancel: () => {
       lastAction.value = "confirm:no-esc:cancel";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `confirm:no-esc:close:${reason ?? "unknown"}`;
     },
   });
@@ -315,7 +341,7 @@ function handleOpenNestedConfirm() {
         onConfirm: () => {
           lastAction.value = "confirm:nested:alert-confirm";
         },
-        onClose: (reason) => {
+        handleTabClose: (reason) => {
           lastAction.value = `confirm:nested:alert-close:${reason ?? "unknown"}`;
         },
       });
@@ -323,7 +349,7 @@ function handleOpenNestedConfirm() {
     onCancel: () => {
       lastAction.value = "confirm:nested:cancel";
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `confirm:nested:close:${reason ?? "unknown"}`;
     },
   });
@@ -349,7 +375,7 @@ function handleOpenCustom() {
         });
       },
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `custom:close:${reason ?? "unknown"}`;
     },
   });
@@ -381,7 +407,7 @@ function handleOpenNestedCustom() {
         });
       },
     },
-    onClose: (reason) => {
+    handleTabClose: (reason) => {
       lastAction.value = `custom:nested:close:${reason ?? "unknown"}`;
     },
   });
@@ -412,21 +438,4 @@ function handleClearAll() {
   modalStore.clearAllModals();
   lastAction.value = "modal:clear-all";
 }
-
-const output = computed(() =>
-  JSON.stringify(
-    {
-      modalCount: modalStore.modals.length,
-      topModalId: modalStore.topModalId,
-      modalIds: modalStore.modals.map((modal) => ({
-        id: modal.id,
-        type: modal.type,
-        title: modal.title ?? "",
-      })),
-      lastAction: lastAction.value,
-    },
-    null,
-    2,
-  ),
-);
 </script>

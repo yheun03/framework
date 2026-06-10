@@ -16,7 +16,7 @@
         :disabled="item.disabled"
         :aria-expanded="isOpen(item.id)"
         :aria-controls="getPanelId(item.id)"
-        @click="toggleItem(item.id)"
+        @click="handleItemToggle(item.id)"
       >
         <div class="app-accordion__trigger-content">
           <div class="app-accordion__text">
@@ -156,7 +156,7 @@ const currentOpenIds = computed(() => {
   return isControlled.value ? (props.openIds ?? []) : internalOpenIds.value;
 });
 
-function setOpenIds(next: Array<string | number>) {
+function handleOpenIdsChange(next: Array<string | number>) {
   if (!isControlled.value) {
     internalOpenIds.value = next;
   }
@@ -168,7 +168,7 @@ function isOpen(id: string | number) {
   return currentOpenIds.value.includes(id);
 }
 
-function toggleItem(id: string | number) {
+function handleItemToggle(id: string | number) {
   const target = normalizedItems.value.find((item) => item.id === id);
 
   if (!target || target.disabled) return;
@@ -184,7 +184,7 @@ function toggleItem(id: string | number) {
       : [...currentOpenIds.value, id];
   }
 
-  setOpenIds(next);
+  handleOpenIdsChange(next);
   emit("toggle", { id, open: !currentlyOpen });
 }
 

@@ -22,7 +22,7 @@
           <p class="login__desc">간단한 정보로 계정을 만들 수 있어요.</p>
         </header>
 
-        <form class="login__form" @submit.prevent="onSubmit">
+        <form class="login__form" @submit.prevent="handleSubmit">
           <AppInput
             v-model="name"
             name="name"
@@ -85,10 +85,16 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 회원가입 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
+ */
+
+/* 페이지 설정 */
 definePageMeta({
   layout: false,
 });
 
+/* ref/reactive state */
 const name = ref("");
 const email = ref("");
 const password = ref("");
@@ -96,6 +102,7 @@ const password2 = ref("");
 const agreeTerms = ref(false);
 const agreeMarketing = ref(false);
 
+/* computed */
 const canSubmit = computed(() => {
   if (!name.value.trim()) return false;
   if (!email.value.trim()) return false;
@@ -105,8 +112,8 @@ const canSubmit = computed(() => {
   return true;
 });
 
-function onSubmit() {
-  // 데모: 실제 가입 연동 전까지는 로그인으로 이동
+/* event handlers */
+function handleSubmit() {
   navigateTo("/auth/sign-in");
 }
 </script>

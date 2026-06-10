@@ -167,11 +167,17 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+/**
+ * 셀렉트 데모 화면의 선택 값과 출력 상태를 관리하는 페이지 컴포넌트입니다.
+ */
 import type { AppSelectOption } from "~/components/AppSelect.vue";
 
+/* stores/composables */
 const { title, description } = useDemoI18n("select");
 
+/* 예제 데이터 */
 const departmentOptions: AppSelectOption[] = [
   { value: "dev", label: "개발" },
   { value: "design", label: "디자인" },
@@ -193,6 +199,7 @@ const countryOptions: AppSelectOption[] = [
   { value: "tw", label: "대만" },
 ];
 
+/* ref/reactive state */
 const basic = reactive({
   department: null as string | null,
   job: null as string | null,
@@ -219,6 +226,7 @@ const stateSuccess = ref<string | null>(null);
 
 const disabledValue = ref<string | null>("dev");
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

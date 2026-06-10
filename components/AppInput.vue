@@ -41,7 +41,7 @@
         :readonly="readonly"
         :aria-invalid="state === 'error'"
         :aria-describedby="describedBy"
-        @input="onInput"
+        @input="handleInput"
       />
 
       <!-- clear -->
@@ -52,7 +52,7 @@
         aria-label="입력값 지우기"
         button-size="md"
         icon-size="md"
-        @click="clear"
+        @click="handleClear"
       />
 
       <!-- password toggle -->
@@ -63,7 +63,7 @@
         aria-label="비밀번호 표시 전환"
         button-size="md"
         icon-size="md"
-        @click="togglePassword"
+        @click="handlePasswordToggle"
       />
 
       <!-- slot right -->
@@ -153,19 +153,19 @@ const computedType = computed(() => {
   return props.type;
 });
 
-function togglePassword() {
+function handlePasswordToggle() {
   showPassword.value = !showPassword.value;
 }
 
 /* clear */
 
-function clear() {
+function handleClear() {
   emit("update:modelValue", "");
 }
 
 /* input */
 
-function onInput(e: Event) {
+function handleInput(e: Event) {
   const target = e.target as HTMLInputElement;
 
   emit("update:modelValue", target.value);

@@ -156,14 +156,17 @@ import { h, resolveComponent } from "vue";
 import type { AppAccordionItem } from "~/components/AppAccordion.vue";
 import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
 
+/* stores/composables */
 const { title, description } = useDemoI18n("accordion");
 
+/* ref/reactive state */
 const basicOpenIds = ref<Array<string | number>>([]);
 const singleModeOpenIds = ref<Array<string | number>>([]);
 const multipleModeOpenIds = ref<Array<string | number>>([]);
 const disabledOpenIds = ref<Array<string | number>>([]);
 const rendererOpenIds = ref<Array<string | number>>([]);
 
+/* 예제 데이터 */
 const basicItems: AppAccordionItem[] = [
   {
     id: "basic-1",
@@ -310,6 +313,7 @@ const rendererItems: AppAccordionItem[] = [
   },
 ];
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

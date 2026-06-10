@@ -23,7 +23,7 @@
       :maxlength="maxLength"
       :aria-invalid="invalid || Boolean(error)"
       :aria-describedby="ariaDescribedby"
-      @input="onInput"
+      @input="handleInput"
       @focus="isFocused = true"
       @blur="isFocused = false"
     />
@@ -34,7 +34,7 @@
         unstyled
         type="button"
         class="app-textarea__clear"
-        @click="clearValue"
+        @click="handleClear"
       >
         지우기
       </AppButton>
@@ -95,7 +95,7 @@ const isFocused = ref(false);
 
 const textLength = computed(() => String(props.modelValue ?? "").length);
 
-function onInput(event: Event) {
+function handleInput(event: Event) {
   const target = event.target as HTMLTextAreaElement;
   const value = target.value;
 
@@ -103,7 +103,7 @@ function onInput(event: Event) {
   emit("input", value);
 }
 
-function clearValue() {
+function handleClear() {
   emit("update:modelValue", "");
   emit("clear");
 }

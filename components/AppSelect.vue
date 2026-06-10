@@ -35,7 +35,7 @@
         :aria-expanded="isOpen"
         :aria-readonly="readonly || undefined"
         aria-haspopup="listbox"
-        @click="toggle"
+        @click="handleToggle"
       >
         <span
           class="app-select__value"
@@ -61,7 +61,7 @@
           :class="{ 'is-selected': modelValue === null }"
           role="option"
           :aria-selected="modelValue === null"
-          @click="selectValue(null)"
+          @click="handleSelectValue(null)"
         >
           {{ placeholder }}
         </li>
@@ -76,7 +76,7 @@
           }"
           role="option"
           :aria-selected="modelValue === opt.value"
-          @click="selectValue(opt)"
+          @click="handleSelectValue(opt)"
         >
           {{ opt.label }}
         </li>
@@ -151,7 +151,7 @@ function getOptionKey(option: AppSelectOption) {
   return `option-${String(option.value)}`;
 }
 
-function toggle() {
+function handleToggle() {
   if (props.disabled || props.readonly) return;
   isOpen.value = !isOpen.value;
 }
@@ -160,7 +160,7 @@ function close() {
   isOpen.value = false;
 }
 
-function selectValue(option: AppSelectOption | null) {
+function handleSelectValue(option: AppSelectOption | null) {
   if (props.disabled || props.readonly) return;
   if (option?.disabled) return;
 
@@ -169,28 +169,28 @@ function selectValue(option: AppSelectOption | null) {
   close();
 }
 
-function onDocumentClick(e: MouseEvent) {
+function handleDocumentClick(e: MouseEvent) {
   if (!isOpen.value) return;
   if (!rootEl.value?.contains(e.target as Node)) close();
 }
 
-function onDocumentKeydown(e: KeyboardEvent) {
+function handleDocumentKeydown(e: KeyboardEvent) {
   if (e.key === "Escape") close();
 }
 
-function onCloseAll() {
+function handleCloseAll() {
   close();
 }
 
 onMounted(() => {
-  document.addEventListener("mousedown", onDocumentClick);
-  document.addEventListener("keydown", onDocumentKeydown);
-  window.addEventListener(APP_SELECT_CLOSE_ALL_EVENT, onCloseAll);
+  document.addEventListener("mousedown", handleDocumentClick);
+  document.addEventListener("keydown", handleDocumentKeydown);
+  window.addEventListener(APP_SELECT_CLOSE_ALL_EVENT, handleCloseAll);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("mousedown", onDocumentClick);
-  document.removeEventListener("keydown", onDocumentKeydown);
-  window.removeEventListener(APP_SELECT_CLOSE_ALL_EVENT, onCloseAll);
+  document.removeEventListener("mousedown", handleDocumentClick);
+  document.removeEventListener("keydown", handleDocumentKeydown);
+  window.removeEventListener(APP_SELECT_CLOSE_ALL_EVENT, handleCloseAll);
 });
 </script>

@@ -16,7 +16,7 @@
         :icon-size="16"
         :aria-expanded="open"
         :aria-controls="submenuId"
-        @click.stop="toggleOpen"
+        @click.stop="handleToggleOpen"
       />
 
       <component
@@ -26,7 +26,7 @@
         role="menuitem"
         :aria-haspopup="hasChildren ? 'true' : undefined"
         :aria-expanded="hasChildren ? String(open) : undefined"
-        @click="onClickRow"
+        @click="handleRowClick"
       >
         <span
           v-if="item.icon"
@@ -113,16 +113,16 @@ const linkAttrs = computed(() => {
 
 const open = ref(props.item.depth === 1 && hasChildren.value);
 
-function toggleOpen() {
+function handleToggleOpen() {
   open.value = !open.value;
 }
 
-function onClickRow(event: MouseEvent) {
+function handleRowClick(event: MouseEvent) {
   if (isButtonRow.value) {
     event.preventDefault();
 
     if (hasChildren.value) {
-      toggleOpen();
+      handleToggleOpen();
     }
   }
 }

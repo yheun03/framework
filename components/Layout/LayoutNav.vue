@@ -12,7 +12,7 @@
           aria-label="메뉴 닫기"
           :button-size="36"
           :icon-size="18"
-          @click="emit('close')"
+          @click="handleClose"
         />
       </div>
 
@@ -64,6 +64,10 @@ const { t } = useI18nText();
 const navigationStore = useNavigationStore();
 const { menuTree } = storeToRefs(navigationStore);
 const headerActions = NAVIGATION_HEADER_ACTIONS;
+
+function handleClose() {
+  emit("close");
+}
 
 callOnce("navigation:menus", () => navigationStore.fetchMenus());
 </script>

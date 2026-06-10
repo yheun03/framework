@@ -572,10 +572,15 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 선택(체크박스/라디오/칩) 데모 화면의 선택 값과 출력 상태를 관리하는 페이지 컴포넌트입니다.
+ */
+/* stores/composables */
 const { title, description } = useDemoI18n("choice");
 
 type ChoiceValue = string | number | null;
 
+/* ref/reactive state */
 const checkbox = reactive({
   agreeTerms: true,
   receiveEmail: false,
@@ -656,6 +661,7 @@ const disabledChip = reactive({
   fill: "option-a" as ChoiceValue,
 });
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

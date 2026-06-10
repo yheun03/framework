@@ -14,7 +14,7 @@
             role="tab"
             :aria-selected="t.key === currentKey"
             :to="t.path"
-            @click="() => onClickTab(t.key)"
+            @click="() => handleTabClick(t.key)"
           >
             <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
           </NuxtLink>
@@ -25,7 +25,7 @@
             aria-label="탭 닫기"
             :button-size="20"
             :icon-size="12"
-            @click="(e) => onClose(e, t.key)"
+            @click="(e) => handleTabClose(e, t.key)"
           />
         </li>
       </ul>
@@ -36,21 +36,21 @@
         aria-label="왼쪽 탭으로 이동"
         :button-size="28"
         :icon-size="20"
-        @click="moveToLeftTab"
+        @click="handleMoveToLeftTab"
       />
       <AppIconButton
         icon="mdi:chevron-right"
         aria-label="오른쪽 탭으로 이동"
         :button-size="28"
         :icon-size="20"
-        @click="moveToRightTab"
+        @click="handleMoveToRightTab"
       />
       <AppIconButton
         icon="mdi:close"
         aria-label="다른 탭 닫기"
         :button-size="28"
         :icon-size="20"
-        @click="closeOtherTabs"
+        @click="handleCloseOtherTabs"
       />
     </div>
   </div>
@@ -69,7 +69,7 @@ const { t } = useI18nText();
 const { tabs, activeKey } = storeToRefs(store);
 const currentKey = computed(() => activeKey.value ?? route.fullPath);
 
-function onClickTab(key: string) {
+function handleTabClick(key: string) {
   store.activate(key);
 }
 
@@ -83,7 +83,7 @@ function isHomeTab(path: string) {
   return HOME_PATHS.has(path);
 }
 
-async function moveToLeftTab() {
+async function handleMoveToLeftTab() {
   const idx = tabs.value.findIndex((t) => t.key === currentKey.value);
   if (idx <= 0) return;
 
@@ -93,7 +93,7 @@ async function moveToLeftTab() {
   await router.push(target.path);
 }
 
-async function moveToRightTab() {
+async function handleMoveToRightTab() {
   const idx = tabs.value.findIndex((t) => t.key === currentKey.value);
   if (idx < 0 || idx >= tabs.value.length - 1) return;
 
@@ -103,14 +103,14 @@ async function moveToRightTab() {
   await router.push(target.path);
 }
 
-function closeOtherTabs() {
+function handleCloseOtherTabs() {
   tabs.value
     .filter((t) => t.key !== currentKey.value && !isHomeTab(t.path))
     .map((t) => t.key)
     .forEach((key) => store.close(key));
 }
 
-async function onClose(e: MouseEvent, key: string) {
+async function handleTabClose(e: MouseEvent, key: string) {
   e.preventDefault();
   e.stopPropagation();
 

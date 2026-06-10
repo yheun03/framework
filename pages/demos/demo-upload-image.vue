@@ -268,6 +268,7 @@
 /**
  * 이미지 업로드 데모 화면의 샘플 이미지, 상태, 이벤트 출력을 관리하는 페이지 컴포넌트입니다.
  */
+/* stores/composables */
 const { title } = useDemoI18n("uploadImage");
 const description = "이미지 업로드 필드 속성별 동작을 확인하는 데모입니다.";
 
@@ -289,6 +290,7 @@ type ImageFieldItem = {
   source?: "sample" | "upload";
 };
 
+/* ref/reactive state */
 const basic = reactive({
   imageUrl: null as ImageFieldItem | null,
   file: null as FileMeta | null,
@@ -373,6 +375,7 @@ function updateFileMetaList(
   lastError.value = null;
 }
 
+/* event handlers */
 function handleBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     basic.file = meta;
@@ -541,6 +544,7 @@ function handleReset() {
   removedCount.value = 0;
 }
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

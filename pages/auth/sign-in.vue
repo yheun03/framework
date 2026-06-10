@@ -22,7 +22,7 @@
           <p class="login__desc">계정 정보를 입력해 주세요.</p>
         </header>
 
-        <form class="login__form" @submit.prevent="onSubmit">
+        <form class="login__form" @submit.prevent="handleSubmit">
           <AppInput
             v-model="email"
             name="email"
@@ -70,20 +70,27 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 로그인 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
+ */
+
+/* 페이지 설정 */
 definePageMeta({
   layout: false,
 });
 
+/* ref/reactive state */
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
 
+/* computed */
 const canSubmit = computed(() => {
   return email.value.trim().length > 0 && password.value.trim().length > 0;
 });
 
-function onSubmit() {
-  // 데모 페이지: 실제 로그인 연동 전까지는 이동만 처리
+/* event handlers */
+function handleSubmit() {
   navigateTo("/");
 }
 </script>

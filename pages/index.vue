@@ -71,6 +71,11 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 메인 화면의 소개 콘텐츠와 주요 이동 링크를 표시하는 페이지 컴포넌트입니다.
+ */
+
+/* constants */
 const currentYear = new Date().getFullYear();
 </script>
 

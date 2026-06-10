@@ -21,7 +21,7 @@
         class="app-pagination__button"
         :disabled="disabled || isFirstPage"
         aria-label="첫 페이지"
-        @click="setPage(1)"
+        @click="handlePageChange(1)"
       >
         <Icon icon="mdi:chevron-double-left" />
       </component>
@@ -32,7 +32,7 @@
         class="app-pagination__button"
         :disabled="disabled || isFirstPage"
         aria-label="이전 페이지"
-        @click="setPage(page - 1)"
+        @click="handlePageChange(page - 1)"
       >
         <Icon icon="mdi:chevron-left" />
       </component>
@@ -46,7 +46,7 @@
         :class="{ 'is-active': pageNumber === page }"
         :disabled="disabled"
         :aria-current="pageNumber === page ? 'page' : undefined"
-        @click="setPage(pageNumber)"
+        @click="handlePageChange(pageNumber)"
       >
         {{ pageNumber }}
       </component>
@@ -57,7 +57,7 @@
         class="app-pagination__button"
         :disabled="disabled || isLastPage"
         aria-label="다음 페이지"
-        @click="setPage(page + 1)"
+        @click="handlePageChange(page + 1)"
       >
         <Icon icon="mdi:chevron-right" />
       </component>
@@ -68,7 +68,7 @@
         class="app-pagination__button"
         :disabled="disabled || isLastPage"
         aria-label="마지막 페이지"
-        @click="setPage(totalPages)"
+        @click="handlePageChange(totalPages)"
       >
         <Icon icon="mdi:chevron-double-right" />
       </component>
@@ -79,7 +79,7 @@
         :model-value="pageSize"
         :options="pageSizeSelectOptions"
         :disabled="disabled"
-        @update:model-value="setPageSize"
+        @update:model-value="handlePageSizeChange"
       />
     </div>
   </nav>
@@ -174,7 +174,7 @@ watch(
   },
 );
 
-function setPage(nextPage: number) {
+function handlePageChange(nextPage: number) {
   const next = Math.min(Math.max(nextPage, 1), totalPages.value);
 
   if (next === props.page) return;
@@ -186,7 +186,7 @@ function setPage(nextPage: number) {
   });
 }
 
-function setPageSize(value: string | number | boolean | null) {
+function handlePageSizeChange(value: string | number | boolean | null) {
   if (typeof value === "boolean" || value === null) return;
 
   const nextPageSize = Number(value);

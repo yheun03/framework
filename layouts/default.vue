@@ -5,7 +5,7 @@
         class="layout__nav-toggle"
         size="sm"
         aria-label="메뉴 열기"
-        @click="openNav"
+        @click="handleNavOpen"
       >
         <template #iconLeft>
           <Icon icon="mdi:menu" />
@@ -22,10 +22,10 @@
       unstyled
       type="button"
       aria-label="메뉴 닫기"
-      @click="closeNav"
+      @click="handleNavClose"
     />
 
-    <LayoutNav class="layout__nav" @close="closeNav" />
+    <LayoutNav class="layout__nav" @close="handleNavClose" />
     <main class="layout__main">
       <LayoutTabsPage class="layout__tabs" />
       <div class="layout__content">
@@ -40,18 +40,18 @@
 const route = useRoute();
 const isNavOpen = ref(false);
 
-function openNav() {
+function handleNavOpen() {
   isNavOpen.value = true;
 }
 
-function closeNav() {
+function handleNavClose() {
   isNavOpen.value = false;
 }
 
 watch(
   () => route.fullPath,
   () => {
-    closeNav();
+    handleNavClose();
   },
 );
 </script>

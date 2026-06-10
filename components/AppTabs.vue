@@ -33,8 +33,8 @@
         :aria-selected="isActive(item.id)"
         :aria-controls="getPanelId(item.id)"
         :tabindex="isActive(item.id) ? 0 : -1"
-        @click="selectItem(item.id)"
-        @keydown="onTabKeydown($event, index)"
+        @click="handleSelectItem(item.id)"
+        @keydown="handleTabKeydown($event, index)"
       >
         <span v-if="item.icon" class="app-tabs__tab-icon" aria-hidden="true">
           <Icon :icon="item.icon" />
@@ -187,7 +187,7 @@ const currentActiveId = computed(() => {
   return isControlled.value ? (props.activeId ?? null) : internalActiveId.value;
 });
 
-function setActiveId(next: string | number | null) {
+function handleActiveIdChange(next: string | number | null) {
   if (!isControlled.value) {
     internalActiveId.value = next;
   }
@@ -207,13 +207,13 @@ function isActive(id: string | number) {
   return currentActiveId.value === id;
 }
 
-function selectItem(id: string | number) {
+function handleSelectItem(id: string | number) {
   const target = normalizedItems.value.find((item) => item.id === id);
 
   if (!target || target.disabled) return;
   if (currentActiveId.value === id) return;
 
-  setActiveId(id);
+  handleActiveIdChange(id);
 }
 
 function getTabId(id: string | number) {
@@ -258,11 +258,11 @@ function selectByIndex(index: number) {
 
   if (!target || target.disabled) return;
 
-  selectItem(target.id);
+  handleSelectItem(target.id);
   focusTabByIndex(index);
 }
 
-function onTabKeydown(event: KeyboardEvent, index: number) {
+function handleTabKeydown(event: KeyboardEvent, index: number) {
   const isHorizontal = props.orientation === "horizontal";
 
   const nextKeys = isHorizontal ? ["ArrowRight"] : ["ArrowDown"];
