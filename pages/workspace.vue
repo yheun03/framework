@@ -11,15 +11,23 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 워크스페이스 탭의 마크다운 편집 상태를 Toast UI Editor와 동기화하는 페이지 컴포넌트입니다.
+ */
+
+/* imports */
 import type Editor from "@toast-ui/editor";
 import { useWorkspaceStore } from "~/stores/workspace";
 
+/* stores/composables */
 const ws = useWorkspaceStore();
 
+/* ref/reactive state */
 const editorRoot = ref<HTMLDivElement | null>(null);
 let editor: Editor | null = null;
 let isSettingValue = false;
 
+/* lifecycle */
 onMounted(async () => {
   if (!editorRoot.value) return;
 

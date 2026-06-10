@@ -2,10 +2,10 @@
   <div
     class="app-file-upload"
     :class="rootClasses"
-    @dragenter.prevent="onDragEnter"
-    @dragover.prevent="onDragOver"
-    @dragleave.prevent="onDragLeave"
-    @drop.prevent="onDrop"
+    @dragenter.prevent="handleDragEnter"
+    @dragover.prevent="handleDragOver"
+    @dragleave.prevent="handleDragLeave"
+    @drop.prevent="handleDrop"
   >
     <div class="app-file-upload__head">
       <div class="app-file-upload__dropzone">
@@ -16,7 +16,7 @@
           :accept="accept"
           :multiple="multiple"
           :disabled="disabled"
-          @change="onFileChange"
+          @change="handleFileChange"
         />
 
         <component
@@ -24,7 +24,7 @@
           type="button"
           class="app-file-upload__trigger"
           :disabled="disabled"
-          @click="openFile"
+          @click="handleFileOpen"
         >
           <span class="app-file-upload__trigger-icon" aria-hidden="true">
             <Icon icon="mdi:file-upload-outline" />
@@ -45,7 +45,7 @@
           variant="outline"
           size="sm"
           :disabled="disabled || !items.length"
-          @click="clearAll"
+          @click="handleClearAll"
         >
           {{ multiple ? "전체 삭제" : "파일 삭제" }}
         </AppButton>
@@ -83,7 +83,7 @@
             v-if="isPdfItem(uploadItem)"
             size="sm"
             aria-label="PDF 미리보기"
-            @click="previewPdf(uploadItem)"
+            @click="handlePreviewPdf(uploadItem)"
           >
             미리보기
           </AppTextButton>
@@ -94,7 +94,7 @@
             :button-size="28"
             :icon-size="16"
             :disabled="disabled"
-            @click="removeItem(uploadItem.id)"
+            @click="handleRemoveItem(uploadItem.id)"
           />
         </div>
       </li>
@@ -205,7 +205,7 @@ function createId() {
   return createUploadId("file");
 }
 
-function openFile() {
+function handleFileOpen() {
   if (props.disabled) return;
   fileInput.value?.click();
 }
@@ -277,7 +277,7 @@ async function appendFiles(files: File[]) {
   emitValue(nextItems);
 }
 
-function removeItem(id: string) {
+function handleRemoveItem(id: string) {
   const target = items.value.find((uploadItem) => uploadItem.id === id);
   if (!target) return;
 
@@ -295,7 +295,7 @@ function isPdfItem(item: AppUploadFileItem) {
   );
 }
 
-function previewPdf(item: AppUploadFileItem) {
+function handlePreviewPdf(item: AppUploadFileItem) {
   openPdfViewer({
     name: item.name,
     path: item.path,
@@ -303,7 +303,7 @@ function previewPdf(item: AppUploadFileItem) {
   });
 }
 
-function clearAll() {
+function handleClearAll() {
   if (items.value.length === 1) {
     emit("remove", items.value[0]);
   }
@@ -311,7 +311,7 @@ function clearAll() {
   emitValue([]);
 }
 
-async function onFileChange(event: Event) {
+async function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
   const files = Array.from(target.files ?? []);
 
@@ -321,21 +321,21 @@ async function onFileChange(event: Event) {
   target.value = "";
 }
 
-function onDragEnter() {
+function handleDragEnter() {
   if (!props.allowDrop || props.disabled) return;
   dragOver.value = true;
 }
 
-function onDragOver() {
+function handleDragOver() {
   if (!props.allowDrop || props.disabled) return;
   dragOver.value = true;
 }
 
-function onDragLeave() {
+function handleDragLeave() {
   dragOver.value = false;
 }
 
-async function onDrop(event: DragEvent) {
+async function handleDrop(event: DragEvent) {
   dragOver.value = false;
 
   if (!props.allowDrop || props.disabled) return;

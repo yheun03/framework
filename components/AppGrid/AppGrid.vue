@@ -3,7 +3,7 @@
     v-bind="gridAttrs"
     :locale-text="localeText"
     :class="gridClasses"
-    @grid-ready="onGridReady"
+    @grid-ready="handleGridReady"
   />
 </template>
 
@@ -42,19 +42,19 @@ const props = withDefaults(
   },
 );
 
-function closeOpenSelects() {
+function handleCloseOpenSelects() {
   window.dispatchEvent(new Event(APP_SELECT_CLOSE_ALL_EVENT));
 }
 
-function onBodyScroll() {
-  closeOpenSelects();
+function handleBodyScroll() {
+  handleCloseOpenSelects();
 }
 
-function onGridReady(e: GridReadyEvent) {
+function handleGridReady(e: GridReadyEvent) {
   gridApi.value = e.api;
   e.api.addEventListener(
     "bodyScroll",
-    onBodyScroll as (event: BodyScrollEvent) => void,
+    handleBodyScroll as (event: BodyScrollEvent) => void,
   );
 
   const id = e.api.getGridId();
@@ -71,7 +71,7 @@ function onGridReady(e: GridReadyEvent) {
 onBeforeUnmount(() => {
   gridApi.value?.removeEventListener(
     "bodyScroll",
-    onBodyScroll as (event: BodyScrollEvent) => void,
+    handleBodyScroll as (event: BodyScrollEvent) => void,
   );
   if (registeredGridId.value) {
     unregister(registeredGridId.value);

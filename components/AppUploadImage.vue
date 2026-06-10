@@ -2,10 +2,10 @@
   <div
     class="app-image-upload"
     :class="rootClasses"
-    @dragenter.prevent="onDragEnter"
-    @dragover.prevent="onDragOver"
-    @dragleave.prevent="onDragLeave"
-    @drop.prevent="onDrop"
+    @dragenter.prevent="handleDragEnter"
+    @dragover.prevent="handleDragOver"
+    @dragleave.prevent="handleDragLeave"
+    @drop.prevent="handleDrop"
   >
     <div class="app-image-upload__head">
       <div class="app-image-upload__dropzone">
@@ -16,7 +16,7 @@
           :accept="accept"
           :multiple="multiple"
           :disabled="disabled"
-          @change="onFileChange"
+          @change="handleFileChange"
         />
 
         <component
@@ -24,7 +24,7 @@
           type="button"
           class="app-image-upload__trigger"
           :disabled="disabled"
-          @click="openFile"
+          @click="handleFileOpen"
         >
           <span class="app-image-upload__trigger-icon" aria-hidden="true">
             <Icon icon="mdi:image-plus" />
@@ -45,7 +45,7 @@
           variant="outline"
           size="sm"
           :disabled="disabled || !items.length"
-          @click="clearAll"
+          @click="handleClearAll"
         >
           {{ multiple ? "전체 삭제" : "이미지 삭제" }}
         </AppButton>
@@ -89,7 +89,7 @@
             v-if="uploadItem.url"
             size="sm"
             aria-label="이미지 미리보기"
-            @click="previewItem(uploadItem)"
+            @click="handlePreviewItem(uploadItem)"
           >
             미리보기
           </AppTextButton>
@@ -100,7 +100,7 @@
             :button-size="28"
             :icon-size="16"
             :disabled="disabled"
-            @click="removeItem(uploadItem.id)"
+            @click="handleRemoveItem(uploadItem.id)"
           />
         </div>
       </li>
@@ -220,7 +220,7 @@ function createId() {
   return createUploadId("image");
 }
 
-function openFile() {
+function handleFileOpen() {
   if (props.disabled) return;
   fileInput.value?.click();
 }
@@ -322,7 +322,7 @@ async function appendFiles(files: File[]) {
   emitValue(nextItems);
 }
 
-function removeItem(id: string) {
+function handleRemoveItem(id: string) {
   const target = items.value.find((uploadItem) => uploadItem.id === id);
   if (!target) return;
 
@@ -330,7 +330,7 @@ function removeItem(id: string) {
   emitValue(items.value.filter((uploadItem) => uploadItem.id !== id));
 }
 
-function previewItem(item: AppImageUploadItem) {
+function handlePreviewItem(item: AppImageUploadItem) {
   openImageViewer({
     name: item.name,
     url: item.url,
@@ -338,7 +338,7 @@ function previewItem(item: AppImageUploadItem) {
   });
 }
 
-function clearAll() {
+function handleClearAll() {
   if (items.value.length === 1) {
     emit("remove", items.value[0]);
   }
@@ -346,7 +346,7 @@ function clearAll() {
   emitValue([]);
 }
 
-async function onFileChange(event: Event) {
+async function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
   const files = Array.from(target.files ?? []);
 
@@ -356,21 +356,21 @@ async function onFileChange(event: Event) {
   target.value = "";
 }
 
-function onDragEnter() {
+function handleDragEnter() {
   if (!props.allowDrop || props.disabled) return;
   dragOver.value = true;
 }
 
-function onDragOver() {
+function handleDragOver() {
   if (!props.allowDrop || props.disabled) return;
   dragOver.value = true;
 }
 
-function onDragLeave() {
+function handleDragLeave() {
   dragOver.value = false;
 }
 
-async function onDrop(event: DragEvent) {
+async function handleDrop(event: DragEvent) {
   dragOver.value = false;
 
   if (!props.allowDrop || props.disabled) return;

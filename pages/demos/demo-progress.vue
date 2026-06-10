@@ -141,10 +141,19 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 프로그레스 데모 화면의 진행률 값과 범위 상태를 관리하는 페이지 컴포넌트입니다.
+ */
+/* stores/composables */
 const { title, description } = useDemoI18n("progress");
 
+/* constants */
 const linearDisplayValue = 35;
+const gaugeDisplayValue = 68;
+const disabledLinearValue = 40;
+const disabledGaugeValue = 55;
 
+/* ref/reactive state */
 const linearRangeDisplay = reactive({
   start: 20,
   end: 70,
@@ -156,8 +165,6 @@ const linearControlRange = reactive({
   start: 25,
   end: 75,
 });
-
-const gaugeDisplayValue = 68;
 
 const gaugeRangeDisplay = reactive({
   start: 20,
@@ -171,9 +178,7 @@ const gaugeControlRange = reactive({
   end: 70,
 });
 
-const disabledLinearValue = 40;
-const disabledGaugeValue = 55;
-
+/* event handlers */
 function handleLinearRangeUpdate(value: { start: number; end: number }) {
   linearControlRange.start = value.start;
   linearControlRange.end = value.end;
@@ -184,6 +189,7 @@ function handleGaugeRangeUpdate(value: { start: number; end: number }) {
   gaugeControlRange.end = value.end;
 }
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

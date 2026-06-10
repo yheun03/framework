@@ -17,8 +17,8 @@
       <p class="app-error__message">{{ message }}</p>
 
       <div class="app-error__actions">
-        <AppButton size="md" variant="fill" @click="goHome">홈으로</AppButton>
-        <AppButton size="md" variant="outline" @click="goBack">뒤로</AppButton>
+        <AppButton size="md" variant="fill" @click="handleGoHome">홈으로</AppButton>
+        <AppButton size="md" variant="outline" @click="handleGoBack">뒤로</AppButton>
       </div>
 
       <details v-if="isDev && debugText" class="app-error__debug">
@@ -76,11 +76,11 @@ const debugText = computed(() => {
   return parts.join("\n");
 });
 
-function goHome() {
+function handleGoHome() {
   clearError({ redirect: "/" });
 }
 
-function goBack() {
+function handleGoBack() {
   // 에러 화면에서 history back이 불가능할 수 있어, 실패 시 홈으로 보냅니다.
   try {
     history.back();

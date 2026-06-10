@@ -156,8 +156,10 @@
 /**
  * 페이지네이션 데모 화면의 현재 페이지, 페이지 크기, 변경 이력을 관리하는 페이지 컴포넌트입니다.
  */
+/* stores/composables */
 const { title, description } = useDemoI18n("pagination");
 
+/* ref/reactive state */
 const basicPage = ref(1);
 const basicPageSize = ref(10);
 const basicTotal = ref(128);
@@ -193,6 +195,7 @@ const lastChanged = ref<{
   pageSize: number;
 } | null>(null);
 
+/* event handlers */
 function handleChange(name: string, payload: { page: number; pageSize: number }) {
   lastChanged.value = {
     name,
@@ -200,6 +203,7 @@ function handleChange(name: string, payload: { page: number; pageSize: number })
   };
 }
 
+/* computed */
 const output = computed(() =>
   JSON.stringify(
     {

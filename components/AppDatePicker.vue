@@ -155,7 +155,7 @@ const displayValue = computed(() => {
   return [range.start, range.end].filter(Boolean).join(" ~ ");
 });
 
-function onFlatpickrChange(selectedDates: Date[]) {
+function handleFlatpickrChange(selectedDates: Date[]) {
   if (props.readonly || props.disabled) return;
 
   if (props.mode === "single") {
@@ -194,7 +194,7 @@ function buildOptions(): Partial<FlatpickrOptions> {
         fp?.close();
       }
     },
-    onChange: (selectedDates) => onFlatpickrChange(selectedDates),
+    handleChange: (selectedDates) => handleFlatpickrChange(selectedDates),
   };
 }
 

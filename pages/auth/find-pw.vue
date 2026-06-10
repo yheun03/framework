@@ -22,7 +22,7 @@
           <p class="login__desc">가입한 이메일로 재설정 링크를 보내드릴게요.</p>
         </header>
 
-        <form class="login__form" @submit.prevent="onSubmit">
+        <form class="login__form" @submit.prevent="handleSubmit">
           <AppInput
             v-model="email"
             name="email"
@@ -55,16 +55,23 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 비밀번호 찾기 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
+ */
+
+/* 페이지 설정 */
 definePageMeta({
   layout: false,
 });
 
+/* ref/reactive state */
 const email = ref("");
 
+/* computed */
 const canSubmit = computed(() => email.value.trim().length > 0);
 
-function onSubmit() {
-  // 데모: 실제 메일 발송 연동 전까지는 안내 화면 대신 로그인으로 이동
+/* event handlers */
+function handleSubmit() {
   navigateTo("/auth/sign-in");
 }
 </script>

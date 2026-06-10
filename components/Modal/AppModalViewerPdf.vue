@@ -6,7 +6,7 @@
           variant="outline"
           size="sm"
           :disabled="isBusy || pageNumber <= 1"
-          @click="goToPreviousPage"
+          @click="handlePreviousPage"
         >
           이전
         </AppButton>
@@ -19,7 +19,7 @@
           variant="outline"
           size="sm"
           :disabled="isBusy || pageNumber >= pageCount"
-          @click="goToNextPage"
+          @click="handleNextPage"
         >
           다음
         </AppButton>
@@ -30,7 +30,7 @@
           variant="outline"
           size="sm"
           :disabled="isBusy || scale <= minScale"
-          @click="zoomOut"
+          @click="handleZoomOut"
         >
           축소
         </AppButton>
@@ -43,7 +43,7 @@
           variant="outline"
           size="sm"
           :disabled="isBusy || scale >= maxScale"
-          @click="zoomIn"
+          @click="handleZoomIn"
         >
           확대
         </AppButton>
@@ -239,22 +239,22 @@ async function cleanupDocument() {
   await document.destroy();
 }
 
-function goToPreviousPage() {
+function handlePreviousPage() {
   pageNumber.value = Math.max(1, pageNumber.value - 1);
 }
 
-function goToNextPage() {
+function handleNextPage() {
   pageNumber.value = Math.min(pageCount.value, pageNumber.value + 1);
 }
 
-function zoomOut() {
+function handleZoomOut() {
   scale.value = Math.max(
     minScale,
     Number((scale.value - scaleStep).toFixed(1)),
   );
 }
 
-function zoomIn() {
+function handleZoomIn() {
   scale.value = Math.min(
     maxScale,
     Number((scale.value + scaleStep).toFixed(1)),

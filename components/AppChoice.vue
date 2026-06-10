@@ -12,7 +12,7 @@
         :aria-invalid="state === 'error'"
         :aria-describedby="describedBy"
         :aria-readonly="readonly || undefined"
-        @change="onChange"
+        @change="handleChange"
       />
 
       <span class="app-choice__visual" aria-hidden="true">
@@ -20,7 +20,6 @@
           <template v-if="type === 'checkbox'">
             <Icon icon="mdi:check" />
           </template>
-
           <template v-else>
             <span class="app-choice__dot" />
           </template>
@@ -120,7 +119,7 @@ const rootClasses = computed(() => [
   },
 ]);
 
-function onChange(event: Event) {
+function handleChange(event: Event) {
   if (props.readonly) {
     event.preventDefault();
     return;

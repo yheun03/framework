@@ -2,7 +2,7 @@
   <div
     ref="root"
     class="app-grid-search"
-    @keydown.enter.prevent="applySearch"
+    @keydown.enter.prevent="handleSearch"
     @change="handleAutoSearch"
   >
     <template v-for="f in searchFields" :key="f.fieldKey">
@@ -17,7 +17,7 @@
             :placeholder="f.placeholder"
             :readonly="f.readonly"
             :disabled="f.disabled"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -32,7 +32,7 @@
             :placeholder="f.placeholder"
             :readonly="f.readonly"
             :disabled="f.disabled"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -55,7 +55,7 @@
             :readonly="f.readonly"
             :disabled="f.disabled"
             class="app-grid-search__range-part"
-            @update:model-value="(v) => setFieldValue(f.numberRange!.minKey, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.numberRange!.minKey, v)"
           />
           <span class="app-grid-search__range-sep">~</span>
           <AppInput
@@ -70,7 +70,7 @@
             :readonly="f.readonly"
             :disabled="f.disabled"
             class="app-grid-search__range-part"
-            @update:model-value="(v) => setFieldValue(f.numberRange!.maxKey, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.numberRange!.maxKey, v)"
           />
         </dd>
       </dl>
@@ -92,7 +92,7 @@
               :readonly="f.readonly"
               :disabled="f.disabled"
               class="app-grid-search__split-part"
-              @update:model-value="(v) => setFieldValue(sk, v)"
+              @update:model-value="(v) => handleFieldValueChange(sk, v)"
             />
             <span
               v-if="
@@ -102,7 +102,9 @@
               >@</span
             >
           </template>
-        </dd>
+
+
+</dd>
       </dl>
 
       <dl
@@ -120,14 +122,14 @@
             :readonly="f.readonly"
             :disabled="f.disabled"
             class="app-grid-search__select-input-text"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
           <AppButton
             size="sm"
             variant="outline"
             type="button"
             :disabled="f.disabled"
-            @click="emitFieldAction(f)"
+            @click="handleFieldAction(f)"
           >
             {{ f.buttonText ?? "실행" }}
           </AppButton>
@@ -149,7 +151,7 @@
             :readonly="f.readonly"
             :disabled="f.disabled"
             class="app-grid-search__select-input-text"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
           <span v-if="f.suffixText" class="app-grid-search__suffix">{{
             f.suffixText
@@ -171,7 +173,7 @@
             variant="outline"
             type="button"
             :disabled="f.disabled"
-            @click="emitFieldAction(f)"
+            @click="handleFieldAction(f)"
           >
             {{ f.buttonText ?? "실행" }}
           </AppButton>
@@ -192,8 +194,8 @@
             :placeholder="f.placeholderSelect ?? f.placeholder ?? '선택하세요'"
             :readonly="f.readonly"
             :disabled="f.disabled"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
-            @change="applySearch"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
+            @change="handleSearch"
           />
         </dd>
       </dl>
@@ -212,9 +214,9 @@
             :placeholder="f.placeholderSelect ?? '컬럼'"
             class="app-grid-search__select-input-select"
             @update:model-value="
-              (v) => setFieldValue(f.selectInput!.columnKey, v)
+              (v) => handleFieldValueChange(f.selectInput!.columnKey, v)
             "
-            @change="applySearch"
+            @change="handleSearch"
           />
           <AppInput
             size="sm"
@@ -223,7 +225,7 @@
             :placeholder="f.placeholderInput ?? f.placeholder ?? '검색어'"
             class="app-grid-search__select-input-text"
             @update:model-value="
-              (v) => setFieldValue(f.selectInput!.textKey, v)
+              (v) => handleFieldValueChange(f.selectInput!.textKey, v)
             "
           />
         </dd>
@@ -246,7 +248,7 @@
               :value="opt.value"
               :label="opt.label"
               :disabled="opt.disabled"
-              @update:model-value="(v) => setFieldValue(f.field, v)"
+              @update:model-value="(v) => handleFieldValueChange(f.field, v)"
             />
           </div>
         </dd>
@@ -268,7 +270,7 @@
               :label="opt.label"
               :disabled="opt.disabled"
               @update:model-value="
-                (checked) => toggleCheckboxValue(f.field, opt.value, checked)
+                (checked) => handleCheckboxToggle(f.field, opt.value, checked)
               "
             />
           </div>
@@ -284,7 +286,7 @@
             :model-value="getBooleanValue(f.field)"
             :disabled="f.disabled"
             :readonly="f.readonly"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -301,7 +303,7 @@
             :placeholder="f.placeholder ?? '날짜 선택'"
             :disabled="f.disabled"
             :readonly="f.readonly"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -319,7 +321,7 @@
             :placeholder="f.placeholder ?? '기간 선택'"
             :disabled="f.disabled"
             :readonly="f.readonly"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -339,7 +341,7 @@
             :placeholder="f.placeholder ?? '기간 선택 (min/max)'"
             :disabled="f.disabled"
             :readonly="f.readonly"
-            @update:model-value="(v) => setFieldValue(f.field, v)"
+            @update:model-value="(v) => handleFieldValueChange(f.field, v)"
           />
         </dd>
       </dl>
@@ -348,10 +350,10 @@
     <slot />
 
     <div class="app-grid-search__actions">
-      <AppButton size="sm" variant="outline" @click="applySearch"
+      <AppButton size="sm" variant="outline" @click="handleSearch"
         >검색</AppButton
       >
-      <AppButton size="sm" variant="outline" @click="resetGrid"
+      <AppButton size="sm" variant="outline" @click="handleReset"
         >초기화</AppButton
       >
     </div>
@@ -455,7 +457,7 @@ const searchFields = computed<NormalizedSearchField[]>(() =>
   })),
 );
 
-function emitFieldAction(f: AppGridSearchField) {
+function handleFieldAction(f: AppGridSearchField) {
   emit("field-action", f);
 }
 
@@ -506,11 +508,11 @@ function hasCheckboxValue(
   return includesArrayValue(model.value[field], optionValue);
 }
 
-function setFieldValue(key: string, v: unknown) {
+function handleFieldValueChange(key: string, v: unknown) {
   model.value[key] = v;
 }
 
-function toggleCheckboxValue(
+function handleCheckboxToggle(
   field: string,
   optionValue: string | number,
   checked: unknown,
@@ -531,7 +533,7 @@ function handleAutoSearch(e: Event) {
 
   if (!isAuto) return;
 
-  applySearch();
+  handleSearch();
 }
 
 function dateEqualsModel(dateStr: string) {
@@ -819,7 +821,7 @@ function allManagedKeys(): Set<string> {
   return s;
 }
 
-function applySearch() {
+function handleSearch() {
   if (!target) return;
 
   const api = getApi(target);
@@ -842,7 +844,7 @@ function applySearch() {
   api.onFilterChanged();
 }
 
-function resetGrid() {
+function handleReset() {
   if (!target) return;
 
   const api = getApi(target);
@@ -1003,3 +1005,4 @@ function resetGrid() {
   white-space: nowrap;
 }
 </style>
+
