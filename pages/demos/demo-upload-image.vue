@@ -19,9 +19,9 @@
           <div class="page-demo-row">
             <AppUploadImage
               v-model="basic.imageUrl"
-              @change="onBasicChange"
-              @error="onError"
-              @remove="onRemove"
+              @change="handleBasicChange"
+              @error="handleError"
+              @remove="handleRemove"
             />
 
             <div class="page-demo-stack">
@@ -30,14 +30,18 @@
               </div>
 
               <div class="page-demo-actions">
-                <AppButton size="sm" variant="outline" @click="setBasicSample">
+                <AppButton
+                  size="sm"
+                  variant="outline"
+                  @click="handleBasicSampleSet"
+                >
                   샘플 이미지
                 </AppButton>
 
                 <AppTextButton
                   size="sm"
                   :disabled="!basic.imageUrl"
-                  @click="clearBasic"
+                  @click="handleBasicClear"
                 >
                   값 비우기
                 </AppTextButton>
@@ -56,24 +60,28 @@
             <AppUploadImage
               v-model="state.imageUrl"
               :disabled="state.disabled"
-              @change="onStateChange"
-              @error="onError"
+              @change="handleStateChange"
+              @error="handleError"
             />
 
             <div class="page-demo-stack">
               <div class="page-demo-actions">
-                <AppButton size="sm" variant="outline" @click="setStateSample">
+                <AppButton
+                  size="sm"
+                  variant="outline"
+                  @click="handleStateSampleSet"
+                >
                   샘플 이미지
                 </AppButton>
 
-                <AppTextButton size="sm" @click="toggleDisabled">
+                <AppTextButton size="sm" @click="handleDisabledToggle">
                   disabled: {{ state.disabled ? "ON" : "OFF" }}
                 </AppTextButton>
 
                 <AppTextButton
                   size="sm"
                   :disabled="!state.imageUrl"
-                  @click="clearState"
+                  @click="handleStateClear"
                 >
                   값 비우기
                 </AppTextButton>
@@ -98,9 +106,9 @@
               v-model="multiple.images"
               multiple
               :max-count="3"
-              @change="onMultipleChange"
-              @error="onError"
-              @remove="onRemove"
+              @change="handleMultipleChange"
+              @error="handleError"
+              @remove="handleRemove"
             />
 
             <div class="page-demo-stack">
@@ -112,7 +120,7 @@
                 <AppButton
                   size="sm"
                   variant="outline"
-                  @click="setMultipleSamples"
+                  @click="handleMultipleSamplesSet"
                 >
                   샘플 이미지
                 </AppButton>
@@ -120,7 +128,7 @@
                 <AppTextButton
                   size="sm"
                   :disabled="!multiple.images.length"
-                  @click="clearMultiple"
+                  @click="handleMultipleClear"
                 >
                   값 비우기
                 </AppTextButton>
@@ -140,8 +148,8 @@
               <AppUploadImage
                 v-model="readMode.dataUrlImage"
                 read-mode="dataUrl"
-                @change="onDataUrlChange"
-                @error="onError"
+                @change="handleDataUrlChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">
@@ -154,8 +162,8 @@
               <AppUploadImage
                 v-model="readMode.objectUrlImage"
                 read-mode="objectUrl"
-                @change="onObjectUrlChange"
-                @error="onError"
+                @change="handleObjectUrlChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">
@@ -177,8 +185,8 @@
               <AppUploadImage
                 v-model="drop.enabled"
                 :allow-drop="true"
-                @change="onDropEnabledChange"
-                @error="onError"
+                @change="handleDropEnabledChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">드롭 가능 상태입니다.</div>
@@ -188,8 +196,8 @@
               <AppUploadImage
                 v-model="drop.disabled"
                 :allow-drop="false"
-                @change="onDropDisabledChange"
-                @error="onError"
+                @change="handleDropDisabledChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
@@ -208,8 +216,8 @@
               <AppUploadImage
                 v-model="rules.imageOnly"
                 accept="image/png,image/jpeg,image/webp"
-                @change="onRulesImageChange"
-                @error="onError"
+                @change="handleRulesImageChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">
@@ -221,8 +229,8 @@
               <AppUploadImage
                 v-model="rules.maxSizeImage"
                 :max-size-bytes="rules.maxSizeBytes"
-                @change="onRulesSizeChange"
-                @error="onError"
+                @change="handleRulesSizeChange"
+                @error="handleError"
               />
 
               <div class="page-demo-hint">
@@ -239,11 +247,11 @@
 
           <AppSection class="page-demo-accordion" title="Actions">
             <div class="page-demo-actions">
-              <AppButton variant="fill" @click="setAllSamples">
+              <AppButton variant="fill" @click="handleAllSamplesSet">
                 샘플 이미지 일괄 적용
               </AppButton>
 
-              <AppTextButton @click="resetAll"> 초기화 </AppTextButton>
+              <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
             </div>
           </AppSection>
 
@@ -257,6 +265,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 이미지 업로드 데모 화면의 샘플 이미지, 상태, 이벤트 출력을 관리하는 페이지 컴포넌트입니다.
+ */
 const { title } = useDemoI18n("uploadImage");
 const description = "이미지 업로드 필드 속성별 동작을 확인하는 데모입니다.";
 
@@ -362,76 +373,76 @@ function updateFileMetaList(
   lastError.value = null;
 }
 
-function onBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     basic.file = meta;
   });
   lastError.value = null;
 }
 
-function onStateChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleStateChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     state.file = meta;
   });
 }
 
-function onMultipleChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleMultipleChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMetaList(item, (meta) => {
     multiple.files = meta;
   });
 }
 
-function onDataUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleDataUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     readMode.dataUrlFile = meta;
   });
 }
 
-function onObjectUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleObjectUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     readMode.objectUrlFile = meta;
   });
 }
 
-function onDropEnabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleDropEnabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     drop.enabledFile = meta;
   });
 }
 
-function onDropDisabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleDropDisabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     drop.disabledFile = meta;
   });
 }
 
-function onRulesImageChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleRulesImageChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     rules.imageOnlyFile = meta;
   });
 }
 
-function onRulesSizeChange(item: ImageFieldItem | ImageFieldItem[] | null) {
+function handleRulesSizeChange(item: ImageFieldItem | ImageFieldItem[] | null) {
   updateFileMeta(item, (meta) => {
     rules.maxSizeFile = meta;
   });
 }
 
-function setBasicSample() {
+function handleBasicSampleSet() {
   basic.imageUrl = toSampleImage(
     "https://picsum.photos/240?random=11",
     "basic-sample",
   );
 }
 
-function setStateSample() {
+function handleStateSampleSet() {
   state.imageUrl = toSampleImage(
     "https://picsum.photos/240?random=12",
     "state-sample",
   );
 }
 
-function setMultipleSamples() {
+function handleMultipleSamplesSet() {
   multiple.images = [
     toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
     toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
@@ -439,7 +450,7 @@ function setMultipleSamples() {
   ];
 }
 
-function setAllSamples() {
+function handleAllSamplesSet() {
   basic.imageUrl = toSampleImage(
     "https://picsum.photos/240?random=11",
     "basic-sample",
@@ -475,32 +486,32 @@ function setAllSamples() {
   );
 }
 
-function clearBasic() {
+function handleBasicClear() {
   basic.imageUrl = null;
 }
 
-function clearState() {
+function handleStateClear() {
   state.imageUrl = null;
 }
 
-function clearMultiple() {
+function handleMultipleClear() {
   multiple.images = [];
   multiple.files = [];
 }
 
-function toggleDisabled() {
+function handleDisabledToggle() {
   state.disabled = !state.disabled;
 }
 
-function onError(payload: { message: string; detail?: unknown }) {
+function handleError(payload: { message: string; detail?: unknown }) {
   lastError.value = payload;
 }
 
-function onRemove() {
+function handleRemove() {
   removedCount.value += 1;
 }
 
-function resetAll() {
+function handleReset() {
   basic.imageUrl = null;
   basic.file = null;
 

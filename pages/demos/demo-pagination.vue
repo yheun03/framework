@@ -19,7 +19,7 @@
             v-model:page="basicPage"
             v-model:page-size="basicPageSize"
             :total="basicTotal"
-            @change="onChange('basic', $event)"
+            @change="handleChange('basic', $event)"
           />
         </AppSection>
 
@@ -34,7 +34,7 @@
             v-model:page-size="pageSize"
             :total="pageSizeTotal"
             :page-size-options="[5, 10, 30, 50]"
-            @change="onChange('pageSize', $event)"
+            @change="handleChange('pageSize', $event)"
           />
         </AppSection>
 
@@ -54,7 +54,7 @@
                 :total="siblingTotal"
                 :sibling-count="1"
                 :show-page-size="false"
-                @change="onChange('siblingOne', $event)"
+                @change="handleChange('siblingOne', $event)"
               />
             </div>
 
@@ -67,7 +67,7 @@
                 :total="siblingTotal"
                 :sibling-count="2"
                 :show-page-size="false"
-                @change="onChange('siblingTwo', $event)"
+                @change="handleChange('siblingTwo', $event)"
               />
             </div>
           </div>
@@ -89,7 +89,7 @@
                 :total="smallTotal"
                 size="sm"
                 :show-page-size="false"
-                @change="onChange('small', $event)"
+                @change="handleChange('small', $event)"
               />
             </div>
 
@@ -102,7 +102,7 @@
                 :total="mediumTotal"
                 size="md"
                 :show-page-size="false"
-                @change="onChange('medium', $event)"
+                @change="handleChange('medium', $event)"
               />
             </div>
           </div>
@@ -120,7 +120,7 @@
             :total="simpleTotal"
             :show-total="false"
             :show-page-size="false"
-            @change="onChange('simple', $event)"
+            @change="handleChange('simple', $event)"
           />
         </AppSection>
 
@@ -153,6 +153,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 페이지네이션 데모 화면의 현재 페이지, 페이지 크기, 변경 이력을 관리하는 페이지 컴포넌트입니다.
+ */
 const { title, description } = useDemoI18n("pagination");
 
 const basicPage = ref(1);
@@ -190,13 +193,11 @@ const lastChanged = ref<{
   pageSize: number;
 } | null>(null);
 
-function onChange(name: string, payload: { page: number; pageSize: number }) {
+function handleChange(name: string, payload: { page: number; pageSize: number }) {
   lastChanged.value = {
     name,
     ...payload,
   };
-
-  console.log("pagination change", name, payload);
 }
 
 const output = computed(() =>

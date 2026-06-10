@@ -17,9 +17,9 @@
             <div class="page-demo-row">
               <AppUploadFile
                 v-model="basic.file"
-                @change="onBasicChange"
-                @error="onError"
-                @remove="onRemove"
+                @change="handleBasicChange"
+                @error="handleError"
+                @remove="handleRemove"
               />
 
               <div class="page-demo-stack">
@@ -31,7 +31,7 @@
                   <AppButton
                     size="sm"
                     variant="outline"
-                    @click="setBasicSample"
+                    @click="handleBasicSampleSet"
                   >
                     샘플 파일
                   </AppButton>
@@ -39,7 +39,7 @@
                   <AppTextButton
                     size="sm"
                     :disabled="!basic.file"
-                    @click="clearBasic"
+                    @click="handleBasicClear"
                   >
                     값 비우기
                   </AppTextButton>
@@ -54,9 +54,9 @@
                 v-model="multiple.files"
                 multiple
                 :max-count="4"
-                @change="onMultipleChange"
-                @error="onError"
-                @remove="onRemove"
+                @change="handleMultipleChange"
+                @error="handleError"
+                @remove="handleRemove"
               />
 
               <div class="page-demo-stack">
@@ -68,7 +68,7 @@
                   <AppButton
                     size="sm"
                     variant="outline"
-                    @click="setMultipleSamples"
+                    @click="handleMultipleSamplesSet"
                   >
                     샘플 파일
                   </AppButton>
@@ -76,7 +76,7 @@
                   <AppTextButton
                     size="sm"
                     :disabled="!multiple.files.length"
-                    @click="clearMultiple"
+                    @click="handleMultipleClear"
                   >
                     값 비우기
                   </AppTextButton>
@@ -91,8 +91,8 @@
                 <AppUploadFile
                   v-model="drop.enabled"
                   :allow-drop="true"
-                  @change="onDropEnabledChange"
-                  @error="onError"
+                  @change="handleDropEnabledChange"
+                  @error="handleError"
                 />
 
                 <div class="page-demo-hint">드롭 가능 상태입니다.</div>
@@ -102,8 +102,8 @@
                 <AppUploadFile
                   v-model="drop.disabled"
                   :allow-drop="false"
-                  @change="onDropDisabledChange"
-                  @error="onError"
+                  @change="handleDropDisabledChange"
+                  @error="handleError"
                 />
 
                 <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
@@ -117,8 +117,8 @@
                 <AppUploadFile
                   v-model="rules.docsOnly"
                   accept=".pdf,.doc,.docx,.xls,.xlsx"
-                  @change="onRulesDocsChange"
-                  @error="onError"
+                  @change="handleRulesDocsChange"
+                  @error="handleError"
                 />
 
                 <div class="page-demo-hint">
@@ -130,8 +130,8 @@
                 <AppUploadFile
                   v-model="rules.maxSizeFile"
                   :max-size-bytes="rules.maxSizeBytes"
-                  @change="onRulesSizeChange"
-                  @error="onError"
+                  @change="handleRulesSizeChange"
+                  @error="handleError"
                 />
 
                 <div class="page-demo-hint">
@@ -146,20 +146,20 @@
               <AppUploadFile
                 v-model="disabled.file"
                 :disabled="disabled.value"
-                @change="onDisabledChange"
-                @error="onError"
+                @change="handleDisabledChange"
+                @error="handleError"
               />
 
               <div class="page-demo-stack">
                 <div class="page-demo-actions">
-                  <AppTextButton size="sm" @click="toggleDisabled">
+                  <AppTextButton size="sm" @click="handleDisabledToggle">
                     disabled: {{ disabled.value ? "ON" : "OFF" }}
                   </AppTextButton>
 
                   <AppTextButton
                     size="sm"
                     :disabled="!disabled.file"
-                    @click="clearDisabled"
+                    @click="handleDisabledClear"
                   >
                     값 비우기
                   </AppTextButton>
@@ -182,11 +182,11 @@
           >
             <template #actions>
               <div class="page-demo-actions">
-                <AppButton variant="fill" @click="setAllSamples">
+                <AppButton variant="fill" @click="handleAllSamplesSet">
                   샘플 파일 일괄 적용
                 </AppButton>
 
-                <AppTextButton @click="resetAll"> 초기화 </AppTextButton>
+                <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
               </div>
             </template>
 
@@ -221,6 +221,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 파일 업로드 데모 화면의 샘플 파일, 상태, 이벤트 출력을 관리하는 페이지 컴포넌트입니다.
+ */
 import type { AppAccordionItem } from "~/components/AppAccordion.vue";
 
 const { title, description } = useDemoI18n("uploadFile");
@@ -406,49 +409,49 @@ function updateMetaList(
   lastError.value = null;
 }
 
-function onBasicChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleBasicChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     basic.meta = meta;
   });
 }
 
-function onMultipleChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleMultipleChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMetaList(item, (meta) => {
     multiple.metas = meta;
   });
 }
 
-function onDropEnabledChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleDropEnabledChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     drop.enabledMeta = meta;
   });
 }
 
-function onDropDisabledChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleDropDisabledChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     drop.disabledMeta = meta;
   });
 }
 
-function onRulesDocsChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleRulesDocsChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     rules.docsOnlyMeta = meta;
   });
 }
 
-function onRulesSizeChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleRulesSizeChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     rules.maxSizeMeta = meta;
   });
 }
 
-function onDisabledChange(item: UploadFileItem | UploadFileItem[] | null) {
+function handleDisabledChange(item: UploadFileItem | UploadFileItem[] | null) {
   updateMeta(item, (meta) => {
     disabled.meta = meta;
   });
 }
 
-function setBasicSample() {
+function handleBasicSampleSet() {
   basic.file = toSampleFile(
     "project-overview.pdf",
     "application/pdf",
@@ -457,7 +460,7 @@ function setBasicSample() {
   );
 }
 
-function setMultipleSamples() {
+function handleMultipleSamplesSet() {
   multiple.files = [
     toSampleFile(
       "contract.pdf",
@@ -480,7 +483,7 @@ function setMultipleSamples() {
   ];
 }
 
-function setAllSamples() {
+function handleAllSamplesSet() {
   basic.file = toSampleFile(
     "project-overview.pdf",
     "application/pdf",
@@ -527,34 +530,34 @@ function setAllSamples() {
   );
 }
 
-function clearBasic() {
+function handleBasicClear() {
   basic.file = null;
   basic.meta = null;
 }
 
-function clearMultiple() {
+function handleMultipleClear() {
   multiple.files = [];
   multiple.metas = [];
 }
 
-function clearDisabled() {
+function handleDisabledClear() {
   disabled.file = null;
   disabled.meta = null;
 }
 
-function toggleDisabled() {
+function handleDisabledToggle() {
   disabled.value = !disabled.value;
 }
 
-function onError(payload: { message: string; detail?: unknown }) {
+function handleError(payload: { message: string; detail?: unknown }) {
   lastError.value = payload;
 }
 
-function onRemove() {
+function handleRemove() {
   removedCount.value += 1;
 }
 
-function resetAll() {
+function handleReset() {
   basic.file = null;
   basic.meta = null;
 
@@ -580,7 +583,7 @@ function resetAll() {
 }
 
 function stringifyOutput(value: unknown) {
-  JSON.stringify(value, null, 2);
+  return JSON.stringify(value, null, 2);
 }
 
 const basicOutput = computed(() =>

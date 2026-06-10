@@ -133,6 +133,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 테이블 데모 화면의 셀 타입별 입력 값과 액션 상태를 관리하는 페이지 컴포넌트입니다.
+ */
 import type { AppTableOption, AppTableRow } from "~/types/appTable";
 const { title, description } = useDemoI18n("table");
 
@@ -487,7 +490,7 @@ function updateDisabledForm(next: Record<string, unknown>) {
 }
 
 function handleFieldAction(cell: unknown) {
-  console.log("field action:", cell);
+  void cell;
 }
 
 const output = computed(() =>

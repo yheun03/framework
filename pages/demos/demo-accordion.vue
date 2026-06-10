@@ -149,6 +149,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 아코디언 데모 화면의 열림 상태, 렌더러 예제, 현재 값을 관리하는 페이지 컴포넌트입니다.
+ */
 import { h, resolveComponent } from "vue";
 import type { AppAccordionItem } from "~/components/AppAccordion.vue";
 import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
@@ -302,9 +305,7 @@ const rendererItems: AppAccordionItem[] = [
     component: PageDemoModalRendererExample,
     componentProps: {
       lastAction: "accordion renderer",
-      onAction: () => {
-        console.log("accordion renderer action");
-      },
+      onAction: () => {},
     },
   },
 ];

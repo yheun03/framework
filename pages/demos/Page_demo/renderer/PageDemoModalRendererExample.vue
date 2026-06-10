@@ -4,9 +4,9 @@
     <p>현재 마지막 액션: {{ lastAction }}</p>
 
     <div class="page-demo-actions">
-      <AppButton variant="fill" @click="onClickAction"> 액션 실행 </AppButton>
+      <AppButton variant="fill" @click="handleActionClick"> 액션 실행 </AppButton>
 
-      <AppButton variant="outline" @click="onClickNestedAlert">
+      <AppButton variant="outline" @click="handleNestedAlertClick">
         Alert 중첩 열기
       </AppButton>
     </div>
@@ -14,17 +14,20 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 모달 렌더러 데모에서 전달받은 액션과 중첩 알림 실행을 관리하는 예제 컴포넌트입니다.
+ */
 const props = defineProps<{
   lastAction: string;
   onAction?: () => void;
   onNestedAlert?: () => void;
 }>();
 
-function onClickAction() {
+function handleActionClick() {
   props.onAction?.();
 }
 
-function onClickNestedAlert() {
+function handleNestedAlertClick() {
   props.onNestedAlert?.();
 }
 </script>
