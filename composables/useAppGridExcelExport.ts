@@ -1,106 +1,113 @@
 /**
  * AppGrid 데이터를 Excel 파일로보내기 위한 composable 파일입니다.
  */
-import type { GridApi } from 'ag-grid-community';
-import { useApi } from '~/composables/useApi';
-import type { AppGridExportColumn, AppGridExportRow } from '~/types/appGrid';
+import type { GridApi } from "ag-grid-community";
+import { useApi } from "~/composables/useApi";
+import type { AppGridExportColumn, AppGridExportRow } from "~/types/appGrid";
 
 function pad2(n: number) {
-    return String(n).padStart(2, '0');
+  return String(n).padStart(2, "0");
 }
 
 function makeTimestamp() {
-    const d = new Date();
-    return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}_${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
+  const d = new Date();
+  return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}_${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
 }
 
 function makeExportFileName(base: string) {
-    return `${base}_${makeTimestamp()}`;
+  return `${base}_${makeTimestamp()}`;
 }
 
 function getColumns<T>(api: GridApi<T>): AppGridExportColumn[] {
-    return api.getAllDisplayedColumns().map((col) => ({
-        field: col.getColId(),
-        headerName: (col.getColDef().headerName as string) || col.getColId(),
-    }));
+  return api.getAllDisplayedColumns().map((col) => ({
+    field: col.getColId(),
+    headerName: (col.getColDef().headerName as string) || col.getColId(),
+  }));
 }
 
-function getDisplayedRows<T>(api: GridApi<T>, filter?: (index: number) => boolean): AppGridExportRow[] {
-    const rows: AppGridExportRow[] = [];
-    const count = api.getDisplayedRowCount();
-    for (let i = 0; i < count; i++) {
-        const node = api.getDisplayedRowAtIndex(i);
-        if (node?.data && (!filter || filter(i))) rows.push(node.data as AppGridExportRow);
-    }
-    return rows;
+function getDisplayedRows<T>(
+  api: GridApi<T>,
+  filter?: (index: number) => boolean,
+): AppGridExportRow[] {
+  const rows: AppGridExportRow[] = [];
+  const count = api.getDisplayedRowCount();
+  for (let i = 0; i < count; i++) {
+    const node = api.getDisplayedRowAtIndex(i);
+    if (node?.data && (!filter || filter(i)))
+      rows.push(node.data as AppGridExportRow);
+  }
+  return rows;
 }
 
 function getDisplayedSelectedRows<T>(api: GridApi<T>): AppGridExportRow[] {
-    return getDisplayedRows(api, (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected());
+  return getDisplayedRows(
+    api,
+    (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected(),
+  );
 }
 
 async function downloadBlobAsFile(blob: Blob, filename: string) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export function useAppGridExcelExport(options?: { origin?: string }) {
-    const origin = options?.origin ?? 'A1';
-    const api = useApi();
+  const origin = options?.origin ?? "A1";
+  const api = useApi();
 
-    async function requestExcelDownload(params: {
-        gridId: string;
-        columns: AppGridExportColumn[];
-        rows: AppGridExportRow[];
-        fileNameBase?: string;
-        sheetName?: string;
-    }) {
-        const fileNameBase = params.fileNameBase ?? params.gridId;
-        const fileName = makeExportFileName(fileNameBase);
-        const sheetName = params.sheetName ?? params.gridId;
+  async function requestExcelDownload(params: {
+    gridId: string;
+    columns: AppGridExportColumn[];
+    rows: AppGridExportRow[];
+    fileNameBase?: string;
+    sheetName?: string;
+  }) {
+    const fileNameBase = params.fileNameBase ?? params.gridId;
+    const fileName = makeExportFileName(fileNameBase);
+    const sheetName = params.sheetName ?? params.gridId;
 
-        const res = await api.post<Blob>(
-            '/api/export/excel',
-            {
-                gridId: params.gridId,
-                columns: params.columns,
-                rows: params.rows,
-                fileName,
-                sheetName,
-                origin,
-            },
-            { responseType: 'blob' },
-        );
+    const res = await api.post<Blob>(
+      "/api/export/excel",
+      {
+        gridId: params.gridId,
+        columns: params.columns,
+        rows: params.rows,
+        fileName,
+        sheetName,
+        origin,
+      },
+      { responseType: "blob" },
+    );
 
-        await downloadBlobAsFile(res, `${fileName}.xlsx`);
-    }
+    await downloadBlobAsFile(res, `${fileName}.xlsx`);
+  }
 
-    async function exportDisplayed<T>(gridId: string, api: GridApi<T>) {
-        const columns = getColumns(api);
-        const rows = getDisplayedRows(api);
-        if (!rows.length) return;
-        await requestExcelDownload({ gridId, columns, rows });
-    }
+  async function exportDisplayed<T>(gridId: string, api: GridApi<T>) {
+    const columns = getColumns(api);
+    const rows = getDisplayedRows(api);
+    if (!rows.length) return;
+    await requestExcelDownload({ gridId, columns, rows });
+  }
 
-    async function exportDisplayedSelected<T>(gridId: string, api: GridApi<T>) {
-        const columns = getColumns(api);
-        const rows = getDisplayedSelectedRows(api);
-        if (!rows.length) return;
-        await requestExcelDownload({
-            gridId: `${gridId}_selected`,
-            columns,
-            rows,
-            fileNameBase: `${gridId}_선택`,
-            sheetName: `${gridId}_선택`,
-        });
-    }
+  async function exportDisplayedSelected<T>(gridId: string, api: GridApi<T>) {
+    const columns = getColumns(api);
+    const rows = getDisplayedSelectedRows(api);
+    if (!rows.length) return;
+    await requestExcelDownload({
+      gridId: `${gridId}_selected`,
+      columns,
+      rows,
+      fileNameBase: `${gridId}_선택`,
+      sheetName: `${gridId}_선택`,
+    });
+  }
 
-    return {
-        exportDisplayed,
-        exportDisplayedSelected,
-    };
+  return {
+    exportDisplayed,
+    exportDisplayedSelected,
+  };
 }

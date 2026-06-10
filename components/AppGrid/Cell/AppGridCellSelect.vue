@@ -1,25 +1,36 @@
 <template>
-    <div class="app-grid-cell-control">
-        <AppSelect v-model="value" :options="options" size="sm" />
-    </div>
+  <div class="app-grid-cell-control">
+    <AppSelect v-model="value" :options="options" size="sm" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue'
-import type { AppGridCellRendererProps } from '~/types/appGrid'
+import { useAppGridCellRendererValue } from "~/composables/useAppGridCellRendererValue";
+import type { AppGridCellRendererProps } from "~/types/appGrid";
 
 type SelectOption = {
-    label: string
-    value: string | number | boolean | null
-    disabled?: boolean
-}
+  label: string;
+  value: string | number | boolean | null;
+  disabled?: boolean;
+};
 type SelectRendererParams = {
-    options?: SelectOption[]
-}
+  options?: SelectOption[];
+};
 
-const props = defineProps<AppGridCellRendererProps<string | number | boolean | null, SelectRendererParams>>()
+const props =
+  defineProps<
+    AppGridCellRendererProps<
+      string | number | boolean | null,
+      SelectRendererParams
+    >
+  >();
 
-const params = props.params
-const { rendererParams, value } = useAppGridCellRendererValue<string | number | boolean | null, SelectRendererParams>(params)
-const options = computed<SelectOption[]>(() => rendererParams.value.options ?? [])
+const params = props.params;
+const { rendererParams, value } = useAppGridCellRendererValue<
+  string | number | boolean | null,
+  SelectRendererParams
+>(params);
+const options = computed<SelectOption[]>(
+  () => rendererParams.value.options ?? [],
+);
 </script>

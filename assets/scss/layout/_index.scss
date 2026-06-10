@@ -13,136 +13,126 @@
 ========================================= */
 
 .layout {
-    --layout-mobile-bar-height: 52px;
-    --layout-content-padding: 0;
-    --layout-nav-z-index: 40;
+  --layout-mobile-bar-height: 52px;
+  --layout-content-padding: 0;
+  --layout-nav-z-index: 40;
 
-    /* ----------------------------------------
+  /* ----------------------------------------
      Container
   ---------------------------------------- */
-    display: grid;
-    height: 100dvh;
-    min-width: 0;
-    overflow: hidden;
-    grid-template-rows: 1fr;
-    grid-template-columns: var(--width-sidebar) 1fr;
-    grid-template-areas:
-        "nav main";
+  display: grid;
+  height: 100dvh;
+  min-width: 0;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+  grid-template-columns: var(--width-sidebar) 1fr;
+  grid-template-areas: "nav main";
 
-    /* ----------------------------------------
+  /* ----------------------------------------
      Mobile Bar
   ---------------------------------------- */
-    &__mobile-bar {
-        display: none;
-        grid-area: mobile-bar;
-        align-items: center;
-        gap: 8px;
-        min-width: 0;
-        min-height: var(--layout-mobile-bar-height);
-        padding: 6px 10px;
-        border-bottom: 1px solid $gray-200;
-        background: $gray-0;
+  &__mobile-bar {
+    display: none;
+    grid-area: mobile-bar;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: var(--layout-mobile-bar-height);
+    padding: 6px 10px;
+    border-bottom: 1px solid $gray-200;
+    background: $gray-0;
+  }
+
+  &__nav-toggle {
+    color: $gray-800;
+
+    svg {
+      width: 22px;
+      height: 22px;
     }
+  }
 
-    &__nav-toggle {
-        color: $gray-800;
+  &__mobile-title {
+    min-width: 0;
+    color: $gray-900;
+    @include font(b2, sb);
+  }
 
-        svg {
-            width: 22px;
-            height: 22px;
-        }
-    }
+  &__nav-dim {
+    display: none;
+  }
 
-    &__mobile-title {
-        min-width: 0;
-        color: $gray-900;
-        @include font(b2, sb);
-    }
-
-    &__nav-dim {
-        display: none;
-    }
-
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Header
   ---------------------------------------- */
-    &__header {
-        grid-area: header;
-    }
+  &__header {
+    grid-area: header;
+  }
 
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Sidebar
   ---------------------------------------- */
-    &__nav {
-        grid-area: nav;
-        min-width: 0;
-    }
+  &__nav {
+    grid-area: nav;
+    min-width: 0;
+  }
 
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Main
   ---------------------------------------- */
-    &__main {
-        grid-area: main;
-        min-height: 0;
-        min-width: 0;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        overflow: hidden;
+  &__main {
+    grid-area: main;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+  }
 
-    }
-
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Route Tabs
   ---------------------------------------- */
-    &__tabs {
-        position: sticky;
-        top: 0;
-        z-index: 10;
+  &__tabs {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 
-    }
-
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Content
   ---------------------------------------- */
-    &__content {
-        min-height: 0;
-        min-width: 0;
-        overflow: auto;
-        padding: var(--layout-content-padding);
+  &__content {
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+    padding: var(--layout-content-padding);
+  }
 
-    }
-
-    /* ----------------------------------------
+  /* ----------------------------------------
      Page Bottom Fixed (Teleport target)
      ---------------------------------------- */
-    &__page-bottom-fixed {
-        width: 100%;
-        min-height: 0;
-        background: var(--js-color-surface-primary, #fff);
-        border-top: 1px solid $gray-200;
-        z-index: 20;
+  &__page-bottom-fixed {
+    width: 100%;
+    min-height: 0;
+    background: var(--js-color-surface-primary, #fff);
+    border-top: 1px solid $gray-200;
+    z-index: 20;
 
-        &__content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
+    &__content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
 
-            &>div {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-            }
-        }
-
-
-        &__right {
-            margin-left: auto;
-        }
+      & > div {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
     }
+
+    &__right {
+      margin-left: auto;
+    }
+  }
 }
