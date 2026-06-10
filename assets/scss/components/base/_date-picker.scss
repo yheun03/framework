@@ -6,10 +6,26 @@
 ========================================= */
 
 $date-picker-sizes: (
-    xs: (height: 36px, padding: 12px, icon: 16px),
-    sm: (height: 44px, padding: 14px, icon: 18px),
-    md: (height: 48px, padding: 16px, icon: 20px),
-    lg: (height: 56px, padding: 18px, icon: 22px)
+  xs: (
+    height: 36px,
+    padding: 12px,
+    icon: 16px,
+  ),
+  sm: (
+    height: 44px,
+    padding: 14px,
+    icon: 18px,
+  ),
+  md: (
+    height: 48px,
+    padding: 16px,
+    icon: 20px,
+  ),
+  lg: (
+    height: 56px,
+    padding: 18px,
+    icon: 22px,
+  ),
 );
 
 /* =========================================
@@ -17,181 +33,158 @@ $date-picker-sizes: (
 ========================================= */
 
 .app-date-picker {
-
-    /* -------------------------
+  /* -------------------------
        Element
     ------------------------- */
 
-    &__control {
-        position: relative;
+  &__control {
+    position: relative;
+  }
+
+  &__field {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    border: unset;
+    outline: unset;
+    color: inherit;
+    cursor: pointer;
+
+    &::placeholder {
+      color: $color-04-gray;
     }
 
-    &__field {
-        width: 100%;
-        box-sizing: border-box;
-        background-color: transparent;
-        border: unset;
-        outline: unset;
-        color: inherit;
-        cursor: pointer;
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
 
-        &::placeholder {
-            color: $color-04-gray;
-        }
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 
-        &:disabled {
-            cursor: not-allowed;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    &--right {
+      right: 12px;
     }
 
-    &__icon {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        pointer-events: none;
-
-        &--right {
-            right: 12px;
-        }
-
-        svg {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
+  }
 
-    /* -------------------------
+  /* -------------------------
        Modifier: Size
     ------------------------- */
 
-    @each $size, $data in $date-picker-sizes {
-        &--#{$size} {
-            .app-date-picker__field {
-                height: map.get($data, height);
-                padding-left: map.get($data, padding);
-                padding-right: calc(#{map.get($data, padding)} + #{map.get($data, icon)} + 12px);
-            }
+  @each $size, $data in $date-picker-sizes {
+    &--#{$size} {
+      .app-date-picker__field {
+        height: map.get($data, height);
+        padding-left: map.get($data, padding);
+        padding-right: calc(
+          #{map.get($data, padding)} + #{map.get($data, icon)} + 12px
+        );
+      }
 
-            .app-date-picker__icon {
-                width: map.get($data, icon);
-                height: map.get($data, icon);
-            }
-        }
+      .app-date-picker__icon {
+        width: map.get($data, icon);
+        height: map.get($data, icon);
+      }
     }
+  }
 
-    /* -------------------------
+  /* -------------------------
        Modifier: Shape
     ------------------------- */
 
-    &--shape-square {
-        .app-date-picker__control {
-            border-radius: 0;
-        }
+  &--shape-square {
+    .app-date-picker__control {
+      border-radius: 0;
+    }
+  }
+
+  &--shape-round {
+    .app-date-picker__control {
+      border-radius: 6px;
+    }
+  }
+
+  &--shape-pill {
+    .app-date-picker__control {
+      border-radius: 999px;
+
+      .app-date-picker__field {
+        padding-left: 20px;
+        padding-right: 48px;
+      }
+    }
+  }
+
+  &--shape-underline {
+    .app-date-picker__control {
+      border-width: 0 0 1px 0;
+
+      .app-date-picker__field {
+        padding-left: 0;
+        padding-right: 28px;
+      }
     }
 
-    &--shape-round {
-        .app-date-picker__control {
-            border-radius: 6px;
-        }
+    .app-date-picker__icon--right {
+      right: 0;
     }
+  }
 
-    &--shape-pill {
-        .app-date-picker__control {
-            border-radius: 999px;
-
-            .app-date-picker__field {
-                padding-left: 20px;
-                padding-right: 48px;
-            }
-        }
-    }
-
-    &--shape-underline {
-        .app-date-picker__control {
-            border-width: 0 0 1px 0;
-
-            .app-date-picker__field {
-                padding-left: 0;
-                padding-right: 28px;
-            }
-        }
-
-        .app-date-picker__icon--right {
-            right: 0;
-        }
-    }
-
-    /* -------------------------
+  /* -------------------------
        State
     ------------------------- */
 
-
-
-
-
-    &.is-error {
-
-        .app-date-picker__field {
-
-            border-color: $status-error;
-
-        }
-
+  &.is-error {
+    .app-date-picker__field {
+      border-color: $status-error;
     }
+  }
 
-    &.is-warning {
-
-        .app-date-picker__field {
-
-            border-color: $status-warning;
-
-        }
-
+  &.is-warning {
+    .app-date-picker__field {
+      border-color: $status-warning;
     }
+  }
 
-    &.is-success {
-
-        .app-date-picker__field {
-
-            border-color: $status-success;
-
-        }
-
+  &.is-success {
+    .app-date-picker__field {
+      border-color: $status-success;
     }
+  }
 
-    &.is-readonly {
+  &.is-readonly {
+    .app-date-picker__field {
+      background: $bg-light;
 
-        .app-date-picker__field {
+      color: $gray-700;
 
-            background: $bg-light;
-
-            color: $gray-700;
-
-            cursor: default;
-
-        }
-
+      cursor: default;
     }
+  }
 
-    &.is-disabled {
+  &.is-disabled {
+    .app-date-picker__field {
+      background: $gray-100;
 
-        .app-date-picker__field {
+      color: $gray-500;
 
-            background: $gray-100;
-
-            color: $gray-500;
-
-            cursor: not-allowed;
-
-        }
-
+      cursor: not-allowed;
     }
+  }
 }
 
 /* =========================================
@@ -199,205 +192,205 @@ $date-picker-sizes: (
 ========================================= */
 
 .flatpickr-calendar {
-    @include font(b3, rg);
-    width: 320px;
-    overflow: hidden;
-    box-sizing: border-box;
-    border: 1px solid $line-regular;
-    border-radius: 8px;
-    background: $bg-white;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  @include font(b3, rg);
+  width: 320px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid $line-regular;
+  border-radius: 8px;
+  background: $bg-white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 
-    &::before,
-    &::after {
+  &::before,
+  &::after {
+    display: none;
+  }
+
+  .flatpickr-months {
+    align-items: center;
+    padding: 12px 12px 6px;
+
+    .flatpickr-month {
+      height: 32px;
+    }
+
+    .flatpickr-prev-month,
+    .flatpickr-next-month {
+      top: 12px;
+      width: 32px;
+      height: 32px;
+      padding: 8px;
+      color: $color-03-gray;
+      border-radius: 6px;
+
+      &:hover {
+        color: $color-02-black;
+        background: $bg-light;
+      }
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .flatpickr-current-month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 40px;
+    gap: 4px;
+    width: calc(100% - 80px);
+    height: 32px;
+    padding: 0;
+    color: $color-02-black;
+    @include font(b2, sb);
+
+    .numInputWrapper {
+      order: 1;
+      display: inline-flex;
+      align-items: center;
+      width: auto;
+
+      span {
         display: none;
-    }
+      }
 
-    .flatpickr-months {
-        align-items: center;
-        padding: 12px 12px 6px;
-
-        .flatpickr-month {
-            height: 32px;
-        }
-
-        .flatpickr-prev-month,
-        .flatpickr-next-month {
-            top: 12px;
-            width: 32px;
-            height: 32px;
-            padding: 8px;
-            color: $color-03-gray;
-            border-radius: 6px;
-
-            &:hover {
-                color: $color-02-black;
-                background: $bg-light;
-            }
-
-            svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-    }
-
-    .flatpickr-current-month {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        left: 40px;
-        gap: 4px;
-        width: calc(100% - 80px);
-        height: 32px;
-        padding: 0;
+      &::after {
+        content: "년";
+        margin-left: 2px;
         color: $color-02-black;
-        @include font(b2, sb);
-
-        .numInputWrapper {
-            order: 1;
-            display: inline-flex;
-            align-items: center;
-            width: auto;
-
-            span {
-                display: none;
-            }
-
-            &::after {
-                content: "년";
-                margin-left: 2px;
-                color: $color-02-black;
-            }
-        }
-
-        input.cur-year {
-            width: 42px;
-            height: 32px;
-            padding: 0;
-            color: $color-02-black;
-            text-align: right;
-            @include font(b2, sb);
-        }
-
-        .flatpickr-monthDropdown-months,
-        .cur-month {
-            order: 2;
-            width: auto;
-            height: 32px;
-            margin: 0;
-            padding: 0 20px 0 6px;
-            color: $color-02-black;
-            font-weight: 600;
-            border-radius: 6px;
-            background-color: transparent;
-
-            &:hover {
-                background: $bg-light;
-            }
-        }
+      }
     }
 
-    .flatpickr-weekdays {
-        width: 100%;
-        height: 36px;
-        border-bottom: 1px solid $line-light;
+    input.cur-year {
+      width: 42px;
+      height: 32px;
+      padding: 0;
+      color: $color-02-black;
+      text-align: right;
+      @include font(b2, sb);
     }
 
-    .flatpickr-weekdaycontainer {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        width: 100%;
+    .flatpickr-monthDropdown-months,
+    .cur-month {
+      order: 2;
+      width: auto;
+      height: 32px;
+      margin: 0;
+      padding: 0 20px 0 6px;
+      color: $color-02-black;
+      font-weight: 600;
+      border-radius: 6px;
+      background-color: transparent;
+
+      &:hover {
+        background: $bg-light;
+      }
+    }
+  }
+
+  .flatpickr-weekdays {
+    width: 100%;
+    height: 36px;
+    border-bottom: 1px solid $line-light;
+  }
+
+  .flatpickr-weekdaycontainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+  }
+
+  span.flatpickr-weekday {
+    color: $color-04-gray;
+    @include font(c2, sb);
+
+    &:first-child {
+      color: $status-error;
     }
 
-    span.flatpickr-weekday {
-        color: $color-04-gray;
-        @include font(c2, sb);
+    &:nth-child(7) {
+      color: $primary-600;
+    }
+  }
 
-        &:first-child {
-            color: $status-error;
-        }
+  .flatpickr-innerContainer,
+  .flatpickr-rContainer {
+    display: block;
+    width: 100%;
+  }
 
-        &:nth-child(7) {
-            color: $primary-600;
-        }
+  .flatpickr-days,
+  .flatpickr-weekdays {
+    width: 100%;
+    padding: 8px 12px 12px;
+    box-sizing: border-box;
+  }
+
+  .dayContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    row-gap: 4px;
+  }
+
+  .flatpickr-day {
+    width: 34px;
+    max-width: 34px;
+    height: 34px;
+    line-height: 34px;
+    color: $color-02-black;
+    border: 0;
+    border-radius: 6px;
+    justify-self: center;
+
+    &:hover,
+    &:focus {
+      background: $bg-light;
+      border-color: transparent;
     }
 
-    .flatpickr-innerContainer,
-    .flatpickr-rContainer {
-        display: block;
-        width: 100%;
+    &.prevMonthDay,
+    &.nextMonthDay {
+      color: $color-05-gray-disabled;
     }
 
-    .flatpickr-days,
-    .flatpickr-weekdays {
-        width: 100%;
-        padding: 8px 12px 12px;
-        box-sizing: border-box;
+    &.today {
+      color: $primary-700;
+      box-shadow: inset 0 0 0 1px $primary-300;
     }
 
-    .dayContainer {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        width: 100%;
-        min-width: 0;
-        max-width: none;
-        row-gap: 4px;
+    &:not(.prevMonthDay):not(.nextMonthDay):nth-child(7n + 1) {
+      color: $status-error;
     }
 
-    .flatpickr-day {
-        width: 34px;
-        max-width: 34px;
-        height: 34px;
-        line-height: 34px;
-        color: $color-02-black;
-        border: 0;
-        border-radius: 6px;
-        justify-self: center;
-
-        &:hover,
-        &:focus {
-            background: $bg-light;
-            border-color: transparent;
-        }
-
-        &.prevMonthDay,
-        &.nextMonthDay {
-            color: $color-05-gray-disabled;
-        }
-
-        &.today {
-            color: $primary-700;
-            box-shadow: inset 0 0 0 1px $primary-300;
-        }
-
-        &:not(.prevMonthDay):not(.nextMonthDay):nth-child(7n + 1) {
-            color: $status-error;
-        }
-
-        &:not(.prevMonthDay):not(.nextMonthDay):nth-child(7n) {
-            color: $primary-600;
-        }
-
-        &.selected,
-        &.startRange,
-        &.endRange {
-            color: $color-01-white;
-            background: $primary;
-            box-shadow: none;
-        }
-
-        &.inRange {
-            color: $primary-700;
-            background: $primary-50;
-            box-shadow: none;
-        }
-
-        &.flatpickr-disabled,
-        &.flatpickr-disabled:hover {
-            color: $color-05-gray-disabled;
-            background: transparent;
-            cursor: not-allowed;
-        }
+    &:not(.prevMonthDay):not(.nextMonthDay):nth-child(7n) {
+      color: $primary-600;
     }
+
+    &.selected,
+    &.startRange,
+    &.endRange {
+      color: $color-01-white;
+      background: $primary;
+      box-shadow: none;
+    }
+
+    &.inRange {
+      color: $primary-700;
+      background: $primary-50;
+      box-shadow: none;
+    }
+
+    &.flatpickr-disabled,
+    &.flatpickr-disabled:hover {
+      color: $color-05-gray-disabled;
+      background: transparent;
+      cursor: not-allowed;
+    }
+  }
 }

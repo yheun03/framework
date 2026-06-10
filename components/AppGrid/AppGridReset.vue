@@ -1,13 +1,10 @@
-<template>
-</template>
+<template></template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
-import { useAppGridRegistry } from '~/composables/useAppGridRegistry'
+import { inject } from "vue";
+import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
 
-const target = inject<string>('appGridTarget')
+const target = inject<string>("appGridTarget");
 
-const { getApi } = useAppGridRegistry()
-
-
+const { getApi } = useAppGridRegistry();
 </script>
