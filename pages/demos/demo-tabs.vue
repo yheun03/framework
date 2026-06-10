@@ -163,6 +163,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 탭 데모 화면의 탭 항목, 렌더러 예제, 현재 값을 관리하는 페이지 컴포넌트입니다.
+ */
 import { h, resolveComponent } from "vue";
 import type { AppTabItem } from "~/components/AppTabs.vue";
 import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
@@ -343,9 +346,7 @@ const rendererItems: AppTabItem[] = [
     component: PageDemoModalRendererExample,
     componentProps: {
       lastAction: "tabs renderer",
-      onAction: () => {
-        console.log("tabs renderer action");
-      },
+      onAction: () => {},
     },
   },
   {
