@@ -1,13 +1,13 @@
 <template>
-  <div class="app-grid-download">
-    <AppButton size="sm" variant="outline" @click="handleDownloadAll">
-      엑셀 다운로드
-    </AppButton>
+    <div class="app-grid-download">
+        <AppButton size="sm" variant="outline" @click="handleDownloadAll">
+            엑셀 다운로드
+        </AppButton>
 
-    <AppButton size="sm" variant="outline" @click="handleDownloadSelected">
-      선택 엑셀
-    </AppButton>
-  </div>
+        <AppButton size="sm" variant="outline" @click="handleDownloadSelected">
+            선택 엑셀
+        </AppButton>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -21,22 +21,22 @@ const { getApi } = useAppGridRegistry();
 const { exportDisplayed, exportDisplayedSelected } = useAppGridExcelExport();
 
 async function handleDownloadAll() {
-  if (!target) return;
+    if (!target) return;
 
-  const api = getApi(target);
+    const api = getApi(target);
 
-  if (!api) return;
+    if (!api) return;
 
-  await exportDisplayed(target, api);
+    await exportDisplayed(target, api);
 }
 
 async function handleDownloadSelected() {
-  if (!target) return;
+    if (!target) return;
 
-  const api = getApi(target);
+    const api = getApi(target);
 
-  if (!api) return;
+    if (!api) return;
 
-  await exportDisplayedSelected(target, api);
+    await exportDisplayedSelected(target, api);
 }
 </script>

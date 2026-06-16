@@ -1,82 +1,52 @@
 <template>
-  <div
-    :class="[
-      'form-field',
-      'app-input',
-      `app-input--${size}`,
-      `app-input--shape-${shape}`,
-      {
-        'app-input--icon-left': hasIconLeft,
-        'app-input--icon-right': hasIconRight || clearable || passwordToggle,
-        'is-disabled': disabled,
-        [`is-${state}`]: state,
-      },
-    ]"
-  >
-    <!-- label -->
-    <label
-      v-if="label"
-      class="form-field__label app-input__label"
-      :for="inputId"
-      >{{ label }}</label
-    >
+    <div :class="[
+        'form-field',
+        'app-input',
+        `app-input--${size}`,
+        `app-input--shape-${shape}`,
+        {
+            'app-input--icon-left': hasIconLeft,
+            'app-input--icon-right': hasIconRight || clearable || passwordToggle,
+            'is-disabled': disabled,
+            [`is-${state}`]: state,
+        },
+    ]">
+        <!-- label -->
+        <label v-if="label" class="form-field__label app-input__label" :for="inputId">{{ label }}</label>
 
-    <!-- control -->
-    <div class="form-field__control app-input__control">
-      <!-- left icon -->
-      <span v-if="hasIconLeft" class="app-input__icon app-input__icon--left">
-        <slot name="iconLeft" />
-      </span>
+        <!-- control -->
+        <div class="form-field__control app-input__control">
+            <!-- left icon -->
+            <span v-if="hasIconLeft" class="app-input__icon app-input__icon--left">
+                <slot name="iconLeft" />
+            </span>
 
-      <!-- input -->
-      <input
-        :id="inputId"
-        class="app-input__field"
-        :type="computedType"
-        :value="modelValue ?? ''"
-        :placeholder="placeholder"
-        :name="name"
-        :autocomplete="autocomplete"
-        :disabled="disabled"
-        :readonly="readonly"
-        :aria-invalid="state === 'error'"
-        :aria-describedby="describedBy"
-        @input="handleInput"
-      />
+            <!-- input -->
+            <input :id="inputId" class="app-input__field" :type="computedType" :value="modelValue ?? ''"
+                :placeholder="placeholder" :name="name" :autocomplete="autocomplete" :disabled="disabled"
+                :readonly="readonly" :aria-invalid="state === 'error'" :aria-describedby="describedBy"
+                @input="handleInput" />
 
-      <!-- clear -->
-      <AppIconButton
-        v-if="clearable && modelValue"
-        class="app-input__icon app-input__icon--right"
-        icon="mdi:close"
-        aria-label="입력값 지우기"
-        button-size="md"
-        icon-size="md"
-        @click="handleClear"
-      />
+            <!-- clear -->
+            <AppIconButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right"
+                icon="mdi:close" aria-label="입력값 지우기" button-size="md" icon-size="md" @click="handleClear" />
 
-      <!-- password toggle -->
-      <AppIconButton
-        v-if="passwordToggle"
-        class="app-input__icon app-input__icon--right"
-        :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'"
-        aria-label="비밀번호 표시 전환"
-        button-size="md"
-        icon-size="md"
-        @click="handlePasswordToggle"
-      />
+            <!-- password toggle -->
+            <AppIconButton v-if="passwordToggle" class="app-input__icon app-input__icon--right"
+                :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'" aria-label="비밀번호 표시 전환" button-size="md" icon-size="md"
+                @click="handlePasswordToggle" />
 
-      <!-- slot right -->
-      <span v-if="hasIconRight" class="app-input__icon app-input__icon--right">
-        <slot name="iconRight" />
-      </span>
+            <!-- slot right -->
+            <span v-if="hasIconRight" class="app-input__icon app-input__icon--right">
+                <slot name="iconRight" />
+            </span>
+        </div>
+
+        <!-- hint -->
+        <p v-if="hint" class="form-field__hint app-input__hint" :id="hintId">
+            {{ hint }}
+        </p>
     </div>
-
-    <!-- hint -->
-    <p v-if="hint" class="form-field__hint app-input__hint" :id="hintId">
-      {{ hint }}
-    </p>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -87,44 +57,44 @@ type InputShape = "square" | "round" | "pill" | "underline";
 type InputState = "error" | "warning" | "success" | null;
 
 const props = withDefaults(
-  defineProps<{
-    modelValue: string | number | null;
+    defineProps<{
+        modelValue: string | number | null;
 
-    label?: string;
-    hint?: string;
+        label?: string;
+        hint?: string;
 
-    placeholder?: string;
-    type?: string;
+        placeholder?: string;
+        type?: string;
 
-    size?: InputSize;
-    shape?: InputShape;
+        size?: InputSize;
+        shape?: InputShape;
 
-    state?: InputState;
+        state?: InputState;
 
-    disabled?: boolean;
-    readonly?: boolean;
+        disabled?: boolean;
+        readonly?: boolean;
 
-    clearable?: boolean;
-    passwordToggle?: boolean;
+        clearable?: boolean;
+        passwordToggle?: boolean;
 
-    id?: string;
-    name?: string;
-    autocomplete?: string;
-  }>(),
-  {
-    size: "md",
-    shape: "round",
-    state: null,
-    type: "text",
-    disabled: false,
-    readonly: false,
-    clearable: false,
-    passwordToggle: false,
-  },
+        id?: string;
+        name?: string;
+        autocomplete?: string;
+    }>(),
+    {
+        size: "md",
+        shape: "round",
+        state: null,
+        type: "text",
+        disabled: false,
+        readonly: false,
+        clearable: false,
+        passwordToggle: false,
+    },
 );
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
+    (e: "update:modelValue", value: string): void;
 }>();
 
 const fallbackId = useId();
@@ -146,28 +116,28 @@ const hasIconRight = computed(() => !!slots.iconRight);
 const showPassword = ref(false);
 
 const computedType = computed(() => {
-  if (props.passwordToggle) {
-    return showPassword.value ? "text" : "password";
-  }
+    if (props.passwordToggle) {
+        return showPassword.value ? "text" : "password";
+    }
 
-  return props.type;
+    return props.type;
 });
 
 function handlePasswordToggle() {
-  showPassword.value = !showPassword.value;
+    showPassword.value = !showPassword.value;
 }
 
 /* clear */
 
 function handleClear() {
-  emit("update:modelValue", "");
+    emit("update:modelValue", "");
 }
 
 /* input */
 
 function handleInput(e: Event) {
-  const target = e.target as HTMLInputElement;
+    const target = e.target as HTMLInputElement;
 
-  emit("update:modelValue", target.value);
+    emit("update:modelValue", target.value);
 }
 </script>

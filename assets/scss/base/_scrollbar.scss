@@ -12,31 +12,31 @@
 ---------------------------------------- */
 
 @mixin scrollbar($thumb, $hover) {
-  scrollbar-width: thin;
-  scrollbar-color: $thumb transparent;
+    scrollbar-width: thin;
+    scrollbar-color: $thumb transparent;
 
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: $thumb;
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb;
 
-    border-radius: 999px;
+        border-radius: 999px;
 
-    border: 2px solid transparent;
+        border: 2px solid transparent;
 
-    background-clip: padding-box;
-  }
+        background-clip: padding-box;
+    }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: $hover;
-  }
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $hover;
+    }
 }
 
 /* =========================================
@@ -44,7 +44,7 @@
 ========================================= */
 
 * {
-  @include scrollbar(rgba($gray-700, 0.45), rgba($gray-700, 0.7));
+    @include scrollbar(rgba($gray-700, 0.45), rgba($gray-700, 0.7));
 }
 
 /* =========================================
@@ -53,5 +53,5 @@
 
 .layout-nav,
 .layout-nav * {
-  @include scrollbar(rgba($gray-0, 0.35), rgba($gray-0, 0.6));
+    @include scrollbar(rgba($gray-0, 0.35), rgba($gray-0, 0.6));
 }

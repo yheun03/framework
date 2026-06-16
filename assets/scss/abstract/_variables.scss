@@ -36,24 +36,21 @@ $gray-700: #3f454f;
 $gray-800: #2a2f38;
 $gray-900: #1c2026;
 
-$gradient-primary: linear-gradient(
-  to bottom,
-  $primary-800 0%,
-  $primary-900 100%
-);
+$gradient-primary: linear-gradient(to bottom,
+        $primary-800 0%,
+        $primary-900 100%);
 
 // Typography
-$font-family-base:
-  "Pretendard",
-  system-ui,
-  -apple-system,
-  sans-serif;
+$font-family-base: "Pretendard",
+    system-ui,
+    -apple-system,
+    sans-serif;
 $font-size-base: 16px;
 $line-height-base: 1.5;
 
 // Variables
 :root {
-  --width-sidebar: 260px;
+    --width-sidebar: 260px;
 }
 
 $color-01-white: #ffffff;

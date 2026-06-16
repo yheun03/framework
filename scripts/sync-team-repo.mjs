@@ -19,154 +19,148 @@
  *       매주 동기화 후에도 유지됩니다.
  */
 
-import { execSync } from "node:child_process";
-import { cpSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+import {execSync} from 'node:child_process';
+import {cpSync, mkdtempSync, readdirSync, rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 
-const FRAMEWORK_REPO =
-  process.env.FRAMEWORK_REPO || "https://github.com/yheun03/framework.git";
-const FRAMEWORK_BRANCH = process.env.FRAMEWORK_BRANCH || "main";
-const TEAM_BRANCH = process.env.TEAM_BRANCH || "feature/yh.eun";
-const KEEP_NODE_MODULES = process.env.KEEP_NODE_MODULES === "1";
-const isInit = process.argv.includes("--init");
+const FRAMEWORK_REPO = process.env.FRAMEWORK_REPO || 'https://github.com/yheun03/framework.git';
+const FRAMEWORK_BRANCH = process.env.FRAMEWORK_BRANCH || 'main';
+const TEAM_BRANCH = process.env.TEAM_BRANCH || 'feature/yh.eun';
+const KEEP_NODE_MODULES = process.env.KEEP_NODE_MODULES === '1';
+const isInit = process.argv.includes('--init');
 
-function run(cmd, { cwd, silent = false } = {}) {
-  return execSync(cmd, {
-    cwd,
-    encoding: "utf8",
-    stdio: silent ? ["pipe", "pipe", "inherit"] : "inherit",
-  });
+function run(cmd, {cwd, silent = false} = {}) {
+    return execSync(cmd, {
+        cwd,
+        encoding: 'utf8',
+        stdio: silent ? ['pipe', 'pipe', 'inherit'] : 'inherit',
+    });
 }
 
 function runQuiet(cmd, cwd) {
-  try {
-    return execSync(cmd, { cwd, encoding: "utf8", stdio: "pipe" }).trim();
-  } catch {
-    return null;
-  }
+    try {
+        return execSync(cmd, {cwd, encoding: 'utf8', stdio: 'pipe'}).trim();
+    } catch {
+        return null;
+    }
 }
 
 function tryRun(cmd, cwd) {
-  try {
-    execSync(cmd, { cwd, stdio: "pipe" });
-  } catch {
-    /* optional */
-  }
+    try {
+        execSync(cmd, {cwd, stdio: 'pipe'});
+    } catch {
+        /* optional */
+    }
 }
 
 function ensureFrameworkRemote(repoRoot) {
-  const url = runQuiet("git remote get-url framework", repoRoot);
-  if (url === FRAMEWORK_REPO) return;
-  if (url) {
-    run(`git remote set-url framework "${FRAMEWORK_REPO}"`, { cwd: repoRoot });
-  } else {
-    run(`git remote add framework "${FRAMEWORK_REPO}"`, { cwd: repoRoot });
-  }
+    const url = runQuiet('git remote get-url framework', repoRoot);
+    if (url === FRAMEWORK_REPO) return;
+    if (url) {
+        run(`git remote set-url framework "${FRAMEWORK_REPO}"`, {cwd: repoRoot});
+    } else {
+        run(`git remote add framework "${FRAMEWORK_REPO}"`, {cwd: repoRoot});
+    }
 }
 
 function removeAllExceptNodeModules(repoRoot) {
-  for (const entry of readdirSync(repoRoot)) {
-    if (entry === "node_modules" && KEEP_NODE_MODULES) continue;
-    rmSync(join(repoRoot, entry), { recursive: true, force: true });
-  }
+    for (const entry of readdirSync(repoRoot)) {
+        if (entry === 'node_modules' && KEEP_NODE_MODULES) continue;
+        rmSync(join(repoRoot, entry), {recursive: true, force: true});
+    }
 }
 
 function cleanUntracked(repoRoot) {
-  const exclude = KEEP_NODE_MODULES ? "-e node_modules" : "";
-  run(`git clean -fdx ${exclude}`.trim(), { cwd: repoRoot });
+    const exclude = KEEP_NODE_MODULES ? '-e node_modules' : '';
+    run(`git clean -fdx ${exclude}`.trim(), {cwd: repoRoot});
 }
 
 function clearBranchUpstream(repoRoot) {
-  tryRun(`git config --unset branch.${TEAM_BRANCH}.remote`, repoRoot);
-  tryRun(`git config --unset branch.${TEAM_BRANCH}.merge`, repoRoot);
+    tryRun(`git config --unset branch.${TEAM_BRANCH}.remote`, repoRoot);
+    tryRun(`git config --unset branch.${TEAM_BRANCH}.merge`, repoRoot);
 }
 
 function alignTeamBranch(repoRoot) {
-  const ref = `framework/${FRAMEWORK_BRANCH}`;
-  if (!runQuiet(`git rev-parse ${ref}`, repoRoot)) {
-    console.error(`${ref} 브랜치를 찾을 수 없습니다.`);
-    process.exit(1);
-  }
+    const ref = `framework/${FRAMEWORK_BRANCH}`;
+    if (!runQuiet(`git rev-parse ${ref}`, repoRoot)) {
+        console.error(`${ref} 브랜치를 찾을 수 없습니다.`);
+        process.exit(1);
+    }
 
-  const current = runQuiet("git branch --show-current", repoRoot);
-  if (current && current !== TEAM_BRANCH) {
-    console.log(`  브랜치 전환: ${current} → ${TEAM_BRANCH}`);
-  }
+    const current = runQuiet('git branch --show-current', repoRoot);
+    if (current && current !== TEAM_BRANCH) {
+        console.log(`  브랜치 전환: ${current} → ${TEAM_BRANCH}`);
+    }
 
-  // 일반 checkout은 로컬 수정 중이면 실패 → -f로 강제 전환
-  run(`git branch -f ${TEAM_BRANCH} ${ref}`, { cwd: repoRoot });
-  run(`git checkout -f ${TEAM_BRANCH}`, { cwd: repoRoot });
-  run(`git reset --hard ${ref}`, { cwd: repoRoot });
-  clearBranchUpstream(repoRoot);
-  tryRun(
-    `git branch --set-upstream-to=origin/${TEAM_BRANCH} ${TEAM_BRANCH}`,
-    repoRoot,
-  );
-  cleanUntracked(repoRoot);
+    // 일반 checkout은 로컬 수정 중이면 실패 → -f로 강제 전환
+    run(`git branch -f ${TEAM_BRANCH} ${ref}`, {cwd: repoRoot});
+    run(`git checkout -f ${TEAM_BRANCH}`, {cwd: repoRoot});
+    run(`git reset --hard ${ref}`, {cwd: repoRoot});
+    clearBranchUpstream(repoRoot);
+    tryRun(`git branch --set-upstream-to=origin/${TEAM_BRANCH} ${TEAM_BRANCH}`, repoRoot);
+    cleanUntracked(repoRoot);
 }
 
 function printSummary(repoRoot) {
-  const count = runQuiet("git rev-list --count HEAD", repoRoot);
-  const latest = runQuiet("git log -1 --oneline", repoRoot);
-  console.log("\n--- 동기화 완료 ---");
-  console.log(`저장소: ${repoRoot}`);
-  console.log(`브랜치: ${TEAM_BRANCH} ← framework/${FRAMEWORK_BRANCH}`);
-  console.log(`커밋 수: ${count ?? "?"}`);
-  console.log(`최신: ${latest ?? "(없음)"}`);
-  console.log(`팀 origin: ${runQuiet("git remote get-url origin", repoRoot)}`);
-  const branch = runQuiet("git branch --show-current", repoRoot);
-  console.log(`\n팀 서버 반영: git push -u origin ${TEAM_BRANCH} --force`);
-  console.log(`(현재 브랜치: ${branch ?? "?"})`);
-  if (branch && branch !== TEAM_BRANCH) {
-    console.warn(
-      `⚠ 현재 ${branch}에 있습니다. push 전에 git checkout ${TEAM_BRANCH} 하세요.`,
-    );
-  }
+    const count = runQuiet('git rev-list --count HEAD', repoRoot);
+    const latest = runQuiet('git log -1 --oneline', repoRoot);
+    console.log('\n--- 동기화 완료 ---');
+    console.log(`저장소: ${repoRoot}`);
+    console.log(`브랜치: ${TEAM_BRANCH} ← framework/${FRAMEWORK_BRANCH}`);
+    console.log(`커밋 수: ${count ?? '?'}`);
+    console.log(`최신: ${latest ?? '(없음)'}`);
+    console.log(`팀 origin: ${runQuiet('git remote get-url origin', repoRoot)}`);
+    const branch = runQuiet('git branch --show-current', repoRoot);
+    console.log(`\n팀 서버 반영: git push -u origin ${TEAM_BRANCH} --force`);
+    console.log(`(현재 브랜치: ${branch ?? '?'})`);
+    if (branch && branch !== TEAM_BRANCH) {
+        console.warn(`⚠ 현재 ${branch}에 있습니다. push 전에 git checkout ${TEAM_BRANCH} 하세요.`);
+    }
 }
 
-const repoRoot = runQuiet("git rev-parse --show-toplevel");
+const repoRoot = runQuiet('git rev-parse --show-toplevel');
 if (!repoRoot) {
-  console.error("git 저장소 안에서 실행해 주세요.");
-  process.exit(1);
+    console.error('git 저장소 안에서 실행해 주세요.');
+    process.exit(1);
 }
 
-const teamOrigin = runQuiet("git remote get-url origin", repoRoot);
+const teamOrigin = runQuiet('git remote get-url origin', repoRoot);
 if (!teamOrigin) {
-  console.error("origin remote(팀 Git URL)이 없습니다.");
-  process.exit(1);
+    console.error('origin remote(팀 Git URL)이 없습니다.');
+    process.exit(1);
 }
 
-console.log(`[sync-team] ${isInit ? "초기 이관" : "주간 동기화"}`);
+console.log(`[sync-team] ${isInit ? '초기 이관' : '주간 동기화'}`);
 console.log(`  repo     : ${repoRoot}`);
 console.log(`  origin   : ${teamOrigin}`);
 console.log(`  framework: ${FRAMEWORK_REPO} (${FRAMEWORK_BRANCH})`);
 
 if (isInit) {
-  const tempRoot = mkdtempSync(join(tmpdir(), "framework-sync-"));
-  const cloneDir = join(tempRoot, "framework");
+    const tempRoot = mkdtempSync(join(tmpdir(), 'framework-sync-'));
+    const cloneDir = join(tempRoot, 'framework');
 
-  try {
-    run(`git clone "${FRAMEWORK_REPO}" "${cloneDir}"`);
-    removeAllExceptNodeModules(repoRoot);
-    rmSync(join(repoRoot, ".git"), { recursive: true, force: true });
-    cpSync(join(cloneDir, ".git"), join(repoRoot, ".git"), { recursive: true });
+    try {
+        run(`git clone "${FRAMEWORK_REPO}" "${cloneDir}"`);
+        removeAllExceptNodeModules(repoRoot);
+        rmSync(join(repoRoot, '.git'), {recursive: true, force: true});
+        cpSync(join(cloneDir, '.git'), join(repoRoot, '.git'), {recursive: true});
 
-    run(`git remote set-url origin "${teamOrigin}"`, { cwd: repoRoot });
-    ensureFrameworkRemote(repoRoot);
-    alignTeamBranch(repoRoot);
-  } finally {
-    rmSync(tempRoot, { recursive: true, force: true });
-  }
+        run(`git remote set-url origin "${teamOrigin}"`, {cwd: repoRoot});
+        ensureFrameworkRemote(repoRoot);
+        alignTeamBranch(repoRoot);
+    } finally {
+        rmSync(tempRoot, {recursive: true, force: true});
+    }
 } else {
-  ensureFrameworkRemote(repoRoot);
-  run("git fetch framework --tags", { cwd: repoRoot });
-  alignTeamBranch(repoRoot);
+    ensureFrameworkRemote(repoRoot);
+    run('git fetch framework --tags', {cwd: repoRoot});
+    alignTeamBranch(repoRoot);
 
-  const currentOrigin = runQuiet("git remote get-url origin", repoRoot);
-  if (currentOrigin !== teamOrigin) {
-    run(`git remote set-url origin "${teamOrigin}"`, { cwd: repoRoot });
-  }
+    const currentOrigin = runQuiet('git remote get-url origin', repoRoot);
+    if (currentOrigin !== teamOrigin) {
+        run(`git remote set-url origin "${teamOrigin}"`, {cwd: repoRoot});
+    }
 }
 
 printSummary(repoRoot);

@@ -8,81 +8,73 @@
 ========================================================= */
 
 $btn-tones: (
-  "primary": $primary-500,
-  "secondary": $gray-700,
-  "gray": $gray-700,
-  "danger": $status-error,
-  "warning": $status-warning,
-  "success": $status-success,
-  "info": $status-info,
+    "primary": $primary-500,
+    "secondary": $gray-700,
+    "gray": $gray-700,
+    "danger": $status-error,
+    "warning": $status-warning,
+    "success": $status-success,
+    "info": $status-info,
 );
 
 $btn-sizes: (
-  xl: (
-    min-width: 88px,
-    height: 56px,
-    padding: 16px,
-    gap: 6px,
-    font: btn1,
-    weight: sb,
-  ),
-  lg: (
-    min-width: 80px,
-    height: 48px,
-    padding: 16px,
-    gap: 6px,
-    font: btn2,
-    weight: sb,
-  ),
-  md: (
-    min-width: 80px,
-    height: 44px,
-    padding: 16px,
-    gap: 4px,
-    font: btn2,
-    weight: sb,
-  ),
-  sm: (
-    min-width: 68px,
-    height: 36px,
-    padding: 12px,
-    gap: 4px,
-    font: btn3,
-    weight: rg,
-  ),
-  xs: (
-    min-width: 58px,
-    height: 24px,
-    padding: 8px,
-    gap: 4px,
-    font: btn4,
-    weight: rg,
-  ),
+    xl: (min-width: 88px,
+        height: 56px,
+        padding: 16px,
+        gap: 6px,
+        font: btn1,
+        weight: sb,
+    ),
+    lg: (min-width: 80px,
+        height: 48px,
+        padding: 16px,
+        gap: 6px,
+        font: btn2,
+        weight: sb,
+    ),
+    md: (min-width: 80px,
+        height: 44px,
+        padding: 16px,
+        gap: 4px,
+        font: btn2,
+        weight: sb,
+    ),
+    sm: (min-width: 68px,
+        height: 36px,
+        padding: 12px,
+        gap: 4px,
+        font: btn3,
+        weight: rg,
+    ),
+    xs: (min-width: 58px,
+        height: 24px,
+        padding: 8px,
+        gap: 4px,
+        font: btn4,
+        weight: rg,
+    ),
 );
 
 $btn-text-sizes: (
-  lg: (
-    font: btn2,
-    weight: rg,
-  ),
-  md: (
-    font: btn3,
-    weight: rg,
-  ),
-  sm: (
-    font: btn4,
-    weight: rg,
-  ),
+    lg: (font: btn2,
+        weight: rg,
+    ),
+    md: (font: btn3,
+        weight: rg,
+    ),
+    sm: (font: btn4,
+        weight: rg,
+    ),
 );
 
 $icon-button-tones: (
-  "primary": $primary-500,
-  "secondary": $gray-700,
-  "gray": $gray-700,
-  "danger": $status-error,
-  "warning": $status-warning,
-  "success": $status-success,
-  "info": $status-info,
+    "primary": $primary-500,
+    "secondary": $gray-700,
+    "gray": $gray-700,
+    "danger": $status-error,
+    "warning": $status-warning,
+    "success": $status-success,
+    "info": $status-info,
 );
 
 /* =========================================================
@@ -90,52 +82,58 @@ $icon-button-tones: (
 ========================================================= */
 
 @mixin btn-variant($variant, $color) {
-  $hover: color.adjust($color, $lightness: -6%);
-  $active: color.adjust($color, $lightness: -10%);
-  $focus: color.adjust($color, $lightness: 18%);
+    $hover: color.adjust($color, $lightness: -6%);
+    $active: color.adjust($color, $lightness: -10%);
+    $focus: color.adjust($color, $lightness: 18%);
 
-  @if $variant ==fill {
-    --btn-bg: #{$color};
-    --btn-fg: #{$gray-0};
-    --btn-bd: transparent;
+    @if $variant ==fill {
+        --btn-bg: #{$color};
+        --btn-fg: #{$gray-0};
+        --btn-bd: transparent;
 
-    --btn-bg-hover: #{$hover};
-    --btn-bg-active: #{$active};
-  } @else if $variant ==outline {
-    --btn-bg: #{$gray-0};
-    --btn-fg: #{$color};
-    --btn-bd: #{$color};
+        --btn-bg-hover: #{$hover};
+        --btn-bg-active: #{$active};
+    }
 
-    --btn-bg-hover: #{rgba($gray-0, 0.6)};
-    --btn-bg-active: #{rgba($gray-0, 0.8)};
-    // --btn-bg-hover:#{rgba($gray-0,.06)};
-    // --btn-bg-active:#{rgba($gray-0,.10)};
+    @else if $variant ==outline {
+        --btn-bg: #{$gray-0};
+        --btn-fg: #{$color};
+        --btn-bd: #{$color};
 
-    --btn-fg-hover: #{$hover};
-    --btn-fg-active: #{$active};
+        --btn-bg-hover: #{rgba($gray-0, 0.6)};
+        --btn-bg-active: #{rgba($gray-0, 0.8)};
+        // --btn-bg-hover:#{rgba($gray-0,.06)};
+        // --btn-bg-active:#{rgba($gray-0,.10)};
 
-    --btn-bd-hover: #{$hover};
-    --btn-bd-active: #{$active};
-  } @else if $variant ==text {
-    --btn-bg: transparent;
-    --btn-fg: #{$color};
-    --btn-bd: transparent;
+        --btn-fg-hover: #{$hover};
+        --btn-fg-active: #{$active};
 
-    --btn-fg-hover: #{$hover};
-    --btn-fg-active: #{$active};
-  } @else if $variant ==underline {
-    --btn-bg: transparent;
-    --btn-fg: #{$color};
-    --btn-bd: transparent;
+        --btn-bd-hover: #{$hover};
+        --btn-bd-active: #{$active};
+    }
 
-    --btn-fg-hover: #{$hover};
-    --btn-fg-active: #{$active};
+    @else if $variant ==text {
+        --btn-bg: transparent;
+        --btn-fg: #{$color};
+        --btn-bd: transparent;
 
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+        --btn-fg-hover: #{$hover};
+        --btn-fg-active: #{$active};
+    }
 
-  --btn-focus: #{$focus};
+    @else if $variant ==underline {
+        --btn-bg: transparent;
+        --btn-fg: #{$color};
+        --btn-bd: transparent;
+
+        --btn-fg-hover: #{$hover};
+        --btn-fg-active: #{$active};
+
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    --btn-focus: #{$focus};
 }
 
 /* =========================================================
@@ -143,175 +141,175 @@ $icon-button-tones: (
 ========================================================= */
 
 .app-button {
-  @include font(btn2, rg);
+    @include font(btn2, rg);
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 6px;
-
-  border: 1px solid transparent;
-
-  background: transparent;
-  color: $gray-900;
-
-  cursor: pointer;
-  user-select: none;
-
-  text-decoration: none;
-  white-space: nowrap;
-
-  appearance: none;
-
-  transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    color 0.15s,
-    box-shadow 0.15s,
-    opacity 0.15s;
-
-  /* CSS Variables */
-
-  --btn-bg: transparent;
-  --btn-fg: #{$gray-900};
-  --btn-bd: transparent;
-
-  --btn-bg-hover: transparent;
-  --btn-bg-active: transparent;
-
-  --btn-fg-hover: var(--btn-fg);
-  --btn-fg-active: var(--btn-fg);
-
-  --btn-bd-hover: var(--btn-bd);
-  --btn-bd-active: var(--btn-bd);
-
-  --btn-focus: #{$primary-300};
-
-  background: var(--btn-bg);
-  color: var(--btn-fg);
-  border-color: var(--btn-bd);
-
-  &:hover {
-    background: var(--btn-bg-hover);
-    color: var(--btn-fg-hover);
-    border-color: var(--btn-bd-hover);
-  }
-
-  &:active {
-    background: var(--btn-bg-active);
-    color: var(--btn-fg-active);
-    border-color: var(--btn-bd-active);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--btn-focus);
-    outline-offset: 2px;
-  }
-
-  /* ------------------------------------------------
-       Button Size (fill / outline only)
-    ------------------------------------------------ */
-
-  @each $size, $data in $btn-sizes {
-    &.app-button--size-#{$size} {
-      min-width: map.get($data, min-width);
-      height: map.get($data, height);
-
-      padding-inline: map.get($data, padding);
-      gap: map.get($data, gap);
-
-      @include font(map.get($data, font), map.get($data, weight));
-    }
-  }
-
-  /* ------------------------------------------------
-       Shape
-    ------------------------------------------------ */
-
-  &--shape-square {
-    border-radius: 0;
-  }
-
-  &--shape-round {
-    border-radius: 6px;
-  }
-
-  &--shape-pill {
-    border-radius: 999px;
-  }
-
-  /* ------------------------------------------------
-       Variant
-    ------------------------------------------------ */
-
-  &--variant-fill {
-    @include btn-variant(fill, $primary-500);
-  }
-
-  &--variant-outline {
-    @include btn-variant(outline, $primary-500);
-  }
-
-  &--variant-text {
-    @include btn-variant(text, $primary-500);
-  }
-
-  &--variant-underline {
-    @include btn-variant(underline, $primary-500);
-  }
-
-  /* ------------------------------------------------
-       Tone
-    ------------------------------------------------ */
-
-  @each $tone, $color in $btn-tones {
-    &--tone-#{$tone} {
-      &.app-button--variant-fill {
-        @include btn-variant(fill, $color);
-      }
-
-      &.app-button--variant-outline {
-        @include btn-variant(outline, $color);
-      }
-    }
-  }
-
-  /* ------------------------------------------------
-       States
-    ------------------------------------------------ */
-
-  &--block {
-    width: 100%;
-  }
-
-  &--disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  &--loading {
-    cursor: progress;
-  }
-
-  /* ------------------------------------------------
-       Icon
-    ------------------------------------------------ */
-
-  &__icon {
-    @extend .app-icon;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-  }
 
-  &__label {
-    display: inline-flex;
-    align-items: center;
-    min-width: 0;
-  }
+    gap: 6px;
+
+    border: 1px solid transparent;
+
+    background: transparent;
+    color: $gray-900;
+
+    cursor: pointer;
+    user-select: none;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    appearance: none;
+
+    transition:
+        background-color 0.15s,
+        border-color 0.15s,
+        color 0.15s,
+        box-shadow 0.15s,
+        opacity 0.15s;
+
+    /* CSS Variables */
+
+    --btn-bg: transparent;
+    --btn-fg: #{$gray-900};
+    --btn-bd: transparent;
+
+    --btn-bg-hover: transparent;
+    --btn-bg-active: transparent;
+
+    --btn-fg-hover: var(--btn-fg);
+    --btn-fg-active: var(--btn-fg);
+
+    --btn-bd-hover: var(--btn-bd);
+    --btn-bd-active: var(--btn-bd);
+
+    --btn-focus: #{$primary-300};
+
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    border-color: var(--btn-bd);
+
+    &:hover {
+        background: var(--btn-bg-hover);
+        color: var(--btn-fg-hover);
+        border-color: var(--btn-bd-hover);
+    }
+
+    &:active {
+        background: var(--btn-bg-active);
+        color: var(--btn-fg-active);
+        border-color: var(--btn-bd-active);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--btn-focus);
+        outline-offset: 2px;
+    }
+
+    /* ------------------------------------------------
+       Button Size (fill / outline only)
+    ------------------------------------------------ */
+
+    @each $size, $data in $btn-sizes {
+        &.app-button--size-#{$size} {
+            min-width: map.get($data, min-width);
+            height: map.get($data, height);
+
+            padding-inline: map.get($data, padding);
+            gap: map.get($data, gap);
+
+            @include font(map.get($data, font), map.get($data, weight));
+        }
+    }
+
+    /* ------------------------------------------------
+       Shape
+    ------------------------------------------------ */
+
+    &--shape-square {
+        border-radius: 0;
+    }
+
+    &--shape-round {
+        border-radius: 6px;
+    }
+
+    &--shape-pill {
+        border-radius: 999px;
+    }
+
+    /* ------------------------------------------------
+       Variant
+    ------------------------------------------------ */
+
+    &--variant-fill {
+        @include btn-variant(fill, $primary-500);
+    }
+
+    &--variant-outline {
+        @include btn-variant(outline, $primary-500);
+    }
+
+    &--variant-text {
+        @include btn-variant(text, $primary-500);
+    }
+
+    &--variant-underline {
+        @include btn-variant(underline, $primary-500);
+    }
+
+    /* ------------------------------------------------
+       Tone
+    ------------------------------------------------ */
+
+    @each $tone, $color in $btn-tones {
+        &--tone-#{$tone} {
+            &.app-button--variant-fill {
+                @include btn-variant(fill, $color);
+            }
+
+            &.app-button--variant-outline {
+                @include btn-variant(outline, $color);
+            }
+        }
+    }
+
+    /* ------------------------------------------------
+       States
+    ------------------------------------------------ */
+
+    &--block {
+        width: 100%;
+    }
+
+    &--disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    &--loading {
+        cursor: progress;
+    }
+
+    /* ------------------------------------------------
+       Icon
+    ------------------------------------------------ */
+
+    &__icon {
+        @extend .app-icon;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+    }
 }
 
 /* =========================================================
@@ -319,96 +317,96 @@ $icon-button-tones: (
 ========================================================= */
 
 .app-text-button {
-  --btn-bg: transparent;
-  --btn-fg: #{$gray-700};
-  --btn-bd: transparent;
-  --btn-bg-hover: transparent;
-  --btn-bg-active: transparent;
-  --btn-fg-hover: var(--btn-fg);
-  --btn-fg-active: var(--btn-fg);
-  --btn-focus: #{$primary-300};
+    --btn-bg: transparent;
+    --btn-fg: #{$gray-700};
+    --btn-bd: transparent;
+    --btn-bg-hover: transparent;
+    --btn-bg-active: transparent;
+    --btn-fg-hover: var(--btn-fg);
+    --btn-fg-active: var(--btn-fg);
+    --btn-focus: #{$primary-300};
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-width: auto;
-  height: auto;
-  padding: 0;
-  border: 1px solid transparent;
-  background: var(--btn-bg);
-  color: var(--btn-fg);
-  cursor: pointer;
-  user-select: none;
-  appearance: none;
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    color 0.15s,
-    opacity 0.15s;
-
-  &:hover {
-    color: var(--btn-fg-hover);
-  }
-
-  &:active {
-    color: var(--btn-fg-active);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--btn-focus);
-    outline-offset: 2px;
-  }
-
-  &--variant-text {
-    @include btn-variant(text, $gray-700);
-  }
-
-  &--variant-underline {
-    @include btn-variant(underline, $gray-700);
-  }
-
-  @each $tone, $color in $btn-tones {
-    &--tone-#{$tone} {
-      &.app-text-button--variant-text {
-        @include btn-variant(text, $color);
-      }
-
-      &.app-text-button--variant-underline {
-        @include btn-variant(underline, $color);
-      }
-    }
-  }
-
-  @each $size, $data in $btn-text-sizes {
-    &--size-#{$size} {
-      @include font(map.get($data, font), map.get($data, weight));
-    }
-  }
-
-  &--disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  &--loading {
-    cursor: progress;
-  }
-
-  &__icon {
-    @extend .app-icon;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-  }
+    gap: 4px;
+    min-width: auto;
+    height: auto;
+    padding: 0;
+    border: 1px solid transparent;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        color 0.15s,
+        opacity 0.15s;
 
-  &__label {
-    display: inline-flex;
-    align-items: center;
-    min-width: 0;
-  }
+    &:hover {
+        color: var(--btn-fg-hover);
+    }
+
+    &:active {
+        color: var(--btn-fg-active);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--btn-focus);
+        outline-offset: 2px;
+    }
+
+    &--variant-text {
+        @include btn-variant(text, $gray-700);
+    }
+
+    &--variant-underline {
+        @include btn-variant(underline, $gray-700);
+    }
+
+    @each $tone, $color in $btn-tones {
+        &--tone-#{$tone} {
+            &.app-text-button--variant-text {
+                @include btn-variant(text, $color);
+            }
+
+            &.app-text-button--variant-underline {
+                @include btn-variant(underline, $color);
+            }
+        }
+    }
+
+    @each $size, $data in $btn-text-sizes {
+        &--size-#{$size} {
+            @include font(map.get($data, font), map.get($data, weight));
+        }
+    }
+
+    &--disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    &--loading {
+        cursor: progress;
+    }
+
+    &__icon {
+        @extend .app-icon;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+    }
 }
 
 /* =========================================================
@@ -416,90 +414,90 @@ $icon-button-tones: (
 ========================================================= */
 
 .app-icon-button {
-  --icon-button-size: 32px;
-  --icon-size: 16px;
-  --icon-button-color: #{$gray-700};
-  --icon-button-bg: transparent;
-  --icon-button-border: transparent;
-  --icon-button-bg-hover: #{rgba($gray-900, 0.06)};
-  --icon-button-bg-active: #{rgba($gray-900, 0.1)};
-  --icon-button-focus: #{$primary-300};
+    --icon-button-size: 32px;
+    --icon-size: 16px;
+    --icon-button-color: #{$gray-700};
+    --icon-button-bg: transparent;
+    --icon-button-border: transparent;
+    --icon-button-bg-hover: #{rgba($gray-900, 0.06)};
+    --icon-button-bg-active: #{rgba($gray-900, 0.1)};
+    --icon-button-focus: #{$primary-300};
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: var(--icon-button-size);
-  height: var(--icon-button-size);
-  padding: 0;
-  border: 1px solid var(--icon-button-border);
-  background: var(--icon-button-bg);
-  color: var(--icon-button-color);
-  cursor: pointer;
-  appearance: none;
-  text-decoration: none;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    color 0.15s,
-    opacity 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: var(--icon-button-size);
+    height: var(--icon-button-size);
+    padding: 0;
+    border: 1px solid var(--icon-button-border);
+    background: var(--icon-button-bg);
+    color: var(--icon-button-color);
+    cursor: pointer;
+    appearance: none;
+    text-decoration: none;
+    transition:
+        background-color 0.15s,
+        border-color 0.15s,
+        color 0.15s,
+        opacity 0.15s;
 
-  svg {
-    display: block;
-    width: var(--icon-size);
-    height: var(--icon-size);
-    color: currentColor;
-  }
-
-  &:hover {
-    background: var(--icon-button-bg-hover);
-  }
-
-  &:active {
-    background: var(--icon-button-bg-active);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--icon-button-focus);
-    outline-offset: 2px;
-  }
-
-  &--shape-square {
-    border-radius: 0;
-  }
-
-  &--shape-round {
-    border-radius: 6px;
-  }
-
-  &--shape-pill {
-    border-radius: 999px;
-  }
-
-  &--disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  @each $tone, $color in $icon-button-tones {
-    &--tone-#{$tone} {
-      --icon-button-color: #{$color};
-      --icon-button-focus: #{color.adjust($color, $lightness: 18%)};
-
-      &.app-icon-button--variant-soft {
-        --icon-button-bg: #{rgba($color, 0.08)};
-        --icon-button-bg-hover: #{rgba($color, 0.12)};
-        --icon-button-bg-active: #{rgba($color, 0.18)};
-      }
-
-      &.app-icon-button--variant-outline {
-        --icon-button-border: #{rgba($color, 0.6)};
-        --icon-button-bg-hover: #{rgba($color, 0.08)};
-        --icon-button-bg-active: #{rgba($color, 0.14)};
-      }
+    svg {
+        display: block;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        color: currentColor;
     }
-  }
+
+    &:hover {
+        background: var(--icon-button-bg-hover);
+    }
+
+    &:active {
+        background: var(--icon-button-bg-active);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--icon-button-focus);
+        outline-offset: 2px;
+    }
+
+    &--shape-square {
+        border-radius: 0;
+    }
+
+    &--shape-round {
+        border-radius: 6px;
+    }
+
+    &--shape-pill {
+        border-radius: 999px;
+    }
+
+    &--disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    @each $tone, $color in $icon-button-tones {
+        &--tone-#{$tone} {
+            --icon-button-color: #{$color};
+            --icon-button-focus: #{color.adjust($color, $lightness: 18%)};
+
+            &.app-icon-button--variant-soft {
+                --icon-button-bg: #{rgba($color, 0.08)};
+                --icon-button-bg-hover: #{rgba($color, 0.12)};
+                --icon-button-bg-active: #{rgba($color, 0.18)};
+            }
+
+            &.app-icon-button--variant-outline {
+                --icon-button-border: #{rgba($color, 0.6)};
+                --icon-button-bg-hover: #{rgba($color, 0.08)};
+                --icon-button-bg-active: #{rgba($color, 0.14)};
+            }
+        }
+    }
 }
 
 /* =========================================================
@@ -508,18 +506,18 @@ $icon-button-tones: (
 
 .app-button__spinner,
 .app-text-button__spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: btn-spin 0.6s linear infinite;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
 }
 
 @keyframes btn-spin {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* =========================================================

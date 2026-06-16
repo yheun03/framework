@@ -1,22 +1,9 @@
 <template>
-  <div
-    class="app-grid-cell-file"
-    @dragenter.stop
-    @dragover.stop
-    @dragleave.stop
-    @drop.stop
-  >
-    <AppUploadFile
-      v-model="value"
-      :multiple="fileOptions.multiple"
-      :max-count="fileOptions.maxCount"
-      :accept="fileOptions.accept"
-      :hint="fileOptions.hint"
-      :trigger-text="fileOptions.triggerText"
-      :allow-drop="fileOptions.allowDrop"
-      :max-size-bytes="fileOptions.maxSizeBytes"
-    />
-  </div>
+    <div class="app-grid-cell-file" @dragenter.stop @dragover.stop @dragleave.stop @drop.stop>
+        <AppUploadFile v-model="value" :multiple="fileOptions.multiple" :max-count="fileOptions.maxCount"
+            :accept="fileOptions.accept" :hint="fileOptions.hint" :trigger-text="fileOptions.triggerText"
+            :allow-drop="fileOptions.allowDrop" :max-size-bytes="fileOptions.maxSizeBytes" />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -24,56 +11,56 @@ import { useAppGridCellRendererValue } from "~/composables/useAppGridCellRendere
 import type { AppGridCellRendererProps } from "~/types/appGrid";
 
 type FileCellValue =
-  | string
-  | {
-      id: string;
-      name: string;
-      type: string;
-      size: number;
-      path?: string;
-      file?: File;
-      source?: "sample" | "upload";
+    | string
+    | {
+        id: string;
+        name: string;
+        type: string;
+        size: number;
+        path?: string;
+        file?: File;
+        source?: "sample" | "upload";
     }
-  | Array<
-      | string
-      | {
-          id: string;
-          name: string;
-          type: string;
-          size: number;
-          path?: string;
-          file?: File;
-          source?: "sample" | "upload";
+    | Array<
+        | string
+        | {
+            id: string;
+            name: string;
+            type: string;
+            size: number;
+            path?: string;
+            file?: File;
+            source?: "sample" | "upload";
         }
     >
-  | null;
+    | null;
 
 type FileCellParams = {
-  multiple?: boolean;
-  maxCount?: number;
-  accept?: string;
-  hint?: string;
-  triggerText?: string;
-  allowDrop?: boolean;
-  maxSizeBytes?: number;
+    multiple?: boolean;
+    maxCount?: number;
+    accept?: string;
+    hint?: string;
+    triggerText?: string;
+    allowDrop?: boolean;
+    maxSizeBytes?: number;
 };
 
 const props =
-  defineProps<AppGridCellRendererProps<FileCellValue, FileCellParams>>();
+    defineProps<AppGridCellRendererProps<FileCellValue, FileCellParams>>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<
-  FileCellValue,
-  FileCellParams
+    FileCellValue,
+    FileCellParams
 >(params);
 
 const fileOptions = computed<FileCellParams>(() => ({
-  multiple: Boolean(rendererParams.value.multiple),
-  maxCount: rendererParams.value.maxCount,
-  accept: rendererParams.value.accept,
-  hint: rendererParams.value.hint,
-  triggerText: rendererParams.value.triggerText,
-  allowDrop: rendererParams.value.allowDrop ?? true,
-  maxSizeBytes: rendererParams.value.maxSizeBytes,
+    multiple: Boolean(rendererParams.value.multiple),
+    maxCount: rendererParams.value.maxCount,
+    accept: rendererParams.value.accept,
+    hint: rendererParams.value.hint,
+    triggerText: rendererParams.value.triggerText,
+    allowDrop: rendererParams.value.allowDrop ?? true,
+    maxSizeBytes: rendererParams.value.maxSizeBytes,
 }));
 </script>
