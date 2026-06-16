@@ -55,10 +55,10 @@ plugins/      Nuxt 앱 초기화/주입
 - Vue 의존성이 없는 순수 함수는 `utils/`에 둡니다.
 - 값 변환, 정규화, 포맷팅, 비교 함수는 utils로 분리합니다.
 - 예시:
-  - `utils/css.ts`: CSS size 변환
-  - `utils/progress.ts`: progress value/range 정규화
-  - `utils/upload.ts`: 파일 형식/용량 처리
-  - `utils/section.ts`: section layout 값 변환
+    - `utils/css.ts`: CSS size 변환
+    - `utils/progress.ts`: progress value/range 정규화
+    - `utils/upload.ts`: 파일 형식/용량 처리
+    - `utils/section.ts`: section layout 값 변환
 
 ## 7. API 규칙
 
@@ -69,7 +69,7 @@ plugins/      Nuxt 앱 초기화/주입
 
 ```ts
 const api = useApi();
-const data = await api.get<MyType>("/api/example");
+const data = await api.get<MyType>('/api/example');
 ```
 
 ## 8. Type 규칙

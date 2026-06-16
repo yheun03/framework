@@ -9,10 +9,10 @@
 ========================================================= */
 
 .login {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  background: $gray-0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    background: $gray-0;
 }
 
 /* =========================================================
@@ -20,57 +20,49 @@
 ========================================================= */
 
 .login__hero {
-  position: relative;
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      900px 540px at 20% 10%,
-      rgba($primary-500, 0.55),
-      transparent 60%
-    ),
-    radial-gradient(
-      820px 560px at 90% 20%,
-      rgba($primary-200, 0.58),
-      transparent 60%
-    ),
-    radial-gradient(
-      860px 640px at 40% 105%,
-      rgba($status-info, 0.25),
-      transparent 62%
-    ),
-    linear-gradient(180deg, $primary-900, $primary-700);
-
-  color: $gray-0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
+    position: relative;
+    overflow: hidden;
 
     background:
-      linear-gradient(135deg, rgba($gray-0, 0.14), rgba($gray-0, 0) 35%),
-      repeating-linear-gradient(
-        135deg,
-        rgba($gray-0, 0.08) 0px,
-        rgba($gray-0, 0.08) 1px,
-        rgba($gray-0, 0) 1px,
-        rgba($gray-0, 0) 10px
-      );
+        radial-gradient(900px 540px at 20% 10%,
+            rgba($primary-500, 0.55),
+            transparent 60%),
+        radial-gradient(820px 560px at 90% 20%,
+            rgba($primary-200, 0.58),
+            transparent 60%),
+        radial-gradient(860px 640px at 40% 105%,
+            rgba($status-info, 0.25),
+            transparent 62%),
+        linear-gradient(180deg, $primary-900, $primary-700);
 
-    opacity: 0.45;
-    pointer-events: none;
-  }
+    color: $gray-0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+
+        background:
+            linear-gradient(135deg, rgba($gray-0, 0.14), rgba($gray-0, 0) 35%),
+            repeating-linear-gradient(135deg,
+                rgba($gray-0, 0.08) 0px,
+                rgba($gray-0, 0.08) 1px,
+                rgba($gray-0, 0) 1px,
+                rgba($gray-0, 0) 10px);
+
+        opacity: 0.45;
+        pointer-events: none;
+    }
 }
 
 .login__hero-inner {
-  position: relative;
+    position: relative;
 
-  min-height: 100%;
-  padding: 44px;
+    min-height: 100%;
+    padding: 44px;
 
-  display: grid;
-  grid-template-rows: 1fr auto;
+    display: grid;
+    grid-template-rows: 1fr auto;
 }
 
 /* =========================================================
@@ -78,29 +70,29 @@
 ========================================================= */
 
 .login__brand {
-  align-self: start;
-  max-width: 520px;
+    align-self: start;
+    max-width: 520px;
 }
 
 .login__logo {
-  width: 240px;
-  max-width: 100%;
+    width: 240px;
+    max-width: 100%;
 
-  filter: drop-shadow(0 18px 28px rgba($primary-900, 0.32));
+    filter: drop-shadow(0 18px 28px rgba($primary-900, 0.32));
 }
 
 .login__tagline {
-  margin: 18px 0 0;
+    margin: 18px 0 0;
 
-  @include font(t5, rg);
-  color: rgba($gray-0, 0.88);
+    @include font(t5, rg);
+    color: rgba($gray-0, 0.88);
 }
 
 .login__copyright {
-  margin: 0;
+    margin: 0;
 
-  @include font(c2, rg);
-  color: rgba($gray-0, 0.72);
+    @include font(c2, rg);
+    color: rgba($gray-0, 0.72);
 }
 
 /* =========================================================
@@ -108,33 +100,31 @@
 ========================================================= */
 
 .login__panel {
-  padding: 44px 20px;
+    padding: 44px 20px;
 
-  display: grid;
-  place-items: center;
+    display: grid;
+    place-items: center;
 
-  background:
-    radial-gradient(
-      780px 520px at 30% 0%,
-      rgba($primary-50, 1),
-      rgba($gray-0, 0) 60%
-    ),
-    $gray-0;
+    background:
+        radial-gradient(780px 520px at 30% 0%,
+            rgba($primary-50, 1),
+            rgba($gray-0, 0) 60%),
+        $gray-0;
 }
 
 .login__panel-inner {
-  width: min(440px, 100%);
+    width: min(440px, 100%);
 
-  padding: 22px;
+    padding: 22px;
 
-  border-radius: 18px;
-  border: 1px solid rgba($gray-900, 0.1);
+    border-radius: 18px;
+    border: 1px solid rgba($gray-900, 0.1);
 
-  background: rgba($gray-0, 0.9);
+    background: rgba($gray-0, 0.9);
 
-  box-shadow:
-    0 26px 70px rgba($primary-900, 0.1),
-    0 10px 24px rgba($primary-800, 0.08);
+    box-shadow:
+        0 26px 70px rgba($primary-900, 0.1),
+        0 10px 24px rgba($primary-800, 0.08);
 }
 
 /* =========================================================
@@ -142,24 +132,24 @@
 ========================================================= */
 
 .login__header {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 
-  display: grid;
-  gap: 6px;
+    display: grid;
+    gap: 6px;
 }
 
 .login__title {
-  margin: 0;
+    margin: 0;
 
-  @include font(t4, sb);
-  color: $gray-900;
+    @include font(t4, sb);
+    color: $gray-900;
 }
 
 .login__desc {
-  margin: 0;
+    margin: 0;
 
-  @include font(b3, rg);
-  color: rgba($gray-900, 0.66);
+    @include font(b3, rg);
+    color: rgba($gray-900, 0.66);
 }
 
 /* =========================================================
@@ -167,22 +157,22 @@
 ========================================================= */
 
 .login__form {
-  display: grid;
-  gap: 12px;
+    display: grid;
+    gap: 12px;
 }
 
 .login__row {
-  margin-top: 2px;
+    margin-top: 2px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 .login__submit {
-  width: 100%;
-  margin-top: 6px;
+    width: 100%;
+    margin-top: 6px;
 }
 
 /* =========================================================
@@ -190,14 +180,14 @@
 ========================================================= */
 
 .login__link {
-  @include font(b4, sb);
+    @include font(b4, sb);
 
-  color: $primary-700;
-  text-decoration: none;
+    color: $primary-700;
+    text-decoration: none;
 
-  &:hover {
-    text-decoration: underline;
-  }
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 /* =========================================================
@@ -206,25 +196,25 @@
 
 .login__footer,
 .login__helper {
-  margin-top: 10px;
-  padding-top: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-  border-top: 1px solid rgba($gray-900, 0.08);
+    border-top: 1px solid rgba($gray-900, 0.08);
 }
 
 .login__footer-text,
 .login__helper-text {
-  @include font(b4, rg);
-  color: rgba($gray-900, 0.66);
+    @include font(b4, rg);
+    color: rgba($gray-900, 0.66);
 }
 
 .login__helper-sep {
-  color: rgba($gray-900, 0.28);
+    color: rgba($gray-900, 0.28);
 }
 
 /* =========================================================
@@ -232,9 +222,9 @@
 ========================================================= */
 
 .login--signup {
-  .login__panel-inner {
-    width: min(520px, 100%);
-  }
+    .login__panel-inner {
+        width: min(520px, 100%);
+    }
 }
 
 /* forgot 은 기본 width 사용 */
@@ -244,10 +234,10 @@
 ========================================================= */
 
 .login__checks {
-  margin-top: 4px;
+    margin-top: 4px;
 
-  display: grid;
-  gap: 8px;
+    display: grid;
+    gap: 8px;
 }
 
 /* =========================================================
@@ -255,16 +245,16 @@
 ========================================================= */
 
 @media (max-width: 980px) {
-  .login {
-    grid-template-columns: 1fr;
-  }
+    .login {
+        grid-template-columns: 1fr;
+    }
 
-  .login__hero-inner {
-    padding: 34px 22px;
-    min-height: 320px;
-  }
+    .login__hero-inner {
+        padding: 34px 22px;
+        min-height: 320px;
+    }
 
-  .login__panel {
-    padding: 22px 16px 36px;
-  }
+    .login__panel {
+        padding: 22px 16px 36px;
+    }
 }

@@ -1,267 +1,185 @@
 <template>
-  <div class="page-demo">
-    <div class="page-demo-layout">
-      <main class="page-demo-main">
-        <header class="page-demo__header">
-          <h1 class="page-demo__title">{{ title }}</h1>
-          <p class="page-demo__desc">
-            단일/다중 이미지 업로드 필드 컴포넌트입니다. multiple, disabled,
-            allowDrop, readMode, maxSizeBytes 등의 속성을 확인할 수 있습니다.
-          </p>
-        </header>
+    <div class="page-demo">
+        <div class="page-demo-layout">
+            <main class="page-demo-main">
+                <header class="page-demo__header">
+                    <h1 class="page-demo__title">{{ title }}</h1>
+                    <p class="page-demo__desc">
+                        단일/다중 이미지 업로드 필드 컴포넌트입니다. multiple, disabled,
+                        allowDrop, readMode, maxSizeBytes 등의 속성을 확인할 수 있습니다.
+                    </p>
+                </header>
 
-        <!-- BASIC -->
-        <AppSection
-          class="page-demo-accordion"
-          title="Basic"
-          desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다."
-        >
-          <div class="page-demo-row">
-            <AppUploadImage
-              v-model="basic.imageUrl"
-              @change="handleBasicChange"
-              @error="handleError"
-              @remove="handleRemove"
-            />
+                <!-- BASIC -->
+                <AppSection class="page-demo-accordion" title="Basic"
+                    desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
+                    <div class="page-demo-row">
+                        <AppUploadImage v-model="basic.imageUrl" @change="handleBasicChange" @error="handleError"
+                            @remove="handleRemove" />
 
-            <div class="page-demo-stack">
-              <div class="page-demo-hint">
-                단일 이미지 업로드용 기본 예시입니다.
-              </div>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">
+                                단일 이미지 업로드용 기본 예시입니다.
+                            </div>
 
-              <div class="page-demo-actions">
-                <AppButton
-                  size="sm"
-                  variant="outline"
-                  @click="handleBasicSampleSet"
-                >
-                  샘플 이미지
-                </AppButton>
+                            <div class="page-demo-actions">
+                                <AppButton size="sm" variant="outline" @click="handleBasicSampleSet">
+                                    샘플 이미지
+                                </AppButton>
 
-                <AppTextButton
-                  size="sm"
-                  :disabled="!basic.imageUrl"
-                  @click="handleBasicClear"
-                >
-                  값 비우기
-                </AppTextButton>
-              </div>
-            </div>
-          </div>
-        </AppSection>
+                                <AppTextButton size="sm" :disabled="!basic.imageUrl" @click="handleBasicClear">
+                                    값 비우기
+                                </AppTextButton>
+                            </div>
+                        </div>
+                    </div>
+                </AppSection>
 
-        <!-- STATE -->
-        <AppSection
-          class="page-demo-accordion"
-          title="State &amp; Control"
-          desc="disabled 상태와 외부 제어 예시입니다."
-        >
-          <div class="page-demo-row">
-            <AppUploadImage
-              v-model="state.imageUrl"
-              :disabled="state.disabled"
-              @change="handleStateChange"
-              @error="handleError"
-            />
+                <!-- STATE -->
+                <AppSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
+                    <div class="page-demo-row">
+                        <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" @change="handleStateChange"
+                            @error="handleError" />
 
-            <div class="page-demo-stack">
-              <div class="page-demo-actions">
-                <AppButton
-                  size="sm"
-                  variant="outline"
-                  @click="handleStateSampleSet"
-                >
-                  샘플 이미지
-                </AppButton>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-actions">
+                                <AppButton size="sm" variant="outline" @click="handleStateSampleSet">
+                                    샘플 이미지
+                                </AppButton>
 
-                <AppTextButton size="sm" @click="handleDisabledToggle">
-                  disabled: {{ state.disabled ? "ON" : "OFF" }}
-                </AppTextButton>
+                                <AppTextButton size="sm" @click="handleDisabledToggle">
+                                    disabled: {{ state.disabled ? "ON" : "OFF" }}
+                                </AppTextButton>
 
-                <AppTextButton
-                  size="sm"
-                  :disabled="!state.imageUrl"
-                  @click="handleStateClear"
-                >
-                  값 비우기
-                </AppTextButton>
-              </div>
+                                <AppTextButton size="sm" :disabled="!state.imageUrl" @click="handleStateClear">
+                                    값 비우기
+                                </AppTextButton>
+                            </div>
 
-              <div class="page-demo-hint">
-                <strong>disabled</strong> 속성으로 선택/드롭 동작을 막을 수
-                있습니다.
-              </div>
-            </div>
-          </div>
-        </AppSection>
+                            <div class="page-demo-hint">
+                                <strong>disabled</strong> 속성으로 선택/드롭 동작을 막을 수
+                                있습니다.
+                            </div>
+                        </div>
+                    </div>
+                </AppSection>
 
-        <!-- MULTIPLE -->
-        <AppSection
-          class="page-demo-accordion"
-          title="Multiple"
-          desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다."
-        >
-          <div class="page-demo-row">
-            <AppUploadImage
-              v-model="multiple.images"
-              multiple
-              :max-count="3"
-              @change="handleMultipleChange"
-              @error="handleError"
-              @remove="handleRemove"
-            />
+                <!-- MULTIPLE -->
+                <AppSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
+                    <div class="page-demo-row">
+                        <AppUploadImage v-model="multiple.images" multiple :max-count="3" @change="handleMultipleChange"
+                            @error="handleError" @remove="handleRemove" />
 
-            <div class="page-demo-stack">
-              <div class="page-demo-hint">
-                최대 3개까지 업로드할 수 있습니다.
-              </div>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">
+                                최대 3개까지 업로드할 수 있습니다.
+                            </div>
 
-              <div class="page-demo-actions">
-                <AppButton
-                  size="sm"
-                  variant="outline"
-                  @click="handleMultipleSamplesSet"
-                >
-                  샘플 이미지
-                </AppButton>
+                            <div class="page-demo-actions">
+                                <AppButton size="sm" variant="outline" @click="handleMultipleSamplesSet">
+                                    샘플 이미지
+                                </AppButton>
 
-                <AppTextButton
-                  size="sm"
-                  :disabled="!multiple.images.length"
-                  @click="handleMultipleClear"
-                >
-                  값 비우기
-                </AppTextButton>
-              </div>
-            </div>
-          </div>
-        </AppSection>
+                                <AppTextButton size="sm" :disabled="!multiple.images.length"
+                                    @click="handleMultipleClear">
+                                    값 비우기
+                                </AppTextButton>
+                            </div>
+                        </div>
+                    </div>
+                </AppSection>
 
-        <!-- READ MODE -->
-        <AppSection
-          class="page-demo-accordion"
-          title="Read Mode"
-          desc='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'
-        >
-          <div class="page-demo-grid">
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="readMode.dataUrlImage"
-                read-mode="dataUrl"
-                @change="handleDataUrlChange"
-                @error="handleError"
-              />
+                <!-- READ MODE -->
+                <AppSection class="page-demo-accordion" title="Read Mode"
+                    desc='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'>
+                    <div class="page-demo-grid">
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="readMode.dataUrlImage" read-mode="dataUrl"
+                                @change="handleDataUrlChange" @error="handleError" />
 
-              <div class="page-demo-hint">
-                <strong>dataUrl</strong>은 문자열 데이터로 읽어 바로 바인딩할 때
-                사용합니다.
-              </div>
-            </div>
+                            <div class="page-demo-hint">
+                                <strong>dataUrl</strong>은 문자열 데이터로 읽어 바로 바인딩할 때
+                                사용합니다.
+                            </div>
+                        </div>
 
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="readMode.objectUrlImage"
-                read-mode="objectUrl"
-                @change="handleObjectUrlChange"
-                @error="handleError"
-              />
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="readMode.objectUrlImage" read-mode="objectUrl"
+                                @change="handleObjectUrlChange" @error="handleError" />
 
-              <div class="page-demo-hint">
-                <strong>objectUrl</strong>은 브라우저 URL을 만들어 미리보기할 때
-                유리합니다.
-              </div>
-            </div>
-          </div>
-        </AppSection>
+                            <div class="page-demo-hint">
+                                <strong>objectUrl</strong>은 브라우저 URL을 만들어 미리보기할 때
+                                유리합니다.
+                            </div>
+                        </div>
+                    </div>
+                </AppSection>
 
-        <!-- DRAG & DROP -->
-        <AppSection
-          class="page-demo-accordion"
-          title="Drag &amp; Drop"
-          desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다."
-        >
-          <div class="page-demo-grid">
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="drop.enabled"
-                :allow-drop="true"
-                @change="handleDropEnabledChange"
-                @error="handleError"
-              />
+                <!-- DRAG & DROP -->
+                <AppSection class="page-demo-accordion" title="Drag &amp; Drop"
+                    desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
+                    <div class="page-demo-grid">
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="drop.enabled" :allow-drop="true" @change="handleDropEnabledChange"
+                                @error="handleError" />
 
-              <div class="page-demo-hint">드롭 가능 상태입니다.</div>
-            </div>
+                            <div class="page-demo-hint">드롭 가능 상태입니다.</div>
+                        </div>
 
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="drop.disabled"
-                :allow-drop="false"
-                @change="handleDropDisabledChange"
-                @error="handleError"
-              />
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="drop.disabled" :allow-drop="false"
+                                @change="handleDropDisabledChange" @error="handleError" />
 
-              <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
-            </div>
-          </div>
-        </AppSection>
+                            <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
+                        </div>
+                    </div>
+                </AppSection>
 
-        <!-- FILE RULES -->
-        <AppSection
-          class="page-demo-accordion"
-          title="File Rules"
-          desc="파일 형식과 최대 용량 제한 예시입니다."
-        >
-          <div class="page-demo-grid">
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="rules.imageOnly"
-                accept="image/png,image/jpeg,image/webp"
-                @change="handleRulesImageChange"
-                @error="handleError"
-              />
+                <!-- FILE RULES -->
+                <AppSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
+                    <div class="page-demo-grid">
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp"
+                                @change="handleRulesImageChange" @error="handleError" />
 
-              <div class="page-demo-hint">
-                <strong>accept</strong> 속성으로 허용 파일 형식을 제한합니다.
-              </div>
-            </div>
+                            <div class="page-demo-hint">
+                                <strong>accept</strong> 속성으로 허용 파일 형식을 제한합니다.
+                            </div>
+                        </div>
 
-            <div class="page-demo-stack">
-              <AppUploadImage
-                v-model="rules.maxSizeImage"
-                :max-size-bytes="rules.maxSizeBytes"
-                @change="handleRulesSizeChange"
-                @error="handleError"
-              />
+                        <div class="page-demo-stack">
+                            <AppUploadImage v-model="rules.maxSizeImage" :max-size-bytes="rules.maxSizeBytes"
+                                @change="handleRulesSizeChange" @error="handleError" />
 
-              <div class="page-demo-hint">
-                <strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.
-              </div>
-            </div>
-          </div>
-        </AppSection>
-      </main>
+                            <div class="page-demo-hint">
+                                <strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.
+                            </div>
+                        </div>
+                    </div>
+                </AppSection>
+            </main>
 
-      <aside class="page-demo-aside" aria-label="현재 값 패널">
-        <div class="page-demo-aside__sticky">
-          <PageDemoPropsSummary />
+            <aside class="page-demo-aside" aria-label="현재 값 패널">
+                <div class="page-demo-aside__sticky">
+                    <PageDemoPropsSummary />
 
-          <AppSection class="page-demo-accordion" title="Actions">
-            <div class="page-demo-actions">
-              <AppButton variant="fill" @click="handleAllSamplesSet">
-                샘플 이미지 일괄 적용
-              </AppButton>
+                    <AppSection class="page-demo-accordion" title="Actions">
+                        <div class="page-demo-actions">
+                            <AppButton variant="fill" @click="handleAllSamplesSet">
+                                샘플 이미지 일괄 적용
+                            </AppButton>
 
-              <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
-            </div>
-          </AppSection>
+                            <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
+                        </div>
+                    </AppSection>
 
-          <AppSection class="page-demo-accordion" title="Current Value">
-            <pre class="page-demo-output">{{ output }}</pre>
-          </AppSection>
+                    <AppSection class="page-demo-accordion" title="Current Value">
+                        <pre class="page-demo-output">{{ output }}</pre>
+                    </AppSection>
+                </div>
+            </aside>
         </div>
-      </aside>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -273,319 +191,319 @@ const { title } = useDemoI18n("uploadImage");
 const description = "이미지 업로드 필드 속성별 동작을 확인하는 데모입니다.";
 
 type FileMeta = {
-  name: string;
-  type: string;
-  size: number;
-  lastModified: number;
+    name: string;
+    type: string;
+    size: number;
+    lastModified: number;
 };
 
 type ImageFieldItem = {
-  id: string;
-  name: string;
-  type: string;
-  size: number;
-  url: string;
-  alt?: string;
-  file?: File;
-  source?: "sample" | "upload";
+    id: string;
+    name: string;
+    type: string;
+    size: number;
+    url: string;
+    alt?: string;
+    file?: File;
+    source?: "sample" | "upload";
 };
 
 /* ref/reactive state */
 const basic = reactive({
-  imageUrl: null as ImageFieldItem | null,
-  file: null as FileMeta | null,
+    imageUrl: null as ImageFieldItem | null,
+    file: null as FileMeta | null,
 });
 
 const state = reactive({
-  imageUrl: null as ImageFieldItem | null,
-  disabled: false,
-  file: null as FileMeta | null,
+    imageUrl: null as ImageFieldItem | null,
+    disabled: false,
+    file: null as FileMeta | null,
 });
 
 const multiple = reactive({
-  images: [] as ImageFieldItem[],
-  files: [] as FileMeta[],
+    images: [] as ImageFieldItem[],
+    files: [] as FileMeta[],
 });
 
 const readMode = reactive({
-  dataUrlImage: null as ImageFieldItem | null,
-  objectUrlImage: null as ImageFieldItem | null,
-  dataUrlFile: null as FileMeta | null,
-  objectUrlFile: null as FileMeta | null,
+    dataUrlImage: null as ImageFieldItem | null,
+    objectUrlImage: null as ImageFieldItem | null,
+    dataUrlFile: null as FileMeta | null,
+    objectUrlFile: null as FileMeta | null,
 });
 
 const drop = reactive({
-  enabled: null as ImageFieldItem | null,
-  disabled: null as ImageFieldItem | null,
-  enabledFile: null as FileMeta | null,
-  disabledFile: null as FileMeta | null,
+    enabled: null as ImageFieldItem | null,
+    disabled: null as ImageFieldItem | null,
+    enabledFile: null as FileMeta | null,
+    disabledFile: null as FileMeta | null,
 });
 
 const rules = reactive({
-  imageOnly: null as ImageFieldItem | null,
-  maxSizeImage: null as ImageFieldItem | null,
-  maxSizeBytes: 2 * 1024 * 1024,
-  imageOnlyFile: null as FileMeta | null,
-  maxSizeFile: null as FileMeta | null,
+    imageOnly: null as ImageFieldItem | null,
+    maxSizeImage: null as ImageFieldItem | null,
+    maxSizeBytes: 2 * 1024 * 1024,
+    imageOnlyFile: null as FileMeta | null,
+    maxSizeFile: null as FileMeta | null,
 });
 
 const lastError = ref<{ message: string; detail?: unknown } | null>(null);
 const removedCount = ref(0);
 
 function toMeta(file: File): FileMeta {
-  return {
-    name: file.name,
-    type: file.type,
-    size: file.size,
-    lastModified: file.lastModified,
-  };
+    return {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        lastModified: file.lastModified,
+    };
 }
 
 function toSampleImage(url: string, name = "sample-image") {
-  return {
-    id: `sample-${name}`,
-    name,
-    type: "image/jpeg",
-    size: 0,
-    url,
-    alt: name,
-    source: "sample" as const,
-  } satisfies ImageFieldItem;
+    return {
+        id: `sample-${name}`,
+        name,
+        type: "image/jpeg",
+        size: 0,
+        url,
+        alt: name,
+        source: "sample" as const,
+    } satisfies ImageFieldItem;
 }
 
 function updateFileMeta(
-  item: ImageFieldItem | ImageFieldItem[] | null,
-  assign: (meta: FileMeta | null) => void,
+    item: ImageFieldItem | ImageFieldItem[] | null,
+    assign: (meta: FileMeta | null) => void,
 ) {
-  const nextItem = Array.isArray(item) ? (item[0] ?? null) : item;
-  assign(nextItem?.file ? toMeta(nextItem.file) : null);
-  lastError.value = null;
+    const nextItem = Array.isArray(item) ? (item[0] ?? null) : item;
+    assign(nextItem?.file ? toMeta(nextItem.file) : null);
+    lastError.value = null;
 }
 
 function updateFileMetaList(
-  item: ImageFieldItem | ImageFieldItem[] | null,
-  assign: (meta: FileMeta[]) => void,
+    item: ImageFieldItem | ImageFieldItem[] | null,
+    assign: (meta: FileMeta[]) => void,
 ) {
-  const nextItems = Array.isArray(item) ? item : item ? [item] : [];
-  assign(
-    nextItems
-      .filter((uploadItem) => Boolean(uploadItem.file))
-      .map((uploadItem) => toMeta(uploadItem.file as File)),
-  );
-  lastError.value = null;
+    const nextItems = Array.isArray(item) ? item : item ? [item] : [];
+    assign(
+        nextItems
+            .filter((uploadItem) => Boolean(uploadItem.file))
+            .map((uploadItem) => toMeta(uploadItem.file as File)),
+    );
+    lastError.value = null;
 }
 
 /* event handlers */
 function handleBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    basic.file = meta;
-  });
-  lastError.value = null;
+    updateFileMeta(item, (meta) => {
+        basic.file = meta;
+    });
+    lastError.value = null;
 }
 
 function handleStateChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    state.file = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        state.file = meta;
+    });
 }
 
 function handleMultipleChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMetaList(item, (meta) => {
-    multiple.files = meta;
-  });
+    updateFileMetaList(item, (meta) => {
+        multiple.files = meta;
+    });
 }
 
 function handleDataUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    readMode.dataUrlFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        readMode.dataUrlFile = meta;
+    });
 }
 
 function handleObjectUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    readMode.objectUrlFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        readMode.objectUrlFile = meta;
+    });
 }
 
 function handleDropEnabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    drop.enabledFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        drop.enabledFile = meta;
+    });
 }
 
 function handleDropDisabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    drop.disabledFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        drop.disabledFile = meta;
+    });
 }
 
 function handleRulesImageChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    rules.imageOnlyFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        rules.imageOnlyFile = meta;
+    });
 }
 
 function handleRulesSizeChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-  updateFileMeta(item, (meta) => {
-    rules.maxSizeFile = meta;
-  });
+    updateFileMeta(item, (meta) => {
+        rules.maxSizeFile = meta;
+    });
 }
 
 function handleBasicSampleSet() {
-  basic.imageUrl = toSampleImage(
-    "https://picsum.photos/240?random=11",
-    "basic-sample",
-  );
+    basic.imageUrl = toSampleImage(
+        "https://picsum.photos/240?random=11",
+        "basic-sample",
+    );
 }
 
 function handleStateSampleSet() {
-  state.imageUrl = toSampleImage(
-    "https://picsum.photos/240?random=12",
-    "state-sample",
-  );
+    state.imageUrl = toSampleImage(
+        "https://picsum.photos/240?random=12",
+        "state-sample",
+    );
 }
 
 function handleMultipleSamplesSet() {
-  multiple.images = [
-    toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
-    toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
-    toSampleImage("https://picsum.photos/240?random=23", "multiple-sample-3"),
-  ];
+    multiple.images = [
+        toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
+        toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
+        toSampleImage("https://picsum.photos/240?random=23", "multiple-sample-3"),
+    ];
 }
 
 function handleAllSamplesSet() {
-  basic.imageUrl = toSampleImage(
-    "https://picsum.photos/240?random=11",
-    "basic-sample",
-  );
-  state.imageUrl = toSampleImage(
-    "https://picsum.photos/240?random=12",
-    "state-sample",
-  );
-  multiple.images = [
-    toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
-    toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
-    toSampleImage("https://picsum.photos/240?random=23", "multiple-sample-3"),
-  ];
-  readMode.dataUrlImage = toSampleImage(
-    "https://picsum.photos/240?random=13",
-    "dataurl-sample",
-  );
-  readMode.objectUrlImage = toSampleImage(
-    "https://picsum.photos/240?random=14",
-    "objecturl-sample",
-  );
-  drop.enabled = toSampleImage(
-    "https://picsum.photos/240?random=15",
-    "drop-enabled-sample",
-  );
-  rules.imageOnly = toSampleImage(
-    "https://picsum.photos/240?random=16",
-    "rules-image-sample",
-  );
-  rules.maxSizeImage = toSampleImage(
-    "https://picsum.photos/240?random=17",
-    "rules-size-sample",
-  );
+    basic.imageUrl = toSampleImage(
+        "https://picsum.photos/240?random=11",
+        "basic-sample",
+    );
+    state.imageUrl = toSampleImage(
+        "https://picsum.photos/240?random=12",
+        "state-sample",
+    );
+    multiple.images = [
+        toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
+        toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
+        toSampleImage("https://picsum.photos/240?random=23", "multiple-sample-3"),
+    ];
+    readMode.dataUrlImage = toSampleImage(
+        "https://picsum.photos/240?random=13",
+        "dataurl-sample",
+    );
+    readMode.objectUrlImage = toSampleImage(
+        "https://picsum.photos/240?random=14",
+        "objecturl-sample",
+    );
+    drop.enabled = toSampleImage(
+        "https://picsum.photos/240?random=15",
+        "drop-enabled-sample",
+    );
+    rules.imageOnly = toSampleImage(
+        "https://picsum.photos/240?random=16",
+        "rules-image-sample",
+    );
+    rules.maxSizeImage = toSampleImage(
+        "https://picsum.photos/240?random=17",
+        "rules-size-sample",
+    );
 }
 
 function handleBasicClear() {
-  basic.imageUrl = null;
+    basic.imageUrl = null;
 }
 
 function handleStateClear() {
-  state.imageUrl = null;
+    state.imageUrl = null;
 }
 
 function handleMultipleClear() {
-  multiple.images = [];
-  multiple.files = [];
+    multiple.images = [];
+    multiple.files = [];
 }
 
 function handleDisabledToggle() {
-  state.disabled = !state.disabled;
+    state.disabled = !state.disabled;
 }
 
 function handleError(payload: { message: string; detail?: unknown }) {
-  lastError.value = payload;
+    lastError.value = payload;
 }
 
 function handleRemove() {
-  removedCount.value += 1;
+    removedCount.value += 1;
 }
 
 function handleReset() {
-  basic.imageUrl = null;
-  basic.file = null;
+    basic.imageUrl = null;
+    basic.file = null;
 
-  state.imageUrl = null;
-  state.disabled = false;
-  state.file = null;
+    state.imageUrl = null;
+    state.disabled = false;
+    state.file = null;
 
-  multiple.images = [];
-  multiple.files = [];
+    multiple.images = [];
+    multiple.files = [];
 
-  readMode.dataUrlImage = null;
-  readMode.objectUrlImage = null;
-  readMode.dataUrlFile = null;
-  readMode.objectUrlFile = null;
+    readMode.dataUrlImage = null;
+    readMode.objectUrlImage = null;
+    readMode.dataUrlFile = null;
+    readMode.objectUrlFile = null;
 
-  drop.enabled = null;
-  drop.disabled = null;
-  drop.enabledFile = null;
-  drop.disabledFile = null;
+    drop.enabled = null;
+    drop.disabled = null;
+    drop.enabledFile = null;
+    drop.disabledFile = null;
 
-  rules.imageOnly = null;
-  rules.maxSizeImage = null;
-  rules.imageOnlyFile = null;
-  rules.maxSizeFile = null;
+    rules.imageOnly = null;
+    rules.maxSizeImage = null;
+    rules.imageOnlyFile = null;
+    rules.maxSizeFile = null;
 
-  lastError.value = null;
-  removedCount.value = 0;
+    lastError.value = null;
+    removedCount.value = 0;
 }
 
 /* computed */
 const output = computed(() =>
-  JSON.stringify(
-    {
-      basic: {
-        imageUrl: basic.imageUrl ? "(set)" : "",
-        file: basic.file,
-      },
-      state: {
-        imageUrl: state.imageUrl ? "(set)" : "",
-        disabled: state.disabled,
-        file: state.file,
-      },
-      multiple: {
-        images: multiple.images.length,
-        files: multiple.files,
-      },
-      readMode: {
-        dataUrlImage: readMode.dataUrlImage ? "(set)" : "",
-        objectUrlImage: readMode.objectUrlImage ? "(set)" : "",
-        dataUrlFile: readMode.dataUrlFile,
-        objectUrlFile: readMode.objectUrlFile,
-      },
-      drop: {
-        enabled: drop.enabled ? "(set)" : "",
-        disabled: drop.disabled ? "(set)" : "",
-        enabledFile: drop.enabledFile,
-        disabledFile: drop.disabledFile,
-      },
-      rules: {
-        imageOnly: rules.imageOnly ? "(set)" : "",
-        maxSizeImage: rules.maxSizeImage ? "(set)" : "",
-        maxSizeBytes: rules.maxSizeBytes,
-        imageOnlyFile: rules.imageOnlyFile,
-        maxSizeFile: rules.maxSizeFile,
-      },
-      lastError: lastError.value,
-      removedCount: removedCount.value,
-    },
-    null,
-    2,
-  ),
+    JSON.stringify(
+        {
+            basic: {
+                imageUrl: basic.imageUrl ? "(set)" : "",
+                file: basic.file,
+            },
+            state: {
+                imageUrl: state.imageUrl ? "(set)" : "",
+                disabled: state.disabled,
+                file: state.file,
+            },
+            multiple: {
+                images: multiple.images.length,
+                files: multiple.files,
+            },
+            readMode: {
+                dataUrlImage: readMode.dataUrlImage ? "(set)" : "",
+                objectUrlImage: readMode.objectUrlImage ? "(set)" : "",
+                dataUrlFile: readMode.dataUrlFile,
+                objectUrlFile: readMode.objectUrlFile,
+            },
+            drop: {
+                enabled: drop.enabled ? "(set)" : "",
+                disabled: drop.disabled ? "(set)" : "",
+                enabledFile: drop.enabledFile,
+                disabledFile: drop.disabledFile,
+            },
+            rules: {
+                imageOnly: rules.imageOnly ? "(set)" : "",
+                maxSizeImage: rules.maxSizeImage ? "(set)" : "",
+                maxSizeBytes: rules.maxSizeBytes,
+                imageOnlyFile: rules.imageOnlyFile,
+                maxSizeFile: rules.maxSizeFile,
+            },
+            lastError: lastError.value,
+            removedCount: removedCount.value,
+        },
+        null,
+        2,
+    ),
 );
 </script>
 

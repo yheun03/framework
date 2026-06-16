@@ -1,7 +1,7 @@
 <template>
-  <div class="app-section-part app-section-part--body">
-    <slot />
-  </div>
+    <div class="app-section-part app-section-part--body">
+        <slot />
+    </div>
 </template>
 
 <script setup lang="ts"></script>
