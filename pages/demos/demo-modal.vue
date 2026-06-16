@@ -12,7 +12,7 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
                     desc="가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlert">
@@ -27,10 +27,10 @@
                             Custom 열기
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- ALERT -->
-                <AppSection class="page-demo-accordion" title="Alert Props"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Alert Props"
                     desc="title, message, confirmText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlertBasic">
@@ -49,10 +49,10 @@
                             Alert 중첩 열기
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CONFIRM -->
-                <AppSection class="page-demo-accordion" title="Confirm Props"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Confirm Props"
                     desc="confirmText, cancelText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenConfirmBasic">
@@ -71,10 +71,10 @@
                             Confirm 중첩 열기
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CUSTOM -->
-                <AppSection class="page-demo-accordion" title="Custom Modal"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Custom Modal"
                     desc="component와 componentProps를 전달해 원하는 내용을 렌더링하는 방식입니다. 실무에서는 별도 컴포넌트 전달 방식이 유지보수에 유리합니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenCustom">
@@ -85,10 +85,10 @@
                             Custom 중첩 열기
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- VIEWER -->
-                <AppSection class="page-demo-accordion" title="Viewer Modal"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Viewer Modal"
                     desc="이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenImageViewer">
@@ -99,10 +99,10 @@
                             PDF 뷰어 열기
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CONTROL -->
-                <AppSection class="page-demo-accordion" title="Store Control"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Store Control"
                     desc="스토어 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="outline" @click="handleCloseTop">
@@ -113,16 +113,16 @@
                             전체 모달 닫기
                         </AppTextButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

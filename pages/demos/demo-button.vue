@@ -12,7 +12,7 @@
                 <!-- Variant -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Variant">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Variant">
                     <p class="page-demo-hint">버튼 유형별 기본 스타일을 정의합니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -29,13 +29,13 @@
                         <AppTextButton variant="underline" @click="handleLogClick('underline')">underline
                         </AppTextButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Size -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Size">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Size">
                     <p class="page-demo-hint">버튼 크기를 정의합니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -79,13 +79,13 @@
                         <AppTextButton variant="underline" size="md">MD</AppTextButton>
                         <AppTextButton variant="underline" size="lg">LG</AppTextButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Shape -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Shape">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Shape">
                     <p class="page-demo-hint">버튼 모서리 스타일</p>
 
                     <ul class="page-demo-hint-list">
@@ -99,13 +99,13 @@
                         <AppButton variant="fill" shape="round">Round</AppButton>
                         <AppButton variant="fill" shape="pill">Pill</AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Tone -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Tone">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Tone">
                     <p class="page-demo-hint">버튼 색상 스타일</p>
 
                     <div class="page-demo-row">
@@ -117,13 +117,13 @@
                         <AppButton variant="fill" tone="success">Success</AppButton>
                         <AppButton variant="fill" tone="info">Info</AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Icon">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Icon">
                     <p class="page-demo-hint">
                         AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.
                     </p>
@@ -143,13 +143,13 @@
                             </template>
                         </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon Button -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Icon Button">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Icon Button">
                     <p class="page-demo-hint">
                         아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘
                         크기를 따로 지정할 수 있습니다.
@@ -175,13 +175,13 @@
                         <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36" :icon-size="18"
                             variant="outline" tone="danger" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Link -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="Link">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Link">
                     <p class="page-demo-hint">
                         AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.
                     </p>
@@ -199,13 +199,13 @@
                             외부 링크
                         </AppTextButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- State -->
                 <!-- -------------------------------------------------- -->
 
-                <AppSection class="page-demo-accordion" title="State">
+                <PageDemoAccordionSection class="page-demo-accordion" title="State">
                     <p class="page-demo-hint">버튼 상태</p>
 
                     <ul class="page-demo-hint-list">
@@ -221,9 +221,9 @@
 
                         <AppButton block> Block </AppButton>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
-                <AppSection class="page-demo-accordion" title="Custom Size">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Custom Size">
                     <p class="page-demo-hint">
                         AppButton / AppTextButton / AppIconButton은 width/height 속성으로
                         가로/세로와 min-size를 함께 지정할 수 있습니다.
@@ -250,7 +250,7 @@
                         <AppIconButton icon="mdi:star-outline" aria-label="커스텀 아이콘 버튼" :width="72" :height="30"
                             :icon-size="16" variant="outline" tone="primary" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <!-- 로그 패널 -->
@@ -259,19 +259,19 @@
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Actions">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Actions">
                         <div class="page-demo-actions">
                             <AppButton variant="fill" @click="handleClearClick">
                                 로그 비우기
                             </AppButton>
                         </div>
-                    </AppSection>
+                    </PageDemoAccordionSection>
 
-                    <AppSection class="page-demo-accordion" title="Click Log">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Click Log">
                         <pre class="page-demo-output">
                 {{ output }}
             </pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

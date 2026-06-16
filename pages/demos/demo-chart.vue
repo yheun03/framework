@@ -9,7 +9,7 @@
                 </header>
 
                 <!-- LINE -->
-                <AppSection class="page-demo-accordion" title="Line Variants" desc="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Line Variants" desc="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
                     <div class="page-demo-grid">
                         <client-only>
                             <AppChart class="page-demo-chart-box" type="line" :data="lineData" />
@@ -27,10 +27,10 @@
                             <AppChart class="page-demo-chart-box" type="line" :data="multiLineData2" />
                         </client-only>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CHART TYPES -->
-                <AppSection class="page-demo-accordion" title="Bar / Doughnut / Semi Doughnut / Pie"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Bar / Doughnut / Semi Doughnut / Pie"
                     desc="막대형, 도넛형, 반도넛형, 원형 차트 구성을 확인합니다.">
                     <div class="page-demo-grid">
                         <client-only>
@@ -50,16 +50,16 @@
                             <AppChart class="page-demo-chart-box" type="pie" :data="pieData" :height="220" />
                         </client-only>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

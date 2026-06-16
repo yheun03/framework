@@ -7,7 +7,7 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
                 <!-- GRID 1 -->
-                <AppSection class="page-demo-accordion" title="사용자 목록">
+                <PageDemoAccordionSection class="page-demo-accordion" title="사용자 목록">
                     <AppGridToolbar target="grid1">
                         <AppGridSearch v-model="search1" :fields="searchFields1" />
                         <AppGridDownload />
@@ -18,9 +18,9 @@
                             :row-selection="multiRowSelection" animate-rows
                             :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
                 <!-- GRID 2 -->
-                <AppSection class="page-demo-accordion" title="주문 목록">
+                <PageDemoAccordionSection class="page-demo-accordion" title="주문 목록">
                     <AppGridToolbar target="grid2">
                         <AppGridSearch v-model="search2" :fields="searchFields2" />
                         <AppGridDownload />
@@ -31,9 +31,9 @@
                             :row-selection="multiRowSelection" animate-rows
                             :style="{ height: '320px', width: '100%' }" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
                 <!-- GRID 3 -->
-                <AppSection class="page-demo-accordion" title="상품 조회 (단순 그리드)">
+                <PageDemoAccordionSection class="page-demo-accordion" title="상품 조회 (단순 그리드)">
                     <AppGridToolbar target="grid3">
                         <AppGridSearch v-model="search3" :fields="searchFields3" />
                         <AppGridDownload />
@@ -42,8 +42,8 @@
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
                             :default-col-def="defaultColDef" auto-height animate-rows />
                     </ClientOnly>
-                </AppSection>
-                <AppSection class="page-demo-accordion" title="셀 렌더러 인풋 예제">
+                </PageDemoAccordionSection>
+                <PageDemoAccordionSection class="page-demo-accordion" title="셀 렌더러 인풋 예제">
                     <AppGridToolbar target="grid4">
                         <AppGridDownload />
                     </AppGridToolbar>
@@ -51,22 +51,22 @@
                         <AppGrid grid-id="grid4" class="page-demo-grid" :row-data="rows4" :column-defs="columns4"
                             :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="검색 상태 패널">
                 <div class="page-demo-aside__sticky page-demo-stack">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="검색 폼 값 (v-model)"
+                    <PageDemoAccordionSection class="page-demo-accordion" title="검색 폼 값 (v-model)"
                         desc="각 그리드 &lt;code>AppGridSearch&lt;/code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.">
                         <pre class="page-demo-output">{{ searchStateOutput }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
 
-                    <AppSection class="page-demo-accordion" title="검색 필드 정의 (&lt;code>fields&lt;/code>)"
+                    <PageDemoAccordionSection class="page-demo-accordion" title="검색 필드 정의 (&lt;code>fields&lt;/code>)"
                         desc="&lt;code>AppGridSearchField&lt;/code> 배열 — &lt;code>type&lt;/code>, &lt;code>label&lt;/code>, &lt;code>filterField&lt;/code>, &lt;code>selectInput&lt;/code>, &lt;code>numberRange&lt;/code> 등 속성을 한눈에 확인할 수 있습니다.">
                         <pre class="page-demo-output">{{ searchFieldsOutput }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

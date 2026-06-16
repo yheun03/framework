@@ -10,12 +10,12 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic" desc="기본 textarea 입력 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본 textarea 입력 예시입니다.">
                     <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- WITH FORM FIELD -->
-                <AppSection class="page-demo-accordion" title="With FormField"
+                <PageDemoAccordionSection class="page-demo-accordion" title="With FormField"
                     desc="AppFormField와 함께 label, hint, error를 연결합니다.">
                     <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다." :error="contentError">
                         <template #default="{ id, invalid, describedby }">
@@ -23,10 +23,10 @@
                                 show-count clearable :invalid="invalid" :aria-describedby="describedby" />
                         </template>
                     </AppFormField>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- SIZE -->
-                <AppSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
@@ -46,10 +46,10 @@
                             <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- RESIZE -->
-                <AppSection class="page-demo-accordion" title="Resize" desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Resize" desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
@@ -77,10 +77,10 @@
                             <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- STATES -->
-                <AppSection class="page-demo-accordion" title="States" desc="disabled, readonly, invalid 상태를 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="States" desc="disabled, readonly, invalid 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">disabled</div>
@@ -100,22 +100,22 @@
                             <AppTextarea v-model="invalidValue" invalid placeholder="invalid textarea" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- COUNT / CLEAR -->
-                <AppSection class="page-demo-accordion" title="Count / Clear" desc="글자 수 표시와 clearable 옵션을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Count / Clear" desc="글자 수 표시와 clearable 옵션을 확인합니다.">
                     <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
                         clearable />
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

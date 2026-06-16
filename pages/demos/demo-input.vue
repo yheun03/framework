@@ -9,36 +9,36 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic" desc="가장 기본적인 Input 사용 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="가장 기본적인 Input 사용 예시입니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="basic" label="이름" placeholder="이름을 입력하세요" hint="이름은 2자 이상 입력하세요" />
                         <AppInput v-model="email" label="이메일" placeholder="name@example.com" />
                         <AppInput v-model="search" placeholder="검색" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- SIZE -->
-                <AppSection class="page-demo-accordion" title="Size" desc="Input의 높이를 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="Input의 높이를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppInput size="xs" label="XS" v-model="sizes.xs" />
                         <AppInput size="sm" label="SM" v-model="sizes.sm" />
                         <AppInput size="md" label="MD" v-model="sizes.md" />
                         <AppInput size="lg" label="LG" v-model="sizes.lg" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- SHAPE -->
-                <AppSection class="page-demo-accordion" title="Shape" desc="Input의 border 스타일을 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Shape" desc="Input의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppInput shape="square" label="Square" v-model="shape.square" />
                         <AppInput shape="round" label="Round" v-model="shape.round" />
                         <AppInput shape="pill" label="Pill" v-model="shape.pill" />
                         <AppInput shape="underline" label="Underline" v-model="shape.underline" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- ICON -->
-                <AppSection class="page-demo-accordion" title="Icon" desc="Input 내부에 아이콘을 배치할 수 있습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Icon" desc="Input 내부에 아이콘을 배치할 수 있습니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="search" placeholder="검색어"><template #iconLeft>
                                 <Icon icon="mdi:magnify" />
@@ -47,10 +47,10 @@
                         <AppInput v-model="search" placeholder="검색" clearable />
                         <AppInput v-model="password" placeholder="비밀번호" type="password" passwordToggle />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- ICONIFY -->
-                <AppSection class="page-demo-accordion" title="Iconify"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Iconify"
                     desc="&lt;code>@iconify/vue&lt;/code> 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="icon" placeholder="사용자명"><template #iconLeft>
@@ -66,24 +66,24 @@
                                 <Icon icon="mdi:link-variant" />
                             </template></AppInput>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- STATE -->
-                <AppSection class="page-demo-accordion" title="State" desc="입력 상태에 따른 스타일을 제공합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="State" desc="입력 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="stateError" label="Error" state="error" hint="에러 메시지" />
                         <AppInput v-model="stateWarning" label="Warning" state="warning" hint="경고 메시지" />
                         <AppInput v-model="stateSuccess" label="Success" state="success" hint="사용 가능" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DISABLED / READONLY -->
-                <AppSection class="page-demo-accordion" title="Disabled / Readonly" desc="입력 불가 상태를 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled / Readonly" desc="입력 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="readonlyValue" label="Readonly" readonly hint="읽기 전용" />
                         <AppInput v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" />
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <!-- STATE PANEL -->
@@ -91,9 +91,9 @@
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

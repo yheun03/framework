@@ -11,7 +11,7 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
                     desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="basic.imageUrl" @change="handleBasicChange" @error="handleError"
@@ -33,10 +33,10 @@
                             </div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- STATE -->
-                <AppSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" @change="handleStateChange"
                             @error="handleError" />
@@ -62,10 +62,10 @@
                             </div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- MULTIPLE -->
-                <AppSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="multiple.images" multiple :max-count="3" @change="handleMultipleChange"
                             @error="handleError" @remove="handleRemove" />
@@ -87,10 +87,10 @@
                             </div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- READ MODE -->
-                <AppSection class="page-demo-accordion" title="Read Mode"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Read Mode"
                     desc='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'>
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
@@ -113,10 +113,10 @@
                             </div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DRAG & DROP -->
-                <AppSection class="page-demo-accordion" title="Drag &amp; Drop"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Drag &amp; Drop"
                     desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
@@ -133,10 +133,10 @@
                             <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- FILE RULES -->
-                <AppSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp"
@@ -156,14 +156,14 @@
                             </div>
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Actions">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Actions">
                         <div class="page-demo-actions">
                             <AppButton variant="fill" @click="handleAllSamplesSet">
                                 샘플 이미지 일괄 적용
@@ -171,11 +171,11 @@
 
                             <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
                         </div>
-                    </AppSection>
+                    </PageDemoAccordionSection>
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
