@@ -56,6 +56,7 @@ export type AppTableCell = {
 
 export type AppTableRow = {
     id?: string | number;
+    layout?: 'default' | 'stacked' | 'label-row' | 'label-full';
     visible?: boolean | ((model: Record<string, unknown>) => boolean);
     cells: AppTableCell[];
 };
