@@ -7,7 +7,7 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <AppAccordion class="page-demo-accordion" :items="demoSections" mode="multiple" initial-open="none">
+                <AppAccordion class="page-demo-accordion" :items="demoSections" mode="multiple" initial-open="all">
                     <template #basic>
                         <div class="page-demo-row">
                             <AppUploadFile v-model="basic.file" @change="handleBasicChange" @error="handleError"
@@ -121,7 +121,7 @@
                     <PageDemoPropsSummary />
 
                     <AppAccordion class="page-demo-accordion" :items="asideSections" mode="multiple"
-                        initial-open="none">
+                        initial-open="all">
                         <template #actions>
                             <div class="page-demo-actions">
                                 <AppButton variant="fill" @click="handleAllSamplesSet">

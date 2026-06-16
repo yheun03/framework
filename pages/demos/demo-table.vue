@@ -8,7 +8,7 @@
                 </header>
 
                 <!-- BASIC TYPES -->
-                <AppSection class="page-demo-accordion" title="Basic Types">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic Types">
                     <p class="page-demo__desc">
                         AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각
                         행의 <code>th</code>에는 <code>cell.type</code>이,
@@ -19,51 +19,51 @@
                         <AppTable v-model="basicForm" :rows="basicRows" title="Basic" default-label-width="160px"
                             @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- LAYOUT TYPES -->
-                <AppSection class="page-demo-accordion" title="Layout Types" desc="stacked / label-full 레이아웃 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Layout Types" desc="stacked / label-full 레이아웃 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" default-label-width="160px"
                             @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- BUTTON TYPES -->
-                <AppSection class="page-demo-accordion" title="Button Types"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Button Types"
                     desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants"
                             default-label-width="160px" @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CHOICE TYPES -->
-                <AppSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" default-label-width="160px"
                             @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DATE TYPES -->
-                <AppSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="dateForm" :rows="dateRows" title="Date" default-label-width="160px"
                             @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- CONTACT TYPES -->
-                <AppSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="contactForm" :rows="contactRows" title="Contact" default-label-width="160px"
                             @field-action="handleFieldAction" />
                     </ClientOnly>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- STATE -->
-                <AppSection class="page-demo-accordion" title="Readonly / Disabled"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Readonly / Disabled"
                     desc="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
                         <ClientOnly>
@@ -76,16 +76,16 @@
                                 default-label-width="160px" disabled @field-action="handleFieldAction" />
                         </ClientOnly>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

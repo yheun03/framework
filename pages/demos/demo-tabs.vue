@@ -10,12 +10,12 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic" desc="기본적인 line 탭 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 line 탭 예시입니다.">
                     <AppTabs :items="basicItems" variant="line" v-model:active-id="basicActiveId" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- VARIANT -->
-                <AppSection class="page-demo-accordion" title="Variant" desc="line / box / pill 스타일을 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Variant" desc="line / box / pill 스타일을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>
@@ -35,21 +35,21 @@
                             <AppTabs :items="variantItems" variant="pill" v-model:active-id="pillActiveId" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DEFAULT ACTIVE -->
-                <AppSection class="page-demo-accordion" title="Default Active Id"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Default Active Id"
                     desc="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.">
                     <AppTabs :items="defaultItems" variant="line" default-active-id="default-2" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
-                <AppSection class="page-demo-accordion" title="Disabled" desc="disabled 탭은 선택할 수 없습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 탭은 선택할 수 없습니다.">
                     <AppTabs :items="disabledItems" variant="box" v-model:active-id="disabledActiveId" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- SIZE -->
-                <AppSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
@@ -69,16 +69,16 @@
                             <AppTabs :items="sizeItems" size="lg" variant="pill" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- VERTICAL -->
-                <AppSection class="page-demo-accordion" title="Vertical" desc="orientation을 vertical로 지정한 좌측 탭 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Vertical" desc="orientation을 vertical로 지정한 좌측 탭 예시입니다.">
                     <AppTabs :items="verticalItems" orientation="vertical" variant="line"
                         v-model:active-id="verticalActiveId" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- COMPONENT RENDER -->
-                <AppSection class="page-demo-accordion" title="Renderer / Component"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
                     desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
                     <AppTabs :items="rendererItems" variant="line" v-model:active-id="rendererActiveId">
                         <template #custom="{ item }">
@@ -88,16 +88,16 @@
                             </div>
                         </template>
                     </AppTabs>
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>

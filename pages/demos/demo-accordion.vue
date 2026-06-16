@@ -10,13 +10,13 @@
                 </header>
 
                 <!-- BASIC -->
-                <AppSection class="page-demo-accordion" title="Basic" desc="기본적인 multiple 아코디언 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 multiple 아코디언 예시입니다.">
                     <AppAccordion :items="basicItems" mode="multiple" initial-open="none"
                         v-model:open-ids="basicOpenIds" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- OPEN MODE -->
-                <AppSection class="page-demo-accordion" title="Open Mode"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Open Mode"
                     desc="한 개만 열리는 single 모드와 여러 개를 자유롭게 여는 multiple 모드를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -33,10 +33,10 @@
                                 v-model:open-ids="multipleModeOpenIds" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- INITIAL OPEN -->
-                <AppSection class="page-demo-accordion" title="Initial Open"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Initial Open"
                     desc="페이지 최초 진입 시 none / first / all 상태를 확인할 수 있습니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
@@ -57,36 +57,36 @@
                             <AppAccordion :items="initialItems" mode="multiple" initial-open="all" />
                         </div>
                     </div>
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DEFAULT OPEN IDS -->
-                <AppSection class="page-demo-accordion" title="Default Open Ids"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Default Open Ids"
                     desc="defaultOpenIds로 특정 패널만 기본 열림 상태로 지정할 수 있습니다.">
                     <AppAccordion :items="defaultItems" mode="multiple"
                         :default-open-ids="['default-2', 'default-3']" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
-                <AppSection class="page-demo-accordion" title="Disabled" desc="disabled 항목은 열고 닫을 수 없습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 항목은 열고 닫을 수 없습니다.">
                     <AppAccordion :items="disabledItems" mode="multiple" initial-open="first"
                         v-model:open-ids="disabledOpenIds" />
-                </AppSection>
+                </PageDemoAccordionSection>
 
                 <!-- COMPONENT RENDER -->
-                <AppSection class="page-demo-accordion" title="Renderer / Component"
+                <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
                     desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
                     <AppAccordion :items="rendererItems" mode="multiple" initial-open="first"
                         v-model:open-ids="rendererOpenIds" />
-                </AppSection>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
 
-                    <AppSection class="page-demo-accordion" title="Current Value">
+                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
                         <pre class="page-demo-output">{{ output }}</pre>
-                    </AppSection>
+                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
