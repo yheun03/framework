@@ -3,6 +3,7 @@
  */
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
+import {resolveFallbackTabId} from '~/utils/tab';
 
 export type WorkspaceTab = {
     id: string;
@@ -57,7 +58,10 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         if (idx < 0) return;
         tabs.value.splice(idx, 1);
 
-        const fallback = tabs.value[Math.max(0, idx - 1)]?.id ?? tabs.value[0]?.id;
+        const fallback = resolveFallbackTabId(
+            tabs.value.map((tab) => tab.id),
+            idx,
+        );
         if (!fallback) return;
 
         if (activeTabId.value === id) activeTabId.value = fallback;

@@ -3,6 +3,7 @@
  */
 import * as XLSX from 'xlsx';
 import type {AppGridExportRequestBody} from '~/types/appGrid';
+import {ensureXlsxExtension, sanitizeExportBaseName} from '~/utils/exportFilename';
 
 export function buildGridExcelBuffer(body: AppGridExportRequestBody): Buffer {
     const {gridId, columns, rows} = body;
@@ -34,6 +35,6 @@ export function buildGridExcelBuffer(body: AppGridExportRequestBody): Buffer {
 
 export function resolveGridExcelFilename(body: AppGridExportRequestBody): string {
     const {gridId} = body;
-    const baseName = (body.fileName || gridId || 'export').replace(/[\\/:*?"<>|]/g, '_');
-    return baseName.toLowerCase().endsWith('.xlsx') ? baseName : `${baseName}.xlsx`;
+    const baseName = sanitizeExportBaseName(body.fileName || gridId || 'export');
+    return ensureXlsxExtension(baseName);
 }

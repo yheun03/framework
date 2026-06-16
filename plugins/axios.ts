@@ -19,16 +19,6 @@ export default defineNuxtPlugin(() => {
         headers: {'Content-Type': 'application/json'},
     });
 
-    api.interceptors.request.use(
-        (req) => req,
-        (error) => Promise.reject(error),
-    );
-
-    api.interceptors.response.use(
-        (res) => res,
-        (error) => Promise.reject(error),
-    );
-
     return {
         provide: {api},
     };

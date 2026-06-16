@@ -53,3 +53,20 @@ export function isAcceptedUploadType(file: File, accept?: string) {
         return file.type === acceptItem;
     });
 }
+
+export function resolveNextUploadItems<Item>(options: {
+    currentItems: Item[];
+    createdItems: Item[];
+    multiple?: boolean;
+    maxCount?: number;
+}) {
+    const {currentItems, createdItems, multiple, maxCount} = options;
+    if (!createdItems.length) return [];
+
+    let nextItems = multiple ? [...currentItems, ...createdItems] : [createdItems[0]];
+    if (multiple && maxCount != null) {
+        nextItems = nextItems.slice(0, maxCount);
+    }
+
+    return nextItems;
+}

@@ -20,3 +20,17 @@ export function normalizeSectionRatio(value: SectionRatio) {
 
     return value;
 }
+
+export function buildSectionStyleVars(options: {
+    gapVarName: string;
+    ratioVarName: string;
+    gap: SectionGap;
+    ratio: SectionRatio;
+}) {
+    const {gapVarName, ratioVarName, gap, ratio} = options;
+
+    return {
+        [gapVarName]: normalizeSectionGap(gap),
+        [ratioVarName]: normalizeSectionRatio(ratio),
+    };
+}

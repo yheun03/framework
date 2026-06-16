@@ -20,8 +20,7 @@
 
 <script setup lang="ts">
 import {
-    normalizeSectionGap,
-    normalizeSectionRatio,
+    buildSectionStyleVars,
     type SectionDirection,
     type SectionRatio,
     type SectionGap,
@@ -49,9 +48,11 @@ const hasDefaultHeader = computed(() => !!props.title || !!props.desc);
 const sectionClassName = computed(() => `app-section--${props.direction}`);
 
 const sectionStyle = computed(() => {
-    return {
-        "--app-section-gap": normalizeSectionGap(props.gap as SectionGap),
-        "--app-section-template": normalizeSectionRatio(props.ratio),
-    };
+    return buildSectionStyleVars({
+        gapVarName: "--app-section-gap",
+        ratioVarName: "--app-section-template",
+        gap: props.gap as SectionGap,
+        ratio: props.ratio,
+    });
 });
 </script>
