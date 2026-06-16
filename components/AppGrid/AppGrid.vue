@@ -20,7 +20,6 @@ import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
 const { register, unregister } = useAppGridRegistry();
 
-const { $agGridLocale } = useNuxtApp();
 const attrs = useAttrs();
 const gridApi = ref<GridApi | null>(null);
 const registeredGridId = ref<string | null>(null);
@@ -193,6 +192,6 @@ const gridClasses = computed(() => [
 ]);
 
 const localeText = computed<GridOptions["localeText"]>(() => {
-    return (attrs.localeText as GridOptions["localeText"]) ?? $agGridLocale;
+    return attrs.localeText as GridOptions["localeText"];
 });
 </script>

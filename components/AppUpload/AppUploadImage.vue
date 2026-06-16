@@ -74,18 +74,19 @@
 <script setup lang="ts">
 import { useModalViewer } from "~/composables/useModalViewer";
 import {
-    buildUploadHelperText,
     createUploadId,
     formatBytes,
-    isAcceptedUploadType,
+    resolveNextUploadItems,
 } from "~/utils/upload";
+import {
+    normalizeUploadItems,
+    resolveUploadValue,
+    useAppUpload,
+    type AppUploadModelValue,
+} from "./useAppUpload";
 
 type ReadMode = "dataUrl" | "objectUrl";
-type AppImageUploadValue = string | AppImageUploadItem;
-type AppImageUploadModelValue =
-    | AppImageUploadValue
-    | AppImageUploadValue[]
-    | null;
+type AppImageUploadModelValue = AppUploadModelValue<AppImageUploadItem>;
 
 export type AppImageUploadItem = {
     id: string;
@@ -136,16 +137,19 @@ const emit = defineEmits<{
     (e: "error", payload: { message: string; detail?: unknown }): void;
 }>();
 
-const fileInput = ref<HTMLInputElement | null>(null);
-const dragOver = ref(false);
 const objectUrls = ref<string[]>([]);
 const { openImageViewer } = useModalViewer();
-
-const rootClasses = computed(() => ({
-    "is-disabled": props.disabled,
-    "is-dragover": dragOver.value,
-    "is-multiple": props.multiple,
-}));
+const {
+    fileInput,
+    rootClasses,
+    helperText,
+    handleFileOpen,
+    shouldAcceptFile,
+    handleDragEnter,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop: handleUploadDrop,
+} = useAppUpload(props, error);
 
 function createUrlItem(url: string, index = 0): AppImageUploadItem {
     const fallbackName =
@@ -162,26 +166,11 @@ function createUrlItem(url: string, index = 0): AppImageUploadItem {
 }
 
 const items = computed<AppImageUploadItem[]>(() => {
-    if (!props.modelValue) return [];
-
-    const sourceItems = Array.isArray(props.modelValue)
-        ? props.modelValue
-        : [props.modelValue];
-
-    return sourceItems.map((value, index) =>
-        typeof value === "string" ? createUrlItem(value, index) : value,
-    );
+    return normalizeUploadItems(props.modelValue, createUrlItem);
 });
-
-const helperText = computed(() => buildUploadHelperText(props));
 
 function createId() {
     return createUploadId("image");
-}
-
-function handleFileOpen() {
-    if (props.disabled) return;
-    fileInput.value?.click();
 }
 
 function cleanupObjectUrls() {
@@ -190,7 +179,7 @@ function cleanupObjectUrls() {
 }
 
 function emitValue(nextItems: AppImageUploadItem[]) {
-    const value = props.multiple ? nextItems : (nextItems[0] ?? null);
+    const value = resolveUploadValue(nextItems, props.multiple);
 
     emit("update:modelValue", value);
     emit("change", value);
@@ -198,28 +187,6 @@ function emitValue(nextItems: AppImageUploadItem[]) {
 
 function error(message: string, detail?: unknown) {
     emit("error", { message, detail });
-}
-
-async function shouldAccept(file: File) {
-    if (!isAcceptedUploadType(file, props.accept)) {
-        error("허용되지 않는 파일 형식입니다.", {
-            accept: props.accept,
-            type: file.type,
-            name: file.name,
-        });
-        return false;
-    }
-
-    if (props.maxSizeBytes != null && file.size > props.maxSizeBytes) {
-        error("파일 용량 제한을 초과했습니다.", {
-            maxSizeBytes: props.maxSizeBytes,
-            size: file.size,
-            name: file.name,
-        });
-        return false;
-    }
-
-    return true;
 }
 
 function toObjectUrl(file: File) {
@@ -243,7 +210,7 @@ function readAsDataUrl(file: File) {
 async function createItemFromFile(
     file: File,
 ): Promise<AppImageUploadItem | null> {
-    const accepted = await shouldAccept(file);
+    const accepted = shouldAcceptFile(file);
     if (!accepted) return null;
 
     const url =
@@ -268,15 +235,13 @@ async function appendFiles(files: File[]) {
         await Promise.all(files.map(createItemFromFile))
     ).filter(Boolean) as AppImageUploadItem[];
 
-    if (!createdItems.length) return;
-
-    let nextItems = props.multiple
-        ? [...items.value, ...createdItems]
-        : [createdItems[0]];
-
-    if (props.multiple && props.maxCount != null) {
-        nextItems = nextItems.slice(0, props.maxCount);
-    }
+    const nextItems = resolveNextUploadItems({
+        currentItems: items.value,
+        createdItems,
+        multiple: props.multiple,
+        maxCount: props.maxCount,
+    });
+    if (!nextItems.length) return;
 
     emitValue(nextItems);
 }
@@ -315,29 +280,8 @@ async function handleFileChange(event: Event) {
     target.value = "";
 }
 
-function handleDragEnter() {
-    if (!props.allowDrop || props.disabled) return;
-    dragOver.value = true;
-}
-
-function handleDragOver() {
-    if (!props.allowDrop || props.disabled) return;
-    dragOver.value = true;
-}
-
-function handleDragLeave() {
-    dragOver.value = false;
-}
-
 async function handleDrop(event: DragEvent) {
-    dragOver.value = false;
-
-    if (!props.allowDrop || props.disabled) return;
-
-    const files = Array.from(event.dataTransfer?.files ?? []);
-    if (!files.length) return;
-
-    await appendFiles(files);
+    await handleUploadDrop(event, appendFiles);
 }
 
 watch(

@@ -4,19 +4,7 @@
 import type {GridApi} from 'ag-grid-community';
 import {useApi} from '~/composables/useApi';
 import type {AppGridExportColumn, AppGridExportRow} from '~/types/appGrid';
-
-function pad2(n: number) {
-    return String(n).padStart(2, '0');
-}
-
-function makeTimestamp() {
-    const d = new Date();
-    return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}_${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
-}
-
-function makeExportFileName(base: string) {
-    return `${base}_${makeTimestamp()}`;
-}
+import {ensureXlsxExtension, makeTimestampedExportName} from '~/utils/exportFilename';
 
 function getColumns<T>(api: GridApi<T>): AppGridExportColumn[] {
     return api.getAllDisplayedColumns().map((col) => ({
@@ -60,7 +48,7 @@ export function useAppGridExcelExport(options?: {origin?: string}) {
         sheetName?: string;
     }) {
         const fileNameBase = params.fileNameBase ?? params.gridId;
-        const fileName = makeExportFileName(fileNameBase);
+        const fileName = makeTimestampedExportName(fileNameBase);
         const sheetName = params.sheetName ?? params.gridId;
 
         const res = await api.post<Blob>(
@@ -76,7 +64,7 @@ export function useAppGridExcelExport(options?: {origin?: string}) {
             {responseType: 'blob'},
         );
 
-        await downloadBlobAsFile(res, `${fileName}.xlsx`);
+        await downloadBlobAsFile(res, ensureXlsxExtension(fileName));
     }
 
     async function exportDisplayed<T>(gridId: string, api: GridApi<T>) {

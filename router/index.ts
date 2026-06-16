@@ -5,13 +5,16 @@ export type AppRoute = {
 };
 
 export const ROUTE_HIDDEN_PATHS = ['/auth/sign-in', '/auth/sign-up', '/auth/find-pw', '/demos'] as const;
+const ROUTE_VISIBLE_EXACT_PATHS = ['/', '/workspace', '/settings'] as const;
+const ROUTE_VISIBLE_PREFIXES = ['/demos/'] as const;
 
 export function isVisibleRoute(path: string): boolean {
     if (!path) return false;
     if (path.includes(':')) return false;
     if (ROUTE_HIDDEN_PATHS.includes(path as (typeof ROUTE_HIDDEN_PATHS)[number])) return false;
 
-    return path === '/' || path === '/workspace' || path === '/settings' || path.startsWith('/demos/');
+    if (ROUTE_VISIBLE_EXACT_PATHS.includes(path as (typeof ROUTE_VISIBLE_EXACT_PATHS)[number])) return true;
+    return ROUTE_VISIBLE_PREFIXES.some((prefix) => path.startsWith(prefix));
 }
 
 export function getRouteLabel(path: string, route?: AppRoute): string {

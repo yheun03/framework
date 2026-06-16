@@ -3,6 +3,7 @@
  */
 import {computed, ref} from 'vue';
 import {defineStore} from 'pinia';
+import {resolveFallbackTabId} from '~/utils/tab';
 
 export type RouteTab = {
     key: string;
@@ -41,8 +42,11 @@ export const useRouteTabsStore = defineStore('route-tabs', () => {
         tabs.value.splice(idx, 1);
 
         if (activeKey.value !== key) return;
-        const fallback = tabs.value[Math.max(0, idx - 1)] ?? tabs.value[0] ?? null;
-        activeKey.value = fallback?.key ?? null;
+        const fallback = resolveFallbackTabId(
+            tabs.value.map((tab) => tab.key),
+            idx,
+        );
+        activeKey.value = fallback;
     }
 
     function reset() {

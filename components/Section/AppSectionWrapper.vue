@@ -26,8 +26,7 @@
 
 <script setup lang="ts">
 import {
-    normalizeSectionGap,
-    normalizeSectionRatio,
+    buildSectionStyleVars,
     type SectionDirection,
     type SectionRatio,
     type SectionGap,
@@ -61,9 +60,11 @@ const wrapperClassName = computed(
 );
 
 const wrapperStyle = computed(() => {
-    return {
-        "--app-section-wrapper-gap": normalizeSectionGap(props.gap as SectionGap),
-        "--app-section-wrapper-template": normalizeSectionRatio(props.ratio),
-    };
+    return buildSectionStyleVars({
+        gapVarName: "--app-section-wrapper-gap",
+        ratioVarName: "--app-section-wrapper-template",
+        gap: props.gap as SectionGap,
+        ratio: props.ratio,
+    });
 });
 </script>
