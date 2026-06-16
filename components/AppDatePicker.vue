@@ -177,7 +177,7 @@ function buildOptions(): Partial<FlatpickrOptions> {
                 fp?.close();
             }
         },
-        handleChange: (selectedDates) => handleFlatpickrChange(selectedDates),
+        onChange: (selectedDates) => handleFlatpickrChange(selectedDates),
     };
 }
 
