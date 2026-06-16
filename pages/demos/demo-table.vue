@@ -15,44 +15,66 @@
                         <code>td</code>에는 해당 타입의 컴포넌트가 렌더링됩니다.
                     </p>
 
-                    <AppTable v-model="basicForm" :rows="basicRows" title="Basic" default-label-width="160px"
-                        @field-action="handleFieldAction" />
+                    <ClientOnly>
+                        <AppTable v-model="basicForm" :rows="basicRows" title="Basic" default-label-width="160px"
+                            @field-action="handleFieldAction" />
+                    </ClientOnly>
+                </AppSection>
+
+                <!-- LAYOUT TYPES -->
+                <AppSection class="page-demo-accordion" title="Layout Types" desc="stacked / label-full 레이아웃 예시입니다.">
+                    <ClientOnly>
+                        <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" default-label-width="160px"
+                            @field-action="handleFieldAction" />
+                    </ClientOnly>
                 </AppSection>
 
                 <!-- BUTTON TYPES -->
                 <AppSection class="page-demo-accordion" title="Button Types"
                     desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
-                    <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants"
-                        default-label-width="160px" @field-action="handleFieldAction" />
+                    <ClientOnly>
+                        <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants"
+                            default-label-width="160px" @field-action="handleFieldAction" />
+                    </ClientOnly>
                 </AppSection>
 
                 <!-- CHOICE TYPES -->
                 <AppSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
-                    <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" default-label-width="160px"
-                        @field-action="handleFieldAction" />
+                    <ClientOnly>
+                        <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" default-label-width="160px"
+                            @field-action="handleFieldAction" />
+                    </ClientOnly>
                 </AppSection>
 
                 <!-- DATE TYPES -->
                 <AppSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
-                    <AppTable v-model="dateForm" :rows="dateRows" title="Date" default-label-width="160px"
-                        @field-action="handleFieldAction" />
+                    <ClientOnly>
+                        <AppTable v-model="dateForm" :rows="dateRows" title="Date" default-label-width="160px"
+                            @field-action="handleFieldAction" />
+                    </ClientOnly>
                 </AppSection>
 
                 <!-- CONTACT TYPES -->
                 <AppSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
-                    <AppTable v-model="contactForm" :rows="contactRows" title="Contact" default-label-width="160px"
-                        @field-action="handleFieldAction" />
+                    <ClientOnly>
+                        <AppTable v-model="contactForm" :rows="contactRows" title="Contact" default-label-width="160px"
+                            @field-action="handleFieldAction" />
+                    </ClientOnly>
                 </AppSection>
 
                 <!-- STATE -->
                 <AppSection class="page-demo-accordion" title="Readonly / Disabled"
                     desc="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
-                        <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" default-label-width="160px"
-                            readonly @field-action="handleFieldAction" />
+                        <ClientOnly>
+                            <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" default-label-width="160px"
+                                readonly @field-action="handleFieldAction" />
+                        </ClientOnly>
 
-                        <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled"
-                            default-label-width="160px" disabled @field-action="handleFieldAction" />
+                        <ClientOnly>
+                            <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled"
+                                default-label-width="160px" disabled @field-action="handleFieldAction" />
+                        </ClientOnly>
                     </div>
                 </AppSection>
             </main>
@@ -100,6 +122,16 @@ const basicForm = ref<Record<string, unknown>>({
     inputValue: "",
     handleSelectValue: null,
     textareaValue: "",
+});
+
+const layoutForm = ref<Record<string, unknown>>({
+    stackedName: "홍길동",
+    stackedDept: "개발팀",
+    stackedRole: "관리자",
+    stackedStatus: "사용",
+    defaultName: "김철수",
+    defaultDept: "영업팀",
+    fullMemo: "th가 가로 100%로 노출되는 행입니다.",
 });
 
 const buttonForm = ref<Record<string, unknown>>({
@@ -184,6 +216,76 @@ const basicRows: AppTableRow[] = [
                 type: "textarea",
                 placeholder: "입력하세요.",
                 rows: 4,
+            },
+        ],
+    },
+];
+
+const layoutRows: AppTableRow[] = [
+    {
+        layout: "label-row",
+        cells: [
+            {
+                label: "th 1",
+            },
+            {
+                label: "th 2",
+            },
+            {
+                label: "th 3",
+            },
+            {
+                label: "th 4",
+            },
+        ],
+    },
+    {
+        layout: "stacked",
+        cells: [
+            {
+                label: "이름",
+                key: "stackedName",
+                type: "input",
+            },
+            {
+                label: "부서",
+                key: "stackedDept",
+                type: "input",
+            },
+            {
+                label: "권한",
+                key: "stackedRole",
+                type: "input",
+            },
+            {
+                label: "상태",
+                key: "stackedStatus",
+                type: "input",
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: "이름",
+                key: "defaultName",
+                type: "input",
+            },
+            {
+                label: "부서",
+                key: "defaultDept",
+                type: "input",
+            },
+        ],
+    },
+    {
+        layout: "label-full",
+        cells: [
+            {
+                label: "메모",
+                key: "fullMemo",
+                type: "textarea",
+                rows: 3,
             },
         ],
     },
@@ -409,6 +511,7 @@ const output = computed(() =>
     JSON.stringify(
         {
             basicForm: basicForm.value,
+            layoutForm: layoutForm.value,
             buttonForm: buttonForm.value,
             choiceForm: choiceForm.value,
             dateForm: dateForm.value,
