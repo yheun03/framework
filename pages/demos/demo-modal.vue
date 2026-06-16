@@ -177,7 +177,7 @@ function handleOpenAlertBasic() {
         onConfirm: () => {
             lastAction.value = "alert:confirm";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `alert:close:${reason ?? "unknown"}`;
         },
     });
@@ -194,7 +194,7 @@ function handleOpenAlertNoClose() {
         onConfirm: () => {
             lastAction.value = "alert:no-close:confirm";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `alert:no-close:${reason ?? "unknown"}`;
         },
     });
@@ -209,7 +209,7 @@ function handleOpenAlertCustomText() {
         onConfirm: () => {
             lastAction.value = "alert:custom-text:confirm";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `alert:custom-text:${reason ?? "unknown"}`;
         },
     });
@@ -233,12 +233,12 @@ function handleOpenNestedAlert() {
                 onConfirm: () => {
                     lastAction.value = "alert:nested:top-confirm";
                 },
-                handleTabClose: (reason) => {
+                onClose: (reason) => {
                     lastAction.value = `alert:nested:top-close:${reason ?? "unknown"}`;
                 },
             });
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `alert:nested:close:${reason ?? "unknown"}`;
         },
     });
@@ -264,7 +264,7 @@ function handleOpenConfirmBasic() {
         onCancel: () => {
             lastAction.value = "confirm:cancel";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `confirm:close:${reason ?? "unknown"}`;
         },
     });
@@ -282,7 +282,7 @@ function handleOpenConfirmNoDimClose() {
         onCancel: () => {
             lastAction.value = "confirm:no-dim:cancel";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `confirm:no-dim:close:${reason ?? "unknown"}`;
         },
     });
@@ -300,7 +300,7 @@ function handleOpenConfirmNoEscClose() {
         onCancel: () => {
             lastAction.value = "confirm:no-esc:cancel";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `confirm:no-esc:close:${reason ?? "unknown"}`;
         },
     });
@@ -323,7 +323,7 @@ function handleOpenNestedConfirm() {
                 onConfirm: () => {
                     lastAction.value = "confirm:nested:alert-confirm";
                 },
-                handleTabClose: (reason) => {
+                onClose: (reason) => {
                     lastAction.value = `confirm:nested:alert-close:${reason ?? "unknown"}`;
                 },
             });
@@ -331,7 +331,7 @@ function handleOpenNestedConfirm() {
         onCancel: () => {
             lastAction.value = "confirm:nested:cancel";
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `confirm:nested:close:${reason ?? "unknown"}`;
         },
     });
@@ -357,7 +357,7 @@ function handleOpenCustom() {
                 });
             },
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `custom:close:${reason ?? "unknown"}`;
         },
     });
@@ -389,7 +389,7 @@ function handleOpenNestedCustom() {
                 });
             },
         },
-        handleTabClose: (reason) => {
+        onClose: (reason) => {
             lastAction.value = `custom:nested:close:${reason ?? "unknown"}`;
         },
     });

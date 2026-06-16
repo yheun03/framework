@@ -56,10 +56,10 @@ const { t } = useI18nText();
 
 /* event handlers */
 function handleLocaleChange(next: Locale) {
-    preferences.handleLocaleChange(next);
+    preferences.setLocale(next);
 }
 
 function handleThemeChange(next: AppTheme) {
-    preferences.handleThemeChange(next);
+    preferences.setTheme(next);
 }
 </script>
