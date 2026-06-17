@@ -14,7 +14,7 @@
         background-color 0.2s ease;
 
     &:has(.app-textarea__footer) .app-textarea__control {
-        padding-bottom: 16px;
+        padding-bottom: 34px;
     }
 
     &__control {
@@ -41,30 +41,23 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 8px;
+        gap: 12px;
 
         position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 12px;
+        bottom: 10px;
+        left: 14px;
+        right: 14px;
     }
 
     &__clear {
-        border: 0;
-        background: transparent;
-        color: $gray-500;
-        cursor: pointer;
-
-        @include font(c2, rg);
-
-        &:hover {
-            color: $gray-700;
-        }
+        padding-inline: 0;
+        min-height: auto;
     }
 
     &__count {
         margin-left: auto;
         color: $gray-400;
+        line-height: 1;
 
         @include font(c2, rg);
     }
