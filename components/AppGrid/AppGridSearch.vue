@@ -446,11 +446,21 @@ function buildFilterFromFields(): Record<string, unknown> {
                     filterType: "set",
                     values: arr.map((x) => String(x)),
                 };
+            } else if (arr.length > 1) {
+                filterModel[fk] = {
+                    filterType: "text",
+                    operator: "OR",
+                    conditions: arr.map((x) => ({
+                        filterType: "text",
+                        type: "equals",
+                        filter: String(x),
+                    })),
+                };
             } else {
                 filterModel[fk] = {
                     filterType: "text",
                     type: "equals",
-                    filter: arr[0],
+                    filter: String(arr[0]),
                 };
             }
 
