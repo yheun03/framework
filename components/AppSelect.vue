@@ -6,7 +6,6 @@
         `app-select--shape-${shape}`,
         {
             'app-select--open': isOpen,
-            'app-select--drop-up': dropDirection === 'up',
             'is-readonly': readonly,
             'is-disabled': disabled,
             [`is-${state}`]: state,
@@ -21,9 +20,8 @@
                 :disabled="disabled" :aria-invalid="state === 'error'" :aria-describedby="describedBy"
                 :aria-expanded="isOpen" :aria-readonly="readonly || undefined" aria-haspopup="listbox"
                 @click="handleToggle">
-                <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
-                    {{ selectedOption?.label ?? placeholder }}
-                </span>
+                <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }"
+                    v-html="selectedOption?.label ?? placeholder" />
 
                 <span class="app-select__icon app-select__icon--right" aria-hidden="true">
                     <slot name="iconRight">
@@ -32,20 +30,20 @@
                 </span>
             </component>
 
-            <ul v-if="isOpen" class="app-select__menu" role="listbox">
-                <li v-if="placeholder && !required" class="app-select__option"
-                    :class="{ 'is-selected': modelValue === null }" role="option" :aria-selected="modelValue === null"
-                    @click="handleSelectValue(null)">
-                    {{ placeholder }}
-                </li>
+            <Teleport to="body">
+                <ul v-if="isOpen" ref="menuEl" class="app-select__menu" :style="menuStyle" role="listbox"
+                    @mousedown.stop>
+                    <li v-if="placeholder && !required" class="app-select__option"
+                        :class="{ 'is-selected': modelValue === null }" role="option"
+                        :aria-selected="modelValue === null" @click="handleSelectValue(null)" v-html="placeholder" />
 
-                <li v-for="opt in options" :key="getOptionKey(opt)" class="app-select__option" :class="{
-                    'is-selected': modelValue === opt.value,
-                    'is-disabled': !!opt.disabled,
-                }" role="option" :aria-selected="modelValue === opt.value" @click="handleSelectValue(opt)">
-                    {{ opt.label }}
-                </li>
-            </ul>
+                    <li v-for="opt in options" :key="getOptionKey(opt)" class="app-select__option" :class="{
+                        'is-selected': modelValue === opt.value,
+                        'is-disabled': !!opt.disabled,
+                    }" role="option" :aria-selected="modelValue === opt.value" @click="handleSelectValue(opt)"
+                        v-html="opt.label" />
+                </ul>
+            </Teleport>
         </div>
 
         <p v-if="hint" class="form-field__hint app-select__hint" :id="hintId">
@@ -58,6 +56,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
+const SELECT_MENU_GAP = 8;
 
 export type AppSelectOption = {
     value: string | number | boolean | null;
@@ -103,8 +102,9 @@ const emit = defineEmits<{
 
 const fallbackId = useId();
 const rootEl = ref<HTMLElement | null>(null);
+const menuEl = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
-const dropDirection = ref<"down" | "up">("down");
+const menuStyle = ref<Record<string, string>>({});
 
 const selectId = computed(() => props.id ?? `app-select-${fallbackId}`);
 const hintId = computed(() => `hint-${selectId.value}`);
@@ -119,24 +119,32 @@ function getOptionKey(option: AppSelectOption) {
 
 async function handleToggle() {
     if (props.disabled || props.readonly) return;
-    isOpen.value = !isOpen.value;
 
     if (isOpen.value) {
-        await nextTick();
-        updateDropDirection();
+        close();
+        return;
     }
+
+    isOpen.value = true;
+    await nextTick();
+    updateMenuPosition();
 }
 
 function close() {
     isOpen.value = false;
+    menuStyle.value = {};
 }
 
-function updateDropDirection() {
-    const rect = rootEl.value?.getBoundingClientRect();
+function updateMenuPosition() {
+    const trigger = rootEl.value?.querySelector<HTMLElement>(".app-select__trigger");
+    const rect = trigger?.getBoundingClientRect();
     if (!rect) return;
 
-    const spaceBelow = window.innerHeight - rect.bottom;
-    dropDirection.value = spaceBelow < 260 && rect.top > spaceBelow ? "up" : "down";
+    menuStyle.value = {
+        top: `${rect.bottom + SELECT_MENU_GAP}px`,
+        left: `${rect.left}px`,
+        width: `${rect.width}px`,
+    };
 }
 
 function handleSelectValue(option: AppSelectOption | null) {
@@ -150,7 +158,11 @@ function handleSelectValue(option: AppSelectOption | null) {
 
 function handleDocumentClick(e: MouseEvent) {
     if (!isOpen.value) return;
-    if (!rootEl.value?.contains(e.target as Node)) close();
+
+    const target = e.target as Node;
+    if (rootEl.value?.contains(target) || menuEl.value?.contains(target)) return;
+
+    close();
 }
 
 function handleDocumentKeydown(e: KeyboardEvent) {
@@ -161,15 +173,23 @@ function handleCloseAll() {
     close();
 }
 
+function handleDocumentScroll() {
+    if (isOpen.value) close();
+}
+
 onMounted(() => {
     document.addEventListener("mousedown", handleDocumentClick);
     document.addEventListener("keydown", handleDocumentKeydown);
+    window.addEventListener("scroll", handleDocumentScroll, true);
+    window.addEventListener("resize", handleDocumentScroll);
     window.addEventListener(APP_SELECT_CLOSE_ALL_EVENT, handleCloseAll);
 });
 
 onBeforeUnmount(() => {
     document.removeEventListener("mousedown", handleDocumentClick);
     document.removeEventListener("keydown", handleDocumentKeydown);
+    window.removeEventListener("scroll", handleDocumentScroll, true);
+    window.removeEventListener("resize", handleDocumentScroll);
     window.removeEventListener(APP_SELECT_CLOSE_ALL_EVENT, handleCloseAll);
 });
 </script>
