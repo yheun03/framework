@@ -15,10 +15,10 @@
             @focus="isFocused = true" @blur="isFocused = false" />
 
         <div v-if="showCount || clearable" class="app-textarea__footer">
-            <AppButton v-if="clearable && modelValue && !disabled && !readonly" unstyled type="button"
-                class="app-textarea__clear" @click="handleClear">
+            <AppTextButton v-if="clearable && modelValue && !disabled && !readonly" type="button"
+                class="app-textarea__clear" size="sm" tone="gray" @click="handleClear">
                 지우기
-            </AppButton>
+            </AppTextButton>
 
             <span v-if="showCount" class="app-textarea__count">
                 {{ textLength }}<template v-if="maxLength"> / {{ maxLength }}</template>
