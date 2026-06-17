@@ -12,9 +12,10 @@ export function assertGridExcelRequestBody(body: AppGridExportRequestBody | null
 
 export function setExcelDownloadHeaders(event: H3Event, fileName: string) {
     const encoded = encodeURIComponent(fileName);
+    const fallback = fileName.replace(/[^\x20-\x7E]/g, '_');
     event.node.res.setHeader(
         'Content-Disposition',
-        `attachment; filename="${fileName}"; filename*=UTF-8''${encoded}`,
+        `attachment; filename="${fallback}"; filename*=UTF-8''${encoded}`,
     );
     event.node.res.setHeader(
         'Content-Type',

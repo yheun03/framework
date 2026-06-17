@@ -1,7 +1,7 @@
 /**
  * AppGrid 데이터를 Excel 파일로보내기 위한 composable 파일입니다.
  */
-import type {GridApi} from 'ag-grid-community';
+import type {GridApi, IRowNode} from 'ag-grid-community';
 import {useApi} from '~/composables/useApi';
 import type {AppGridExportColumn, AppGridExportRow} from '~/types/appGrid';
 import {ensureXlsxExtension, makeTimestampedExportName} from '~/utils/exportFilename';
@@ -24,6 +24,22 @@ function normalizeExportValue(value: unknown) {
     return value;
 }
 
+function toExportRow<T>(
+    node: IRowNode<T>,
+    columns: AppGridExportColumn[],
+): AppGridExportRow | null {
+    if (!node.data) return null;
+
+    const row: AppGridExportRow = {};
+    for (const col of columns) {
+        row[col.field] = normalizeExportValue(
+            (node.data as Record<string, unknown>)[col.field],
+        );
+    }
+
+    return row;
+}
+
 function getDisplayedRows<T>(
     api: GridApi<T>,
     columns: AppGridExportColumn[],
@@ -36,19 +52,26 @@ function getDisplayedRows<T>(
         const node = api.getDisplayedRowAtIndex(i);
         if (!node?.data || (filter && !filter(i))) continue;
 
-        const row: AppGridExportRow = {};
-        for (const col of columns) {
-            row[col.field] = normalizeExportValue(api.getValue(col.field, node));
-        }
-
-        rows.push(row);
+        const row = toExportRow(node, columns);
+        if (row) rows.push(row);
     }
 
     return rows;
 }
 
 function getDisplayedSelectedRows<T>(api: GridApi<T>, columns: AppGridExportColumn[]): AppGridExportRow[] {
-    return getDisplayedRows(api, columns, (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected());
+    const rows: AppGridExportRow[] = [];
+    const count = api.getDisplayedRowCount();
+
+    for (let i = 0; i < count; i++) {
+        const node = api.getDisplayedRowAtIndex(i);
+        if (!node?.isSelected()) continue;
+
+        const row = toExportRow(node, columns);
+        if (row) rows.push(row);
+    }
+
+    return rows;
 }
 
 async function downloadBlobAsFile(blob: Blob, filename: string) {
