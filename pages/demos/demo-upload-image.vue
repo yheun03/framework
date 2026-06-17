@@ -188,7 +188,6 @@
  */
 /* stores/composables */
 const { title } = useDemoI18n("uploadImage");
-const description = "이미지 업로드 필드 속성별 동작을 확인하는 데모입니다.";
 
 type FileMeta = {
     name: string;
@@ -298,7 +297,6 @@ function handleBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
     updateFileMeta(item, (meta) => {
         basic.file = meta;
     });
-    lastError.value = null;
 }
 
 function handleStateChange(item: ImageFieldItem | ImageFieldItem[] | null) {

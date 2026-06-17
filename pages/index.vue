@@ -60,20 +60,11 @@
             </section>
 
             <footer class="home__footer">
-                <p>© {{ currentYear }} Framework. All rights reserved.</p>
+                <p>© {{ new Date().getFullYear() }} Framework. All rights reserved.</p>
             </footer>
         </main>
     </div>
 </template>
-
-<script setup lang="ts">
-/**
- * 메인 화면의 소개 콘텐츠와 주요 이동 링크를 표시하는 페이지 컴포넌트입니다.
- */
-
-/* constants */
-const currentYear = new Date().getFullYear();
-</script>
 
 <style scoped lang="scss">
 .home {

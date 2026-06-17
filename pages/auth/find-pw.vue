@@ -25,7 +25,7 @@
                 <form class="login__form" @submit.prevent="handleSubmit">
                     <AppInput v-model="email" name="email" type="email" label="이메일" placeholder="name@company.com" />
 
-                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!canSubmit">
+                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!email.trim()">
                         재설정 링크 보내기
                     </AppButton>
 
@@ -41,22 +41,12 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 비밀번호 찾기 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
- */
-
-/* 페이지 설정 */
 definePageMeta({
     layout: false,
 });
 
-/* ref/reactive state */
 const email = ref("");
 
-/* computed */
-const canSubmit = computed(() => email.value.trim().length > 0);
-
-/* event handlers */
 function handleSubmit() {
     navigateTo("/auth/sign-in");
 }

@@ -31,7 +31,8 @@
                         <NuxtLink class="login__link" to="/auth/find-pw">비밀번호를 잊으셨나요?</NuxtLink>
                     </div>
 
-                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!canSubmit">
+                    <AppButton class="login__submit" type="submit" variant="fill" size="lg"
+                        :disabled="!email.trim() || !password.trim()">
                         로그인
                     </AppButton>
 
@@ -46,26 +47,14 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 로그인 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
- */
-
-/* 페이지 설정 */
 definePageMeta({
     layout: false,
 });
 
-/* ref/reactive state */
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
 
-/* computed */
-const canSubmit = computed(() => {
-    return email.value.trim().length > 0 && password.value.trim().length > 0;
-});
-
-/* event handlers */
 function handleSubmit() {
     navigateTo("/");
 }

@@ -83,7 +83,7 @@ import {
     resolveUploadValue,
     useAppUpload,
     type AppUploadModelValue,
-} from "./useAppUpload";
+} from "~/composables/useAppUpload";
 
 type ReadMode = "dataUrl" | "objectUrl";
 type AppImageUploadModelValue = AppUploadModelValue<AppImageUploadItem>;

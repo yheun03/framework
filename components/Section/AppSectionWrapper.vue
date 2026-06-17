@@ -1,6 +1,6 @@
 <template>
-    <section class="app-section-wrapper" :class="wrapperClassName" :style="wrapperStyle">
-        <header v-if="hasHeader" class="app-section-wrapper__header">
+    <section class="app-section-wrapper" :class="`app-section-wrapper--${direction}`" :style="wrapperStyle">
+        <header v-if="title || desc || $slots.header" class="app-section-wrapper__header">
             <slot name="header">
                 <div class="app-section-wrapper__header-text">
                     <h2 v-if="title" class="app-section-wrapper__title">
@@ -32,8 +32,6 @@ import {
     type SectionGap,
 } from "~/utils/section";
 
-const slots = useSlots();
-
 const props = withDefaults(
     defineProps<{
         direction?: SectionDirection;
@@ -49,14 +47,6 @@ const props = withDefaults(
         desc: "",
         gap: 16,
     },
-);
-
-const hasHeader = computed(
-    () => !!props.title || !!props.desc || !!slots.header,
-);
-
-const wrapperClassName = computed(
-    () => `app-section-wrapper--${props.direction}`,
 );
 
 const wrapperStyle = computed(() => {
