@@ -1,11 +1,11 @@
 <template>
     <label :class="rootClasses">
-        <span v-if="showIndicator" class="app-choice__control">
+        <span class="app-choice__control">
             <input :id="inputId" class="app-choice__input" :type="type" :name="name" :value="inputValue"
                 :checked="isChecked" :disabled="disabled" :aria-invalid="state === 'error'"
                 :aria-describedby="describedBy" :aria-readonly="readonly || undefined" @change="handleChange" />
 
-            <span class="app-choice__visual" aria-hidden="true">
+            <span v-if="showIndicator" class="app-choice__visual" aria-hidden="true">
                 <span v-if="isChecked" class="app-choice__inner">
                     <template v-if="type === 'checkbox'">
                         <Icon icon="mdi:check" />
