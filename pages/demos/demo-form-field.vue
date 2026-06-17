@@ -64,6 +64,48 @@
                         <AppInput v-model="customLabelValue" placeholder="값 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
+
+                <!-- FORM EXAMPLE -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Form Example"
+                    desc="한 form 안에서 input, select, radio, checkbox, textarea를 함께 사용하는 예시입니다.">
+                    <form class="page-demo-stack" @submit.prevent>
+                        <AppFormField label="제목" required hint="업무 요청 제목을 입력하세요.">
+                            <AppInput v-model="form.title" placeholder="제목 입력" />
+                        </AppFormField>
+
+                        <AppFormField label="유형" required hint="요청 유형을 선택하세요.">
+                            <AppSelect v-model="form.type" :options="formTypeOptions" placeholder="유형 선택" />
+                        </AppFormField>
+
+                        <AppFormField label="우선순위" required>
+                            <div class="page-demo-row">
+                                <AppChoice v-model="form.priority" type="radio" name="form-priority" value="low"
+                                    label="낮음" />
+                                <AppChoice v-model="form.priority" type="radio" name="form-priority" value="normal"
+                                    label="보통" />
+                                <AppChoice v-model="form.priority" type="radio" name="form-priority" value="high"
+                                    label="높음" />
+                            </div>
+                        </AppFormField>
+
+                        <AppFormField label="알림">
+                            <div class="page-demo-row">
+                                <AppChoice v-model="form.notifyEmail" type="checkbox" label="이메일" />
+                                <AppChoice v-model="form.notifySms" type="checkbox" label="SMS" />
+                            </div>
+                        </AppFormField>
+
+                        <AppFormField label="상세 내용" hint="필요한 내용을 자유롭게 입력하세요.">
+                            <AppTextarea v-model="form.memo" placeholder="상세 내용 입력" :rows="4" show-count
+                                :max-length="200" clearable />
+                        </AppFormField>
+
+                        <div class="page-demo-row">
+                            <AppButton type="submit">저장</AppButton>
+                            <AppButton type="button" variant="outline" @click="handleFormReset">초기화</AppButton>
+                        </div>
+                    </form>
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="현재 값 패널">
@@ -88,10 +130,34 @@ const nickname = ref("");
 const password = ref("");
 const department = ref("플랫폼팀");
 const customLabelValue = ref("");
+const formTypeOptions = [
+    { label: "문의", value: "question" },
+    { label: "요청", value: "request" },
+    { label: "오류", value: "bug" },
+];
+
+const form = reactive({
+    title: "",
+    type: null as string | null,
+    priority: "normal",
+    notifyEmail: true,
+    notifySms: false,
+    memo: "",
+});
+
+function handleFormReset() {
+    form.title = "";
+    form.type = null;
+    form.priority = "normal";
+    form.notifyEmail = true;
+    form.notifySms = false;
+    form.memo = "";
+}
 
 const output = computed(() =>
     JSON.stringify(
         {
+            form: { ...form },
             name: name.value,
             email: email.value,
             nickname: nickname.value,
