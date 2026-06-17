@@ -7,24 +7,48 @@ import type {AppGridExportColumn, AppGridExportRow} from '~/types/appGrid';
 import {ensureXlsxExtension, makeTimestampedExportName} from '~/utils/exportFilename';
 
 function getColumns<T>(api: GridApi<T>): AppGridExportColumn[] {
-    return api.getAllDisplayedColumns().map((col) => ({
-        field: col.getColId(),
-        headerName: (col.getColDef().headerName as string) || col.getColId(),
-    }));
+    return api
+        .getAllDisplayedColumns()
+        .filter((col) => Boolean(col.getColDef().field))
+        .map((col) => ({
+            field: col.getColId(),
+            headerName: (col.getColDef().headerName as string) || col.getColId(),
+        }));
 }
 
-function getDisplayedRows<T>(api: GridApi<T>, filter?: (index: number) => boolean): AppGridExportRow[] {
+function normalizeExportValue(value: unknown) {
+    if (value === null || value === undefined) return '';
+    if (Array.isArray(value)) return value.join(', ');
+    if (typeof value === 'object') return '';
+
+    return value;
+}
+
+function getDisplayedRows<T>(
+    api: GridApi<T>,
+    columns: AppGridExportColumn[],
+    filter?: (index: number) => boolean,
+): AppGridExportRow[] {
     const rows: AppGridExportRow[] = [];
     const count = api.getDisplayedRowCount();
+
     for (let i = 0; i < count; i++) {
         const node = api.getDisplayedRowAtIndex(i);
-        if (node?.data && (!filter || filter(i))) rows.push(node.data as AppGridExportRow);
+        if (!node?.data || (filter && !filter(i))) continue;
+
+        const row: AppGridExportRow = {};
+        for (const col of columns) {
+            row[col.field] = normalizeExportValue(api.getValue(col.field, node));
+        }
+
+        rows.push(row);
     }
+
     return rows;
 }
 
-function getDisplayedSelectedRows<T>(api: GridApi<T>): AppGridExportRow[] {
-    return getDisplayedRows(api, (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected());
+function getDisplayedSelectedRows<T>(api: GridApi<T>, columns: AppGridExportColumn[]): AppGridExportRow[] {
+    return getDisplayedRows(api, columns, (index) => !!api.getDisplayedRowAtIndex(index)?.isSelected());
 }
 
 async function downloadBlobAsFile(blob: Blob, filename: string) {
@@ -69,15 +93,15 @@ export function useAppGridExcelExport(options?: {origin?: string}) {
 
     async function exportDisplayed<T>(gridId: string, api: GridApi<T>) {
         const columns = getColumns(api);
-        const rows = getDisplayedRows(api);
-        if (!rows.length) return;
+        const rows = getDisplayedRows(api, columns);
+        if (!columns.length || !rows.length) return;
         await requestExcelDownload({gridId, columns, rows});
     }
 
     async function exportDisplayedSelected<T>(gridId: string, api: GridApi<T>) {
         const columns = getColumns(api);
-        const rows = getDisplayedSelectedRows(api);
-        if (!rows.length) return;
+        const rows = getDisplayedSelectedRows(api, columns);
+        if (!columns.length || !rows.length) return;
         await requestExcelDownload({
             gridId: `${gridId}_selected`,
             columns,
