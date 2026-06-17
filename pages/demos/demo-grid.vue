@@ -188,7 +188,6 @@ const searchFields1: AppGridSearchField[] = [
         filterField: "department",
         label: "부서(다중)",
         type: "checkbox",
-        setFilter: true,
         options: deptSearchOptions,
     },
     {

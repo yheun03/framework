@@ -1,7 +1,8 @@
 /**
  * 버튼 클릭 액션과 라우팅/이벤트 처리를 관리하는 composable 파일입니다.
  */
-import {computed, resolveComponent} from 'vue';
+import {NuxtLink} from '#components';
+import {computed} from 'vue';
 
 type ButtonActionOptions = {
     attrs: Record<string, unknown>;
@@ -14,11 +15,10 @@ type ButtonActionOptions = {
 };
 
 export function useButtonAction(options: ButtonActionOptions) {
-    const NuxtLinkComp = resolveComponent('NuxtLink');
     const isLink = computed(() => !!options.to() || !!options.href());
 
     const tag = computed(() => {
-        if (options.to()) return NuxtLinkComp;
+        if (options.to()) return NuxtLink;
         if (options.href()) return 'a';
         return 'button';
     });
