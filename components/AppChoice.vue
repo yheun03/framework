@@ -26,6 +26,10 @@
                 {{ hint }}
             </span>
         </span>
+
+        <span v-if="isToggleVariant && toggleText" class="app-choice__toggle-text">
+            {{ toggleText }}
+        </span>
     </label>
 </template>
 
@@ -33,16 +37,23 @@
 import { computed } from "vue";
 
 type ChoiceType = "checkbox" | "radio";
-type ChoiceVariant = "default" | "chip" | "chip-outline" | "fill" | "ghost";
+type ChoiceVariant =
+    | "default"
+    | "round"
+    | "chip"
+    | "chip-outline"
+    | "fill"
+    | "ghost"
+    | "toggle";
 type ChoiceState = "error" | "warning" | "success" | null;
 type ChoiceSize = "md" | "sm";
-type ChoiceUiType = "a" | "b";
 
 const CHIP_VARIANTS: ChoiceVariant[] = [
     "chip",
     "chip-outline",
     "fill",
     "ghost",
+    "toggle",
 ];
 
 const props = withDefaults(
@@ -53,13 +64,14 @@ const props = withDefaults(
         name?: string;
         label?: string;
         hint?: string;
+        checkedLabel?: string;
+        uncheckedLabel?: string;
         disabled?: boolean;
         readonly?: boolean;
         id?: string;
         variant?: ChoiceVariant;
         state?: ChoiceState;
         size?: ChoiceSize;
-        uiType?: ChoiceUiType;
     }>(),
     {
         type: "checkbox",
@@ -68,7 +80,6 @@ const props = withDefaults(
         disabled: false,
         readonly: false,
         size: "md",
-        uiType: "a",
     },
 );
 
@@ -83,6 +94,7 @@ const hintId = computed(() => `${inputId.value}-hint`);
 const describedBy = computed(() => (props.hint ? hintId.value : undefined));
 
 const isChipVariant = computed(() => CHIP_VARIANTS.includes(props.variant));
+const isToggleVariant = computed(() => props.variant === "toggle");
 const showIndicator = computed(() => !isChipVariant.value);
 const hasBody = computed(() => Boolean(props.label || props.hint));
 const inputValue = computed(() => props.value ?? "");
@@ -100,7 +112,6 @@ const rootClasses = computed(() => [
     `app-choice--${props.type}`,
     `app-choice--${props.variant}`,
     `app-choice--${props.size}`,
-    `app-choice--ui-${props.uiType}`,
     {
         "is-disabled": props.disabled,
         "is-readonly": props.readonly,
@@ -108,6 +119,13 @@ const rootClasses = computed(() => [
         [`is-${props.state}`]: props.state,
     },
 ]);
+
+const toggleText = computed(() => {
+    if (!isToggleVariant.value || props.label) return "";
+
+    if (isChecked.value) return props.checkedLabel ?? "";
+    return props.uncheckedLabel ?? "";
+});
 
 function handleChange(event: Event) {
     if (props.readonly) {

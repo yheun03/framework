@@ -177,12 +177,7 @@
         }
     }
 
-    /* ----------------------------------------
-       UI Type A
-       Checkbox: square
-       Radio: white bg + black dot
-    ---------------------------------------- */
-    &--ui-a {
+    &--default {
         &.app-choice--checkbox {
             .app-choice__visual {
                 border: 1px solid $line-regular;
@@ -213,12 +208,7 @@
         }
     }
 
-    /* ----------------------------------------
-       UI Type B
-       Checkbox: round
-       Radio: black bg + white dot
-    ---------------------------------------- */
-    &--ui-b {
+    &--round {
         &.app-choice--checkbox {
             .app-choice__visual {
                 border: 1px solid $gray-200;
@@ -315,7 +305,8 @@
     &--chip,
     &--chip-outline,
     &--fill,
-    &--ghost {
+    &--ghost,
+    &--toggle {
         align-items: center;
         gap: 6px;
         padding: 4px 12px;
@@ -410,6 +401,108 @@
 
             .app-choice__label {
                 color: $primary-700;
+            }
+        }
+    }
+
+    &--toggle {
+        position: relative;
+        min-width: 72px;
+        height: 34px;
+        padding: 0 11px;
+        justify-content: flex-start;
+        border-radius: 999px;
+        border-color: $gray-200;
+        background-color: $gray-200;
+        box-shadow: inset 0 0 0 1px rgba($gray-800, 0.04);
+        transition:
+            background-color 0.24s ease,
+            border-color 0.24s ease,
+            box-shadow 0.24s ease;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: $gray-0;
+            box-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.18),
+                0 0 0 1px rgba(0, 0, 0, 0.04);
+            transform: translateX(0);
+            transition:
+                transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.24s ease,
+                box-shadow 0.24s ease;
+        }
+
+        .app-choice__body {
+            width: 100%;
+        }
+
+            .app-choice__label {
+            width: 100%;
+            color: $gray-600;
+            font-weight: 700;
+            text-align: right;
+            text-transform: uppercase;
+            transition:
+                color 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .app-choice__toggle-text {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            color: $gray-600;
+            font-weight: 700;
+            text-align: right;
+            text-transform: uppercase;
+            pointer-events: none;
+            transition:
+                color 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        &.is-checked {
+            justify-content: flex-end;
+            border-color: $primary-500;
+            background-color: $primary-500;
+            box-shadow: inset 0 0 0 1px rgba($primary-700, 0.08);
+
+            &::after {
+                background-color: $gray-0;
+                transform: translateX(calc(100% + 11px));
+            }
+
+            .app-choice__label {
+                color: $gray-0;
+                text-align: left;
+            }
+
+            .app-choice__toggle-text {
+                color: $gray-0;
+                text-align: left;
+            }
+        }
+
+        &.is-disabled {
+            background-color: $gray-100;
+            border-color: $gray-200;
+            box-shadow: none;
+
+            &::after {
+                background-color: $gray-0;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            }
+
+            .app-choice__label,
+            .app-choice__toggle-text {
+                color: $gray-400;
             }
         }
     }

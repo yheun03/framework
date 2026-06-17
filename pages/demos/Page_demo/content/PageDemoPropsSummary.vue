@@ -167,12 +167,11 @@ const summaries: Record<string, DemoSummary> = {
         description: "checkbox, radio, chip 선택 패턴을 한 컴포넌트로 다룹니다.",
         props: [
             { name: "type", description: "checkbox 또는 radio" },
-            { name: "uiType", description: "기본 컨트롤 형태 a, b" },
-            { name: "variant", description: "chip, chip-outline, fill, ghost" },
+            { name: "variant", description: "default, round, chip, fill, ghost, toggle" },
             { name: "size", description: "md, sm 크기" },
             { name: "disabled", description: "선택 불가 상태" },
         ],
-        values: ["checkbox", "radio", "chip", "chip-outline", "fill", "ghost"],
+        values: ["checkbox", "radio", "round", "chip", "chip-outline", "fill", "ghost", "toggle"],
     },
     "demo-upload-image": {
         description: "이미지 선택, 미리보기, 제거, 읽기 모드를 확인합니다.",

@@ -11,64 +11,64 @@
 
                 <!-- CHECKBOX -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Checkbox"
-                    desc="checkbox는 uiType(a / b)와 size(md / sm) 조합으로 사용할 수 있습니다. A 타입은 각진 형태, B 타입은 round 형태를 제공합니다.">
+                    desc="checkbox는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 각진 형태, round는 둥근 형태를 제공합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">A Type / MD</h3>
+                            <h3 class="page-demo-compare__title">Default / MD</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.aMd.default" type="checkbox" uiType="a" size="md"
+                                <AppChoice v-model="checkbox.aMd.default" type="checkbox" size="md"
                                     label="기본상태" />
-                                <AppChoice v-model="checkbox.aMd.checked" type="checkbox" uiType="a" size="md"
+                                <AppChoice v-model="checkbox.aMd.checked" type="checkbox" size="md"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.aMd.disabled" type="checkbox" uiType="a" size="md"
+                                <AppChoice v-model="checkbox.aMd.disabled" type="checkbox" size="md"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.aMd.checkedDisabled" type="checkbox" uiType="a" size="md"
+                                <AppChoice v-model="checkbox.aMd.checkedDisabled" type="checkbox" size="md"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">A Type / SM</h3>
+                            <h3 class="page-demo-compare__title">Default / SM</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.aSm.default" type="checkbox" uiType="a" size="sm"
+                                <AppChoice v-model="checkbox.aSm.default" type="checkbox" size="sm"
                                     label="기본상태" />
-                                <AppChoice v-model="checkbox.aSm.checked" type="checkbox" uiType="a" size="sm"
+                                <AppChoice v-model="checkbox.aSm.checked" type="checkbox" size="sm"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.aSm.disabled" type="checkbox" uiType="a" size="sm"
+                                <AppChoice v-model="checkbox.aSm.disabled" type="checkbox" size="sm"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.aSm.checkedDisabled" type="checkbox" uiType="a" size="sm"
+                                <AppChoice v-model="checkbox.aSm.checkedDisabled" type="checkbox" size="sm"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">B Type / MD</h3>
+                            <h3 class="page-demo-compare__title">Round / MD</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.bMd.default" type="checkbox" uiType="b" size="md"
+                                <AppChoice v-model="checkbox.bMd.default" type="checkbox" variant="round" size="md"
                                     label="기본상태" />
-                                <AppChoice v-model="checkbox.bMd.checked" type="checkbox" uiType="b" size="md"
+                                <AppChoice v-model="checkbox.bMd.checked" type="checkbox" variant="round" size="md"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.bMd.disabled" type="checkbox" uiType="b" size="md"
+                                <AppChoice v-model="checkbox.bMd.disabled" type="checkbox" variant="round" size="md"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.bMd.checkedDisabled" type="checkbox" uiType="b" size="md"
+                                <AppChoice v-model="checkbox.bMd.checkedDisabled" type="checkbox" variant="round" size="md"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">B Type / SM</h3>
+                            <h3 class="page-demo-compare__title">Round / SM</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.bSm.default" type="checkbox" uiType="b" size="sm"
+                                <AppChoice v-model="checkbox.bSm.default" type="checkbox" variant="round" size="sm"
                                     label="기본상태" />
-                                <AppChoice v-model="checkbox.bSm.checked" type="checkbox" uiType="b" size="sm"
+                                <AppChoice v-model="checkbox.bSm.checked" type="checkbox" variant="round" size="sm"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.bSm.disabled" type="checkbox" uiType="b" size="sm"
+                                <AppChoice v-model="checkbox.bSm.disabled" type="checkbox" variant="round" size="sm"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.bSm.checkedDisabled" type="checkbox" uiType="b" size="sm"
+                                <AppChoice v-model="checkbox.bSm.checkedDisabled" type="checkbox" variant="round" size="sm"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
@@ -77,68 +77,68 @@
 
                 <!-- RADIO -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Radio"
-                    desc="radio는 uiType(a / b)와 size(md / sm) 조합으로 사용할 수 있습니다. A 타입은 흰 배경 + 검은 dot, B 타입은 검은 배경 + 흰 dot 구조입니다.">
+                    desc="radio는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 흰 배경 + 검은 dot, round는 검은 배경 + 흰 dot 구조입니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">A Type / MD</h3>
+                            <h3 class="page-demo-compare__title">Default / MD</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.aMd" type="radio" name="radio-a-md" value="default" uiType="a"
+                                <AppChoice v-model="radio.aMd" type="radio" name="radio-a-md" value="default"
                                     size="md" label="기본상태" />
-                                <AppChoice v-model="radio.aMd" type="radio" name="radio-a-md" value="checked" uiType="a"
+                                <AppChoice v-model="radio.aMd" type="radio" name="radio-a-md" value="checked"
                                     size="md" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.aMd" type="radio" name="radio-a-md-disabled"
-                                    value="default" uiType="a" size="md" label="비활성화" disabled />
+                                    value="default" size="md" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.aMd" type="radio"
-                                    name="radio-a-md-disabled-checked" value="checked" uiType="a" size="md"
+                                    name="radio-a-md-disabled-checked" value="checked" size="md"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">A Type / SM</h3>
+                            <h3 class="page-demo-compare__title">Default / SM</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.aSm" type="radio" name="radio-a-sm" value="default" uiType="a"
+                                <AppChoice v-model="radio.aSm" type="radio" name="radio-a-sm" value="default"
                                     size="sm" label="기본상태" />
-                                <AppChoice v-model="radio.aSm" type="radio" name="radio-a-sm" value="checked" uiType="a"
+                                <AppChoice v-model="radio.aSm" type="radio" name="radio-a-sm" value="checked"
                                     size="sm" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.aSm" type="radio" name="radio-a-sm-disabled"
-                                    value="default" uiType="a" size="sm" label="비활성화" disabled />
+                                    value="default" size="sm" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.aSm" type="radio"
-                                    name="radio-a-sm-disabled-checked" value="checked" uiType="a" size="sm"
+                                    name="radio-a-sm-disabled-checked" value="checked" size="sm"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">B Type / MD</h3>
+                            <h3 class="page-demo-compare__title">Round / MD</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.bMd" type="radio" name="radio-b-md" value="default" uiType="b"
+                                <AppChoice v-model="radio.bMd" type="radio" name="radio-b-md" value="default" variant="round"
                                     size="md" label="기본상태" />
-                                <AppChoice v-model="radio.bMd" type="radio" name="radio-b-md" value="checked" uiType="b"
+                                <AppChoice v-model="radio.bMd" type="radio" name="radio-b-md" value="checked" variant="round"
                                     size="md" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.bMd" type="radio" name="radio-b-md-disabled"
-                                    value="default" uiType="b" size="md" label="비활성화" disabled />
+                                    value="default" variant="round" size="md" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.bMd" type="radio"
-                                    name="radio-b-md-disabled-checked" value="checked" uiType="b" size="md"
+                                    name="radio-b-md-disabled-checked" value="checked" variant="round" size="md"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">B Type / SM</h3>
+                            <h3 class="page-demo-compare__title">Round / SM</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.bSm" type="radio" name="radio-b-sm" value="default" uiType="b"
+                                <AppChoice v-model="radio.bSm" type="radio" name="radio-b-sm" value="default" variant="round"
                                     size="sm" label="기본상태" />
-                                <AppChoice v-model="radio.bSm" type="radio" name="radio-b-sm" value="checked" uiType="b"
+                                <AppChoice v-model="radio.bSm" type="radio" name="radio-b-sm" value="checked" variant="round"
                                     size="sm" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.bSm" type="radio" name="radio-b-sm-disabled"
-                                    value="default" uiType="b" size="sm" label="비활성화" disabled />
+                                    value="default" variant="round" size="sm" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.bSm" type="radio"
-                                    name="radio-b-sm-disabled-checked" value="checked" uiType="b" size="sm"
+                                    name="radio-b-sm-disabled-checked" value="checked" variant="round" size="sm"
                                     label="체크 비활성화" disabled />
                             </div>
                         </div>
@@ -183,6 +183,20 @@
                             <AppChoice v-model="chipRadio.view" type="radio" name="chip-view" value="list"
                                 variant="ghost" label="리스트형" />
                         </div>
+                    </div>
+                </PageDemoAccordionSection>
+
+                <!-- TOGGLE -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Toggle"
+                    desc="ON/OFF 스위치 형태의 checkbox variant입니다.">
+                    <div class="page-demo-row">
+                        <AppChoice v-model="toggle.basic" type="checkbox" variant="toggle" label="ON" />
+                        <AppChoice v-model="toggle.off" type="checkbox" variant="toggle" label="OFF" />
+                        <AppChoice v-model="toggle.custom" type="checkbox" variant="toggle" checked-label="사용"
+                            unchecked-label="중지" />
+                        <AppChoice v-model="toggle.pure" type="checkbox" variant="toggle" />
+                        <AppChoice v-model="toggle.disabled" type="checkbox" variant="toggle" label="ON" disabled />
+                        <AppChoice v-model="toggle.disabledOff" type="checkbox" variant="toggle" label="OFF" disabled />
                     </div>
                 </PageDemoAccordionSection>
 
@@ -312,6 +326,15 @@ const chipRadio = reactive({
     view: "card" as ChoiceValue,
 });
 
+const toggle = reactive({
+    basic: true,
+    off: false,
+    custom: true,
+    pure: false,
+    disabled: true,
+    disabledOff: false,
+});
+
 const state = reactive({
     error: false,
     warning: false,
@@ -338,6 +361,7 @@ const output = computed(() =>
             radioDisabledChecked: { ...radioDisabledChecked },
             chipFilter: { ...chipFilter },
             chipRadio: { ...chipRadio },
+            toggle: { ...toggle },
             state: { ...state },
             disabled: { ...disabled },
             disabledChip: { ...disabledChip },
