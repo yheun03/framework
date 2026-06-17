@@ -252,9 +252,6 @@ type ChoiceValue = string | number | null;
 
 /* ref/reactive state */
 const checkbox = reactive({
-    agreeTerms: true,
-    receiveEmail: false,
-    receiveMarketing: false,
     aMd: {
         default: false,
         checked: true,

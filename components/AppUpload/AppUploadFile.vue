@@ -81,7 +81,7 @@ import {
     resolveUploadValue,
     useAppUpload,
     type AppUploadModelValue,
-} from "./useAppUpload";
+} from "~/composables/useAppUpload";
 
 type AppUploadFileModelValue = AppUploadModelValue<AppUploadFileItem>;
 

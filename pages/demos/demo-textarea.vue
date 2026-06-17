@@ -17,7 +17,8 @@
                 <!-- WITH FORM FIELD -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="With FormField"
                     desc="AppFormField와 함께 label, hint, error를 연결합니다.">
-                    <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다." :error="contentError">
+                    <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다."
+                        :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''">
                         <template #default="{ id, invalid, describedby }">
                             <AppTextarea :id="id" v-model="content" placeholder="문의 내용을 입력하세요." :max-length="200"
                                 show-count clearable :invalid="invalid" :aria-describedby="describedby" />
@@ -142,18 +143,12 @@ const readonlyValue = ref("readonly value");
 const invalidValue = ref("invalid value");
 const countValue = ref("");
 
-const contentError = computed(() => {
-    if (!content.value) return "";
-
-    return content.value.length < 10 ? "문의 내용은 10자 이상 입력해주세요." : "";
-});
-
 const output = computed(() =>
     JSON.stringify(
         {
             basicValue: basicValue.value,
             content: content.value,
-            contentError: contentError.value,
+            contentError: content.value && content.value.length < 10 ? "문의 내용은 10자 이상 입력해주세요." : "",
             smallValue: smallValue.value,
             mediumValue: mediumValue.value,
             largeValue: largeValue.value,

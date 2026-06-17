@@ -41,7 +41,8 @@
 
                 <!-- ERROR -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Error" desc="error가 있으면 hint 대신 error message가 표시됩니다.">
-                    <AppFormField label="비밀번호" required hint="8자 이상 입력하세요." :error="passwordError">
+                    <AppFormField label="비밀번호" required hint="8자 이상 입력하세요."
+                        :error="password && password.length < 8 ? '비밀번호는 8자 이상 입력해주세요.' : ''">
                         <template #default="{ id, invalid, describedby }">
                             <AppInput :id="id" v-model="password" type="password" placeholder="비밀번호 입력"
                                 :invalid="invalid" :aria-describedby="describedby" />
@@ -101,12 +102,6 @@ const password = ref("");
 const department = ref("플랫폼팀");
 const customLabelValue = ref("");
 
-const passwordError = computed(() => {
-    if (!password.value) return "";
-
-    return password.value.length < 8 ? "비밀번호는 8자 이상 입력해주세요." : "";
-});
-
 const output = computed(() =>
     JSON.stringify(
         {
@@ -116,7 +111,7 @@ const output = computed(() =>
             password: password.value,
             department: department.value,
             customLabelValue: customLabelValue.value,
-            passwordError: passwordError.value,
+            passwordError: password.value && password.value.length < 8 ? "비밀번호는 8자 이상 입력해주세요." : "",
             propsSummary: {
                 label: true,
                 required: true,

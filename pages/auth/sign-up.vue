@@ -34,7 +34,8 @@
                         <AppChoice v-model="agreeMarketing" type="checkbox" label="마케팅 정보 수신에 동의합니다 (선택)" />
                     </div>
 
-                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!canSubmit">
+                    <AppButton class="login__submit" type="submit" variant="fill" size="lg"
+                        :disabled="!name.trim() || !email.trim() || !password.trim() || password !== password2 || !agreeTerms">
                         가입하기
                     </AppButton>
 
@@ -49,16 +50,10 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 회원가입 폼 입력과 데모용 제출 처리를 담당하는 페이지 컴포넌트입니다.
- */
-
-/* 페이지 설정 */
 definePageMeta({
     layout: false,
 });
 
-/* ref/reactive state */
 const name = ref("");
 const email = ref("");
 const password = ref("");
@@ -66,17 +61,6 @@ const password2 = ref("");
 const agreeTerms = ref(false);
 const agreeMarketing = ref(false);
 
-/* computed */
-const canSubmit = computed(() => {
-    if (!name.value.trim()) return false;
-    if (!email.value.trim()) return false;
-    if (!password.value.trim()) return false;
-    if (password.value !== password2.value) return false;
-    if (!agreeTerms.value) return false;
-    return true;
-});
-
-/* event handlers */
 function handleSubmit() {
     navigateTo("/auth/sign-in");
 }

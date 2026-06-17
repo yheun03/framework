@@ -1,6 +1,6 @@
 <template>
-    <section class="app-section" :class="sectionClassName" :style="sectionStyle">
-        <header v-if="hasDefaultHeader" class="app-section__header">
+    <section class="app-section" :class="`app-section--${direction}`" :style="sectionStyle">
+        <header v-if="title || desc" class="app-section__header">
             <div class="app-section__header-text">
                 <h3 v-if="title" class="app-section__title">
                     {{ title }}
@@ -42,10 +42,6 @@ const props = withDefaults(
         gap: 12,
     },
 );
-
-const hasDefaultHeader = computed(() => !!props.title || !!props.desc);
-
-const sectionClassName = computed(() => `app-section--${props.direction}`);
 
 const sectionStyle = computed(() => {
     return buildSectionStyleVars({

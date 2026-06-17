@@ -1,9 +1,12 @@
 <template>
-    <li class="layout-nav__item" role="none" :class="itemClasses" :style="itemStyle">
+    <li class="layout-nav__item" role="none" :class="[
+        `layout-nav__item--depth-${item.depth}`,
+        { 'layout-nav__item--has-children': hasChildren },
+    ]" :style="{ '--indent': `${(item.depth - 1) * 20}px` }">
         <div class="layout-nav__row">
             <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
                 icon="mdi:chevron-right" aria-label="메뉴 펼치기/접기" :button-size="24" :icon-size="16" :aria-expanded="open"
-                :aria-controls="submenuId" @click.stop="handleToggleOpen" />
+                :aria-controls="`submenu-${item.id}`" @click.stop="handleToggleOpen" />
 
             <component :is="linkTag" v-bind="linkAttrs" class="layout-nav__link" role="menuitem"
                 :aria-haspopup="hasChildren ? 'true' : undefined"
@@ -18,7 +21,7 @@
             </component>
         </div>
 
-        <ul v-if="hasChildren" v-show="open" :id="submenuId" class="layout-nav__sublist" role="menu"
+        <ul v-if="hasChildren" v-show="open" :id="`submenu-${item.id}`" class="layout-nav__sublist" role="menu"
             :aria-label="`${item.label} submenu`">
             <LayoutNavItem v-for="child in item.children" :key="child.id" :item="child" />
         </ul>
@@ -39,19 +42,6 @@ const isExternalLink = computed(() =>
 );
 const isButtonRow = computed(() => !hasLink.value);
 const NuxtLinkComp = resolveComponent("NuxtLink");
-
-const submenuId = computed(() => `submenu-${props.item.id}`);
-
-const itemClasses = computed(() => [
-    `layout-nav__item--depth-${props.item.depth}`,
-    {
-        "layout-nav__item--has-children": hasChildren.value,
-    },
-]);
-
-const itemStyle = computed(() => ({
-    "--indent": `${(props.item.depth - 1) * 20}px`,
-}));
 
 const linkTag = computed(() => {
     if (isButtonRow.value) return "button";
