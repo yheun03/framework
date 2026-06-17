@@ -47,6 +47,10 @@ type ChoiceVariant =
     | "toggle";
 type ChoiceState = "error" | "warning" | "success" | null;
 type ChoiceSize = "md" | "sm";
+type ToggleLabels = {
+    checked?: string;
+    unchecked?: string;
+};
 
 const CHIP_VARIANTS: ChoiceVariant[] = [
     "chip",
@@ -64,8 +68,7 @@ const props = withDefaults(
         name?: string;
         label?: string;
         hint?: string;
-        checkedLabel?: string;
-        uncheckedLabel?: string;
+        toggleLabels?: ToggleLabels;
         disabled?: boolean;
         readonly?: boolean;
         id?: string;
@@ -123,8 +126,8 @@ const rootClasses = computed(() => [
 const toggleText = computed(() => {
     if (!isToggleVariant.value || props.label) return "";
 
-    if (isChecked.value) return props.checkedLabel ?? "";
-    return props.uncheckedLabel ?? "";
+    if (isChecked.value) return props.toggleLabels?.checked ?? "";
+    return props.toggleLabels?.unchecked ?? "";
 });
 
 function handleChange(event: Event) {

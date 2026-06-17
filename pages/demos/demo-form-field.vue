@@ -13,40 +13,32 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
                     desc="label, description, hint를 가진 기본 FormField 예시입니다.">
                     <AppFormField label="이름" description="사용자의 실명을 입력합니다." hint="한글 또는 영문 이름을 입력하세요.">
-                        <template #default="{ id, describedby }">
-                            <AppInput :id="id" v-model="name" placeholder="이름 입력" :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="name" placeholder="이름 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
                 <!-- REQUIRED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Required" desc="required 상태에서는 label 옆에 필수 표시가 노출됩니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Required"
+                    desc="required 상태에서는 label 옆에 필수 표시가 노출됩니다.">
                     <AppFormField label="이메일" required hint="업무용 이메일을 입력하세요.">
-                        <template #default="{ id, describedby }">
-                            <AppInput :id="id" v-model="email" placeholder="email@example.com"
-                                :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="email" placeholder="email@example.com" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
                 <!-- OPTIONAL -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Optional" desc="optionalText로 선택 입력 필드를 표시할 수 있습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Optional"
+                    desc="optionalText로 선택 입력 필드를 표시할 수 있습니다.">
                     <AppFormField label="닉네임" optional-text="선택 입력" hint="입력하지 않아도 됩니다.">
-                        <template #default="{ id, describedby }">
-                            <AppInput :id="id" v-model="nickname" placeholder="닉네임 입력"
-                                :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="nickname" placeholder="닉네임 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
                 <!-- ERROR -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Error" desc="error가 있으면 hint 대신 error message가 표시됩니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Error"
+                    desc="error가 있으면 hint 대신 error message가 표시됩니다.">
                     <AppFormField label="비밀번호" required hint="8자 이상 입력하세요."
                         :error="password && password.length < 8 ? '비밀번호는 8자 이상 입력해주세요.' : ''">
-                        <template #default="{ id, invalid, describedby }">
-                            <AppInput :id="id" v-model="password" type="password" placeholder="비밀번호 입력"
-                                :invalid="invalid" :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="password" type="password" placeholder="비밀번호 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
@@ -54,15 +46,13 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
                     desc="disabled 상태의 label, description, message 표현을 확인합니다.">
                     <AppFormField label="부서" disabled description="비활성 상태의 필드입니다." hint="현재 수정할 수 없습니다.">
-                        <template #default="{ id, disabled, describedby }">
-                            <AppInput :id="id" v-model="department" disabled placeholder="부서 입력"
-                                :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="department" placeholder="부서 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
                 <!-- SLOT LABEL -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Label Slot" desc="label slot으로 커스텀 라벨을 렌더링할 수 있습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Label Slot"
+                    desc="label slot으로 커스텀 라벨을 렌더링할 수 있습니다.">
                     <AppFormField hint="slot label 예시입니다.">
                         <template #label>
                             <div class="page-demo-inline">
@@ -71,10 +61,7 @@
                             </div>
                         </template>
 
-                        <template #default="{ id, describedby }">
-                            <AppInput :id="id" v-model="customLabelValue" placeholder="값 입력"
-                                :aria-describedby="describedby" />
-                        </template>
+                        <AppInput v-model="customLabelValue" placeholder="값 입력" />
                     </AppFormField>
                 </PageDemoAccordionSection>
             </main>

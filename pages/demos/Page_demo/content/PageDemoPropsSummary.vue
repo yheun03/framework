@@ -166,10 +166,12 @@ const summaries: Record<string, DemoSummary> = {
     "demo-choice": {
         description: "checkbox, radio, chip 선택 패턴을 한 컴포넌트로 다룹니다.",
         props: [
+            { name: "modelValue / value", description: "선택 상태와 radio option 값" },
             { name: "type", description: "checkbox 또는 radio" },
             { name: "variant", description: "default, round, chip, fill, ghost, toggle" },
+            { name: "toggleLabels", description: "toggle 전용 checked / unchecked 문구" },
             { name: "size", description: "md, sm 크기" },
-            { name: "disabled", description: "선택 불가 상태" },
+            { name: "disabled / readonly", description: "선택 불가와 읽기 전용 상태" },
         ],
         values: ["checkbox", "radio", "round", "chip", "chip-outline", "fill", "ghost", "toggle"],
     },

@@ -80,6 +80,8 @@ const props = withDefaults(
         id?: string;
         name?: string;
         autocomplete?: string;
+        ariaDescribedby?: string;
+        "aria-describedby"?: string;
     }>(),
     {
         size: "md",
@@ -103,7 +105,12 @@ const inputId = computed(() => props.id ?? `app-input-${fallbackId}`);
 
 const hintId = computed(() => `hint-${inputId.value}`);
 
-const describedBy = computed(() => (props.hint ? hintId.value : undefined));
+const describedBy = computed(
+    () =>
+        props.ariaDescribedby ??
+        props["aria-describedby"] ??
+        (props.hint ? hintId.value : undefined),
+);
 
 const slots = useSlots();
 
