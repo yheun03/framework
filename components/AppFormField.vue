@@ -25,7 +25,7 @@
         </p>
 
         <div class="app-form-field__control">
-            <slot :id="forId" :invalid="hasError" :disabled="disabled" :describedby="describedBy" />
+            <RenderControl />
         </div>
 
         <p v-if="hasError" :id="errorId" class="app-form-field__message app-form-field__message--error">
@@ -39,6 +39,8 @@
 </template>
 
 <script setup lang="ts">
+import { cloneVNode, useSlots } from "vue";
+
 const props = withDefaults(
     defineProps<{
         label?: string;
@@ -63,6 +65,7 @@ const props = withDefaults(
 );
 
 const uid = useId();
+const slots = useSlots();
 
 const forId = computed(() => props.for || `app-form-field-${uid}`);
 const errorId = computed(() => `${forId.value}-error`);
@@ -84,4 +87,31 @@ const describedBy = computed(() => {
 
     return undefined;
 });
+
+function RenderControl() {
+    const nodes = slots.default?.({
+        id: forId.value,
+        invalid: hasError.value,
+        disabled: props.disabled,
+        describedby: describedBy.value,
+    }) ?? [];
+    const injectedProps: Record<string, unknown> = {
+        id: forId.value,
+        ariaDescribedby: describedBy.value,
+        "aria-describedby": describedBy.value,
+    };
+
+    if (hasError.value) {
+        injectedProps.invalid = true;
+        injectedProps.state = "error";
+    }
+
+    if (props.disabled) {
+        injectedProps.disabled = true;
+    }
+
+    return nodes.map((node) =>
+        typeof node.type === "symbol" ? node : cloneVNode(node, injectedProps),
+    );
+}
 </script>
