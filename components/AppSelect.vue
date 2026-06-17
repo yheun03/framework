@@ -6,6 +6,7 @@
         `app-select--shape-${shape}`,
         {
             'app-select--open': isOpen,
+            'app-select--drop-up': dropDirection === 'up',
             'is-readonly': readonly,
             'is-disabled': disabled,
             [`is-${state}`]: state,
@@ -54,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
 
@@ -103,6 +104,7 @@ const emit = defineEmits<{
 const fallbackId = useId();
 const rootEl = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
+const dropDirection = ref<"down" | "up">("down");
 
 const selectId = computed(() => props.id ?? `app-select-${fallbackId}`);
 const hintId = computed(() => `hint-${selectId.value}`);
@@ -115,13 +117,26 @@ function getOptionKey(option: AppSelectOption) {
     return `option-${String(option.value)}`;
 }
 
-function handleToggle() {
+async function handleToggle() {
     if (props.disabled || props.readonly) return;
     isOpen.value = !isOpen.value;
+
+    if (isOpen.value) {
+        await nextTick();
+        updateDropDirection();
+    }
 }
 
 function close() {
     isOpen.value = false;
+}
+
+function updateDropDirection() {
+    const rect = rootEl.value?.getBoundingClientRect();
+    if (!rect) return;
+
+    const spaceBelow = window.innerHeight - rect.bottom;
+    dropDirection.value = spaceBelow < 260 && rect.top > spaceBelow ? "up" : "down";
 }
 
 function handleSelectValue(option: AppSelectOption | null) {

@@ -111,6 +111,13 @@ $select-sizes: (
         overflow-y: auto;
     }
 
+    &--drop-up {
+        .app-select__menu {
+            top: auto;
+            bottom: calc(100% + 8px);
+        }
+    }
+
     &__option {
         @include font(b3, rg);
         padding: 10px 14px;

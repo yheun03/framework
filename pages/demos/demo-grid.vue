@@ -52,6 +52,18 @@
                             :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows />
                     </ClientOnly>
                 </PageDemoAccordionSection>
+                <PageDemoAccordionSection class="page-demo-accordion" title="페이지네이션 예제">
+                    <AppGridToolbar target="grid5">
+                        <AppGridDownload />
+                    </AppGridToolbar>
+                    <ClientOnly>
+                        <AppGrid grid-id="grid5" class="page-demo-grid" :row-data="pagedRows"
+                            :column-defs="columns1" :default-col-def="defaultColDef" :row-selection="multiRowSelection"
+                            animate-rows :style="{ height: '360px', width: '100%' }" />
+                    </ClientOnly>
+                    <AppPagination v-model:page="paginationPage" v-model:page-size="paginationPageSize"
+                        :total="rowsPagination.length" :page-size-options="[5, 10, 20]" size="sm" />
+                </PageDemoAccordionSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="검색 상태 패널">
@@ -726,6 +738,28 @@ const rows1 = [
         joinedAt: "2026-04-05",
     },
 ];
+
+const rowsPagination = Array.from({ length: 24 }, (_, index) => {
+    const source = rows1[index % rows1.length];
+    const pageNo = index + 1;
+
+    return {
+        ...source,
+        id: pageNo,
+        name: `${source.name}${pageNo}`,
+        email: `user${String(pageNo).padStart(2, "0")}@test.com`,
+        score: Math.max(50, source.score - (index % 7)),
+    };
+});
+
+const paginationPage = ref(1);
+const paginationPageSize = ref(5);
+const pagedRows = computed(() => {
+    const start = (paginationPage.value - 1) * paginationPageSize.value;
+    const end = start + paginationPageSize.value;
+
+    return rowsPagination.slice(start, end);
+});
 
 /* GRID 2 data */
 
