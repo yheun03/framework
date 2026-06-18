@@ -110,7 +110,7 @@
  */
 import { h, resolveComponent } from "vue";
 import type { AppTabItem } from "~/components/AppTabs.vue";
-import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
+import PageDemoTabsExternalRenderer from "~/pages/demos/Page_demo/renderer/PageDemoTabsExternalRenderer.vue";
 
 const { title, description } = useDemoI18n("tabs");
 
@@ -283,13 +283,9 @@ const rendererItems: AppTabItem[] = [
     },
     {
         id: "renderer-2",
-        title: "component 방식",
-        desc: "component + componentProps 전달",
-        component: PageDemoModalRendererExample,
-        componentProps: {
-            lastAction: "tabs renderer",
-            onAction: () => { },
-        },
+        title: "외부 렌더러",
+        desc: "renderer 폴더의 Vue 파일 연결",
+        component: PageDemoTabsExternalRenderer,
     },
     {
         id: "renderer-3",

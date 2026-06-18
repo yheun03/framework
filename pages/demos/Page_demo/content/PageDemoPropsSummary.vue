@@ -243,6 +243,7 @@ const summaries: Record<string, DemoSummary> = {
             { name: "variant", description: "line, box, pill 스타일" },
             { name: "size", description: "sm, md, lg 크기" },
             { name: "disabled", description: "탭 비활성 상태" },
+            { name: "component", description: "외부 Vue 렌더러 연결" },
         ],
         values: ["line", "box", "pill", "sm", "md", "lg"],
     },
