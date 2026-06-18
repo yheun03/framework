@@ -98,8 +98,65 @@
                     </AppSectionWrapper>
                 </PageDemoAccordionSection>
 
+                <PageDemoAccordionSection class="page-demo-accordion" title="Section Row (Static)"
+                    desc="v-for 없이 AppSection을 정적으로 나열한 예시입니다.">
+                    <AppSectionWrapper class="section-demo__wrapper-demo" title="Weekly Tasks" desc="정적 section 예시"
+                        direction="column" :gap="16">
+                        <AppSection class="section-demo__section-demo" title="Section Item 1" desc="첫 번째 섹션"
+                            direction="row" :ratio="[1, 1]" :gap="8">
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Body 1</strong>
+                                    <span>정적 섹션 #1</span>
+                                </div>
+                            </AppSectionBody>
+
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Detail</strong>
+                                    <span>추가 설명 영역</span>
+                                </div>
+                            </AppSectionBody>
+                        </AppSection>
+
+                        <AppSection class="section-demo__section-demo" title="Section Item 2" desc="두 번째 섹션"
+                            direction="row" :ratio="[1, 1]" :gap="8">
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Body 2</strong>
+                                    <span>정적 섹션 #2</span>
+                                </div>
+                            </AppSectionBody>
+
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Detail</strong>
+                                    <span>추가 설명 영역</span>
+                                </div>
+                            </AppSectionBody>
+                        </AppSection>
+
+                        <AppSection class="section-demo__section-demo" title="Section Item 3" desc="세 번째 섹션"
+                            direction="row" :ratio="[1, 1]" :gap="8">
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Body 3</strong>
+                                    <span>정적 섹션 #3</span>
+                                </div>
+                            </AppSectionBody>
+
+                            <AppSectionBody>
+                                <div class="section-demo-box section-demo-box--body">
+                                    <strong>Detail</strong>
+                                    <span>추가 설명 영역</span>
+                                </div>
+                            </AppSectionBody>
+                        </AppSection>
+                    </AppSectionWrapper>
+                </PageDemoAccordionSection>
+
                 <PageDemoAccordionSection class="page-demo-accordion" title="Section Row + Repeat"
-                    desc="AppSection 내부 row 배치와 반복 렌더링을 함께 확인합니다.">
+                    desc="AppSection 내부 row 배치와 v-for 반복 렌더링 예시입니다.">
                     <AppSectionWrapper class="section-demo__wrapper-demo" title="Weekly Tasks" desc="반복 section 예시"
                         direction="column" :gap="16">
                         <AppSection v-for="item in repeatedSections" :key="item.id" class="section-demo__section-demo"
