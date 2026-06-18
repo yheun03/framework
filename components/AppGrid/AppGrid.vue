@@ -1,11 +1,12 @@
 <template>
-    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses" :style="gridStyles"
+    <AgGridVue ref="gridRef" v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses" :style="gridStyles"
         @grid-ready="handleGridReady" />
 </template>
 
 <script setup lang="ts">
 defineOptions({
     ssr: false,
+    inheritAttrs: false,
 });
 import { AgGridVue } from "ag-grid-vue3";
 import type {
@@ -27,6 +28,7 @@ const { register, unregister } = useAppGridRegistry();
 const APP_CHOICE_SELECTION_COL_ID = "appChoiceSelection";
 
 const attrs = useAttrs();
+const gridRef = ref<{ $el?: HTMLElement } | null>(null);
 const gridApi = ref<GridApi | null>(null);
 const registeredGridId = ref<string | null>(null);
 const props = withDefaults(
@@ -52,12 +54,32 @@ function handleBodyScroll() {
     handleCloseOpenSelects();
 }
 
+function removeAgHeaderCheckboxPlaceholders() {
+    const el = gridRef.value?.$el;
+
+    if (!el) return;
+
+    el.querySelectorAll(".ag-header-select-all.ag-hidden").forEach((node) => {
+        node.remove();
+    });
+}
+
+function scheduleRemoveAgHeaderCheckboxPlaceholders() {
+    nextTick(() => {
+        removeAgHeaderCheckboxPlaceholders();
+        window.setTimeout(removeAgHeaderCheckboxPlaceholders);
+    });
+}
+
 function handleGridReady(e: GridReadyEvent) {
     gridApi.value = e.api;
     e.api.addEventListener(
         "bodyScroll",
         handleBodyScroll as (event: BodyScrollEvent) => void,
     );
+    e.api.addEventListener("displayedColumnsChanged", scheduleRemoveAgHeaderCheckboxPlaceholders);
+    e.api.addEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
+    scheduleRemoveAgHeaderCheckboxPlaceholders();
 
     const id = e.api.getGridId();
 
@@ -75,6 +97,8 @@ onBeforeUnmount(() => {
         "bodyScroll",
         handleBodyScroll as (event: BodyScrollEvent) => void,
     );
+    gridApi.value?.removeEventListener("displayedColumnsChanged", scheduleRemoveAgHeaderCheckboxPlaceholders);
+    gridApi.value?.removeEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
     if (registeredGridId.value) {
         unregister(registeredGridId.value);
     }
