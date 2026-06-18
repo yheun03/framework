@@ -87,6 +87,47 @@ let fp: FlatpickrInstance | null = null;
 
 const format = "Y-m-d";
 
+function closeCalendar() {
+    fp?.close();
+}
+
+function isCalendarTarget(target: EventTarget | null) {
+    if (!(target instanceof Node)) return false;
+
+    return (
+        inputEl.value?.contains(target) ||
+        fp?.calendarContainer?.contains(target)
+    );
+}
+
+function handleDocumentPointerDown(event: PointerEvent) {
+    if (isCalendarTarget(event.target)) return;
+
+    closeCalendar();
+}
+
+function handleDocumentKeydown(event: KeyboardEvent) {
+    if (event.key !== "Escape") return;
+
+    closeCalendar();
+}
+
+function handleWindowScroll() {
+    closeCalendar();
+}
+
+function addCloseListeners() {
+    document.addEventListener("pointerdown", handleDocumentPointerDown);
+    document.addEventListener("keydown", handleDocumentKeydown);
+    window.addEventListener("scroll", handleWindowScroll, true);
+}
+
+function removeCloseListeners() {
+    document.removeEventListener("pointerdown", handleDocumentPointerDown);
+    document.removeEventListener("keydown", handleDocumentKeydown);
+    window.removeEventListener("scroll", handleWindowScroll, true);
+}
+
 function toRangeValue(dates: Date[]): DateRangeValue | null {
     if (!dates?.length) return null;
 
@@ -175,8 +216,12 @@ function buildOptions(): Partial<FlatpickrOptions> {
         onOpen: () => {
             if (props.disabled || props.readonly) {
                 fp?.close();
+                return;
             }
+
+            addCloseListeners();
         },
+        onClose: () => removeCloseListeners(),
         onChange: (selectedDates) => handleFlatpickrChange(selectedDates),
     };
 }
@@ -209,6 +254,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+    removeCloseListeners();
     fp?.destroy();
     fp = null;
 });
