@@ -103,6 +103,10 @@
                             이미지 뷰어 열기
                         </AppButton>
 
+                        <AppButton variant="outline" @click="handleOpenImageGalleryViewer">
+                            여러 이미지 뷰어 열기
+                        </AppButton>
+
                         <AppButton variant="outline" @click="handleOpenPdfViewer">
                             PDF 뷰어 열기
                         </AppButton>
@@ -308,6 +312,30 @@ function handleOpenImageViewer() {
         name: "샘플 이미지",
         url: "https://picsum.photos/1200/800?random=31",
         alt: "modal viewer sample image",
+    });
+}
+
+function handleOpenImageGalleryViewer() {
+    openImageViewer({
+        name: "샘플 이미지 갤러리",
+        images: [
+            {
+                url: "https://picsum.photos/1200/800?random=41",
+                alt: "sample gallery image 1",
+            },
+            {
+                url: "https://picsum.photos/1200/800?random=42",
+                alt: "sample gallery image 2",
+            },
+            {
+                url: "https://picsum.photos/1200/800?random=43",
+                alt: "sample gallery image 3",
+            },
+            {
+                url: "https://picsum.photos/1200/800?random=44",
+                alt: "sample gallery image 4",
+            },
+        ],
     });
 }
 

@@ -9,6 +9,10 @@ type ImageViewerSource = {
     name?: string;
     url?: string;
     alt?: string;
+    images?: {
+        url: string;
+        alt?: string;
+    }[];
 };
 
 type PdfViewerSource = {
@@ -21,7 +25,11 @@ export function useModalViewer() {
     const modalStore = useModalStore();
 
     function openImageViewer(source: ImageViewerSource) {
-        if (!source.url) return;
+        const items = source.images?.length ? source.images : undefined;
+        const firstItem = items?.[0];
+        const src = source.url || firstItem?.url;
+
+        if (!src) return;
 
         modalStore.modalOpen({
             type: 'custom',
@@ -29,8 +37,9 @@ export function useModalViewer() {
             width: '960px',
             component: AppModalViewerImage,
             componentProps: {
-                src: source.url,
-                alt: source.alt || source.name || '이미지 미리보기',
+                src,
+                alt: source.alt || firstItem?.alt || source.name || '이미지 미리보기',
+                items,
             },
         });
     }
