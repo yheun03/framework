@@ -1,14 +1,14 @@
 <template>
     <label :class="rootClasses">
         <span class="app-choice__control">
-            <input :id="inputId" class="app-choice__input" :type="type" :name="name" :value="inputValue"
+            <input :id="inputId" ref="inputRef" class="app-choice__input" :type="type" :name="name" :value="inputValue"
                 :checked="isChecked" :disabled="disabled" :aria-invalid="state === 'error'"
                 :aria-describedby="describedBy" :aria-readonly="readonly || undefined" @change="handleChange" />
 
             <span v-if="showIndicator" class="app-choice__visual" aria-hidden="true">
-                <span v-if="isChecked" class="app-choice__inner">
+                <span v-if="isChecked || indeterminate" class="app-choice__inner">
                     <template v-if="type === 'checkbox'">
-                        <Icon icon="mdi:check" />
+                        <Icon :icon="indeterminate ? 'mdi:minus' : 'mdi:check'" />
                     </template>
                     <template v-else>
                         <span class="app-choice__dot" />
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 
 type ChoiceType = "checkbox" | "radio";
 type ChoiceVariant =
@@ -71,6 +71,7 @@ const props = withDefaults(
         toggleLabels?: ToggleLabels;
         disabled?: boolean;
         readonly?: boolean;
+        indeterminate?: boolean;
         id?: string;
         variant?: ChoiceVariant;
         state?: ChoiceState;
@@ -82,6 +83,7 @@ const props = withDefaults(
         state: null,
         disabled: false,
         readonly: false,
+        indeterminate: false,
         size: "md",
     },
 );
@@ -91,6 +93,7 @@ const emit = defineEmits<{
 }>();
 
 const fallbackId = useId();
+const inputRef = ref<HTMLInputElement | null>(null);
 
 const inputId = computed(() => props.id ?? `app-choice-${fallbackId}`);
 const hintId = computed(() => `${inputId.value}-hint`);
@@ -119,6 +122,7 @@ const rootClasses = computed(() => [
         "is-disabled": props.disabled,
         "is-readonly": props.readonly,
         "is-checked": isChecked.value,
+        "is-indeterminate": props.indeterminate,
         [`is-${props.state}`]: props.state,
     },
 ]);
@@ -145,4 +149,14 @@ function handleChange(event: Event) {
 
     emit("update:modelValue", props.value ?? target.value ?? null);
 }
+
+watch(
+    () => props.indeterminate,
+    (value) => {
+        if (inputRef.value) {
+            inputRef.value.indeterminate = value;
+        }
+    },
+    { immediate: true },
+);
 </script>
