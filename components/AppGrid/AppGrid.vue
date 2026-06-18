@@ -17,6 +17,7 @@ import type {
     GridReadyEvent,
     FilterChangedEvent,
     BodyScrollEvent,
+    CellClickedEvent,
 } from "ag-grid-community";
 import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
 import type { AppGridCellAlign, AppGridCellVerticalAlign, AppGridColDef } from "~/types/appGrid";
@@ -31,6 +32,7 @@ const attrs = useAttrs();
 const gridRef = ref<{ $el?: HTMLElement } | null>(null);
 const gridApi = ref<GridApi | null>(null);
 const registeredGridId = ref<string | null>(null);
+let headerCheckboxObserver: MutationObserver | null = null;
 const props = withDefaults(
     defineProps<{
         autoHeight?: boolean;
@@ -67,7 +69,18 @@ function removeAgHeaderCheckboxPlaceholders() {
 function scheduleRemoveAgHeaderCheckboxPlaceholders() {
     nextTick(() => {
         removeAgHeaderCheckboxPlaceholders();
-        window.setTimeout(removeAgHeaderCheckboxPlaceholders);
+    });
+}
+
+function observeAgHeaderCheckboxPlaceholders() {
+    const el = gridRef.value?.$el;
+
+    if (!el || headerCheckboxObserver) return;
+
+    headerCheckboxObserver = new MutationObserver(removeAgHeaderCheckboxPlaceholders);
+    headerCheckboxObserver.observe(el, {
+        childList: true,
+        subtree: true,
     });
 }
 
@@ -79,6 +92,7 @@ function handleGridReady(e: GridReadyEvent) {
     );
     e.api.addEventListener("displayedColumnsChanged", scheduleRemoveAgHeaderCheckboxPlaceholders);
     e.api.addEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
+    observeAgHeaderCheckboxPlaceholders();
     scheduleRemoveAgHeaderCheckboxPlaceholders();
 
     const id = e.api.getGridId();
@@ -99,6 +113,8 @@ onBeforeUnmount(() => {
     );
     gridApi.value?.removeEventListener("displayedColumnsChanged", scheduleRemoveAgHeaderCheckboxPlaceholders);
     gridApi.value?.removeEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
+    headerCheckboxObserver?.disconnect();
+    headerCheckboxObserver = null;
     if (registeredGridId.value) {
         unregister(registeredGridId.value);
     }
@@ -232,6 +248,25 @@ function shouldAddSelectionColumn(rowSelection?: GridOptions["rowSelection"]) {
     );
 }
 
+function isClickSelectionEnabled(rowSelection?: GridOptions["rowSelection"]) {
+    if (!rowSelection || typeof rowSelection === "string") return Boolean(rowSelection);
+    return rowSelection.enableClickSelection !== false;
+}
+
+function toggleRowSelection(params: CellClickedEvent, rowSelection?: GridOptions["rowSelection"]) {
+    if (!isClickSelectionEnabled(rowSelection)) return;
+    if (params.colDef.colId === APP_CHOICE_SELECTION_COL_ID) return;
+
+    const selected = !params.node.isSelected();
+
+    if (typeof rowSelection === "object" && rowSelection.mode === "singleRow") {
+        params.node.setSelected(selected, true);
+        return;
+    }
+
+    params.node.setSelected(selected);
+}
+
 function normalizeDefaultColDef(defaultColDef?: AppGridColDef) {
     return {
         cellDataType: false,
@@ -284,6 +319,7 @@ const gridAttrs = computed((): GridOptions => {
         defaultColDef,
         "default-col-def": defaultColDefKebab,
         defaultcoldef: defaultColDefLower,
+        onCellClicked,
         onFilterChanged,
         ...rest
     } = a;
@@ -322,6 +358,9 @@ const gridAttrs = computed((): GridOptions => {
         shouldUseAppChoiceSelectionColumn &&
         typeof resolvedRowSelection === "object" &&
         resolvedRowSelection.mode === "multiRow";
+    const shouldHandleClickSelection =
+        shouldUseAppChoiceSelectionColumn &&
+        isClickSelectionEnabled(resolvedRowSelection);
 
     return {
         ...rest,
@@ -337,11 +376,22 @@ const gridAttrs = computed((): GridOptions => {
         getRowHeight: resolvedGetRowHeight as GridOptions["getRowHeight"],
         ...(finalRowSelection ? { rowSelection: finalRowSelection } : {}),
         ...(shouldEnableMultiSelectWithClick ? { rowMultiSelectWithClick: true } : {}),
+        ...(shouldHandleClickSelection ? { suppressRowClickSelection: true } : {}),
         ...(resolvedSelectionColumnDef && !shouldUseAppChoiceSelectionColumn
             ? { selectionColumnDef: resolvedSelectionColumnDef }
             : {}),
         defaultColDef: normalizedDefaultColDef,
         ...(resolvedColumnDefs ? { columnDefs: resolvedColumnDefs } : {}),
+
+        onCellClicked(params: CellClickedEvent) {
+            if (shouldHandleClickSelection) {
+                toggleRowSelection(params, resolvedRowSelection);
+            }
+
+            if (typeof onCellClicked === "function") {
+                onCellClicked(params);
+            }
+        },
 
         onFilterChanged(params: FilterChangedEvent) {
             const api = params.api;
