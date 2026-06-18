@@ -12,6 +12,7 @@ export type ModalCommonOptions = {
     title?: string;
     width?: string;
     height?: string;
+    variant?: string;
     overlay?: boolean;
     closable?: boolean;
     closeOnDim?: boolean;
@@ -40,6 +41,13 @@ export type CustomModalInput = ModalCommonOptions & {
     type: 'custom';
     component: Component;
     componentProps?: Record<string, unknown>;
+    footer?: boolean;
+    confirmText?: string;
+    cancelText?: string;
+    footerComponent?: Component;
+    footerProps?: Record<string, unknown>;
+    onConfirm?: () => void;
+    onCancel?: () => void;
 };
 
 export type ModalOpenPayload = AlertModalInput | ConfirmModalInput | CustomModalInput;

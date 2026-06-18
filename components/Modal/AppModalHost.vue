@@ -1,10 +1,10 @@
 <template>
     <Teleport to="body">
-        <div v-for="(modalItem, modalIndex) in modalStore.modals" :key="modalItem.id" class="app-modal"
+        <div v-for="(modalItem, modalIndex) in modalStore.modals" :key="modalItem.id" :class="getModalClass(modalItem)"
             :style="{ zIndex: String(getModalZIndex(modalIndex)) }">
             <div v-if="modalItem.overlay" class="app-modal__backdrop" @click="handleBackdropClick(modalItem)" />
 
-            <div class="app-modal__dialog" :style="getDialogStyle(modalItem)" role="dialog" aria-modal="true"
+            <div :class="getDialogClass(modalItem)" :style="getDialogStyle(modalItem)" role="dialog" aria-modal="true"
                 :aria-label="getAriaLabel(modalItem)" @click.stop>
                 <header v-if="modalItem.title || modalItem.closable" class="app-modal__header">
                     <div class="app-modal__header-left">
@@ -29,19 +29,32 @@
                     <component v-else :is="modalItem.component" v-bind="modalItem.componentProps" />
                 </section>
 
-                <footer v-if="modalItem.type !== 'custom'" class="app-modal__footer">
-                    <div v-if="modalItem.type === 'alert'" class="app-alert-modal__actions">
+                <footer v-if="hasFooter(modalItem)" class="app-modal__footer">
+                    <div v-if="modalItem.type === 'alert'" class="app-modal__actions app-alert-modal__actions">
                         <AppButton variant="fill" @click="handleModalConfirm(modalItem.id)">
                             {{ modalItem.confirmText }}
                         </AppButton>
                     </div>
 
-                    <div v-else class="app-confirm-modal__actions">
+                    <div v-else-if="modalItem.type === 'confirm'" class="app-modal__actions app-confirm-modal__actions">
                         <AppButton variant="outline" @click="handleModalCancel(modalItem.id)">
                             {{ modalItem.cancelText }}
                         </AppButton>
 
                         <AppButton variant="fill" @click="handleModalConfirm(modalItem.id)">
+                            {{ modalItem.confirmText }}
+                        </AppButton>
+                    </div>
+
+                    <component v-else-if="modalItem.footerComponent" :is="modalItem.footerComponent"
+                        v-bind="modalItem.footerProps" />
+
+                    <div v-else-if="modalItem.footer" class="app-modal__actions app-custom-modal__actions">
+                        <AppButton variant="outline" @click="handleCustomModalCancel(modalItem)">
+                            {{ modalItem.cancelText }}
+                        </AppButton>
+
+                        <AppButton variant="fill" @click="handleCustomModalConfirm(modalItem)">
                             {{ modalItem.confirmText }}
                         </AppButton>
                     </div>
@@ -69,11 +82,31 @@ function getModalZIndex(modalIndex: number) {
     return 2000 + modalIndex * 10;
 }
 
+function getModalClass(modalItem: ModalItem) {
+    return ["app-modal", getModifierClass("app-modal", modalItem.variant)];
+}
+
+function getDialogClass(modalItem: ModalItem) {
+    return [
+        "app-modal__dialog",
+        getModifierClass("app-modal__dialog", modalItem.variant),
+    ];
+}
+
+function getModifierClass(block: string, variant?: string) {
+    return variant ? `${block}--${variant}` : null;
+}
+
 function getDialogStyle(modalItem: ModalItem) {
     return {
         width: modalItem.width,
         height: modalItem.height,
     };
+}
+
+function hasFooter(modalItem: ModalItem) {
+    if (modalItem.type !== "custom") return true;
+    return Boolean(modalItem.footerComponent || modalItem.footer);
 }
 
 function getAriaLabel(modalItem: ModalItem) {
@@ -116,6 +149,22 @@ function handleModalCancel(modalId: number | undefined | null) {
 function handleModalConfirm(modalId: number | undefined | null) {
     if (modalId == null) return;
     modalStore.modalConfirm(modalId);
+}
+
+function handleCustomModalCancel(modalItem: ModalItem) {
+    if (modalItem.type !== "custom") return;
+    modalItem.onCancel?.();
+    modalStore.modalClose(modalItem.id, "cancel");
+}
+
+function handleCustomModalConfirm(modalItem: ModalItem) {
+    if (modalItem.type !== "custom") return;
+
+    if (modalItem.keepOnConfirm !== true) {
+        modalStore.modalClose(modalItem.id, "confirm");
+    }
+
+    modalItem.onConfirm?.();
 }
 
 onMounted(() => {

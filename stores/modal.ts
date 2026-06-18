@@ -3,7 +3,7 @@
  */
 import {computed, ref} from 'vue';
 import {defineStore} from 'pinia';
-import type {AlertModalItem, ConfirmModalItem, CustomModalItem, ModalCloseReason, ModalItem, ModalOpenPayload} from '~/types/appModal';
+import type {AlertModalInput, AlertModalItem, ConfirmModalInput, ConfirmModalItem, CustomModalInput, CustomModalItem, ModalCloseReason, ModalItem, ModalOpenPayload} from '~/types/appModal';
 
 const MODAL_DEFAULTS = {
     common: {
@@ -14,6 +14,7 @@ const MODAL_DEFAULTS = {
         keepOnConfirm: false,
         width: '560px',
         height: undefined,
+        variant: undefined,
     },
     alert: {
         title: '안내',
@@ -33,6 +34,11 @@ const MODAL_DEFAULTS = {
         width: '560px',
         height: undefined,
         componentProps: {},
+        footer: false,
+        confirmText: '확인',
+        cancelText: '취소',
+        footerComponent: undefined,
+        footerProps: {},
     },
 } as const;
 
@@ -74,6 +80,7 @@ export const useModalStore = defineStore('modal', () => {
         return {
             ...base,
             componentProps: payload.componentProps ?? {},
+            footerProps: payload.footerProps ?? {},
         } as CustomModalItem;
     }
 
@@ -93,6 +100,30 @@ export const useModalStore = defineStore('modal', () => {
         return modal.id;
     }
 
+    function alert(payload: string | Omit<AlertModalInput, 'type'>) {
+        const options = typeof payload === 'string' ? {message: payload} : payload;
+        return modalOpen({
+            type: 'alert',
+            ...options,
+        });
+    }
+
+    function confirm(payload: string | Omit<ConfirmModalInput, 'type'>) {
+        const options = typeof payload === 'string' ? {message: payload} : payload;
+        return modalOpen({
+            type: 'confirm',
+            ...options,
+        });
+    }
+
+    function custom(component: CustomModalInput['component'], options: Omit<CustomModalInput, 'type' | 'component'> = {}) {
+        return modalOpen({
+            type: 'custom',
+            component,
+            ...options,
+        });
+    }
+
     function modalClose(id: number, reason: ModalCloseReason = 'close') {
         const target = removeModal(id);
         target?.onClose?.(reason);
@@ -100,7 +131,7 @@ export const useModalStore = defineStore('modal', () => {
 
     function modalConfirm(id: number) {
         const modal = findModal(id);
-        if (!modal || modal.type === 'custom') return;
+        if (!modal) return;
         const shouldKeep = modal.keepOnConfirm === true;
 
         if (!shouldKeep) {
@@ -112,7 +143,7 @@ export const useModalStore = defineStore('modal', () => {
 
     function modalCancel(id: number) {
         const modal = findModal(id);
-        if (!modal || modal.type !== 'confirm') return;
+        if (!modal || (modal.type !== 'confirm' && modal.type !== 'custom')) return;
         modal.onCancel?.();
         modalClose(id, 'cancel');
     }
@@ -132,6 +163,9 @@ export const useModalStore = defineStore('modal', () => {
         modals,
         topModalId,
         modalOpen,
+        alert,
+        confirm,
+        custom,
         modalClose,
         modalConfirm,
         modalCancel,
