@@ -122,13 +122,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Structure Info">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -159,46 +155,6 @@ const repeatedSections = ref([
         note: "v-for item #3",
     },
 ]);
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            examples: {
-                wrapper: {
-                    column: {
-                        direction: "column",
-                        ratio: "auto",
-                        gap: "24px",
-                    },
-                    row: {
-                        direction: "row",
-                        ratio: "2fr 1fr",
-                        gap: "20px",
-                    },
-                },
-                section: {
-                    column: {
-                        direction: "column",
-                        ratio: "auto",
-                        gap: "12px",
-                    },
-                    row: {
-                        direction: "row",
-                        ratio: "1fr 1fr",
-                        gap: "8px",
-                    },
-                },
-            },
-            repeat: {
-                count: repeatedSections.value.length,
-                sameProps: true,
-            },
-        },
-        null,
-        2,
-    ),
-);
 </script>
 
 <style lang="scss" scoped>

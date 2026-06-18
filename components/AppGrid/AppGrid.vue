@@ -1,5 +1,6 @@
 <template>
-    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses" @grid-ready="handleGridReady" />
+    <AgGridVue v-bind="gridAttrs" :locale-text="localeText" :class="gridClasses" :style="gridStyles"
+        @grid-ready="handleGridReady" />
 </template>
 
 <script setup lang="ts">
@@ -28,11 +29,13 @@ const props = withDefaults(
         autoHeight?: boolean;
         headerHeight?: number;
         rowHeight?: number;
+        height?: number | string;
     }>(),
     {
         autoHeight: false,
         headerHeight: 40,
         rowHeight: 48,
+        height: undefined,
     },
 );
 
@@ -104,6 +107,16 @@ function normalizeDefaultColDef(defaultColDef?: ColDef) {
 function resolveNumberAttr(value: unknown, fallback: number): number {
     return typeof value === "number" ? value : fallback;
 }
+
+function toCssSize(value?: number | string) {
+    if (typeof value === "number") return `${value}px`;
+    return value;
+}
+
+const gridStyles = computed(() => ({
+    width: "100%",
+    ...(props.height && !props.autoHeight ? { height: toCssSize(props.height) } : {}),
+}));
 
 /* attrs -> grid-id 전달 */
 

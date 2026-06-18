@@ -67,13 +67,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -129,38 +125,6 @@ function handleGaugeRangeUpdate(value: { start: number; end: number }) {
     gaugeControlRange.end = value.end;
 }
 
-/* computed */
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            linearDisplayValue,
-            linearRangeDisplay: {
-                start: linearRangeDisplay.start,
-                end: linearRangeDisplay.end,
-            },
-            linearControlValue: linearControlValue.value,
-            linearControlRange: {
-                start: linearControlRange.start,
-                end: linearControlRange.end,
-            },
-            gaugeDisplayValue,
-            gaugeRangeDisplay: {
-                start: gaugeRangeDisplay.start,
-                end: gaugeRangeDisplay.end,
-            },
-            gaugeControlValue: gaugeControlValue.value,
-            gaugeControlRange: {
-                start: gaugeControlRange.start,
-                end: gaugeControlRange.end,
-            },
-            disabledLinearValue,
-            disabledGaugeValue,
-        },
-        null,
-        2,
-    ),
-);
-</script>
+/* computed */</script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->

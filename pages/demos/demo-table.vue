@@ -16,16 +16,14 @@
                     </p>
 
                     <ClientOnly>
-                        <AppTable v-model="basicForm" :rows="basicRows" title="Basic" default-label-width="160px"
-                            @field-action="handleFieldAction" />
+                        <AppTable v-model="basicForm" :rows="basicRows" title="Basic" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- LAYOUT TYPES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Layout Types" desc="stacked / label-full 레이아웃 예시입니다.">
                     <ClientOnly>
-                        <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" default-label-width="160px"
-                            @field-action="handleFieldAction" />
+                        <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
@@ -33,32 +31,28 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Button Types"
                     desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
                     <ClientOnly>
-                        <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants"
-                            default-label-width="160px" @field-action="handleFieldAction" />
+                        <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- CHOICE TYPES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
                     <ClientOnly>
-                        <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" default-label-width="160px"
-                            @field-action="handleFieldAction" />
+                        <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- DATE TYPES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
                     <ClientOnly>
-                        <AppTable v-model="dateForm" :rows="dateRows" title="Date" default-label-width="160px"
-                            @field-action="handleFieldAction" />
+                        <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- CONTACT TYPES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
                     <ClientOnly>
-                        <AppTable v-model="contactForm" :rows="contactRows" title="Contact" default-label-width="160px"
-                            @field-action="handleFieldAction" />
+                        <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
@@ -67,25 +61,19 @@
                     desc="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
                         <ClientOnly>
-                            <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" default-label-width="160px"
-                                readonly @field-action="handleFieldAction" />
+                            <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" readonly />
                         </ClientOnly>
 
                         <ClientOnly>
-                            <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled"
-                                default-label-width="160px" disabled @field-action="handleFieldAction" />
+                            <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled" disabled />
                         </ClientOnly>
                     </div>
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -501,27 +489,4 @@ const disabledRows: AppTableRow[] = [
     },
 ];
 
-/* event handlers */
-function handleFieldAction(cell: unknown) {
-    void cell;
-}
-
-/* computed */
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basicForm: basicForm.value,
-            layoutForm: layoutForm.value,
-            buttonForm: buttonForm.value,
-            choiceForm: choiceForm.value,
-            dateForm: dateForm.value,
-            contactForm: contactForm.value,
-            stateForm: stateForm.value,
-            disabledForm: disabledForm.value,
-        },
-        null,
-        2,
-    ),
-);
 </script>

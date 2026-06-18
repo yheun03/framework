@@ -177,13 +177,9 @@
             </main>
 
             <!-- STATE PANEL -->
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -238,25 +234,6 @@ const constraints = reactive({
     single: null as string | null,
     range: null as DateRangeValue | null,
 });
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basic,
-            modes,
-            sizes,
-            shapes,
-            states,
-            disabledValue: disabledValue.value,
-            constraints,
-            min,
-            max,
-        },
-        null,
-        2,
-    ),
-);
 </script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
