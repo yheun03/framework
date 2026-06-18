@@ -148,10 +148,6 @@ const { title } = useDemoI18n("modal");
 const modal = useModal();
 const { openImageViewer, openPdfViewer } = useModalViewer();
 
-/* ref/reactive state */
-const lastAction = ref("-");
-
-/* computed */
 /* event handlers */
 function handleOpenAlert() {
     handleOpenAlertBasic();
@@ -160,12 +156,6 @@ function handleOpenAlert() {
 function handleOpenAlertBasic() {
     modal.openAlert({
         message: "간단한 안내 메시지입니다.",
-        onConfirm: () => {
-            lastAction.value = "alert:confirm";
-        },
-        onClose: (reason) => {
-            lastAction.value = `alert:close:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -176,12 +166,6 @@ function handleOpenAlertNoClose() {
         closable: false,
         closeOnDim: false,
         closeOnEsc: false,
-        onConfirm: () => {
-            lastAction.value = "alert:no-close:confirm";
-        },
-        onClose: (reason) => {
-            lastAction.value = `alert:no-close:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -190,12 +174,6 @@ function handleOpenAlertCustomText() {
         title: "버튼 텍스트 변경",
         message: "confirmText 속성으로 버튼 문구를 변경할 수 있습니다.",
         confirmText: "이해했습니다",
-        onConfirm: () => {
-            lastAction.value = "alert:custom-text:confirm";
-        },
-        onClose: (reason) => {
-            lastAction.value = `alert:custom-text:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -207,21 +185,10 @@ function handleOpenNestedAlert() {
         confirmText: "상단 Alert 열기",
         keepOnConfirm: true,
         onConfirm: () => {
-            lastAction.value = "alert:nested:confirm";
-
             modal.openAlert({
                 title: "2차 Alert",
                 message: "이 Alert가 최상단입니다.",
-                onConfirm: () => {
-                    lastAction.value = "alert:nested:top-confirm";
-                },
-                onClose: (reason) => {
-                    lastAction.value = `alert:nested:top-close:${reason ?? "unknown"}`;
-                },
             });
-        },
-        onClose: (reason) => {
-            lastAction.value = `alert:nested:close:${reason ?? "unknown"}`;
         },
     });
 }
@@ -234,18 +201,10 @@ function handleOpenConfirmBasic() {
     modal.openConfirm({
         message: "정말 진행할까요?",
         onConfirm: () => {
-            lastAction.value = "confirm:confirm";
-
             modal.openAlert({
                 title: "Confirm 결과",
                 message: "Confirm에서 확인을 눌렀습니다.",
             });
-        },
-        onCancel: () => {
-            lastAction.value = "confirm:cancel";
-        },
-        onClose: (reason) => {
-            lastAction.value = `confirm:close:${reason ?? "unknown"}`;
         },
     });
 }
@@ -255,15 +214,6 @@ function handleOpenConfirmNoDimClose() {
         title: "배경 닫기 제한",
         message: "배경 클릭으로는 닫히지 않습니다.",
         closeOnDim: false,
-        onConfirm: () => {
-            lastAction.value = "confirm:no-dim:confirm";
-        },
-        onCancel: () => {
-            lastAction.value = "confirm:no-dim:cancel";
-        },
-        onClose: (reason) => {
-            lastAction.value = `confirm:no-dim:close:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -272,15 +222,6 @@ function handleOpenConfirmNoEscClose() {
         title: "ESC 닫기 제한",
         message: "ESC 키로는 닫히지 않습니다.",
         closeOnEsc: false,
-        onConfirm: () => {
-            lastAction.value = "confirm:no-esc:confirm";
-        },
-        onCancel: () => {
-            lastAction.value = "confirm:no-esc:cancel";
-        },
-        onClose: (reason) => {
-            lastAction.value = `confirm:no-esc:close:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -290,15 +231,6 @@ function handleOpenConfirmCustomText() {
         message: "confirmText, cancelText 속성으로 버튼 문구를 변경할 수 있습니다.",
         confirmText: "적용하기",
         cancelText: "다음에",
-        onConfirm: () => {
-            lastAction.value = "confirm:custom-text:confirm";
-        },
-        onCancel: () => {
-            lastAction.value = "confirm:custom-text:cancel";
-        },
-        onClose: (reason) => {
-            lastAction.value = `confirm:custom-text:close:${reason ?? "unknown"}`;
-        },
     });
 }
 
@@ -309,24 +241,10 @@ function handleOpenNestedConfirm() {
         confirmText: "상단 Alert 열기",
         keepOnConfirm: true,
         onConfirm: () => {
-            lastAction.value = "confirm:nested:confirm";
-
             modal.openAlert({
                 title: "최상단 Alert",
                 message: "이 모달이 최상단입니다.",
-                onConfirm: () => {
-                    lastAction.value = "confirm:nested:alert-confirm";
-                },
-                onClose: (reason) => {
-                    lastAction.value = `confirm:nested:alert-close:${reason ?? "unknown"}`;
-                },
             });
-        },
-        onCancel: () => {
-            lastAction.value = "confirm:nested:cancel";
-        },
-        onClose: (reason) => {
-            lastAction.value = `confirm:nested:close:${reason ?? "unknown"}`;
         },
     });
 }
@@ -336,10 +254,8 @@ function handleOpenCustom() {
         title: "커스텀 모달",
         width: "640px",
         componentProps: {
-            lastAction: lastAction.value,
             onAction: () => {
-                lastAction.value = "custom:action";
-                modal.closeTop("confirm");
+                modal.closeTop();
             },
             onNestedAlert: () => {
                 modal.openAlert({
@@ -347,9 +263,6 @@ function handleOpenCustom() {
                     message: "Custom 모달 위에 Alert가 열렸습니다.",
                 });
             },
-        },
-        onClose: (reason) => {
-            lastAction.value = `custom:close:${reason ?? "unknown"}`;
         },
     });
 }
@@ -363,19 +276,10 @@ function handleOpenCustomFooter() {
         confirmText: "적용하기",
         cancelText: "다음에",
         componentProps: {
-            lastAction: lastAction.value,
-            onAction: () => {
-                lastAction.value = "custom-footer:body-action";
-            },
+            onAction: () => modal.closeTop(),
             onNestedAlert: () => {
                 modal.openAlert("Custom 모달 위에 Alert가 열렸습니다.");
             },
-        },
-        onCancel: () => {
-            lastAction.value = "custom-footer:cancel";
-        },
-        onConfirm: () => {
-            lastAction.value = "custom-footer:confirm";
         },
     });
 }
@@ -385,25 +289,16 @@ function handleOpenNestedCustom() {
         title: "1차 Custom",
         keepOnConfirm: true,
         componentProps: {
-            lastAction: lastAction.value,
-            onAction: () => {
-                lastAction.value = "custom:nested:action";
-            },
+            onAction: () => modal.closeTop(),
             onNestedAlert: () => {
                 modal.openCustom(PageDemoModalRendererExample, {
                     title: "2차 Custom",
                     width: "520px",
                     componentProps: {
-                        lastAction: "nested custom open",
-                        onAction: () => {
-                            lastAction.value = "custom:nested:second-action";
-                        },
+                        onAction: () => modal.closeTop(),
                     },
                 });
             },
-        },
-        onClose: (reason) => {
-            lastAction.value = `custom:nested:close:${reason ?? "unknown"}`;
         },
     });
 }
@@ -414,7 +309,6 @@ function handleOpenImageViewer() {
         url: "https://picsum.photos/1200/800?random=31",
         alt: "modal viewer sample image",
     });
-    lastAction.value = "viewer:image:open";
 }
 
 function handleOpenPdfViewer() {
@@ -422,15 +316,13 @@ function handleOpenPdfViewer() {
         name: "샘플 PDF",
         path: "/files/sample.pdf",
     });
-    lastAction.value = "viewer:pdf:open";
 }
 
 function handleCloseTop() {
-    modal.closeTop("close");
+    modal.closeTop();
 }
 
 function handleClearAll() {
     modal.clearAll();
-    lastAction.value = "modal:clear-all";
 }
 </script>
