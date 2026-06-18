@@ -108,13 +108,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -140,41 +136,4 @@ const disabledValue = ref("disabled value");
 const readonlyValue = ref("readonly value");
 const invalidValue = ref("invalid value");
 const countValue = ref("");
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basicValue: basicValue.value,
-            content: content.value,
-            contentError: content.value && content.value.length < 10 ? "문의 내용은 10자 이상 입력해주세요." : "",
-            smallValue: smallValue.value,
-            mediumValue: mediumValue.value,
-            largeValue: largeValue.value,
-            resizeNoneValue: resizeNoneValue.value,
-            resizeVerticalValue: resizeVerticalValue.value,
-            resizeHorizontalValue: resizeHorizontalValue.value,
-            resizeBothValue: resizeBothValue.value,
-            disabledValue: disabledValue.value,
-            readonlyValue: readonlyValue.value,
-            invalidValue: invalidValue.value,
-            countValue: countValue.value,
-            propsSummary: {
-                modelValue: true,
-                placeholder: true,
-                disabled: true,
-                readonly: true,
-                rows: true,
-                maxLength: true,
-                showCount: true,
-                clearable: true,
-                invalid: true,
-                size: ["sm", "md", "lg"],
-                resize: ["none", "vertical", "horizontal", "both"],
-            },
-        },
-        null,
-        2,
-    ),
-);
 </script>

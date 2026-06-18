@@ -15,8 +15,7 @@
                     <ClientOnly>
                         <AppGrid grid-id="grid1" class="page-demo-grid" :row-data="rows1" :column-defs="columns1"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight"
-                            :row-selection="multiRowSelection" animate-rows
-                            :style="{ height: '320px', width: '100%' }" />
+                            :row-selection="multiRowSelection" animate-rows height="320px" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <!-- GRID 2 -->
@@ -28,8 +27,7 @@
                     <ClientOnly>
                         <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="columns2"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight"
-                            :row-selection="multiRowSelection" animate-rows
-                            :style="{ height: '320px', width: '100%' }" />
+                            :row-selection="multiRowSelection" animate-rows height="320px" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <!-- GRID 3 -->
@@ -59,26 +57,16 @@
                     <ClientOnly>
                         <AppGrid grid-id="grid5" class="page-demo-grid" :row-data="pagedRows"
                             :column-defs="columns1" :default-col-def="defaultColDef" :row-selection="multiRowSelection"
-                            animate-rows :style="{ height: '360px', width: '100%' }" />
+                            animate-rows height="360px" />
                     </ClientOnly>
                     <AppPagination v-model:page="paginationPage" v-model:page-size="paginationPageSize"
                         :total="rowsPagination.length" :page-size-options="[5, 10, 20]" size="sm" />
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="검색 상태 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky page-demo-stack">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="검색 폼 값 (v-model)"
-                        desc="각 그리드 &lt;code>AppGridSearch&lt;/code>에 연결된 반응형 검색 객체입니다. 필드를 조작하면 실시간으로 갱신됩니다.">
-                        <pre class="page-demo-output">{{ searchStateOutput }}</pre>
-                    </PageDemoAccordionSection>
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="검색 필드 정의 (&lt;code>fields&lt;/code>)"
-                        desc="&lt;code>AppGridSearchField&lt;/code> 배열 — &lt;code>type&lt;/code>, &lt;code>label&lt;/code>, &lt;code>filterField&lt;/code>, &lt;code>selectInput&lt;/code>, &lt;code>numberRange&lt;/code> 등 속성을 한눈에 확인할 수 있습니다.">
-                        <pre class="page-demo-output">{{ searchFieldsOutput }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -265,30 +253,6 @@ const searchFields3: AppGridSearchField[] = [
         placeholder: "등록일 선택",
     },
 ];
-
-const searchStateOutput = computed(() =>
-    JSON.stringify(
-        {
-            grid1: { ...search1 },
-            grid2: { ...search2 },
-            grid3: { ...search3 },
-        },
-        null,
-        2,
-    ),
-);
-
-const searchFieldsOutput = computed(() =>
-    JSON.stringify(
-        {
-            searchFields1,
-            searchFields2,
-            searchFields3,
-        },
-        null,
-        2,
-    ),
-);
 
 /* 기본 column 옵션 */
 

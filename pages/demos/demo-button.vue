@@ -23,10 +23,10 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppButton variant="fill" @click="handleLogClick('fill')">fill</AppButton>
-                        <AppButton variant="outline" @click="handleLogClick('outline')">outline</AppButton>
-                        <AppTextButton @click="handleLogClick('text')">text</AppTextButton>
-                        <AppTextButton variant="underline" @click="handleLogClick('underline')">underline
+                        <AppButton variant="fill">fill</AppButton>
+                        <AppButton variant="outline">outline</AppButton>
+                        <AppTextButton>text</AppTextButton>
+                        <AppTextButton variant="underline">underline
                         </AppTextButton>
                     </div>
                 </PageDemoAccordionSection>
@@ -159,21 +159,14 @@
                         <li><b>button-size</b> : 클릭 영역 크기</li>
                         <li><b>icon-size</b> : 아이콘 시각 크기</li>
                         <li><b>icon</b> : Iconify 아이콘 이름</li>
-                        <li>
-                            <b>width / height</b> : 가로/세로 지정 + min-size 자동 동기화
-                        </li>
                     </ul>
 
                     <div class="page-demo-row">
                         <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xs" icon-size="xs" />
                         <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="md" icon-size="md" />
                         <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xl" icon-size="lg" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :button-size="44" :icon-size="18"
-                            variant="soft" tone="primary" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" :width="80" :height="30"
-                            :icon-size="18" variant="soft" tone="secondary" />
-                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" :button-size="36" :icon-size="18"
-                            variant="outline" tone="danger" />
+                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" variant="soft" tone="primary" />
+                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" variant="outline" tone="danger" />
                     </div>
                 </PageDemoAccordionSection>
 
@@ -223,55 +216,11 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Custom Size">
-                    <p class="page-demo-hint">
-                        AppButton / AppTextButton / AppIconButton은 width/height 속성으로
-                        가로/세로와 min-size를 함께 지정할 수 있습니다.
-                    </p>
-
-                    <ul class="page-demo-hint-list">
-                        <li><b>width</b> : width + min-width 동기화</li>
-                        <li><b>height</b> : height + min-height 동기화</li>
-                    </ul>
-
-                    <div class="page-demo-row">
-                        <AppButton variant="fill" :width="120" :height="36">
-                            Fill 120x36
-                        </AppButton>
-                        <AppButton variant="outline" width="140px" height="30px">
-                            Outline 140x30
-                        </AppButton>
-                        <AppTextButton :width="110" :height="32">
-                            Text 110x32
-                        </AppTextButton>
-                        <AppTextButton variant="underline" :width="120" :height="28">
-                            Underline 120x28
-                        </AppTextButton>
-                        <AppIconButton icon="mdi:star-outline" aria-label="커스텀 아이콘 버튼" :width="72" :height="30"
-                            :icon-size="16" variant="outline" tone="primary" />
-                    </div>
-                </PageDemoAccordionSection>
             </main>
 
-            <!-- 로그 패널 -->
-
-            <aside class="page-demo-aside">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Actions">
-                        <div class="page-demo-actions">
-                            <AppButton variant="fill" @click="handleClearClick">
-                                로그 비우기
-                            </AppButton>
-                        </div>
-                    </PageDemoAccordionSection>
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Click Log">
-                        <pre class="page-demo-output">
-                {{ output }}
-            </pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -280,22 +229,6 @@
 
 <script setup lang="ts">
 const { title, description } = useDemoI18n("button");
-
-type LogItem = { t: number; message: string };
-const logs = ref<LogItem[]>([]);
-
-function handleLogClick(message: string) {
-    logs.value = [{ t: Date.now(), message }, ...logs.value].slice(0, 30);
-}
-
-function handleClearClick() {
-    logs.value = [];
-}
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify({ count: logs.value.length, logs: logs.value }, null, 2),
-);
 </script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->

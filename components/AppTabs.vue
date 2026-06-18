@@ -1,13 +1,13 @@
 <template>
     <div class="app-tabs" :class="[
-        `app-tabs--${variant}`,
+        `app-tabs--${resolvedVariant}`,
         `app-tabs--${size}`,
-        `app-tabs--${orientation}`,
+        `app-tabs--${resolvedOrientation}`,
         {
             'is-stretch': stretch,
         },
     ]">
-        <div ref="tabListRef" class="app-tabs__list" role="tablist" :aria-orientation="orientation">
+        <div ref="tabListRef" class="app-tabs__list" role="tablist" :aria-orientation="resolvedOrientation">
             <component :is="'button'" v-for="(item, index) in enabledAwareItems" :id="getTabId(item.id)" :key="item.id"
                 ref="tabButtonRefs" type="button" class="app-tabs__tab" role="tab" :class="{
                     'is-active': isActive(item.id),
@@ -54,7 +54,7 @@ import type { Component, VNodeChild } from "vue";
 
 type TabRenderer = () => VNodeChild;
 type TabInitialActive = "first" | "none";
-type TabVariant = "line" | "box" | "pill";
+type TabVariant = "line" | "box" | "pill" | "vertical";
 type TabSize = "sm" | "md" | "lg";
 type TabOrientation = "horizontal" | "vertical";
 type TabButtonRef = HTMLButtonElement;
@@ -158,6 +158,14 @@ const currentActiveId = computed(() => {
     return isControlled.value ? (props.activeId ?? null) : internalActiveId.value;
 });
 
+const resolvedVariant = computed(() =>
+    props.variant === "vertical" ? "line" : props.variant,
+);
+
+const resolvedOrientation = computed(() =>
+    props.variant === "vertical" ? "vertical" : props.orientation,
+);
+
 function handleActiveIdChange(next: string | number | null) {
     if (!isControlled.value) {
         internalActiveId.value = next;
@@ -234,7 +242,7 @@ function selectByIndex(index: number) {
 }
 
 function handleTabKeydown(event: KeyboardEvent, index: number) {
-    const isHorizontal = props.orientation === "horizontal";
+    const isHorizontal = resolvedOrientation.value === "horizontal";
 
     const nextKeys = isHorizontal ? ["ArrowRight"] : ["ArrowDown"];
     const prevKeys = isHorizontal ? ["ArrowLeft"] : ["ArrowUp"];

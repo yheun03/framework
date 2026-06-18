@@ -51,7 +51,8 @@ ChartJS.register(
     Filler,
 );
 
-type ChartType = "line" | "bar" | "doughnut" | "pie";
+type ChartType = "line" | "bar" | "doughnut" | "semi-doughnut" | "pie";
+type NativeChartType = Exclude<ChartType, "semi-doughnut">;
 type ChartVariant = "default" | "semi-doughnut";
 
 type AnyObject = Record<string, any>;
@@ -59,7 +60,7 @@ type AnyObject = Record<string, any>;
 const props = withDefaults(
     defineProps<{
         type: ChartType;
-        data: ChartData<ChartType>;
+        data: ChartData<NativeChartType>;
         height?: number;
         variant?: ChartVariant;
         cutout?: string | number;
@@ -104,8 +105,12 @@ function deepMerge<T extends AnyObject>(...sources: T[]): T {
     return result as T;
 }
 
-const resolvedType = computed<ChartType>(() => {
-    return props.variant === "semi-doughnut" ? "doughnut" : props.type;
+const isSemiDoughnut = computed(
+    () => props.type === "semi-doughnut" || props.variant === "semi-doughnut",
+);
+
+const resolvedType = computed<NativeChartType>(() => {
+    return isSemiDoughnut.value ? "doughnut" : props.type;
 });
 
 const isLine = computed(() => resolvedType.value === "line");
@@ -113,7 +118,7 @@ const isBar = computed(() => resolvedType.value === "bar");
 const isDoughnut = computed(() => resolvedType.value === "doughnut");
 
 const resolvedHeight = computed(() => {
-    if (props.variant === "semi-doughnut") {
+    if (isSemiDoughnut.value) {
         return Math.max(220, Math.floor(Number(props.height) || 260));
     }
 
@@ -121,7 +126,7 @@ const resolvedHeight = computed(() => {
 });
 
 const wrapperClasses = computed(() => ({
-    "app-chart--semi-doughnut": props.variant === "semi-doughnut",
+    "app-chart--semi-doughnut": isSemiDoughnut.value,
 }));
 
 const baseOptions = {
@@ -242,7 +247,7 @@ const defaultPieOptions = {
 } satisfies AnyObject;
 
 const chartData = computed(() => {
-    if (props.variant !== "semi-doughnut") {
+    if (!isSemiDoughnut.value) {
         return props.data;
     }
 
@@ -279,7 +284,7 @@ const barOptions = computed<ChartOptions<"bar">>(() => {
 
 const doughnutOptions = computed<ChartOptions<"doughnut">>(() => {
     const preset =
-        props.variant === "semi-doughnut"
+        isSemiDoughnut.value
             ? defaultSemiDoughnutOptions
             : defaultDoughnutOptions;
 

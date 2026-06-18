@@ -11,8 +11,7 @@
 
                 <!-- BASIC -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 multiple 아코디언 예시입니다.">
-                    <AppAccordion :items="basicItems" mode="multiple" initial-open="none"
-                        v-model:open-ids="basicOpenIds" />
+                    <AppAccordion :items="basicItems" mode="multiple" initial-open="none" />
                 </PageDemoAccordionSection>
 
                 <!-- OPEN MODE -->
@@ -22,15 +21,13 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">single</div>
 
-                            <AppAccordion :items="modeItems" mode="single" initial-open="first"
-                                v-model:open-ids="singleModeOpenIds" />
+                            <AppAccordion :items="modeItems" mode="single" initial-open="first" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">multiple</div>
 
-                            <AppAccordion :items="modeItems" mode="multiple" initial-open="none"
-                                v-model:open-ids="multipleModeOpenIds" />
+                            <AppAccordion :items="modeItems" mode="multiple" initial-open="none" />
                         </div>
                     </div>
                 </PageDemoAccordionSection>
@@ -68,25 +65,19 @@
 
                 <!-- DISABLED -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 항목은 열고 닫을 수 없습니다.">
-                    <AppAccordion :items="disabledItems" mode="multiple" initial-open="first"
-                        v-model:open-ids="disabledOpenIds" />
+                    <AppAccordion :items="disabledItems" mode="multiple" initial-open="first" />
                 </PageDemoAccordionSection>
 
                 <!-- COMPONENT RENDER -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
                     desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
-                    <AppAccordion :items="rendererItems" mode="multiple" initial-open="first"
-                        v-model:open-ids="rendererOpenIds" />
+                    <AppAccordion :items="rendererItems" mode="multiple" initial-open="first" />
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -94,9 +85,6 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 아코디언 데모 화면의 열림 상태, 렌더러 예제, 현재 값을 관리하는 페이지 컴포넌트입니다.
- */
 import { h, resolveComponent } from "vue";
 import type { AppAccordionItem } from "~/components/AppAccordion.vue";
 import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
@@ -104,14 +92,6 @@ import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageD
 /* stores/composables */
 const { title, description } = useDemoI18n("accordion");
 
-/* ref/reactive state */
-const basicOpenIds = ref<Array<string | number>>([]);
-const singleModeOpenIds = ref<Array<string | number>>([]);
-const multipleModeOpenIds = ref<Array<string | number>>([]);
-const disabledOpenIds = ref<Array<string | number>>([]);
-const rendererOpenIds = ref<Array<string | number>>([]);
-
-/* 예제 데이터 */
 const basicItems: AppAccordionItem[] = [
     {
         id: "basic-1",
@@ -258,25 +238,4 @@ const rendererItems: AppAccordionItem[] = [
     },
 ];
 
-/* computed */
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basicOpenIds: basicOpenIds.value,
-            singleModeOpenIds: singleModeOpenIds.value,
-            multipleModeOpenIds: multipleModeOpenIds.value,
-            disabledOpenIds: disabledOpenIds.value,
-            rendererOpenIds: rendererOpenIds.value,
-            propsSummary: {
-                mode: ["single", "multiple"],
-                initialOpen: ["none", "first", "all"],
-                defaultOpenIds: true,
-                openIds: true,
-            },
-        },
-        null,
-        2,
-    ),
-);
-</script>
+/* computed */</script>

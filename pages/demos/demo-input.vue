@@ -87,13 +87,9 @@
             </main>
 
             <!-- STATE PANEL -->
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -130,26 +126,4 @@ const stateSuccess = ref("");
 
 const readonlyValue = ref("읽기 전용 값");
 const disabledValue = ref("비활성 값");
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basic: basic.value,
-            email: email.value,
-            search: search.value,
-            icon: icon.value,
-            url: url.value,
-            sizes,
-            shape,
-            stateError: stateError.value,
-            stateWarning: stateWarning.value,
-            stateSuccess: stateSuccess.value,
-            readonlyValue: readonlyValue.value,
-            disabledValue: disabledValue.value,
-        },
-        null,
-        2,
-    ),
-);
 </script>

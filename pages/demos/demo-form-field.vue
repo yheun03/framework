@@ -102,19 +102,15 @@
 
                         <div class="page-demo-row">
                             <AppButton type="submit">저장</AppButton>
-                            <AppButton type="button" variant="outline" @click="handleFormReset">초기화</AppButton>
+                            <AppButton variant="outline" @click="handleFormReset">초기화</AppButton>
                         </div>
                     </form>
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -153,32 +149,4 @@ function handleFormReset() {
     form.notifySms = false;
     form.memo = "";
 }
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            form: { ...form },
-            name: name.value,
-            email: email.value,
-            nickname: nickname.value,
-            password: password.value,
-            department: department.value,
-            customLabelValue: customLabelValue.value,
-            passwordError: password.value && password.value.length < 8 ? "비밀번호는 8자 이상 입력해주세요." : "",
-            propsSummary: {
-                label: true,
-                required: true,
-                disabled: true,
-                description: true,
-                hint: true,
-                error: ["string", "boolean", "null"],
-                optionalText: true,
-                slots: ["default", "label"],
-            },
-        },
-        null,
-        2,
-    ),
-);
 </script>

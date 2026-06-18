@@ -11,28 +11,34 @@
 
                 <!-- BASIC -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 line 탭 예시입니다.">
-                    <AppTabs :items="basicItems" variant="line" v-model:active-id="basicActiveId" />
+                    <AppTabs :items="basicItems" variant="line" />
                 </PageDemoAccordionSection>
 
                 <!-- VARIANT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Variant" desc="line / box / pill 스타일을 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Variant" desc="line / box / pill / vertical 스타일을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>
 
-                            <AppTabs :items="variantItems" variant="line" v-model:active-id="lineActiveId" />
+                            <AppTabs :items="variantItems" variant="line" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "box"</div>
 
-                            <AppTabs :items="variantItems" variant="box" v-model:active-id="boxActiveId" />
+                            <AppTabs :items="variantItems" variant="box" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "pill"</div>
 
-                            <AppTabs :items="variantItems" variant="pill" v-model:active-id="pillActiveId" />
+                            <AppTabs :items="variantItems" variant="pill" />
+                        </div>
+
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">variant = "vertical"</div>
+
+                            <AppTabs :items="verticalItems" variant="vertical" />
                         </div>
                     </div>
                 </PageDemoAccordionSection>
@@ -45,7 +51,7 @@
 
                 <!-- DISABLED -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 탭은 선택할 수 없습니다.">
-                    <AppTabs :items="disabledItems" variant="box" v-model:active-id="disabledActiveId" />
+                    <AppTabs :items="disabledItems" variant="box" />
                 </PageDemoAccordionSection>
 
                 <!-- SIZE -->
@@ -71,16 +77,10 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- VERTICAL -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Vertical" desc="orientation을 vertical로 지정한 좌측 탭 예시입니다.">
-                    <AppTabs :items="verticalItems" orientation="vertical" variant="line"
-                        v-model:active-id="verticalActiveId" />
-                </PageDemoAccordionSection>
-
                 <!-- COMPONENT RENDER -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
                     desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
-                    <AppTabs :items="rendererItems" variant="line" v-model:active-id="rendererActiveId">
+                    <AppTabs :items="rendererItems" variant="line">
                         <template #custom="{ item }">
                             <div class="page-demo-stack">
                                 <p>{{ item.title }} 슬롯 콘텐츠입니다.</p>
@@ -91,13 +91,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -105,22 +101,11 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 탭 데모 화면의 탭 항목, 렌더러 예제, 현재 값을 관리하는 페이지 컴포넌트입니다.
- */
 import { h, resolveComponent } from "vue";
 import type { AppTabItem } from "~/components/AppTabs.vue";
 import PageDemoTabsExternalRenderer from "~/pages/demos/Page_demo/renderer/PageDemoTabsExternalRenderer.vue";
 
 const { title, description } = useDemoI18n("tabs");
-
-const basicActiveId = ref<string | number | null>(null);
-const lineActiveId = ref<string | number | null>(null);
-const boxActiveId = ref<string | number | null>(null);
-const pillActiveId = ref<string | number | null>(null);
-const disabledActiveId = ref<string | number | null>(null);
-const verticalActiveId = ref<string | number | null>(null);
-const rendererActiveId = ref<string | number | null>(null);
 
 const basicItems: AppTabItem[] = [
     {
@@ -294,30 +279,4 @@ const rendererItems: AppTabItem[] = [
         slot: "custom",
     },
 ];
-
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basicActiveId: basicActiveId.value,
-            lineActiveId: lineActiveId.value,
-            boxActiveId: boxActiveId.value,
-            pillActiveId: pillActiveId.value,
-            disabledActiveId: disabledActiveId.value,
-            verticalActiveId: verticalActiveId.value,
-            rendererActiveId: rendererActiveId.value,
-            propsSummary: {
-                activeId: true,
-                defaultActiveId: true,
-                initialActive: ["first", "none"],
-                variant: ["line", "box", "pill"],
-                size: ["sm", "md", "lg"],
-                orientation: ["horizontal", "vertical"],
-                stretch: true,
-            },
-        },
-        null,
-        2,
-    ),
-);
 </script>

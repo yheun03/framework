@@ -257,13 +257,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -373,27 +369,6 @@ const disabledChip = reactive({
     fill: "option-a" as ChoiceValue,
 });
 
-/* computed */
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            guide: { ...guide },
-            checkbox: { ...checkbox },
-            radio: { ...radio },
-            radioDisabled: { ...radioDisabled },
-            radioDisabledChecked: { ...radioDisabledChecked },
-            chipFilter: { ...chipFilter },
-            chipRadio: { ...chipRadio },
-            toggle: { ...toggle },
-            state: { ...state },
-            disabled: { ...disabled },
-            disabledChip: { ...disabledChip },
-        },
-        null,
-        2,
-    ),
-);
-</script>
+/* computed */</script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->

@@ -10,12 +10,10 @@
                     </p>
                 </header>
 
-                <!-- BASIC -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
                     desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
                     <div class="page-demo-row">
-                        <AppUploadImage v-model="basic.imageUrl" @change="handleBasicChange" @error="handleError"
-                            @remove="handleRemove" />
+                        <AppUploadImage v-model="basic.imageUrl" />
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">
@@ -35,11 +33,9 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- STATE -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
                     <div class="page-demo-row">
-                        <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" @change="handleStateChange"
-                            @error="handleError" />
+                        <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" />
 
                         <div class="page-demo-stack">
                             <div class="page-demo-actions">
@@ -57,18 +53,15 @@
                             </div>
 
                             <div class="page-demo-hint">
-                                <strong>disabled</strong> 속성으로 선택/드롭 동작을 막을 수
-                                있습니다.
+                                <strong>disabled</strong> 속성으로 선택/드롭 동작을 막을 수 있습니다.
                             </div>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- MULTIPLE -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                     <div class="page-demo-row">
-                        <AppUploadImage v-model="multiple.images" multiple :max-count="3" @change="handleMultipleChange"
-                            @error="handleError" @remove="handleRemove" />
+                        <AppUploadImage v-model="multiple.images" multiple :max-count="3" />
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">
@@ -89,58 +82,48 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- READ MODE -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Read Mode"
                     desc='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'>
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="readMode.dataUrlImage" read-mode="dataUrl"
-                                @change="handleDataUrlChange" @error="handleError" />
+                            <AppUploadImage v-model="readMode.dataUrlImage" read-mode="dataUrl" />
 
                             <div class="page-demo-hint">
-                                <strong>dataUrl</strong>은 문자열 데이터로 읽어 바로 바인딩할 때
-                                사용합니다.
+                                <strong>dataUrl</strong>은 문자열 데이터로 읽어 바로 바인딩할 때 사용합니다.
                             </div>
                         </div>
 
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="readMode.objectUrlImage" read-mode="objectUrl"
-                                @change="handleObjectUrlChange" @error="handleError" />
+                            <AppUploadImage v-model="readMode.objectUrlImage" read-mode="objectUrl" />
 
                             <div class="page-demo-hint">
-                                <strong>objectUrl</strong>은 브라우저 URL을 만들어 미리보기할 때
-                                유리합니다.
+                                <strong>objectUrl</strong>은 브라우저 URL을 만들어 미리보기할 때 유리합니다.
                             </div>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- DRAG & DROP -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Drag &amp; Drop"
                     desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="drop.enabled" :allow-drop="true" @change="handleDropEnabledChange"
-                                @error="handleError" />
+                            <AppUploadImage v-model="drop.enabled" :allow-drop="true" />
 
                             <div class="page-demo-hint">드롭 가능 상태입니다.</div>
                         </div>
 
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="drop.disabled" :allow-drop="false"
-                                @change="handleDropDisabledChange" @error="handleError" />
+                            <AppUploadImage v-model="drop.disabled" :allow-drop="false" />
 
                             <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- FILE RULES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp"
-                                @change="handleRulesImageChange" @error="handleError" />
+                            <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp" />
 
                             <div class="page-demo-hint">
                                 <strong>accept</strong> 속성으로 허용 파일 형식을 제한합니다.
@@ -148,8 +131,7 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="rules.maxSizeImage" :max-size-bytes="rules.maxSizeBytes"
-                                @change="handleRulesSizeChange" @error="handleError" />
+                            <AppUploadImage v-model="rules.maxSizeImage" :max-size-bytes="rules.maxSizeBytes" />
 
                             <div class="page-demo-hint">
                                 <strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.
@@ -159,23 +141,9 @@
                 </PageDemoAccordionSection>
             </main>
 
-            <aside class="page-demo-aside" aria-label="현재 값 패널">
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Actions">
-                        <div class="page-demo-actions">
-                            <AppButton variant="fill" @click="handleAllSamplesSet">
-                                샘플 이미지 일괄 적용
-                            </AppButton>
-
-                            <AppTextButton @click="handleReset"> 초기화 </AppTextButton>
-                        </div>
-                    </PageDemoAccordionSection>
-
-                    <PageDemoAccordionSection class="page-demo-accordion" title="Current Value">
-                        <pre class="page-demo-output">{{ output }}</pre>
-                    </PageDemoAccordionSection>
                 </div>
             </aside>
         </div>
@@ -183,18 +151,7 @@
 </template>
 
 <script setup lang="ts">
-/**
- * 이미지 업로드 데모 화면의 샘플 이미지, 상태, 이벤트 출력을 관리하는 페이지 컴포넌트입니다.
- */
-/* stores/composables */
 const { title } = useDemoI18n("uploadImage");
-
-type FileMeta = {
-    name: string;
-    type: string;
-    size: number;
-    lastModified: number;
-};
 
 type ImageFieldItem = {
     id: string;
@@ -207,56 +164,34 @@ type ImageFieldItem = {
     source?: "sample" | "upload";
 };
 
-/* ref/reactive state */
 const basic = reactive({
     imageUrl: null as ImageFieldItem | null,
-    file: null as FileMeta | null,
 });
 
 const state = reactive({
     imageUrl: null as ImageFieldItem | null,
     disabled: false,
-    file: null as FileMeta | null,
 });
 
 const multiple = reactive({
     images: [] as ImageFieldItem[],
-    files: [] as FileMeta[],
 });
 
 const readMode = reactive({
     dataUrlImage: null as ImageFieldItem | null,
     objectUrlImage: null as ImageFieldItem | null,
-    dataUrlFile: null as FileMeta | null,
-    objectUrlFile: null as FileMeta | null,
 });
 
 const drop = reactive({
     enabled: null as ImageFieldItem | null,
     disabled: null as ImageFieldItem | null,
-    enabledFile: null as FileMeta | null,
-    disabledFile: null as FileMeta | null,
 });
 
 const rules = reactive({
     imageOnly: null as ImageFieldItem | null,
     maxSizeImage: null as ImageFieldItem | null,
     maxSizeBytes: 2 * 1024 * 1024,
-    imageOnlyFile: null as FileMeta | null,
-    maxSizeFile: null as FileMeta | null,
 });
-
-const lastError = ref<{ message: string; detail?: unknown } | null>(null);
-const removedCount = ref(0);
-
-function toMeta(file: File): FileMeta {
-    return {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        lastModified: file.lastModified,
-    };
-}
 
 function toSampleImage(url: string, name = "sample-image") {
     return {
@@ -268,83 +203,6 @@ function toSampleImage(url: string, name = "sample-image") {
         alt: name,
         source: "sample" as const,
     } satisfies ImageFieldItem;
-}
-
-function updateFileMeta(
-    item: ImageFieldItem | ImageFieldItem[] | null,
-    assign: (meta: FileMeta | null) => void,
-) {
-    const nextItem = Array.isArray(item) ? (item[0] ?? null) : item;
-    assign(nextItem?.file ? toMeta(nextItem.file) : null);
-    lastError.value = null;
-}
-
-function updateFileMetaList(
-    item: ImageFieldItem | ImageFieldItem[] | null,
-    assign: (meta: FileMeta[]) => void,
-) {
-    const nextItems = Array.isArray(item) ? item : item ? [item] : [];
-    assign(
-        nextItems
-            .filter((uploadItem) => Boolean(uploadItem.file))
-            .map((uploadItem) => toMeta(uploadItem.file as File)),
-    );
-    lastError.value = null;
-}
-
-/* event handlers */
-function handleBasicChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        basic.file = meta;
-    });
-}
-
-function handleStateChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        state.file = meta;
-    });
-}
-
-function handleMultipleChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMetaList(item, (meta) => {
-        multiple.files = meta;
-    });
-}
-
-function handleDataUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        readMode.dataUrlFile = meta;
-    });
-}
-
-function handleObjectUrlChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        readMode.objectUrlFile = meta;
-    });
-}
-
-function handleDropEnabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        drop.enabledFile = meta;
-    });
-}
-
-function handleDropDisabledChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        drop.disabledFile = meta;
-    });
-}
-
-function handleRulesImageChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        rules.imageOnlyFile = meta;
-    });
-}
-
-function handleRulesSizeChange(item: ImageFieldItem | ImageFieldItem[] | null) {
-    updateFileMeta(item, (meta) => {
-        rules.maxSizeFile = meta;
-    });
 }
 
 function handleBasicSampleSet() {
@@ -369,42 +227,6 @@ function handleMultipleSamplesSet() {
     ];
 }
 
-function handleAllSamplesSet() {
-    basic.imageUrl = toSampleImage(
-        "https://picsum.photos/240?random=11",
-        "basic-sample",
-    );
-    state.imageUrl = toSampleImage(
-        "https://picsum.photos/240?random=12",
-        "state-sample",
-    );
-    multiple.images = [
-        toSampleImage("https://picsum.photos/240?random=21", "multiple-sample-1"),
-        toSampleImage("https://picsum.photos/240?random=22", "multiple-sample-2"),
-        toSampleImage("https://picsum.photos/240?random=23", "multiple-sample-3"),
-    ];
-    readMode.dataUrlImage = toSampleImage(
-        "https://picsum.photos/240?random=13",
-        "dataurl-sample",
-    );
-    readMode.objectUrlImage = toSampleImage(
-        "https://picsum.photos/240?random=14",
-        "objecturl-sample",
-    );
-    drop.enabled = toSampleImage(
-        "https://picsum.photos/240?random=15",
-        "drop-enabled-sample",
-    );
-    rules.imageOnly = toSampleImage(
-        "https://picsum.photos/240?random=16",
-        "rules-image-sample",
-    );
-    rules.maxSizeImage = toSampleImage(
-        "https://picsum.photos/240?random=17",
-        "rules-size-sample",
-    );
-}
-
 function handleBasicClear() {
     basic.imageUrl = null;
 }
@@ -415,95 +237,11 @@ function handleStateClear() {
 
 function handleMultipleClear() {
     multiple.images = [];
-    multiple.files = [];
 }
 
 function handleDisabledToggle() {
     state.disabled = !state.disabled;
 }
-
-function handleError(payload: { message: string; detail?: unknown }) {
-    lastError.value = payload;
-}
-
-function handleRemove() {
-    removedCount.value += 1;
-}
-
-function handleReset() {
-    basic.imageUrl = null;
-    basic.file = null;
-
-    state.imageUrl = null;
-    state.disabled = false;
-    state.file = null;
-
-    multiple.images = [];
-    multiple.files = [];
-
-    readMode.dataUrlImage = null;
-    readMode.objectUrlImage = null;
-    readMode.dataUrlFile = null;
-    readMode.objectUrlFile = null;
-
-    drop.enabled = null;
-    drop.disabled = null;
-    drop.enabledFile = null;
-    drop.disabledFile = null;
-
-    rules.imageOnly = null;
-    rules.maxSizeImage = null;
-    rules.imageOnlyFile = null;
-    rules.maxSizeFile = null;
-
-    lastError.value = null;
-    removedCount.value = 0;
-}
-
-/* computed */
-// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
-const output = computed(() =>
-    JSON.stringify(
-        {
-            basic: {
-                imageUrl: basic.imageUrl ? "(set)" : "",
-                file: basic.file,
-            },
-            state: {
-                imageUrl: state.imageUrl ? "(set)" : "",
-                disabled: state.disabled,
-                file: state.file,
-            },
-            multiple: {
-                images: multiple.images.length,
-                files: multiple.files,
-            },
-            readMode: {
-                dataUrlImage: readMode.dataUrlImage ? "(set)" : "",
-                objectUrlImage: readMode.objectUrlImage ? "(set)" : "",
-                dataUrlFile: readMode.dataUrlFile,
-                objectUrlFile: readMode.objectUrlFile,
-            },
-            drop: {
-                enabled: drop.enabled ? "(set)" : "",
-                disabled: drop.disabled ? "(set)" : "",
-                enabledFile: drop.enabledFile,
-                disabledFile: drop.disabledFile,
-            },
-            rules: {
-                imageOnly: rules.imageOnly ? "(set)" : "",
-                maxSizeImage: rules.maxSizeImage ? "(set)" : "",
-                maxSizeBytes: rules.maxSizeBytes,
-                imageOnlyFile: rules.imageOnlyFile,
-                maxSizeFile: rules.maxSizeFile,
-            },
-            lastError: lastError.value,
-            removedCount: removedCount.value,
-        },
-        null,
-        2,
-    ),
-);
 </script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
