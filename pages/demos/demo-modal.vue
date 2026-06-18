@@ -148,6 +148,7 @@ const { openImageViewer, openPdfViewer } = useModalViewer();
 const lastAction = ref("-");
 
 /* computed */
+// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
 const output = computed(() =>
     JSON.stringify(
         {
