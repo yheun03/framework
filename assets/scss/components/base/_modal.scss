@@ -116,20 +116,97 @@
 }
 
 .app-image-viewer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 12px;
     min-height: 320px;
     max-height: calc(80vh - 32px);
-    overflow: auto;
+    overflow: hidden;
     background: rgba($gray-900, 0.04);
     border-radius: 12px;
+
+    &--gallery {
+        grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: rgba($gray-0, 0.78);
+        border: 1px solid rgba($gray-900, 0.08);
+    }
+
+    &__count {
+        @include font(b4, sb);
+        color: $gray-700;
+    }
+
+    &__nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    &__stage {
+        min-height: 0;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     &__image {
         display: block;
         max-width: 100%;
         max-height: calc(80vh - 48px);
         object-fit: contain;
+    }
+
+    &--gallery &__image {
+        max-height: 100%;
+    }
+
+    &__thumbs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 10px 2px 2px;
+    }
+
+    &__thumb {
+        flex: 0 0 auto;
+        width: 76px;
+        height: 56px;
+        padding: 2px;
+        border: 1px solid rgba($gray-900, 0.12);
+        border-radius: 8px;
+        background: rgba($gray-0, 0.78);
+        cursor: pointer;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s,
+            opacity 0.15s;
+
+        &:hover {
+            border-color: rgba($primary-500, 0.54);
+        }
+
+        &.is-active {
+            border-color: $primary-500;
+            box-shadow: 0 0 0 2px rgba($primary-500, 0.16);
+        }
+    }
+
+    &__thumb-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 6px;
+        object-fit: cover;
     }
 }
 
