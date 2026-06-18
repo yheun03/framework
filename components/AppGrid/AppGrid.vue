@@ -9,6 +9,7 @@ defineOptions({
 });
 import { AgGridVue } from "ag-grid-vue3";
 import type {
+    CellClassParams,
     ColDef,
     GridApi,
     GridOptions,
@@ -17,9 +18,13 @@ import type {
     BodyScrollEvent,
 } from "ag-grid-community";
 import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
+import type { AppGridCellAlign, AppGridCellVerticalAlign, AppGridColDef } from "~/types/appGrid";
+import AppGridCellSelectionChoice from "~/components/AppGrid/Cell/AppGridCellSelectionChoice.vue";
+import AppGridHeaderSelectionChoice from "~/components/AppGrid/Header/AppGridHeaderSelectionChoice.vue";
 
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
 const { register, unregister } = useAppGridRegistry();
+const APP_CHOICE_SELECTION_COL_ID = "appChoiceSelection";
 
 const attrs = useAttrs();
 const gridApi = ref<GridApi | null>(null);
@@ -75,17 +80,77 @@ onBeforeUnmount(() => {
     }
 });
 
-function normalizeColumnDefs(columnDefs?: ColDef[]) {
+function getAlignClass(align?: AppGridCellAlign) {
+    if (!align) return "";
+    return `app-grid-cell--align-${align}`;
+}
+
+function getVerticalAlignClass(align?: AppGridCellVerticalAlign) {
+    if (!align) return "";
+    return `app-grid-cell--valign-${align}`;
+}
+
+function toCellClassList(cellClass: unknown): string[] {
+    if (!cellClass) return [];
+    if (Array.isArray(cellClass)) {
+        return cellClass.filter((className): className is string =>
+            typeof className === "string" && Boolean(className),
+        );
+    }
+    if (typeof cellClass === "string") return [cellClass];
+    return [];
+}
+
+function mergeCellClass(col: AppGridColDef) {
+    const alignClasses = [
+        getAlignClass(col.cellAlign),
+        getVerticalAlignClass(col.cellVerticalAlign),
+    ].filter(Boolean);
+
+    if (!alignClasses.length) return col.cellClass;
+
+    if (typeof col.cellClass === "function") {
+        return (params: CellClassParams) => [
+            ...toCellClassList(col.cellClass?.(params)),
+            ...alignClasses,
+        ];
+    }
+
+    return [...toCellClassList(col.cellClass), ...alignClasses];
+}
+
+function normalizeColumnDefs(columnDefs?: AppGridColDef[]) {
     if (!Array.isArray(columnDefs)) return columnDefs;
 
     return columnDefs.map((col) => {
-        if (!col.cellRenderer || col.cellDataType !== undefined) return col;
+        const usesAgCheckbox =
+            Boolean(col.checkboxSelection) || Boolean(col.headerCheckboxSelection);
+        const normalizedCol = {
+            ...col,
+            ...(usesAgCheckbox
+                ? {
+                    checkboxSelection: false,
+                    headerCheckboxSelection: false,
+                    headerCheckboxSelectionFilteredOnly: false,
+                    headerCheckboxSelectionCurrentPageOnly: false,
+                    headerComponent:
+                        col.headerCheckboxSelection ? AppGridHeaderSelectionChoice : col.headerComponent,
+                    cellRenderer:
+                        col.checkboxSelection ? AppGridCellSelectionChoice : col.cellRenderer,
+                    sortable: false,
+                    filter: false,
+                }
+                : {}),
+            cellClass: mergeCellClass(col),
+        };
+
+        if (!normalizedCol.cellRenderer || normalizedCol.cellDataType !== undefined) return normalizedCol;
 
         return {
-            ...col,
+            ...normalizedCol,
             cellDataType: false,
             valueFormatter:
-                col.valueFormatter ??
+                normalizedCol.valueFormatter ??
                 ((params) => {
                     if (params.value == null) return "";
                     if (Array.isArray(params.value)) return params.value.join(", ");
@@ -97,10 +162,57 @@ function normalizeColumnDefs(columnDefs?: ColDef[]) {
     });
 }
 
-function normalizeDefaultColDef(defaultColDef?: ColDef) {
+function getSelectionColumn(selectionColumnDef?: GridOptions["selectionColumnDef"]): ColDef {
+    return {
+        colId: APP_CHOICE_SELECTION_COL_ID,
+        width: 56,
+        minWidth: 56,
+        maxWidth: 56,
+        sortable: false,
+        filter: false,
+        resizable: false,
+        suppressMovable: true,
+        ...(selectionColumnDef ?? {}),
+        headerComponent:
+            selectionColumnDef?.headerComponent ?? AppGridHeaderSelectionChoice,
+        cellRenderer:
+            selectionColumnDef?.cellRenderer ?? AppGridCellSelectionChoice,
+    };
+}
+
+function hasSelectionColumn(columnDefs?: AppGridColDef[]) {
+    return columnDefs?.some((col) => col.colId === APP_CHOICE_SELECTION_COL_ID);
+}
+
+function normalizeRowSelection(rowSelection?: GridOptions["rowSelection"]) {
+    if (!rowSelection || typeof rowSelection === "string") return rowSelection;
+
+    return {
+        ...rowSelection,
+        checkboxes: false,
+        headerCheckbox: false,
+        enableClickSelection: rowSelection.enableClickSelection ?? true,
+    };
+}
+
+function toLegacyRowSelection(rowSelection?: GridOptions["rowSelection"]) {
+    if (!rowSelection || typeof rowSelection === "string") return rowSelection;
+    return rowSelection.mode === "singleRow" ? "single" : "multiple";
+}
+
+function shouldAddSelectionColumn(rowSelection?: GridOptions["rowSelection"]) {
+    return Boolean(
+        rowSelection &&
+        typeof rowSelection === "object" &&
+        (rowSelection.checkboxes || rowSelection.headerCheckbox),
+    );
+}
+
+function normalizeDefaultColDef(defaultColDef?: AppGridColDef) {
     return {
         cellDataType: false,
         ...defaultColDef,
+        cellClass: defaultColDef ? mergeCellClass(defaultColDef) : undefined,
     };
 }
 
@@ -138,20 +250,26 @@ const gridAttrs = computed((): GridOptions => {
         "get-row-height": getRowHeightKebab,
         rowSelection,
         "row-selection": rowSelectionKebab,
+        rowselection: rowSelectionLower,
+        selectionColumnDef,
+        "selection-column-def": selectionColumnDefKebab,
+        selectioncolumndef: selectionColumnDefLower,
         columnDefs,
         "column-defs": columnDefsKebab,
+        columndefs: columnDefsLower,
         defaultColDef,
         "default-col-def": defaultColDefKebab,
+        defaultcoldef: defaultColDefLower,
         onFilterChanged,
         ...rest
     } = a;
 
     const id = (gridId ?? gridIdKebab) as string | undefined;
     const normalizedColumnDefs = normalizeColumnDefs(
-        (columnDefs ?? columnDefsKebab) as ColDef[] | undefined,
+        (columnDefs ?? columnDefsKebab ?? columnDefsLower) as AppGridColDef[] | undefined,
     );
     const normalizedDefaultColDef = normalizeDefaultColDef(
-        (defaultColDef ?? defaultColDefKebab) as ColDef | undefined,
+        (defaultColDef ?? defaultColDefKebab ?? defaultColDefLower) as AppGridColDef | undefined,
     );
     const resolvedDomLayout = (domLayout ??
         domLayoutKebab) as GridOptions["domLayout"];
@@ -159,7 +277,27 @@ const gridAttrs = computed((): GridOptions => {
     const resolvedHeaderHeight = headerHeight ?? headerHeightKebab;
     const resolvedRowHeight = rowHeight ?? rowHeightKebab;
     const resolvedRowSelection = (rowSelection ??
-        rowSelectionKebab) as GridOptions["rowSelection"];
+        rowSelectionKebab ??
+        rowSelectionLower) as GridOptions["rowSelection"];
+    const resolvedSelectionColumnDef = (selectionColumnDef ??
+        selectionColumnDefKebab ??
+        selectionColumnDefLower) as GridOptions["selectionColumnDef"];
+    const shouldUseAppChoiceSelectionColumn =
+        shouldAddSelectionColumn(resolvedRowSelection) &&
+        !hasSelectionColumn(normalizedColumnDefs);
+    const resolvedColumnDefs = shouldUseAppChoiceSelectionColumn
+        ? [
+            getSelectionColumn(resolvedSelectionColumnDef) as AppGridColDef,
+            ...(normalizedColumnDefs ?? []),
+        ]
+        : normalizedColumnDefs;
+    const finalRowSelection = shouldUseAppChoiceSelectionColumn
+        ? toLegacyRowSelection(resolvedRowSelection)
+        : normalizeRowSelection(resolvedRowSelection);
+    const shouldEnableMultiSelectWithClick =
+        shouldUseAppChoiceSelectionColumn &&
+        typeof resolvedRowSelection === "object" &&
+        resolvedRowSelection.mode === "multiRow";
 
     return {
         ...rest,
@@ -173,9 +311,13 @@ const gridAttrs = computed((): GridOptions => {
         headerHeight: resolveNumberAttr(resolvedHeaderHeight, props.headerHeight),
         rowHeight: resolveNumberAttr(resolvedRowHeight, props.rowHeight),
         getRowHeight: resolvedGetRowHeight as GridOptions["getRowHeight"],
-        ...(resolvedRowSelection ? { rowSelection: resolvedRowSelection } : {}),
+        ...(finalRowSelection ? { rowSelection: finalRowSelection } : {}),
+        ...(shouldEnableMultiSelectWithClick ? { rowMultiSelectWithClick: true } : {}),
+        ...(resolvedSelectionColumnDef && !shouldUseAppChoiceSelectionColumn
+            ? { selectionColumnDef: resolvedSelectionColumnDef }
+            : {}),
         defaultColDef: normalizedDefaultColDef,
-        ...(normalizedColumnDefs ? { columnDefs: normalizedColumnDefs } : {}),
+        ...(resolvedColumnDefs ? { columnDefs: resolvedColumnDefs } : {}),
 
         onFilterChanged(params: FilterChangedEvent) {
             const api = params.api;

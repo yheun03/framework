@@ -37,8 +37,7 @@
                         </template>
 
                         <template v-else-if="row.layout === 'label-full'">
-                            <template v-for="(cell, cellIndex) in visibleCells(row)"
-                                :key="getCellKey(cell, cellIndex)">
+                            <template v-for="(cell, cellIndex) in visibleCells(row)" :key="getCellKey(cell, cellIndex)">
                                 <tr class="app-table__row">
                                     <th class="app-table__th app-table__th--full" :class="cell.labelClass"
                                         :colspan="tableColspan" scope="row">

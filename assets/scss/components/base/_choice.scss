@@ -185,7 +185,8 @@
                 background: $bg-white;
             }
 
-            .app-choice__input:checked+.app-choice__visual {
+            .app-choice__input:checked+.app-choice__visual,
+            &.is-indeterminate .app-choice__visual {
                 border-color: $bg-black;
                 background: $bg-black;
             }
@@ -216,7 +217,8 @@
                 background: $bg-white;
             }
 
-            .app-choice__input:checked+.app-choice__visual {
+            .app-choice__input:checked+.app-choice__visual,
+            &.is-indeterminate .app-choice__visual {
                 border-color: $bg-black;
                 background: $bg-black;
                 box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);

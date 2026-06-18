@@ -18,6 +18,14 @@
                             :row-selection="multiRowSelection" animate-rows height="320px" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
+                <PageDemoAccordionSection class="page-demo-accordion" title="셀 클릭 데모">
+                    <ClientOnly>
+                        <AppGrid grid-id="grid-cell-click" class="page-demo-grid" :row-data="rows1"
+                            :column-defs="cellClickColumns" :default-col-def="defaultColDef"
+                            :row-selection="appChoiceRowSelection" auto-height animate-rows @cell-clicked="handleCellClicked" />
+                    </ClientOnly>
+                    <p class="page-demo__desc">{{ clickedCellText }}</p>
+                </PageDemoAccordionSection>
                 <!-- GRID 2 -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="주문 목록">
                     <AppGridToolbar target="grid2">
@@ -25,9 +33,9 @@
                         <AppGridDownload />
                     </AppGridToolbar>
                     <ClientOnly>
-                        <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="columns2"
+                        <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="orderColumns"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight"
-                            :row-selection="multiRowSelection" animate-rows height="320px" />
+                            :row-selection="appChoiceRowSelection" animate-rows height="320px" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <!-- GRID 3 -->
@@ -80,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ColDef } from "ag-grid-community";
+import type { CellClickedEvent, ColDef } from "ag-grid-community";
 
 import type { AppGridSearchField, DateRangeValue } from "~/types/appGrid";
 
@@ -91,8 +99,11 @@ import AppGridCellTextarea from "~/components/AppGrid/Cell/AppGridCellTextarea.v
 import AppGridCellDatePicker from "~/components/AppGrid/Cell/AppGridCellDatePicker.vue";
 import AppGridCellImage from "~/components/AppGrid/Cell/AppGridCellImage.vue";
 import AppGridCellFile from "~/components/AppGrid/Cell/AppGridCellFile.vue";
+import AppGridCellSelectionChoice from "~/components/AppGrid/Cell/AppGridCellSelectionChoice.vue";
+import AppGridHeaderSelectionChoice from "~/components/AppGrid/Header/AppGridHeaderSelectionChoice.vue";
 
 const { title, description } = useDemoI18n("grid");
+const clickedCellText = ref("셀을 클릭하면 선택한 행/컬럼/값이 표시됩니다.");
 
 /* 행 높이 동적 처리 */
 
@@ -277,6 +288,22 @@ const multiRowSelection = {
     headerCheckbox: true,
 } as const;
 
+const appChoiceRowSelection = {
+    mode: "multiRow",
+    checkboxes: false,
+    headerCheckbox: false,
+    enableClickSelection: false,
+} as const;
+
+function handleCellClicked(event: CellClickedEvent) {
+    const rowName = event.data?.name ?? "-";
+    const colName = event.colDef.headerName ?? event.colDef.field ?? "-";
+    const value = event.value ?? "-";
+
+    event.node.setSelected(true);
+    clickedCellText.value = `선택 셀: ${rowName} / ${colName} / ${value}`;
+}
+
 const listValueFormatter = (params: any) =>
     Array.isArray(params.value) ? params.value.join(", ") : "";
 
@@ -337,6 +364,22 @@ const columns1: ColDef[] = [
     },
 ];
 
+const cellClickColumns: ColDef[] = [
+    {
+        colId: "appChoiceSelection",
+        width: 56,
+        minWidth: 56,
+        maxWidth: 56,
+        sortable: false,
+        filter: false,
+        resizable: false,
+        suppressMovable: true,
+        headerComponent: AppGridHeaderSelectionChoice,
+        cellRenderer: AppGridCellSelectionChoice,
+    },
+    ...columns1,
+];
+
 /* GRID 2 column */
 
 const columns2: ColDef[] = [
@@ -375,6 +418,22 @@ const columns2: ColDef[] = [
         width: 120,
         filter: "agDateColumnFilter",
     },
+];
+
+const orderColumns: ColDef[] = [
+    {
+        colId: "appChoiceSelection",
+        width: 56,
+        minWidth: 56,
+        maxWidth: 56,
+        sortable: false,
+        filter: false,
+        resizable: false,
+        suppressMovable: true,
+        headerComponent: AppGridHeaderSelectionChoice,
+        cellRenderer: AppGridCellSelectionChoice,
+    },
+    ...columns2,
 ];
 
 /* GRID 3 column */

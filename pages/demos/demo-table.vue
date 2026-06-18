@@ -119,6 +119,9 @@ const layoutForm = ref<Record<string, unknown>>({
     stackedStatus: "사용",
     defaultName: "김철수",
     defaultDept: "영업팀",
+    rowspanOwner: "박영희",
+    rowspanTask: "입고",
+    rowspanMemo: "검수 완료",
     fullMemo: "th가 가로 100%로 노출되는 행입니다.",
 });
 
@@ -262,6 +265,30 @@ const layoutRows: AppTableRow[] = [
             {
                 label: "부서",
                 key: "defaultDept",
+                type: "input",
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: "담당자",
+                key: "rowspanOwner",
+                type: "input",
+                rowspan: 2,
+            },
+            {
+                label: "작업",
+                key: "rowspanTask",
+                type: "input",
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: "메모",
+                key: "rowspanMemo",
                 type: "input",
             },
         ],

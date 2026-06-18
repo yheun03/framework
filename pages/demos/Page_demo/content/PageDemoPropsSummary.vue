@@ -9,7 +9,8 @@
                         <span class="page-demo-prop-desc">{{ prop.description }}</span>
 
                         <div v-if="prop.values?.length" class="page-demo-prop-chip-list">
-                            <code v-for="value in prop.values" :key="`${prop.name}-${value}`" class="page-demo-prop-chip">
+                            <code v-for="value in prop.values" :key="`${prop.name}-${value}`"
+                                class="page-demo-prop-chip">
                                 {{ value }}
                             </code>
                         </div>
