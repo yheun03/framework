@@ -131,6 +131,7 @@ const stateSuccess = ref("");
 const readonlyValue = ref("읽기 전용 값");
 const disabledValue = ref("비활성 값");
 
+// 해당 데모 페이지의 클릭/입력 결과를 Current Value 영역에 노출합니다.
 const output = computed(() =>
     JSON.stringify(
         {
