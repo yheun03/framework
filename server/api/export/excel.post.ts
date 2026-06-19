@@ -4,7 +4,7 @@
  */
 import {buildGridExcelBuffer, resolveGridExcelFilename} from '~/utils/gridExcelWorkbook';
 import type {AppGridExportRequestBody} from '~/types/appGrid';
-import {assertGridExcelRequestBody, setExcelDownloadHeaders} from '~/server/utils/exportExcel';
+import {assertGridExcelRequestBody, setExcelDownloadHeaders} from '~/utils/exportExcel';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody<AppGridExportRequestBody>(event);
