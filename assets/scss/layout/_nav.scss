@@ -117,6 +117,7 @@
 
     &__sublist {
         padding-top: 2px;
+        overflow: hidden;
     }
 
     /* ----------------------------------------
@@ -278,10 +279,19 @@
         width: var(--layout-nav-toggle-size);
         height: var(--layout-nav-toggle-size);
 
+        i,
         svg {
-            transition: transform 0.16s ease-out;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            line-height: 1;
+            transform-origin: center;
+            transition: transform 0.18s ease-out;
         }
 
+        &.is-open i,
         &.is-open svg {
             transform: rotate(90deg);
         }
@@ -339,6 +349,24 @@
             color: rgba($gray-0, 0.76);
         }
     }
+}
+
+.layout-nav-sublist-enter-active,
+.layout-nav-sublist-leave-active {
+    max-height: 420px;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        max-height 0.22s ease,
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+.layout-nav-sublist-enter-from,
+.layout-nav-sublist-leave-to {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
 }
 
 /* =========================================

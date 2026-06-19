@@ -12,12 +12,12 @@
         <div class="app-pagination__controls">
             <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
                 aria-label="첫 페이지" @click="handlePageChange(1)">
-                <Icon icon="mdi:chevron-double-left" />
+                <IconDoubleLeft />
             </component>
 
             <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
                 aria-label="이전 페이지" @click="handlePageChange(page - 1)">
-                <Icon icon="mdi:chevron-left" />
+                <IconChevronLeft />
             </component>
 
             <component :is="'button'" v-for="pageNumber in visiblePages" :key="pageNumber" type="button"
@@ -29,12 +29,12 @@
 
             <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
                 aria-label="다음 페이지" @click="handlePageChange(page + 1)">
-                <Icon icon="mdi:chevron-right" />
+                <IconChevronRight />
             </component>
 
             <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
                 aria-label="마지막 페이지" @click="handlePageChange(totalPages)">
-                <Icon icon="mdi:chevron-double-right" />
+                <IconDoubleRight />
             </component>
         </div>
 
@@ -46,6 +46,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconChevronLeft, IconChevronRight, IconDoubleLeft, IconDoubleRight } from "~/components/icons";
+
 type AppPaginationSize = "sm" | "md";
 
 const props = withDefaults(

@@ -16,6 +16,7 @@ const En = {
     'nav.workspace': 'Workspace',
     'nav.demos': 'Demos',
     'nav.settings': 'Settings',
+    'nav.legalFlaticon': 'Flaticon Terms',
     'nav.demo.button': 'Button Demo',
     'nav.demo.input': 'Input Demo',
     'nav.demo.grid': 'AG Grid Demo',

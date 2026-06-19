@@ -104,6 +104,7 @@
 <script setup lang="ts">
 import { h, resolveComponent } from "vue";
 import type { AppTabItem } from "~/components/AppTabs.vue";
+import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from "~/components/icons";
 import PageDemoTabsExternalRenderer from "~/pages/demos/Page_demo/renderer/PageDemoTabsExternalRenderer.vue";
 
 const { title, description } = useDemoI18n("tabs");
@@ -113,7 +114,7 @@ const basicItems: AppTabItem[] = [
         id: "basic-1",
         title: "기본 정보",
         desc: "텍스트와 입력 필드",
-        icon: "mdi:information-outline",
+        icon: IconInfo,
         bodyRenderer: () =>
             h("div", { class: "page-demo-stack" }, [
                 h("p", "기본 탭 콘텐츠입니다."),
@@ -127,7 +128,7 @@ const basicItems: AppTabItem[] = [
         id: "basic-2",
         title: "선택 영역",
         desc: "셀렉트 컴포넌트",
-        icon: "mdi:form-select",
+        icon: IconForm,
         bodyRenderer: () =>
             h(resolveComponent("AppSelect"), {
                 modelValue: null,
@@ -142,7 +143,7 @@ const basicItems: AppTabItem[] = [
         id: "basic-3",
         title: "버튼 영역",
         desc: "버튼 예시",
-        icon: "mdi:gesture-tap-button",
+        icon: IconTap,
         bodyRenderer: () =>
             h(
                 resolveComponent("AppButton"),
@@ -234,21 +235,21 @@ const verticalItems: AppTabItem[] = [
         id: "vertical-1",
         title: "Overview",
         desc: "요약 정보",
-        icon: "mdi:view-dashboard-outline",
+        icon: IconDashboard,
         bodyRenderer: () => h("div", "Overview Content"),
     },
     {
         id: "vertical-2",
         title: "Members",
         desc: "구성원 정보",
-        icon: "mdi:account-group-outline",
+        icon: IconAccountGroup,
         bodyRenderer: () => h("div", "Members Content"),
     },
     {
         id: "vertical-3",
         title: "Settings",
         desc: "설정 정보",
-        icon: "mdi:cog-outline",
+        icon: IconCog,
         bodyRenderer: () => h("div", "Settings Content"),
     },
 ];

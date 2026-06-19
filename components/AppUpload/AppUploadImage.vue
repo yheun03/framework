@@ -9,7 +9,7 @@
                 <component :is="'button'" type="button" class="app-image-upload__trigger" :disabled="disabled"
                     @click="handleFileOpen">
                     <span class="app-image-upload__trigger-icon" aria-hidden="true">
-                        <Icon icon="mdi:image-plus" />
+                        <IconImagePlus />
                     </span>
 
                     <span class="app-image-upload__trigger-text">
@@ -59,7 +59,7 @@
                         미리보기
                     </AppTextButton>
 
-                    <AppIconButton icon="mdi:close" aria-label="파일 삭제" :button-size="28" :icon-size="16"
+                    <AppIconButton :icon="IconClose" aria-label="파일 삭제" :button-size="28" :icon-size="16"
                         :disabled="disabled" @click="handleRemoveItem(uploadItem.id)" />
                 </div>
             </li>
@@ -72,6 +72,7 @@
 </template>
 
 <script setup lang="ts">
+import { IconClose, IconImagePlus } from "~/components/icons";
 import { useModalViewer } from "~/composables/useModalViewer";
 import {
     createUploadId,

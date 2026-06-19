@@ -4,7 +4,7 @@
             <div class="login__hero-inner">
                 <div class="login__brand">
                     <div class="login__logo" aria-hidden="true">
-                        <Icon icon="mdi:application-braces-outline" />
+                        <IconApp />
                     </div>
                     <p class="login__tagline">워크스페이스 + UI 데모를 위한 Framework</p>
                 </div>
@@ -50,6 +50,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconApp } from "~/components/icons";
+
 definePageMeta({
     layout: false,
 });

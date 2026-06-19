@@ -16,6 +16,7 @@ const Ko = {
     'nav.workspace': '워크스페이스',
     'nav.demos': '데모',
     'nav.settings': '설정',
+    'nav.legalFlaticon': 'Flaticon 이용약관',
     'nav.demo.button': '버튼 데모',
     'nav.demo.input': '인풋 데모',
     'nav.demo.grid': 'AG Grid 데모',

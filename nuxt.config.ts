@@ -18,6 +18,8 @@ export default defineNuxtConfig({
     css: [
         // AG Grid 테마 CSS는 전역 link 로드로 고정 (dev 인라인 주입 최소화)
         'ag-grid-community/styles/ag-theme-quartz.css',
+        '@flaticon/flaticon-uicons/css/regular/rounded.css',
+        '@flaticon/flaticon-uicons/css/solid/rounded.css',
         '~/assets/scss/main.scss',
     ],
 
@@ -39,7 +41,6 @@ export default defineNuxtConfig({
     plugins: [
         '~/plugins/preferences.client',
         '~/plugins/axios',
-        '~/plugins/iconify',
         '~/plugins/ag-grid.client',
         '~/plugins/route-tabs.client',
         '~/plugins/removeViteDuplicateStyles.client',

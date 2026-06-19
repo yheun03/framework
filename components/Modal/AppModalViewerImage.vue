@@ -6,10 +6,10 @@
             </span>
 
             <div class="app-image-viewer__nav">
-                <AppIconButton icon="mdi:chevron-left" aria-label="이전 이미지" variant="outline" :button-size="34"
+                <AppIconButton :icon="IconChevronLeft" aria-label="이전 이미지" variant="outline" :button-size="34"
                     :icon-size="18" :disabled="currentIndex <= 0" @click="handlePrevious" />
 
-                <AppIconButton icon="mdi:chevron-right" aria-label="다음 이미지" variant="outline" :button-size="34"
+                <AppIconButton :icon="IconChevronRight" aria-label="다음 이미지" variant="outline" :button-size="34"
                     :icon-size="18" :disabled="currentIndex >= imageItems.length - 1" @click="handleNext" />
             </div>
         </div>
@@ -29,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconChevronLeft, IconChevronRight } from "~/components/icons";
+
 type ImageViewerItem = {
     url: string;
     alt?: string;

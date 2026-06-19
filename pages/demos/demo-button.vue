@@ -131,7 +131,7 @@
                     <div class="page-demo-row">
                         <AppButton variant="fill">
                             <template #iconLeft>
-                                <Icon icon="mdi:star-outline" />
+                                <IconStar />
                             </template>
                             왼쪽 아이콘
                         </AppButton>
@@ -139,7 +139,7 @@
                         <AppButton variant="fill">
                             오른쪽 아이콘
                             <template #iconRight>
-                                <Icon icon="mdi:star-outline" />
+                                <IconStar />
                             </template>
                         </AppButton>
                     </div>
@@ -158,15 +158,15 @@
                     <ul class="page-demo-hint-list">
                         <li><b>button-size</b> : 클릭 영역 크기</li>
                         <li><b>icon-size</b> : 아이콘 시각 크기</li>
-                        <li><b>icon</b> : Iconify 아이콘 이름</li>
+                        <li><b>icon</b> : 아이콘 컴포넌트</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xs" icon-size="xs" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="md" icon-size="md" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" button-size="xl" icon-size="lg" />
-                        <AppIconButton icon="mdi:star-outline" aria-label="즐겨찾기" variant="soft" tone="primary" />
-                        <AppIconButton icon="mdi:trash-can-outline" aria-label="삭제" variant="outline" tone="danger" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="xs" icon-size="xs" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="md" icon-size="md" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="xl" icon-size="lg" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" variant="soft" tone="primary" />
+                        <AppIconButton :icon="IconTrash" aria-label="삭제" variant="outline" tone="danger" />
                     </div>
                 </PageDemoAccordionSection>
 
@@ -228,6 +228,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconStar, IconTrash } from "~/components/icons";
+
 const { title, description } = useDemoI18n("button");
 </script>
 

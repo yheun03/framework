@@ -4,7 +4,7 @@
             <div class="home__hero-top">
                 <div class="home__brand">
                     <span class="home__brand-icon" aria-hidden="true">
-                        <Icon icon="mdi:application-braces-outline" />
+                        <IconApp />
                     </span>
                     <span class="home__brand-name">Framework</span>
                 </div>
@@ -30,7 +30,7 @@
             <section class="home__grid" aria-label="주요 이동">
                 <NuxtLink class="home__card" to="/workspace">
                     <span class="home__card-icon" aria-hidden="true">
-                        <Icon icon="mdi:view-dashboard-outline" />
+                        <IconDashboard />
                     </span>
                     <strong class="home__card-title">Workspace</strong>
                     <p class="home__card-desc">
@@ -40,7 +40,7 @@
 
                 <NuxtLink class="home__card" to="/demos/demo-button">
                     <span class="home__card-icon" aria-hidden="true">
-                        <Icon icon="mdi:widgets-outline" />
+                        <IconWidgets />
                     </span>
                     <strong class="home__card-title">UI Demos</strong>
                     <p class="home__card-desc">
@@ -50,7 +50,7 @@
 
                 <NuxtLink class="home__card" to="/auth/sign-up">
                     <span class="home__card-icon" aria-hidden="true">
-                        <Icon icon="mdi:account-plus-outline" />
+                        <IconAccountPlus />
                     </span>
                     <strong class="home__card-title">Get Started</strong>
                     <p class="home__card-desc">
@@ -65,6 +65,10 @@
         </main>
     </div>
 </template>
+
+<script setup lang="ts">
+import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from "~/components/icons";
+</script>
 
 <style scoped lang="scss">
 .home {

@@ -13,7 +13,7 @@
                         </h2>
                     </div>
 
-                    <AppIconButton v-if="modalItem.closable" class="app-modal__close" icon="mdi:close" aria-label="닫기"
+                    <AppIconButton v-if="modalItem.closable" class="app-modal__close" :icon="IconClose" aria-label="닫기"
                         :button-size="34" :icon-size="18" @click="handleModalClose(modalItem.id, 'close')" />
                 </header>
 
@@ -65,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import { IconClose } from "~/components/icons";
 import { useModalStore } from "~/stores/modal";
 import type { ModalItem, ModalViewCloseReason } from "~/types/appModal";
 

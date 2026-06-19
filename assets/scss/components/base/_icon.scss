@@ -16,7 +16,10 @@
     justify-content: center;
 
     flex-shrink: 0;
-    line-height: 0;
+    width: 1em;
+    height: 1em;
+    font-size: 1em;
+    line-height: 1;
 
     /* ----------------------------------------
      Icon Source
@@ -27,5 +30,18 @@
         display: block;
         width: 100%;
         height: 100%;
+    }
+
+    svg {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    &::before {
+        display: block;
+        line-height: 1;
     }
 }

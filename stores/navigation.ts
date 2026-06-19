@@ -17,7 +17,7 @@ type MenuSeedEntity = {
     order: number;
     to: string;
     labelKey: string;
-    icon?: string;
+    icon?: NavigationMenu['icon'];
     newTab?: boolean;
     isActive: boolean;
 };
@@ -30,7 +30,7 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 1,
         to: '/',
         labelKey: 'nav.home',
-        icon: 'mdi:home-outline',
+        icon: 'home',
         isActive: true,
     },
     {
@@ -40,7 +40,7 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 2,
         to: '/workspace',
         labelKey: 'nav.workspace',
-        icon: 'mdi:view-dashboard-outline',
+        icon: 'dashboard',
         isActive: true,
     },
     {
@@ -50,7 +50,7 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 3,
         to: '',
         labelKey: 'nav.demos',
-        icon: 'mdi:widgets-outline',
+        icon: 'widgets',
         isActive: true,
     },
     {
@@ -222,7 +222,17 @@ const MENU_SEED: MenuSeedEntity[] = [
         order: 4,
         to: '/settings',
         labelKey: 'nav.settings',
-        icon: 'mdi:cog-outline',
+        icon: 'cog',
+        isActive: true,
+    },
+    {
+        id: 'MENU_040000',
+        parentId: null,
+        depth: 1,
+        order: 5,
+        to: '/legal/flaticon',
+        labelKey: 'nav.legalFlaticon',
+        icon: 'info',
         isActive: true,
     },
 ];
