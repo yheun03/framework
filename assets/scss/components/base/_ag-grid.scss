@@ -274,6 +274,11 @@
     .ag-checkbox-input-wrapper.ag-checked {
         background-color: $primary;
         border-color: $primary;
+        color: $gray-0;
+
+        &::after {
+            color: $gray-0;
+        }
     }
 
     /* ----------------------------------------

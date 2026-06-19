@@ -139,7 +139,15 @@
     &__actions {
         display: inline-flex;
         align-items: center;
-        gap: 2px;
-        padding-right: 8px;
+        gap: 4px;
+        padding-right: 10px;
+    }
+
+    &__action {
+        --icon-button-color: #{$gray-600};
+        --icon-button-bg-hover: #{rgba($gray-900, 0.05)};
+        --icon-button-bg-active: #{rgba($gray-900, 0.08)};
+
+        border-radius: 4px;
     }
 }

@@ -154,14 +154,17 @@
     ---------------------------------------- */
     &--checkbox {
         .app-choice__inner {
+            color: $gray-0;
+
             svg {
                 display: block;
                 width: 100%;
                 height: 100%;
+                color: currentColor;
             }
 
             path {
-                fill: $bg-white;
+                fill: currentColor;
             }
         }
     }
