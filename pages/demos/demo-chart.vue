@@ -9,7 +9,8 @@
                 </header>
 
                 <!-- LINE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Line Variants" desc="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Line Variants"
+                    desc="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
                     <div class="page-demo-grid">
                         <client-only>
                             <AppChart class="page-demo-chart-box" type="line" :data="lineData" />

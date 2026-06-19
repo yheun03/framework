@@ -36,7 +36,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- MODE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Mode" desc="single / range / multiple 모드를 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Mode"
+                    desc="single / range / multiple 모드를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="modes.single" mode="single" label="Single" hint="하나의 날짜 선택">
                             <template #iconRight>
@@ -88,7 +89,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- SHAPE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Shape" desc="DatePicker의 border 스타일을 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Shape"
+                    desc="DatePicker의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="shapes.square" shape="square" label="Square">
                             <template #iconRight>
@@ -157,7 +159,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- CONSTRAINTS -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Constraints" desc="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Constraints"
+                    desc="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="constraints.single" label="Min / Max" :min="min" :max="max"
                             hint="2026년 내에서만 선택 가능">

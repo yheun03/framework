@@ -21,7 +21,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- LAYOUT TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Layout Types" desc="stacked / label-full 레이아웃 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Layout Types"
+                    desc="stacked / label-full 레이아웃 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
                     </ClientOnly>
@@ -36,21 +37,24 @@
                 </PageDemoAccordionSection>
 
                 <!-- CHOICE TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Choice Types" desc="radio / checkbox 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Choice Types"
+                    desc="radio / checkbox 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- DATE TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Date Types" desc="date / range_date 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Date Types"
+                    desc="date / range_date 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
 
                 <!-- CONTACT TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Contact Types" desc="phone / email 타입 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Contact Types"
+                    desc="phone / email 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
                     </ClientOnly>

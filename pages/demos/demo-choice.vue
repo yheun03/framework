@@ -36,8 +36,8 @@
                                     label="기본상태" />
                                 <AppChoice v-model="checkbox.defaultMd.checked" type="checkbox" size="md"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.defaultMd.disabled" type="checkbox" size="md"
-                                    label="비활성화" disabled />
+                                <AppChoice v-model="checkbox.defaultMd.disabled" type="checkbox" size="md" label="비활성화"
+                                    disabled />
                                 <AppChoice v-model="checkbox.defaultMd.checkedDisabled" type="checkbox" size="md"
                                     label="체크 비활성화" disabled />
                             </div>
@@ -51,8 +51,8 @@
                                     label="기본상태" />
                                 <AppChoice v-model="checkbox.defaultSm.checked" type="checkbox" size="sm"
                                     label="체크상태" />
-                                <AppChoice v-model="checkbox.defaultSm.disabled" type="checkbox" size="sm"
-                                    label="비활성화" disabled />
+                                <AppChoice v-model="checkbox.defaultSm.disabled" type="checkbox" size="sm" label="비활성화"
+                                    disabled />
                                 <AppChoice v-model="checkbox.defaultSm.checkedDisabled" type="checkbox" size="sm"
                                     label="체크 비활성화" disabled />
                             </div>
@@ -68,8 +68,8 @@
                                     label="체크상태" />
                                 <AppChoice v-model="checkbox.roundMd.disabled" type="checkbox" variant="round" size="md"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.roundMd.checkedDisabled" type="checkbox" variant="round" size="md"
-                                    label="체크 비활성화" disabled />
+                                <AppChoice v-model="checkbox.roundMd.checkedDisabled" type="checkbox" variant="round"
+                                    size="md" label="체크 비활성화" disabled />
                             </div>
                         </div>
 
@@ -83,8 +83,8 @@
                                     label="체크상태" />
                                 <AppChoice v-model="checkbox.roundSm.disabled" type="checkbox" variant="round" size="sm"
                                     label="비활성화" disabled />
-                                <AppChoice v-model="checkbox.roundSm.checkedDisabled" type="checkbox" variant="round" size="sm"
-                                    label="체크 비활성화" disabled />
+                                <AppChoice v-model="checkbox.roundSm.checkedDisabled" type="checkbox" variant="round"
+                                    size="sm" label="체크 비활성화" disabled />
                             </div>
                         </div>
                     </div>
@@ -105,8 +105,8 @@
                                 <AppChoice v-model="radioDisabled.defaultMd" type="radio" name="radio-a-md-disabled"
                                     value="default" size="md" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.defaultMd" type="radio"
-                                    name="radio-a-md-disabled-checked" value="checked" size="md"
-                                    label="체크 비활성화" disabled />
+                                    name="radio-a-md-disabled-checked" value="checked" size="md" label="체크 비활성화"
+                                    disabled />
                             </div>
                         </div>
 
@@ -121,8 +121,8 @@
                                 <AppChoice v-model="radioDisabled.defaultSm" type="radio" name="radio-a-sm-disabled"
                                     value="default" size="sm" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.defaultSm" type="radio"
-                                    name="radio-a-sm-disabled-checked" value="checked" size="sm"
-                                    label="체크 비활성화" disabled />
+                                    name="radio-a-sm-disabled-checked" value="checked" size="sm" label="체크 비활성화"
+                                    disabled />
                             </div>
                         </div>
 
@@ -130,10 +130,10 @@
                             <h3 class="page-demo-compare__title">Round / MD</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.roundMd" type="radio" name="radio-b-md" value="default" variant="round"
-                                    size="md" label="기본상태" />
-                                <AppChoice v-model="radio.roundMd" type="radio" name="radio-b-md" value="checked" variant="round"
-                                    size="md" label="체크상태" />
+                                <AppChoice v-model="radio.roundMd" type="radio" name="radio-b-md" value="default"
+                                    variant="round" size="md" label="기본상태" />
+                                <AppChoice v-model="radio.roundMd" type="radio" name="radio-b-md" value="checked"
+                                    variant="round" size="md" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.roundMd" type="radio" name="radio-b-md-disabled"
                                     value="default" variant="round" size="md" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.roundMd" type="radio"
@@ -146,10 +146,10 @@
                             <h3 class="page-demo-compare__title">Round / SM</h3>
 
                             <div class="page-demo-row">
-                                <AppChoice v-model="radio.roundSm" type="radio" name="radio-b-sm" value="default" variant="round"
-                                    size="sm" label="기본상태" />
-                                <AppChoice v-model="radio.roundSm" type="radio" name="radio-b-sm" value="checked" variant="round"
-                                    size="sm" label="체크상태" />
+                                <AppChoice v-model="radio.roundSm" type="radio" name="radio-b-sm" value="default"
+                                    variant="round" size="sm" label="기본상태" />
+                                <AppChoice v-model="radio.roundSm" type="radio" name="radio-b-sm" value="checked"
+                                    variant="round" size="sm" label="체크상태" />
                                 <AppChoice v-model="radioDisabled.roundSm" type="radio" name="radio-b-sm-disabled"
                                     value="default" variant="round" size="sm" label="비활성화" disabled />
                                 <AppChoice v-model="radioDisabledChecked.roundSm" type="radio"
@@ -216,7 +216,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- STATE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="State" desc="hint와 state를 함께 사용해 상태 메시지를 표시합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="State"
+                    desc="hint와 state를 함께 사용해 상태 메시지를 표시합니다.">
                     <div class="page-demo-stack">
                         <AppChoice v-model="state.error" type="checkbox" label="Error" hint="에러 메시지" state="error" />
 

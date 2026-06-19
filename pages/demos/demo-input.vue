@@ -78,7 +78,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- DISABLED / READONLY -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled / Readonly" desc="입력 불가 상태를 제어합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled / Readonly"
+                    desc="입력 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="readonlyValue" label="Readonly" readonly hint="읽기 전용" />
                         <AppInput v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" />

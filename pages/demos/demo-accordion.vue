@@ -64,7 +64,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 항목은 열고 닫을 수 없습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
+                    desc="disabled 항목은 열고 닫을 수 없습니다.">
                     <AppAccordion :items="disabledItems" mode="multiple" initial-open="first" />
                 </PageDemoAccordionSection>
 

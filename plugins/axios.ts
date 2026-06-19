@@ -36,16 +36,28 @@ function toFetchOptions(config?: RequestConfig) {
     };
 }
 
+async function requestByAxiosMethod<T, B = RequestBody>(api: AxiosInstance, method: RequestMethod, url: string, body?: B, config?: RequestConfig) {
+    switch (method) {
+        case 'GET':
+            return api.get<T>(url, config);
+        case 'POST':
+            return api.post<T>(url, body, config);
+        case 'PUT':
+            return api.put<T>(url, body, config);
+        case 'PATCH':
+            return api.patch<T>(url, body, config);
+        case 'DELETE':
+            return api.delete<T>(url, config);
+    }
+}
+
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
     const event = useRequestEvent();
     const requestUrl = event ? getRequestURL(event) : null;
     const apiBase = config.public.apiBase as string;
     const appBase = config.app.baseURL;
-    const clientApiBase =
-        apiBase.startsWith('http') || !apiBase.startsWith('/')
-            ? apiBase
-            : `${appBase.replace(/\/$/, '')}${apiBase}`;
+    const clientApiBase = apiBase.startsWith('http') || !apiBase.startsWith('/') ? apiBase : `${appBase.replace(/\/$/, '')}${apiBase}`;
     const baseURL = import.meta.client
         ? clientApiBase
         : apiBase.startsWith('http')
@@ -58,12 +70,7 @@ export default defineNuxtPlugin(() => {
         headers: {'Content-Type': 'application/json'},
     });
 
-    async function request<T, B = RequestBody>(
-        method: RequestMethod,
-        url: string,
-        body?: B,
-        requestConfig?: RequestConfig,
-    ): Promise<T> {
+    async function request<T, B = RequestBody>(method: RequestMethod, url: string, body?: B, requestConfig?: RequestConfig): Promise<T> {
         if (isServerLocalRequest(url)) {
             const response = await $fetch(url, {
                 method,
@@ -75,16 +82,7 @@ export default defineNuxtPlugin(() => {
         }
 
         const axiosUrl = toAxiosUrl(url);
-        const {data} =
-            method === 'GET'
-                ? await api.get<T>(axiosUrl, requestConfig)
-                : method === 'POST'
-                  ? await api.post<T>(axiosUrl, body, requestConfig)
-                  : method === 'PUT'
-                    ? await api.put<T>(axiosUrl, body, requestConfig)
-                    : method === 'PATCH'
-                      ? await api.patch<T>(axiosUrl, body, requestConfig)
-                      : await api.delete<T>(axiosUrl, requestConfig);
+        const {data} = await requestByAxiosMethod<T, B>(api, method, axiosUrl, body, requestConfig);
 
         return data;
     }

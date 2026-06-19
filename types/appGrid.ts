@@ -1,10 +1,10 @@
 /**
  * AppGrid 관련 cell, search, export 타입을 관리하는 공통 타입 정의 파일입니다.
  */
-import type { ColDef } from "ag-grid-community";
+import type {ColDef} from 'ag-grid-community';
 
-export type AppGridCellAlign = "left" | "center" | "right";
-export type AppGridCellVerticalAlign = "top" | "middle" | "bottom";
+export type AppGridCellAlign = 'left' | 'center' | 'right';
+export type AppGridCellVerticalAlign = 'top' | 'middle' | 'bottom';
 
 export type AppGridColDef = ColDef & {
     cellAlign?: AppGridCellAlign;

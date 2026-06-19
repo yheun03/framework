@@ -1,5 +1,5 @@
 /**
- * AppGrid 데이터를 Excel 파일로보내기 위한 composable 파일입니다.
+ * AppGrid 데이터를 Excel 파일로 보내기 위한 composable 파일입니다.
  */
 import type {GridApi, IRowNode} from 'ag-grid-community';
 import {useApi} from '~/composables/useApi';
@@ -24,27 +24,18 @@ function normalizeExportValue(value: unknown) {
     return value;
 }
 
-function toExportRow<T>(
-    node: IRowNode<T>,
-    columns: AppGridExportColumn[],
-): AppGridExportRow | null {
+function toExportRow<T>(node: IRowNode<T>, columns: AppGridExportColumn[]): AppGridExportRow | null {
     if (!node.data) return null;
 
     const row: AppGridExportRow = {};
     for (const col of columns) {
-        row[col.field] = normalizeExportValue(
-            (node.data as Record<string, unknown>)[col.field],
-        );
+        row[col.field] = normalizeExportValue((node.data as Record<string, unknown>)[col.field]);
     }
 
     return row;
 }
 
-function getDisplayedRows<T>(
-    api: GridApi<T>,
-    columns: AppGridExportColumn[],
-    filter?: (index: number) => boolean,
-): AppGridExportRow[] {
+function getDisplayedRows<T>(api: GridApi<T>, columns: AppGridExportColumn[], filter?: (index: number) => boolean): AppGridExportRow[] {
     const rows: AppGridExportRow[] = [];
     const count = api.getDisplayedRowCount();
 
@@ -74,7 +65,7 @@ function getDisplayedSelectedRows<T>(api: GridApi<T>, columns: AppGridExportColu
     return rows;
 }
 
-async function downloadBlobAsFile(blob: Blob, filename: string) {
+function downloadBlobAsFile(blob: Blob, filename: string) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -111,7 +102,7 @@ export function useAppGridExcelExport(options?: {origin?: string}) {
             {responseType: 'blob'},
         );
 
-        await downloadBlobAsFile(res, ensureXlsxExtension(fileName));
+        downloadBlobAsFile(res, ensureXlsxExtension(fileName));
     }
 
     async function exportDisplayed<T>(gridId: string, api: GridApi<T>) {

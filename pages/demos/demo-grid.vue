@@ -21,8 +21,8 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="셀 클릭 데모">
                     <ClientOnly>
                         <AppGrid grid-id="grid-cell-click" class="page-demo-grid" :row-data="rows1"
-                            :column-defs="columns1" :default-col-def="defaultColDef"
-                            :row-selection="multiRowSelection" auto-height animate-rows @cell-clicked="handleCellClicked" />
+                            :column-defs="columns1" :default-col-def="defaultColDef" :row-selection="multiRowSelection"
+                            auto-height animate-rows @cell-clicked="handleCellClicked" />
                     </ClientOnly>
                     <p class="page-demo__desc">{{ clickedCellText }}</p>
                 </PageDemoAccordionSection>
@@ -63,9 +63,9 @@
                         <AppGridDownload />
                     </AppGridToolbar>
                     <ClientOnly>
-                        <AppGrid grid-id="grid5" class="page-demo-grid" :row-data="pagedRows"
-                            :column-defs="columns1" :default-col-def="defaultColDef" :row-selection="multiRowSelection"
-                            animate-rows height="360px" />
+                        <AppGrid grid-id="grid5" class="page-demo-grid" :row-data="pagedRows" :column-defs="columns1"
+                            :default-col-def="defaultColDef" :row-selection="multiRowSelection" animate-rows
+                            height="360px" />
                     </ClientOnly>
                     <AppPagination v-model:page="paginationPage" v-model:page-size="paginationPageSize"
                         :total="rowsPagination.length" :page-size-options="[5, 10, 20]" size="sm" />
