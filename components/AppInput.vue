@@ -29,11 +29,11 @@
 
             <!-- clear -->
             <AppIconButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right"
-                icon="mdi:close" aria-label="입력값 지우기" button-size="md" icon-size="md" @click="handleClear" />
+                :icon="IconClose" aria-label="입력값 지우기" button-size="md" icon-size="md" @click="handleClear" />
 
             <!-- password toggle -->
             <AppIconButton v-if="passwordToggle" class="app-input__icon app-input__icon--right"
-                :icon="showPassword ? 'mdi:eye-off' : 'mdi:eye'" aria-label="비밀번호 표시 전환" button-size="md" icon-size="md"
+                :icon="showPassword ? IconEyeOff : IconEye" aria-label="비밀번호 표시 전환" button-size="md" icon-size="md"
                 @click="handlePasswordToggle" />
 
             <!-- slot right -->
@@ -51,6 +51,7 @@
 
 <script setup lang="ts">
 import { computed, useSlots, ref } from "vue";
+import { IconClose, IconEye, IconEyeOff } from "~/components/icons";
 
 type InputSize = "xs" | "sm" | "md" | "lg";
 type InputShape = "square" | "round" | "pill" | "underline";

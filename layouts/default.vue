@@ -3,7 +3,7 @@
         <div class="layout__mobile-bar">
             <AppTextButton class="layout__nav-toggle" size="sm" aria-label="메뉴 열기" @click="handleNavOpen">
                 <template #iconLeft>
-                    <Icon icon="mdi:menu" />
+                    <IconMenu />
                 </template>
                 메뉴
             </AppTextButton>
@@ -26,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconMenu } from "~/components/icons";
+
 const route = useRoute();
 const isNavOpen = ref(false);
 

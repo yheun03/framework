@@ -27,7 +27,7 @@
                     </div>
 
                     <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
-                        <Icon icon="mdi:chevron-down" />
+                        <IconChevronDown />
                     </span>
                 </div>
             </button>
@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import { h } from "vue";
 import type { Component, VNodeChild } from "vue";
+import { IconChevronDown } from "~/components/icons";
 
 type AccordionRenderer = () => VNodeChild;
 type AccordionOpenMode = "single" | "multiple";

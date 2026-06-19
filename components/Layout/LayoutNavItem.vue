@@ -4,38 +4,58 @@
         { 'layout-nav__item--has-children': hasChildren },
     ]" :style="{ '--indent': `${(item.depth - 1) * 20}px` }">
         <div class="layout-nav__row">
-            <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
-                icon="mdi:chevron-right" aria-label="메뉴 펼치기/접기" :button-size="24" :icon-size="16" :aria-expanded="open"
-                :aria-controls="`submenu-${item.id}`" @click.stop="handleToggleOpen" />
-
             <component :is="linkTag" v-bind="linkAttrs" class="layout-nav__link" role="menuitem"
                 :aria-haspopup="hasChildren ? 'true' : undefined"
                 :aria-expanded="hasChildren ? String(open) : undefined" @click="handleRowClick">
-                <span v-if="item.icon" class="layout-nav__icon app-icon" aria-hidden="true">
-                    <Icon :icon="item.icon" />
+                <span v-if="itemIcon" class="layout-nav__icon app-icon" aria-hidden="true">
+                    <component :is="itemIcon" />
                 </span>
 
                 <span class="layout-nav__label">
                     {{ item.label }}
                 </span>
             </component>
+
+            <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
+                aria-label="메뉴 펼치기/접기" :button-size="24" :icon-size="16" :aria-expanded="open"
+                :aria-controls="`submenu-${item.id}`" @click.stop="handleToggleOpen">
+                <i class="fi-sr-angle-small-right fi" aria-hidden="true"></i>
+            </AppIconButton>
         </div>
 
-        <ul v-if="hasChildren" v-show="open" :id="`submenu-${item.id}`" class="layout-nav__sublist" role="menu"
-            :aria-label="`${item.label} submenu`">
-            <LayoutNavItem v-for="child in item.children" :key="child.id" :item="child" />
-        </ul>
+        <Transition name="layout-nav-sublist">
+            <ul v-if="hasChildren && open" :id="`submenu-${item.id}`" class="layout-nav__sublist" role="menu"
+                :aria-label="`${item.label} submenu`">
+                <LayoutNavItem v-for="child in item.children" :key="child.id" :item="child" />
+            </ul>
+        </Transition>
     </li>
 </template>
 
 <script setup lang="ts">
 import type { NavigationMenu } from "~/types/appNavigation";
+import type { Component } from "vue";
+import {
+    IconCog,
+    IconDashboard,
+    IconHome,
+    IconInfo,
+    IconWidgets,
+} from "~/components/icons";
 
 const props = defineProps<{
     item: NavigationMenu;
 }>();
 
 const hasChildren = computed(() => Boolean(props.item.children?.length));
+const navigationIconMap: Record<NonNullable<NavigationMenu["icon"]>, Component> = {
+    cog: IconCog,
+    dashboard: IconDashboard,
+    home: IconHome,
+    info: IconInfo,
+    widgets: IconWidgets,
+};
+const itemIcon = computed(() => props.item.icon ? navigationIconMap[props.item.icon] : null);
 const hasLink = computed(() => Boolean(props.item.to?.trim()));
 const isExternalLink = computed(() =>
     Boolean(props.item.newTab && hasLink.value),

@@ -2,12 +2,13 @@
     <component ref="buttonEl" :is="tag" v-bind="componentAttrs" :class="classes" :style="mergedStyles"
         :aria-label="resolvedAriaLabel" :aria-disabled="ariaDisabled" :tabindex="tabIndex" @click="handleClick">
         <slot>
-            <Icon v-if="icon" :icon="icon" />
+            <component :is="icon" v-if="icon" />
         </slot>
     </component>
 </template>
 
 <script setup lang="ts">
+import type { Component } from "vue";
 import { toCssSize, toSyncedSizeStyles, type CssSize } from "~/utils/css";
 import { useButtonAction } from "~/composables/useButtonAction";
 
@@ -34,7 +35,7 @@ type IconButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const props = withDefaults(
     defineProps<{
-        icon?: string;
+        icon?: Component;
         ariaLabel?: string;
         "aria-label"?: string;
         type?: IconButtonType;
@@ -126,6 +127,7 @@ const mergedStyles = computed(() => [
 ]);
 
 const classes = computed(() => [
+    attrs.class,
     "app-icon-button",
     `app-icon-button--variant-${props.variant}`,
     `app-icon-button--shape-${props.shape}`,

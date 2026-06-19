@@ -442,10 +442,12 @@ $icon-button-tones: (
         color 0.15s,
         opacity 0.15s;
 
+    .app-icon,
     svg {
         display: block;
         width: var(--icon-size);
         height: var(--icon-size);
+        font-size: var(--icon-size);
         color: currentColor;
     }
 

@@ -41,7 +41,7 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Icon" desc="Input 내부에 아이콘을 배치할 수 있습니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="search" placeholder="검색어"><template #iconLeft>
-                                <Icon icon="mdi:magnify" />
+                                <IconSearch />
                             </template>
                         </AppInput>
                         <AppInput v-model="search" placeholder="검색" clearable />
@@ -49,21 +49,21 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- ICONIFY -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Iconify"
-                    desc="&lt;code>@iconify/vue&lt;/code> 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
+                <!-- ICON -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Icon"
+                    desc="로컬 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="icon" placeholder="사용자명"><template #iconLeft>
-                                <Icon icon="mdi:account-outline" />
+                                <IconAccount />
                             </template>
                         </AppInput>
                         <AppInput v-model="email" placeholder="이메일"><template #iconLeft>
-                                <Icon icon="mdi:email-outline" />
+                                <IconEmail />
                             </template><template #iconRight>
-                                <Icon icon="mdi:check-circle-outline" />
+                                <IconCheckCircle />
                             </template></AppInput>
                         <AppInput v-model="url" placeholder="https://example.com"><template #iconLeft>
-                                <Icon icon="mdi:link-variant" />
+                                <IconLink />
                             </template></AppInput>
                     </div>
                 </PageDemoAccordionSection>
@@ -98,6 +98,8 @@
 </template>
 
 <script setup lang="ts">
+import { IconAccount, IconCheckCircle, IconEmail, IconLink, IconSearch } from "~/components/icons";
+
 const { title, description } = useDemoI18n("input");
 
 const basic = ref("");

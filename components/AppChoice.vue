@@ -8,7 +8,7 @@
             <span v-if="showIndicator" class="app-choice__visual" aria-hidden="true">
                 <span v-if="isChecked || indeterminate" class="app-choice__inner">
                     <template v-if="type === 'checkbox'">
-                        <Icon :icon="indeterminate ? 'mdi:minus' : 'mdi:check'" />
+                        <component :is="indeterminate ? IconMinus : IconCheck" />
                     </template>
                     <template v-else>
                         <span class="app-choice__dot" />
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import { IconCheck, IconMinus } from "~/components/icons";
 
 type ChoiceType = "checkbox" | "radio";
 type ChoiceVariant =

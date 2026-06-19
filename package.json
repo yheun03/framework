@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@ag-grid-community/locale": "^33.3.2",
-        "@iconify/vue": "^5.0.0",
+        "@flaticon/flaticon-uicons": "^3.3.1",
         "@pinia/nuxt": "^0.5.4",
         "@toast-ui/editor": "^3.2.2",
         "ag-grid-community": "^33.3.2",

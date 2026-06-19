@@ -3,10 +3,10 @@
         <div class="layout-nav__header">
             <div class="layout-nav__brand">
                 <div class="layout-nav__logo nav-logo" aria-hidden="true">
-                    <Icon class="nav-logo__mark" icon="mdi:application-braces-outline" />
+                    <IconApp class="nav-logo__mark" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" icon="mdi:close" aria-label="메뉴 닫기" :button-size="36"
+                <AppIconButton class="layout-nav__mobile-close" :icon="IconClose" aria-label="메뉴 닫기" :button-size="36"
                     :icon-size="18" @click="handleClose" />
             </div>
 
@@ -25,7 +25,7 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppIconButton class="nav-action" icon="mdi:cog-outline" :aria-label="t('settings.title')" button-size="md"
+            <AppIconButton class="nav-action" :icon="IconCog" :aria-label="t('settings.title')" button-size="md"
                 icon-size="lg" to="/settings" />
         </div>
     </nav>
@@ -36,6 +36,7 @@ import { storeToRefs } from "pinia";
 import { useI18nText } from "~/composables/useI18nText";
 import { useNavigationStore } from "~/stores/navigation";
 import { NAVIGATION_HEADER_ACTIONS } from "~/types/appNavigation";
+import { IconApp, IconClose, IconCog } from "~/components/icons";
 
 const emit = defineEmits<{
     close: [];

@@ -8,17 +8,17 @@
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppIconButton class="route-tabs__close" icon="mdi:close" aria-label="탭 닫기" :button-size="20"
+                    <AppIconButton class="route-tabs__close" :icon="IconClose" aria-label="탭 닫기" :button-size="20"
                         :icon-size="12" @click="(e) => handleTabClose(e, t.key)" />
                 </li>
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton icon="mdi:chevron-left" aria-label="왼쪽 탭으로 이동" :button-size="28" :icon-size="20"
+            <AppIconButton :icon="IconChevronLeft" aria-label="왼쪽 탭으로 이동" :button-size="28" :icon-size="20"
                 @click="handleMoveToLeftTab" />
-            <AppIconButton icon="mdi:chevron-right" aria-label="오른쪽 탭으로 이동" :button-size="28" :icon-size="20"
+            <AppIconButton :icon="IconChevronRight" aria-label="오른쪽 탭으로 이동" :button-size="28" :icon-size="20"
                 @click="handleMoveToRightTab" />
-            <AppIconButton icon="mdi:close" aria-label="다른 탭 닫기" :button-size="28" :icon-size="20"
+            <AppIconButton :icon="IconClose" aria-label="다른 탭 닫기" :button-size="28" :icon-size="20"
                 @click="handleCloseOtherTabs" />
         </div>
     </div>
@@ -28,6 +28,7 @@
 import { storeToRefs } from "pinia";
 import { useRouteTabsStore } from "~/stores/routeTabs";
 import { useI18nText } from "~/composables/useI18nText";
+import { IconChevronLeft, IconChevronRight, IconClose } from "~/components/icons";
 
 const router = useRouter();
 const route = useRoute();

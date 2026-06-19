@@ -25,7 +25,7 @@
 
                 <span class="app-select__icon app-select__icon--right" aria-hidden="true">
                     <slot name="iconRight">
-                        <Icon icon="mdi:chevron-down" />
+                        <IconChevronDown />
                     </slot>
                 </span>
             </component>
@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { IconChevronDown } from "~/components/icons";
 
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
 const SELECT_MENU_GAP = 8;

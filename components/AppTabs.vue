@@ -16,7 +16,7 @@
                 :tabindex="isActive(item.id) ? 0 : -1" @click="handleSelectItem(item.id)"
                 @keydown="handleTabKeydown($event, index)">
                 <span v-if="item.icon" class="app-tabs__tab-icon" aria-hidden="true">
-                    <Icon :icon="item.icon" />
+                    <component :is="item.icon" />
                 </span>
 
                 <span class="app-tabs__tab-text">
@@ -63,7 +63,7 @@ export type AppTabItem = {
     id: string | number;
     title: string;
     desc?: string;
-    icon?: string;
+    icon?: Component;
     badge?: string | number;
     disabled?: boolean;
     slot?: string;
