@@ -14,12 +14,12 @@
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton :icon="IconChevronLeft" aria-label="왼쪽 탭으로 이동" :button-size="28" :icon-size="20"
-                @click="handleMoveToLeftTab" />
-            <AppIconButton :icon="IconChevronRight" aria-label="오른쪽 탭으로 이동" :button-size="28" :icon-size="20"
-                @click="handleMoveToRightTab" />
-            <AppIconButton :icon="IconClose" aria-label="다른 탭 닫기" :button-size="28" :icon-size="20"
-                @click="handleCloseOtherTabs" />
+            <AppIconButton class="route-tabs__action" :icon="IconChevronSmallLeft" aria-label="왼쪽 탭으로 이동"
+                :button-size="24" :icon-size="16" @click="handleMoveToLeftTab" />
+            <AppIconButton class="route-tabs__action" :icon="IconChevronSmallRight" aria-label="오른쪽 탭으로 이동"
+                :button-size="24" :icon-size="16" @click="handleMoveToRightTab" />
+            <AppIconButton class="route-tabs__action" :icon="IconCloseSmall" aria-label="다른 탭 닫기" :button-size="24"
+                :icon-size="16" @click="handleCloseOtherTabs" />
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@
 import { storeToRefs } from "pinia";
 import { useRouteTabsStore } from "~/stores/routeTabs";
 import { useI18nText } from "~/composables/useI18nText";
-import { IconChevronLeft, IconChevronRight, IconClose } from "~/components/icons";
+import { IconChevronSmallLeft, IconChevronSmallRight, IconClose, IconCloseSmall } from "~/components/icons";
 
 const router = useRouter();
 const route = useRoute();
