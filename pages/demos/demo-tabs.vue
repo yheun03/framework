@@ -11,7 +11,25 @@
 
                 <!-- BASIC -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 line 탭 예시입니다.">
-                    <AppTabs :items="basicItems" variant="line" />
+                    <AppTabs :items="basicItems" variant="line">
+                        <template #basicInfo>
+                            <div class="page-demo-stack">
+                                <p>기본 탭 콘텐츠입니다.</p>
+                                <AppInput model-value="sample text" placeholder="입력하세요." />
+                            </div>
+                        </template>
+
+                        <template #basicSelect>
+                            <AppSelect :model-value="null" :options="[
+                                { label: '옵션 A', value: 'a' },
+                                { label: '옵션 B', value: 'b' },
+                            ]" placeholder="선택하세요." />
+                        </template>
+
+                        <template #basicButton>
+                            <AppButton variant="fill">확인</AppButton>
+                        </template>
+                    </AppTabs>
                 </PageDemoAccordionSection>
 
                 <!-- VARIANT -->
@@ -21,25 +39,41 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>
 
-                            <AppTabs :items="variantItems" variant="line" />
+                            <AppTabs :items="variantItems" variant="line">
+                                <template #account>Account Content</template>
+                                <template #profile>Profile Content</template>
+                                <template #security>Security Content</template>
+                            </AppTabs>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "box"</div>
 
-                            <AppTabs :items="variantItems" variant="box" />
+                            <AppTabs :items="variantItems" variant="box">
+                                <template #account>Account Content</template>
+                                <template #profile>Profile Content</template>
+                                <template #security>Security Content</template>
+                            </AppTabs>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "pill"</div>
 
-                            <AppTabs :items="variantItems" variant="pill" />
+                            <AppTabs :items="variantItems" variant="pill">
+                                <template #account>Account Content</template>
+                                <template #profile>Profile Content</template>
+                                <template #security>Security Content</template>
+                            </AppTabs>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "vertical"</div>
 
-                            <AppTabs :items="verticalItems" variant="vertical" />
+                            <AppTabs :items="verticalItems" variant="vertical">
+                                <template #overview>Overview Content</template>
+                                <template #members>Members Content</template>
+                                <template #settings>Settings Content</template>
+                            </AppTabs>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
@@ -47,12 +81,20 @@
                 <!-- DEFAULT ACTIVE -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Default Active Id"
                     desc="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.">
-                    <AppTabs :items="defaultItems" variant="line" default-active-id="default-2" />
+                    <AppTabs :items="defaultItems" variant="line" default-active-id="default-2">
+                        <template #default1>Default Content 1</template>
+                        <template #default2>Default Content 2</template>
+                        <template #default3>Default Content 3</template>
+                    </AppTabs>
                 </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 탭은 선택할 수 없습니다.">
-                    <AppTabs :items="disabledItems" variant="box" />
+                    <AppTabs :items="disabledItems" variant="box">
+                        <template #active1>Active Content</template>
+                        <template #disabled>Disabled Content</template>
+                        <template #active2>Active Content 2</template>
+                    </AppTabs>
                 </PageDemoAccordionSection>
 
                 <!-- SIZE -->
@@ -61,27 +103,59 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
 
-                            <AppTabs :items="sizeItems" size="sm" variant="pill" />
+                            <AppTabs :items="sizeItems" size="sm" variant="pill">
+                                <template #small>Small Content</template>
+                                <template #medium>Medium Content</template>
+                                <template #large>Large Content</template>
+                            </AppTabs>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "md"</div>
 
-                            <AppTabs :items="sizeItems" size="md" variant="pill" />
+                            <AppTabs :items="sizeItems" size="md" variant="pill">
+                                <template #small>Small Content</template>
+                                <template #medium>Medium Content</template>
+                                <template #large>Large Content</template>
+                            </AppTabs>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "lg"</div>
 
-                            <AppTabs :items="sizeItems" size="lg" variant="pill" />
+                            <AppTabs :items="sizeItems" size="lg" variant="pill">
+                                <template #small>Small Content</template>
+                                <template #medium>Medium Content</template>
+                                <template #large>Large Content</template>
+                            </AppTabs>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
 
-                <!-- COMPONENT RENDER -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
-                    desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
-                    <AppTabs :items="rendererItems" variant="line">
+                <!-- SLOT -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Slot" desc="탭 본문을 슬롯으로 연결합니다.">
+                    <AppTabs :items="slotItems" variant="line">
+                        <template #progress>
+                            <div class="page-demo-stack">
+                                <p>이 콘텐츠는 슬롯으로 렌더링됩니다.</p>
+                                <AppProgress :value="65" variant="linear" />
+                            </div>
+                        </template>
+
+                        <template #actions>
+                            <div class="page-demo-stack">
+                                <div>
+                                    <strong>액션 영역</strong>
+                                    <p>탭 안에 버튼을 직접 배치한 예시입니다.</p>
+                                </div>
+
+                                <div class="page-demo-actions">
+                                    <AppButton variant="fill">새로고침</AppButton>
+                                    <AppButton variant="outline">상세 보기</AppButton>
+                                </div>
+                            </div>
+                        </template>
+
                         <template #custom="{ item }">
                             <div class="page-demo-stack">
                                 <p>{{ item.title }} 슬롯 콘텐츠입니다.</p>
@@ -102,10 +176,8 @@
 </template>
 
 <script setup lang="ts">
-import { h, resolveComponent } from "vue";
 import type { AppTabItem } from "~/components/AppTabs.vue";
 import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from "~/components/icons";
-import PageDemoTabsExternalRenderer from "~/pages/demos/Page_demo/renderer/PageDemoTabsExternalRenderer.vue";
 
 const { title, description } = useDemoI18n("tabs");
 
@@ -115,41 +187,21 @@ const basicItems: AppTabItem[] = [
         title: "기본 정보",
         desc: "텍스트와 입력 필드",
         icon: IconInfo,
-        bodyRenderer: () =>
-            h("div", { class: "page-demo-stack" }, [
-                h("p", "기본 탭 콘텐츠입니다."),
-                h(resolveComponent("AppInput"), {
-                    modelValue: "sample text",
-                    placeholder: "입력하세요.",
-                }),
-            ]),
+        slot: "basicInfo",
     },
     {
         id: "basic-2",
         title: "선택 영역",
         desc: "셀렉트 컴포넌트",
         icon: IconForm,
-        bodyRenderer: () =>
-            h(resolveComponent("AppSelect"), {
-                modelValue: null,
-                options: [
-                    { label: "옵션 A", value: "a" },
-                    { label: "옵션 B", value: "b" },
-                ],
-                placeholder: "선택하세요.",
-            }),
+        slot: "basicSelect",
     },
     {
         id: "basic-3",
         title: "버튼 영역",
         desc: "버튼 예시",
         icon: IconTap,
-        bodyRenderer: () =>
-            h(
-                resolveComponent("AppButton"),
-                { variant: "fill" },
-                { default: () => "확인" },
-            ),
+        slot: "basicButton",
     },
 ];
 
@@ -158,17 +210,17 @@ const variantItems: AppTabItem[] = [
         id: "variant-1",
         title: "Account",
         badge: 3,
-        bodyRenderer: () => h("div", "Account Content"),
+        slot: "account",
     },
     {
         id: "variant-2",
         title: "Profile",
-        bodyRenderer: () => h("div", "Profile Content"),
+        slot: "profile",
     },
     {
         id: "variant-3",
         title: "Security",
-        bodyRenderer: () => h("div", "Security Content"),
+        slot: "security",
     },
 ];
 
@@ -176,17 +228,17 @@ const defaultItems: AppTabItem[] = [
     {
         id: "default-1",
         title: "Default 1",
-        bodyRenderer: () => h("div", "Default Content 1"),
+        slot: "default1",
     },
     {
         id: "default-2",
         title: "Default 2",
-        bodyRenderer: () => h("div", "Default Content 2"),
+        slot: "default2",
     },
     {
         id: "default-3",
         title: "Default 3",
-        bodyRenderer: () => h("div", "Default Content 3"),
+        slot: "default3",
     },
 ];
 
@@ -195,20 +247,20 @@ const disabledItems: AppTabItem[] = [
         id: "disabled-1",
         title: "활성 탭",
         desc: "선택할 수 있습니다.",
-        bodyRenderer: () => h("div", "Active Content"),
+        slot: "active1",
     },
     {
         id: "disabled-2",
         title: "비활성 탭",
         desc: "disabled 상태",
         disabled: true,
-        bodyRenderer: () => h("div", "Disabled Content"),
+        slot: "disabled",
     },
     {
         id: "disabled-3",
         title: "활성 탭 2",
         desc: "선택할 수 있습니다.",
-        bodyRenderer: () => h("div", "Active Content 2"),
+        slot: "active2",
     },
 ];
 
@@ -216,17 +268,17 @@ const sizeItems: AppTabItem[] = [
     {
         id: "size-1",
         title: "Small",
-        bodyRenderer: () => h("div", "Small Content"),
+        slot: "small",
     },
     {
         id: "size-2",
         title: "Medium",
-        bodyRenderer: () => h("div", "Medium Content"),
+        slot: "medium",
     },
     {
         id: "size-3",
         title: "Large",
-        bodyRenderer: () => h("div", "Large Content"),
+        slot: "large",
     },
 ];
 
@@ -236,46 +288,39 @@ const verticalItems: AppTabItem[] = [
         title: "Overview",
         desc: "요약 정보",
         icon: IconDashboard,
-        bodyRenderer: () => h("div", "Overview Content"),
+        slot: "overview",
     },
     {
         id: "vertical-2",
         title: "Members",
         desc: "구성원 정보",
         icon: IconAccountGroup,
-        bodyRenderer: () => h("div", "Members Content"),
+        slot: "members",
     },
     {
         id: "vertical-3",
         title: "Settings",
         desc: "설정 정보",
         icon: IconCog,
-        bodyRenderer: () => h("div", "Settings Content"),
+        slot: "settings",
     },
 ];
 
-const rendererItems: AppTabItem[] = [
+const slotItems: AppTabItem[] = [
     {
-        id: "renderer-1",
-        title: "bodyRenderer 방식",
-        desc: "render function으로 내용 생성",
-        bodyRenderer: () =>
-            h("div", { class: "page-demo-stack" }, [
-                h("p", "이 콘텐츠는 bodyRenderer로 렌더링됩니다."),
-                h(resolveComponent("AppProgress"), {
-                    value: 65,
-                    variant: "linear",
-                }),
-            ]),
+        id: "slot-1",
+        title: "진행 상태",
+        desc: "slot으로 내용 연결",
+        slot: "progress",
     },
     {
-        id: "renderer-2",
-        title: "외부 렌더러",
-        desc: "renderer 폴더의 Vue 파일 연결",
-        component: PageDemoTabsExternalRenderer,
+        id: "slot-2",
+        title: "액션",
+        desc: "버튼 직접 배치",
+        slot: "actions",
     },
     {
-        id: "renderer-3",
+        id: "slot-3",
         title: "slot 방식",
         desc: "slot name으로 내용 연결",
         slot: "custom",
