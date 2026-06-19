@@ -1,16 +1,16 @@
 <template>
     <div ref="root" class="app-grid-search" @keydown.enter.prevent="handleSearch" @change="handleAutoSearch">
-        <template v-for="f in searchFields" :key="f.fieldKey">
-            <dl v-if="f.layoutType === 'input'" class="app-grid-search__dl">
+        <template v-for="f in props.fields" :key="fieldKey(f)">
+            <dl v-if="layoutType(f) === 'input'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="inputNativeType(f)"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'textarea'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'textarea'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppTextarea size="sm" :model-value="getStringValue(f.field)" :rows="f.rows ?? 3"
@@ -19,7 +19,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'number_range' && f.numberRange" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'number_range' && f.numberRange" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput size="sm" type="number" :name="f.numberRange.minKey"
@@ -37,7 +37,7 @@
             </dl>
 
             <dl v-else-if="
-                f.layoutType === 'split_inputs' && f.splitInput?.keys?.length
+                layoutType(f) === 'split_inputs' && f.splitInput?.keys?.length
             " class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
@@ -47,7 +47,7 @@
                             :disabled="f.disabled" class="app-grid-search__split-part"
                             @update:model-value="(v) => handleFieldValueChange(sk, v)" />
                         <span v-if="
-                            f.rawFieldType === 'email' && i < f.splitInput.keys.length - 1
+                            rawFieldType(f) === 'email' && i < f.splitInput.keys.length - 1
                         " class="app-grid-search__split-sep">@</span>
                     </template>
 
@@ -55,10 +55,10 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'input_button'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'input_button'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="inputNativeType(f)"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
                         class="app-grid-search__select-input-text"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
@@ -69,10 +69,10 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'input_text_row'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'input_text_row'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
-                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="f.inputNativeType"
+                    <AppInput size="sm" :name="f.field" :model-value="getStringValue(f.field)" :type="inputNativeType(f)"
                         :placeholder="f.placeholder" :readonly="f.readonly" :disabled="f.disabled"
                         class="app-grid-search__select-input-text"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
@@ -82,7 +82,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'text_button'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'text_button'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <span class="app-grid-search__suffix">{{
@@ -95,7 +95,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'select' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'select' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppSelect size="sm" :name="f.field" :model-value="getSelectValue(f.field)" :options="f.options"
@@ -105,7 +105,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'select_input' && f.selectInput" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'select_input' && f.selectInput" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppSelect size="sm" :name="f.selectInput.columnKey"
@@ -123,7 +123,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'radio' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'radio' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
@@ -135,7 +135,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'checkbox' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'checkbox' && f.options?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
@@ -148,7 +148,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'toggle'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'toggle'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppChoice size="sm" type="checkbox" :model-value="getBooleanValue(f.field)" :disabled="f.disabled"
@@ -156,7 +156,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'calendar'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker size="sm" :model-value="getDateValue(f.field)" mode="single" :min="f.min"
@@ -165,7 +165,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'range_calendar'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'range_calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range"
@@ -174,7 +174,7 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="f.layoutType === 'range_calendar_minmax'" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'range_calendar_minmax'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range" :min="f.min"
@@ -194,10 +194,9 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import type { GridApi } from "ag-grid-community";
 import type { DateRangeValue } from "~/components/AppDatePicker.vue";
 import type { AppGridSearchField } from "~/types/appGrid";
-import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
 import {
     includesArrayValue,
     toBooleanModelValue,
@@ -212,9 +211,11 @@ import {
 const props = withDefaults(
     defineProps<{
         fields?: AppGridSearchField[];
+        api?: GridApi | null;
     }>(),
     {
         fields: () => [],
+        api: null,
     },
 );
 
@@ -226,18 +227,7 @@ const model = defineModel<Record<string, unknown>>({
     default: () => ({}),
 });
 
-const target = inject<string>("appGridTarget");
-
 const root = ref<HTMLElement | null>(null);
-
-const { getApi } = useAppGridRegistry();
-
-type NormalizedSearchField = AppGridSearchField & {
-    fieldKey: string;
-    rawFieldType: string;
-    layoutType: string;
-    inputNativeType: string;
-};
 
 function fieldKey(f: AppGridSearchField) {
     return f.id ?? f.field;
@@ -279,16 +269,6 @@ function inputNativeType(f: AppGridSearchField): string {
     if (raw === "decimal") return "text";
     return "text";
 }
-
-const searchFields = computed<NormalizedSearchField[]>(() =>
-    props.fields.map((field) => ({
-        ...field,
-        fieldKey: fieldKey(field),
-        rawFieldType: rawFieldType(field),
-        layoutType: layoutType(field),
-        inputNativeType: inputNativeType(field),
-    })),
-);
 
 function handleFieldAction(f: AppGridSearchField) {
     emit("field-action", f);
@@ -665,9 +645,7 @@ function allManagedKeys(): Set<string> {
 }
 
 function handleSearch() {
-    if (!target) return;
-
-    const api = getApi(target);
+    const api = props.api;
     if (!api) return;
 
     const managed = allManagedKeys();
@@ -688,9 +666,7 @@ function handleSearch() {
 }
 
 function handleReset() {
-    if (!target) return;
-
-    const api = getApi(target);
+    const api = props.api;
     if (!api) return;
 
     api.setFilterModel(null);

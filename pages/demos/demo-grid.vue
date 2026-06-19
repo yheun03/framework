@@ -8,14 +8,15 @@
                 </header>
                 <!-- GRID 1 -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="사용자 목록">
-                    <AppGridToolbar target="grid1">
-                        <AppGridSearch v-model="search1" :fields="searchFields1" />
-                        <AppGridDownload />
+                    <AppGridToolbar>
+                        <AppGridSearch v-model="search1" :fields="searchFields1" :api="grid1Api" />
+                        <AppGridDownload grid-id="grid1" :api="grid1Api" />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid1" class="page-demo-grid" :row-data="rows1" :column-defs="columns1"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight"
-                            :row-selection="multiRowSelection" animate-rows height="320px" />
+                            :row-selection="multiRowSelection" animate-rows height="320px"
+                            @grid-ready="grid1Api = $event.api" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <PageDemoAccordionSection class="page-demo-accordion" title="셀 클릭 데모">
@@ -28,44 +29,46 @@
                 </PageDemoAccordionSection>
                 <!-- GRID 2 -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="주문 목록">
-                    <AppGridToolbar target="grid2">
-                        <AppGridSearch v-model="search2" :fields="searchFields2" />
-                        <AppGridDownload />
+                    <AppGridToolbar>
+                        <AppGridSearch v-model="search2" :fields="searchFields2" :api="grid2Api" />
+                        <AppGridDownload grid-id="grid2" :api="grid2Api" />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid2" class="page-demo-grid" :row-data="rows2" :column-defs="columns2"
                             :default-col-def="defaultColDef" :get-row-height="getRowHeight"
-                            :row-selection="multiRowSelection" animate-rows height="320px" />
+                            :row-selection="multiRowSelection" animate-rows height="320px"
+                            @grid-ready="grid2Api = $event.api" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <!-- GRID 3 -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="상품 조회 (단순 그리드)">
-                    <AppGridToolbar target="grid3">
-                        <AppGridSearch v-model="search3" :fields="searchFields3" />
-                        <AppGridDownload />
+                    <AppGridToolbar>
+                        <AppGridSearch v-model="search3" :fields="searchFields3" :api="grid3Api" />
+                        <AppGridDownload grid-id="grid3" :api="grid3Api" />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
-                            :default-col-def="defaultColDef" auto-height animate-rows />
+                            :default-col-def="defaultColDef" auto-height animate-rows @grid-ready="grid3Api = $event.api" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <PageDemoAccordionSection class="page-demo-accordion" title="셀 렌더러 인풋 예제">
-                    <AppGridToolbar target="grid4">
-                        <AppGridDownload />
+                    <AppGridToolbar>
+                        <AppGridDownload grid-id="grid4" :api="grid4Api" />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid4" class="page-demo-grid" :row-data="rows4" :column-defs="columns4"
-                            :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows />
+                            :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows
+                            @grid-ready="grid4Api = $event.api" />
                     </ClientOnly>
                 </PageDemoAccordionSection>
                 <PageDemoAccordionSection class="page-demo-accordion" title="페이지네이션 예제">
-                    <AppGridToolbar target="grid5">
-                        <AppGridDownload />
+                    <AppGridToolbar>
+                        <AppGridDownload grid-id="grid5" :api="grid5Api" />
                     </AppGridToolbar>
                     <ClientOnly>
                         <AppGrid grid-id="grid5" class="page-demo-grid" :row-data="pagedRows" :column-defs="columns1"
                             :default-col-def="defaultColDef" :row-selection="multiRowSelection" animate-rows
-                            height="360px" />
+                            height="360px" @grid-ready="grid5Api = $event.api" />
                     </ClientOnly>
                     <AppPagination v-model:page="paginationPage" v-model:page-size="paginationPageSize"
                         :total="rowsPagination.length" :page-size-options="[5, 10, 20]" size="sm" />
@@ -88,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CellClickedEvent, ColDef } from "ag-grid-community";
+import type { CellClickedEvent, ColDef, GridApi } from "ag-grid-community";
 
 import type { AppGridSearchField, DateRangeValue } from "~/types/appGrid";
 
@@ -102,6 +105,11 @@ import AppGridCellFile from "~/components/AppGrid/Cell/AppGridCellFile.vue";
 
 const { title, description } = useDemoI18n("grid");
 const clickedCellText = ref("셀을 클릭하면 선택한 행/컬럼/값이 표시됩니다.");
+const grid1Api = shallowRef<GridApi | null>(null);
+const grid2Api = shallowRef<GridApi | null>(null);
+const grid3Api = shallowRef<GridApi | null>(null);
+const grid4Api = shallowRef<GridApi | null>(null);
+const grid5Api = shallowRef<GridApi | null>(null);
 
 /* 행 높이 동적 처리 */
 

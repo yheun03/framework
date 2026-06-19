@@ -36,11 +36,9 @@
         </div>
 
         <div class="app-tabs__panels">
-            <div v-for="item in normalizedItems" v-show="isActive(item.id)" :id="getPanelId(item.id)" :key="item.id"
+            <div v-for="item in props.items" v-show="isActive(item.id)" :id="getPanelId(item.id)" :key="item.id"
                 class="app-tabs__panel" role="tabpanel" :aria-labelledby="getTabId(item.id)" :tabindex="0">
-                <component :is="item.rendererComponent" v-if="item.rendererComponent" />
-
-                <slot v-else-if="item.slot" :name="item.slot" :item="item" />
+                <slot v-if="item.slot" :name="item.slot" :item="item" />
 
                 <div v-else class="app-tabs__empty">내용이 없습니다.</div>
             </div>
@@ -49,10 +47,8 @@
 </template>
 
 <script setup lang="ts">
-import { h } from "vue";
-import type { Component, VNodeChild } from "vue";
+import type { Component } from "vue";
 
-type TabRenderer = () => VNodeChild;
 type TabInitialActive = "first" | "none";
 type TabVariant = "line" | "box" | "pill" | "vertical";
 type TabSize = "sm" | "md" | "lg";
@@ -67,9 +63,6 @@ export type AppTabItem = {
     badge?: string | number;
     disabled?: boolean;
     slot?: string;
-    bodyRenderer?: TabRenderer;
-    component?: Component;
-    componentProps?: Record<string, unknown>;
 };
 
 const props = withDefaults(
@@ -105,24 +98,17 @@ const emit = defineEmits<{
 const tabListRef = ref<HTMLElement | null>(null);
 const tabButtonRefs = ref<TabButtonRef[]>([]);
 
-const normalizedItems = computed(() =>
-    (props.items ?? []).map((item) => ({
-        ...item,
-        rendererComponent: getRendererComponent(item),
-    })),
-);
-
-const enabledAwareItems = computed(() => normalizedItems.value);
+const enabledAwareItems = computed(() => props.items ?? []);
 
 const enabledItems = computed(() =>
-    normalizedItems.value.filter((item) => !item.disabled),
+    enabledAwareItems.value.filter((item) => !item.disabled),
 );
 
 const isControlled = computed(() => props.activeId !== undefined);
 
 function getInitialActiveId() {
     if (props.defaultActiveId !== undefined && props.defaultActiveId !== null) {
-        const matchedDefaultItem = normalizedItems.value.find(
+        const matchedDefaultItem = enabledAwareItems.value.find(
             (item) => item.id === props.defaultActiveId && !item.disabled,
         );
 
@@ -143,7 +129,7 @@ watch(
     () => {
         if (isControlled.value) return;
 
-        const currentItem = normalizedItems.value.find(
+        const currentItem = enabledAwareItems.value.find(
             (item) => item.id === internalActiveId.value && !item.disabled,
         );
 
@@ -174,7 +160,7 @@ function handleActiveIdChange(next: string | number | null) {
     emit("update:activeId", next);
 
     const item =
-        normalizedItems.value.find((tabItem) => tabItem.id === next) ?? null;
+        enabledAwareItems.value.find((tabItem) => tabItem.id === next) ?? null;
 
     emit("change", {
         id: next,
@@ -187,7 +173,7 @@ function isActive(id: string | number) {
 }
 
 function handleSelectItem(id: string | number) {
-    const target = normalizedItems.value.find((item) => item.id === id);
+    const target = enabledAwareItems.value.find((item) => item.id === id);
 
     if (!target || target.disabled) return;
     if (currentActiveId.value === id) return;
@@ -205,7 +191,7 @@ function getPanelId(id: string | number) {
 
 function focusTabByIndex(index: number) {
     const target = tabButtonRefs.value[index];
-    const item = normalizedItems.value[index];
+    const item = enabledAwareItems.value[index];
 
     if (!target || item?.disabled) return;
 
@@ -213,16 +199,16 @@ function focusTabByIndex(index: number) {
 }
 
 function findNextEnabledIndex(currentIndex: number, direction: 1 | -1) {
-    if (!normalizedItems.value.length) return -1;
+    if (!enabledAwareItems.value.length) return -1;
 
     let nextIndex = currentIndex;
 
-    for (let count = 0; count < normalizedItems.value.length; count += 1) {
+    for (let count = 0; count < enabledAwareItems.value.length; count += 1) {
         nextIndex =
-            (nextIndex + direction + normalizedItems.value.length) %
-            normalizedItems.value.length;
+            (nextIndex + direction + enabledAwareItems.value.length) %
+            enabledAwareItems.value.length;
 
-        const nextItem = normalizedItems.value[nextIndex];
+        const nextItem = enabledAwareItems.value[nextIndex];
 
         if (nextItem && !nextItem.disabled) {
             return nextIndex;
@@ -233,7 +219,7 @@ function findNextEnabledIndex(currentIndex: number, direction: 1 | -1) {
 }
 
 function selectByIndex(index: number) {
-    const target = normalizedItems.value[index];
+    const target = enabledAwareItems.value[index];
 
     if (!target || target.disabled) return;
 
@@ -274,7 +260,7 @@ function handleTabKeydown(event: KeyboardEvent, index: number) {
     if (event.key === "Home") {
         event.preventDefault();
 
-        const firstIndex = normalizedItems.value.findIndex(
+        const firstIndex = enabledAwareItems.value.findIndex(
             (item) => !item.disabled,
         );
 
@@ -288,33 +274,15 @@ function handleTabKeydown(event: KeyboardEvent, index: number) {
     if (event.key === "End") {
         event.preventDefault();
 
-        const reversedIndex = [...normalizedItems.value]
+        const reversedIndex = [...enabledAwareItems.value]
             .reverse()
             .findIndex((item) => !item.disabled);
 
         if (reversedIndex >= 0) {
-            const lastIndex = normalizedItems.value.length - 1 - reversedIndex;
+            const lastIndex = enabledAwareItems.value.length - 1 - reversedIndex;
 
             selectByIndex(lastIndex);
         }
     }
-}
-
-function getRendererComponent(item: AppTabItem) {
-    if (item.component) {
-        return {
-            render() {
-                return h(item.component as Component, item.componentProps ?? {});
-            },
-        };
-    }
-
-    if (item.bodyRenderer) {
-        return {
-            render: item.bodyRenderer,
-        };
-    }
-
-    return null;
 }
 </script>

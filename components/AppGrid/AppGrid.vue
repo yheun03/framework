@@ -19,13 +19,11 @@ import type {
     BodyScrollEvent,
     CellClickedEvent,
 } from "ag-grid-community";
-import { useAppGridRegistry } from "~/composables/useAppGridRegistry";
 import type { AppGridCellAlign, AppGridCellVerticalAlign, AppGridColDef } from "~/types/appGrid";
 import AppGridCellSelectionChoice from "~/components/AppGrid/Cell/AppGridCellSelectionChoice.vue";
 import AppGridHeaderSelectionChoice from "~/components/AppGrid/Header/AppGridHeaderSelectionChoice.vue";
 
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
-const { register, unregister } = useAppGridRegistry();
 const APP_CHOICE_SELECTION_COL_ID = "appChoiceSelection";
 type AppGridRowSelectionOptions = Exclude<GridOptions["rowSelection"], string | undefined> & {
     headerCheckbox?: boolean;
@@ -35,7 +33,6 @@ type AppGridRowSelectionOptions = Exclude<GridOptions["rowSelection"], string | 
 const attrs = useAttrs();
 const gridRef = ref<{ $el?: HTMLElement } | null>(null);
 const gridApi = ref<GridApi | null>(null);
-const registeredGridId = ref<string | null>(null);
 let headerCheckboxObserver: MutationObserver | null = null;
 const props = withDefaults(
     defineProps<{
@@ -51,6 +48,10 @@ const props = withDefaults(
         height: undefined,
     },
 );
+
+const emit = defineEmits<{
+    (e: "grid-ready", value: GridReadyEvent): void;
+}>();
 
 function handleCloseOpenSelects() {
     window.dispatchEvent(new Event(APP_SELECT_CLOSE_ALL_EVENT));
@@ -90,6 +91,7 @@ function observeAgHeaderCheckboxPlaceholders() {
 
 function handleGridReady(e: GridReadyEvent) {
     gridApi.value = e.api;
+    emit("grid-ready", e);
     e.api.addEventListener(
         "bodyScroll",
         handleBodyScroll as (event: BodyScrollEvent) => void,
@@ -98,16 +100,6 @@ function handleGridReady(e: GridReadyEvent) {
     e.api.addEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
     observeAgHeaderCheckboxPlaceholders();
     scheduleRemoveAgHeaderCheckboxPlaceholders();
-
-    const id = e.api.getGridId();
-
-    if (!id) {
-        console.warn("gridId missing");
-        return;
-    }
-
-    register(id, e.api);
-    registeredGridId.value = id;
 }
 
 onBeforeUnmount(() => {
@@ -119,9 +111,6 @@ onBeforeUnmount(() => {
     gridApi.value?.removeEventListener("newColumnsLoaded", scheduleRemoveAgHeaderCheckboxPlaceholders);
     headerCheckboxObserver?.disconnect();
     headerCheckboxObserver = null;
-    if (registeredGridId.value) {
-        unregister(registeredGridId.value);
-    }
 });
 
 function getAlignClass(align?: AppGridCellAlign) {

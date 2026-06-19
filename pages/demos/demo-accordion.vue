@@ -11,7 +11,25 @@
 
                 <!-- BASIC -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 multiple 아코디언 예시입니다.">
-                    <AppAccordion :items="basicItems" mode="multiple" initial-open="none" />
+                    <AppAccordion :items="basicItems" mode="multiple" initial-open="none">
+                        <template #basicInfo>
+                            <div class="page-demo-stack">
+                                <p>기본 아코디언 콘텐츠입니다.</p>
+                                <AppInput model-value="sample text" placeholder="입력하세요." />
+                            </div>
+                        </template>
+
+                        <template #basicSelect>
+                            <AppSelect :model-value="null" :options="[
+                                { label: '옵션 A', value: 'a' },
+                                { label: '옵션 B', value: 'b' },
+                            ]" placeholder="선택하세요." />
+                        </template>
+
+                        <template #basicButton>
+                            <AppButton variant="fill">확인</AppButton>
+                        </template>
+                    </AppAccordion>
                 </PageDemoAccordionSection>
 
                 <!-- OPEN MODE -->
@@ -21,13 +39,21 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">single</div>
 
-                            <AppAccordion :items="modeItems" mode="single" initial-open="first" />
+                            <AppAccordion :items="modeItems" mode="single" initial-open="first">
+                                <template #panel1>Panel 1 Content</template>
+                                <template #panel2>Panel 2 Content</template>
+                                <template #panel3>Panel 3 Content</template>
+                            </AppAccordion>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">multiple</div>
 
-                            <AppAccordion :items="modeItems" mode="multiple" initial-open="none" />
+                            <AppAccordion :items="modeItems" mode="multiple" initial-open="none">
+                                <template #panel1>Panel 1 Content</template>
+                                <template #panel2>Panel 2 Content</template>
+                                <template #panel3>Panel 3 Content</template>
+                            </AppAccordion>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
@@ -39,19 +65,31 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "none"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="none" />
+                            <AppAccordion :items="initialItems" mode="multiple" initial-open="none">
+                                <template #initial1>Initial Content 1</template>
+                                <template #initial2>Initial Content 2</template>
+                                <template #initial3>Initial Content 3</template>
+                            </AppAccordion>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "first"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="first" />
+                            <AppAccordion :items="initialItems" mode="multiple" initial-open="first">
+                                <template #initial1>Initial Content 1</template>
+                                <template #initial2>Initial Content 2</template>
+                                <template #initial3>Initial Content 3</template>
+                            </AppAccordion>
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "all"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="all" />
+                            <AppAccordion :items="initialItems" mode="multiple" initial-open="all">
+                                <template #initial1>Initial Content 1</template>
+                                <template #initial2>Initial Content 2</template>
+                                <template #initial3>Initial Content 3</template>
+                            </AppAccordion>
                         </div>
                     </div>
                 </PageDemoAccordionSection>
@@ -60,19 +98,47 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Default Open Ids"
                     desc="defaultOpenIds로 특정 패널만 기본 열림 상태로 지정할 수 있습니다.">
                     <AppAccordion :items="defaultItems" mode="multiple"
-                        :default-open-ids="['default-2', 'default-3']" />
+                        :default-open-ids="['default-2', 'default-3']">
+                        <template #default1>Default Content 1</template>
+                        <template #default2>Default Content 2</template>
+                        <template #default3>Default Content 3</template>
+                    </AppAccordion>
                 </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
                     desc="disabled 항목은 열고 닫을 수 없습니다.">
-                    <AppAccordion :items="disabledItems" mode="multiple" initial-open="first" />
+                    <AppAccordion :items="disabledItems" mode="multiple" initial-open="first">
+                        <template #active1>Active Content</template>
+                        <template #disabled>Disabled Content</template>
+                        <template #active2>Active Content 2</template>
+                    </AppAccordion>
                 </PageDemoAccordionSection>
 
-                <!-- COMPONENT RENDER -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Renderer / Component"
-                    desc="bodyRenderer와 component 기반 렌더링을 함께 확인합니다.">
-                    <AppAccordion :items="rendererItems" mode="multiple" initial-open="first" />
+                <!-- SLOT -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Slot" desc="아코디언 본문을 슬롯으로 연결합니다.">
+                    <AppAccordion :items="slotItems" mode="multiple" initial-open="first">
+                        <template #progress>
+                            <div class="page-demo-stack">
+                                <p>이 콘텐츠는 슬롯으로 렌더링됩니다.</p>
+                                <AppProgress :value="65" variant="linear" />
+                            </div>
+                        </template>
+
+                        <template #actions>
+                            <div class="page-demo-stack">
+                                <div>
+                                    <strong>액션 영역</strong>
+                                    <p>아코디언 안에 버튼을 직접 배치한 예시입니다.</p>
+                                </div>
+
+                                <div class="page-demo-actions">
+                                    <AppButton variant="fill">실행</AppButton>
+                                    <AppButton variant="outline">취소</AppButton>
+                                </div>
+                            </div>
+                        </template>
+                    </AppAccordion>
                 </PageDemoAccordionSection>
             </main>
 
@@ -86,9 +152,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, resolveComponent } from "vue";
 import type { AppAccordionItem } from "~/components/AppAccordion.vue";
-import PageDemoModalRendererExample from "~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue";
 
 /* stores/composables */
 const { title, description } = useDemoI18n("accordion");
@@ -98,39 +162,19 @@ const basicItems: AppAccordionItem[] = [
         id: "basic-1",
         title: "기본 정보",
         desc: "텍스트와 입력 필드 예시",
-        bodyRenderer: () =>
-            h("div", { class: "page-demo-stack" }, [
-                h("p", "기본 아코디언 콘텐츠입니다."),
-                h(resolveComponent("AppInput"), {
-                    modelValue: "sample text",
-                    placeholder: "입력하세요.",
-                }),
-            ]),
+        slot: "basicInfo",
     },
     {
         id: "basic-2",
         title: "선택 영역",
         desc: "셀렉트 컴포넌트 예시",
-        bodyRenderer: () =>
-            h(resolveComponent("AppSelect"), {
-                modelValue: null,
-                options: [
-                    { label: "옵션 A", value: "a" },
-                    { label: "옵션 B", value: "b" },
-                ],
-                placeholder: "선택하세요.",
-            }),
+        slot: "basicSelect",
     },
     {
         id: "basic-3",
         title: "버튼 영역",
         desc: "버튼 예시",
-        bodyRenderer: () =>
-            h(
-                resolveComponent("AppButton"),
-                { variant: "fill" },
-                { default: () => "확인" },
-            ),
+        slot: "basicButton",
     },
 ];
 
@@ -139,19 +183,19 @@ const modeItems: AppAccordionItem[] = [
         id: "mode-1",
         title: "Panel 1",
         desc: "첫 번째 패널",
-        bodyRenderer: () => h("div", "Panel 1 Content"),
+        slot: "panel1",
     },
     {
         id: "mode-2",
         title: "Panel 2",
         desc: "두 번째 패널",
-        bodyRenderer: () => h("div", "Panel 2 Content"),
+        slot: "panel2",
     },
     {
         id: "mode-3",
         title: "Panel 3",
         desc: "세 번째 패널",
-        bodyRenderer: () => h("div", "Panel 3 Content"),
+        slot: "panel3",
     },
 ];
 
@@ -159,17 +203,17 @@ const initialItems: AppAccordionItem[] = [
     {
         id: "initial-1",
         title: "초기 패널 1",
-        bodyRenderer: () => h("div", "Initial Content 1"),
+        slot: "initial1",
     },
     {
         id: "initial-2",
         title: "초기 패널 2",
-        bodyRenderer: () => h("div", "Initial Content 2"),
+        slot: "initial2",
     },
     {
         id: "initial-3",
         title: "초기 패널 3",
-        bodyRenderer: () => h("div", "Initial Content 3"),
+        slot: "initial3",
     },
 ];
 
@@ -177,17 +221,17 @@ const defaultItems: AppAccordionItem[] = [
     {
         id: "default-1",
         title: "Default 1",
-        bodyRenderer: () => h("div", "Default Content 1"),
+        slot: "default1",
     },
     {
         id: "default-2",
         title: "Default 2",
-        bodyRenderer: () => h("div", "Default Content 2"),
+        slot: "default2",
     },
     {
         id: "default-3",
         title: "Default 3",
-        bodyRenderer: () => h("div", "Default Content 3"),
+        slot: "default3",
     },
 ];
 
@@ -196,46 +240,35 @@ const disabledItems: AppAccordionItem[] = [
         id: "disabled-1",
         title: "활성 패널",
         desc: "열고 닫을 수 있습니다.",
-        bodyRenderer: () => h("div", "Active Content"),
+        slot: "active1",
     },
     {
         id: "disabled-2",
         title: "비활성 패널",
         desc: "disabled 상태",
         disabled: true,
-        bodyRenderer: () => h("div", "Disabled Content"),
+        slot: "disabled",
     },
     {
         id: "disabled-3",
         title: "활성 패널 2",
         desc: "열고 닫을 수 있습니다.",
-        bodyRenderer: () => h("div", "Active Content 2"),
+        slot: "active2",
     },
 ];
 
-const rendererItems: AppAccordionItem[] = [
+const slotItems: AppAccordionItem[] = [
     {
-        id: "renderer-1",
-        title: "bodyRenderer 방식",
-        desc: "render function으로 내용 생성",
-        bodyRenderer: () =>
-            h("div", { class: "page-demo-stack" }, [
-                h("p", "이 콘텐츠는 bodyRenderer로 렌더링됩니다."),
-                h(resolveComponent("AppProgress"), {
-                    value: 65,
-                    variant: "linear",
-                }),
-            ]),
+        id: "slot-1",
+        title: "진행 상태",
+        desc: "slot으로 내용 연결",
+        slot: "progress",
     },
     {
-        id: "renderer-2",
-        title: "component 방식",
-        desc: "component + componentProps 전달",
-        component: PageDemoModalRendererExample,
-        componentProps: {
-            lastAction: "accordion renderer",
-            onAction: () => { },
-        },
+        id: "slot-2",
+        title: "액션",
+        desc: "버튼 직접 배치",
+        slot: "actions",
     },
 ];
 

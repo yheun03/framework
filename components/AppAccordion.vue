@@ -1,6 +1,6 @@
 <template>
     <div class="app-accordion">
-        <div v-for="item in normalizedItems" :key="item.id" class="app-accordion__item" :class="{
+        <div v-for="item in props.items" :key="item.id" class="app-accordion__item" :class="{
             'is-open': isOpen(item.id),
             'is-disabled': item.disabled,
         }">
@@ -35,9 +35,7 @@
             <div v-show="isOpen(item.id)" :id="getPanelId(item.id)" class="app-accordion__panel" role="region"
                 :aria-labelledby="getTriggerId(item.id)">
                 <div class="app-accordion__panel-inner">
-                    <component :is="item.rendererComponent" v-if="item.rendererComponent" />
-
-                    <slot v-else-if="item.slot" :name="item.slot" :item="item" />
+                    <slot v-if="item.slot" :name="item.slot" :item="item" />
 
                     <div v-else class="app-accordion__empty">내용이 없습니다.</div>
                 </div>
@@ -47,11 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import { h } from "vue";
-import type { Component, VNodeChild } from "vue";
 import { IconChevronDown } from "~/components/icons";
 
-type AccordionRenderer = () => VNodeChild;
 type AccordionOpenMode = "single" | "multiple";
 type AccordionInitialOpen = "none" | "first" | "all";
 
@@ -63,9 +58,6 @@ export type AppAccordionItem = {
     descSlot?: string;
     disabled?: boolean;
     slot?: string;
-    bodyRenderer?: AccordionRenderer;
-    component?: Component;
-    componentProps?: Record<string, unknown>;
 };
 
 const props = withDefaults(
@@ -89,13 +81,6 @@ const emit = defineEmits<{
     (e: "toggle", payload: { id: string | number; open: boolean }): void;
 }>();
 
-const normalizedItems = computed(() =>
-    (props.items ?? []).map((item) => ({
-        ...item,
-        rendererComponent: getRendererComponent(item),
-    })),
-);
-
 const isControlled = computed(() => Array.isArray(props.openIds));
 
 function getInitialOpenIds() {
@@ -104,13 +89,13 @@ function getInitialOpenIds() {
     }
 
     if (props.initialOpen === "all") {
-        return normalizedItems.value
+        return props.items
             .filter((item) => !item.disabled)
             .map((item) => item.id);
     }
 
     if (props.initialOpen === "first") {
-        const firstEnabledItem = normalizedItems.value.find(
+        const firstEnabledItem = props.items.find(
             (item) => !item.disabled,
         );
         return firstEnabledItem ? [firstEnabledItem.id] : [];
@@ -147,7 +132,7 @@ function isOpen(id: string | number) {
 }
 
 function handleItemToggle(id: string | number) {
-    const target = normalizedItems.value.find((item) => item.id === id);
+    const target = props.items.find((item) => item.id === id);
 
     if (!target || target.disabled) return;
 
@@ -174,21 +159,4 @@ function getTriggerId(id: string | number) {
     return `app-accordion-trigger-${id}`;
 }
 
-function getRendererComponent(item: AppAccordionItem) {
-    if (item.component) {
-        return {
-            render() {
-                return h(item.component as Component, item.componentProps ?? {});
-            },
-        };
-    }
-
-    if (item.bodyRenderer) {
-        return {
-            render: item.bodyRenderer,
-        };
-    }
-
-    return null;
-}
 </script>
