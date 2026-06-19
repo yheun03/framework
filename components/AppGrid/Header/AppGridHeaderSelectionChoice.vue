@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IHeaderParams, RowNode } from "ag-grid-community";
+import type { IHeaderParams, IRowNode } from "ag-grid-community";
 
 const props = defineProps<{
     params: IHeaderParams;
@@ -16,7 +16,7 @@ const checked = ref(false);
 const indeterminate = ref(false);
 
 function getDisplayedNodes() {
-    const nodes: RowNode[] = [];
+    const nodes: IRowNode[] = [];
 
     props.params.api.forEachNodeAfterFilterAndSort((node) => {
         if (node.selectable !== false) nodes.push(node);

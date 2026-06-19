@@ -110,7 +110,7 @@ const isSemiDoughnut = computed(
 );
 
 const resolvedType = computed<NativeChartType>(() => {
-    return isSemiDoughnut.value ? "doughnut" : props.type;
+    return props.type === "semi-doughnut" ? "doughnut" : props.type;
 });
 
 const isLine = computed(() => resolvedType.value === "line");

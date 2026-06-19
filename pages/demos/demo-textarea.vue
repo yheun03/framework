@@ -48,7 +48,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- RESIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Resize" desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Resize"
+                    desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
@@ -79,7 +80,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- STATES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="States" desc="disabled, readonly, invalid 상태를 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="States"
+                    desc="disabled, readonly, invalid 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">disabled</div>
@@ -102,7 +104,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- COUNT / CLEAR -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Count / Clear" desc="글자 수 표시와 clearable 옵션을 확인합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Count / Clear"
+                    desc="글자 수 표시와 clearable 옵션을 확인합니다.">
                     <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
                         clearable />
                 </PageDemoAccordionSection>

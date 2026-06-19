@@ -33,7 +33,8 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="State &amp; Control" desc="disabled 상태와 외부 제어 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="State &amp; Control"
+                    desc="disabled 상태와 외부 제어 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" />
 
@@ -59,7 +60,8 @@
                     </div>
                 </PageDemoAccordionSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Multiple" desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Multiple"
+                    desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="multiple.images" multiple :max-count="3" />
 

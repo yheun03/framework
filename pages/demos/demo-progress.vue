@@ -9,7 +9,8 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Progress Bar" desc="표시 전용 진행률은 AppProgressBar를 사용합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Progress Bar"
+                    desc="표시 전용 진행률은 AppProgressBar를 사용합니다.">
                     <div class="page-demo-stack">
                         <AppProgressBar :value="linearDisplayValue" label="단일 값" show-value />
 
@@ -36,7 +37,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- GAUGE DISPLAY -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Gauge Display" desc="반원 게이지와 반도넛 범위의 기본 표시 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Gauge Display"
+                    desc="반원 게이지와 반도넛 범위의 기본 표시 예시입니다.">
                     <div class="page-demo-grid">
                         <AppProgressGauge :value="gaugeDisplayValue" type="gauge" label="속도" />
 

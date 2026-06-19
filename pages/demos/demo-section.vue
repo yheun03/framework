@@ -37,7 +37,8 @@
                     </AppSection>
                 </PageDemoAccordionSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Wrapper Column" desc="AppSectionWrapper 세로 배치 예시입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Wrapper Column"
+                    desc="AppSectionWrapper 세로 배치 예시입니다.">
                     <AppSectionWrapper class="section-demo__wrapper-demo" title="Project Status"
                         desc="direction='column' / gap='24'" direction="column" :gap="24">
                         <template #header>

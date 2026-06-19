@@ -10,7 +10,8 @@
                 </header>
 
                 <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="page, pageSize, total을 사용하는 기본 페이지네이션입니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
+                    desc="page, pageSize, total을 사용하는 기본 페이지네이션입니다.">
                     <AppPagination v-model:page="basicPage" v-model:page-size="basicPageSize" :total="basicTotal" />
                 </PageDemoAccordionSection>
 
@@ -22,7 +23,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- SIBLING COUNT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Sibling Count" desc="현재 페이지 주변에 노출할 페이지 개수를 조절합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Sibling Count"
+                    desc="현재 페이지 주변에 노출할 페이지 개수를 조절합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">siblingCount = 1</div>
@@ -67,7 +69,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- DISABLED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 상태에서는 페이지를 변경할 수 없습니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
+                    desc="disabled 상태에서는 페이지를 변경할 수 없습니다.">
                     <AppPagination v-model:page="disabledPage" v-model:page-size="disabledPageSize"
                         :total="disabledTotal" disabled />
                 </PageDemoAccordionSection>

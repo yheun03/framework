@@ -1,7 +1,4 @@
-import {
-    buildUploadHelperText,
-    isAcceptedUploadType,
-} from "~/utils/upload";
+import {buildUploadHelperText, isAcceptedUploadType} from '~/utils/upload';
 
 type UploadBaseProps = {
     disabled?: boolean;
@@ -22,26 +19,21 @@ export function normalizeUploadItems<Item>(
 
     const sourceItems = Array.isArray(modelValue) ? modelValue : [modelValue];
 
-    return sourceItems.map((value, index) =>
-        typeof value === "string" ? createStringItem(value, index) : value,
-    );
+    return sourceItems.map((value, index) => (typeof value === 'string' ? createStringItem(value, index) : value));
 }
 
 export function resolveUploadValue<Item>(items: Item[], multiple?: boolean) {
     return multiple ? items : (items[0] ?? null);
 }
 
-export function useAppUpload(
-    props: UploadBaseProps,
-    emitError: (message: string, detail?: unknown) => void,
-) {
+export function useAppUpload(props: UploadBaseProps, emitError: (message: string, detail?: unknown) => void) {
     const fileInput = ref<HTMLInputElement | null>(null);
     const dragOver = ref(false);
 
     const rootClasses = computed(() => ({
-        "is-disabled": props.disabled,
-        "is-dragover": dragOver.value,
-        "is-multiple": props.multiple,
+        'is-disabled': props.disabled,
+        'is-dragover': dragOver.value,
+        'is-multiple': props.multiple,
     }));
 
     const helperText = computed(() => buildUploadHelperText(props));
@@ -53,7 +45,7 @@ export function useAppUpload(
 
     function shouldAcceptFile(file: File) {
         if (!isAcceptedUploadType(file, props.accept)) {
-            emitError("허용되지 않는 파일 형식입니다.", {
+            emitError('허용되지 않는 파일 형식입니다.', {
                 accept: props.accept,
                 type: file.type,
                 name: file.name,
@@ -62,7 +54,7 @@ export function useAppUpload(
         }
 
         if (props.maxSizeBytes != null && file.size > props.maxSizeBytes) {
-            emitError("파일 용량 제한을 초과했습니다.", {
+            emitError('파일 용량 제한을 초과했습니다.', {
                 maxSizeBytes: props.maxSizeBytes,
                 size: file.size,
                 name: file.name,
@@ -87,10 +79,7 @@ export function useAppUpload(
         dragOver.value = false;
     }
 
-    async function handleDrop(
-        event: DragEvent,
-        onFiles: (files: File[]) => Promise<void>,
-    ) {
+    async function handleDrop(event: DragEvent, onFiles: (files: File[]) => Promise<void>) {
         dragOver.value = false;
 
         if (!props.allowDrop || props.disabled) return;

@@ -3,7 +3,17 @@
  */
 import {computed, ref} from 'vue';
 import {defineStore} from 'pinia';
-import type {AlertModalInput, AlertModalItem, ConfirmModalInput, ConfirmModalItem, CustomModalInput, CustomModalItem, ModalCloseReason, ModalItem, ModalOpenPayload} from '~/types/appModal';
+import type {
+    AlertModalInput,
+    AlertModalItem,
+    ConfirmModalInput,
+    ConfirmModalItem,
+    CustomModalInput,
+    CustomModalItem,
+    ModalCloseReason,
+    ModalItem,
+    ModalOpenPayload,
+} from '~/types/appModal';
 
 const MODAL_DEFAULTS = {
     common: {

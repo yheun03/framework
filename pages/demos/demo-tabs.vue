@@ -15,7 +15,8 @@
                 </PageDemoAccordionSection>
 
                 <!-- VARIANT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Variant" desc="line / box / pill / vertical 스타일을 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Variant"
+                    desc="line / box / pill / vertical 스타일을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>

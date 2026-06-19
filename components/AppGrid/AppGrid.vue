@@ -27,6 +27,10 @@ import AppGridHeaderSelectionChoice from "~/components/AppGrid/Header/AppGridHea
 const APP_SELECT_CLOSE_ALL_EVENT = "app-select:close-all";
 const { register, unregister } = useAppGridRegistry();
 const APP_CHOICE_SELECTION_COL_ID = "appChoiceSelection";
+type AppGridRowSelectionOptions = Exclude<GridOptions["rowSelection"], string | undefined> & {
+    headerCheckbox?: boolean;
+    headerCheckboxSelection?: boolean;
+};
 
 const attrs = useAttrs();
 const gridRef = ref<{ $el?: HTMLElement } | null>(null);
@@ -146,17 +150,18 @@ function mergeCellClass(col: AppGridColDef) {
         getAlignClass(col.cellAlign),
         getVerticalAlignClass(col.cellVerticalAlign),
     ].filter(Boolean);
+    const cellClass = col.cellClass;
 
-    if (!alignClasses.length) return col.cellClass;
+    if (!alignClasses.length) return cellClass;
 
-    if (typeof col.cellClass === "function") {
+    if (typeof cellClass === "function") {
         return (params: CellClassParams) => [
-            ...toCellClassList(col.cellClass?.(params)),
+            ...toCellClassList(cellClass(params)),
             ...alignClasses,
         ];
     }
 
-    return [...toCellClassList(col.cellClass), ...alignClasses];
+    return [...toCellClassList(cellClass), ...alignClasses];
 }
 
 function normalizeColumnDefs(columnDefs?: AppGridColDef[]) {
@@ -241,10 +246,12 @@ function toLegacyRowSelection(rowSelection?: GridOptions["rowSelection"]) {
 }
 
 function shouldAddSelectionColumn(rowSelection?: GridOptions["rowSelection"]) {
+    const normalizedRowSelection = rowSelection as AppGridRowSelectionOptions | undefined;
+
     return Boolean(
-        rowSelection &&
-        typeof rowSelection === "object" &&
-        (rowSelection.checkboxes || rowSelection.headerCheckbox),
+        normalizedRowSelection &&
+        typeof normalizedRowSelection === "object" &&
+        (normalizedRowSelection.checkboxes || normalizedRowSelection.headerCheckbox),
     );
 }
 
@@ -258,8 +265,9 @@ function toggleRowSelection(params: CellClickedEvent, rowSelection?: GridOptions
     if (params.colDef.colId === APP_CHOICE_SELECTION_COL_ID) return;
 
     const selected = !params.node.isSelected();
+    const normalizedRowSelection = rowSelection as AppGridRowSelectionOptions | undefined;
 
-    if (typeof rowSelection === "object" && rowSelection.mode === "singleRow") {
+    if (typeof normalizedRowSelection === "object" && normalizedRowSelection.mode === "singleRow") {
         params.node.setSelected(selected, true);
         return;
     }
