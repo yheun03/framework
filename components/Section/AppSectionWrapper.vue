@@ -1,14 +1,14 @@
 <template>
     <section class="app-section-wrapper" :class="`app-section-wrapper--${direction}`" :style="wrapperStyle">
-        <header v-if="title || desc || $slots.header" class="app-section-wrapper__header">
+        <header v-if="title || description || $slots.header" class="app-section-wrapper__header">
             <slot name="header">
                 <div class="app-section-wrapper__header-text">
                     <h2 v-if="title" class="app-section-wrapper__title">
                         {{ title }}
                     </h2>
 
-                    <p v-if="desc" class="app-section-wrapper__desc">
-                        {{ desc }}
+                    <p v-if="description" class="app-section-wrapper__desc">
+                        {{ description }}
                     </p>
                 </div>
             </slot>
@@ -37,14 +37,14 @@ const props = withDefaults(
         direction?: SectionDirection;
         ratio?: SectionRatio;
         title?: string;
-        desc?: string;
+        description?: string;
         gap?: number | string;
     }>(),
     {
         direction: "column",
         ratio: null,
         title: "",
-        desc: "",
+        description: "",
         gap: 16,
     },
 );

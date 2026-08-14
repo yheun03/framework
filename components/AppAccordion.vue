@@ -12,9 +12,9 @@
                             <slot v-if="item.titleSlot" :name="item.titleSlot" :item="item" />
                             <strong v-else>{{ item.title }}</strong>
                         </div>
-                        <p v-if="item.desc" class="app-accordion__desc">{{ item.desc }}</p>
-                        <div v-else-if="item.descSlot" class="app-accordion__desc">
-                            <slot :name="item.descSlot" :item="item" />
+                        <p v-if="item.description" class="app-accordion__desc">{{ item.description }}</p>
+                        <div v-else-if="item.descriptionSlot" class="app-accordion__desc">
+                            <slot :name="item.descriptionSlot" :item="item" />
                         </div>
                     </div>
                     <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
@@ -40,8 +40,8 @@ export type AppAccordionItem = {
     id: string | number;
     title: string;
     titleSlot?: string;
-    desc?: string;
-    descSlot?: string;
+    description?: string;
+    descriptionSlot?: string;
     disabled?: boolean;
     slot?: string;
 };

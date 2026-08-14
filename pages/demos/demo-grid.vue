@@ -7,7 +7,7 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
                 <!-- GRID 1 -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="사용자 목록">
+                <PageDemoSection class="page-demo-section" title="사용자 목록">
                     <AppGridToolbar>
                         <AppGridSearch v-model="search1" :fields="searchFields1" :api="grid1Api" />
                         <AppGridDownload grid-id="grid1" :api="grid1Api" />
@@ -18,17 +18,17 @@
                             :row-selection="multiRowSelection" animate-rows height="320px"
                             @grid-ready="grid1Api = $event.api" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
-                <PageDemoAccordionSection class="page-demo-accordion" title="셀 클릭 데모">
+                </PageDemoSection>
+                <PageDemoSection class="page-demo-section" title="셀 클릭 데모">
                     <ClientOnly>
                         <AppGrid grid-id="grid-cell-click" class="page-demo-grid" :row-data="rows1"
                             :column-defs="columns1" :default-col-def="defaultColDef" :row-selection="multiRowSelection"
                             auto-height animate-rows @cell-clicked="handleCellClicked" />
                     </ClientOnly>
                     <p class="page-demo__desc">{{ clickedCellText }}</p>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
                 <!-- GRID 2 -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="주문 목록">
+                <PageDemoSection class="page-demo-section" title="주문 목록">
                     <AppGridToolbar>
                         <AppGridSearch v-model="search2" :fields="searchFields2" :api="grid2Api" />
                         <AppGridDownload grid-id="grid2" :api="grid2Api" />
@@ -39,9 +39,9 @@
                             :row-selection="multiRowSelection" animate-rows height="320px"
                             @grid-ready="grid2Api = $event.api" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
                 <!-- GRID 3 -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="상품 조회 (단순 그리드)">
+                <PageDemoSection class="page-demo-section" title="상품 조회 (단순 그리드)">
                     <AppGridToolbar>
                         <AppGridSearch v-model="search3" :fields="searchFields3" :api="grid3Api" />
                         <AppGridDownload grid-id="grid3" :api="grid3Api" />
@@ -50,8 +50,8 @@
                         <AppGrid grid-id="grid3" class="page-demo-grid" :row-data="rows3" :column-defs="columns3"
                             :default-col-def="defaultColDef" auto-height animate-rows @grid-ready="grid3Api = $event.api" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
-                <PageDemoAccordionSection class="page-demo-accordion" title="셀 렌더러 인풋 예제">
+                </PageDemoSection>
+                <PageDemoSection class="page-demo-section" title="셀 렌더러 인풋 예제">
                     <AppGridToolbar>
                         <AppGridDownload grid-id="grid4" :api="grid4Api" />
                     </AppGridToolbar>
@@ -60,8 +60,8 @@
                             :default-col-def="inputExampleColDef" auto-height :row-height="56" animate-rows
                             @grid-ready="grid4Api = $event.api" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
-                <PageDemoAccordionSection class="page-demo-accordion" title="페이지네이션 예제">
+                </PageDemoSection>
+                <PageDemoSection class="page-demo-section" title="페이지네이션 예제">
                     <AppGridToolbar>
                         <AppGridDownload grid-id="grid5" :api="grid5Api" />
                     </AppGridToolbar>
@@ -72,7 +72,7 @@
                     </ClientOnly>
                     <AppPagination v-model:page="paginationPage" v-model:page-size="paginationPageSize"
                         :total="rowsPagination.length" :page-size-options="[5, 10, 20]" size="sm" />
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

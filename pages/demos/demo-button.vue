@@ -12,7 +12,7 @@
                 <!-- Variant -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Variant">
+                <PageDemoSection class="page-demo-section" title="Variant">
                     <p class="page-demo-hint">버튼 유형별 기본 스타일을 정의합니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -28,13 +28,13 @@
                         <AppTextButton>text</AppTextButton>
                         <AppTextButton variant="underline">underline </AppTextButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Size -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size">
+                <PageDemoSection class="page-demo-section" title="Size">
                     <p class="page-demo-hint">버튼 크기를 정의합니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -76,13 +76,13 @@
                         <AppTextButton variant="underline" size="md">MD</AppTextButton>
                         <AppTextButton variant="underline" size="lg">LG</AppTextButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Shape -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Shape">
+                <PageDemoSection class="page-demo-section" title="Shape">
                     <p class="page-demo-hint">버튼 모서리 스타일</p>
 
                     <ul class="page-demo-hint-list">
@@ -96,13 +96,13 @@
                         <AppButton variant="fill" shape="round">Round</AppButton>
                         <AppButton variant="fill" shape="pill">Pill</AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Tone -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Tone">
+                <PageDemoSection class="page-demo-section" title="Tone">
                     <p class="page-demo-hint">버튼 색상 스타일</p>
 
                     <div class="page-demo-row">
@@ -114,13 +114,13 @@
                         <AppButton variant="fill" tone="success">Success</AppButton>
                         <AppButton variant="fill" tone="info">Info</AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Icon">
+                <PageDemoSection class="page-demo-section" title="Icon">
                     <p class="page-demo-hint">AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.</p>
 
                     <div class="page-demo-row">
@@ -138,13 +138,13 @@
                             </template>
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Icon Button -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Icon Button">
+                <PageDemoSection class="page-demo-section" title="Icon Button">
                     <p class="page-demo-hint">아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘 크기를 따로 지정할 수 있습니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -160,13 +160,13 @@
                         <AppIconButton aria-label="즐겨찾기" variant="soft" tone="primary"><IconStar /></AppIconButton>
                         <AppIconButton aria-label="삭제" variant="outline" tone="danger"><IconTrash /></AppIconButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- Link -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Link">
+                <PageDemoSection class="page-demo-section" title="Link">
                     <p class="page-demo-hint">AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.</p>
 
                     <ul class="page-demo-hint-list">
@@ -180,13 +180,13 @@
 
                         <AppTextButton href="https://example.com" new-tab> 외부 링크 </AppTextButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
                 <!-- State -->
                 <!-- -------------------------------------------------- -->
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="State">
+                <PageDemoSection class="page-demo-section" title="State">
                     <p class="page-demo-hint">버튼 상태</p>
 
                     <ul class="page-demo-hint-list">
@@ -202,7 +202,7 @@
 
                         <AppButton block> Block </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

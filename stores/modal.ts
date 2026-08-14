@@ -19,7 +19,7 @@ const MODAL_DEFAULTS = {
     common: {
         overlay: true,
         closable: true,
-        closeOnDim: true,
+        closeOnBackdrop: true,
         closeOnEsc: true,
         keepOnConfirm: false,
         width: '560px',

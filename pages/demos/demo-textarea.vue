@@ -10,22 +10,22 @@
                 </header>
 
                 <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본 textarea 입력 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Basic" description="기본 textarea 입력 예시입니다.">
                     <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." />
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- WITH FORM FIELD -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="With FormField"
-                    desc="AppFormField와 함께 label, hint, error를 연결합니다.">
+                <PageDemoSection class="page-demo-section" title="With FormField"
+                    description="AppFormField와 함께 label, hint, error를 연결합니다.">
                     <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다."
                         :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''">
                         <AppTextarea v-model="content" placeholder="문의 내용을 입력하세요." :max-length="200" show-count
                             clearable :state="content && content.length < 10 ? 'error' : null" />
                     </AppFormField>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="xs / sm / md / lg 공통 크기를 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Size" description="xs / sm / md / lg 공통 크기를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "xs"</div>
@@ -51,22 +51,22 @@
                             <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SHAPE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Shape"
-                    desc="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
+                <PageDemoSection class="page-demo-section" title="Shape"
+                    description="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
                     <div class="page-demo-grid">
                         <AppTextarea v-model="shapeValues.square" shape="square" placeholder="square" />
                         <AppTextarea v-model="shapeValues.round" shape="round" placeholder="round" />
                         <AppTextarea v-model="shapeValues.pill" shape="pill" placeholder="pill" />
                         <AppTextarea v-model="shapeValues.underline" shape="underline" placeholder="underline" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- RESIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Resize"
-                    desc="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="Resize"
+                    description="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
@@ -94,11 +94,11 @@
                             <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- STATES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="States"
-                    desc="공통 state와 disabled, readonly 상태를 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="States"
+                    description="공통 state와 disabled, readonly 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-grid">
                             <AppTextarea v-model="stateValues.error" state="error" placeholder="state = error" />
@@ -124,14 +124,14 @@
                             <AppTextarea v-model="invalidValue" invalid placeholder="invalid textarea" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- COUNT / CLEAR -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Count / Clear"
-                    desc="글자 수 표시와 clearable 옵션을 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="Count / Clear"
+                    description="글자 수 표시와 clearable 옵션을 확인합니다.">
                     <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
                         clearable />
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

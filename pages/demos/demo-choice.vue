@@ -10,8 +10,8 @@
                 </header>
 
                 <!-- GUIDE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Usage Guide"
-                    desc="선택 방식은 type, 모양은 variant, 크기는 size로 제어합니다. disabled / readonly / state는 모든 variant에서 공통으로 사용합니다.">
+                <PageDemoSection class="page-demo-section" title="Usage Guide"
+                    description="선택 방식은 type, 모양은 variant, 크기는 size로 제어합니다. disabled / readonly / state는 모든 variant에서 공통으로 사용합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-row">
                             <AppChoice v-model="guide.checkbox" type="checkbox" label="type=checkbox" />
@@ -22,11 +22,11 @@
                                 :toggle-labels="{ checked: 'ON', unchecked: 'OFF' }" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CHECKBOX -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Checkbox"
-                    desc="checkbox는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 각진 형태, round는 둥근 형태를 제공합니다.">
+                <PageDemoSection class="page-demo-section" title="Checkbox"
+                    description="checkbox는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 각진 형태, round는 둥근 형태를 제공합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / MD</h3>
@@ -88,11 +88,11 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- RADIO -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Radio"
-                    desc="radio는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 흰 배경 + 검은 dot, round는 검은 배경 + 흰 dot 구조입니다.">
+                <PageDemoSection class="page-demo-section" title="Radio"
+                    description="radio는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 흰 배경 + 검은 dot, round는 검은 배경 + 흰 dot 구조입니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / MD</h3>
@@ -158,11 +158,11 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CHIP FILTER -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Chip Filter"
-                    desc="다중 선택 가능한 태그/필터 UI 패턴입니다. checkbox + chip variant 조합으로 사용합니다.">
+                <PageDemoSection class="page-demo-section" title="Chip Filter"
+                    description="다중 선택 가능한 태그/필터 UI 패턴입니다. checkbox + chip variant 조합으로 사용합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-row">
                             <AppChoice v-model="chipFilter.development" type="checkbox" variant="chip" label="개발" />
@@ -177,11 +177,11 @@
                                 label="Outline B" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CHIP RADIO GROUP -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Chip Radio Group"
-                    desc="탭, 세그먼트 버튼, 단일 선택 필터처럼 사용하는 패턴입니다. radio + chip variant 조합으로 사용합니다.">
+                <PageDemoSection class="page-demo-section" title="Chip Radio Group"
+                    description="탭, 세그먼트 버튼, 단일 선택 필터처럼 사용하는 패턴입니다. radio + chip variant 조합으로 사용합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-row">
                             <AppChoice v-model="chipRadio.category" type="radio" name="chip-category" value="all"
@@ -199,11 +199,11 @@
                                 variant="ghost" label="리스트형" />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- TOGGLE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Toggle"
-                    desc="ON/OFF 스위치 형태의 checkbox variant입니다.">
+                <PageDemoSection class="page-demo-section" title="Toggle"
+                    description="ON/OFF 스위치 형태의 checkbox variant입니다.">
                     <div class="page-demo-row">
                         <AppChoice v-model="toggle.basic" type="checkbox" variant="toggle" label="ON" />
                         <AppChoice v-model="toggle.off" type="checkbox" variant="toggle" label="OFF" />
@@ -213,11 +213,11 @@
                         <AppChoice v-model="toggle.disabled" type="checkbox" variant="toggle" label="ON" disabled />
                         <AppChoice v-model="toggle.disabledOff" type="checkbox" variant="toggle" label="OFF" disabled />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- STATE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="State"
-                    desc="hint와 state를 함께 사용해 상태 메시지를 표시합니다.">
+                <PageDemoSection class="page-demo-section" title="State"
+                    description="hint와 state를 함께 사용해 상태 메시지를 표시합니다.">
                     <div class="page-demo-stack">
                         <AppChoice v-model="state.error" type="checkbox" label="Error" hint="에러 메시지" state="error" />
 
@@ -227,11 +227,11 @@
                         <AppChoice v-model="state.success" type="checkbox" label="Success" hint="선택 가능"
                             state="success" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DISABLED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
-                    desc="checkbox / radio / chip 계열 각각의 비활성 상태를 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="Disabled"
+                    description="checkbox / radio / chip 계열 각각의 비활성 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <AppChoice v-model="disabled.checkbox" type="checkbox" label="Disabled Checkbox" hint="선택 불가"
                             disabled />
@@ -255,7 +255,7 @@
                                 value="option-b" variant="fill" label="Disabled Fill B" disabled />
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

@@ -8,27 +8,27 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
                 <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="가장 기본적인 Select 사용 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Basic" description="가장 기본적인 Select 사용 예시입니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="basic.department" label="부서" placeholder="부서를 선택하세요" hint="부서를 선택해주세요"
                             :options="departmentOptions" />
                         <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :options="jobOptions" />
                         <AppSelect v-model="basic.country" placeholder="국가 선택" :options="countryOptions" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="Select의 높이를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Size" description="Select의 높이를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect size="xs" label="XS" v-model="sizes.xs" :options="departmentOptions" />
                         <AppSelect size="sm" label="SM" v-model="sizes.sm" :options="departmentOptions" />
                         <AppSelect size="md" label="MD" v-model="sizes.md" :options="departmentOptions" />
                         <AppSelect size="lg" label="LG" v-model="sizes.lg" :options="departmentOptions" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SHAPE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Shape" desc="Select의 border 스타일을 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Shape" description="Select의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect shape="square" label="Square" v-model="shape.square" :options="departmentOptions" />
                         <AppSelect shape="round" label="Round" v-model="shape.round" :options="departmentOptions" />
@@ -36,10 +36,10 @@
                         <AppSelect shape="underline" label="Underline" v-model="shape.underline"
                             :options="departmentOptions" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- STATE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="State" desc="선택 상태에 따른 스타일을 제공합니다.">
+                <PageDemoSection class="page-demo-section" title="State" description="선택 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지"
                             :options="departmentOptions" />
@@ -48,15 +48,15 @@
                         <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능"
                             :options="departmentOptions" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DISABLED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="선택 불가 상태를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Disabled" description="선택 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태"
                             :options="departmentOptions" />
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <!-- STATE PANEL -->

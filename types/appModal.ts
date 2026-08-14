@@ -15,7 +15,7 @@ export type ModalCommonOptions = {
     variant?: string;
     overlay?: boolean;
     closable?: boolean;
-    closeOnDim?: boolean;
+    closeOnBackdrop?: boolean;
     closeOnEsc?: boolean;
     keepOnConfirm?: boolean;
     onClose?: (reason?: ModalCloseReason) => void;

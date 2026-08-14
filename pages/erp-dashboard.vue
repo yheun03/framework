@@ -14,11 +14,11 @@
         </section>
 
         <div class="business-page__grid business-page__grid--2">
-            <AppSection title="월 매출 달성률" desc="목표 12억 원">
+            <AppSection title="월 매출 달성률" description="목표 12억 원">
                 <AppProgressBar :value="78" label="현재 매출" show-value />
                 <div class="business-kpi"><strong>9.4억</strong><span>전월 대비 +8.2%</span></div>
             </AppSection>
-            <AppSection title="재고 회전 현황" desc="카테고리별 적정 재고 비율">
+            <AppSection title="재고 회전 현황" description="카테고리별 적정 재고 비율">
                 <div v-for="item in inventory" :key="item.label" class="business-progress-row">
                     <span>{{ item.label }}</span><AppProgressBar :value="item.value" show-value />
                 </div>

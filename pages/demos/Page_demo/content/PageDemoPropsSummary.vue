@@ -1,34 +1,29 @@
 <template>
-    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" type="multiple" initial-open="all"
-        aria-label="컴포넌트 속성 요약">
+    <AppAccordion v-if="summary" class="page-demo-props" :items="summaryItems" type="multiple" initial-open="all">
         <template #props>
-            <div class="page-demo-prop-table">
-                <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row">
-                    <div class="page-demo-prop-title">
+            <div class="page-demo-prop-table" role="table" aria-label="컴포넌트 속성 목록">
+                <div class="page-demo-prop-head" role="row">
+                    <span role="columnheader">속성</span>
+                    <span role="columnheader">타입</span>
+                    <span role="columnheader">기본값</span>
+                    <span role="columnheader">설명</span>
+                    <span role="columnheader">사용 가능한 값</span>
+                </div>
+
+                <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row" role="row">
+                    <div class="page-demo-prop-title" role="cell" data-label="속성">
                         <code class="page-demo-prop-name">{{ prop.name }}</code>
                         <span v-if="prop.required" class="page-demo-prop-required">required</span>
                     </div>
-
-                    <div class="page-demo-prop-meta">
-                        <dl class="page-demo-prop-spec">
-                            <div>
-                                <dt>type</dt>
-                                <dd><code>{{ getPropType(prop) }}</code></dd>
-                            </div>
-                            <div>
-                                <dt>default</dt>
-                                <dd><code>{{ prop.default ?? "—" }}</code></dd>
-                            </div>
-                        </dl>
-
-                        <span class="page-demo-prop-desc">{{ prop.description }}</span>
-
-                        <div v-if="prop.values?.length" class="page-demo-prop-chip-list">
-                            <code v-for="value in prop.values" :key="`${prop.name}-${value}`"
-                                class="page-demo-prop-chip">
-                                {{ value }}
-                            </code>
-                        </div>
+                    <code class="page-demo-prop-type" role="cell" data-label="타입">{{ getPropType(prop) }}</code>
+                    <code class="page-demo-prop-default" role="cell" data-label="기본값">{{ prop.default ?? "—" }}</code>
+                    <span class="page-demo-prop-desc" role="cell" data-label="설명">{{ prop.description }}</span>
+                    <div class="page-demo-prop-chip-list" role="cell" data-label="사용 가능한 값">
+                        <code v-for="value in prop.values ?? []" :key="`${prop.name}-${value}`"
+                            class="page-demo-prop-chip">
+                            {{ value }}
+                        </code>
+                        <span v-if="!prop.values?.length">—</span>
                     </div>
                 </div>
             </div>
@@ -93,10 +88,8 @@ const summaries: Record<string, DemoSummary> = {
                 values: buttonShapes,
                 default: "round",
             },
-            {
-                name: "AppButton.iconLeft / iconRight",
-                description: "텍스트 옆에 붙는 보조 아이콘 슬롯",
-            },
+            { name: "AppButton.#iconLeft", description: "텍스트 왼쪽 보조 아이콘 슬롯", type: "Vue slot" },
+            { name: "AppButton.#iconRight", description: "텍스트 오른쪽 보조 아이콘 슬롯", type: "Vue slot" },
             {
                 name: "AppTextButton.variant",
                 description: "텍스트 액션 표현: text, underline",
@@ -116,20 +109,24 @@ const summaries: Record<string, DemoSummary> = {
                 default: "md",
             },
             { name: "type", description: "button 태그 타입", values: buttonTypes, default: "button" },
-            { name: "to / href", description: "NuxtLink 또는 a 태그 전환" },
-            { name: "disabled / loading", description: "클릭 불가와 로딩 상태", type: "boolean", default: "false" },
+            { name: "to", description: "NuxtLink 이동 경로", type: "string" },
+            { name: "href", description: "a 태그 이동 주소", type: "string" },
+            { name: "disabled", description: "클릭 불가 상태", type: "boolean", default: "false" },
+            { name: "loading", description: "로딩 상태", type: "boolean", default: "false" },
         ],
     },
     "demo-input": {
         description: "텍스트 입력 필드의 라벨, 상태, 아이콘, 제약을 다룹니다.",
         props: [
             { name: "modelValue", description: "입력 값", type: "string | number | null", required: true },
-            { name: "label / hint", description: "필드 설명과 보조 문구", type: "string" },
+            { name: "label", description: "필드 라벨", type: "string" },
+            { name: "hint", description: "필드 보조 문구", type: "string" },
             { name: "size", description: "입력 필드 높이", values: formSizes, default: "md" },
             { name: "shape", description: "입력 필드 외곽선 형태", values: shapes, default: "round" },
             { name: "state", description: "입력 상태", values: states, default: "null" },
             { name: "type", description: "input native type", values: ["text", "password", "email", "number"], default: "text" },
-            { name: "clearable / passwordToggle", description: "입력 보조 액션", type: "boolean", default: "false" },
+            { name: "clearable", description: "입력값 삭제 버튼 노출", type: "boolean", default: "false" },
+            { name: "passwordToggle", description: "비밀번호 표시 전환 버튼 노출", type: "boolean", default: "false" },
         ],
     },
     "demo-grid": {
@@ -139,7 +136,8 @@ const summaries: Record<string, DemoSummary> = {
             { name: "rowData", description: "렌더링할 행 데이터", type: "Record<string, unknown>[]" },
             { name: "columnDefs", description: "컬럼, 에디터, 포맷 설정", type: "AppGridColDef[]" },
             { name: "searchFields.type", description: "상단 검색 조건 타입", values: ["input", "select", "calendar", "numberRange"] },
-            { name: "height / autoHeight", description: "고정 높이 또는 자동 높이", type: "string | number | boolean" },
+            { name: "height", description: "그리드 고정 높이", type: "string | number" },
+            { name: "autoHeight", description: "콘텐츠 기준 자동 높이", type: "boolean", default: "false" },
             { name: "excelFileName", description: "엑셀 다운로드 파일명", type: "string" },
         ],
     },
@@ -155,16 +153,10 @@ const summaries: Record<string, DemoSummary> = {
     "demo-progress": {
         description: "표시용 바, 조작용 슬라이더, 게이지를 역할별로 비교합니다.",
         props: [
-            {
-                name: "AppProgressBar.value / range",
-                description: "표시 전용 단일 값 또는 범위 값",
-                type: "number | ProgressRange",
-            },
-            {
-                name: "AppProgressSlider.value / range",
-                description: "드래그로 변경하는 단일 값 또는 범위 값",
-                type: "number | ProgressRange",
-            },
+            { name: "AppProgressBar.value", description: "표시 전용 단일 값", type: "number", default: "0" },
+            { name: "AppProgressBar.range", description: "표시 전용 시작·종료 범위", type: "ProgressRange" },
+            { name: "AppProgressSlider.value", description: "드래그로 변경하는 단일 값", type: "number", default: "0" },
+            { name: "AppProgressSlider.range", description: "드래그로 변경하는 시작·종료 범위", type: "ProgressRange" },
             {
                 name: "AppProgressGauge.variant",
                 description: "게이지 표시 타입",
@@ -177,7 +169,8 @@ const summaries: Record<string, DemoSummary> = {
                 values: ["display", "control-single", "control-range"],
                 default: "display",
             },
-            { name: "label / showValue", description: "라벨과 값 노출 여부", type: "string | boolean" },
+            { name: "label", description: "진행률과 함께 표시할 라벨", type: "string" },
+            { name: "showValue", description: "현재 값 노출 여부", type: "boolean", default: "false" },
         ],
     },
     "demo-datepicker": {
@@ -185,11 +178,13 @@ const summaries: Record<string, DemoSummary> = {
         props: [
             { name: "modelValue", description: "선택한 날짜 또는 범위", type: "string | DateRangeValue | string[] | null", required: true },
             { name: "type", description: "날짜 선택 방식", values: ["single", "range", "range-input", "multiple"], default: "single" },
-            { name: "min / max", description: "선택 가능한 날짜 제한", type: "string" },
+            { name: "min", description: "선택 가능한 최소 날짜", type: "string" },
+            { name: "max", description: "선택 가능한 최대 날짜", type: "string" },
             { name: "size", description: "입력 UI 크기", values: formSizes, default: "md" },
             { name: "shape", description: "입력 UI 형태", values: shapes, default: "round" },
             { name: "state", description: "검증 상태", values: states, default: "null" },
-            { name: "disabled / readonly", description: "비활성 및 읽기 전용 제어", type: "boolean", default: "false" },
+            { name: "disabled", description: "입력 비활성 상태", type: "boolean", default: "false" },
+            { name: "readonly", description: "읽기 전용 상태", type: "boolean", default: "false" },
         ],
     },
     "demo-select": {
@@ -202,19 +197,22 @@ const summaries: Record<string, DemoSummary> = {
             { name: "shape", description: "셀렉트 외곽선 형태", values: shapes, default: "round" },
             { name: "state", description: "검증 상태", values: states, default: "null" },
             { name: "required", description: "placeholder 재선택 제한", type: "boolean", default: "false" },
-            { name: "readonly / disabled", description: "읽기 전용과 비활성 상태", type: "boolean", default: "false" },
+            { name: "readonly", description: "읽기 전용 상태", type: "boolean", default: "false" },
+            { name: "disabled", description: "선택 비활성 상태", type: "boolean", default: "false" },
         ],
     },
     "demo-choice": {
         description: "checkbox, radio, chip 선택 패턴을 한 컴포넌트로 다룹니다.",
         props: [
-            { name: "modelValue / value", description: "선택 상태와 radio option 값", type: "boolean | string | number | null", required: true },
+            { name: "modelValue", description: "현재 선택 상태 또는 값", type: "boolean | string | number | null", required: true },
+            { name: "value", description: "radio option 값", type: "string | number" },
             { name: "type", description: "선택 방식", values: ["checkbox", "radio"], default: "checkbox" },
             { name: "variant", description: "선택 UI 형태", values: ["default", "round", "chip", "chip-outline", "fill", "ghost", "toggle"], default: "default" },
             { name: "toggleLabels", description: "toggle 전용 checked / unchecked 문구", type: "{ checked?: string; unchecked?: string }" },
             { name: "size", description: "선택 컴포넌트 크기", values: controlSizes, default: "md" },
             { name: "state", description: "검증 상태", values: states, default: "null" },
-            { name: "disabled / readonly", description: "선택 불가와 읽기 전용 상태", type: "boolean", default: "false" },
+            { name: "disabled", description: "선택 불가 상태", type: "boolean", default: "false" },
+            { name: "readonly", description: "읽기 전용 상태", type: "boolean", default: "false" },
         ],
     },
     "demo-upload-image": {
@@ -224,7 +222,8 @@ const summaries: Record<string, DemoSummary> = {
             { name: "multiple", description: "다중 이미지 선택", type: "boolean", default: "false" },
             { name: "allowDrop", description: "드래그 앤 드롭 허용 여부", type: "boolean", default: "true" },
             { name: "accept", description: "허용 파일 형식", type: "string", default: "image/*" },
-            { name: "maxSizeBytes / maxCount", description: "파일 용량과 개수 제한", type: "number" },
+            { name: "maxSizeBytes", description: "파일당 최대 용량", type: "number" },
+            { name: "maxCount", description: "다중 선택 최대 개수", type: "number" },
             { name: "readMode", description: "이미지 읽기 방식", values: ["dataUrl", "objectUrl"], default: "dataUrl" },
             { name: "disabled", description: "파일 선택 불가 상태", type: "boolean", default: "false" },
         ],
@@ -235,7 +234,8 @@ const summaries: Record<string, DemoSummary> = {
             { name: "modelValue", description: "선택된 파일 또는 파일 목록", type: "AppFileUploadItem | AppFileUploadItem[] | null", default: "null" },
             { name: "multiple", description: "다중 파일 선택", type: "boolean", default: "false" },
             { name: "allowDrop", description: "드래그 앤 드롭 허용 여부", type: "boolean", default: "true" },
-            { name: "accept / maxSizeBytes", description: "파일 형식과 용량 제한", type: "string | number" },
+            { name: "accept", description: "허용 파일 형식", type: "string", default: "*/*" },
+            { name: "maxSizeBytes", description: "파일당 최대 용량", type: "number" },
             { name: "maxCount", description: "다중 선택 최대 개수", type: "number" },
             { name: "disabled", description: "파일 선택 불가 상태", type: "boolean", default: "false" },
         ],
@@ -244,10 +244,13 @@ const summaries: Record<string, DemoSummary> = {
         description: "모달 타입, 닫기 정책, 스택 동작을 확인합니다.",
         props: [
             { name: "type", description: "모달 타입", values: ["alert", "confirm", "custom"], required: true },
-            { name: "title / message", description: "헤더와 본문 문구", type: "string" },
+            { name: "title", description: "모달 헤더 문구", type: "string" },
+            { name: "message", description: "Alert/Confirm 본문 문구", type: "string" },
             { name: "closeOnEsc", description: "ESC 닫기 허용", type: "boolean", default: "true" },
             { name: "closeOnBackdrop", description: "배경 클릭 닫기 허용", type: "boolean", default: "true" },
-            { name: "actions", description: "버튼 구성과 콜백", type: "ModalAction[]" },
+            { name: "closable", description: "헤더 닫기 버튼 노출", type: "boolean", default: "true" },
+            { name: "confirmText", description: "확인 버튼 문구", type: "string", default: "확인" },
+            { name: "cancelText", description: "취소 버튼 문구", type: "string", default: "취소" },
         ],
     },
     "demo-table": {
@@ -258,14 +261,15 @@ const summaries: Record<string, DemoSummary> = {
             { name: "rows.cells.type", description: "셀 렌더링 타입", values: ["input", "select", "textarea", "choice", "date", "button", "file", "image"] },
             { name: "title", description: "테이블 제목", type: "string", default: "''" },
             { name: "defaultLabelWidth", description: "라벨 컬럼 기본 너비", type: "string", default: "140px" },
-            { name: "readonly / disabled", description: "전체 입력 상태 제어", type: "boolean", default: "false" },
+            { name: "readonly", description: "전체 필드 읽기 전용", type: "boolean", default: "false" },
+            { name: "disabled", description: "전체 필드 비활성", type: "boolean", default: "false" },
         ],
     },
     "demo-section": {
         description: "업무 화면 섹션의 헤더, 본문, 푸터 영역을 조합합니다.",
         props: [
             { name: "title", description: "섹션 제목", type: "string", default: "''" },
-            { name: "desc", description: "섹션 보조 설명", type: "string", default: "''" },
+            { name: "description", description: "섹션 보조 설명", type: "string", default: "''" },
             { name: "direction", description: "섹션 배치 방향", values: ["column", "row"], default: "column" },
             { name: "ratio", description: "row 배치 시 컬럼 비율", type: "SectionRatio", default: "null" },
             { name: "gap", description: "섹션 내부 간격", type: "number | string", default: "12" },
@@ -276,7 +280,8 @@ const summaries: Record<string, DemoSummary> = {
         props: [
             { name: "items", description: "패널 제목과 본문 데이터", type: "AppAccordionItem[]", required: true },
             { name: "type", description: "열림 방식", values: ["single", "multiple"], default: "multiple" },
-            { name: "openIds / defaultOpenIds", description: "제어/비제어 열림 값", type: "Array<string | number>" },
+            { name: "openIds", description: "제어 방식의 열린 패널 ID", type: "Array<string | number>" },
+            { name: "defaultOpenIds", description: "비제어 방식의 초기 열린 패널 ID", type: "Array<string | number>" },
             { name: "initialOpen", description: "초기 열림 상태", values: ["none", "first", "all"], default: "none" },
         ],
     },
@@ -284,7 +289,8 @@ const summaries: Record<string, DemoSummary> = {
         description: "탭 목록, 활성 값, 배치와 크기를 확인합니다.",
         props: [
             { name: "items", description: "탭 라벨과 값 배열", type: "AppTabItem[]", required: true },
-            { name: "activeId / defaultActiveId", description: "제어/비제어 활성 탭 값", type: "string | number | null" },
+            { name: "activeId", description: "제어 방식의 활성 탭 ID", type: "string | number | null" },
+            { name: "defaultActiveId", description: "비제어 방식의 초기 활성 탭 ID", type: "string | number | null" },
             { name: "initialActive", description: "초기 활성 탭 선택 방식", values: ["first", "none"], default: "first" },
             { name: "variant", description: "탭 표시 스타일", values: ["line", "box", "pill"], default: "line" },
             { name: "orientation", description: "탭 배치 방향", values: ["horizontal", "vertical"], default: "horizontal" },
@@ -311,7 +317,8 @@ const summaries: Record<string, DemoSummary> = {
             { name: "pageSizeOptions", description: "페이지당 개수 옵션", type: "number[]", default: "[10, 20, 50, 100]" },
             { name: "siblingCount", description: "현재 페이지 주변 노출 수", type: "number", default: "1" },
             { name: "size", description: "페이지네이션 크기", values: controlSizes, default: "md" },
-            { name: "showTotal / showPageSize", description: "전체 수와 페이지 크기 영역 표시", type: "boolean", default: "true" },
+            { name: "showTotal", description: "전체 아이템 수 표시", type: "boolean", default: "true" },
+            { name: "showPageSize", description: "페이지 크기 선택 영역 표시", type: "boolean", default: "true" },
             { name: "disabled", description: "페이지 이동 비활성", type: "boolean", default: "false" },
         ],
     },
@@ -324,7 +331,8 @@ const summaries: Record<string, DemoSummary> = {
             { name: "shape", description: "Textarea 외곽선 형태", values: shapes, default: "round" },
             { name: "state", description: "검증 상태", values: states, default: "null" },
             { name: "resize", description: "리사이즈 방향", values: ["none", "vertical", "horizontal", "both"], default: "vertical" },
-            { name: "disabled / readonly", description: "입력 가능 상태", type: "boolean", default: "false" },
+            { name: "disabled", description: "입력 비활성 상태", type: "boolean", default: "false" },
+            { name: "readonly", description: "읽기 전용 상태", type: "boolean", default: "false" },
         ],
     },
 };
@@ -342,18 +350,13 @@ function getPropType(prop: DemoProp) {
     return prop.values.map((value) => `'${value}'`).join(" | ");
 }
 
-const summaryItems = computed<AppAccordionItem[]>(() => {
-    if (!summary.value) return [];
+const summaryItems = computed<AppAccordionItem[]>(() => summary.value ? [
+    {
+        id: "props",
+        title: "Props",
+        description: summary.value.description,
+        slot: "props",
+    },
+] : []);
 
-    const items: AppAccordionItem[] = [
-        {
-            id: "props",
-            title: "Props",
-            desc: summary.value.description,
-            slot: "props",
-        },
-    ];
-
-    return items;
-});
 </script>

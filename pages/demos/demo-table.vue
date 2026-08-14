@@ -8,7 +8,7 @@
                 </header>
 
                 <!-- BASIC TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic Types">
+                <PageDemoSection class="page-demo-section" title="Basic Types">
                     <p class="page-demo__desc">
                         AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각
                         행의 <code>th</code>에는 <code>cell.type</code>이,
@@ -18,51 +18,51 @@
                     <ClientOnly>
                         <AppTable v-model="basicForm" :rows="basicRows" title="Basic" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- LAYOUT TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Layout Types"
-                    desc="stacked / label-full 레이아웃 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Layout Types"
+                    description="stacked / label-full 레이아웃 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- BUTTON TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Button Types"
-                    desc="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Button Types"
+                    description="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CHOICE TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Choice Types"
-                    desc="radio / checkbox 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Choice Types"
+                    description="radio / checkbox 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DATE TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Date Types"
-                    desc="date / range_date 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Date Types"
+                    description="date / range_date 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CONTACT TYPES -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Contact Types"
-                    desc="phone / email 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Contact Types"
+                    description="phone / email 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
                     </ClientOnly>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- STATE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Readonly / Disabled"
-                    desc="readonly / disabled 상태 확인용 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Readonly / Disabled"
+                    description="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
                         <ClientOnly>
                             <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" readonly />
@@ -72,7 +72,7 @@
                             <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled" disabled />
                         </ClientOnly>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

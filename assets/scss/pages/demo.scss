@@ -8,13 +8,13 @@
 
 .page-demo {
     width: 100%;
-    max-width: 1280px;
-    padding: 20px;
+    max-width: 1440px;
+    padding: 14px;
 
     &__header {
         display: grid;
-        gap: 8px;
-        padding: 4px 0 8px;
+        gap: 4px;
+        padding: 0 2px 2px;
     }
 
     &__title {
@@ -32,25 +32,84 @@
 
     &-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 360px;
-        gap: 20px;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+        gap: 12px;
         align-items: start;
     }
 
     &-main {
         display: grid;
-        gap: 16px;
+        gap: 12px;
         min-width: 0;
     }
 
     &-aside {
+        align-self: stretch;
         min-width: 0;
 
         &__sticky {
             position: sticky;
-            top: 16px;
+            top: 12px;
+            max-height: calc(100dvh - 64px);
+            padding: 6px;
+            overflow: auto;
+            border: 1px solid $gray-200;
+            border-radius: 12px;
+            background: rgba($gray-900, 0.025);
+            box-shadow: 0 6px 18px rgba($gray-900, 0.06);
+
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 999px;
+                background: $gray-300;
+            }
+        }
+    }
+
+    &-props {
+        gap: 0;
+
+        :where(.app-accordion__item) {
+            border: 0;
+            border-radius: 8px;
+        }
+
+        :where(.app-accordion__trigger) {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            padding: 12px;
+            background: $gray-0;
+        }
+
+        :where(.app-accordion__panel-inner) {
+            padding: 0;
+        }
+    }
+
+    &-section {
+        gap: 0;
+
+        :where(.app-accordion__item) {
+            border-radius: 10px;
+        }
+
+        :where(.app-accordion__trigger) {
+            padding: 12px 14px;
+            transition: background 0.15s ease;
+
+            &:hover {
+                background: rgba($gray-900, 0.025);
+            }
+        }
+
+        :where(.app-accordion__panel-inner) {
             display: grid;
-            gap: 16px;
+            gap: 10px;
+            padding: 12px 14px;
         }
     }
 
@@ -75,14 +134,14 @@
     }
 
     &-accordion {
-        gap: 12px;
+        gap: 8px;
 
         :where(.app-accordion__item) {
             border-radius: 8px;
         }
 
         :where(.app-accordion__trigger) {
-            padding: 16px;
+            padding: 12px 14px;
         }
 
         :where(.app-accordion__title) {
@@ -91,8 +150,8 @@
 
         :where(.app-accordion__panel-inner) {
             display: grid;
-            gap: 12px;
-            padding: 16px;
+            gap: 10px;
+            padding: 12px 14px;
         }
     }
 
@@ -136,8 +195,16 @@
     &-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
+        gap: 8px;
         --ag-border-radius: 8px;
+
+        >:not([class*="ag-"]) {
+            min-width: 0;
+            padding: 10px;
+            border: 1px solid $gray-200;
+            border-radius: 8px;
+            background: rgba($gray-900, 0.015);
+        }
 
         &>[class*="ag-"] {
             grid-column: span 3;
@@ -187,16 +254,28 @@
     &-prop-table {
         display: grid;
         gap: 0;
-        overflow: hidden;
-        border: 1px solid $gray-200;
-        border-radius: 8px;
+    }
+
+    &-prop-head,
+    &-prop-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.8fr) minmax(170px, 1fr) minmax(90px, 0.5fr) minmax(180px, 1.25fr) minmax(180px, 1.2fr);
+        gap: 16px;
+        align-items: start;
+    }
+
+    &-prop-head {
+        padding: 9px 18px;
+        border-bottom: 1px solid $gray-200;
+        background: rgba($gray-900, 0.015);
+        color: $gray-500;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
     }
 
     &-prop-row {
-        display: grid;
-        grid-template-columns: minmax(110px, 0.56fr) minmax(0, 1.44fr);
-        gap: 12px;
-        padding: 12px;
+        padding: 12px 18px;
         border-top: 1px solid $gray-200;
 
         &:first-child {
@@ -220,38 +299,11 @@
         word-break: break-word;
     }
 
-    &-prop-meta {
-        display: grid;
-        gap: 8px;
+    &-prop-type,
+    &-prop-default {
         min-width: 0;
-    }
-
-    &-prop-spec {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(72px, auto);
-        gap: 6px 12px;
-        margin: 0;
-
-        >div {
-            display: grid;
-            gap: 2px;
-            min-width: 0;
-        }
-
-        dt {
-            color: $gray-500;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        dd {
-            min-width: 0;
-            margin: 0;
-            color: $gray-800;
-            overflow-wrap: anywhere;
-        }
+        color: $gray-800;
+        overflow-wrap: anywhere;
     }
 
     &-prop-required {
@@ -329,6 +381,111 @@
     }
 }
 
+@media (min-width: 1200px) {
+    .page-demo-aside {
+        .page-demo-prop-table {
+            background: $gray-0;
+        }
+
+        .page-demo-prop-head {
+            display: none;
+        }
+
+        .page-demo-prop-row {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 8px 12px;
+            padding: 10px 14px;
+            background: $gray-0;
+
+            &:nth-child(even) {
+                background: rgba($gray-900, 0.018);
+            }
+
+            >[data-label]::before {
+                display: block;
+                margin-bottom: 2px;
+                color: $gray-500;
+                font-family: initial;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                content: attr(data-label);
+            }
+        }
+
+        .page-demo-prop-title {
+            align-items: center;
+        }
+
+        .page-demo-prop-type,
+        .page-demo-prop-default,
+        .page-demo-prop-desc,
+        .page-demo-prop-chip-list {
+            line-height: 1.5;
+        }
+
+        .page-demo-prop-title,
+        .page-demo-prop-desc,
+        .page-demo-prop-chip-list {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+@media (max-width: 1199px) {
+    .page-demo {
+        &-aside__sticky {
+            max-height: none;
+            padding: 0;
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        &-props :where(.app-accordion__item) {
+            border: 1px solid $gray-200;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .page-demo {
+        &-prop-head {
+            display: none;
+        }
+
+        &-prop-table {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0;
+        }
+
+        &-prop-row {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 10px 16px;
+            align-content: start;
+
+            >[data-label]::before {
+                display: block;
+                margin-bottom: 3px;
+                color: $gray-500;
+                font-family: initial;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                content: attr(data-label);
+            }
+        }
+
+        &-prop-title,
+        &-prop-desc,
+        &-prop-chip-list {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
 @media (max-width: 900px) {
     .page-demo {
         padding: 16px;
@@ -340,6 +497,15 @@
         &-aside__sticky {
             position: static;
             top: auto;
+        }
+
+        &-props__header {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        &-prop-table {
+            grid-template-columns: 1fr;
         }
 
         &-grid {
