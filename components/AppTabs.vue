@@ -50,7 +50,7 @@
 import type { Component } from "vue";
 
 type TabInitialActive = "first" | "none";
-type TabVariant = "line" | "box" | "pill" | "vertical";
+type TabVariant = "line" | "box" | "pill";
 type TabSize = "sm" | "md" | "lg";
 type TabOrientation = "horizontal" | "vertical";
 type TabButtonRef = HTMLButtonElement;
@@ -144,13 +144,9 @@ const currentActiveId = computed(() => {
     return isControlled.value ? (props.activeId ?? null) : internalActiveId.value;
 });
 
-const resolvedVariant = computed(() =>
-    props.variant === "vertical" ? "line" : props.variant,
-);
+const resolvedVariant = computed(() => props.variant);
 
-const resolvedOrientation = computed(() =>
-    props.variant === "vertical" ? "vertical" : props.orientation,
-);
+const resolvedOrientation = computed(() => props.orientation);
 
 function handleActiveIdChange(next: string | number | null) {
     if (!isControlled.value) {

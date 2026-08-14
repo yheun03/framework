@@ -40,9 +40,9 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Gauge Display"
                     desc="반원 게이지와 반도넛 범위의 기본 표시 예시입니다.">
                     <div class="page-demo-grid">
-                        <AppProgressGauge :value="gaugeDisplayValue" type="gauge" label="속도" />
+                        <AppProgressGauge :value="gaugeDisplayValue" variant="gauge" label="속도" />
 
-                        <AppProgressGauge :range="gaugeRangeDisplay" type="semi-doughnut-range" label="권장 범위" />
+                        <AppProgressGauge :range="gaugeRangeDisplay" variant="semi-doughnut-range" label="권장 범위" />
                     </div>
                 </PageDemoAccordionSection>
 
@@ -50,10 +50,10 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Gauge Drag Control"
                     desc="드래그로 게이지 값과 반도넛 범위를 조정할 수 있습니다.">
                     <div class="page-demo-grid">
-                        <AppProgressGauge v-model:value="gaugeControlValue" type="gauge" mode="control-single"
+                        <AppProgressGauge v-model:value="gaugeControlValue" variant="gauge" mode="control-single"
                             label="속도" />
 
-                        <AppProgressGauge :range="gaugeControlRange" type="semi-doughnut-range" mode="control-range"
+                        <AppProgressGauge :range="gaugeControlRange" variant="semi-doughnut-range" mode="control-range"
                             label="권장 범위" @update:range="handleGaugeRangeUpdate" />
                     </div>
                 </PageDemoAccordionSection>
@@ -63,7 +63,7 @@
                     <div class="page-demo-grid">
                         <AppProgressSlider :value="disabledLinearValue" label="Disabled Linear" show-value disabled />
 
-                        <AppProgressGauge :value="disabledGaugeValue" type="gauge" mode="control-single"
+                        <AppProgressGauge :value="disabledGaugeValue" variant="gauge" mode="control-single"
                             label="Disabled Gauge" disabled />
                     </div>
                 </PageDemoAccordionSection>

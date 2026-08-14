@@ -194,14 +194,23 @@
 
     &-prop-row {
         display: grid;
-        grid-template-columns: minmax(96px, 0.68fr) minmax(0, 1.32fr);
-        gap: 10px;
-        padding: 10px 12px;
+        grid-template-columns: minmax(110px, 0.56fr) minmax(0, 1.44fr);
+        gap: 12px;
+        padding: 12px;
         border-top: 1px solid $gray-200;
 
         &:first-child {
             border-top: 0;
         }
+    }
+
+    &-prop-title {
+        display: flex;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+        min-width: 0;
     }
 
     &-prop-name {
@@ -215,6 +224,45 @@
         display: grid;
         gap: 8px;
         min-width: 0;
+    }
+
+    &-prop-spec {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(72px, auto);
+        gap: 6px 12px;
+        margin: 0;
+
+        >div {
+            display: grid;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        dt {
+            color: $gray-500;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        dd {
+            min-width: 0;
+            margin: 0;
+            color: $gray-800;
+            overflow-wrap: anywhere;
+        }
+    }
+
+    &-prop-required {
+        display: inline-flex;
+        min-height: 18px;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: rgba($status-error, 0.1);
+        color: $status-error;
+        font-size: 10px;
+        font-weight: 600;
     }
 
     &-prop-desc {

@@ -26,8 +26,7 @@
                         <AppButton variant="fill">fill</AppButton>
                         <AppButton variant="outline">outline</AppButton>
                         <AppTextButton>text</AppTextButton>
-                        <AppTextButton variant="underline">underline
-                        </AppTextButton>
+                        <AppTextButton variant="underline">underline </AppTextButton>
                     </div>
                 </PageDemoAccordionSection>
 
@@ -64,9 +63,7 @@
                         <AppButton variant="fill" size="xl">XL</AppButton>
                     </div>
 
-                    <p class="page-demo-hint">
-                        text / underline 버튼은 typography가 별도로 적용됩니다.
-                    </p>
+                    <p class="page-demo-hint">text / underline 버튼은 typography가 별도로 적용됩니다.</p>
 
                     <div class="page-demo-row">
                         <AppTextButton size="sm">SM</AppTextButton>
@@ -124,9 +121,7 @@
                 <!-- -------------------------------------------------- -->
 
                 <PageDemoAccordionSection class="page-demo-accordion" title="Icon">
-                    <p class="page-demo-hint">
-                        AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.
-                    </p>
+                    <p class="page-demo-hint">AppButton / AppTextButton 모두 아이콘 슬롯을 지원합니다.</p>
 
                     <div class="page-demo-row">
                         <AppButton variant="fill">
@@ -150,21 +145,18 @@
                 <!-- -------------------------------------------------- -->
 
                 <PageDemoAccordionSection class="page-demo-accordion" title="Icon Button">
-                    <p class="page-demo-hint">
-                        아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘
-                        크기를 따로 지정할 수 있습니다.
-                    </p>
+                    <p class="page-demo-hint">아이콘만 있는 액션은 AppIconButton을 사용합니다. 버튼 영역과 아이콘 크기를 따로 지정할 수 있습니다.</p>
 
                     <ul class="page-demo-hint-list">
-                        <li><b>button-size</b> : 클릭 영역 크기</li>
+                        <li><b>size</b> : 클릭 영역 크기</li>
                         <li><b>icon-size</b> : 아이콘 시각 크기</li>
                         <li><b>icon</b> : 아이콘 컴포넌트</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="xs" icon-size="xs" />
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="md" icon-size="md" />
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" button-size="xl" icon-size="lg" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="xs" icon-size="xs" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="md" icon-size="md" />
+                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="xl" icon-size="lg" />
                         <AppIconButton :icon="IconStar" aria-label="즐겨찾기" variant="soft" tone="primary" />
                         <AppIconButton :icon="IconTrash" aria-label="삭제" variant="outline" tone="danger" />
                     </div>
@@ -175,9 +167,7 @@
                 <!-- -------------------------------------------------- -->
 
                 <PageDemoAccordionSection class="page-demo-accordion" title="Link">
-                    <p class="page-demo-hint">
-                        AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.
-                    </p>
+                    <p class="page-demo-hint">AppTextButton은 버튼 / 링크 / NuxtLink를 자동으로 처리합니다.</p>
 
                     <ul class="page-demo-hint-list">
                         <li><b>to</b> → NuxtLink</li>
@@ -188,9 +178,7 @@
                     <div class="page-demo-row">
                         <AppTextButton to="/demos/demo-input"> 내부 라우팅 </AppTextButton>
 
-                        <AppTextButton href="https://example.com" new-tab>
-                            외부 링크
-                        </AppTextButton>
+                        <AppTextButton href="https://example.com" new-tab> 외부 링크 </AppTextButton>
                     </div>
                 </PageDemoAccordionSection>
 
@@ -215,7 +203,6 @@
                         <AppButton block> Block </AppButton>
                     </div>
                 </PageDemoAccordionSection>
-
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -228,9 +215,9 @@
 </template>
 
 <script setup lang="ts">
-import { IconStar, IconTrash } from "~/components/icons";
+import { IconStar, IconTrash } from '~/components/icons';
 
-const { title, description } = useDemoI18n("button");
+const { title, description } = useDemoI18n('button');
 </script>
 
 <!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->

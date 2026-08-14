@@ -59,7 +59,7 @@
                         미리보기
                     </AppTextButton>
 
-                    <AppIconButton :icon="IconClose" aria-label="파일 삭제" :button-size="28" :icon-size="16"
+                    <AppIconButton :icon="IconClose" aria-label="파일 삭제" :size="28" :icon-size="16"
                         :disabled="disabled" @click="handleRemoveItem(uploadItem.id)" />
                 </div>
             </li>

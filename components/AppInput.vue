@@ -29,11 +29,11 @@
 
             <!-- clear -->
             <AppIconButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right"
-                :icon="IconClose" aria-label="입력값 지우기" button-size="md" icon-size="md" @click="handleClear" />
+                :icon="IconClose" aria-label="입력값 지우기" size="md" icon-size="md" @click="handleClear" />
 
             <!-- password toggle -->
             <AppIconButton v-if="passwordToggle" class="app-input__icon app-input__icon--right"
-                :icon="showPassword ? IconEyeOff : IconEye" aria-label="비밀번호 표시 전환" button-size="md" icon-size="md"
+                :icon="showPassword ? IconEyeOff : IconEye" aria-label="비밀번호 표시 전환" size="md" icon-size="md"
                 @click="handlePasswordToggle" />
 
             <!-- slot right -->

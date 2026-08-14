@@ -8,17 +8,17 @@
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppIconButton class="route-tabs__close" :icon="IconClose" aria-label="탭 닫기" :button-size="20"
+                    <AppIconButton class="route-tabs__close" :icon="IconClose" aria-label="탭 닫기" :size="20"
                         :icon-size="12" @click="(e) => handleTabClose(e, t.key)" />
                 </li>
             </ul>
         </div>
         <div class="route-tabs__actions">
             <AppIconButton class="route-tabs__action" :icon="IconChevronSmallLeft" aria-label="왼쪽 탭으로 이동"
-                :button-size="24" :icon-size="16" @click="handleMoveToLeftTab" />
+                :size="24" :icon-size="16" @click="handleMoveToLeftTab" />
             <AppIconButton class="route-tabs__action" :icon="IconChevronSmallRight" aria-label="오른쪽 탭으로 이동"
-                :button-size="24" :icon-size="16" @click="handleMoveToRightTab" />
-            <AppIconButton class="route-tabs__action" :icon="IconCloseSmall" aria-label="다른 탭 닫기" :button-size="24"
+                :size="24" :icon-size="16" @click="handleMoveToRightTab" />
+            <AppIconButton class="route-tabs__action" :icon="IconCloseSmall" aria-label="다른 탭 닫기" :size="24"
                 :icon-size="16" @click="handleCloseOtherTabs" />
         </div>
     </div>

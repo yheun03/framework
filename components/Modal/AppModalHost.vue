@@ -14,7 +14,7 @@
                     </div>
 
                     <AppIconButton v-if="modalItem.closable" class="app-modal__close" :icon="IconClose" aria-label="닫기"
-                        :button-size="34" :icon-size="18" @click="handleModalClose(modalItem.id, 'close')" />
+                        :size="34" :icon-size="18" @click="handleModalClose(modalItem.id, 'close')" />
                 </header>
 
                 <section class="app-modal__body">

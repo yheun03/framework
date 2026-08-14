@@ -17,7 +17,7 @@
             </component>
 
             <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
-                aria-label="메뉴 펼치기/접기" :button-size="24" :icon-size="16" :aria-expanded="open"
+                aria-label="메뉴 펼치기/접기" :size="24" :icon-size="16" :aria-expanded="open"
                 :aria-controls="`submenu-${item.id}`" @click.stop="handleToggleOpen">
                 <i class="fi-sr-angle-small-right fi" aria-hidden="true"></i>
             </AppIconButton>
