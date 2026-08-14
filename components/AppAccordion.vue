@@ -1,42 +1,31 @@
 <template>
     <div class="app-accordion">
-        <div v-for="item in props.items" :key="item.id" class="app-accordion__item" :class="{
+        <div v-for="item in items" :key="item.id" class="app-accordion__item" :class="{
             'is-open': isOpen(item.id),
             'is-disabled': item.disabled,
         }">
-            <button :id="getTriggerId(item.id)" type="button" class="app-accordion__trigger" :disabled="item.disabled"
-                :aria-expanded="isOpen(item.id)" :aria-controls="getPanelId(item.id)"
-                @click="handleItemToggle(item.id)">
+            <button type="button" class="app-accordion__trigger" :disabled="item.disabled"
+                :aria-expanded="isOpen(item.id)" @click="toggle(item.id)">
                 <div class="app-accordion__trigger-content">
                     <div class="app-accordion__text">
                         <div class="app-accordion__title">
                             <slot v-if="item.titleSlot" :name="item.titleSlot" :item="item" />
-
-                            <strong v-else>
-                                {{ item.title }}
-                            </strong>
+                            <strong v-else>{{ item.title }}</strong>
                         </div>
-
-                        <p v-if="item.desc" class="app-accordion__desc">
-                            {{ item.desc }}
-                        </p>
-
+                        <p v-if="item.desc" class="app-accordion__desc">{{ item.desc }}</p>
                         <div v-else-if="item.descSlot" class="app-accordion__desc">
                             <slot :name="item.descSlot" :item="item" />
                         </div>
                     </div>
-
                     <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
                         <IconChevronDown />
                     </span>
                 </div>
             </button>
 
-            <div v-show="isOpen(item.id)" :id="getPanelId(item.id)" class="app-accordion__panel" role="region"
-                :aria-labelledby="getTriggerId(item.id)">
+            <div v-if="isOpen(item.id)" class="app-accordion__panel">
                 <div class="app-accordion__panel-inner">
                     <slot v-if="item.slot" :name="item.slot" :item="item" />
-
                     <div v-else class="app-accordion__empty">내용이 없습니다.</div>
                 </div>
             </div>
@@ -46,9 +35,6 @@
 
 <script setup lang="ts">
 import { IconChevronDown } from "~/components/icons";
-
-type AccordionOpenMode = "single" | "multiple";
-type AccordionInitialOpen = "none" | "first" | "all";
 
 export type AppAccordionItem = {
     id: string | number;
@@ -60,103 +46,39 @@ export type AppAccordionItem = {
     slot?: string;
 };
 
-const props = withDefaults(
-    defineProps<{
-        items: AppAccordionItem[];
-        openIds?: Array<string | number>;
-        defaultOpenIds?: Array<string | number>;
-        mode?: AccordionOpenMode;
-        initialOpen?: AccordionInitialOpen;
-    }>(),
-    {
-        openIds: undefined,
-        defaultOpenIds: undefined,
-        mode: "multiple",
-        initialOpen: "none",
-    },
-);
-
-const emit = defineEmits<{
-    (e: "update:openIds", value: Array<string | number>): void;
-    (e: "toggle", payload: { id: string | number; open: boolean }): void;
-}>();
-
-const isControlled = computed(() => Array.isArray(props.openIds));
-
-function getInitialOpenIds() {
-    if (Array.isArray(props.defaultOpenIds)) {
-        return [...props.defaultOpenIds];
-    }
-
-    if (props.initialOpen === "all") {
-        return props.items
-            .filter((item) => !item.disabled)
-            .map((item) => item.id);
-    }
-
-    if (props.initialOpen === "first") {
-        const firstEnabledItem = props.items.find(
-            (item) => !item.disabled,
-        );
-        return firstEnabledItem ? [firstEnabledItem.id] : [];
-    }
-
-    return [];
-}
-
-const internalOpenIds = ref<Array<string | number>>(getInitialOpenIds());
-
-watch(
-    () => [props.items, props.defaultOpenIds, props.initialOpen],
-    () => {
-        if (isControlled.value) return;
-        internalOpenIds.value = getInitialOpenIds();
-    },
-    { deep: true },
-);
-
-const currentOpenIds = computed(() => {
-    return isControlled.value ? (props.openIds ?? []) : internalOpenIds.value;
+const props = withDefaults(defineProps<{
+    items: AppAccordionItem[];
+    openIds?: Array<string | number>;
+    defaultOpenIds?: Array<string | number>;
+    mode?: "single" | "multiple";
+    initialOpen?: "none" | "first" | "all";
+}>(), {
+    mode: "multiple",
+    initialOpen: "none",
 });
 
-function handleOpenIdsChange(next: Array<string | number>) {
-    if (!isControlled.value) {
-        internalOpenIds.value = next;
-    }
+const emit = defineEmits<{
+    "update:openIds": [Array<string | number>];
+    toggle: [{ id: string | number; open: boolean }];
+}>();
 
-    emit("update:openIds", next);
-}
+const firstOpenItem = props.items.find((item) => !item.disabled);
+const initialIds = props.defaultOpenIds ?? (props.initialOpen === "all"
+    ? props.items.filter((item) => !item.disabled).map((item) => item.id)
+    : props.initialOpen === "first" && firstOpenItem ? [firstOpenItem.id] : []);
+const openedIds = ref<Array<string | number>>(initialIds);
 
 function isOpen(id: string | number) {
-    return currentOpenIds.value.includes(id);
+    return (props.openIds ?? openedIds.value).includes(id);
 }
 
-function handleItemToggle(id: string | number) {
-    const target = props.items.find((item) => item.id === id);
+function toggle(id: string | number) {
+    const next = isOpen(id)
+        ? (props.openIds ?? openedIds.value).filter((itemId) => itemId !== id)
+        : props.mode === "single" ? [id] : [...(props.openIds ?? openedIds.value), id];
 
-    if (!target || target.disabled) return;
-
-    const currentlyOpen = isOpen(id);
-    let next: Array<string | number> = [];
-
-    if (props.mode === "single") {
-        next = currentlyOpen ? [] : [id];
-    } else {
-        next = currentlyOpen
-            ? currentOpenIds.value.filter((openId) => openId !== id)
-            : [...currentOpenIds.value, id];
-    }
-
-    handleOpenIdsChange(next);
-    emit("toggle", { id, open: !currentlyOpen });
+    if (!props.openIds) openedIds.value = next;
+    emit("update:openIds", next);
+    emit("toggle", { id, open: next.includes(id) });
 }
-
-function getPanelId(id: string | number) {
-    return `app-accordion-panel-${id}`;
-}
-
-function getTriggerId(id: string | number) {
-    return `app-accordion-trigger-${id}`;
-}
-
 </script>

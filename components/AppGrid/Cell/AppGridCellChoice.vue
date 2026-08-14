@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type ChoiceType = 'checkbox' | 'radio';
 type ChoiceValue = string | number | boolean | null;
@@ -31,7 +30,7 @@ type ChoiceRendererParams = {
     type?: ChoiceType;
 };
 
-const props = defineProps<AppGridCellRendererProps<ChoiceValue | Array<string | number>, ChoiceRendererParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<ChoiceValue | Array<string | number>, ChoiceRendererParams>(params);

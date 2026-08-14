@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type FileCellValue =
     | string
@@ -52,7 +51,7 @@ type FileCellParams = {
     maxSizeBytes?: number;
 };
 
-const props = defineProps<AppGridCellRendererProps<FileCellValue, FileCellParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<FileCellValue, FileCellParams>(params);

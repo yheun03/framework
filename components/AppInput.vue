@@ -1,151 +1,84 @@
 <template>
-    <div :class="[
-        'form-field',
-        'app-input',
+    <div class="form-field app-input" :class="[
         `app-input--${size}`,
         `app-input--shape-${shape}`,
         {
-            'app-input--icon-left': hasIconLeft,
-            'app-input--icon-right': hasIconRight || clearable || passwordToggle,
+            'app-input--icon-left': $slots.iconLeft,
+            'app-input--icon-right': $slots.iconRight || clearable || passwordToggle,
             'is-disabled': disabled,
             [`is-${state}`]: state,
         },
     ]">
-        <!-- label -->
-        <label v-if="label" class="form-field__label app-input__label" :for="inputId">{{ label }}</label>
+        <label v-if="label" class="form-field__label app-input__label" :for="id">{{ label }}</label>
 
-        <!-- control -->
         <div class="form-field__control app-input__control">
-            <!-- left icon -->
-            <span v-if="hasIconLeft" class="app-input__icon app-input__icon--left">
+            <span v-if="$slots.iconLeft" class="app-input__icon app-input__icon--left">
                 <slot name="iconLeft" />
             </span>
 
-            <!-- input -->
-            <input :id="inputId" class="app-input__field" :type="computedType" :value="modelValue ?? ''"
+            <input :id="id" class="app-input__field" :type="inputType" :value="modelValue ?? ''"
                 :placeholder="placeholder" :name="name" :autocomplete="autocomplete" :disabled="disabled"
-                :readonly="readonly" :aria-invalid="state === 'error'" :aria-describedby="describedBy"
-                @input="handleInput" />
+                :readonly="readonly" :aria-invalid="state === 'error'" @input="handleInput" />
 
-            <!-- clear -->
             <AppIconButton v-if="clearable && modelValue" class="app-input__icon app-input__icon--right"
-                :icon="IconClose" aria-label="입력값 지우기" size="md" icon-size="md" @click="handleClear" />
+                aria-label="입력값 지우기" @click="emit('update:modelValue', '')">
+                <IconClose />
+            </AppIconButton>
 
-            <!-- password toggle -->
             <AppIconButton v-if="passwordToggle" class="app-input__icon app-input__icon--right"
-                :icon="showPassword ? IconEyeOff : IconEye" aria-label="비밀번호 표시 전환" size="md" icon-size="md"
-                @click="handlePasswordToggle" />
+                aria-label="비밀번호 표시 전환" @click="showPassword = !showPassword">
+                <IconEyeOff v-if="showPassword" />
+                <IconEye v-else />
+            </AppIconButton>
 
-            <!-- slot right -->
-            <span v-if="hasIconRight" class="app-input__icon app-input__icon--right">
+            <span v-if="$slots.iconRight" class="app-input__icon app-input__icon--right">
                 <slot name="iconRight" />
             </span>
         </div>
 
-        <!-- hint -->
-        <p v-if="hint" class="form-field__hint app-input__hint" :id="hintId">
-            {{ hint }}
-        </p>
+        <p v-if="hint" class="form-field__hint app-input__hint">{{ hint }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots, ref } from "vue";
 import { IconClose, IconEye, IconEyeOff } from "~/components/icons";
 
 type InputSize = "xs" | "sm" | "md" | "lg";
 type InputShape = "square" | "round" | "pill" | "underline";
 type InputState = "error" | "warning" | "success" | null;
 
-const props = withDefaults(
-    defineProps<{
-        modelValue: string | number | null;
-
-        label?: string;
-        hint?: string;
-
-        placeholder?: string;
-        type?: string;
-
-        size?: InputSize;
-        shape?: InputShape;
-
-        state?: InputState;
-
-        disabled?: boolean;
-        readonly?: boolean;
-
-        clearable?: boolean;
-        passwordToggle?: boolean;
-
-        id?: string;
-        name?: string;
-        autocomplete?: string;
-        ariaDescribedby?: string;
-        "aria-describedby"?: string;
-    }>(),
-    {
-        size: "md",
-        shape: "round",
-        state: null,
-        type: "text",
-        disabled: false,
-        readonly: false,
-        clearable: false,
-        passwordToggle: false,
-    },
-);
-
-const emit = defineEmits<{
-    (e: "update:modelValue", value: string): void;
-}>();
-
-const fallbackId = useId();
-
-const inputId = computed(() => props.id ?? `app-input-${fallbackId}`);
-
-const hintId = computed(() => `hint-${inputId.value}`);
-
-const describedBy = computed(
-    () =>
-        props.ariaDescribedby ??
-        props["aria-describedby"] ??
-        (props.hint ? hintId.value : undefined),
-);
-
-const slots = useSlots();
-
-const hasIconLeft = computed(() => !!slots.iconLeft);
-
-const hasIconRight = computed(() => !!slots.iconRight);
-
-/* password */
-
-const showPassword = ref(false);
-
-const computedType = computed(() => {
-    if (props.passwordToggle) {
-        return showPassword.value ? "text" : "password";
-    }
-
-    return props.type;
+const props = withDefaults(defineProps<{
+    modelValue: string | number | null;
+    label?: string;
+    hint?: string;
+    placeholder?: string;
+    type?: string;
+    size?: InputSize;
+    shape?: InputShape;
+    state?: InputState;
+    disabled?: boolean;
+    readonly?: boolean;
+    clearable?: boolean;
+    passwordToggle?: boolean;
+    id?: string;
+    name?: string;
+    autocomplete?: string;
+}>(), {
+    type: "text",
+    size: "md",
+    shape: "round",
+    state: null,
+    disabled: false,
+    readonly: false,
+    clearable: false,
+    passwordToggle: false,
 });
 
-function handlePasswordToggle() {
-    showPassword.value = !showPassword.value;
-}
+const emit = defineEmits<{ "update:modelValue": [string] }>();
+const showPassword = ref(false);
+const inputType = computed(() => props.passwordToggle ? (showPassword.value ? "text" : "password") : props.type);
 
-/* clear */
-
-function handleClear() {
-    emit("update:modelValue", "");
-}
-
-/* input */
-
-function handleInput(e: Event) {
-    const target = e.target as HTMLInputElement;
-
-    emit("update:modelValue", target.value);
+function handleInput(event: Event) {
+    emit("update:modelValue", (event.target as HTMLInputElement).value);
 }
 </script>

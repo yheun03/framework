@@ -6,13 +6,15 @@
                     <IconApp class="nav-logo__mark" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" :icon="IconClose" aria-label="메뉴 닫기" :size="36"
-                    :icon-size="18" @click="handleClose" />
+                <AppIconButton class="layout-nav__mobile-close" aria-label="메뉴 닫기" :size="36" :icon-size="18"
+                    @click="handleClose"><IconClose /></AppIconButton>
             </div>
 
             <div class="layout-nav__actions" :aria-label="t('nav.demos')">
                 <AppIconButton v-for="action in headerActions" :key="action.label" class="nav-action"
-                    :icon="action.icon" :aria-label="action.label" size="md" icon-size="lg" />
+                    :aria-label="action.label" size="md" icon-size="lg">
+                    <component :is="action.icon" />
+                </AppIconButton>
             </div>
         </div>
 
@@ -25,8 +27,8 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppIconButton class="nav-action" :icon="IconCog" :aria-label="t('settings.title')" size="md"
-                icon-size="lg" to="/settings" />
+            <AppIconButton class="nav-action" :aria-label="t('settings.title')" size="md" icon-size="lg"
+                to="/settings"><IconCog /></AppIconButton>
         </div>
     </nav>
 </template>

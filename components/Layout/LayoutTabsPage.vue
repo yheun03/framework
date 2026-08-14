@@ -8,18 +8,20 @@
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppIconButton class="route-tabs__close" :icon="IconClose" aria-label="탭 닫기" :size="20"
-                        :icon-size="12" @click="(e) => handleTabClose(e, t.key)" />
+                    <AppIconButton class="route-tabs__close" aria-label="탭 닫기" :size="20" :icon-size="12"
+                        @click="(e) => handleTabClose(e, t.key)">
+                        <IconClose />
+                    </AppIconButton>
                 </li>
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton class="route-tabs__action" :icon="IconChevronSmallLeft" aria-label="왼쪽 탭으로 이동"
-                :size="24" :icon-size="16" @click="handleMoveToLeftTab" />
-            <AppIconButton class="route-tabs__action" :icon="IconChevronSmallRight" aria-label="오른쪽 탭으로 이동"
-                :size="24" :icon-size="16" @click="handleMoveToRightTab" />
-            <AppIconButton class="route-tabs__action" :icon="IconCloseSmall" aria-label="다른 탭 닫기" :size="24"
-                :icon-size="16" @click="handleCloseOtherTabs" />
+            <AppIconButton class="route-tabs__action" aria-label="왼쪽 탭으로 이동" :size="24" :icon-size="16"
+                @click="handleMoveToLeftTab"><IconChevronSmallLeft /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="오른쪽 탭으로 이동" :size="24" :icon-size="16"
+                @click="handleMoveToRightTab"><IconChevronSmallRight /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="다른 탭 닫기" :size="24" :icon-size="16"
+                @click="handleCloseOtherTabs"><IconCloseSmall /></AppIconButton>
         </div>
     </div>
 </template>

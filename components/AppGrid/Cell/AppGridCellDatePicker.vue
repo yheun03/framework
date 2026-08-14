@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 import type { DateRangeValue } from '~/components/AppDatePicker.vue';
 
 type DatePickerModelValue = string | string[] | DateRangeValue | null | undefined;
@@ -17,7 +16,7 @@ type DatePickerRendererParams = {
     placeholder?: string;
 };
 
-const props = defineProps<AppGridCellRendererProps<DatePickerModelValue, DatePickerRendererParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<DatePickerModelValue, DatePickerRendererParams>(params);

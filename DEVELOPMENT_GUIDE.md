@@ -39,7 +39,7 @@ plugins/      Nuxt 앱 초기화/주입
 ## 4. Composable 규칙
 
 - Vue/Nuxt 기능을 사용하는 재사용 로직은 `composables/use*.ts`로 작성합니다.
-- 이름은 `useModalViewer`, `useButtonAction`처럼 역할이 드러나게 작성합니다.
+- 이름은 `useModalViewer`처럼 역할이 드러나게 작성합니다.
 - 단순히 다른 함수를 한 번 감싸는 composable은 만들지 않습니다.
 - 화면별 composable은 특정 화면에 강하게 묶이지 않도록 입력/출력을 명확히 둡니다.
 

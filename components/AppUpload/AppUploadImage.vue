@@ -6,7 +6,7 @@
                 <input ref="fileInput" class="app-image-upload__input" type="file" :accept="accept" :multiple="multiple"
                     :disabled="disabled" @change="handleFileChange" />
 
-                <component :is="'button'" type="button" class="app-image-upload__trigger" :disabled="disabled"
+                <button type="button" class="app-image-upload__trigger" :disabled="disabled"
                     @click="handleFileOpen">
                     <span class="app-image-upload__trigger-icon" aria-hidden="true">
                         <IconImagePlus />
@@ -19,7 +19,7 @@
                     <span class="app-image-upload__trigger-subtext">
                         {{ helperText }}
                     </span>
-                </component>
+                </button>
             </div>
 
             <div class="app-image-upload__actions">
@@ -59,8 +59,8 @@
                         미리보기
                     </AppTextButton>
 
-                    <AppIconButton :icon="IconClose" aria-label="파일 삭제" :size="28" :icon-size="16"
-                        :disabled="disabled" @click="handleRemoveItem(uploadItem.id)" />
+                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled"
+                        @click="handleRemoveItem(uploadItem.id)"><IconClose /></AppIconButton>
                 </div>
             </li>
         </ul>

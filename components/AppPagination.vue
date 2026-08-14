@@ -10,32 +10,32 @@
         </div>
 
         <div class="app-pagination__controls">
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
+            <button type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
                 aria-label="첫 페이지" @click="handlePageChange(1)">
                 <IconDoubleLeft />
-            </component>
+            </button>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
+            <button type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
                 aria-label="이전 페이지" @click="handlePageChange(page - 1)">
                 <IconChevronLeft />
-            </component>
+            </button>
 
-            <component :is="'button'" v-for="pageNumber in visiblePages" :key="pageNumber" type="button"
+            <button v-for="pageNumber in visiblePages" :key="pageNumber" type="button"
                 class="app-pagination__button app-pagination__page" :class="{ 'is-active': pageNumber === page }"
                 :disabled="disabled" :aria-current="pageNumber === page ? 'page' : undefined"
                 @click="handlePageChange(pageNumber)">
                 {{ pageNumber }}
-            </component>
+            </button>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
+            <button type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
                 aria-label="다음 페이지" @click="handlePageChange(page + 1)">
                 <IconChevronRight />
-            </component>
+            </button>
 
-            <component :is="'button'" type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
+            <button type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
                 aria-label="마지막 페이지" @click="handlePageChange(totalPages)">
                 <IconDoubleRight />
-            </component>
+            </button>
         </div>
 
         <div v-if="showPageSize" class="app-pagination__size">

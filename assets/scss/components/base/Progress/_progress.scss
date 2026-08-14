@@ -92,48 +92,9 @@
         text-align: right;
     }
 
-    &__noui {
+    &__range {
         width: 100%;
-    }
-
-    /* ----------------------------------------
-       noUiSlider Override
-    ---------------------------------------- */
-    .noUi-target {
-        height: var(--app-progress-track-h);
-        border: 0;
-        border-radius: var(--app-progress-radius);
-        background: $gray-200;
-        box-shadow: none;
-    }
-
-    .noUi-origin,
-    .noUi-connect,
-    .noUi-handle {
-        transition: none !important;
-    }
-
-    .noUi-connect {
-        background: $primary;
-    }
-
-    .noUi-handle {
-        width: var(--app-progress-thumb) !important;
-        height: var(--app-progress-thumb) !important;
-        top: calc((var(--app-progress-track-h) - var(--app-progress-thumb)) / 2) !important;
-        right: calc(var(--app-progress-thumb) / -2) !important;
-
-        border: 2px solid $gray-0 !important;
-        border-radius: var(--app-progress-radius) !important;
-        background: $primary !important;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.18) !important;
-
-        cursor: col-resize;
-    }
-
-    .noUi-handle::before,
-    .noUi-handle::after {
-        display: none;
+        accent-color: $primary;
     }
 
     /* ----------------------------------------
@@ -146,19 +107,9 @@
             color: $gray-500;
         }
 
-        .noUi-target {
-            background: $gray-200;
-            opacity: 0.7;
-        }
-
-        .noUi-connect,
-        .noUi-handle {
-            background: $gray-400 !important;
-        }
-
-        .noUi-handle {
+        .app-progress-slider__range {
+            accent-color: $gray-400;
             cursor: not-allowed;
-            box-shadow: none !important;
         }
     }
 }
