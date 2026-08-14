@@ -55,6 +55,7 @@ import type { Instance as FlatpickrInstance } from "flatpickr/dist/types/instanc
 import type { Options as FlatpickrOptions } from "flatpickr/dist/types/options";
 import { Korean } from "flatpickr/dist/l10n/ko.js";
 import { IconCalendar } from "~/components/icons";
+import { useBodyOverlay } from "~/composables/useBodyOverlay";
 
 export type DateRangeValue = {
     start: string | null;
@@ -108,6 +109,14 @@ const endInputEl = ref<HTMLInputElement | null>(null);
 let calendar: FlatpickrInstance | null = null;
 let startCalendar: FlatpickrInstance | null = null;
 let endCalendar: FlatpickrInstance | null = null;
+let activeCalendar: FlatpickrInstance | null = null;
+let activeTrigger: HTMLElement | null = null;
+
+const overlay = useBodyOverlay({
+    trigger: () => activeTrigger,
+    overlay: () => activeCalendar?.calendarContainer ?? null,
+    close: closeActiveCalendar,
+});
 
 const dateFormat = "Y-m-d";
 const rangeValue = computed<DateRangeValue>(() => {
@@ -183,18 +192,41 @@ function options(
         allowInput: false,
         disableMobile: true,
         clickOpens: !props.disabled && !props.readonly,
+        appendTo: document.body,
+        onOpen: (_dates, _value, instance) => openCalendarOverlay(instance),
+        onClose: (_dates, _value, instance) => closeCalendarOverlay(instance),
         onChange,
         ...option,
     };
 }
 
+function openCalendarOverlay(instance: FlatpickrInstance) {
+    activeCalendar = instance;
+    activeTrigger = instance.input;
+    overlay.start();
+}
+
+function closeCalendarOverlay(instance: FlatpickrInstance) {
+    if (activeCalendar !== instance) return;
+    overlay.stop();
+    activeCalendar = null;
+    activeTrigger = null;
+}
+
+function closeActiveCalendar() {
+    activeCalendar?.close();
+}
+
 function destroyCalendars() {
+    overlay.stop();
     calendar?.destroy();
     startCalendar?.destroy();
     endCalendar?.destroy();
     calendar = null;
     startCalendar = null;
     endCalendar = null;
+    activeCalendar = null;
+    activeTrigger = null;
 }
 
 function createCalendars() {
