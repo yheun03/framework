@@ -1,6 +1,6 @@
 <template>
     <div class="business-page business-page--detail">
-        <header class="business-page__header"><div><p class="business-page__eyebrow">MES · 작업관리</p><h1 class="business-page__title">작업지시 상세</h1><p class="business-page__desc">WO-260814-01 · 모터 하우징 A</p></div><div class="business-page__actions"><AppButton>목록</AppButton><AppButton variant="fill">실적 등록</AppButton></div></header>
+        <header class="business-page__header"><div><p class="business-page__eyebrow">MES · 작업관리</p><h1 class="business-page__title">작업지시 상세</h1><p class="business-page__desc">WO-260814-01 · 모터 하우징 A</p></div><div class="business-page__actions"><AppButton size="md">목록</AppButton><AppButton size="md" variant="fill">실적 등록</AppButton></div></header>
         <section class="business-summary"><article v-for="item in summary" :key="item.label" class="business-summary__item"><span class="business-summary__label">{{ item.label }}</span><strong class="business-summary__value">{{ item.value }}</strong></article></section>
         <div class="business-page__grid business-page__grid--2">
             <AppSection title="작업 정보"><dl class="business-detail"><div v-for="item in details" :key="item.label" class="business-detail__item"><dt>{{ item.label }}</dt><dd>{{ item.value }}</dd></div></dl></AppSection>
