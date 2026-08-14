@@ -27,7 +27,7 @@
                     <div class="page-demo-stack">
                         <AppProgressSlider v-model:value="linearControlValue" label="단일 값" show-value />
 
-                        <AppProgressSlider :range="linearControlRange" mode="range"
+                        <AppProgressSlider :range="linearControlRange" type="range"
                             @update:range="handleLinearRangeUpdate" />
 
                         <div class="page-demo-hint">
@@ -50,10 +50,10 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Gauge Drag Control"
                     desc="드래그로 게이지 값과 반도넛 범위를 조정할 수 있습니다.">
                     <div class="page-demo-grid">
-                        <AppProgressGauge v-model:value="gaugeControlValue" variant="gauge" mode="control-single"
+                        <AppProgressGauge v-model:value="gaugeControlValue" variant="gauge" type="control-single"
                             label="속도" />
 
-                        <AppProgressGauge :range="gaugeControlRange" variant="semi-doughnut-range" mode="control-range"
+                        <AppProgressGauge :range="gaugeControlRange" variant="semi-doughnut-range" type="control-range"
                             label="권장 범위" @update:range="handleGaugeRangeUpdate" />
                     </div>
                 </PageDemoAccordionSection>
@@ -63,7 +63,7 @@
                     <div class="page-demo-grid">
                         <AppProgressSlider :value="disabledLinearValue" label="Disabled Linear" show-value disabled />
 
-                        <AppProgressGauge :value="disabledGaugeValue" variant="gauge" mode="control-single"
+                        <AppProgressGauge :value="disabledGaugeValue" variant="gauge" type="control-single"
                             label="Disabled Gauge" disabled />
                     </div>
                 </PageDemoAccordionSection>

@@ -58,7 +58,7 @@ const Ko = {
     'demo.progress.title': 'AppProgress',
     'demo.progress.desc': 'Linear Progress와 Gauge Progress 컴포넌트입니다. display / drag control 형태를 지원합니다.',
     'demo.datepicker.title': 'AppDatePicker',
-    'demo.datepicker.desc': 'Flatpickr 기반 DatePicker 컴포넌트입니다. mode / size / shape / state / disabled / min / max 속성을 지원합니다.',
+    'demo.datepicker.desc': 'Flatpickr 기반 DatePicker 컴포넌트입니다. type / size / shape / state / disabled / min / max 속성을 지원합니다.',
     'demo.select.title': 'AppSelect',
     'demo.select.desc': '옵션 선택을 위한 기본 Select 컴포넌트입니다. size / shape / state / disabled 상태를 지원합니다.',
     'demo.choice.title': 'AppChoice',
