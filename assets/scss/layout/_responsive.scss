@@ -52,12 +52,12 @@
 }
 
 .page-demo {
-    padding: var(--layout-page-block) var(--layout-page-inline);
+    padding: 14px;
 
     &-layout {
         grid-template-columns: minmax(0, 1fr) minmax(280px,
                 var(--layout-aside-width));
-        gap: var(--layout-page-gap);
+        gap: 12px;
     }
 
     &-card {
@@ -68,6 +68,7 @@
 @media (min-width: 1680px) {
     .page-demo {
         max-width: 1480px;
+        padding: 16px;
     }
 }
 

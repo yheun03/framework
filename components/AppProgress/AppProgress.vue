@@ -1,9 +1,9 @@
 <template>
     <AppProgressSlider v-if="isControlType" :value="singleValue" :range="normalizedRange" :type="sliderType"
-        :label="label" :show-value="showLabel" :disabled="disabled" @update:value="handleValueUpdate"
+        :label="label" :show-value="showValue" :disabled="disabled" @update:value="handleValueUpdate"
         @update:range="handleRangeUpdate" />
 
-    <AppProgressBar v-else :value="singleValue" :range="range" :label="label" :show-value="showLabel"
+    <AppProgressBar v-else :value="singleValue" :range="range" :label="label" :show-value="showValue"
         :disabled="disabled" />
 </template>
 
@@ -26,12 +26,12 @@ const props = withDefaults(
         label?: string;
         disabled?: boolean;
         variant?: Variant;
-        showLabel?: boolean;
+        showValue?: boolean;
     }>(),
     {
         variant: "linear",
         type: "display",
-        showLabel: false,
+        showValue: false,
         rangeSelectable: false,
         label: undefined,
         disabled: false,

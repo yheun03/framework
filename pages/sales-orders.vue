@@ -7,7 +7,7 @@
             <AppDatePicker v-model="orderDate" class="business-toolbar__field" size="sm" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton><AppButton size="md">초기화</AppButton></div>
         </section>
-        <AppSection title="수주 128건" desc="납기 임박 순으로 표시합니다.">
+        <AppSection title="수주 128건" description="납기 임박 순으로 표시합니다.">
             <div class="business-table-wrap"><table class="business-table"><thead><tr><th><AppChoice v-model="checkAll" /></th><th>수주번호</th><th>거래처</th><th>품목</th><th>수량</th><th>납기일</th><th>담당자</th><th>상태</th></tr></thead><tbody><tr v-for="row in rows" :key="row.no"><td><AppChoice v-model="row.checked" /></td><td><NuxtLink :to="`/sales-order-detail?id=${row.no}`" class="business-link">{{ row.no }}</NuxtLink></td><td>{{ row.customer }}</td><td>{{ row.item }}</td><td>{{ row.qty }}</td><td>{{ row.date }}</td><td>{{ row.manager }}</td><td><span class="business-status" :class="`business-status--${row.state}`">{{ row.status }}</span></td></tr></tbody></table></div>
             <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="128" />
         </AppSection>

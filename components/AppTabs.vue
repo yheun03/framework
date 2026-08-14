@@ -14,7 +14,7 @@
                 </span>
                 <span class="app-tabs__tab-text">
                     <strong class="app-tabs__tab-title">{{ item.title }}</strong>
-                    <span v-if="item.desc" class="app-tabs__tab-desc">{{ item.desc }}</span>
+                    <span v-if="item.description" class="app-tabs__tab-desc">{{ item.description }}</span>
                 </span>
                 <span v-if="item.badge" class="app-tabs__tab-badge">{{ item.badge }}</span>
             </button>
@@ -36,7 +36,7 @@ import type { Component } from "vue";
 export type AppTabItem = {
     id: string | number;
     title: string;
-    desc?: string;
+    description?: string;
     icon?: Component;
     badge?: string | number;
     disabled?: boolean;

@@ -10,8 +10,8 @@
                     </p>
                 </header>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
-                    desc="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
+                <PageDemoSection class="page-demo-section" title="Basic"
+                    description="가장 기본적인 이미지 업로드 예시입니다. 업로드 후 각 항목의 미리보기 버튼으로 이미지 뷰어 모달을 열 수 있습니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="basic.imageUrl" />
 
@@ -31,10 +31,10 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="State &amp; Control"
-                    desc="disabled 상태와 외부 제어 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="State &amp; Control"
+                    description="disabled 상태와 외부 제어 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="state.imageUrl" :disabled="state.disabled" />
 
@@ -58,10 +58,10 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Multiple"
-                    desc="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Multiple"
+                    description="여러 이미지를 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                     <div class="page-demo-row">
                         <AppUploadImage v-model="multiple.images" multiple :max-count="3" />
 
@@ -82,10 +82,10 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Read Mode"
-                    desc='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'>
+                <PageDemoSection class="page-demo-section" title="Read Mode"
+                    description='&lt;code>readMode="dataUrl"&lt;/code> 와 &lt;code>readMode="objectUrl"&lt;/code> 차이를 확인합니다.'>
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="readMode.dataUrlImage" read-mode="dataUrl" />
@@ -103,10 +103,10 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="Drag &amp; Drop"
-                    desc="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Drag &amp; Drop"
+                    description="&lt;code>allowDrop&lt;/code> 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="drop.enabled" :allow-drop="true" />
@@ -120,9 +120,9 @@
                             <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
-                <PageDemoAccordionSection class="page-demo-accordion" title="File Rules" desc="파일 형식과 최대 용량 제한 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="File Rules" description="파일 형식과 최대 용량 제한 예시입니다.">
                     <div class="page-demo-grid">
                         <div class="page-demo-stack">
                             <AppUploadImage v-model="rules.imageOnly" accept="image/png,image/jpeg,image/webp" />
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

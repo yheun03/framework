@@ -1,13 +1,13 @@
 <template>
     <section class="app-section" :class="`app-section--${direction}`" :style="sectionStyle">
-        <header v-if="title || desc" class="app-section__header">
+        <header v-if="title || description" class="app-section__header">
             <div class="app-section__header-text">
                 <h3 v-if="title" class="app-section__title">
                     {{ title }}
                 </h3>
 
-                <p v-if="desc" class="app-section__desc">
-                    {{ desc }}
+                <p v-if="description" class="app-section__desc">
+                    {{ description }}
                 </p>
             </div>
         </header>
@@ -31,14 +31,14 @@ const props = withDefaults(
         direction?: SectionDirection;
         ratio?: SectionRatio;
         title?: string;
-        desc?: string;
+        description?: string;
         gap?: number | string;
     }>(),
     {
         direction: "column",
         ratio: null,
         title: "",
-        desc: "",
+        description: "",
         gap: 12,
     },
 );

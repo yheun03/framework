@@ -7,8 +7,8 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <AppAccordion class="page-demo-accordion" :items="demoSections" type="multiple" initial-open="all">
-                    <template #basic>
+                <PageDemoSection class="page-demo-section" title="Basic"
+                    description="가장 기본적인 단일 파일 업로드 예시입니다. PDF 파일은 미리보기 버튼으로 확인할 수 있습니다.">
                         <div class="page-demo-row">
                             <AppUploadFile v-model="basic.file" />
 
@@ -28,9 +28,10 @@
                                 </div>
                             </div>
                         </div>
-                    </template>
+                </PageDemoSection>
 
-                    <template #multiple>
+                <PageDemoSection class="page-demo-section" title="Multiple"
+                    description="여러 파일을 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
                         <div class="page-demo-row">
                             <AppUploadFile v-model="multiple.files" multiple :max-count="4" />
 
@@ -51,9 +52,10 @@
                                 </div>
                             </div>
                         </div>
-                    </template>
+                </PageDemoSection>
 
-                    <template #drop>
+                <PageDemoSection class="page-demo-section" title="Drag &amp; Drop"
+                    description="allowDrop 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
                         <div class="page-demo-grid">
                             <div class="page-demo-stack">
                                 <AppUploadFile v-model="drop.enabled" :allow-drop="true" />
@@ -67,9 +69,10 @@
                                 <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
                             </div>
                         </div>
-                    </template>
+                </PageDemoSection>
 
-                    <template #rules>
+                <PageDemoSection class="page-demo-section" title="File Rules"
+                    description="파일 형식과 최대 용량 제한 예시입니다.">
                         <div class="page-demo-grid">
                             <div class="page-demo-stack">
                                 <AppUploadFile v-model="rules.docsOnly" accept=".pdf,.doc,.docx,.xls,.xlsx" />
@@ -87,9 +90,10 @@
                                 </div>
                             </div>
                         </div>
-                    </template>
+                </PageDemoSection>
 
-                    <template #disabled>
+                <PageDemoSection class="page-demo-section" title="Disabled"
+                    description="비활성 상태에서 선택과 드롭을 막는 예시입니다.">
                         <div class="page-demo-row">
                             <AppUploadFile v-model="disabled.file" :disabled="disabled.value" />
 
@@ -105,8 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                    </template>
-                </AppAccordion>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -119,42 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AppAccordionItem } from "~/components/AppAccordion.vue";
-
 const { title, description } = useDemoI18n("uploadFile");
-
-const demoSections: AppAccordionItem[] = [
-    {
-        id: "basic",
-        title: "Basic",
-        desc: "가장 기본적인 단일 파일 업로드 예시입니다. PDF 파일은 항목의 미리보기 버튼으로 PDF 뷰어 모달을 열 수 있습니다.",
-        slot: "basic",
-    },
-    {
-        id: "multiple",
-        title: "Multiple",
-        desc: "여러 파일을 업로드하고 최대 개수 제한을 적용하는 예시입니다.",
-        slot: "multiple",
-    },
-    {
-        id: "drop",
-        title: "Drag & Drop",
-        desc: "allowDrop 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.",
-        slot: "drop",
-    },
-    {
-        id: "rules",
-        title: "File Rules",
-        desc: "파일 형식과 최대 용량 제한 예시입니다.",
-        slot: "rules",
-    },
-    {
-        id: "disabled",
-        title: "Disabled",
-        desc: "비활성 상태에서 선택/드롭을 막는 예시입니다.",
-        slot: "disabled",
-    },
-];
 
 type UploadFileItem = {
     id: string;

@@ -121,7 +121,7 @@ function isTopModal(modalId: number) {
 }
 
 function handleBackdropClick(modalItem: ModalItem) {
-    if (!modalItem.closeOnDim) return;
+    if (!modalItem.closeOnBackdrop) return;
     if (!isTopModal(modalItem.id)) return;
     handleModalClose(modalItem.id, "backdrop");
 }

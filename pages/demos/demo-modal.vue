@@ -12,8 +12,8 @@
                 </header>
 
                 <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic"
-                    desc="가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Basic"
+                    description="가장 기본적인 Alert / Confirm / Custom 모달 오픈 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlert">
                             Alert 열기
@@ -27,11 +27,11 @@
                             Custom 열기
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- ALERT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Alert Props"
-                    desc="title, message, confirmText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Alert Props"
+                    description="title, message, confirmText, closeOnBackdrop, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenAlertBasic">
                             기본 Alert
@@ -49,11 +49,11 @@
                             Alert 중첩 열기
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CONFIRM -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Confirm Props"
-                    desc="confirmText, cancelText, closeOnDim, closeOnEsc, closable 조합 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Confirm Props"
+                    description="confirmText, cancelText, closeOnBackdrop, closeOnEsc, closable 조합 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenConfirmBasic">
                             기본 Confirm
@@ -75,11 +75,11 @@
                             Confirm 중첩 열기
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CUSTOM -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Custom Modal"
-                    desc="header/body/footer 구조는 유지하고 body, footer 영역에 필요한 컴포넌트를 전달하는 방식입니다. variant로 BEM modifier를 추가할 수 있습니다.">
+                <PageDemoSection class="page-demo-section" title="Custom Modal"
+                    description="header/body/footer 구조는 유지하고 body, footer 영역에 필요한 컴포넌트를 전달하는 방식입니다. variant로 BEM modifier를 추가할 수 있습니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenCustom">
                             Custom 열기
@@ -93,11 +93,11 @@
                             Custom 중첩 열기
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- VIEWER -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Viewer Modal"
-                    desc="이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Viewer Modal"
+                    description="이미지/PDF 미리보기처럼 `custom` 모달을 재사용하는 예시입니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="fill" @click="handleOpenImageViewer">
                             이미지 뷰어 열기
@@ -111,11 +111,11 @@
                             PDF 뷰어 열기
                         </AppButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CONTROL -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Store Control"
-                    desc="composable 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.">
+                <PageDemoSection class="page-demo-section" title="Store Control"
+                    description="composable 기준으로 최상단 모달 닫기, 전체 모달 닫기 같은 제어도 가능합니다.">
                     <div class="page-demo-actions">
                         <AppButton variant="outline" @click="handleCloseTop">
                             최상단 모달 닫기
@@ -125,7 +125,7 @@
                             전체 모달 닫기
                         </AppTextButton>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -168,7 +168,7 @@ function handleOpenAlertNoClose() {
         title: "닫기 제한 Alert",
         message: "dim 클릭과 ESC로는 닫히지 않습니다.",
         closable: false,
-        closeOnDim: false,
+        closeOnBackdrop: false,
         closeOnEsc: false,
     });
 }
@@ -217,7 +217,7 @@ function handleOpenConfirmNoDimClose() {
     modal.openConfirm({
         title: "배경 닫기 제한",
         message: "배경 클릭으로는 닫히지 않습니다.",
-        closeOnDim: false,
+        closeOnBackdrop: false,
     });
 }
 

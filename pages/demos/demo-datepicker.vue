@@ -10,8 +10,8 @@
                 </header>
 
                 <!-- TYPE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Type"
-                    desc="single / range / range-input / multiple 타입을 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Type"
+                    description="single / range / range-input / multiple 타입을 비교합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="types.single" type="single" label="Single" placeholder="날짜를 선택하세요"
                             hint="하나의 날짜를 선택합니다">
@@ -42,10 +42,10 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="DatePicker의 높이를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Size" description="DatePicker의 높이를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="sizes.xs" size="xs" label="XS">
                             <template #iconRight>
@@ -71,11 +71,11 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SHAPE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Shape"
-                    desc="DatePicker의 border 스타일을 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Shape"
+                    description="DatePicker의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="shapes.square" shape="square" label="Square">
                             <template #iconRight>
@@ -101,10 +101,10 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- STATE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="State" desc="입력 상태에 따른 스타일을 제공합니다.">
+                <PageDemoSection class="page-demo-section" title="State" description="입력 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="states.error" label="Error" state="error" hint="에러 메시지">
                             <template #iconRight>
@@ -124,11 +124,11 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DISABLED & READONLY -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled &amp;amp; Readonly"
-                    desc="선택 불가 또는 읽기 전용 상태를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Disabled &amp;amp; Readonly"
+                    description="선택 불가 또는 읽기 전용 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="disabledValue" label="Disabled" disabled hint="비활성 상태">
                             <template #iconRight>
@@ -141,11 +141,11 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- CONSTRAINTS -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Constraints"
-                    desc="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
+                <PageDemoSection class="page-demo-section" title="Constraints"
+                    description="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="constraints.single" label="Min / Max" :min="min" :max="max"
                             hint="2026년 내에서만 선택 가능">
@@ -161,7 +161,7 @@
                             </template>
                         </AppDatePicker>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <!-- STATE PANEL -->

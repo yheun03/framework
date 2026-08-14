@@ -10,7 +10,7 @@
                 </header>
 
                 <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 line 탭 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Basic" description="기본적인 line 탭 예시입니다.">
                     <AppTabs :items="basicItems" variant="line">
                         <template #basicInfo>
                             <div class="page-demo-stack">
@@ -30,11 +30,11 @@
                             <AppButton variant="fill">확인</AppButton>
                         </template>
                     </AppTabs>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- VARIANT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Variant"
-                    desc="line / box / pill / vertical 스타일을 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Variant"
+                    description="line / box / pill / vertical 스타일을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>
@@ -76,29 +76,29 @@
                             </AppTabs>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DEFAULT ACTIVE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Default Active Id"
-                    desc="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.">
+                <PageDemoSection class="page-demo-section" title="Default Active Id"
+                    description="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.">
                     <AppTabs :items="defaultItems" variant="line" default-active-id="default-2">
                         <template #default1>Default Content 1</template>
                         <template #default2>Default Content 2</template>
                         <template #default3>Default Content 3</template>
                     </AppTabs>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- DISABLED -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Disabled" desc="disabled 탭은 선택할 수 없습니다.">
+                <PageDemoSection class="page-demo-section" title="Disabled" description="disabled 탭은 선택할 수 없습니다.">
                     <AppTabs :items="disabledItems" variant="box">
                         <template #active1>Active Content</template>
                         <template #disabled>Disabled Content</template>
                         <template #active2>Active Content 2</template>
                     </AppTabs>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Size" description="sm / md / lg 크기를 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
@@ -130,10 +130,10 @@
                             </AppTabs>
                         </div>
                     </div>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
 
                 <!-- SLOT -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Slot" desc="탭 본문을 슬롯으로 연결합니다.">
+                <PageDemoSection class="page-demo-section" title="Slot" description="탭 본문을 슬롯으로 연결합니다.">
                     <AppTabs :items="slotItems" variant="line">
                         <template #progress>
                             <div class="page-demo-stack">
@@ -163,7 +163,7 @@
                             </div>
                         </template>
                     </AppTabs>
-                </PageDemoAccordionSection>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -185,21 +185,21 @@ const basicItems: AppTabItem[] = [
     {
         id: "basic-1",
         title: "기본 정보",
-        desc: "텍스트와 입력 필드",
+        description: "텍스트와 입력 필드",
         icon: IconInfo,
         slot: "basicInfo",
     },
     {
         id: "basic-2",
         title: "선택 영역",
-        desc: "셀렉트 컴포넌트",
+        description: "셀렉트 컴포넌트",
         icon: IconForm,
         slot: "basicSelect",
     },
     {
         id: "basic-3",
         title: "버튼 영역",
-        desc: "버튼 예시",
+        description: "버튼 예시",
         icon: IconTap,
         slot: "basicButton",
     },
@@ -246,20 +246,20 @@ const disabledItems: AppTabItem[] = [
     {
         id: "disabled-1",
         title: "활성 탭",
-        desc: "선택할 수 있습니다.",
+        description: "선택할 수 있습니다.",
         slot: "active1",
     },
     {
         id: "disabled-2",
         title: "비활성 탭",
-        desc: "disabled 상태",
+        description: "disabled 상태",
         disabled: true,
         slot: "disabled",
     },
     {
         id: "disabled-3",
         title: "활성 탭 2",
-        desc: "선택할 수 있습니다.",
+        description: "선택할 수 있습니다.",
         slot: "active2",
     },
 ];
@@ -286,21 +286,21 @@ const verticalItems: AppTabItem[] = [
     {
         id: "vertical-1",
         title: "Overview",
-        desc: "요약 정보",
+        description: "요약 정보",
         icon: IconDashboard,
         slot: "overview",
     },
     {
         id: "vertical-2",
         title: "Members",
-        desc: "구성원 정보",
+        description: "구성원 정보",
         icon: IconAccountGroup,
         slot: "members",
     },
     {
         id: "vertical-3",
         title: "Settings",
-        desc: "설정 정보",
+        description: "설정 정보",
         icon: IconCog,
         slot: "settings",
     },
@@ -310,19 +310,19 @@ const slotItems: AppTabItem[] = [
     {
         id: "slot-1",
         title: "진행 상태",
-        desc: "slot으로 내용 연결",
+        description: "slot으로 내용 연결",
         slot: "progress",
     },
     {
         id: "slot-2",
         title: "액션",
-        desc: "버튼 직접 배치",
+        description: "버튼 직접 배치",
         slot: "actions",
     },
     {
         id: "slot-3",
         title: "slot 방식",
-        desc: "slot name으로 내용 연결",
+        description: "slot name으로 내용 연결",
         slot: "custom",
     },
 ];
