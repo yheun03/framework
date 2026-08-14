@@ -1,9 +1,9 @@
 <template>
     <div class="app-progress-slider" :class="[
-        `app-progress-slider--${mode}`,
+        `app-progress-slider--${type}`,
         { 'app-progress-slider--disabled': disabled },
     ]">
-        <label v-if="mode === 'single'" class="app-progress-slider__control">
+        <label v-if="type === 'single'" class="app-progress-slider__control">
             <span v-if="label" class="app-progress-slider__label">{{ label }}</span>
             <input class="app-progress-slider__range" type="range" min="0" max="100" :value="value"
                 :disabled="disabled" @input="updateValue" />
@@ -32,14 +32,14 @@ import type { ProgressRange } from "~/utils/progress";
 const props = withDefaults(defineProps<{
     value?: number;
     range?: ProgressRange;
-    mode?: "single" | "range";
+    type?: "single" | "range";
     label?: string;
     disabled?: boolean;
     showValue?: boolean;
 }>(), {
     value: 0,
     range: () => ({ start: 0, end: 100 }),
-    mode: "single",
+    type: "single",
     disabled: false,
     showValue: false,
 });

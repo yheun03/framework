@@ -50,10 +50,10 @@ const props = withDefaults(defineProps<{
     items: AppAccordionItem[];
     openIds?: Array<string | number>;
     defaultOpenIds?: Array<string | number>;
-    mode?: "single" | "multiple";
+    type?: "single" | "multiple";
     initialOpen?: "none" | "first" | "all";
 }>(), {
-    mode: "multiple",
+    type: "multiple",
     initialOpen: "none",
 });
 
@@ -75,7 +75,7 @@ function isOpen(id: string | number) {
 function toggle(id: string | number) {
     const next = isOpen(id)
         ? (props.openIds ?? openedIds.value).filter((itemId) => itemId !== id)
-        : props.mode === "single" ? [id] : [...(props.openIds ?? openedIds.value), id];
+        : props.type === "single" ? [id] : [...(props.openIds ?? openedIds.value), id];
 
     if (!props.openIds) openedIds.value = next;
     emit("update:openIds", next);

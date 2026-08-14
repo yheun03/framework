@@ -1,5 +1,5 @@
 <template>
-    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" mode="multiple" initial-open="all"
+    <AppAccordion v-if="summary" class="page-demo-accordion" :items="summaryItems" type="multiple" initial-open="all"
         aria-label="컴포넌트 속성 요약">
         <template #props>
             <div class="page-demo-prop-table">
@@ -172,7 +172,7 @@ const summaries: Record<string, DemoSummary> = {
                 default: "gauge",
             },
             {
-                name: "mode",
+                name: "type",
                 description: "display, control-single, control-range 조작 방식",
                 values: ["display", "control-single", "control-range"],
                 default: "display",
@@ -275,7 +275,7 @@ const summaries: Record<string, DemoSummary> = {
         description: "접이식 패널의 선택 방식과 초기 열림 상태를 확인합니다.",
         props: [
             { name: "items", description: "패널 제목과 본문 데이터", type: "AppAccordionItem[]", required: true },
-            { name: "mode", description: "열림 방식", values: ["single", "multiple"], default: "multiple" },
+            { name: "type", description: "열림 방식", values: ["single", "multiple"], default: "multiple" },
             { name: "openIds / defaultOpenIds", description: "제어/비제어 열림 값", type: "Array<string | number>" },
             { name: "initialOpen", description: "초기 열림 상태", values: ["none", "first", "all"], default: "none" },
         ],

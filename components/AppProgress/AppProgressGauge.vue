@@ -1,7 +1,7 @@
 <template>
     <div class="app-progress-gauge" :class="[
         `app-progress-gauge--${variant}`,
-        `app-progress-gauge--${mode}`,
+        `app-progress-gauge--${type}`,
         { 'is-disabled': disabled },
     ]">
         <div class="app-progress-gauge__svg-wrap">
@@ -25,10 +25,10 @@
             </div>
         </div>
 
-        <input v-if="mode === 'control-single'" class="app-progress-gauge__input" type="range" :min="min" :max="max"
+        <input v-if="type === 'control-single'" class="app-progress-gauge__input" type="range" :min="min" :max="max"
             :step="step" :value="value" :disabled="disabled" @input="updateValue" />
 
-        <div v-if="mode === 'control-range'" class="app-progress-gauge__controls">
+        <div v-if="type === 'control-range'" class="app-progress-gauge__controls">
             <input type="range" :min="min" :max="max" :step="step" :value="range.start" :disabled="disabled"
                 @input="updateRange('start', $event)" />
             <input type="range" :min="min" :max="max" :step="step" :value="range.end" :disabled="disabled"
@@ -42,7 +42,7 @@ import type { ProgressRange } from "~/utils/progress";
 
 const props = withDefaults(defineProps<{
     variant?: "gauge" | "semi-doughnut-range";
-    mode?: "display" | "control-single" | "control-range";
+    type?: "display" | "control-single" | "control-range";
     value?: number;
     range?: ProgressRange;
     min?: number;
@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<{
     strokeWidth?: number;
 }>(), {
     variant: "gauge",
-    mode: "display",
+    type: "display",
     value: 0,
     range: () => ({ start: 0, end: 100 }),
     min: 0,

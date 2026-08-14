@@ -6,7 +6,7 @@
             desc: props.desc,
             slot: 'content',
         },
-    ]" mode="multiple" initial-open="all">
+    ]" type="multiple" initial-open="all">
         <template #content>
             <slot />
         </template>

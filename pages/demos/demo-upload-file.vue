@@ -7,7 +7,7 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <AppAccordion class="page-demo-accordion" :items="demoSections" mode="multiple" initial-open="all">
+                <AppAccordion class="page-demo-accordion" :items="demoSections" type="multiple" initial-open="all">
                     <template #basic>
                         <div class="page-demo-row">
                             <AppUploadFile v-model="basic.file" />

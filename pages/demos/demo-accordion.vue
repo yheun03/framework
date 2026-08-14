@@ -9,9 +9,10 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="기본적인 multiple 아코디언 예시입니다.">
-                    <AppAccordion :items="basicItems" mode="multiple" initial-open="none">
+                <!-- CONTENT -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Content"
+                    desc="아코디언 안에 입력, 선택, 버튼 컴포넌트를 배치한 예시입니다.">
+                    <AppAccordion :items="basicItems" type="multiple" initial-open="none">
                         <template #basicInfo>
                             <div class="page-demo-stack">
                                 <p>기본 아코디언 콘텐츠입니다.</p>
@@ -32,14 +33,14 @@
                     </AppAccordion>
                 </PageDemoAccordionSection>
 
-                <!-- OPEN MODE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Open Mode"
-                    desc="한 개만 열리는 single 모드와 여러 개를 자유롭게 여는 multiple 모드를 비교합니다.">
+                <!-- TYPE -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Type"
+                    desc="한 개만 열리는 single 타입과 여러 개를 자유롭게 여는 multiple 타입을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">single</div>
 
-                            <AppAccordion :items="modeItems" mode="single" initial-open="first">
+                            <AppAccordion :items="typeItems" type="single" initial-open="first">
                                 <template #panel1>Panel 1 Content</template>
                                 <template #panel2>Panel 2 Content</template>
                                 <template #panel3>Panel 3 Content</template>
@@ -49,7 +50,7 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">multiple</div>
 
-                            <AppAccordion :items="modeItems" mode="multiple" initial-open="none">
+                            <AppAccordion :items="typeItems" type="multiple" initial-open="none">
                                 <template #panel1>Panel 1 Content</template>
                                 <template #panel2>Panel 2 Content</template>
                                 <template #panel3>Panel 3 Content</template>
@@ -65,7 +66,7 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "none"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="none">
+                            <AppAccordion :items="initialItems" type="multiple" initial-open="none">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -75,7 +76,7 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "first"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="first">
+                            <AppAccordion :items="initialItems" type="multiple" initial-open="first">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -85,7 +86,7 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">initialOpen = "all"</div>
 
-                            <AppAccordion :items="initialItems" mode="multiple" initial-open="all">
+                            <AppAccordion :items="initialItems" type="multiple" initial-open="all">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -97,7 +98,7 @@
                 <!-- DEFAULT OPEN IDS -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Default Open Ids"
                     desc="defaultOpenIds로 특정 패널만 기본 열림 상태로 지정할 수 있습니다.">
-                    <AppAccordion :items="defaultItems" mode="multiple"
+                    <AppAccordion :items="defaultItems" type="multiple"
                         :default-open-ids="['default-2', 'default-3']">
                         <template #default1>Default Content 1</template>
                         <template #default2>Default Content 2</template>
@@ -108,7 +109,7 @@
                 <!-- DISABLED -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
                     desc="disabled 항목은 열고 닫을 수 없습니다.">
-                    <AppAccordion :items="disabledItems" mode="multiple" initial-open="first">
+                    <AppAccordion :items="disabledItems" type="multiple" initial-open="first">
                         <template #active1>Active Content</template>
                         <template #disabled>Disabled Content</template>
                         <template #active2>Active Content 2</template>
@@ -117,7 +118,7 @@
 
                 <!-- SLOT -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="Slot" desc="아코디언 본문을 슬롯으로 연결합니다.">
-                    <AppAccordion :items="slotItems" mode="multiple" initial-open="first">
+                    <AppAccordion :items="slotItems" type="multiple" initial-open="first">
                         <template #progress>
                             <div class="page-demo-stack">
                                 <p>이 콘텐츠는 슬롯으로 렌더링됩니다.</p>
@@ -178,21 +179,21 @@ const basicItems: AppAccordionItem[] = [
     },
 ];
 
-const modeItems: AppAccordionItem[] = [
+const typeItems: AppAccordionItem[] = [
     {
-        id: "mode-1",
+        id: "type-1",
         title: "Panel 1",
         desc: "첫 번째 패널",
         slot: "panel1",
     },
     {
-        id: "mode-2",
+        id: "type-2",
         title: "Panel 2",
         desc: "두 번째 패널",
         slot: "panel2",
     },
     {
-        id: "mode-3",
+        id: "type-3",
         title: "Panel 3",
         desc: "세 번째 패널",
         slot: "panel3",
