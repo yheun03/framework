@@ -5,15 +5,12 @@
 ========================================= */
 
 .app-progress-gauge {
-    --gauge-track: #e5e7eb;
-    // --gauge-range: #22c55e;
-    --gauge-range: #3b82f6;
-    --gauge-value: #3b82f6;
-    --gauge-needle: #0f172a;
-    --gauge-text: #0f172a;
-    --gauge-text-sub: #6b7280;
-    --gauge-handle: #ffffff;
-    --gauge-handle-border: #0f172a;
+    --gauge-track: #{$gray-200};
+    --gauge-range: #{$primary};
+    --gauge-value: #{$primary};
+    --gauge-needle: #{$gray-900};
+    --gauge-text: #{$gray-900};
+    --gauge-text-sub: #{$gray-600};
 
     width: 100%;
 
@@ -87,33 +84,18 @@
         text-align: center;
     }
 
-    &__input,
-    &__controls input {
-        width: 100%;
-        accent-color: $primary;
-    }
-
-    &__controls {
-        display: grid;
-        gap: 8px;
-    }
-
     &__label {
-        font-size: 13px;
-        line-height: 1.3;
+        @include font(b4, rg);
         color: var(--gauge-text-sub);
     }
 
     &__value-text {
-        font-size: 22px;
-        font-weight: 700;
-        line-height: 1;
+        @include font(h5, sb);
         color: var(--gauge-text);
     }
 
     &__range-text {
-        font-size: 12px;
-        line-height: 1.3;
+        @include font(c2, rg);
         color: var(--gauge-text-sub);
     }
 

@@ -27,7 +27,7 @@
                     <div class="page-demo-stack">
                         <AppProgressSlider v-model:value="linearControlValue" label="단일 값" show-value />
 
-                        <AppProgressSlider :range="linearControlRange" type="range"
+                        <AppProgressSlider :range="linearControlRange" type="range" label="범위 값" show-value
                             @update:range="handleLinearRangeUpdate" />
 
                         <div class="page-demo-hint">

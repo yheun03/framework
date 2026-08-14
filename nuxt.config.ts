@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         '@flaticon/flaticon-uicons/css/regular/rounded.css',
         '@flaticon/flaticon-uicons/css/solid/rounded.css',
         'flatpickr/dist/flatpickr.css',
+        'nouislider/dist/nouislider.css',
         '~/assets/scss/main.scss',
     ],
 

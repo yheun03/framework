@@ -23,7 +23,6 @@
                     <slot name="iconRight"><IconChevronDown /></slot>
                 </span>
             </button>
-
         </div>
 
         <Teleport to="body">

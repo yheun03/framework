@@ -59,9 +59,10 @@ export function getBodyOverlayStyle(trigger: HTMLElement, overlay: HTMLElement) 
     const width = triggerRect.width;
     const spaceBelow = window.innerHeight - triggerRect.bottom;
     const openAbove = spaceBelow < overlayHeight + gap && triggerRect.top > spaceBelow;
+    const maxTop = Math.max(screenGap, window.innerHeight - overlayHeight - screenGap);
     const top = openAbove
         ? Math.max(screenGap, triggerRect.top - overlayHeight - gap)
-        : Math.min(window.innerHeight - overlayHeight - screenGap, triggerRect.bottom + gap);
+        : Math.max(screenGap, Math.min(maxTop, triggerRect.bottom + gap));
     const left = Math.min(
         Math.max(screenGap, triggerRect.left),
         Math.max(screenGap, window.innerWidth - width - screenGap),
