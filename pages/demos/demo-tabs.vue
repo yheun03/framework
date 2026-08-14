@@ -69,7 +69,7 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "vertical"</div>
 
-                            <AppTabs :items="verticalItems" variant="vertical">
+                            <AppTabs :items="verticalItems" variant="line" orientation="vertical">
                                 <template #overview>Overview Content</template>
                                 <template #members>Members Content</template>
                                 <template #settings>Settings Content</template>

@@ -1,22 +1,44 @@
 <template>
-    <div class="app-textarea" :class="[
-        `app-textarea--${size}`,
-        `app-textarea--resize-${resize}`,
-        {
-            'is-focused': isFocused,
-            'is-disabled': disabled,
-            'is-readonly': readonly,
-            'is-error': invalid || Boolean(error),
-        },
-    ]">
-        <textarea :id="id" class="app-textarea__control" :value="modelValue" :placeholder="placeholder"
-            :disabled="disabled" :readonly="readonly" :rows="rows" :maxlength="maxLength"
-            :aria-invalid="invalid || Boolean(error)" :aria-describedby="ariaDescribedby" @input="handleInput"
-            @focus="isFocused = true" @blur="isFocused = false" />
+    <div
+        class="app-textarea"
+        :class="[
+            `app-textarea--${size}`,
+            `app-textarea--shape-${shape}`,
+            `app-textarea--resize-${resize}`,
+            {
+                'is-focused': isFocused,
+                'is-disabled': disabled,
+                'is-readonly': readonly,
+                [`is-${state}`]: state,
+                'is-error': state === 'error' || invalid || Boolean(error),
+            },
+        ]"
+    >
+        <textarea
+            :id="id"
+            class="app-textarea__control"
+            :value="modelValue"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :readonly="readonly"
+            :rows="rows"
+            :maxlength="maxLength"
+            :aria-invalid="state === 'error' || invalid || Boolean(error)"
+            :aria-describedby="ariaDescribedby"
+            @input="handleInput"
+            @focus="isFocused = true"
+            @blur="isFocused = false"
+        />
 
         <div v-if="showCount || clearable" class="app-textarea__footer">
-            <AppTextButton v-if="clearable && modelValue && !disabled && !readonly" type="button"
-                class="app-textarea__clear" size="sm" tone="gray" @click="handleClear">
+            <AppTextButton
+                v-if="clearable && modelValue && !disabled && !readonly"
+                type="button"
+                class="app-textarea__clear"
+                size="sm"
+                tone="gray"
+                @click="handleClear"
+            >
                 지우기
             </AppTextButton>
 
@@ -28,8 +50,10 @@
 </template>
 
 <script setup lang="ts">
-type AppTextareaSize = "sm" | "md" | "lg";
-type AppTextareaResize = "none" | "vertical" | "horizontal" | "both";
+type AppTextareaSize = 'xs' | 'sm' | 'md' | 'lg';
+type AppTextareaShape = 'square' | 'round' | 'pill' | 'underline';
+type AppTextareaState = 'error' | 'warning' | 'success' | null;
+type AppTextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 
 const props = withDefaults(
     defineProps<{
@@ -45,13 +69,15 @@ const props = withDefaults(
         invalid?: boolean;
         error?: string | boolean | null;
         size?: AppTextareaSize;
+        shape?: AppTextareaShape;
+        state?: AppTextareaState;
         resize?: AppTextareaResize;
         ariaDescribedby?: string;
     }>(),
     {
-        modelValue: "",
+        modelValue: '',
         id: undefined,
-        placeholder: "",
+        placeholder: '',
         disabled: false,
         readonly: false,
         rows: 4,
@@ -60,32 +86,34 @@ const props = withDefaults(
         clearable: false,
         invalid: false,
         error: null,
-        size: "md",
-        resize: "vertical",
+        size: 'md',
+        shape: 'round',
+        state: null,
+        resize: 'vertical',
         ariaDescribedby: undefined,
     },
 );
 
 const emit = defineEmits<{
-    (e: "update:modelValue", value: string): void;
-    (e: "input", value: string): void;
-    (e: "clear"): void;
+    (e: 'update:modelValue', value: string): void;
+    (e: 'input', value: string): void;
+    (e: 'clear'): void;
 }>();
 
 const isFocused = ref(false);
 
-const textLength = computed(() => String(props.modelValue ?? "").length);
+const textLength = computed(() => String(props.modelValue ?? '').length);
 
 function handleInput(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     const value = target.value;
 
-    emit("update:modelValue", value);
-    emit("input", value);
+    emit('update:modelValue', value);
+    emit('input', value);
 }
 
 function handleClear() {
-    emit("update:modelValue", "");
-    emit("clear");
+    emit('update:modelValue', '');
+    emit('clear');
 }
 </script>

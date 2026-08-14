@@ -25,8 +25,14 @@
                 </PageDemoAccordionSection>
 
                 <!-- SIZE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="sm / md / lg 크기를 비교합니다.">
+                <PageDemoAccordionSection class="page-demo-accordion" title="Size" desc="xs / sm / md / lg 공통 크기를 비교합니다.">
                     <div class="page-demo-stack">
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">size = "xs"</div>
+
+                            <AppTextarea v-model="extraSmallValue" size="xs" placeholder="extra small textarea" />
+                        </div>
+
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
 
@@ -44,6 +50,17 @@
 
                             <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
                         </div>
+                    </div>
+                </PageDemoAccordionSection>
+
+                <!-- SHAPE -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Shape"
+                    desc="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
+                    <div class="page-demo-grid">
+                        <AppTextarea v-model="shapeValues.square" shape="square" placeholder="square" />
+                        <AppTextarea v-model="shapeValues.round" shape="round" placeholder="round" />
+                        <AppTextarea v-model="shapeValues.pill" shape="pill" placeholder="pill" />
+                        <AppTextarea v-model="shapeValues.underline" shape="underline" placeholder="underline" />
                     </div>
                 </PageDemoAccordionSection>
 
@@ -81,8 +98,14 @@
 
                 <!-- STATES -->
                 <PageDemoAccordionSection class="page-demo-accordion" title="States"
-                    desc="disabled, readonly, invalid 상태를 확인합니다.">
+                    desc="공통 state와 disabled, readonly 상태를 확인합니다.">
                     <div class="page-demo-stack">
+                        <div class="page-demo-grid">
+                            <AppTextarea v-model="stateValues.error" state="error" placeholder="state = error" />
+                            <AppTextarea v-model="stateValues.warning" state="warning" placeholder="state = warning" />
+                            <AppTextarea v-model="stateValues.success" state="success" placeholder="state = success" />
+                        </div>
+
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">disabled</div>
 
@@ -128,6 +151,7 @@ const { title, description } = useDemoI18n("textarea");
 
 const basicValue = ref("");
 const content = ref("");
+const extraSmallValue = ref("");
 const smallValue = ref("");
 const mediumValue = ref("");
 const largeValue = ref("");
@@ -139,4 +163,15 @@ const disabledValue = ref("disabled value");
 const readonlyValue = ref("readonly value");
 const invalidValue = ref("invalid value");
 const countValue = ref("");
+const shapeValues = reactive({
+    square: "",
+    round: "",
+    pill: "",
+    underline: "",
+});
+const stateValues = reactive({
+    error: "",
+    warning: "",
+    success: "",
+});
 </script>

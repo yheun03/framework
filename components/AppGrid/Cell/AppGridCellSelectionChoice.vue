@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ICellRendererParams } from "ag-grid-community";
+import type { ICellRendererParams } from 'ag-grid-community';
 
 const props = defineProps<{
     params: ICellRendererParams;
@@ -24,10 +24,10 @@ function handleChange(value: boolean | string | number | null) {
 
 onMounted(() => {
     syncChecked();
-    props.params.node?.addEventListener?.("rowSelected", syncChecked);
+    props.params.node?.addEventListener?.('rowSelected', syncChecked);
 });
 
 onBeforeUnmount(() => {
-    props.params.node?.removeEventListener?.("rowSelected", syncChecked);
+    props.params.node?.removeEventListener?.('rowSelected', syncChecked);
 });
 </script>

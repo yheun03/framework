@@ -54,7 +54,7 @@ import {
     type ProgressRange,
 } from "~/utils/progress";
 
-type GaugeType = "gauge" | "semi-doughnut-range";
+type GaugeVariant = "gauge" | "semi-doughnut-range";
 type GaugeMode = "display" | "control-single" | "control-range";
 type ActiveHandle = "value" | "start" | "end" | null;
 
@@ -65,7 +65,7 @@ const RADIUS = 44;
 
 const props = withDefaults(
     defineProps<{
-        type?: GaugeType;
+        variant?: GaugeVariant;
         mode?: GaugeMode;
         value?: number;
         range?: ProgressRange;
@@ -81,7 +81,7 @@ const props = withDefaults(
         strokeWidth?: number;
     }>(),
     {
-        type: "gauge",
+        variant: "gauge",
         mode: "display",
         value: 0,
         min: 0,
@@ -169,7 +169,7 @@ const normalizedRange = computed(() => {
     return normalizeProgressRange(props.range, { min, max, step });
 });
 
-const isGauge = computed(() => props.type === "gauge");
+const isGauge = computed(() => props.variant === "gauge");
 const hasRange = computed(() => !!props.range);
 
 const isControlSingle = computed(() => props.mode === "control-single");
@@ -185,7 +185,7 @@ const showContent = computed(
 
 const rootClasses = computed(() => [
     "app-progress-gauge",
-    `app-progress-gauge--${props.type}`,
+    `app-progress-gauge--${props.variant}`,
     `app-progress-gauge--${props.mode}`,
     {
         "is-disabled": props.disabled,
