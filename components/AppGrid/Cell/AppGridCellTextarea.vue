@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type TextareaRendererParams = {
     rows?: number;
@@ -14,7 +13,7 @@ type TextareaRendererParams = {
     placeholder?: string;
 };
 
-const props = defineProps<AppGridCellRendererProps<string | number | null, TextareaRendererParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<string | number | null, TextareaRendererParams>(params);

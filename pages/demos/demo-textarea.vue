@@ -20,7 +20,7 @@
                     <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다."
                         :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''">
                         <AppTextarea v-model="content" placeholder="문의 내용을 입력하세요." :max-length="200" show-count
-                            clearable />
+                            clearable :state="content && content.length < 10 ? 'error' : null" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 

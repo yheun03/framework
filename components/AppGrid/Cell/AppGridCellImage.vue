@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type ReadMode = 'dataUrl' | 'objectUrl';
 type ImageCellValue =
@@ -57,7 +56,7 @@ type ImageCellParams = {
     readMode?: ReadMode;
 };
 
-const props = defineProps<AppGridCellRendererProps<ImageCellValue, ImageCellParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<ImageCellValue, ImageCellParams>(params);

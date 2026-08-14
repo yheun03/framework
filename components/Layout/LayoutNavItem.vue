@@ -4,17 +4,28 @@
         { 'layout-nav__item--has-children': hasChildren },
     ]" :style="{ '--indent': `${(item.depth - 1) * 20}px` }">
         <div class="layout-nav__row">
-            <component :is="linkTag" v-bind="linkAttrs" class="layout-nav__link" role="menuitem"
-                :aria-haspopup="hasChildren ? 'true' : undefined"
-                :aria-expanded="hasChildren ? String(open) : undefined" @click="handleRowClick">
+            <a v-if="isExternalLink" :href="item.to" target="_blank" rel="noopener noreferrer"
+                class="layout-nav__link" role="menuitem">
                 <span v-if="itemIcon" class="layout-nav__icon app-icon" aria-hidden="true">
                     <component :is="itemIcon" />
                 </span>
+                <span class="layout-nav__label">{{ item.label }}</span>
+            </a>
 
-                <span class="layout-nav__label">
-                    {{ item.label }}
+            <NuxtLink v-else-if="hasLink" :to="item.to" class="layout-nav__link" role="menuitem">
+                <span v-if="itemIcon" class="layout-nav__icon app-icon" aria-hidden="true">
+                    <component :is="itemIcon" />
                 </span>
-            </component>
+                <span class="layout-nav__label">{{ item.label }}</span>
+            </NuxtLink>
+
+            <button v-else type="button" class="layout-nav__link" role="menuitem"
+                :aria-expanded="hasChildren ? open : undefined" @click="handleToggleOpen">
+                <span v-if="itemIcon" class="layout-nav__icon app-icon" aria-hidden="true">
+                    <component :is="itemIcon" />
+                </span>
+                <span class="layout-nav__label">{{ item.label }}</span>
+            </button>
 
             <AppIconButton v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': open }"
                 aria-label="메뉴 펼치기/접기" :size="24" :icon-size="16" :aria-expanded="open"
@@ -60,46 +71,10 @@ const hasLink = computed(() => Boolean(props.item.to?.trim()));
 const isExternalLink = computed(() =>
     Boolean(props.item.newTab && hasLink.value),
 );
-const isButtonRow = computed(() => !hasLink.value);
-const NuxtLinkComp = resolveComponent("NuxtLink");
-
-const linkTag = computed(() => {
-    if (isButtonRow.value) return "button";
-    if (isExternalLink.value) return "a";
-    return NuxtLinkComp;
-});
-
-const linkAttrs = computed(() => {
-    if (isButtonRow.value) {
-        return { type: "button" };
-    }
-
-    if (isExternalLink.value) {
-        return {
-            href: props.item.to,
-            target: "_blank",
-            rel: "noopener noreferrer",
-        };
-    }
-
-    return {
-        to: props.item.to,
-    };
-});
-
 const open = ref(props.item.depth === 1 && hasChildren.value);
 
 function handleToggleOpen() {
     open.value = !open.value;
 }
 
-function handleRowClick(event: MouseEvent) {
-    if (isButtonRow.value) {
-        event.preventDefault();
-
-        if (hasChildren.value) {
-            handleToggleOpen();
-        }
-    }
-}
 </script>

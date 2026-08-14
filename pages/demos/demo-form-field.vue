@@ -38,7 +38,8 @@
                     desc="error가 있으면 hint 대신 error message가 표시됩니다.">
                     <AppFormField label="비밀번호" required hint="8자 이상 입력하세요."
                         :error="password && password.length < 8 ? '비밀번호는 8자 이상 입력해주세요.' : ''">
-                        <AppInput v-model="password" type="password" placeholder="비밀번호 입력" />
+                        <AppInput v-model="password" type="password" placeholder="비밀번호 입력"
+                            :state="password && password.length < 8 ? 'error' : null" />
                     </AppFormField>
                 </PageDemoAccordionSection>
 
@@ -46,7 +47,7 @@
                 <PageDemoAccordionSection class="page-demo-accordion" title="Disabled"
                     desc="disabled 상태의 label, description, message 표현을 확인합니다.">
                     <AppFormField label="부서" disabled description="비활성 상태의 필드입니다." hint="현재 수정할 수 없습니다.">
-                        <AppInput v-model="department" placeholder="부서 입력" />
+                        <AppInput v-model="department" placeholder="부서 입력" disabled />
                     </AppFormField>
                 </PageDemoAccordionSection>
 

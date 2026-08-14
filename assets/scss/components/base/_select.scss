@@ -1,4 +1,4 @@
-@use "abstract/index" as *;
+@use "../../abstract" as *;
 @use "sass:map";
 
 /* =========================================
@@ -95,7 +95,10 @@ $select-sizes: (
     }
 
     &__menu {
-        position: fixed;
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        left: 0;
         z-index: 1000;
         margin: 0;
         padding: 6px 0;
@@ -108,11 +111,21 @@ $select-sizes: (
         overflow-y: auto;
     }
 
+    &__option-item {
+        margin: 0;
+        padding: 0;
+    }
+
     &__option {
         @include font(b3, rg);
+        display: block;
+        width: 100%;
         padding: 10px 14px;
+        border: 0;
+        background: transparent;
         color: $color-02-black;
         cursor: pointer;
+        text-align: left;
         transition:
             background-color 0.15s ease,
             color 0.15s ease;
@@ -130,6 +143,10 @@ $select-sizes: (
             color: $color-05-gray-disabled;
             cursor: not-allowed;
             background-color: transparent;
+        }
+
+        &:disabled {
+            pointer-events: none;
         }
     }
 

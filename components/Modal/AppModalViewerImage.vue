@@ -6,11 +6,15 @@
             </span>
 
             <div class="app-image-viewer__nav">
-                <AppIconButton :icon="IconChevronLeft" aria-label="이전 이미지" variant="outline" :size="34"
-                    :icon-size="18" :disabled="currentIndex <= 0" @click="handlePrevious" />
+                <AppIconButton aria-label="이전 이미지" variant="outline" :size="34" :icon-size="18"
+                    :disabled="currentIndex <= 0" @click="handlePrevious">
+                    <IconChevronLeft />
+                </AppIconButton>
 
-                <AppIconButton :icon="IconChevronRight" aria-label="다음 이미지" variant="outline" :size="34"
-                    :icon-size="18" :disabled="currentIndex >= imageItems.length - 1" @click="handleNext" />
+                <AppIconButton aria-label="다음 이미지" variant="outline" :size="34" :icon-size="18"
+                    :disabled="currentIndex >= imageItems.length - 1" @click="handleNext">
+                    <IconChevronRight />
+                </AppIconButton>
             </div>
         </div>
 

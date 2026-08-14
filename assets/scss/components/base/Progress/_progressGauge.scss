@@ -87,6 +87,17 @@
         text-align: center;
     }
 
+    &__input,
+    &__controls input {
+        width: 100%;
+        accent-color: $primary;
+    }
+
+    &__controls {
+        display: grid;
+        gap: 8px;
+    }
+
     &__label {
         font-size: 13px;
         line-height: 1.3;

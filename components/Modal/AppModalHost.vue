@@ -13,8 +13,10 @@
                         </h2>
                     </div>
 
-                    <AppIconButton v-if="modalItem.closable" class="app-modal__close" :icon="IconClose" aria-label="닫기"
-                        :size="34" :icon-size="18" @click="handleModalClose(modalItem.id, 'close')" />
+                    <AppIconButton v-if="modalItem.closable" class="app-modal__close" aria-label="닫기" :size="34"
+                        :icon-size="18" @click="handleModalClose(modalItem.id, 'close')">
+                        <IconClose />
+                    </AppIconButton>
                 </header>
 
                 <section class="app-modal__body">

@@ -154,11 +154,11 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="xs" icon-size="xs" />
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="md" icon-size="md" />
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" size="xl" icon-size="lg" />
-                        <AppIconButton :icon="IconStar" aria-label="즐겨찾기" variant="soft" tone="primary" />
-                        <AppIconButton :icon="IconTrash" aria-label="삭제" variant="outline" tone="danger" />
+                        <AppIconButton aria-label="즐겨찾기" size="xs" icon-size="xs"><IconStar /></AppIconButton>
+                        <AppIconButton aria-label="즐겨찾기" size="md" icon-size="md"><IconStar /></AppIconButton>
+                        <AppIconButton aria-label="즐겨찾기" size="xl" icon-size="lg"><IconStar /></AppIconButton>
+                        <AppIconButton aria-label="즐겨찾기" variant="soft" tone="primary"><IconStar /></AppIconButton>
+                        <AppIconButton aria-label="삭제" variant="outline" tone="danger"><IconTrash /></AppIconButton>
                     </div>
                 </PageDemoAccordionSection>
 

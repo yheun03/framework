@@ -6,14 +6,13 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type InputRendererParams = {
     type?: string;
     placeholder?: string;
 };
 
-const props = defineProps<AppGridCellRendererProps<string | number | null, InputRendererParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<string | number | null, InputRendererParams>(params);

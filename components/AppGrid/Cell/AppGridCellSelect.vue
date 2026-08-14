@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { useAppGridCellRendererValue } from '~/composables/useAppGridCellRendererValue';
-import type { AppGridCellRendererProps } from '~/types/appGrid';
 
 type SelectOption = {
     label: string;
@@ -17,7 +16,7 @@ type SelectRendererParams = {
     options?: SelectOption[];
 };
 
-const props = defineProps<AppGridCellRendererProps<string | number | boolean | null, SelectRendererParams>>();
+const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<string | number | boolean | null, SelectRendererParams>(params);
