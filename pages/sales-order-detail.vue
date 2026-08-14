@@ -1,6 +1,6 @@
 <template>
     <div class="business-page business-page--detail">
-        <header class="business-page__header"><div><p class="business-page__eyebrow">ERP · 영업관리</p><h1 class="business-page__title">수주 상세</h1><p class="business-page__desc">SO-260814-01 · 한빛전자</p></div><div class="business-page__actions"><AppButton>목록</AppButton><AppButton variant="fill">저장</AppButton></div></header>
+        <header class="business-page__header"><div><p class="business-page__eyebrow">ERP · 영업관리</p><h1 class="business-page__title">수주 상세</h1><p class="business-page__desc">SO-260814-01 · 한빛전자</p></div><div class="business-page__actions"><AppButton size="md">목록</AppButton><AppButton size="md" variant="fill">저장</AppButton></div></header>
         <AppSection title="기본 정보">
             <div class="business-form-grid"><AppInput v-model="form.orderNo" label="수주번호" readonly /><AppSelect v-model="form.customer" label="거래처" :options="customers" /><AppDatePicker v-model="form.orderDate" label="수주일" /><AppDatePicker v-model="form.dueDate" label="납기일" /><AppInput v-model="form.manager" label="담당자" /><AppSelect v-model="form.status" label="상태" :options="statuses" /></div>
         </AppSection>

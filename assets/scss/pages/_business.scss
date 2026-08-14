@@ -11,7 +11,7 @@ $business-status-colors: (
 
 .business-page {
     display: grid;
-    gap: 20px;
+    gap: 24px;
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
@@ -20,9 +20,9 @@ $business-status-colors: (
 
 .business-page__header {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 24px;
 }
 
 .business-page__eyebrow {
@@ -50,6 +50,12 @@ $business-status-colors: (
     gap: 8px;
 }
 
+.business-page__tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .business-page__grid {
     display: grid;
     gap: 20px;
@@ -62,7 +68,7 @@ $business-status-colors: (
 .business-summary {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 16px;
 }
 
 .business-summary--compact {
@@ -72,7 +78,8 @@ $business-status-colors: (
 .business-summary__item {
     display: grid;
     gap: 6px;
-    padding: 18px;
+    min-height: 112px;
+    padding: 20px;
     border: 1px solid $gray-200;
     border-radius: 12px;
     background: $gray-0;
@@ -100,21 +107,44 @@ $business-status-colors: (
 }
 
 .business-toolbar {
-    display: grid;
-    grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(150px, 0.8fr)) auto auto;
-    gap: 8px;
-    align-items: end;
-    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
     border: 1px solid $gray-200;
     border-radius: 12px;
     background: $gray-0;
+}
+
+.business-toolbar__field {
+    flex: 1 1 180px;
+    min-width: 160px;
+    max-width: 240px;
+}
+
+.business-toolbar__field--wide {
+    flex-basis: 260px;
+    max-width: 360px;
+}
+
+.business-toolbar__choice {
+    flex: 0 0 auto;
+    margin-inline: 4px;
+}
+
+.business-toolbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
 }
 
 .business-table-wrap {
     width: 100%;
     overflow-x: auto;
     border: 1px solid $gray-200;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .business-table {
@@ -128,7 +158,7 @@ $business-status-colors: (
 .business-table th,
 .business-table td {
     height: 48px;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-bottom: 1px solid $gray-200;
     text-align: left;
     vertical-align: middle;
@@ -186,7 +216,7 @@ $business-status-colors: (
 .business-form-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 20px;
 }
 
 .business-detail {
@@ -199,7 +229,7 @@ $business-status-colors: (
     display: grid;
     grid-template-columns: 100px minmax(0, 1fr);
     gap: 12px;
-    padding: 12px 0;
+    padding: 14px 0;
     border-bottom: 1px solid $gray-100;
 }
 
@@ -257,13 +287,13 @@ $business-status-colors: (
 .equipment-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 16px;
 }
 
 .equipment-card {
     display: grid;
     gap: 16px;
-    padding: 18px;
+    padding: 20px;
     border: 1px solid $gray-200;
     border-top: 3px solid $gray-400;
     border-radius: 12px;
@@ -324,7 +354,6 @@ $business-status-colors: (
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .business-toolbar,
     .business-form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -340,10 +369,41 @@ $business-status-colors: (
         flex-direction: column;
     }
 
+    .business-page__actions,
+    .business-page__tools,
+    .business-toolbar__actions {
+        width: 100%;
+    }
+
+    .business-page__actions .app-button,
+    .business-toolbar__actions .app-button {
+        flex: 1 1 auto;
+    }
+
+    .business-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .business-toolbar__field {
+        flex-basis: auto;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+    }
+
+    .business-toolbar__choice {
+        margin: 4px 0;
+    }
+
+    .business-toolbar__actions {
+        margin-left: 0;
+    }
+
     .business-page__grid--2,
     .business-summary,
     .business-summary--compact,
-    .business-toolbar,
     .business-form-grid,
     .equipment-grid {
         grid-template-columns: 1fr;

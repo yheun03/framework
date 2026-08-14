@@ -2,7 +2,7 @@
     <div class="business-page business-page--dashboard">
         <header class="business-page__header">
             <div><p class="business-page__eyebrow">ERP</p><h1 class="business-page__title">경영 현황 대시보드</h1><p class="business-page__desc">매출, 발주, 재고 현황을 한눈에 확인합니다.</p></div>
-            <AppDatePicker v-model="baseDate" size="sm" />
+            <div class="business-page__tools"><AppDatePicker v-model="baseDate" size="md" /></div>
         </header>
 
         <section class="business-summary">
