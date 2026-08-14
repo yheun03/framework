@@ -35,6 +35,23 @@ $date-picker-sizes: (
 
     &__control {
         position: relative;
+
+        &--disabled {
+            background: $gray-100;
+            color: $gray-500;
+        }
+    }
+
+    &__range {
+        display: grid;
+        grid-template-columns: minmax(120px, 1fr) auto minmax(120px, 1fr);
+        gap: 8px;
+        align-items: center;
+    }
+
+    &__separator {
+        color: $gray-500;
+        text-align: center;
     }
 
     &__field {
@@ -178,6 +195,16 @@ $date-picker-sizes: (
 
             cursor: not-allowed;
         }
+    }
+}
+
+@media (max-width: 480px) {
+    .app-date-picker__range {
+        grid-template-columns: 1fr;
+    }
+
+    .app-date-picker__separator {
+        display: none;
     }
 }
 

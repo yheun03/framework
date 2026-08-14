@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         'ag-grid-community/styles/ag-theme-quartz.css',
         '@flaticon/flaticon-uicons/css/regular/rounded.css',
         '@flaticon/flaticon-uicons/css/solid/rounded.css',
+        'flatpickr/dist/flatpickr.css',
         '~/assets/scss/main.scss',
     ],
 

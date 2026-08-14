@@ -181,10 +181,10 @@ const summaries: Record<string, DemoSummary> = {
         ],
     },
     "demo-datepicker": {
-        description: "날짜 선택 모드와 입력 상태를 조합합니다.",
+        description: "날짜 선택 타입과 입력 상태를 조합합니다.",
         props: [
             { name: "modelValue", description: "선택한 날짜 또는 범위", type: "string | DateRangeValue | string[] | null", required: true },
-            { name: "mode", description: "날짜 선택 방식", values: ["single", "range", "multiple"], default: "single" },
+            { name: "type", description: "날짜 선택 방식", values: ["single", "range", "range-input", "multiple"], default: "single" },
             { name: "min / max", description: "선택 가능한 날짜 제한", type: "string" },
             { name: "size", description: "입력 UI 크기", values: formSizes, default: "md" },
             { name: "shape", description: "입력 UI 형태", values: shapes, default: "round" },

@@ -9,49 +9,34 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <!-- BASIC -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Basic" desc="가장 기본적인 DatePicker 사용 예시입니다.">
+                <!-- TYPE -->
+                <PageDemoAccordionSection class="page-demo-accordion" title="Type"
+                    desc="single / range / range-input / multiple 타입을 비교합니다.">
                     <div class="page-demo-grid">
-                        <AppDatePicker v-model="basic.single" label="단일 날짜" placeholder="날짜를 선택하세요"
-                            hint="기본 single 모드입니다">
+                        <AppDatePicker v-model="types.single" type="single" label="Single" placeholder="날짜를 선택하세요"
+                            hint="하나의 날짜를 선택합니다">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="basic.range" mode="range" label="범위 날짜" placeholder="기간을 선택하세요"
-                            hint="시작일과 종료일을 선택합니다">
+                        <AppDatePicker v-model="types.range" type="range" label="Range" placeholder="기간을 선택하세요"
+                            hint="하나의 입력에서 시작일과 종료일을 선택합니다">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="basic.multiple" mode="multiple" label="다중 날짜" placeholder="여러 날짜를 선택하세요"
-                            hint="복수 날짜 선택이 가능합니다">
-                            <template #iconRight>
-                                <IconCalendar />
-                            </template>
-                        </AppDatePicker>
-                    </div>
-                </PageDemoAccordionSection>
-
-                <!-- MODE -->
-                <PageDemoAccordionSection class="page-demo-accordion" title="Mode"
-                    desc="single / range / multiple 모드를 제어합니다.">
-                    <div class="page-demo-grid">
-                        <AppDatePicker v-model="modes.single" mode="single" label="Single" hint="하나의 날짜 선택">
+                        <AppDatePicker v-model="types.rangeInput" type="range-input" label="Range Input"
+                            start-placeholder="시작일 선택" end-placeholder="종료일 선택"
+                            hint="시작일을 선택하면 종료일 입력이 활성화됩니다">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="modes.range" mode="range" label="Range" hint="날짜 범위 선택">
-                            <template #iconRight>
-                                <IconCalendar />
-                            </template>
-                        </AppDatePicker>
-
-                        <AppDatePicker v-model="modes.multiple" mode="multiple" label="Multiple" hint="여러 날짜 선택">
+                        <AppDatePicker v-model="types.multiple" type="multiple" label="Multiple"
+                            placeholder="여러 날짜를 선택하세요" hint="여러 날짜를 선택합니다">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
@@ -169,7 +154,7 @@
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="constraints.range" mode="range" label="Range with Min / Max" :min="min"
+                        <AppDatePicker v-model="constraints.range" type="range" label="Range with Min / Max" :min="min"
                             :max="max" hint="범위 선택에도 동일하게 적용">
                             <template #iconRight>
                                 <IconCalendar />
@@ -198,15 +183,10 @@ const { title, description } = useDemoI18n("datepicker");
 const min = "2026-04-01";
 const max = "2026-12-31";
 
-const basic = reactive({
+const types = reactive({
     single: null as string | null,
     range: null as DateRangeValue | null,
-    multiple: [] as string[],
-});
-
-const modes = reactive({
-    single: null as string | null,
-    range: null as DateRangeValue | null,
+    rangeInput: null as DateRangeValue | null,
     multiple: [] as string[],
 });
 

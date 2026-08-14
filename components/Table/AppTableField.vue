@@ -70,7 +70,7 @@
         <AppDatePicker v-else-if="cell.type === 'date'" :model-value="dateValue" :placeholder="cell.placeholder"
             :readonly="readonly" :disabled="disabled" @update:model-value="updateSingle" />
 
-        <AppDatePicker v-else-if="cell.type === 'range_date'" :model-value="rangeValue" mode="range"
+        <AppDatePicker v-else-if="cell.type === 'range_date'" :model-value="rangeValue" type="range"
             :placeholder="cell.placeholder" :readonly="readonly" :disabled="disabled"
             @update:model-value="updateSingle" />
 

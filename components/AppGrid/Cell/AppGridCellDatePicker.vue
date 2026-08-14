@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppDatePicker v-model="value" size="sm" :mode="mode" :min="min" :max="max" :placeholder="placeholder" />
+        <AppDatePicker v-model="value" size="sm" :type="type" :min="min" :max="max" :placeholder="placeholder" />
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import type { DateRangeValue } from '~/components/AppDatePicker.vue';
 
 type DatePickerModelValue = string | string[] | DateRangeValue | null | undefined;
 type DatePickerRendererParams = {
-    mode?: 'single' | 'multiple' | 'range';
+    type?: 'single' | 'multiple' | 'range' | 'range-input';
     min?: string;
     max?: string;
     placeholder?: string;
@@ -21,7 +21,7 @@ const props = defineProps<{ params: any }>();
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<DatePickerModelValue, DatePickerRendererParams>(params);
 
-const mode = computed(() => rendererParams.value.mode ?? 'single');
+const type = computed(() => rendererParams.value.type ?? 'single');
 const min = computed(() => rendererParams.value.min);
 const max = computed(() => rendererParams.value.max);
 const placeholder = computed(() => rendererParams.value.placeholder ?? '날짜 선택');

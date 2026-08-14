@@ -159,7 +159,7 @@
             <dl v-else-if="layoutType(f) === 'calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="getDateValue(f.field)" mode="single" :min="f.min"
+                    <AppDatePicker size="sm" :model-value="getDateValue(f.field)" type="single" :min="f.min"
                         :max="f.max" :placeholder="f.placeholder ?? '날짜 선택'" :disabled="f.disabled"
                         :readonly="f.readonly" @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
                 </dd>
@@ -168,7 +168,7 @@
             <dl v-else-if="layoutType(f) === 'range_calendar'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range"
+                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" type="range"
                         :placeholder="f.placeholder ?? '기간 선택'" :disabled="f.disabled" :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
                 </dd>
@@ -177,7 +177,7 @@
             <dl v-else-if="layoutType(f) === 'range_calendar_minmax'" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
-                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" mode="range" :min="f.min"
+                    <AppDatePicker size="sm" :model-value="getRangeValue(f.field)" type="range" :min="f.min"
                         :max="f.max" :placeholder="f.placeholder ?? '기간 선택 (min/max)'" :disabled="f.disabled"
                         :readonly="f.readonly" @update:model-value="(v) => handleFieldValueChange(f.field, v)" />
                 </dd>
