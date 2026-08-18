@@ -11,8 +11,7 @@
             <strong class="layout__mobile-title">Framework</strong>
         </div>
 
-        <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" aria-label="메뉴 닫기"
-            @click="handleNavClose" />
+        <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" aria-label="메뉴 닫기" @click="handleNavClose" />
 
         <LayoutNav class="layout__nav" @close="handleNavClose" />
         <main class="layout__main">
@@ -26,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconMenu } from "~/components/icons";
+import { IconMenu } from '~/components/icons';
 
 const route = useRoute();
 const isNavOpen = ref(false);

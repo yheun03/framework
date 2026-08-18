@@ -1,7 +1,7 @@
 /**
  * 섹션 구성과 화면 표시 조건 처리에 사용하는 공통 유틸 함수 파일입니다.
  */
-import {toCssSize} from '~/utils/css';
+import { toCssSize } from '~/utils/css';
 
 export type SectionDirection = 'row' | 'column';
 export type SectionRatio = number[] | string | null;
@@ -21,13 +21,8 @@ export function normalizeSectionRatio(value: SectionRatio) {
     return value;
 }
 
-export function buildSectionStyleVars(options: {
-    gapVarName: string;
-    ratioVarName: string;
-    gap: SectionGap;
-    ratio: SectionRatio;
-}) {
-    const {gapVarName, ratioVarName, gap, ratio} = options;
+export function buildSectionStyleVars(options: { gapVarName: string; ratioVarName: string; gap: SectionGap; ratio: SectionRatio }) {
+    const { gapVarName, ratioVarName, gap, ratio } = options;
 
     return {
         [gapVarName]: normalizeSectionGap(gap),

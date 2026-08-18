@@ -10,33 +10,52 @@
                 </header>
 
                 <!-- TYPE -->
-                <PageDemoSection class="page-demo-section" title="Type"
-                    description="single / range / range-input / multiple 타입을 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Type" description="single / range / range-input / multiple 타입을 비교합니다.">
                     <div class="page-demo-grid">
-                        <AppDatePicker v-model="types.single" type="single" label="Single" placeholder="날짜를 선택하세요"
-                            hint="하나의 날짜를 선택합니다">
+                        <AppDatePicker
+                            v-model="types.single"
+                            type="single"
+                            label="Single"
+                            placeholder="날짜를 선택하세요"
+                            hint="하나의 날짜를 선택합니다"
+                        >
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="types.range" type="range" label="Range" placeholder="기간을 선택하세요"
-                            hint="하나의 입력에서 시작일과 종료일을 선택합니다">
+                        <AppDatePicker
+                            v-model="types.range"
+                            type="range"
+                            label="Range"
+                            placeholder="기간을 선택하세요"
+                            hint="하나의 입력에서 시작일과 종료일을 선택합니다"
+                        >
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="types.rangeInput" type="range-input" label="Range Input"
-                            start-placeholder="시작일 선택" end-placeholder="종료일 선택"
-                            hint="시작일을 선택하면 종료일 입력이 활성화됩니다">
+                        <AppDatePicker
+                            v-model="types.rangeInput"
+                            type="range-input"
+                            label="Range Input"
+                            start-placeholder="시작일 선택"
+                            end-placeholder="종료일 선택"
+                            hint="시작일을 선택하면 종료일 입력이 활성화됩니다"
+                        >
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="types.multiple" type="multiple" label="Multiple"
-                            placeholder="여러 날짜를 선택하세요" hint="여러 날짜를 선택합니다">
+                        <AppDatePicker
+                            v-model="types.multiple"
+                            type="multiple"
+                            label="Multiple"
+                            placeholder="여러 날짜를 선택하세요"
+                            hint="여러 날짜를 선택합니다"
+                        >
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
@@ -74,8 +93,7 @@
                 </PageDemoSection>
 
                 <!-- SHAPE -->
-                <PageDemoSection class="page-demo-section" title="Shape"
-                    description="DatePicker의 border 스타일을 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Shape" description="DatePicker의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="shapes.square" shape="square" label="Square">
                             <template #iconRight>
@@ -127,8 +145,11 @@
                 </PageDemoSection>
 
                 <!-- DISABLED & READONLY -->
-                <PageDemoSection class="page-demo-section" title="Disabled &amp;amp; Readonly"
-                    description="선택 불가 또는 읽기 전용 상태를 제어합니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Disabled &amp;amp; Readonly"
+                    description="선택 불가 또는 읽기 전용 상태를 제어합니다."
+                >
                     <div class="page-demo-grid">
                         <AppDatePicker v-model="disabledValue" label="Disabled" disabled hint="비활성 상태">
                             <template #iconRight>
@@ -144,18 +165,22 @@
                 </PageDemoSection>
 
                 <!-- CONSTRAINTS -->
-                <PageDemoSection class="page-demo-section" title="Constraints"
-                    description="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
+                <PageDemoSection class="page-demo-section" title="Constraints" description="min / max 속성으로 선택 가능한 날짜 범위를 제한합니다.">
                     <div class="page-demo-grid">
-                        <AppDatePicker v-model="constraints.single" label="Min / Max" :min="min" :max="max"
-                            hint="2026년 내에서만 선택 가능">
+                        <AppDatePicker v-model="constraints.single" label="Min / Max" :min="min" :max="max" hint="2026년 내에서만 선택 가능">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="constraints.range" type="range" label="Range with Min / Max" :min="min"
-                            :max="max" hint="범위 선택에도 동일하게 적용">
+                        <AppDatePicker
+                            v-model="constraints.range"
+                            type="range"
+                            label="Range with Min / Max"
+                            :min="min"
+                            :max="max"
+                            hint="범위 선택에도 동일하게 적용"
+                        >
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
@@ -175,13 +200,13 @@
 </template>
 
 <script setup lang="ts">
-import type { DateRangeValue } from "~/components/AppDatePicker.vue";
-import { IconCalendar } from "~/components/icons";
+import type { DateRangeValue } from '~/components/AppDatePicker.vue';
+import { IconCalendar } from '~/components/icons';
 
-const { title, description } = useDemoI18n("datepicker");
+const { title, description } = useDemoI18n('datepicker');
 
-const min = "2026-04-01";
-const max = "2026-12-31";
+const min = '2026-04-01';
+const max = '2026-12-31';
 
 const types = reactive({
     single: null as string | null,
@@ -210,8 +235,8 @@ const states = reactive({
     success: null as string | null,
 });
 
-const disabledValue = ref<string | null>("2026-05-10");
-const readonlyValue = ref<string | null>("2026-05-10");
+const disabledValue = ref<string | null>('2026-05-10');
+const readonlyValue = ref<string | null>('2026-05-10');
 
 const constraints = reactive({
     single: null as string | null,

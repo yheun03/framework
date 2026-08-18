@@ -9,9 +9,7 @@
                     <p class="login__tagline">워크스페이스 + UI 데모를 위한 Framework</p>
                 </div>
 
-                <p class="login__copyright">
-                    © {{ new Date().getFullYear() }} Framework. All rights reserved.
-                </p>
+                <p class="login__copyright">© {{ new Date().getFullYear() }} Framework. All rights reserved.</p>
             </div>
         </section>
 
@@ -31,8 +29,7 @@
                         <NuxtLink class="login__link" to="/auth/find-pw">비밀번호를 잊으셨나요?</NuxtLink>
                     </div>
 
-                    <AppButton class="login__submit" type="submit" variant="fill" size="lg"
-                        :disabled="!email.trim() || !password.trim()">
+                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!email.trim() || !password.trim()">
                         로그인
                     </AppButton>
 
@@ -47,17 +44,17 @@
 </template>
 
 <script setup lang="ts">
-import { IconApp } from "~/components/icons";
+import { IconApp } from '~/components/icons';
 
 definePageMeta({
     layout: false,
 });
 
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const rememberMe = ref(false);
 
 function handleSubmit() {
-    navigateTo("/");
+    navigateTo('/');
 }
 </script>

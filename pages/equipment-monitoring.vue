@@ -1,13 +1,90 @@
 <template>
     <div class="business-page business-page--dashboard">
-        <header class="business-page__header"><div><p class="business-page__eyebrow">MES · 설비관리</p><h1 class="business-page__title">설비 모니터링</h1><p class="business-page__desc">설비 가동 상태와 주요 알람을 실시간으로 확인합니다.</p></div><div class="business-live"><span class="business-live__dot"></span>LIVE · 14:32:08</div></header>
-        <section class="business-summary"><article v-for="item in summary" :key="item.label" class="business-summary__item"><span class="business-summary__label">{{ item.label }}</span><strong class="business-summary__value">{{ item.value }}</strong><span class="business-summary__change">{{ item.desc }}</span></article></section>
-        <section class="equipment-grid"><article v-for="machine in machines" :key="machine.code" class="equipment-card" :class="`equipment-card--${machine.state}`"><header class="equipment-card__header"><div><span class="equipment-card__code">{{ machine.code }}</span><h2 class="equipment-card__title">{{ machine.name }}</h2></div><span class="business-status" :class="`business-status--${machine.state}`">{{ machine.status }}</span></header><dl class="equipment-card__data"><div><dt>가동률</dt><dd>{{ machine.operation }}%</dd></div><div><dt>현재 생산</dt><dd>{{ machine.output }}</dd></div><div><dt>작업자</dt><dd>{{ machine.worker }}</dd></div></dl><AppProgressBar :value="machine.operation" /></article></section>
-        <AppSection title="최근 설비 알람"><div class="business-table-wrap"><table class="business-table"><thead><tr><th>발생시각</th><th>설비</th><th>알람 내용</th><th>등급</th><th>조치상태</th></tr></thead><tbody><tr v-for="alarm in alarms" :key="`${alarm.time}-${alarm.machine}`"><td>{{ alarm.time }}</td><td>{{ alarm.machine }}</td><td>{{ alarm.message }}</td><td><span class="business-status" :class="`business-status--${alarm.state}`">{{ alarm.level }}</span></td><td>{{ alarm.action }}</td></tr></tbody></table></div></AppSection>
+        <header class="business-page__header">
+            <div>
+                <p class="business-page__eyebrow">MES · 설비관리</p>
+                <h1 class="business-page__title">설비 모니터링</h1>
+                <p class="business-page__desc">설비 가동 상태와 주요 알람을 실시간으로 확인합니다.</p>
+            </div>
+            <div class="business-live"><span class="business-live__dot"></span>LIVE · 14:32:08</div>
+        </header>
+        <section class="business-summary">
+            <article v-for="item in summary" :key="item.label" class="business-summary__item">
+                <span class="business-summary__label">{{ item.label }}</span
+                ><strong class="business-summary__value">{{ item.value }}</strong
+                ><span class="business-summary__change">{{ item.desc }}</span>
+            </article>
+        </section>
+        <section class="equipment-grid">
+            <article v-for="machine in machines" :key="machine.code" class="equipment-card" :class="`equipment-card--${machine.state}`">
+                <header class="equipment-card__header">
+                    <div>
+                        <span class="equipment-card__code">{{ machine.code }}</span>
+                        <h2 class="equipment-card__title">{{ machine.name }}</h2>
+                    </div>
+                    <span class="business-status" :class="`business-status--${machine.state}`">{{ machine.status }}</span>
+                </header>
+                <dl class="equipment-card__data">
+                    <div>
+                        <dt>가동률</dt>
+                        <dd>{{ machine.operation }}%</dd>
+                    </div>
+                    <div>
+                        <dt>현재 생산</dt>
+                        <dd>{{ machine.output }}</dd>
+                    </div>
+                    <div>
+                        <dt>작업자</dt>
+                        <dd>{{ machine.worker }}</dd>
+                    </div>
+                </dl>
+                <AppProgressBar :value="machine.operation" />
+            </article>
+        </section>
+        <AppSection title="최근 설비 알람"
+            ><div class="business-table-wrap">
+                <table class="business-table">
+                    <thead>
+                        <tr>
+                            <th>발생시각</th>
+                            <th>설비</th>
+                            <th>알람 내용</th>
+                            <th>등급</th>
+                            <th>조치상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="alarm in alarms" :key="`${alarm.time}-${alarm.machine}`">
+                            <td>{{ alarm.time }}</td>
+                            <td>{{ alarm.machine }}</td>
+                            <td>{{ alarm.message }}</td>
+                            <td>
+                                <span class="business-status" :class="`business-status--${alarm.state}`">{{ alarm.level }}</span>
+                            </td>
+                            <td>{{ alarm.action }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div></AppSection
+        >
     </div>
 </template>
 <script setup lang="ts">
-const summary = [{ label: "전체 설비", value: "24대", desc: "정상 20대" }, { label: "평균 가동률", value: "84.6%", desc: "목표 82%" }, { label: "비가동", value: "2대", desc: "계획정지 1대" }, { label: "금일 알람", value: "7건", desc: "미조치 1건" }];
-const machines = [{ code: "CNC-01", name: "CNC 머시닝센터 1호", status: "가동", state: "success", operation: 92, output: "842 / 1,000", worker: "김현장" }, { code: "CNC-02", name: "CNC 머시닝센터 2호", status: "가동", state: "success", operation: 86, output: "714 / 800", worker: "이기술" }, { code: "CNC-04", name: "CNC 머시닝센터 4호", status: "알람", state: "error", operation: 48, output: "386 / 1,200", worker: "박설비" }, { code: "WASH-02", name: "자동 세척기 2호", status: "대기", state: "gray", operation: 61, output: "520 / 900", worker: "-" }];
-const alarms = [{ time: "14:28:12", machine: "CNC-04", message: "주축 모터 과부하", level: "긴급", state: "error", action: "조치중" }, { time: "13:42:51", machine: "WASH-02", message: "세척액 수위 부족", level: "주의", state: "warning", action: "조치완료" }, { time: "11:08:20", machine: "CNC-01", message: "공구 수명 임박", level: "안내", state: "info", action: "확인" }];
+const summary = [
+    { label: '전체 설비', value: '24대', desc: '정상 20대' },
+    { label: '평균 가동률', value: '84.6%', desc: '목표 82%' },
+    { label: '비가동', value: '2대', desc: '계획정지 1대' },
+    { label: '금일 알람', value: '7건', desc: '미조치 1건' },
+];
+const machines = [
+    { code: 'CNC-01', name: 'CNC 머시닝센터 1호', status: '가동', state: 'success', operation: 92, output: '842 / 1,000', worker: '김현장' },
+    { code: 'CNC-02', name: 'CNC 머시닝센터 2호', status: '가동', state: 'success', operation: 86, output: '714 / 800', worker: '이기술' },
+    { code: 'CNC-04', name: 'CNC 머시닝센터 4호', status: '알람', state: 'error', operation: 48, output: '386 / 1,200', worker: '박설비' },
+    { code: 'WASH-02', name: '자동 세척기 2호', status: '대기', state: 'gray', operation: 61, output: '520 / 900', worker: '-' },
+];
+const alarms = [
+    { time: '14:28:12', machine: 'CNC-04', message: '주축 모터 과부하', level: '긴급', state: 'error', action: '조치중' },
+    { time: '13:42:51', machine: 'WASH-02', message: '세척액 수위 부족', level: '주의', state: 'warning', action: '조치완료' },
+    { time: '11:08:20', machine: 'CNC-01', message: '공구 수명 임박', level: '안내', state: 'info', action: '확인' },
+];
 </script>

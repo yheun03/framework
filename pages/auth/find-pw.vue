@@ -9,9 +9,7 @@
                     <p class="login__tagline">워크스페이스 + UI 데모를 위한 Framework</p>
                 </div>
 
-                <p class="login__copyright">
-                    © {{ new Date().getFullYear() }} Framework. All rights reserved.
-                </p>
+                <p class="login__copyright">© {{ new Date().getFullYear() }} Framework. All rights reserved.</p>
             </div>
         </section>
 
@@ -25,9 +23,7 @@
                 <form class="login__form" @submit.prevent="handleSubmit">
                     <AppInput v-model="email" name="email" type="email" label="이메일" placeholder="name@company.com" />
 
-                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!email.trim()">
-                        재설정 링크 보내기
-                    </AppButton>
+                    <AppButton class="login__submit" type="submit" variant="fill" size="lg" :disabled="!email.trim()"> 재설정 링크 보내기 </AppButton>
 
                     <div class="login__helper">
                         <NuxtLink class="login__link" to="/auth/sign-in">로그인으로 돌아가기</NuxtLink>
@@ -41,15 +37,15 @@
 </template>
 
 <script setup lang="ts">
-import { IconApp } from "~/components/icons";
+import { IconApp } from '~/components/icons';
 
 definePageMeta({
     layout: false,
 });
 
-const email = ref("");
+const email = ref('');
 
 function handleSubmit() {
-    navigateTo("/auth/sign-in");
+    navigateTo('/auth/sign-in');
 }
 </script>

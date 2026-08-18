@@ -15,12 +15,21 @@
                 </PageDemoSection>
 
                 <!-- WITH FORM FIELD -->
-                <PageDemoSection class="page-demo-section" title="With FormField"
-                    description="AppFormField와 함께 label, hint, error를 연결합니다.">
-                    <AppFormField label="문의 내용" required hint="최대 200자까지 입력할 수 있습니다."
-                        :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''">
-                        <AppTextarea v-model="content" placeholder="문의 내용을 입력하세요." :max-length="200" show-count
-                            clearable :state="content && content.length < 10 ? 'error' : null" />
+                <PageDemoSection class="page-demo-section" title="With FormField" description="AppFormField와 함께 label, hint, error를 연결합니다.">
+                    <AppFormField
+                        label="문의 내용"
+                        required
+                        hint="최대 200자까지 입력할 수 있습니다."
+                        :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''"
+                    >
+                        <AppTextarea
+                            v-model="content"
+                            placeholder="문의 내용을 입력하세요."
+                            :max-length="200"
+                            show-count
+                            clearable
+                            :state="content && content.length < 10 ? 'error' : null"
+                        />
                     </AppFormField>
                 </PageDemoSection>
 
@@ -54,8 +63,7 @@
                 </PageDemoSection>
 
                 <!-- SHAPE -->
-                <PageDemoSection class="page-demo-section" title="Shape"
-                    description="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
+                <PageDemoSection class="page-demo-section" title="Shape" description="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
                     <div class="page-demo-grid">
                         <AppTextarea v-model="shapeValues.square" shape="square" placeholder="square" />
                         <AppTextarea v-model="shapeValues.round" shape="round" placeholder="round" />
@@ -65,8 +73,7 @@
                 </PageDemoSection>
 
                 <!-- RESIZE -->
-                <PageDemoSection class="page-demo-section" title="Resize"
-                    description="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="Resize" description="resize 옵션별 textarea 크기 조절 방식을 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
@@ -77,15 +84,13 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "vertical"</div>
 
-                            <AppTextarea v-model="resizeVerticalValue" resize="vertical"
-                                placeholder="resize vertical" />
+                            <AppTextarea v-model="resizeVerticalValue" resize="vertical" placeholder="resize vertical" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "horizontal"</div>
 
-                            <AppTextarea v-model="resizeHorizontalValue" resize="horizontal"
-                                placeholder="resize horizontal" />
+                            <AppTextarea v-model="resizeHorizontalValue" resize="horizontal" placeholder="resize horizontal" />
                         </div>
 
                         <div class="page-demo-stack">
@@ -97,8 +102,7 @@
                 </PageDemoSection>
 
                 <!-- STATES -->
-                <PageDemoSection class="page-demo-section" title="States"
-                    description="공통 state와 disabled, readonly 상태를 확인합니다.">
+                <PageDemoSection class="page-demo-section" title="States" description="공통 state와 disabled, readonly 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-grid">
                             <AppTextarea v-model="stateValues.error" state="error" placeholder="state = error" />
@@ -127,10 +131,8 @@
                 </PageDemoSection>
 
                 <!-- COUNT / CLEAR -->
-                <PageDemoSection class="page-demo-section" title="Count / Clear"
-                    description="글자 수 표시와 clearable 옵션을 확인합니다.">
-                    <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count
-                        clearable />
+                <PageDemoSection class="page-demo-section" title="Count / Clear" description="글자 수 표시와 clearable 옵션을 확인합니다.">
+                    <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count clearable />
                 </PageDemoSection>
             </main>
 
@@ -147,31 +149,31 @@
 /**
  * 텍스트에어리어 데모 화면의 입력 값과 검증 상태를 관리하는 페이지 컴포넌트입니다.
  */
-const { title, description } = useDemoI18n("textarea");
+const { title, description } = useDemoI18n('textarea');
 
-const basicValue = ref("");
-const content = ref("");
-const extraSmallValue = ref("");
-const smallValue = ref("");
-const mediumValue = ref("");
-const largeValue = ref("");
-const resizeNoneValue = ref("resize none");
-const resizeVerticalValue = ref("resize vertical");
-const resizeHorizontalValue = ref("resize horizontal");
-const resizeBothValue = ref("resize both");
-const disabledValue = ref("disabled value");
-const readonlyValue = ref("readonly value");
-const invalidValue = ref("invalid value");
-const countValue = ref("");
+const basicValue = ref('');
+const content = ref('');
+const extraSmallValue = ref('');
+const smallValue = ref('');
+const mediumValue = ref('');
+const largeValue = ref('');
+const resizeNoneValue = ref('resize none');
+const resizeVerticalValue = ref('resize vertical');
+const resizeHorizontalValue = ref('resize horizontal');
+const resizeBothValue = ref('resize both');
+const disabledValue = ref('disabled value');
+const readonlyValue = ref('readonly value');
+const invalidValue = ref('invalid value');
+const countValue = ref('');
 const shapeValues = reactive({
-    square: "",
-    round: "",
-    pill: "",
-    underline: "",
+    square: '',
+    round: '',
+    pill: '',
+    underline: '',
 });
 const stateValues = reactive({
-    error: "",
-    warning: "",
-    success: "",
+    error: '',
+    warning: '',
+    success: '',
 });
 </script>

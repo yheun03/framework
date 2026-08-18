@@ -40,7 +40,8 @@
                 <!-- ICON -->
                 <PageDemoSection class="page-demo-section" title="Icon" description="Input 내부에 아이콘을 배치할 수 있습니다.">
                     <div class="page-demo-grid">
-                        <AppInput v-model="search" placeholder="검색어"><template #iconLeft>
+                        <AppInput v-model="search" placeholder="검색어"
+                            ><template #iconLeft>
                                 <IconSearch />
                             </template>
                         </AppInput>
@@ -50,21 +51,23 @@
                 </PageDemoSection>
 
                 <!-- ICON -->
-                <PageDemoSection class="page-demo-section" title="Icon"
-                    description="로컬 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
+                <PageDemoSection class="page-demo-section" title="Icon" description="로컬 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
                     <div class="page-demo-grid">
-                        <AppInput v-model="icon" placeholder="사용자명"><template #iconLeft>
+                        <AppInput v-model="icon" placeholder="사용자명"
+                            ><template #iconLeft>
                                 <IconAccount />
                             </template>
                         </AppInput>
-                        <AppInput v-model="email" placeholder="이메일"><template #iconLeft>
-                                <IconEmail />
-                            </template><template #iconRight>
-                                <IconCheckCircle />
-                            </template></AppInput>
-                        <AppInput v-model="url" placeholder="https://example.com"><template #iconLeft>
-                                <IconLink />
-                            </template></AppInput>
+                        <AppInput v-model="email" placeholder="이메일"
+                            ><template #iconLeft>
+                                <IconEmail /> </template
+                            ><template #iconRight>
+                                <IconCheckCircle /> </template
+                        ></AppInput>
+                        <AppInput v-model="url" placeholder="https://example.com"
+                            ><template #iconLeft>
+                                <IconLink /> </template
+                        ></AppInput>
                     </div>
                 </PageDemoSection>
 
@@ -78,8 +81,7 @@
                 </PageDemoSection>
 
                 <!-- DISABLED / READONLY -->
-                <PageDemoSection class="page-demo-section" title="Disabled / Readonly"
-                    description="입력 불가 상태를 제어합니다.">
+                <PageDemoSection class="page-demo-section" title="Disabled / Readonly" description="입력 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
                         <AppInput v-model="readonlyValue" label="Readonly" readonly hint="읽기 전용" />
                         <AppInput v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" />
@@ -98,35 +100,35 @@
 </template>
 
 <script setup lang="ts">
-import { IconAccount, IconCheckCircle, IconEmail, IconLink, IconSearch } from "~/components/icons";
+import { IconAccount, IconCheckCircle, IconEmail, IconLink, IconSearch } from '~/components/icons';
 
-const { title, description } = useDemoI18n("input");
+const { title, description } = useDemoI18n('input');
 
-const basic = ref("");
-const email = ref("");
-const search = ref("");
-const icon = ref("");
-const password = ref("");
-const url = ref("");
+const basic = ref('');
+const email = ref('');
+const search = ref('');
+const icon = ref('');
+const password = ref('');
+const url = ref('');
 
 const sizes = reactive({
-    xs: "",
-    sm: "",
-    md: "",
-    lg: "",
+    xs: '',
+    sm: '',
+    md: '',
+    lg: '',
 });
 
 const shape = reactive({
-    square: "",
-    round: "",
-    pill: "",
-    underline: "",
+    square: '',
+    round: '',
+    pill: '',
+    underline: '',
 });
 
-const stateError = ref("");
-const stateWarning = ref("");
-const stateSuccess = ref("");
+const stateError = ref('');
+const stateWarning = ref('');
+const stateSuccess = ref('');
 
-const readonlyValue = ref("읽기 전용 값");
-const disabledValue = ref("비활성 값");
+const readonlyValue = ref('읽기 전용 값');
+const disabledValue = ref('비활성 값');
 </script>

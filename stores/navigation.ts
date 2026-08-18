@@ -1,10 +1,10 @@
 /**
  * 네비게이션 메뉴와 활성 경로 상태를 관리하는 Pinia store 파일입니다.
  */
-import {computed, ref} from 'vue';
-import {defineStore} from 'pinia';
-import {useI18nText} from '~/composables/useI18nText';
-import type {NavigationMenu} from '~/types/appNavigation';
+import { computed, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { useI18nText } from '~/composables/useI18nText';
+import type { NavigationMenu } from '~/types/appNavigation';
 
 type MutableNavigationMenu = Omit<NavigationMenu, 'children'> & {
     children?: MutableNavigationMenu[];
@@ -226,44 +226,94 @@ const MENU_SEED: MenuSeedEntity[] = [
         isActive: true,
     },
     {
-        id: 'MENU_025001', parentId: 'MENU_025000', depth: 2, order: 1,
-        to: '/erp-dashboard', labelKey: 'nav.business.erpDashboard', isActive: true,
+        id: 'MENU_025001',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 1,
+        to: '/erp-dashboard',
+        labelKey: 'nav.business.erpDashboard',
+        isActive: true,
     },
     {
-        id: 'MENU_025002', parentId: 'MENU_025000', depth: 2, order: 2,
-        to: '/sales-orders', labelKey: 'nav.business.salesOrders', isActive: true,
+        id: 'MENU_025002',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 2,
+        to: '/sales-orders',
+        labelKey: 'nav.business.salesOrders',
+        isActive: true,
     },
     {
-        id: 'MENU_025003', parentId: 'MENU_025000', depth: 2, order: 3,
-        to: '/sales-order-detail', labelKey: 'nav.business.salesOrderDetail', isActive: true,
+        id: 'MENU_025003',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 3,
+        to: '/sales-order-detail',
+        labelKey: 'nav.business.salesOrderDetail',
+        isActive: true,
     },
     {
-        id: 'MENU_025004', parentId: 'MENU_025000', depth: 2, order: 4,
-        to: '/purchase-orders', labelKey: 'nav.business.purchaseOrders', isActive: true,
+        id: 'MENU_025004',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 4,
+        to: '/purchase-orders',
+        labelKey: 'nav.business.purchaseOrders',
+        isActive: true,
     },
     {
-        id: 'MENU_025005', parentId: 'MENU_025000', depth: 2, order: 5,
-        to: '/inventory-status', labelKey: 'nav.business.inventoryStatus', isActive: true,
+        id: 'MENU_025005',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 5,
+        to: '/inventory-status',
+        labelKey: 'nav.business.inventoryStatus',
+        isActive: true,
     },
     {
-        id: 'MENU_025006', parentId: 'MENU_025000', depth: 2, order: 6,
-        to: '/production-plan', labelKey: 'nav.business.productionPlan', isActive: true,
+        id: 'MENU_025006',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 6,
+        to: '/production-plan',
+        labelKey: 'nav.business.productionPlan',
+        isActive: true,
     },
     {
-        id: 'MENU_025007', parentId: 'MENU_025000', depth: 2, order: 7,
-        to: '/work-orders', labelKey: 'nav.business.workOrders', isActive: true,
+        id: 'MENU_025007',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 7,
+        to: '/work-orders',
+        labelKey: 'nav.business.workOrders',
+        isActive: true,
     },
     {
-        id: 'MENU_025008', parentId: 'MENU_025000', depth: 2, order: 8,
-        to: '/work-order-detail', labelKey: 'nav.business.workOrderDetail', isActive: true,
+        id: 'MENU_025008',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 8,
+        to: '/work-order-detail',
+        labelKey: 'nav.business.workOrderDetail',
+        isActive: true,
     },
     {
-        id: 'MENU_025009', parentId: 'MENU_025000', depth: 2, order: 9,
-        to: '/quality-inspection', labelKey: 'nav.business.qualityInspection', isActive: true,
+        id: 'MENU_025009',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 9,
+        to: '/quality-inspection',
+        labelKey: 'nav.business.qualityInspection',
+        isActive: true,
     },
     {
-        id: 'MENU_025010', parentId: 'MENU_025000', depth: 2, order: 10,
-        to: '/equipment-monitoring', labelKey: 'nav.business.equipmentMonitoring', isActive: true,
+        id: 'MENU_025010',
+        parentId: 'MENU_025000',
+        depth: 2,
+        order: 10,
+        to: '/equipment-monitoring',
+        labelKey: 'nav.business.equipmentMonitoring',
+        isActive: true,
     },
     {
         id: 'MENU_030000',
@@ -357,7 +407,7 @@ function buildNavigationTree(items: readonly NavigationMenu[]): NavigationMenu[]
 }
 
 export const useNavigationStore = defineStore('navigation', () => {
-    const {t} = useI18nText();
+    const { t } = useI18nText();
     const menus = ref<NavigationMenu[]>([]);
     const isLoading = ref(false);
     const isLoaded = ref(false);

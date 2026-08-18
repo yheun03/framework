@@ -1,9 +1,9 @@
 /**
  * 라우트 탭 목록과 활성 탭 상태를 관리하는 Pinia store 파일입니다.
  */
-import {computed, ref} from 'vue';
-import {defineStore} from 'pinia';
-import {resolveFallbackTabId} from '~/utils/tab';
+import { computed, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { resolveFallbackTabId } from '~/utils/tab';
 
 export type RouteTab = {
     key: string;
@@ -18,14 +18,14 @@ export const useRouteTabsStore = defineStore('route-tabs', () => {
 
     const activeTab = computed(() => (activeKey.value ? tabs.value.find((t) => t.key === activeKey.value) : null) ?? null);
 
-    function visit(tab: {key: string; path: string; title: string; labelKey?: string}, opts?: {activate?: boolean}) {
+    function visit(tab: { key: string; path: string; title: string; labelKey?: string }, opts?: { activate?: boolean }) {
         const existing = tabs.value.find((t) => t.key === tab.key);
         if (existing) {
             existing.path = tab.path;
             existing.title = tab.title;
             existing.labelKey = tab.labelKey;
         } else {
-            tabs.value.push({...tab});
+            tabs.value.push({ ...tab });
         }
 
         if (opts?.activate ?? true) activeKey.value = tab.key;

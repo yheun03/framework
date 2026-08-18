@@ -1,7 +1,7 @@
 import axios from 'axios';
-import type {AxiosInstance} from 'axios';
-import type {AxiosRequestConfig} from 'axios';
-import {getRequestURL} from 'h3';
+import type { AxiosInstance } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import { getRequestURL } from 'h3';
 
 type RequestConfig = AxiosRequestConfig;
 type FetchResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'stream';
@@ -67,14 +67,14 @@ export default defineNuxtPlugin(() => {
     const api: AxiosInstance = axios.create({
         baseURL,
         timeout: 10000,
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
     });
 
     async function request<T, B = RequestBody>(method: RequestMethod, url: string, body?: B, requestConfig?: RequestConfig): Promise<T> {
         if (isServerLocalRequest(url)) {
             const response = await $fetch(url, {
                 method,
-                ...(body !== undefined ? {body: body as RequestBody} : {}),
+                ...(body !== undefined ? { body: body as RequestBody } : {}),
                 ...toFetchOptions(requestConfig),
             });
 
@@ -82,7 +82,7 @@ export default defineNuxtPlugin(() => {
         }
 
         const axiosUrl = toAxiosUrl(url);
-        const {data} = await requestByAxiosMethod<T, B>(api, method, axiosUrl, body, requestConfig);
+        const { data } = await requestByAxiosMethod<T, B>(api, method, axiosUrl, body, requestConfig);
 
         return data;
     }
@@ -96,7 +96,7 @@ export default defineNuxtPlugin(() => {
     };
 
     return {
-        provide: {api: apiClient},
+        provide: { api: apiClient },
     };
 });
 
