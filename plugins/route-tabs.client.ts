@@ -1,7 +1,7 @@
-import {useRouteTabsStore} from '~/stores/routeTabs';
-import {useNavigationStore} from '~/stores/navigation';
-import {getRouteTitle, isVisibleRoute} from '~/router';
-import type {RouteLocationNormalized} from 'vue-router';
+import { useRouteTabsStore } from '~/stores/routeTabs';
+import { useNavigationStore } from '~/stores/navigation';
+import { getRouteTitle, isVisibleRoute } from '~/router';
+import type { RouteLocationNormalized } from 'vue-router';
 
 export default defineNuxtPlugin(() => {
     const router = useRouter();

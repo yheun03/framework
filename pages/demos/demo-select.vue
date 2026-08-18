@@ -10,8 +10,13 @@
                 <!-- BASIC -->
                 <PageDemoSection class="page-demo-section" title="Basic" description="가장 기본적인 Select 사용 예시입니다.">
                     <div class="page-demo-grid">
-                        <AppSelect v-model="basic.department" label="부서" placeholder="부서를 선택하세요" hint="부서를 선택해주세요"
-                            :options="departmentOptions" />
+                        <AppSelect
+                            v-model="basic.department"
+                            label="부서"
+                            placeholder="부서를 선택하세요"
+                            hint="부서를 선택해주세요"
+                            :options="departmentOptions"
+                        />
                         <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :options="jobOptions" />
                         <AppSelect v-model="basic.country" placeholder="국가 선택" :options="countryOptions" />
                     </div>
@@ -33,28 +38,23 @@
                         <AppSelect shape="square" label="Square" v-model="shape.square" :options="departmentOptions" />
                         <AppSelect shape="round" label="Round" v-model="shape.round" :options="departmentOptions" />
                         <AppSelect shape="pill" label="Pill" v-model="shape.pill" :options="departmentOptions" />
-                        <AppSelect shape="underline" label="Underline" v-model="shape.underline"
-                            :options="departmentOptions" />
+                        <AppSelect shape="underline" label="Underline" v-model="shape.underline" :options="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- STATE -->
                 <PageDemoSection class="page-demo-section" title="State" description="선택 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지"
-                            :options="departmentOptions" />
-                        <AppSelect v-model="stateWarning" label="Warning" state="warning" hint="경고 메시지"
-                            :options="departmentOptions" />
-                        <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능"
-                            :options="departmentOptions" />
+                        <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지" :options="departmentOptions" />
+                        <AppSelect v-model="stateWarning" label="Warning" state="warning" hint="경고 메시지" :options="departmentOptions" />
+                        <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능" :options="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- DISABLED -->
                 <PageDemoSection class="page-demo-section" title="Disabled" description="선택 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태"
-                            :options="departmentOptions" />
+                        <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" :options="departmentOptions" />
                     </div>
                 </PageDemoSection>
             </main>
@@ -73,31 +73,31 @@
 /**
  * 셀렉트 데모 화면의 선택 값과 출력 상태를 관리하는 페이지 컴포넌트입니다.
  */
-import type { AppSelectOption } from "~/components/AppSelect.vue";
+import type { AppSelectOption } from '~/components/AppSelect.vue';
 
 /* stores/composables */
-const { title, description } = useDemoI18n("select");
+const { title, description } = useDemoI18n('select');
 
 /* 예제 데이터 */
 const departmentOptions: AppSelectOption[] = [
-    { value: "dev", label: "개발" },
-    { value: "design", label: "디자인" },
-    { value: "plan", label: "기획" },
-    { value: "ops", label: "운영", disabled: true },
+    { value: 'dev', label: '개발' },
+    { value: 'design', label: '디자인' },
+    { value: 'plan', label: '기획' },
+    { value: 'ops', label: '운영', disabled: true },
 ];
 
 const jobOptions: AppSelectOption[] = [
-    { value: "publisher", label: "<span>퍼블리셔</span> <span>Publisher</span>" },
-    { value: "frontend", label: "프론트엔드" },
-    { value: "designer", label: "디자이너" },
-    { value: "pm", label: "PM" },
+    { value: 'publisher', label: '<span>퍼블리셔</span> <span>Publisher</span>' },
+    { value: 'frontend', label: '프론트엔드' },
+    { value: 'designer', label: '디자이너' },
+    { value: 'pm', label: 'PM' },
 ];
 
 const countryOptions: AppSelectOption[] = [
-    { value: "kr", label: "대한민국" },
-    { value: "jp", label: "일본" },
-    { value: "us", label: "미국" },
-    { value: "tw", label: "대만" },
+    { value: 'kr', label: '대한민국' },
+    { value: 'jp', label: '일본' },
+    { value: 'us', label: '미국' },
+    { value: 'tw', label: '대만' },
 ];
 
 /* ref/reactive state */
@@ -125,8 +125,7 @@ const stateError = ref<string | null>(null);
 const stateWarning = ref<string | null>(null);
 const stateSuccess = ref<string | null>(null);
 
-const disabledValue = ref<string | null>("dev");
-
+const disabledValue = ref<string | null>('dev');
 </script>
 
 <!-- demo 공통 스타일은 assets/scss/pages/demo.scss 에서 관리 -->

@@ -1,9 +1,9 @@
 /**
  * 작업 영역의 UI 상태와 공통 화면 상태를 관리하는 Pinia store 파일입니다.
  */
-import {defineStore} from 'pinia';
-import {computed, ref} from 'vue';
-import {resolveFallbackTabId} from '~/utils/tab';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+import { resolveFallbackTabId } from '~/utils/tab';
 
 export type WorkspaceTab = {
     id: string;
@@ -39,7 +39,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
     function ensureTab(id: string) {
         const existing = tabs.value.find((t) => t.id === id);
         if (existing) return existing;
-        const t: WorkspaceTab = {id, title: id, content: ''};
+        const t: WorkspaceTab = { id, title: id, content: '' };
         tabs.value.push(t);
         return t;
     }

@@ -7,108 +7,94 @@
                     <p class="page-demo__desc">{{ description }}</p>
                 </header>
 
-                <PageDemoSection class="page-demo-section" title="Basic"
-                    description="가장 기본적인 단일 파일 업로드 예시입니다. PDF 파일은 미리보기 버튼으로 확인할 수 있습니다.">
-                        <div class="page-demo-row">
-                            <AppUploadFile v-model="basic.file" />
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Basic"
+                    description="가장 기본적인 단일 파일 업로드 예시입니다. PDF 파일은 미리보기 버튼으로 확인할 수 있습니다."
+                >
+                    <div class="page-demo-row">
+                        <AppUploadFile v-model="basic.file" />
 
-                            <div class="page-demo-stack">
-                                <div class="page-demo-hint">
-                                    단일 파일 업로드용 기본 예시입니다.
-                                </div>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">단일 파일 업로드용 기본 예시입니다.</div>
 
-                                <div class="page-demo-actions">
-                                    <AppButton size="sm" variant="outline" @click="handleBasicSampleSet">
-                                        샘플 파일
-                                    </AppButton>
+                            <div class="page-demo-actions">
+                                <AppButton size="sm" variant="outline" @click="handleBasicSampleSet"> 샘플 파일 </AppButton>
 
-                                    <AppTextButton size="sm" :disabled="!basic.file" @click="handleBasicClear">
-                                        값 비우기
-                                    </AppTextButton>
-                                </div>
+                                <AppTextButton size="sm" :disabled="!basic.file" @click="handleBasicClear"> 값 비우기 </AppTextButton>
                             </div>
                         </div>
+                    </div>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Multiple"
-                    description="여러 파일을 업로드하고 최대 개수 제한을 적용하는 예시입니다.">
-                        <div class="page-demo-row">
-                            <AppUploadFile v-model="multiple.files" multiple :max-count="4" />
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Multiple"
+                    description="여러 파일을 업로드하고 최대 개수 제한을 적용하는 예시입니다."
+                >
+                    <div class="page-demo-row">
+                        <AppUploadFile v-model="multiple.files" multiple :max-count="4" />
 
-                            <div class="page-demo-stack">
-                                <div class="page-demo-hint">
-                                    최대 4개까지 업로드할 수 있습니다.
-                                </div>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-hint">최대 4개까지 업로드할 수 있습니다.</div>
 
-                                <div class="page-demo-actions">
-                                    <AppButton size="sm" variant="outline" @click="handleMultipleSamplesSet">
-                                        샘플 파일
-                                    </AppButton>
+                            <div class="page-demo-actions">
+                                <AppButton size="sm" variant="outline" @click="handleMultipleSamplesSet"> 샘플 파일 </AppButton>
 
-                                    <AppTextButton size="sm" :disabled="!multiple.files.length"
-                                        @click="handleMultipleClear">
-                                        값 비우기
-                                    </AppTextButton>
-                                </div>
+                                <AppTextButton size="sm" :disabled="!multiple.files.length" @click="handleMultipleClear"> 값 비우기 </AppTextButton>
                             </div>
                         </div>
+                    </div>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Drag &amp; Drop"
-                    description="allowDrop 속성으로 드래그 앤 드롭 허용 여부를 제어합니다.">
-                        <div class="page-demo-grid">
-                            <div class="page-demo-stack">
-                                <AppUploadFile v-model="drop.enabled" :allow-drop="true" />
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Drag &amp; Drop"
+                    description="allowDrop 속성으로 드래그 앤 드롭 허용 여부를 제어합니다."
+                >
+                    <div class="page-demo-grid">
+                        <div class="page-demo-stack">
+                            <AppUploadFile v-model="drop.enabled" :allow-drop="true" />
 
-                                <div class="page-demo-hint">드롭 가능 상태입니다.</div>
-                            </div>
-
-                            <div class="page-demo-stack">
-                                <AppUploadFile v-model="drop.disabled" :allow-drop="false" />
-
-                                <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
-                            </div>
+                            <div class="page-demo-hint">드롭 가능 상태입니다.</div>
                         </div>
+
+                        <div class="page-demo-stack">
+                            <AppUploadFile v-model="drop.disabled" :allow-drop="false" />
+
+                            <div class="page-demo-hint">드롭 비허용 상태입니다.</div>
+                        </div>
+                    </div>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="File Rules"
-                    description="파일 형식과 최대 용량 제한 예시입니다.">
-                        <div class="page-demo-grid">
-                            <div class="page-demo-stack">
-                                <AppUploadFile v-model="rules.docsOnly" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                <PageDemoSection class="page-demo-section" title="File Rules" description="파일 형식과 최대 용량 제한 예시입니다.">
+                    <div class="page-demo-grid">
+                        <div class="page-demo-stack">
+                            <AppUploadFile v-model="rules.docsOnly" accept=".pdf,.doc,.docx,.xls,.xlsx" />
 
-                                <div class="page-demo-hint">
-                                    <strong>accept</strong> 속성으로 문서 형식만 허용합니다.
-                                </div>
-                            </div>
-
-                            <div class="page-demo-stack">
-                                <AppUploadFile v-model="rules.maxSizeFile" :max-size-bytes="rules.maxSizeBytes" />
-
-                                <div class="page-demo-hint">
-                                    <strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.
-                                </div>
-                            </div>
+                            <div class="page-demo-hint"><strong>accept</strong> 속성으로 문서 형식만 허용합니다.</div>
                         </div>
+
+                        <div class="page-demo-stack">
+                            <AppUploadFile v-model="rules.maxSizeFile" :max-size-bytes="rules.maxSizeBytes" />
+
+                            <div class="page-demo-hint"><strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.</div>
+                        </div>
+                    </div>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Disabled"
-                    description="비활성 상태에서 선택과 드롭을 막는 예시입니다.">
-                        <div class="page-demo-row">
-                            <AppUploadFile v-model="disabled.file" :disabled="disabled.value" />
+                <PageDemoSection class="page-demo-section" title="Disabled" description="비활성 상태에서 선택과 드롭을 막는 예시입니다.">
+                    <div class="page-demo-row">
+                        <AppUploadFile v-model="disabled.file" :disabled="disabled.value" />
 
-                            <div class="page-demo-stack">
-                                <div class="page-demo-actions">
-                                    <AppTextButton size="sm" @click="handleDisabledToggle">
-                                        disabled: {{ disabled.value ? "ON" : "OFF" }}
-                                    </AppTextButton>
+                        <div class="page-demo-stack">
+                            <div class="page-demo-actions">
+                                <AppTextButton size="sm" @click="handleDisabledToggle"> disabled: {{ disabled.value ? 'ON' : 'OFF' }} </AppTextButton>
 
-                                    <AppTextButton size="sm" :disabled="!disabled.file" @click="handleDisabledClear">
-                                        값 비우기
-                                    </AppTextButton>
-                                </div>
+                                <AppTextButton size="sm" :disabled="!disabled.file" @click="handleDisabledClear"> 값 비우기 </AppTextButton>
                             </div>
                         </div>
+                    </div>
                 </PageDemoSection>
             </main>
 
@@ -122,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-const { title, description } = useDemoI18n("uploadFile");
+const { title, description } = useDemoI18n('uploadFile');
 
 type UploadFileItem = {
     id: string;
@@ -131,7 +117,7 @@ type UploadFileItem = {
     size: number;
     path?: string;
     file?: File;
-    source?: "sample" | "upload";
+    source?: 'sample' | 'upload';
 };
 
 const basic = reactive({
@@ -165,39 +151,19 @@ function toSampleFile(name: string, type: string, size: number, path: string) {
         type,
         size,
         path,
-        source: "sample" as const,
+        source: 'sample' as const,
     } satisfies UploadFileItem;
 }
 
 function handleBasicSampleSet() {
-    basic.file = toSampleFile(
-        "project-overview.pdf",
-        "application/pdf",
-        240000,
-        "/samples/project-overview.pdf",
-    );
+    basic.file = toSampleFile('project-overview.pdf', 'application/pdf', 240000, '/samples/project-overview.pdf');
 }
 
 function handleMultipleSamplesSet() {
     multiple.files = [
-        toSampleFile(
-            "contract.pdf",
-            "application/pdf",
-            180000,
-            "/samples/contract.pdf",
-        ),
-        toSampleFile(
-            "budget.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            92000,
-            "/samples/budget.xlsx",
-        ),
-        toSampleFile(
-            "notes.docx",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            76000,
-            "/samples/notes.docx",
-        ),
+        toSampleFile('contract.pdf', 'application/pdf', 180000, '/samples/contract.pdf'),
+        toSampleFile('budget.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 92000, '/samples/budget.xlsx'),
+        toSampleFile('notes.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 76000, '/samples/notes.docx'),
     ];
 }
 

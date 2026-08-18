@@ -1,12 +1,12 @@
-@use "../abstract" as *;
-@use "sass:color";
+@use '../abstract' as *;
+@use 'sass:color';
 
 $business-status-colors: (
-    "success": $status-success,
-    "warning": $status-warning,
-    "error": $status-error,
-    "info": $status-info,
-    "gray": $gray-500,
+    'success': $status-success,
+    'warning': $status-warning,
+    'error': $status-error,
+    'info': $status-info,
+    'gray': $gray-500,
 );
 
 .business-page {

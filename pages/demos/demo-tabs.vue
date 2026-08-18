@@ -20,10 +20,14 @@
                         </template>
 
                         <template #basicSelect>
-                            <AppSelect :model-value="null" :options="[
-                                { label: '옵션 A', value: 'a' },
-                                { label: '옵션 B', value: 'b' },
-                            ]" placeholder="선택하세요." />
+                            <AppSelect
+                                :model-value="null"
+                                :options="[
+                                    { label: '옵션 A', value: 'a' },
+                                    { label: '옵션 B', value: 'b' },
+                                ]"
+                                placeholder="선택하세요."
+                            />
                         </template>
 
                         <template #basicButton>
@@ -33,8 +37,7 @@
                 </PageDemoSection>
 
                 <!-- VARIANT -->
-                <PageDemoSection class="page-demo-section" title="Variant"
-                    description="line / box / pill / vertical 스타일을 비교합니다.">
+                <PageDemoSection class="page-demo-section" title="Variant" description="line / box / pill / vertical 스타일을 비교합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">variant = "line"</div>
@@ -79,8 +82,11 @@
                 </PageDemoSection>
 
                 <!-- DEFAULT ACTIVE -->
-                <PageDemoSection class="page-demo-section" title="Default Active Id"
-                    description="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Default Active Id"
+                    description="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다."
+                >
                     <AppTabs :items="defaultItems" variant="line" default-active-id="default-2">
                         <template #default1>Default Content 1</template>
                         <template #default2>Default Content 2</template>
@@ -176,154 +182,154 @@
 </template>
 
 <script setup lang="ts">
-import type { AppTabItem } from "~/components/AppTabs.vue";
-import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from "~/components/icons";
+import type { AppTabItem } from '~/components/AppTabs.vue';
+import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from '~/components/icons';
 
-const { title, description } = useDemoI18n("tabs");
+const { title, description } = useDemoI18n('tabs');
 
 const basicItems: AppTabItem[] = [
     {
-        id: "basic-1",
-        title: "기본 정보",
-        description: "텍스트와 입력 필드",
+        id: 'basic-1',
+        title: '기본 정보',
+        description: '텍스트와 입력 필드',
         icon: IconInfo,
-        slot: "basicInfo",
+        slot: 'basicInfo',
     },
     {
-        id: "basic-2",
-        title: "선택 영역",
-        description: "셀렉트 컴포넌트",
+        id: 'basic-2',
+        title: '선택 영역',
+        description: '셀렉트 컴포넌트',
         icon: IconForm,
-        slot: "basicSelect",
+        slot: 'basicSelect',
     },
     {
-        id: "basic-3",
-        title: "버튼 영역",
-        description: "버튼 예시",
+        id: 'basic-3',
+        title: '버튼 영역',
+        description: '버튼 예시',
         icon: IconTap,
-        slot: "basicButton",
+        slot: 'basicButton',
     },
 ];
 
 const variantItems: AppTabItem[] = [
     {
-        id: "variant-1",
-        title: "Account",
+        id: 'variant-1',
+        title: 'Account',
         badge: 3,
-        slot: "account",
+        slot: 'account',
     },
     {
-        id: "variant-2",
-        title: "Profile",
-        slot: "profile",
+        id: 'variant-2',
+        title: 'Profile',
+        slot: 'profile',
     },
     {
-        id: "variant-3",
-        title: "Security",
-        slot: "security",
+        id: 'variant-3',
+        title: 'Security',
+        slot: 'security',
     },
 ];
 
 const defaultItems: AppTabItem[] = [
     {
-        id: "default-1",
-        title: "Default 1",
-        slot: "default1",
+        id: 'default-1',
+        title: 'Default 1',
+        slot: 'default1',
     },
     {
-        id: "default-2",
-        title: "Default 2",
-        slot: "default2",
+        id: 'default-2',
+        title: 'Default 2',
+        slot: 'default2',
     },
     {
-        id: "default-3",
-        title: "Default 3",
-        slot: "default3",
+        id: 'default-3',
+        title: 'Default 3',
+        slot: 'default3',
     },
 ];
 
 const disabledItems: AppTabItem[] = [
     {
-        id: "disabled-1",
-        title: "활성 탭",
-        description: "선택할 수 있습니다.",
-        slot: "active1",
+        id: 'disabled-1',
+        title: '활성 탭',
+        description: '선택할 수 있습니다.',
+        slot: 'active1',
     },
     {
-        id: "disabled-2",
-        title: "비활성 탭",
-        description: "disabled 상태",
+        id: 'disabled-2',
+        title: '비활성 탭',
+        description: 'disabled 상태',
         disabled: true,
-        slot: "disabled",
+        slot: 'disabled',
     },
     {
-        id: "disabled-3",
-        title: "활성 탭 2",
-        description: "선택할 수 있습니다.",
-        slot: "active2",
+        id: 'disabled-3',
+        title: '활성 탭 2',
+        description: '선택할 수 있습니다.',
+        slot: 'active2',
     },
 ];
 
 const sizeItems: AppTabItem[] = [
     {
-        id: "size-1",
-        title: "Small",
-        slot: "small",
+        id: 'size-1',
+        title: 'Small',
+        slot: 'small',
     },
     {
-        id: "size-2",
-        title: "Medium",
-        slot: "medium",
+        id: 'size-2',
+        title: 'Medium',
+        slot: 'medium',
     },
     {
-        id: "size-3",
-        title: "Large",
-        slot: "large",
+        id: 'size-3',
+        title: 'Large',
+        slot: 'large',
     },
 ];
 
 const verticalItems: AppTabItem[] = [
     {
-        id: "vertical-1",
-        title: "Overview",
-        description: "요약 정보",
+        id: 'vertical-1',
+        title: 'Overview',
+        description: '요약 정보',
         icon: IconDashboard,
-        slot: "overview",
+        slot: 'overview',
     },
     {
-        id: "vertical-2",
-        title: "Members",
-        description: "구성원 정보",
+        id: 'vertical-2',
+        title: 'Members',
+        description: '구성원 정보',
         icon: IconAccountGroup,
-        slot: "members",
+        slot: 'members',
     },
     {
-        id: "vertical-3",
-        title: "Settings",
-        description: "설정 정보",
+        id: 'vertical-3',
+        title: 'Settings',
+        description: '설정 정보',
         icon: IconCog,
-        slot: "settings",
+        slot: 'settings',
     },
 ];
 
 const slotItems: AppTabItem[] = [
     {
-        id: "slot-1",
-        title: "진행 상태",
-        description: "slot으로 내용 연결",
-        slot: "progress",
+        id: 'slot-1',
+        title: '진행 상태',
+        description: 'slot으로 내용 연결',
+        slot: 'progress',
     },
     {
-        id: "slot-2",
-        title: "액션",
-        description: "버튼 직접 배치",
-        slot: "actions",
+        id: 'slot-2',
+        title: '액션',
+        description: '버튼 직접 배치',
+        slot: 'actions',
     },
     {
-        id: "slot-3",
-        title: "slot 방식",
-        description: "slot name으로 내용 연결",
-        slot: "custom",
+        id: 'slot-3',
+        title: 'slot 방식',
+        description: 'slot name으로 내용 연결',
+        slot: 'custom',
     },
 ];
 </script>

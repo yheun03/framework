@@ -12,7 +12,7 @@ export function formatBytes(bytes: number) {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function buildUploadHelperText(options: {accept?: string; maxSizeBytes?: number; multiple?: boolean; maxCount?: number}) {
+export function buildUploadHelperText(options: { accept?: string; maxSizeBytes?: number; multiple?: boolean; maxCount?: number }) {
     const rules: string[] = [];
 
     if (options.accept) {
@@ -54,13 +54,8 @@ export function isAcceptedUploadType(file: File, accept?: string) {
     });
 }
 
-export function resolveNextUploadItems<Item>(options: {
-    currentItems: Item[];
-    createdItems: Item[];
-    multiple?: boolean;
-    maxCount?: number;
-}) {
-    const {currentItems, createdItems, multiple, maxCount} = options;
+export function resolveNextUploadItems<Item>(options: { currentItems: Item[]; createdItems: Item[]; multiple?: boolean; maxCount?: number }) {
+    const { currentItems, createdItems, multiple, maxCount } = options;
     if (!createdItems.length) return [];
 
     let nextItems = multiple ? [...currentItems, ...createdItems] : [createdItems[0]];

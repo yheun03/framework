@@ -10,8 +10,7 @@
                 <!-- BASIC TYPES -->
                 <PageDemoSection class="page-demo-section" title="Basic Types">
                     <p class="page-demo__desc">
-                        AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각
-                        행의 <code>th</code>에는 <code>cell.type</code>이,
+                        AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각 행의 <code>th</code>에는 <code>cell.type</code>이,
                         <code>td</code>에는 해당 타입의 컴포넌트가 렌더링됩니다.
                     </p>
 
@@ -21,48 +20,46 @@
                 </PageDemoSection>
 
                 <!-- LAYOUT TYPES -->
-                <PageDemoSection class="page-demo-section" title="Layout Types"
-                    description="stacked / label-full 레이아웃 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Layout Types" description="stacked / label-full 레이아웃 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
                     </ClientOnly>
                 </PageDemoSection>
 
                 <!-- BUTTON TYPES -->
-                <PageDemoSection class="page-demo-section" title="Button Types"
-                    description="button / input_button / input_button-text / input-text / text-button 타입 예시입니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Button Types"
+                    description="button / input_button / input_button-text / input-text / text-button 타입 예시입니다."
+                >
                     <ClientOnly>
                         <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants" />
                     </ClientOnly>
                 </PageDemoSection>
 
                 <!-- CHOICE TYPES -->
-                <PageDemoSection class="page-demo-section" title="Choice Types"
-                    description="radio / checkbox 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Choice Types" description="radio / checkbox 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
                     </ClientOnly>
                 </PageDemoSection>
 
                 <!-- DATE TYPES -->
-                <PageDemoSection class="page-demo-section" title="Date Types"
-                    description="date / range_date 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Date Types" description="date / range_date 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
                     </ClientOnly>
                 </PageDemoSection>
 
                 <!-- CONTACT TYPES -->
-                <PageDemoSection class="page-demo-section" title="Contact Types"
-                    description="phone / email 타입 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Contact Types" description="phone / email 타입 예시입니다.">
                     <ClientOnly>
                         <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
                     </ClientOnly>
                 </PageDemoSection>
 
                 <!-- STATE -->
-                <PageDemoSection class="page-demo-section" title="Readonly / Disabled"
-                    description="readonly / disabled 상태 확인용 예시입니다.">
+                <PageDemoSection class="page-demo-section" title="Readonly / Disabled" description="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
                         <ClientOnly>
                             <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" readonly />
@@ -88,63 +85,63 @@
 /**
  * 테이블 데모 화면의 셀 타입별 입력 값과 액션 상태를 관리하는 페이지 컴포넌트입니다.
  */
-import type { AppTableOption, AppTableRow } from "~/types/appTable";
-const { title, description } = useDemoI18n("table");
+import type { AppTableOption, AppTableRow } from '~/types/appTable';
+const { title, description } = useDemoI18n('table');
 
 const selectOptions: AppTableOption[] = [
-    { label: "선택하세요", value: null },
-    { label: "옵션 A", value: "a" },
-    { label: "옵션 B", value: "b" },
-    { label: "옵션 C", value: "c" },
+    { label: '선택하세요', value: null },
+    { label: '옵션 A', value: 'a' },
+    { label: '옵션 B', value: 'b' },
+    { label: '옵션 C', value: 'c' },
 ];
 
 const radioOptions: AppTableOption[] = [
-    { label: "합격", value: "pass" },
-    { label: "불합격", value: "fail" },
+    { label: '합격', value: 'pass' },
+    { label: '불합격', value: 'fail' },
 ];
 
 const checkboxOptions: AppTableOption[] = [
-    { label: "옵션 1", value: "option1" },
-    { label: "옵션 2", value: "option2" },
-    { label: "옵션 3", value: "option3" },
+    { label: '옵션 1', value: 'option1' },
+    { label: '옵션 2', value: 'option2' },
+    { label: '옵션 3', value: 'option3' },
 ];
 
 const basicForm = ref<Record<string, unknown>>({
-    textValue: "텍스트 값",
-    inputValue: "",
+    textValue: '텍스트 값',
+    inputValue: '',
     handleSelectValue: null,
-    textareaValue: "",
+    textareaValue: '',
 });
 
 const layoutForm = ref<Record<string, unknown>>({
-    stackedName: "홍길동",
-    stackedDept: "개발팀",
-    stackedRole: "관리자",
-    stackedStatus: "사용",
-    defaultName: "김철수",
-    defaultDept: "영업팀",
-    rowspanOwner: "박영희",
-    rowspanTask: "입고",
-    rowspanMemo: "검수 완료",
-    fullMemo: "th가 가로 100%로 노출되는 행입니다.",
+    stackedName: '홍길동',
+    stackedDept: '개발팀',
+    stackedRole: '관리자',
+    stackedStatus: '사용',
+    defaultName: '김철수',
+    defaultDept: '영업팀',
+    rowspanOwner: '박영희',
+    rowspanTask: '입고',
+    rowspanMemo: '검수 완료',
+    fullMemo: 'th가 가로 100%로 노출되는 행입니다.',
 });
 
 const buttonForm = ref<Record<string, unknown>>({
-    buttonOnly: "",
-    inputButtonValue: "",
-    inputButtonTextValue: "",
-    inputTextValue: "",
-    textButtonValue: "텍스트 + 버튼",
+    buttonOnly: '',
+    inputButtonValue: '',
+    inputButtonTextValue: '',
+    inputTextValue: '',
+    textButtonValue: '텍스트 + 버튼',
 });
 
 const choiceForm = ref<Record<string, unknown>>({
-    radioValue: "pass",
-    checkboxValue: ["option1"],
+    radioValue: 'pass',
+    checkboxValue: ['option1'],
     toggleValue: true,
 });
 
 const dateForm = ref<Record<string, unknown>>({
-    dateValue: "2026-04-27",
+    dateValue: '2026-04-27',
     range: {
         start: null,
         end: null,
@@ -152,53 +149,53 @@ const dateForm = ref<Record<string, unknown>>({
 });
 
 const contactForm = ref<Record<string, unknown>>({
-    phone1: "",
-    phone2: "",
-    phone3: "",
-    emailId: "",
-    emailDomain: "",
+    phone1: '',
+    phone2: '',
+    phone3: '',
+    emailId: '',
+    emailDomain: '',
 });
 
 const stateForm = ref<Record<string, unknown>>({
-    readonlyInput: "읽기 전용 값",
-    readonlySelect: "b",
-    readonlyDate: "2026-04-27",
+    readonlyInput: '읽기 전용 값',
+    readonlySelect: 'b',
+    readonlyDate: '2026-04-27',
 });
 
 const disabledForm = ref<Record<string, unknown>>({
-    disabledInput: "비활성 값",
-    disabledRadio: "pass",
-    disabledCheckbox: ["option1"],
-    disabledDate: "2026-04-27",
+    disabledInput: '비활성 값',
+    disabledRadio: 'pass',
+    disabledCheckbox: ['option1'],
+    disabledDate: '2026-04-27',
 });
 
 const basicRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "text",
-                key: "textValue",
-                type: "text",
+                label: 'text',
+                key: 'textValue',
+                type: 'text',
             },
         ],
     },
     {
         cells: [
             {
-                label: "input",
-                key: "inputValue",
-                type: "input",
-                placeholder: "입력하세요.",
+                label: 'input',
+                key: 'inputValue',
+                type: 'input',
+                placeholder: '입력하세요.',
             },
         ],
     },
     {
         cells: [
             {
-                label: "select",
-                key: "handleSelectValue",
-                type: "select",
-                placeholder: "선택하세요.",
+                label: 'select',
+                key: 'handleSelectValue',
+                type: 'select',
+                placeholder: '선택하세요.',
                 options: selectOptions,
             },
         ],
@@ -206,10 +203,10 @@ const basicRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "textarea",
-                key: "textareaValue",
-                type: "textarea",
-                placeholder: "입력하세요.",
+                label: 'textarea',
+                key: 'textareaValue',
+                type: 'textarea',
+                placeholder: '입력하세요.',
                 rows: 4,
             },
         ],
@@ -218,92 +215,92 @@ const basicRows: AppTableRow[] = [
 
 const layoutRows: AppTableRow[] = [
     {
-        layout: "label-row",
+        layout: 'label-row',
         cells: [
             {
-                label: "th 1",
+                label: 'th 1',
             },
             {
-                label: "th 2",
+                label: 'th 2',
             },
             {
-                label: "th 3",
+                label: 'th 3',
             },
             {
-                label: "th 4",
+                label: 'th 4',
             },
         ],
     },
     {
-        layout: "stacked",
+        layout: 'stacked',
         cells: [
             {
-                label: "이름",
-                key: "stackedName",
-                type: "input",
+                label: '이름',
+                key: 'stackedName',
+                type: 'input',
             },
             {
-                label: "부서",
-                key: "stackedDept",
-                type: "input",
+                label: '부서',
+                key: 'stackedDept',
+                type: 'input',
             },
             {
-                label: "권한",
-                key: "stackedRole",
-                type: "input",
+                label: '권한',
+                key: 'stackedRole',
+                type: 'input',
             },
             {
-                label: "상태",
-                key: "stackedStatus",
-                type: "input",
-            },
-        ],
-    },
-    {
-        cells: [
-            {
-                label: "이름",
-                key: "defaultName",
-                type: "input",
-            },
-            {
-                label: "부서",
-                key: "defaultDept",
-                type: "input",
+                label: '상태',
+                key: 'stackedStatus',
+                type: 'input',
             },
         ],
     },
     {
         cells: [
             {
-                label: "담당자",
-                key: "rowspanOwner",
-                type: "input",
+                label: '이름',
+                key: 'defaultName',
+                type: 'input',
+            },
+            {
+                label: '부서',
+                key: 'defaultDept',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: '담당자',
+                key: 'rowspanOwner',
+                type: 'input',
                 rowspan: 2,
             },
             {
-                label: "작업",
-                key: "rowspanTask",
-                type: "input",
+                label: '작업',
+                key: 'rowspanTask',
+                type: 'input',
             },
         ],
     },
     {
         cells: [
             {
-                label: "메모",
-                key: "rowspanMemo",
-                type: "input",
+                label: '메모',
+                key: 'rowspanMemo',
+                type: 'input',
             },
         ],
     },
     {
-        layout: "label-full",
+        layout: 'label-full',
         cells: [
             {
-                label: "메모",
-                key: "fullMemo",
-                type: "textarea",
+                label: '메모',
+                key: 'fullMemo',
+                type: 'textarea',
                 rows: 3,
             },
         ],
@@ -314,55 +311,55 @@ const buttonRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "button",
-                key: "buttonOnly",
-                type: "button",
-                buttonText: "버튼",
+                label: 'button',
+                key: 'buttonOnly',
+                type: 'button',
+                buttonText: '버튼',
             },
         ],
     },
     {
         cells: [
             {
-                label: "input_button",
-                key: "inputButtonValue",
-                type: "input_button",
-                placeholder: "검색어를 입력하세요.",
-                buttonText: "검색",
+                label: 'input_button',
+                key: 'inputButtonValue',
+                type: 'input_button',
+                placeholder: '검색어를 입력하세요.',
+                buttonText: '검색',
             },
         ],
     },
     {
         cells: [
             {
-                label: "input_button-text",
-                key: "inputButtonTextValue",
-                type: "input_button-text",
-                placeholder: "입력하세요.",
-                buttonText: "확인",
-                text: "보조 텍스트",
+                label: 'input_button-text',
+                key: 'inputButtonTextValue',
+                type: 'input_button-text',
+                placeholder: '입력하세요.',
+                buttonText: '확인',
+                text: '보조 텍스트',
             },
         ],
     },
     {
         cells: [
             {
-                label: "input-text",
-                key: "inputTextValue",
-                type: "input-text",
-                placeholder: "입력하세요.",
-                text: "suffix",
+                label: 'input-text',
+                key: 'inputTextValue',
+                type: 'input-text',
+                placeholder: '입력하세요.',
+                text: 'suffix',
             },
         ],
     },
     {
         cells: [
             {
-                label: "text-button",
-                key: "textButtonValue",
-                type: "text-button",
-                text: "텍스트 + 버튼",
-                buttonText: "열기",
+                label: 'text-button',
+                key: 'textButtonValue',
+                type: 'text-button',
+                text: '텍스트 + 버튼',
+                buttonText: '열기',
             },
         ],
     },
@@ -372,9 +369,9 @@ const choiceRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "radio",
-                key: "radioValue",
-                type: "radio",
+                label: 'radio',
+                key: 'radioValue',
+                type: 'radio',
                 options: radioOptions,
             },
         ],
@@ -382,9 +379,9 @@ const choiceRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "checkbox",
-                key: "checkboxValue",
-                type: "checkbox",
+                label: 'checkbox',
+                key: 'checkboxValue',
+                type: 'checkbox',
                 options: checkboxOptions,
             },
         ],
@@ -392,10 +389,10 @@ const choiceRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "toggle",
-                key: "toggleValue",
-                type: "toggle",
-                text: "활성화",
+                label: 'toggle',
+                key: 'toggleValue',
+                type: 'toggle',
+                text: '활성화',
             },
         ],
     },
@@ -405,18 +402,18 @@ const dateRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "date",
-                key: "dateValue",
-                type: "date",
+                label: 'date',
+                key: 'dateValue',
+                type: 'date',
             },
         ],
     },
     {
         cells: [
             {
-                label: "range_date",
-                key: "range",
-                type: "range_date",
+                label: 'range_date',
+                key: 'range',
+                type: 'range_date',
             },
         ],
     },
@@ -426,20 +423,20 @@ const contactRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "phone",
-                type: "phone",
-                keys: ["phone1", "phone2", "phone3"],
-                placeholders: ["010", "0000", "0000"],
+                label: 'phone',
+                type: 'phone',
+                keys: ['phone1', 'phone2', 'phone3'],
+                placeholders: ['010', '0000', '0000'],
             },
         ],
     },
     {
         cells: [
             {
-                label: "email",
-                type: "email",
-                keys: ["emailId", "emailDomain"],
-                placeholders: ["id", "domain.com"],
+                label: 'email',
+                type: 'email',
+                keys: ['emailId', 'emailDomain'],
+                placeholders: ['id', 'domain.com'],
             },
         ],
     },
@@ -449,9 +446,9 @@ const stateRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "input",
-                key: "readonlyInput",
-                type: "input",
+                label: 'input',
+                key: 'readonlyInput',
+                type: 'input',
                 readonly: true,
             },
         ],
@@ -459,9 +456,9 @@ const stateRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "select",
-                key: "readonlySelect",
-                type: "select",
+                label: 'select',
+                key: 'readonlySelect',
+                type: 'select',
                 options: selectOptions,
                 readonly: true,
             },
@@ -470,9 +467,9 @@ const stateRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "date",
-                key: "readonlyDate",
-                type: "date",
+                label: 'date',
+                key: 'readonlyDate',
+                type: 'date',
                 readonly: true,
             },
         ],
@@ -483,18 +480,18 @@ const disabledRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "input",
-                key: "disabledInput",
-                type: "input",
+                label: 'input',
+                key: 'disabledInput',
+                type: 'input',
             },
         ],
     },
     {
         cells: [
             {
-                label: "radio",
-                key: "disabledRadio",
-                type: "radio",
+                label: 'radio',
+                key: 'disabledRadio',
+                type: 'radio',
                 options: radioOptions,
             },
         ],
@@ -502,9 +499,9 @@ const disabledRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "checkbox",
-                key: "disabledCheckbox",
-                type: "checkbox",
+                label: 'checkbox',
+                key: 'disabledCheckbox',
+                type: 'checkbox',
                 options: checkboxOptions,
             },
         ],
@@ -512,12 +509,11 @@ const disabledRows: AppTableRow[] = [
     {
         cells: [
             {
-                label: "date",
-                key: "disabledDate",
-                type: "date",
+                label: 'date',
+                key: 'disabledDate',
+                type: 'date',
             },
         ],
     },
 ];
-
 </script>

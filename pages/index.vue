@@ -12,12 +12,9 @@
             </div>
             <div class="home__hero-content">
                 <p class="home__eyebrow">Workspace + Components</p>
-                <h1 class="home__title">
-                    팀이 바로 시작할 수 있는<br />Vue/Nuxt 프레임워크
-                </h1>
+                <h1 class="home__title">팀이 바로 시작할 수 있는<br />Vue/Nuxt 프레임워크</h1>
                 <p class="home__desc">
-                    인증/에러 페이지와 동일한 톤으로 구성한 메인 화면입니다. 워크스페이스,
-                    컴포넌트 데모, 가이드 페이지로 빠르게 이동할 수 있습니다.
+                    인증/에러 페이지와 동일한 톤으로 구성한 메인 화면입니다. 워크스페이스, 컴포넌트 데모, 가이드 페이지로 빠르게 이동할 수 있습니다.
                 </p>
                 <div class="home__hero-actions">
                     <AppButton to="/workspace" size="lg" variant="fill">워크스페이스 시작</AppButton>
@@ -33,9 +30,7 @@
                         <IconDashboard />
                     </span>
                     <strong class="home__card-title">Workspace</strong>
-                    <p class="home__card-desc">
-                        프로젝트 탭, 작업 흐름, 생산성 도구를 한 화면에서 관리합니다.
-                    </p>
+                    <p class="home__card-desc">프로젝트 탭, 작업 흐름, 생산성 도구를 한 화면에서 관리합니다.</p>
                 </NuxtLink>
 
                 <NuxtLink class="home__card" to="/demos/demo-button">
@@ -43,9 +38,7 @@
                         <IconWidgets />
                     </span>
                     <strong class="home__card-title">UI Demos</strong>
-                    <p class="home__card-desc">
-                        AppInput, AppChoice 등 공통 UI를 예제로 빠르게 검증합니다.
-                    </p>
+                    <p class="home__card-desc">AppInput, AppChoice 등 공통 UI를 예제로 빠르게 검증합니다.</p>
                 </NuxtLink>
 
                 <NuxtLink class="home__card" to="/auth/sign-up">
@@ -53,9 +46,7 @@
                         <IconAccountPlus />
                     </span>
                     <strong class="home__card-title">Get Started</strong>
-                    <p class="home__card-desc">
-                        새 계정으로 가입하고 팀 워크스페이스를 바로 생성할 수 있습니다.
-                    </p>
+                    <p class="home__card-desc">새 계정으로 가입하고 팀 워크스페이스를 바로 생성할 수 있습니다.</p>
                 </NuxtLink>
             </section>
 
@@ -67,20 +58,15 @@
 </template>
 
 <script setup lang="ts">
-import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from "~/components/icons";
+import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from '~/components/icons';
 </script>
 
 <style scoped lang="scss">
 .home {
     min-height: 100vh;
     background:
-        radial-gradient(900px 520px at 8% 5%,
-            rgba($primary-500, 0.25),
-            transparent 52%),
-        radial-gradient(840px 560px at 95% 2%,
-            rgba($primary-200, 0.3),
-            transparent 52%),
-        linear-gradient(180deg, $gray-0, $primary-50);
+        radial-gradient(900px 520px at 8% 5%, rgba($primary-500, 0.25), transparent 52%),
+        radial-gradient(840px 560px at 95% 2%, rgba($primary-200, 0.3), transparent 52%), linear-gradient(180deg, $gray-0, $primary-50);
     color: $gray-900;
     padding: 22px 22px 28px;
 }
@@ -92,16 +78,9 @@ import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from "~/componen
     padding: 24px;
     margin-bottom: 16px;
     background:
-        radial-gradient(900px 540px at 20% 10%,
-            rgba($primary-500, 0.55),
-            transparent 60%),
-        radial-gradient(820px 560px at 90% 20%,
-            rgba($primary-200, 0.58),
-            transparent 60%),
-        radial-gradient(860px 640px at 40% 105%,
-            rgba($status-info, 0.25),
-            transparent 62%),
-        linear-gradient(180deg, $primary-900, $primary-700);
+        radial-gradient(900px 540px at 20% 10%, rgba($primary-500, 0.55), transparent 60%),
+        radial-gradient(820px 560px at 90% 20%, rgba($primary-200, 0.58), transparent 60%),
+        radial-gradient(860px 640px at 40% 105%, rgba($status-info, 0.25), transparent 62%), linear-gradient(180deg, $primary-900, $primary-700);
     border: 1px solid rgba($gray-0, 0.18);
     box-shadow:
         0 24px 58px rgba($primary-900, 0.14),
@@ -109,16 +88,12 @@ import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from "~/componen
     color: $gray-0;
 
     &::before {
-        content: "";
+        content: '';
         position: absolute;
         inset: -1px;
         background:
             linear-gradient(135deg, rgba($gray-0, 0.14), rgba($gray-0, 0) 35%),
-            repeating-linear-gradient(135deg,
-                rgba($gray-0, 0.08) 0px,
-                rgba($gray-0, 0.08) 1px,
-                rgba($gray-0, 0) 1px,
-                rgba($gray-0, 0) 10px);
+            repeating-linear-gradient(135deg, rgba($gray-0, 0.08) 0px, rgba($gray-0, 0.08) 1px, rgba($gray-0, 0) 1px, rgba($gray-0, 0) 10px);
         opacity: 0.45;
         pointer-events: none;
     }

@@ -6,13 +6,11 @@
                     <h1 class="page-demo__title">AppSection</h1>
 
                     <p class="page-demo__desc">
-                        AppSection / AppSectionWrapper의 기본 구조와 direction, ratio, gap
-                        속성을 정적으로 확인하는 데모입니다.
+                        AppSection / AppSectionWrapper의 기본 구조와 direction, ratio, gap 속성을 정적으로 확인하는 데모입니다.
                     </p>
                 </header>
 
-                <PageDemoSection class="page-demo-section" title="Basic Section"
-                    description="AppSection의 기본 Header / Body / Footer 구성입니다.">
+                <PageDemoSection class="page-demo-section" title="Basic Section" description="AppSection의 기본 Header / Body / Footer 구성입니다.">
                     <AppSection class="section-demo__section-demo" title="Account Summary" description="기본 column, gap=12">
                         <AppSectionHeader>
                             <div class="section-demo-box section-demo-box--header">
@@ -37,10 +35,14 @@
                     </AppSection>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Wrapper Column"
-                    description="AppSectionWrapper 세로 배치 예시입니다.">
-                    <AppSectionWrapper class="section-demo__wrapper-demo" title="Project Status"
-                        description="direction='column' / gap='24'" direction="column" :gap="24">
+                <PageDemoSection class="page-demo-section" title="Wrapper Column" description="AppSectionWrapper 세로 배치 예시입니다.">
+                    <AppSectionWrapper
+                        class="section-demo__wrapper-demo"
+                        title="Project Status"
+                        description="direction='column' / gap='24'"
+                        direction="column"
+                        :gap="24"
+                    >
                         <template #header>
                             <div class="section-demo-box section-demo-box--wrapper-header">
                                 <strong>Wrapper Header</strong>
@@ -68,10 +70,19 @@
                     </AppSectionWrapper>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Wrapper Row + Ratio"
-                    description="AppSectionWrapper 가로 배치와 ratio, gap 조합 예시입니다.">
-                    <AppSectionWrapper class="section-demo__wrapper-demo" title="Dashboard Layout"
-                        description="direction='row' / ratio='2fr 1fr' / gap='20'" direction="row" :ratio="[2, 1]" :gap="20">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Wrapper Row + Ratio"
+                    description="AppSectionWrapper 가로 배치와 ratio, gap 조합 예시입니다."
+                >
+                    <AppSectionWrapper
+                        class="section-demo__wrapper-demo"
+                        title="Dashboard Layout"
+                        description="direction='row' / ratio='2fr 1fr' / gap='20'"
+                        direction="row"
+                        :ratio="[2, 1]"
+                        :gap="20"
+                    >
                         <template #header>
                             <div class="section-demo-box section-demo-box--wrapper-header">
                                 <strong>Wrapper Header</strong>
@@ -99,12 +110,26 @@
                     </AppSectionWrapper>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Section Row (Static)"
-                    description="v-for 없이 AppSection을 정적으로 나열한 예시입니다.">
-                    <AppSectionWrapper class="section-demo__wrapper-demo" title="Weekly Tasks" description="정적 section 예시"
-                        direction="column" :gap="16">
-                        <AppSection class="section-demo__section-demo" title="Section Item 1" description="첫 번째 섹션"
-                            direction="row" :ratio="[1, 1]" :gap="8">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Section Row (Static)"
+                    description="v-for 없이 AppSection을 정적으로 나열한 예시입니다."
+                >
+                    <AppSectionWrapper
+                        class="section-demo__wrapper-demo"
+                        title="Weekly Tasks"
+                        description="정적 section 예시"
+                        direction="column"
+                        :gap="16"
+                    >
+                        <AppSection
+                            class="section-demo__section-demo"
+                            title="Section Item 1"
+                            description="첫 번째 섹션"
+                            direction="row"
+                            :ratio="[1, 1]"
+                            :gap="8"
+                        >
                             <AppSectionBody>
                                 <div class="section-demo-box section-demo-box--body">
                                     <strong>Body 1</strong>
@@ -120,8 +145,14 @@
                             </AppSectionBody>
                         </AppSection>
 
-                        <AppSection class="section-demo__section-demo" title="Section Item 2" description="두 번째 섹션"
-                            direction="row" :ratio="[1, 1]" :gap="8">
+                        <AppSection
+                            class="section-demo__section-demo"
+                            title="Section Item 2"
+                            description="두 번째 섹션"
+                            direction="row"
+                            :ratio="[1, 1]"
+                            :gap="8"
+                        >
                             <AppSectionBody>
                                 <div class="section-demo-box section-demo-box--body">
                                     <strong>Body 2</strong>
@@ -137,8 +168,14 @@
                             </AppSectionBody>
                         </AppSection>
 
-                        <AppSection class="section-demo__section-demo" title="Section Item 3" description="세 번째 섹션"
-                            direction="row" :ratio="[1, 1]" :gap="8">
+                        <AppSection
+                            class="section-demo__section-demo"
+                            title="Section Item 3"
+                            description="세 번째 섹션"
+                            direction="row"
+                            :ratio="[1, 1]"
+                            :gap="8"
+                        >
                             <AppSectionBody>
                                 <div class="section-demo-box section-demo-box--body">
                                     <strong>Body 3</strong>
@@ -156,12 +193,28 @@
                     </AppSectionWrapper>
                 </PageDemoSection>
 
-                <PageDemoSection class="page-demo-section" title="Section Row + Repeat"
-                    description="AppSection 내부 row 배치와 v-for 반복 렌더링 예시입니다.">
-                    <AppSectionWrapper class="section-demo__wrapper-demo" title="Weekly Tasks" description="반복 section 예시"
-                        direction="column" :gap="16">
-                        <AppSection v-for="item in repeatedSections" :key="item.id" class="section-demo__section-demo"
-                            :title="item.title" :description="item.description" direction="row" :ratio="[1, 1]" :gap="8">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Section Row + Repeat"
+                    description="AppSection 내부 row 배치와 v-for 반복 렌더링 예시입니다."
+                >
+                    <AppSectionWrapper
+                        class="section-demo__wrapper-demo"
+                        title="Weekly Tasks"
+                        description="반복 section 예시"
+                        direction="column"
+                        :gap="16"
+                    >
+                        <AppSection
+                            v-for="item in repeatedSections"
+                            :key="item.id"
+                            class="section-demo__section-demo"
+                            :title="item.title"
+                            :description="item.description"
+                            direction="row"
+                            :ratio="[1, 1]"
+                            :gap="8"
+                        >
                             <AppSectionBody>
                                 <div class="section-demo-box section-demo-box--body">
                                     <strong>{{ item.label }}</strong>
@@ -193,24 +246,24 @@
 const repeatedSections = ref([
     {
         id: 1,
-        title: "Section Item 1",
-        description: "첫 번째 반복 섹션",
-        label: "Body 1",
-        note: "v-for item #1",
+        title: 'Section Item 1',
+        description: '첫 번째 반복 섹션',
+        label: 'Body 1',
+        note: 'v-for item #1',
     },
     {
         id: 2,
-        title: "Section Item 2",
-        description: "두 번째 반복 섹션",
-        label: "Body 2",
-        note: "v-for item #2",
+        title: 'Section Item 2',
+        description: '두 번째 반복 섹션',
+        label: 'Body 2',
+        note: 'v-for item #2',
     },
     {
         id: 3,
-        title: "Section Item 3",
-        description: "세 번째 반복 섹션",
-        label: "Body 3",
-        note: "v-for item #3",
+        title: 'Section Item 3',
+        description: '세 번째 반복 섹션',
+        label: 'Body 3',
+        note: 'v-for item #3',
     },
 ]);
 </script>

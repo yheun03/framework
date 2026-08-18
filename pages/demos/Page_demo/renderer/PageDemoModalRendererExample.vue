@@ -5,9 +5,7 @@
         <div class="page-demo-actions">
             <AppButton variant="fill" @click="handleActionClick"> 액션 실행 </AppButton>
 
-            <AppButton variant="outline" @click="handleNestedAlertClick">
-                Alert 중첩 열기
-            </AppButton>
+            <AppButton variant="outline" @click="handleNestedAlertClick"> Alert 중첩 열기 </AppButton>
         </div>
     </div>
 </template>

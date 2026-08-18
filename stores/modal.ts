@@ -1,8 +1,8 @@
 /**
  * 모달 표시 상태와 모달 옵션을 관리하는 Pinia store 파일입니다.
  */
-import {computed, ref} from 'vue';
-import {defineStore} from 'pinia';
+import { computed, ref } from 'vue';
+import { defineStore } from 'pinia';
 import type {
     AlertModalInput,
     AlertModalItem,
@@ -111,7 +111,7 @@ export const useModalStore = defineStore('modal', () => {
     }
 
     function alert(payload: string | Omit<AlertModalInput, 'type'>) {
-        const options = typeof payload === 'string' ? {message: payload} : payload;
+        const options = typeof payload === 'string' ? { message: payload } : payload;
         return modalOpen({
             type: 'alert',
             ...options,
@@ -119,7 +119,7 @@ export const useModalStore = defineStore('modal', () => {
     }
 
     function confirm(payload: string | Omit<ConfirmModalInput, 'type'>) {
-        const options = typeof payload === 'string' ? {message: payload} : payload;
+        const options = typeof payload === 'string' ? { message: payload } : payload;
         return modalOpen({
             type: 'confirm',
             ...options,

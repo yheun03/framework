@@ -6,13 +6,9 @@
         </div>
 
         <div class="page-demo-actions">
-            <AppButton variant="fill">
-                새로고침
-            </AppButton>
+            <AppButton variant="fill"> 새로고침 </AppButton>
 
-            <AppButton variant="outline">
-                상세 보기
-            </AppButton>
+            <AppButton variant="outline"> 상세 보기 </AppButton>
         </div>
     </div>
 </template>

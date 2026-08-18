@@ -4,8 +4,7 @@
             <header class="page-demo__header">
                 <h1 class="page-demo__title">Flaticon 이용약관</h1>
                 <p class="page-demo__desc">
-                    본 프로젝트에서 사용하는 Flaticon UIcons의 라이선스 준수 기준입니다.
-                    공식 약관을 우선하며, 아이콘 사용 전 최신 약관을 확인합니다.
+                    본 프로젝트에서 사용하는 Flaticon UIcons의 라이선스 준수 기준입니다. 공식 약관을 우선하며, 아이콘 사용 전 최신 약관을 확인합니다.
                 </p>
             </header>
 
@@ -14,8 +13,10 @@
                 <ul class="page-demo-list">
                     <li>기준 문서: Flaticon Terms of use</li>
                     <li>기준 버전: April 2026</li>
-                    <li>공식 약관: <a href="https://www.flaticon.com/legal" target="_blank"
-                            rel="noopener noreferrer">https://www.flaticon.com/legal</a></li>
+                    <li>
+                        공식 약관:
+                        <a href="https://www.flaticon.com/legal" target="_blank" rel="noopener noreferrer">https://www.flaticon.com/legal</a>
+                    </li>
                 </ul>
             </section>
 
@@ -23,8 +24,10 @@
                 <h2 class="page-demo-card__title">무료 사용 조건</h2>
                 <ul class="page-demo-list">
                     <li>무료 라이선스는 Flaticon과 저작자 출처 표기를 전제로 사용합니다.</li>
-                    <li>본 페이지에서 <a href="https://www.flaticon.com/" target="_blank"
-                            rel="noopener noreferrer">Icons by Flaticon</a> 출처를 명시합니다.</li>
+                    <li>
+                        본 페이지에서 <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Icons by Flaticon</a> 출처를
+                        명시합니다.
+                    </li>
                     <li>출처 표기 없이 사용하려면 Premium 구독 기간 중 다운로드한 콘텐츠를 사용합니다.</li>
                     <li>편집용으로 표시된 콘텐츠는 상업 활동, 홍보, 마케팅 목적에 사용하지 않습니다.</li>
                 </ul>
@@ -90,7 +93,7 @@
     background: $gray-0;
     box-shadow: 0 1px 2px rgba($gray-900, 0.04);
 
-    &+& {
+    & + & {
         margin-top: 16px;
     }
 }
@@ -126,7 +129,7 @@
             height: 4px;
             border-radius: 50%;
             background: $primary-500;
-            content: "";
+            content: '';
         }
     }
 
