@@ -13,7 +13,7 @@
             </article>
         </section>
 
-        <div class="business-page__grid business-page__grid--2">
+        <AppSectionWrapper class="business-page__section-wrapper" direction="row" :ratio="[1, 1]" :gap="20">
             <AppSection title="월 매출 달성률" description="목표 12억 원">
                 <AppProgressBar :value="78" label="현재 매출" show-value />
                 <div class="business-kpi"><strong>9.4억</strong><span>전월 대비 +8.2%</span></div>
@@ -23,7 +23,7 @@
                     <span>{{ item.label }}</span><AppProgressBar :value="item.value" show-value />
                 </div>
             </AppSection>
-        </div>
+        </AppSectionWrapper>
 
         <AppSection title="최근 수주 현황">
             <div class="business-table-wrap"><table class="business-table"><thead><tr><th>수주번호</th><th>거래처</th><th>납기일</th><th>금액</th><th>상태</th></tr></thead><tbody><tr v-for="row in orders" :key="row.no"><td><NuxtLink :to="`/sales-order-detail?id=${row.no}`" class="business-link">{{ row.no }}</NuxtLink></td><td>{{ row.customer }}</td><td>{{ row.date }}</td><td>{{ row.amount }}</td><td><span class="business-status" :class="`business-status--${row.state}`">{{ row.status }}</span></td></tr></tbody></table></div>

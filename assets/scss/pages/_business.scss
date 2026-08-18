@@ -409,6 +409,12 @@ $business-status-colors: (
         grid-template-columns: 1fr;
     }
 
+    .business-page__section-wrapper.app-section-wrapper--row {
+        .app-section-wrapper__body {
+            grid-template-columns: 1fr;
+        }
+    }
+
     .business-detail {
         grid-template-columns: 1fr;
     }
