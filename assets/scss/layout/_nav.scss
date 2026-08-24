@@ -82,19 +82,19 @@
         overflow: hidden auto;
 
         padding: 10px var(--layout-nav-body-padding-x) 12px;
-    }
 
-    &__body::-webkit-scrollbar {
-        width: 6px;
-    }
+        &::-webkit-scrollbar {
+            width: 6px;
 
-    &__body::-webkit-scrollbar-thumb {
-        border-radius: 999px;
-        background: rgba($gray-0, 0.2);
-    }
+            &-thumb {
+                border-radius: 999px;
+                background: rgba($gray-0, 0.2);
+            }
 
-    &__body::-webkit-scrollbar-track {
-        background: transparent;
+            &-track {
+                background: transparent;
+            }
+        }
     }
 
     &__list-wrap {
@@ -324,10 +324,10 @@
     &__item--depth-1 {
         >.layout-nav__row {
             min-height: 38px;
-        }
 
-        >.layout-nav__row .layout-nav__label {
-            @include font(b3, sb);
+            .layout-nav__label {
+                @include font(b3, sb);
+            }
         }
     }
 
@@ -335,12 +335,11 @@
     &__item--depth-3 {
         >.layout-nav__row {
             min-height: 34px;
-        }
 
-        >.layout-nav__row .layout-nav__label {
-            color: rgba($gray-0, 0.86);
-
-            @include font(c1, rg);
+            .layout-nav__label {
+                color: rgba($gray-0, 0.86);
+                @include font(c1, rg);
+            }
         }
     }
 
