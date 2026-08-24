@@ -60,31 +60,31 @@
 .page-demo {
     min-height: 100%;
     background: $gray-0;
-}
 
-.page-demo-main {
-    width: min(100%, 1180px);
-    padding: 28px 24px 56px;
-}
+    &-main {
+        width: min(100%, 1180px);
+        padding: 28px 24px 56px;
+    }
 
-.page-demo__header {
-    margin-bottom: 24px;
-}
+    &__header {
+        margin-bottom: 24px;
+    }
 
-.page-demo__title {
-    margin: 0;
-    color: $gray-900;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.35;
-}
+    &__title {
+        margin: 0;
+        color: $gray-900;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.35;
+    }
 
-.page-demo__desc {
-    max-width: 760px;
-    margin: 10px 0 0;
-    color: $gray-600;
-    font-size: 14px;
-    line-height: 1.7;
+    &__desc {
+        max-width: 760px;
+        margin: 10px 0 0;
+        color: $gray-600;
+        font-size: 14px;
+        line-height: 1.7;
+    }
 }
 
 .page-demo-card {
@@ -96,15 +96,15 @@
     & + & {
         margin-top: 16px;
     }
-}
 
-.page-demo-card__title {
-    margin: 0;
-    padding: 18px 20px 0;
-    color: $gray-900;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.4;
+    &__title {
+        margin: 0;
+        padding: 18px 20px 0;
+        color: $gray-900;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
 }
 
 .page-demo-list {

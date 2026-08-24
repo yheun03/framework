@@ -5,12 +5,12 @@
     grid-template-rows: 1fr;
     height: 100%;
     min-height: 0;
-}
 
-.workspace__content {
-    min-height: 0;
-    display: grid;
-    grid-template-columns: 1fr;
+    &__content {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
 
 /* =========================================

@@ -16,93 +16,93 @@ $business-status-colors: (
     max-width: 1440px;
     margin: 0 auto;
     padding: 24px;
-}
 
-.business-page__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-}
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+    }
 
-.business-page__eyebrow {
-    margin: 0 0 4px;
-    color: $primary-600;
-    font-weight: 600;
-    @include font(c2, rg);
-}
+    &__eyebrow {
+        margin: 0 0 4px;
+        color: $primary-600;
+        font-weight: 600;
+        @include font(c2, rg);
+    }
 
-.business-page__title {
-    margin: 0;
-    color: $gray-900;
-    @include font(h4, sb);
-}
+    &__title {
+        margin: 0;
+        color: $gray-900;
+        @include font(h4, sb);
+    }
 
-.business-page__desc {
-    margin: 6px 0 0;
-    color: $gray-600;
-    @include font(b3, rg);
-}
+    &__desc {
+        margin: 6px 0 0;
+        color: $gray-600;
+        @include font(b3, rg);
+    }
 
-.business-page__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
 
-.business-page__tools {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+    &__tools {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-.business-page__grid {
-    display: grid;
-    gap: 20px;
-}
+    &__grid {
+        display: grid;
+        gap: 20px;
 
-.business-page__grid--2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+        &--2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
 }
 
 .business-summary {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
-}
 
-.business-summary--compact {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+    &--compact {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-.business-summary__item {
-    display: grid;
-    gap: 6px;
-    min-height: 112px;
-    padding: 20px;
-    border: 1px solid $gray-200;
-    border-radius: 12px;
-    background: $gray-0;
-}
+    &__item {
+        display: grid;
+        gap: 6px;
+        min-height: 112px;
+        padding: 20px;
+        border: 1px solid $gray-200;
+        border-radius: 12px;
+        background: $gray-0;
+    }
 
-.business-summary__label {
-    color: $gray-600;
-    @include font(b4, rg);
-}
+    &__label {
+        color: $gray-600;
+        @include font(b4, rg);
+    }
 
-.business-summary__value {
-    color: $gray-900;
-    @include font(t4, sb);
-}
+    &__value {
+        color: $gray-900;
+        @include font(t4, sb);
+    }
 
-.business-summary__change {
-    color: $gray-500;
-    @include font(c2, rg);
-}
+    &__change {
+        color: $gray-500;
+        @include font(c2, rg);
 
-@each $state, $state-color in $business-status-colors {
-    .business-summary__change--#{$state} {
-        color: $state-color;
+        @each $state, $state-color in $business-status-colors {
+            &--#{$state} {
+                color: $state-color;
+            }
+        }
     }
 }
 
@@ -115,29 +115,29 @@ $business-status-colors: (
     border: 1px solid $gray-200;
     border-radius: 12px;
     background: $gray-0;
-}
 
-.business-toolbar__field {
-    flex: 1 1 180px;
-    min-width: 160px;
-    max-width: 240px;
-}
+    &__field {
+        flex: 1 1 180px;
+        min-width: 160px;
+        max-width: 240px;
 
-.business-toolbar__field--wide {
-    flex-basis: 260px;
-    max-width: 360px;
-}
+        &--wide {
+            flex-basis: 260px;
+            max-width: 360px;
+        }
+    }
 
-.business-toolbar__choice {
-    flex: 0 0 auto;
-    margin-inline: 4px;
-}
+    &__choice {
+        flex: 0 0 auto;
+        margin-inline: 4px;
+    }
 
-.business-toolbar__actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: auto;
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+    }
 }
 
 .business-table-wrap {
@@ -153,40 +153,44 @@ $business-status-colors: (
     border-collapse: collapse;
     color: $gray-800;
     @include font(b3, rg);
-}
 
-.business-table th,
-.business-table td {
-    height: 48px;
-    padding: 12px 16px;
-    border-bottom: 1px solid $gray-200;
-    text-align: left;
-    vertical-align: middle;
-    white-space: nowrap;
-}
+    th,
+    td {
+        height: 48px;
+        padding: 12px 16px;
+        border-bottom: 1px solid $gray-200;
+        text-align: left;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
 
-.business-table th {
-    background: $gray-50;
-    color: $gray-700;
-    font-weight: 600;
-}
+    th {
+        background: $gray-50;
+        color: $gray-700;
+        font-weight: 600;
+    }
 
-.business-table tbody tr:last-child td {
-    border-bottom: 0;
-}
+    tbody tr {
+        &:last-child td {
+            border-bottom: 0;
+        }
 
-.business-table tbody tr:hover td {
-    background: color.change($primary-50, $alpha: 0.55);
-}
+        &:hover td {
+            background: color.change($primary-50, $alpha: 0.55);
+        }
+    }
 
-.business-table tfoot td,
-.business-table tfoot th {
-    background: $gray-50;
-    font-weight: 600;
-}
+    tfoot {
+        td,
+        th {
+            background: $gray-50;
+            font-weight: 600;
+        }
+    }
 
-.business-table__progress {
-    min-width: 180px;
+    &__progress {
+        min-width: 180px;
+    }
 }
 
 .business-link {
@@ -204,12 +208,12 @@ $business-status-colors: (
     border-radius: 999px;
     font-weight: 600;
     @include font(c2, rg);
-}
 
-@each $state, $state-color in $business-status-colors {
-    .business-status--#{$state} {
-        background: color.change($state-color, $alpha: 0.12);
-        color: $state-color;
+    @each $state, $state-color in $business-status-colors {
+        &--#{$state} {
+            background: color.change($state-color, $alpha: 0.12);
+            color: $state-color;
+        }
     }
 }
 
@@ -223,24 +227,24 @@ $business-status-colors: (
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin: 0;
-}
 
-.business-detail__item {
-    display: grid;
-    grid-template-columns: 100px minmax(0, 1fr);
-    gap: 12px;
-    padding: 14px 0;
-    border-bottom: 1px solid $gray-100;
-}
+    &__item {
+        display: grid;
+        grid-template-columns: 100px minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid $gray-100;
 
-.business-detail__item dt {
-    color: $gray-500;
-}
+        dt {
+            color: $gray-500;
+        }
 
-.business-detail__item dd {
-    margin: 0;
-    color: $gray-900;
-    font-weight: 600;
+        dd {
+            margin: 0;
+            color: $gray-900;
+            font-weight: 600;
+        }
+    }
 }
 
 .business-kpi {
@@ -248,16 +252,16 @@ $business-status-colors: (
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-}
 
-.business-kpi strong {
-    color: $gray-900;
-    @include font(h5, sb);
-}
+    strong {
+        color: $gray-900;
+        @include font(h5, sb);
+    }
 
-.business-kpi span {
-    color: $status-success;
-    @include font(b4, rg);
+    span {
+        color: $status-success;
+        @include font(b4, rg);
+    }
 }
 
 .business-progress-row {
@@ -274,14 +278,14 @@ $business-status-colors: (
     color: $status-success;
     font-weight: 600;
     @include font(b4, rg);
-}
 
-.business-live__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: $status-success;
-    box-shadow: 0 0 0 4px color.change($status-success, $alpha: 0.14);
+    &__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $status-success;
+        box-shadow: 0 0 0 4px color.change($status-success, $alpha: 0.14);
+    }
 }
 
 .equipment-grid {
@@ -298,54 +302,54 @@ $business-status-colors: (
     border-top: 3px solid $gray-400;
     border-radius: 12px;
     background: $gray-0;
-}
 
-@each $state, $state-color in $business-status-colors {
-    .equipment-card--#{$state} {
-        border-top-color: $state-color;
+    @each $state, $state-color in $business-status-colors {
+        &--#{$state} {
+            border-top-color: $state-color;
+        }
     }
-}
 
-.equipment-card__header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-}
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+    }
 
-.equipment-card__code {
-    color: $gray-500;
-    @include font(c2, rg);
-}
+    &__code {
+        color: $gray-500;
+        @include font(c2, rg);
+    }
 
-.equipment-card__title {
-    margin: 3px 0 0;
-    color: $gray-900;
-    @include font(b2, sb);
-}
+    &__title {
+        margin: 3px 0 0;
+        color: $gray-900;
+        @include font(b2, sb);
+    }
 
-.equipment-card__data {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    margin: 0;
-}
+    &__data {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0;
 
-.equipment-card__data div {
-    display: grid;
-    gap: 3px;
-}
+        div {
+            display: grid;
+            gap: 3px;
+        }
 
-.equipment-card__data dt {
-    color: $gray-500;
-    @include font(c3, rg);
-}
+        dt {
+            color: $gray-500;
+            @include font(c3, rg);
+        }
 
-.equipment-card__data dd {
-    margin: 0;
-    color: $gray-800;
-    font-weight: 600;
-    @include font(c1, rg);
+        dd {
+            margin: 0;
+            color: $gray-800;
+            font-weight: 600;
+            @include font(c1, rg);
+        }
+    }
 }
 
 @media (max-width: 1100px) {
@@ -362,43 +366,46 @@ $business-status-colors: (
 @media (max-width: 720px) {
     .business-page {
         padding: 16px;
-    }
 
-    .business-page__header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
+        &__header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
 
-    .business-page__actions,
-    .business-page__tools,
-    .business-toolbar__actions {
-        width: 100%;
-    }
+        &__actions,
+        &__tools {
+            width: 100%;
+        }
 
-    .business-page__actions .app-button,
-    .business-toolbar__actions .app-button {
-        flex: 1 1 auto;
+        &__actions .app-button {
+            flex: 1 1 auto;
+        }
     }
 
     .business-toolbar {
         align-items: stretch;
         flex-direction: column;
         padding: 16px;
-    }
 
-    .business-toolbar__field {
-        flex-basis: auto;
-        width: 100%;
-        max-width: none;
-        min-width: 0;
-    }
+        &__field {
+            flex-basis: auto;
+            width: 100%;
+            max-width: none;
+            min-width: 0;
+        }
 
-    .business-toolbar__choice {
-        margin: 4px 0;
-    }
+        &__choice {
+            margin: 4px 0;
+        }
 
-    .business-toolbar__actions {
-        margin-left: 0;
+        &__actions {
+            width: 100%;
+            margin-left: 0;
+
+            .app-button {
+                flex: 1 1 auto;
+            }
+        }
     }
 
     .business-page__grid--2,
