@@ -1,126 +1,220 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /* =========================================================
-   Component: Login Page
-   구조: BEM
-   영역:
-   - hero (branding area)
-   - panel (login form area)
+   Component: Auth Page
 ========================================================= */
 
-.login {
+.auth-page {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-columns: minmax(420px, 0.92fr) minmax(560px, 1.08fr);
     background: $gray-0;
 
     &__hero {
         position: relative;
         overflow: hidden;
-        background:
-            radial-gradient(900px 540px at 20% 10%, rgba($primary-500, 0.55), transparent 60%),
-            radial-gradient(820px 560px at 90% 20%, rgba($primary-200, 0.58), transparent 60%),
-            radial-gradient(860px 640px at 40% 105%, rgba($status-info, 0.25), transparent 62%),
-            linear-gradient(180deg, $primary-900, $primary-700);
         color: $gray-0;
+        background:
+            radial-gradient(720px 520px at 5% 5%, rgba($primary-400, 0.62), transparent 58%),
+            radial-gradient(640px 480px at 100% 30%, rgba($primary-200, 0.32), transparent 62%),
+            linear-gradient(155deg, $primary-900 5%, $primary-700 58%, $primary-600 100%);
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            pointer-events: none;
+        }
 
         &::before {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            background:
-                linear-gradient(135deg, rgba($gray-0, 0.14), rgba($gray-0, 0) 35%),
-                repeating-linear-gradient(135deg, rgba($gray-0, 0.08) 0px, rgba($gray-0, 0.08) 1px, rgba($gray-0, 0) 1px, rgba($gray-0, 0) 10px);
-            opacity: 0.45;
-            pointer-events: none;
+            inset: 0;
+            opacity: 0.34;
+            background: repeating-linear-gradient(135deg, rgba($gray-0, 0.1) 0 1px, transparent 1px 12px);
+        }
+
+        &::after {
+            width: 340px;
+            height: 340px;
+            right: -120px;
+            bottom: -120px;
+            border: 1px solid rgba($gray-0, 0.24);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 70px rgba($gray-0, 0.04),
+                0 0 0 140px rgba($gray-0, 0.03);
         }
 
         &-inner {
             position: relative;
+            z-index: 1;
             min-height: 100%;
-            padding: 44px;
+            padding: clamp(32px, 5vw, 72px);
             display: grid;
-            grid-template-rows: 1fr auto;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        &-content {
+            align-self: center;
+            max-width: 520px;
+        }
+
+        &-title {
+            margin: 12px 0 18px;
+            max-width: 500px;
+            white-space: pre-line;
+            @include font(t2, sb);
+            line-height: 1.24;
+            letter-spacing: -0.035em;
+        }
+
+        &-desc {
+            margin: 0;
+            max-width: 460px;
+            @include font(b2, rg);
+            line-height: 1.7;
+            color: rgba($gray-0, 0.76);
         }
     }
 
     &__brand {
-        align-self: start;
-        max-width: 520px;
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: $gray-0;
+        text-decoration: none;
+
+        &-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba($gray-0, 0.26);
+            border-radius: 12px;
+            background: rgba($gray-0, 0.12);
+            backdrop-filter: blur(8px);
+            font-size: 20px;
+        }
+
+        &-name {
+            @include font(t5, sb);
+            letter-spacing: -0.02em;
+        }
     }
 
-    &__logo {
-        width: 240px;
-        max-width: 100%;
-        filter: drop-shadow(0 18px 28px rgba($primary-900, 0.32));
+    &__eyebrow,
+    &__step {
+        margin: 0;
+        @include font(c1, sb);
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
     }
 
-    &__tagline {
-        margin: 18px 0 0;
-        @include font(t5, rg);
+    &__eyebrow {
+        color: rgba($primary-100, 0.86);
+    }
+
+    &__features {
+        margin: 30px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+        list-style: none;
+    }
+
+    &__feature {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        @include font(b3, rg);
         color: rgba($gray-0, 0.88);
+
+        .app-icon {
+            color: $primary-100;
+        }
     }
 
     &__copyright {
         margin: 0;
         @include font(c2, rg);
-        color: rgba($gray-0, 0.72);
+        color: rgba($gray-0, 0.56);
     }
 
     &__panel {
-        padding: 44px 20px;
+        min-width: 0;
+        padding: 48px clamp(28px, 7vw, 108px);
         display: grid;
         place-items: center;
-        background:
-            radial-gradient(780px 520px at 30% 0%, rgba($primary-50, 1), rgba($gray-0, 0) 60%),
-            $gray-0;
+        background: radial-gradient(680px 420px at 100% 0%, rgba($primary-100, 0.72), transparent 62%), linear-gradient(180deg, $gray-0, $gray-50);
 
         &-inner {
-            width: min(440px, 100%);
-            padding: 22px;
-            border-radius: 18px;
-            border: 1px solid rgba($gray-900, 0.1);
-            background: rgba($gray-0, 0.9);
-            box-shadow:
-                0 26px 70px rgba($primary-900, 0.1),
-                0 10px 24px rgba($primary-800, 0.08);
+            width: min(520px, 100%);
         }
     }
 
     &__header {
-        margin-bottom: 16px;
-        display: grid;
-        gap: 6px;
+        margin-bottom: 34px;
+
+        &--center {
+            text-align: center;
+        }
+    }
+
+    &__step {
+        margin-bottom: 10px;
+        color: $primary-600;
     }
 
     &__title {
         margin: 0;
-        @include font(t4, sb);
+        @include font(t3, sb);
         color: $gray-900;
+        letter-spacing: -0.035em;
     }
 
     &__desc {
-        margin: 0;
+        margin: 10px 0 0;
         @include font(b3, rg);
-        color: rgba($gray-900, 0.66);
+        line-height: 1.6;
+        color: $gray-600;
+
+        strong {
+            color: $gray-800;
+            font-weight: 600;
+        }
     }
 
     &__form {
         display: grid;
-        gap: 12px;
+        gap: 20px;
+    }
+
+    &__field-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
     }
 
     &__row {
-        margin-top: 2px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 16px;
     }
 
-    &__submit {
-        width: 100%;
-        margin-top: 6px;
+    &__agreements {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+        border: 1px solid $gray-200;
+        border-radius: 10px;
+        background: rgba($gray-0, 0.72);
+    }
+
+    &__error {
+        margin: -4px 0 0 30px;
+        @include font(c2, rg);
+        color: $status-error;
     }
 
     &__link {
@@ -130,58 +224,98 @@
 
         &:hover {
             text-decoration: underline;
+            text-underline-offset: 3px;
         }
     }
 
-    &__footer,
-    &__helper {
-        margin-top: 10px;
-        padding-top: 10px;
+    &__footer {
+        margin-top: 26px;
+        padding-top: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        border-top: 1px solid rgba($gray-900, 0.08);
+        border-top: 1px solid $gray-200;
+
+        &-text {
+            @include font(b4, rg);
+            color: $gray-600;
+        }
     }
 
-    &__footer-text,
-    &__helper-text {
-        @include font(b4, rg);
-        color: rgba($gray-900, 0.66);
-    }
-
-    &__helper-sep {
-        color: rgba($gray-900, 0.28);
-    }
-
-    &--signup &__panel-inner {
-        width: min(520px, 100%);
-    }
-
-    &__checks {
-        margin-top: 4px;
+    &__complete {
         display: grid;
-        gap: 8px;
+        gap: 14px;
+
+        &-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 12px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: $primary-50;
+            color: $primary-600;
+            font-size: 30px;
+            box-shadow: inset 0 0 0 1px $primary-100;
+        }
     }
 }
 
-/* forgot 은 기본 width 사용 */
-
-/* =========================================================
-   Responsive
-========================================================= */
-
-@media (max-width: 980px) {
-    .login {
-        grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+    .auth-page {
+        grid-template-columns: minmax(340px, 0.8fr) minmax(500px, 1.2fr);
 
         &__hero-inner {
-            padding: 34px 22px;
-            min-height: 320px;
+            padding: 36px;
         }
 
         &__panel {
-            padding: 22px 16px 36px;
+            padding-inline: 48px;
+        }
+    }
+}
+
+@media (max-width: 820px) {
+    .auth-page {
+        grid-template-columns: 1fr;
+
+        &__hero-inner {
+            min-height: auto;
+            padding: 24px;
+        }
+
+        &__hero-content,
+        &__hero::after,
+        &__copyright {
+            display: none;
+        }
+
+        &__panel {
+            min-height: calc(100vh - 90px);
+            padding: 44px 20px;
+            place-items: start center;
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .auth-page {
+        &__panel {
+            padding: 34px 18px;
+        }
+
+        &__header {
+            margin-bottom: 28px;
+        }
+
+        &__field-row {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        &__row {
+            align-items: flex-start;
         }
     }
 }
