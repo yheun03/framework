@@ -1,52 +1,57 @@
-@use "../../abstract" as *;
-@use "sass:map";
-@use "sass:color";
-@use "icon";
+@use '../../abstract' as *;
+@use 'sass:map';
+@use 'sass:color';
+@use 'icon';
 
 /* =========================================================
    Tokens
 ========================================================= */
 
 $btn-tones: (
-    "primary": $primary-500,
-    "secondary": $gray-700,
-    "gray": $gray-700,
-    "danger": $status-error,
-    "warning": $status-warning,
-    "success": $status-success,
-    "info": $status-info,
+    'primary': $primary-500,
+    'secondary': $secondary,
+    'gray': $gray-700,
+    'danger': $status-error,
+    'warning': $status-warning,
+    'success': $status-success,
+    'info': $status-info,
 );
 
 $btn-sizes: (
-    xl: (min-width: 88px,
+    xl: (
+        min-width: 88px,
         height: 56px,
         padding: 16px,
         gap: 6px,
         font: btn1,
         weight: sb,
     ),
-    lg: (min-width: 80px,
+    lg: (
+        min-width: 80px,
         height: 48px,
         padding: 16px,
         gap: 6px,
         font: btn2,
         weight: sb,
     ),
-    md: (min-width: 80px,
+    md: (
+        min-width: 80px,
         height: 44px,
         padding: 16px,
         gap: 4px,
         font: btn2,
         weight: sb,
     ),
-    sm: (min-width: 68px,
+    sm: (
+        min-width: 68px,
         height: 36px,
         padding: 12px,
         gap: 4px,
         font: btn3,
         weight: rg,
     ),
-    xs: (min-width: 58px,
+    xs: (
+        min-width: 58px,
         height: 24px,
         padding: 8px,
         gap: 4px,
@@ -56,25 +61,28 @@ $btn-sizes: (
 );
 
 $btn-text-sizes: (
-    lg: (font: btn2,
+    lg: (
+        font: btn2,
         weight: rg,
     ),
-    md: (font: btn3,
+    md: (
+        font: btn3,
         weight: rg,
     ),
-    sm: (font: btn4,
+    sm: (
+        font: btn4,
         weight: rg,
     ),
 );
 
 $icon-button-tones: (
-    "primary": $primary-500,
-    "secondary": $gray-700,
-    "gray": $gray-700,
-    "danger": $status-error,
-    "warning": $status-warning,
-    "success": $status-success,
-    "info": $status-info,
+    'primary': $primary-500,
+    'secondary': $secondary,
+    'gray': $gray-700,
+    'danger': $status-error,
+    'warning': $status-warning,
+    'success': $status-success,
+    'info': $status-info,
 );
 
 /* =========================================================
@@ -93,9 +101,7 @@ $icon-button-tones: (
 
         --btn-bg-hover: #{$hover};
         --btn-bg-active: #{$active};
-    }
-
-    @else if $variant ==outline {
+    } @else if $variant ==outline {
         --btn-bg: #{$gray-0};
         --btn-fg: #{$color};
         --btn-bd: #{$color};
@@ -110,18 +116,14 @@ $icon-button-tones: (
 
         --btn-bd-hover: #{$hover};
         --btn-bd-active: #{$active};
-    }
-
-    @else if $variant ==text {
+    } @else if $variant ==text {
         --btn-bg: transparent;
         --btn-fg: #{$color};
         --btn-bd: transparent;
 
         --btn-fg-hover: #{$hover};
         --btn-fg-active: #{$active};
-    }
-
-    @else if $variant ==underline {
+    } @else if $variant ==underline {
         --btn-bg: transparent;
         --btn-fg: #{$color};
         --btn-bd: transparent;

@@ -1,6 +1,6 @@
-@use "../abstract" as *;
-@use "nav";
-@use "section";
+@use '../abstract' as *;
+@use 'nav';
+@use 'section';
 
 // 필요 시 확장
 // @forward "header";
@@ -26,7 +26,7 @@
     overflow: hidden;
     grid-template-rows: 1fr;
     grid-template-columns: var(--width-sidebar) 1fr;
-    grid-template-areas: "nav main";
+    grid-template-areas: 'nav main';
 
     /* ----------------------------------------
      Mobile Bar
@@ -40,11 +40,19 @@
         min-height: var(--layout-mobile-bar-height);
         padding: 6px 10px;
         border-bottom: 1px solid $gray-200;
-        background: $gray-0;
+        background: $header-background;
     }
 
     &__nav-toggle {
         color: $gray-800;
+
+        &:hover {
+            background: $header-hover-color;
+        }
+
+        &:active {
+            background: $header-active-color;
+        }
 
         svg {
             width: 22px;
@@ -124,7 +132,7 @@
             gap: 8px;
             padding: 12px 16px;
 
-            &>div {
+            & > div {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;

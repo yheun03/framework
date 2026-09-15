@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /* =========================================
    Component: LayoutNav
@@ -18,7 +18,7 @@
     grid-template-rows: auto 1fr auto;
     min-height: 0;
 
-    background: $gradient-primary;
+    background: $lnb-background;
     color: $gray-0;
 
     /* ----------------------------------------
@@ -30,7 +30,11 @@
         color: $gray-0;
 
         &:hover:not(:disabled) {
-            background: rgba($gray-50, 0.1);
+            background: $lnb-hover-color;
+        }
+
+        &:active:not(:disabled) {
+            background: $lnb-active-color;
         }
 
         &:focus-visible {
@@ -159,7 +163,7 @@
         padding: 4px 6px;
 
         &::after {
-            content: "";
+            content: '';
 
             position: absolute;
             inset: 0;
@@ -176,12 +180,12 @@
         }
 
         &:hover::after {
-            background: rgba($gray-50, 0.08);
+            background: $lnb-hover-color;
         }
 
         &:has(.router-link-active)::after,
         &:has(.router-link-exact-active)::after {
-            background: rgba($gray-0, 0.16);
+            background: $lnb-active-color;
             box-shadow:
                 0 8px 20px rgba($gray-900, 0.12),
                 inset 0 0 0 1px rgba($gray-0, 0.18);
@@ -200,7 +204,7 @@
             }
         }
 
-        >* {
+        > * {
             position: relative;
             z-index: 1;
         }
@@ -322,7 +326,7 @@
        Depth
     ---------------------------------------- */
     &__item--depth-1 {
-        >.layout-nav__row {
+        > .layout-nav__row {
             min-height: 38px;
 
             .layout-nav__label {
@@ -333,7 +337,7 @@
 
     &__item--depth-2,
     &__item--depth-3 {
-        >.layout-nav__row {
+        > .layout-nav__row {
             min-height: 34px;
 
             .layout-nav__label {
@@ -344,7 +348,7 @@
     }
 
     &__item--depth-3 {
-        >.layout-nav__row .layout-nav__label {
+        > .layout-nav__row .layout-nav__label {
             color: rgba($gray-0, 0.76);
         }
     }
@@ -390,7 +394,6 @@
 ========================================= */
 
 .nav-action {
-
     &.app-button,
     &.app-icon-button {
         color: $gray-0;

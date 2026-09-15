@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 /* =========================================
    Component: RouteTabs
@@ -8,7 +8,7 @@
 ========================================= */
 
 .route-tabs {
-    background: $primary-50;
+    background: $header-background;
     // border-bottom: 1px solid $gray-200;
     min-height: 40px;
     display: grid;
@@ -58,8 +58,12 @@
         padding: 6px 10px 4px 12px;
         border-radius: 4px 4px 0 0;
 
+        &:hover {
+            background: $header-hover-color;
+        }
+
         &:has(.router-link-active) {
-            background: $gray-0;
+            background: $header-active-color;
         }
     }
 
@@ -77,7 +81,7 @@
         color: $gray-700;
 
         &.is-active {
-            color: $gray-900;
+            color: $header-accent-color;
             font-weight: 600;
         }
     }
@@ -112,7 +116,7 @@
         transition: background 0.12s ease;
 
         &:hover {
-            background: $gray-100;
+            background: $header-hover-color;
         }
     }
 
@@ -145,8 +149,8 @@
 
     &__action {
         --icon-button-color: #{$gray-600};
-        --icon-button-bg-hover: #{rgba($gray-900, 0.05)};
-        --icon-button-bg-active: #{rgba($gray-900, 0.08)};
+        --icon-button-bg-hover: #{$header-hover-color};
+        --icon-button-bg-active: #{$header-active-color};
 
         border-radius: 4px;
     }
