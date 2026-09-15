@@ -2,26 +2,15 @@
 // Framework - SCSS 변수
 // ============================================
 
+@use "../base/theme" as theme;
+@forward "../base/theme";
+
 // Colors (semantic 기본값)
 
 $status-success: #22c55e;
 $status-warning: #f59e0b;
 $status-error: #ef4444;
-$status-info: #2f6bff;
-
-// Colors Palette (raw 토큰)
-// Primary (blue) 50~900
-$primary-50: #eef4ff;
-$primary-100: #dce8ff;
-$primary-200: #b8d1ff;
-$primary-300: #8fb7ff;
-$primary-400: #5c95ff;
-$primary-500: #2f6bff;
-$primary-600: #2456d9;
-$primary-700: #1c43b3;
-$primary-800: #16358c;
-$primary-900: #0f255f;
-$primary: $primary-500;
+$status-info: theme.$primary;
 
 // Gray 0~900
 $gray-0: #ffffff;
@@ -35,10 +24,6 @@ $gray-600: #5e6670;
 $gray-700: #3f454f;
 $gray-800: #2a2f38;
 $gray-900: #1c2026;
-
-$gradient-primary: linear-gradient(to bottom,
-        $primary-800 0%,
-        $primary-900 100%);
 
 // Typography
 $font-family-base: "Pretendard",

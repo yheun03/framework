@@ -1,44 +1,38 @@
-@use "../abstract" as *;
+@use 'sass:color';
 
-:root[data-theme="dark"] {
-    color-scheme: dark;
+// ============================================
+// Framework Theme
+// 아래 3가지 색상만 변경하면 프레임워크 전체 테마에 반영됩니다.
+// ============================================
 
-    body {
-        background: $gray-900;
-        color: $gray-50;
-    }
+$primary: #2f6bff !default;
+$secondary: #5e6670 !default;
+$tertiary: #39508e !default;
 
-    .layout__content {
-        background: $gray-900;
-    }
+// Primary palette
+// 컴포넌트에서 사용하는 기존 50~900 토큰은 primary를 기준으로 자동 생성합니다.
+$primary-50: color.mix(#ffffff, $primary, 92%) !default;
+$primary-100: color.mix(#ffffff, $primary, 84%) !default;
+$primary-200: color.mix(#ffffff, $primary, 68%) !default;
+$primary-300: color.mix(#ffffff, $primary, 48%) !default;
+$primary-400: color.mix(#ffffff, $primary, 22%) !default;
+$primary-500: $primary !default;
+$primary-600: color.mix(#000000, $primary, 15%) !default;
+$primary-700: color.mix(#000000, $primary, 30%) !default;
+$primary-800: color.mix(#000000, $primary, 45%) !default;
+$primary-900: color.mix(#000000, $primary, 63%) !default;
 
-    :where(.page-demo-card, .page-demo-accordion .app-accordion__item) {
-        background: $gray-800;
-        border-color: $gray-700;
-    }
+$gradient-primary: linear-gradient(to bottom, $primary-800 0%, $primary-900 100%) !default;
 
-    .page-demo {
-        &__title {
-            color: $gray-50;
-        }
+// Header
+// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
+$header-background: $primary-50 !default;
+$header-hover-color: rgba($secondary, 0.12) !default;
+$header-active-color: rgba($tertiary, 0.16) !default;
+$header-accent-color: $tertiary !default;
 
-        &__desc,
-        &-hint,
-        &-output {
-            color: rgba($gray-50, 0.78);
-        }
-
-        &-output {
-            background: rgba($gray-0, 0.08);
-        }
-    }
-
-    :where(.page-demo-card__title, .page-demo-accordion .app-accordion__title) {
-        color: $gray-50;
-    }
-
-    .home {
-        background: linear-gradient(180deg, $gray-900, #11161f);
-        color: $gray-50;
-    }
-}
+// LNB
+// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
+$lnb-background: $gradient-primary !default;
+$lnb-hover-color: rgba($secondary, 0.35) !default;
+$lnb-active-color: rgba($tertiary, 0.5) !default;
