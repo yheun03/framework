@@ -12,7 +12,7 @@
         background: $gray-900;
     }
 
-    :where(.page-demo-card, .page-demo-accordion .app-accordion__item) {
+    .page-demo-card {
         background: $gray-800;
         border-color: $gray-700;
     }
@@ -33,7 +33,7 @@
         }
     }
 
-    :where(.page-demo-card__title, .page-demo-accordion .app-accordion__title) {
+    .page-demo-card__title {
         color: $gray-50;
     }
 

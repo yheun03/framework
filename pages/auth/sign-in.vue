@@ -3,7 +3,7 @@
         <header class="auth-page__header">
             <p class="auth-page__step">Welcome back</p>
             <h1 class="auth-page__title">로그인</h1>
-            <p class="auth-page__desc">Framework 워크스페이스에 로그인하세요.</p>
+            <p class="auth-page__desc">{{ project.serviceName }} 워크스페이스에 로그인하세요.</p>
         </header>
 
         <form class="auth-page__form" novalidate @submit.prevent="handleSubmit">
@@ -58,7 +58,9 @@
 import { IconEmail, IconLock } from '~/components/icons';
 
 definePageMeta({ layout: false });
-useHead({ title: '로그인 | Framework' });
+useHead({ title: '로그인' });
+
+const project = useProjectConfig();
 
 const email = ref('');
 const password = ref('');

@@ -25,10 +25,6 @@ export type AppGridCellRendererParams<Value = unknown, RendererParams extends Re
     };
 };
 
-export type AppGridCellRendererProps<Value = unknown, RendererParams extends Record<string, unknown> = Record<string, unknown>> = {
-    params: AppGridCellRendererParams<Value, RendererParams>;
-};
-
 export type AppGridExportColumn = {
     field: string;
     headerName: string;

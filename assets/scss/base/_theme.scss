@@ -1,13 +1,22 @@
 @use 'sass:color';
+@use '@project-theme' as project;
+
+@function project-value($value, $fallback) {
+    @if $value == null {
+        @return $fallback;
+    }
+
+    @return $value;
+}
 
 // ============================================
 // Framework Theme
-// 아래 3가지 색상만 변경하면 프레임워크 전체 테마에 반영됩니다.
+// 활성 프로젝트의 _theme.scss에 있는 대표 색상을 전체 테마에 반영합니다.
 // ============================================
 
-$primary: #2f6bff !default;
-$secondary: #5e6670 !default;
-$tertiary: #39508e !default;
+$primary: project.$primary !default;
+$secondary: project.$secondary !default;
+$tertiary: project.$tertiary !default;
 
 // Primary palette
 // 컴포넌트에서 사용하는 기존 50~900 토큰은 primary를 기준으로 자동 생성합니다.
@@ -26,21 +35,21 @@ $gradient-primary: linear-gradient(to bottom, $primary-800 0%, $primary-900 100%
 
 // Header
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$header-background: $primary-50 !default;
-$header-hover-color: rgba($secondary, 0.12) !default;
-$header-active-color: rgba($tertiary, 0.16) !default;
-$header-accent-color: $tertiary !default;
+$header-background: project-value(project.$header-background, $primary-50) !default;
+$header-hover-color: project-value(project.$header-hover-color, rgba($secondary, 0.12)) !default;
+$header-active-color: project-value(project.$header-active-color, rgba($tertiary, 0.16)) !default;
+$header-accent-color: project-value(project.$header-accent-color, $tertiary) !default;
 
 // LNB
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$lnb-background: $gradient-primary !default;
-$lnb-hover-color: rgba(#ffffff, 0.08) !default;
-$lnb-active-color: rgba(#ffffff, 0.16) !default;
+$lnb-background: project-value(project.$lnb-background, $gradient-primary) !default;
+$lnb-hover-color: project-value(project.$lnb-hover-color, rgba(#ffffff, 0.08)) !default;
+$lnb-active-color: project-value(project.$lnb-active-color, rgba(#ffffff, 0.16)) !default;
 
 // Page Navigator
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$page-navigator-background: $primary-50 !default;
-$page-navigator-hover-color: rgba(#1c2026, 0.05) !default;
-$page-navigator-active-color: #ffffff !default;
-$page-navigator-accent-color: #1c2026 !default;
-$page-navigator-control-active-color: rgba(#1c2026, 0.08) !default;
+$page-navigator-background: project-value(project.$page-navigator-background, $primary-50) !default;
+$page-navigator-hover-color: project-value(project.$page-navigator-hover-color, rgba(#1c2026, 0.05)) !default;
+$page-navigator-active-color: project-value(project.$page-navigator-active-color, #ffffff) !default;
+$page-navigator-accent-color: project-value(project.$page-navigator-accent-color, #1c2026) !default;
+$page-navigator-control-active-color: project-value(project.$page-navigator-control-active-color, rgba(#1c2026, 0.08)) !default;

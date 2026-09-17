@@ -92,8 +92,8 @@ const data = await api.get<MyType>('/api/example');
 - `pages/` 파일명은 URL이 되므로 kebab-case를 사용합니다.
 - demo 페이지는 컴포넌트 사용 예시만 담당합니다.
 - 실제 업무 로직과 demo 전용 상태를 섞지 않습니다.
-- 특정 page 안에서만 쓰는 modal, renderer, content는 `Page_페이지명/modal`, `Page_페이지명/renderer`, `Page_페이지명/content` 폴더에 둡니다.
-- page 전용 파일명도 폴더 역할이 보이도록 `PageDemoModalRendererExample.vue`처럼 작성합니다.
+- 특정 page 안에서만 쓰는 modal, renderer, content는 `components/Page_페이지명/modal`, `components/Page_페이지명/renderer`, `components/Page_페이지명/content` 폴더에 둡니다.
+- 페이지 전용 컴포넌트 파일명은 `PageDemoModalRendererExample.vue`처럼 역할이 드러나게 작성합니다.
 - 새 페이지가 LNB에 필요하면 navigation store와 i18n label을 함께 추가합니다.
 
 ## 11. i18n 규칙
