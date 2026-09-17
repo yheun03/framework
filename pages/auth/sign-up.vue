@@ -1,7 +1,7 @@
 <template>
     <AuthPageShell
         panel-label="회원가입 폼"
-        eyebrow="Start with Framework"
+        :eyebrow="`Start with ${project.serviceName}`"
         hero-title="하나의 계정으로\n팀의 업무를 연결하세요"
         hero-description="공통 컴포넌트로 구성된 안정적인 업무 환경을 바로 시작할 수 있습니다."
         :features="['간편한 계정 생성', '팀 워크스페이스 연결', '모든 디바이스에서 이용']"
@@ -102,7 +102,9 @@
 import { IconAccount, IconEmail, IconLock } from '~/components/icons';
 
 definePageMeta({ layout: false });
-useHead({ title: '회원가입 | Framework' });
+useHead({ title: '회원가입' });
+
+const project = useProjectConfig();
 
 const name = ref('');
 const email = ref('');

@@ -118,7 +118,7 @@
 /* imports */
 import { useModal } from '~/composables/useModal';
 import { useModalViewer } from '~/composables/useModalViewer';
-import PageDemoModalRendererExample from '~/pages/demos/Page_demo/renderer/PageDemoModalRendererExample.vue';
+import PageDemoModalRendererExample from '~/components/PageDemo/renderer/PageDemoModalRendererExample.vue';
 
 /* stores/composables */
 const { title } = useDemoI18n('modal');

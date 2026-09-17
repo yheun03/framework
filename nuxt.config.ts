@@ -1,16 +1,43 @@
+import { fileURLToPath } from 'node:url';
+import { projectConfig } from './project.config';
+
+const baseURL = process.env.NUXT_APP_BASE_URL || projectConfig.baseURL;
+
+function resolvePublicUrl(path: string): string {
+    const normalizedPath = path.replace(/^\//, '');
+    const normalizedBase = baseURL.endsWith('/') ? baseURL : `${baseURL}/`;
+
+    return new URL(`${normalizedBase}${normalizedPath}`, projectConfig.siteUrl).toString();
+}
+
 export default defineNuxtConfig({
-    devtools: {enabled: true},
-    experimental: {appManifest: false},
-    features: {inlineStyles: false},
+    devtools: { enabled: true },
+    experimental: { appManifest: false },
+    features: { inlineStyles: false },
 
     app: {
-        // GitHub Pages: https://yheun03.github.io/framework/ → base는 /framework/
-        // 다른 base는 빌드 시 NUXT_APP_BASE_URL 로 지정 (package.json의 generate:gh-pages).
-        baseURL: process.env.NUXT_APP_BASE_URL || '/framework/',
+        // 환경변수가 있으면 프로젝트 설정보다 우선합니다.
+        baseURL,
         head: {
-            title: 'Framework',
-            htmlAttrs: {lang: 'ko'},
-            link: [{rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg'}],
+            title: projectConfig.seo.title,
+            htmlAttrs: { lang: projectConfig.locale },
+            meta: [
+                { name: 'description', content: projectConfig.seo.description },
+                { name: 'keywords', content: projectConfig.seo.keywords.join(', ') },
+                { name: 'theme-color', content: projectConfig.themeColor },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:locale', content: projectConfig.locale },
+                { property: 'og:site_name', content: projectConfig.serviceName },
+                { property: 'og:title', content: projectConfig.seo.title },
+                { property: 'og:description', content: projectConfig.seo.description },
+                { property: 'og:image', content: resolvePublicUrl(projectConfig.seo.ogImage) },
+                { property: 'og:image:alt', content: projectConfig.seo.ogImageAlt },
+                { name: 'twitter:card', content: projectConfig.seo.twitterCard },
+                { name: 'twitter:title', content: projectConfig.seo.title },
+                { name: 'twitter:description', content: projectConfig.seo.description },
+                { name: 'twitter:image', content: resolvePublicUrl(projectConfig.seo.ogImage) },
+            ],
+            link: [{ rel: 'icon', href: `${baseURL}${projectConfig.favicon}` }],
         },
     },
 
@@ -23,20 +50,22 @@ export default defineNuxtConfig({
         'flatpickr/dist/flatpickr.css',
         'nouislider/dist/nouislider.css',
         '~/assets/scss/main.scss',
+        `~/assets/scss/projects/${projectConfig.key}/index.scss`,
     ],
 
     components: [
-        {path: '~/components/Table', pathPrefix: false},
-        {path: '~/components/Section', pathPrefix: false},
-        {path: '~/components/Layout', pathPrefix: false},
-        {path: '~/components/Modal', pathPrefix: false},
-        {path: '~/components/AppButton', pathPrefix: false},
-        {path: '~/components/AppGrid', pathPrefix: false},
-        {path: '~/components/AppProgress', pathPrefix: false},
-        {path: '~/components/AppUpload', pathPrefix: false},
-        {path: '~/pages/demos/Page_demo/content', pathPrefix: false},
+        { path: '~/components/Table', pathPrefix: false },
+        { path: '~/components/Section', pathPrefix: false },
+        { path: '~/components/Layout', pathPrefix: false },
+        { path: '~/components/Modal', pathPrefix: false },
+        { path: '~/components/AppButton', pathPrefix: false },
+        { path: '~/components/AppGrid', pathPrefix: false },
+        { path: '~/components/AppProgress', pathPrefix: false },
+        { path: '~/components/AppUpload', pathPrefix: false },
+        { path: '~/components/PageDemo', pathPrefix: false },
+        { path: `~/components/projects/${projectConfig.key}`, pathPrefix: false },
         // components 루트 단일 컴포넌트만 자동 등록
-        {path: '~/components', pathPrefix: true, pattern: '*.vue'},
+        { path: '~/components', pathPrefix: true, pattern: '*.vue' },
     ],
 
     // 플러그인 실행 순서를 명확히 하기 위해 명시 로딩
@@ -49,6 +78,11 @@ export default defineNuxtConfig({
     ],
 
     vite: {
+        resolve: {
+            alias: {
+                '@project-theme': fileURLToPath(new URL(`./assets/scss/projects/${projectConfig.key}/_theme.scss`, import.meta.url)),
+            },
+        },
         build: {
             cssCodeSplit: false,
         },
@@ -79,6 +113,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiBase: '/api',
+            project: projectConfig,
         },
     },
 

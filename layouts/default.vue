@@ -8,7 +8,7 @@
                 메뉴
             </AppTextButton>
 
-            <strong class="layout__mobile-title">Framework</strong>
+            <strong class="layout__mobile-title">{{ project.serviceName }}</strong>
         </div>
 
         <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" aria-label="메뉴 닫기" @click="handleNavClose" />
@@ -28,6 +28,7 @@
 import { IconMenu } from '~/components/icons';
 
 const route = useRoute();
+const project = useProjectConfig();
 const isNavOpen = ref(false);
 
 function handleNavOpen() {

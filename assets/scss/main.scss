@@ -1,6 +1,5 @@
-@use "abstract" as *;
-@use "base" as base;
-@use "layout" as layout;
-@use "components" as components;
-@use "pages" as pages;
-@use "layout/responsive" as layoutResponsive;
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'pages';
+@use 'layout/responsive';

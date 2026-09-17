@@ -54,7 +54,7 @@
 import { IconEmail } from '~/components/icons';
 
 definePageMeta({ layout: false });
-useHead({ title: '비밀번호 찾기 | Framework' });
+useHead({ title: '비밀번호 찾기' });
 
 const email = ref('');
 const submitted = ref(false);

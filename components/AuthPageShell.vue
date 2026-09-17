@@ -1,10 +1,10 @@
 <template>
     <div class="auth-page">
-        <section class="auth-page__hero" aria-label="Framework 소개">
+        <section class="auth-page__hero" :aria-label="`${project.serviceName} 소개`">
             <div class="auth-page__hero-inner">
-                <NuxtLink class="auth-page__brand" to="/" aria-label="Framework 홈으로 이동">
+                <NuxtLink class="auth-page__brand" to="/" :aria-label="`${project.serviceName} 홈으로 이동`">
                     <span class="auth-page__brand-icon" aria-hidden="true"><IconApp /></span>
-                    <span class="auth-page__brand-name">Framework</span>
+                    <span class="auth-page__brand-name">{{ project.serviceName }}</span>
                 </NuxtLink>
 
                 <div class="auth-page__hero-content">
@@ -19,7 +19,7 @@
                     </ul>
                 </div>
 
-                <p class="auth-page__copyright">© {{ new Date().getFullYear() }} Framework. All rights reserved.</p>
+                <p class="auth-page__copyright">© {{ currentYear }} {{ project.companyName }}. All rights reserved.</p>
             </div>
         </section>
 
@@ -31,6 +31,9 @@
 
 <script setup lang="ts">
 import { IconApp, IconCheckCircle } from '~/components/icons';
+
+const project = useProjectConfig();
+const currentYear = new Date().getFullYear();
 
 withDefaults(
     defineProps<{

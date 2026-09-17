@@ -12,12 +12,11 @@
         "clean": "rm -rf .nuxt .output node_modules/.vite",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
-        "deploy": "NUXT_APP_BASE_URL=/framework/ nuxt generate && gh-pages -d .output/public --dotfiles",
+        "deploy": "nuxt generate && gh-pages -d .output/public --dotfiles",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
-        "@ag-grid-community/locale": "^33.3.2",
         "@flaticon/flaticon-uicons": "^3.3.1",
         "@pinia/nuxt": "^0.5.4",
         "@toast-ui/editor": "^3.2.2",
@@ -28,7 +27,6 @@
         "flatpickr": "^4.6.13",
         "nouislider": "^15.8.1",
         "nuxt": "^3.14.1593",
-        "pdfjs-dist": "^5.1.91",
         "pinia": "^2.2.4",
         "vue": "^3.5.12",
         "vue-chartjs": "^5.3.3",

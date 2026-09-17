@@ -6,7 +6,7 @@
                     <span class="home__brand-icon" aria-hidden="true">
                         <IconApp />
                     </span>
-                    <span class="home__brand-name">Framework</span>
+                    <span class="home__brand-name">{{ project.serviceName }}</span>
                 </div>
                 <NuxtLink class="home__signin" to="/auth/sign-in">Sign in</NuxtLink>
             </div>
@@ -51,7 +51,7 @@
             </section>
 
             <footer class="home__footer">
-                <p>© {{ new Date().getFullYear() }} Framework. All rights reserved.</p>
+                <p>© {{ currentYear }} {{ project.companyName }}. All rights reserved.</p>
             </footer>
         </main>
     </div>
@@ -59,6 +59,9 @@
 
 <script setup lang="ts">
 import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from '~/components/icons';
+
+const project = useProjectConfig();
+const currentYear = new Date().getFullYear();
 </script>
 
 <style scoped lang="scss">

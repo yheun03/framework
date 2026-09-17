@@ -9,17 +9,8 @@ export type RangeModelValue = {
     end?: unknown;
 };
 
-export function getModelValue(model: Record<string, unknown>, key?: string) {
-    if (!key) return '';
-    return model?.[key] ?? '';
-}
-
 export function toStringModelValue(value: unknown) {
     return value === null || value === undefined ? '' : String(value);
-}
-
-export function toScalarStringModelValue(value: unknown) {
-    return typeof value === 'string' || typeof value === 'number' ? String(value) : '';
 }
 
 export function toBooleanModelValue(value: unknown) {
