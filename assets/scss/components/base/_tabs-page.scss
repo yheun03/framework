@@ -8,7 +8,7 @@
 ========================================= */
 
 .route-tabs {
-    background: $header-background;
+    background: $page-navigator-background;
     // border-bottom: 1px solid $gray-200;
     min-height: 40px;
     display: grid;
@@ -59,11 +59,11 @@
         border-radius: 4px 4px 0 0;
 
         &:hover {
-            background: $header-hover-color;
+            background: $page-navigator-hover-color;
         }
 
         &:has(.router-link-active) {
-            background: $header-active-color;
+            background: $page-navigator-active-color;
         }
     }
 
@@ -81,7 +81,7 @@
         color: $gray-700;
 
         &.is-active {
-            color: $header-accent-color;
+            color: $page-navigator-accent-color;
             font-weight: 600;
         }
     }
@@ -116,7 +116,7 @@
         transition: background 0.12s ease;
 
         &:hover {
-            background: $header-hover-color;
+            background: $page-navigator-hover-color;
         }
     }
 
@@ -149,8 +149,8 @@
 
     &__action {
         --icon-button-color: #{$gray-600};
-        --icon-button-bg-hover: #{$header-hover-color};
-        --icon-button-bg-active: #{$header-active-color};
+        --icon-button-bg-hover: #{$page-navigator-hover-color};
+        --icon-button-bg-active: #{$page-navigator-control-active-color};
 
         border-radius: 4px;
     }

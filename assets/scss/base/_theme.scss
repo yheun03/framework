@@ -34,5 +34,13 @@ $header-accent-color: $tertiary !default;
 // LNB
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
 $lnb-background: $gradient-primary !default;
-$lnb-hover-color: rgba($secondary, 0.35) !default;
-$lnb-active-color: rgba($tertiary, 0.5) !default;
+$lnb-hover-color: rgba(#ffffff, 0.08) !default;
+$lnb-active-color: rgba(#ffffff, 0.16) !default;
+
+// Page Navigator
+// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
+$page-navigator-background: $primary-50 !default;
+$page-navigator-hover-color: rgba(#1c2026, 0.05) !default;
+$page-navigator-active-color: #ffffff !default;
+$page-navigator-accent-color: #1c2026 !default;
+$page-navigator-control-active-color: rgba(#1c2026, 0.08) !default;
