@@ -126,204 +126,139 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-bg-btn-disabled: #f1f1f5;
 
     // 레이아웃 기본값
-    --theme-header-background: var(--theme-primary-50);
-    --theme-header-hover-color: color-mix(in srgb, var(--theme-secondary) 12%, transparent);
-    --theme-header-active-color: color-mix(in srgb, var(--theme-tertiary) 16%, transparent);
-    --theme-header-accent-color: var(--theme-tertiary);
-    --theme-lnb-background: var(--theme-gradient-primary);
-    --theme-lnb-hover-color: rgb(255 255 255 / 8%);
-    --theme-lnb-active-color: rgb(255 255 255 / 16%);
-    --theme-page-navigator-background: var(--theme-primary-50);
-    --theme-page-navigator-hover-color: color-mix(in srgb, var(--theme-gray-900) 5%, transparent);
-    --theme-page-navigator-active-color: var(--theme-gray-0);
-    --theme-page-navigator-accent-color: var(--theme-gray-900);
-    --theme-page-navigator-control-active-color: color-mix(in srgb, var(--theme-gray-900) 8%, transparent);
-
-    @each $name,
-        $value
-            in (
-                'header-background': project.$header-background,
-                'header-hover-color': project.$header-hover-color,
-                'header-active-color': project.$header-active-color,
-                'header-accent-color': project.$header-accent-color,
-                'lnb-background': project.$lnb-background,
-                'lnb-hover-color': project.$lnb-hover-color,
-                'lnb-active-color': project.$lnb-active-color,
-                'page-navigator-background': project.$page-navigator-background,
-                'page-navigator-hover-color': project.$page-navigator-hover-color,
-                'page-navigator-active-color': project.$page-navigator-active-color,
-                'page-navigator-accent-color': project.$page-navigator-accent-color,
-                'page-navigator-control-active-color': project.$page-navigator-control-active-color
-            )
-    {
-        @if $value != null {
-            --theme-#{$name}: #{$value};
-        }
-    }
+    --theme-header-background: #{project-value(project.$header-background, var(--theme-primary-50))};
+    --theme-header-hover-color: #{project-value(project.$header-hover-color, color-mix(in srgb, var(--theme-secondary) 12%, transparent))};
+    --theme-header-active-color: #{project-value(project.$header-active-color, color-mix(in srgb, var(--theme-tertiary) 16%, transparent))};
+    --theme-header-accent-color: #{project-value(project.$header-accent-color, var(--theme-tertiary))};
+    --theme-lnb-background: #{project-value(project.$lnb-background, var(--theme-gradient-primary))};
+    --theme-lnb-hover-color: #{project-value(project.$lnb-hover-color, rgb(255 255 255 / 8%))};
+    --theme-lnb-active-color: #{project-value(project.$lnb-active-color, rgb(255 255 255 / 16%))};
+    --theme-page-navigator-background: #{project-value(project.$page-navigator-background, var(--theme-primary-50))};
+    --theme-page-navigator-hover-color: #{project-value(
+            project.$page-navigator-hover-color,
+            color-mix(in srgb, var(--theme-gray-900) 5%, transparent)
+        )};
+    --theme-page-navigator-active-color: #{project-value(project.$page-navigator-active-color, var(--theme-gray-0))};
+    --theme-page-navigator-accent-color: #{project-value(project.$page-navigator-accent-color, var(--theme-gray-900))};
+    --theme-page-navigator-control-active-color: #{project-value(
+            project.$page-navigator-control-active-color,
+            color-mix(in srgb, var(--theme-gray-900) 8%, transparent)
+        )};
 
     // 투명도 단계
-    @each $name,
-        $opacities
-            in (
-                'gray-0': (
-                        0,
-                        3,
-                        4,
-                        8,
-                        10,
-                        12,
-                        14,
-                        16,
-                        18,
-                        20,
-                        24,
-                        26,
-                        28,
-                        35,
-                        56,
-                        60,
-                        70,
-                        72,
-                        76,
-                        78,
-                        80,
-                        82,
-                        86,
-                        88,
-                        90,
-                        92,
-                    ),
-                'gray-50': (
-                        78,
-                    ),
-                'gray-200': (
-                        90,
-                        100,
-                    ),
-                'gray-500': (
-                        12,
-                    ),
-                'gray-700': (
-                        8,
-                        12,
-                        14,
-                        18,
-                        45,
-                        60,
-                        70,
-                    ),
-                'gray-800': (
-                        4,
-                    ),
-                'gray-900': (
-                        0,
-                        2,
-                        4,
-                        6,
-                        8,
-                        10,
-                        12,
-                        18,
-                        22,
-                        28,
-                        42,
-                        54,
-                        55,
-                        62,
-                        70,
-                        76,
-                        80,
-                    ),
-                'primary': (
-                        10,
-                        12,
-                        65,
-                    ),
-                'primary-50': (
-                        55,
-                        80,
-                        90,
-                    ),
-                'primary-100': (
-                        60,
-                        72,
-                        86,
-                        90,
-                    ),
-                'primary-200': (
-                        30,
-                        32,
-                        58,
-                    ),
-                'primary-400': (
-                        62,
-                    ),
-                'primary-500': (
-                        8,
-                        12,
-                        14,
-                        16,
-                        18,
-                        25,
-                        30,
-                        35,
-                        54,
-                        55,
-                        60,
-                    ),
-                'primary-700': (
-                        8,
-                    ),
-                'primary-900': (
-                        6,
-                        8,
-                        10,
-                        12,
-                        14,
-                    ),
-                'secondary': (
-                        8,
-                        12,
-                        14,
-                        18,
-                        60,
-                    ),
-                'status-error': (
-                        8,
-                        10,
-                        12,
-                        14,
-                        18,
-                        60,
-                    ),
-                'status-info': (
-                        8,
-                        12,
-                        14,
-                        18,
-                        25,
-                        60,
-                    ),
-                'status-success': (
-                        8,
-                        12,
-                        14,
-                        18,
-                        60,
-                    ),
-                'status-warning': (
-                        8,
-                        12,
-                        14,
-                        18,
-                        60,
-                    )
-            )
-    {
-        @each $opacity in $opacities {
-            --theme-#{$name}-alpha-#{$opacity}: color-mix(in srgb, var(--theme-#{$name}) #{$opacity}%, transparent);
-        }
-    }
+    --theme-gray-0-alpha-0: color-mix(in srgb, var(--theme-gray-0) 0%, transparent);
+    --theme-gray-0-alpha-3: color-mix(in srgb, var(--theme-gray-0) 3%, transparent);
+    --theme-gray-0-alpha-4: color-mix(in srgb, var(--theme-gray-0) 4%, transparent);
+    --theme-gray-0-alpha-8: color-mix(in srgb, var(--theme-gray-0) 8%, transparent);
+    --theme-gray-0-alpha-10: color-mix(in srgb, var(--theme-gray-0) 10%, transparent);
+    --theme-gray-0-alpha-12: color-mix(in srgb, var(--theme-gray-0) 12%, transparent);
+    --theme-gray-0-alpha-14: color-mix(in srgb, var(--theme-gray-0) 14%, transparent);
+    --theme-gray-0-alpha-16: color-mix(in srgb, var(--theme-gray-0) 16%, transparent);
+    --theme-gray-0-alpha-18: color-mix(in srgb, var(--theme-gray-0) 18%, transparent);
+    --theme-gray-0-alpha-20: color-mix(in srgb, var(--theme-gray-0) 20%, transparent);
+    --theme-gray-0-alpha-24: color-mix(in srgb, var(--theme-gray-0) 24%, transparent);
+    --theme-gray-0-alpha-26: color-mix(in srgb, var(--theme-gray-0) 26%, transparent);
+    --theme-gray-0-alpha-28: color-mix(in srgb, var(--theme-gray-0) 28%, transparent);
+    --theme-gray-0-alpha-35: color-mix(in srgb, var(--theme-gray-0) 35%, transparent);
+    --theme-gray-0-alpha-56: color-mix(in srgb, var(--theme-gray-0) 56%, transparent);
+    --theme-gray-0-alpha-60: color-mix(in srgb, var(--theme-gray-0) 60%, transparent);
+    --theme-gray-0-alpha-70: color-mix(in srgb, var(--theme-gray-0) 70%, transparent);
+    --theme-gray-0-alpha-72: color-mix(in srgb, var(--theme-gray-0) 72%, transparent);
+    --theme-gray-0-alpha-76: color-mix(in srgb, var(--theme-gray-0) 76%, transparent);
+    --theme-gray-0-alpha-78: color-mix(in srgb, var(--theme-gray-0) 78%, transparent);
+    --theme-gray-0-alpha-80: color-mix(in srgb, var(--theme-gray-0) 80%, transparent);
+    --theme-gray-0-alpha-82: color-mix(in srgb, var(--theme-gray-0) 82%, transparent);
+    --theme-gray-0-alpha-86: color-mix(in srgb, var(--theme-gray-0) 86%, transparent);
+    --theme-gray-0-alpha-88: color-mix(in srgb, var(--theme-gray-0) 88%, transparent);
+    --theme-gray-0-alpha-90: color-mix(in srgb, var(--theme-gray-0) 90%, transparent);
+    --theme-gray-0-alpha-92: color-mix(in srgb, var(--theme-gray-0) 92%, transparent);
+    --theme-gray-50-alpha-78: color-mix(in srgb, var(--theme-gray-50) 78%, transparent);
+    --theme-gray-200-alpha-90: color-mix(in srgb, var(--theme-gray-200) 90%, transparent);
+    --theme-gray-200-alpha-100: color-mix(in srgb, var(--theme-gray-200) 100%, transparent);
+    --theme-gray-500-alpha-12: color-mix(in srgb, var(--theme-gray-500) 12%, transparent);
+    --theme-gray-700-alpha-8: color-mix(in srgb, var(--theme-gray-700) 8%, transparent);
+    --theme-gray-700-alpha-12: color-mix(in srgb, var(--theme-gray-700) 12%, transparent);
+    --theme-gray-700-alpha-14: color-mix(in srgb, var(--theme-gray-700) 14%, transparent);
+    --theme-gray-700-alpha-18: color-mix(in srgb, var(--theme-gray-700) 18%, transparent);
+    --theme-gray-700-alpha-45: color-mix(in srgb, var(--theme-gray-700) 45%, transparent);
+    --theme-gray-700-alpha-60: color-mix(in srgb, var(--theme-gray-700) 60%, transparent);
+    --theme-gray-700-alpha-70: color-mix(in srgb, var(--theme-gray-700) 70%, transparent);
+    --theme-gray-800-alpha-4: color-mix(in srgb, var(--theme-gray-800) 4%, transparent);
+    --theme-gray-900-alpha-0: color-mix(in srgb, var(--theme-gray-900) 0%, transparent);
+    --theme-gray-900-alpha-2: color-mix(in srgb, var(--theme-gray-900) 2%, transparent);
+    --theme-gray-900-alpha-4: color-mix(in srgb, var(--theme-gray-900) 4%, transparent);
+    --theme-gray-900-alpha-6: color-mix(in srgb, var(--theme-gray-900) 6%, transparent);
+    --theme-gray-900-alpha-8: color-mix(in srgb, var(--theme-gray-900) 8%, transparent);
+    --theme-gray-900-alpha-10: color-mix(in srgb, var(--theme-gray-900) 10%, transparent);
+    --theme-gray-900-alpha-12: color-mix(in srgb, var(--theme-gray-900) 12%, transparent);
+    --theme-gray-900-alpha-18: color-mix(in srgb, var(--theme-gray-900) 18%, transparent);
+    --theme-gray-900-alpha-22: color-mix(in srgb, var(--theme-gray-900) 22%, transparent);
+    --theme-gray-900-alpha-28: color-mix(in srgb, var(--theme-gray-900) 28%, transparent);
+    --theme-gray-900-alpha-42: color-mix(in srgb, var(--theme-gray-900) 42%, transparent);
+    --theme-gray-900-alpha-54: color-mix(in srgb, var(--theme-gray-900) 54%, transparent);
+    --theme-gray-900-alpha-55: color-mix(in srgb, var(--theme-gray-900) 55%, transparent);
+    --theme-gray-900-alpha-62: color-mix(in srgb, var(--theme-gray-900) 62%, transparent);
+    --theme-gray-900-alpha-70: color-mix(in srgb, var(--theme-gray-900) 70%, transparent);
+    --theme-gray-900-alpha-76: color-mix(in srgb, var(--theme-gray-900) 76%, transparent);
+    --theme-gray-900-alpha-80: color-mix(in srgb, var(--theme-gray-900) 80%, transparent);
+    --theme-primary-alpha-10: color-mix(in srgb, var(--theme-primary) 10%, transparent);
+    --theme-primary-alpha-12: color-mix(in srgb, var(--theme-primary) 12%, transparent);
+    --theme-primary-alpha-65: color-mix(in srgb, var(--theme-primary) 65%, transparent);
+    --theme-primary-50-alpha-55: color-mix(in srgb, var(--theme-primary-50) 55%, transparent);
+    --theme-primary-50-alpha-80: color-mix(in srgb, var(--theme-primary-50) 80%, transparent);
+    --theme-primary-50-alpha-90: color-mix(in srgb, var(--theme-primary-50) 90%, transparent);
+    --theme-primary-100-alpha-60: color-mix(in srgb, var(--theme-primary-100) 60%, transparent);
+    --theme-primary-100-alpha-72: color-mix(in srgb, var(--theme-primary-100) 72%, transparent);
+    --theme-primary-100-alpha-86: color-mix(in srgb, var(--theme-primary-100) 86%, transparent);
+    --theme-primary-100-alpha-90: color-mix(in srgb, var(--theme-primary-100) 90%, transparent);
+    --theme-primary-200-alpha-30: color-mix(in srgb, var(--theme-primary-200) 30%, transparent);
+    --theme-primary-200-alpha-32: color-mix(in srgb, var(--theme-primary-200) 32%, transparent);
+    --theme-primary-200-alpha-58: color-mix(in srgb, var(--theme-primary-200) 58%, transparent);
+    --theme-primary-400-alpha-62: color-mix(in srgb, var(--theme-primary-400) 62%, transparent);
+    --theme-primary-500-alpha-8: color-mix(in srgb, var(--theme-primary-500) 8%, transparent);
+    --theme-primary-500-alpha-12: color-mix(in srgb, var(--theme-primary-500) 12%, transparent);
+    --theme-primary-500-alpha-14: color-mix(in srgb, var(--theme-primary-500) 14%, transparent);
+    --theme-primary-500-alpha-16: color-mix(in srgb, var(--theme-primary-500) 16%, transparent);
+    --theme-primary-500-alpha-18: color-mix(in srgb, var(--theme-primary-500) 18%, transparent);
+    --theme-primary-500-alpha-25: color-mix(in srgb, var(--theme-primary-500) 25%, transparent);
+    --theme-primary-500-alpha-30: color-mix(in srgb, var(--theme-primary-500) 30%, transparent);
+    --theme-primary-500-alpha-35: color-mix(in srgb, var(--theme-primary-500) 35%, transparent);
+    --theme-primary-500-alpha-54: color-mix(in srgb, var(--theme-primary-500) 54%, transparent);
+    --theme-primary-500-alpha-55: color-mix(in srgb, var(--theme-primary-500) 55%, transparent);
+    --theme-primary-500-alpha-60: color-mix(in srgb, var(--theme-primary-500) 60%, transparent);
+    --theme-primary-700-alpha-8: color-mix(in srgb, var(--theme-primary-700) 8%, transparent);
+    --theme-primary-900-alpha-6: color-mix(in srgb, var(--theme-primary-900) 6%, transparent);
+    --theme-primary-900-alpha-8: color-mix(in srgb, var(--theme-primary-900) 8%, transparent);
+    --theme-primary-900-alpha-10: color-mix(in srgb, var(--theme-primary-900) 10%, transparent);
+    --theme-primary-900-alpha-12: color-mix(in srgb, var(--theme-primary-900) 12%, transparent);
+    --theme-primary-900-alpha-14: color-mix(in srgb, var(--theme-primary-900) 14%, transparent);
+    --theme-secondary-alpha-8: color-mix(in srgb, var(--theme-secondary) 8%, transparent);
+    --theme-secondary-alpha-12: color-mix(in srgb, var(--theme-secondary) 12%, transparent);
+    --theme-secondary-alpha-14: color-mix(in srgb, var(--theme-secondary) 14%, transparent);
+    --theme-secondary-alpha-18: color-mix(in srgb, var(--theme-secondary) 18%, transparent);
+    --theme-secondary-alpha-60: color-mix(in srgb, var(--theme-secondary) 60%, transparent);
+    --theme-status-error-alpha-8: color-mix(in srgb, var(--theme-status-error) 8%, transparent);
+    --theme-status-error-alpha-10: color-mix(in srgb, var(--theme-status-error) 10%, transparent);
+    --theme-status-error-alpha-12: color-mix(in srgb, var(--theme-status-error) 12%, transparent);
+    --theme-status-error-alpha-14: color-mix(in srgb, var(--theme-status-error) 14%, transparent);
+    --theme-status-error-alpha-18: color-mix(in srgb, var(--theme-status-error) 18%, transparent);
+    --theme-status-error-alpha-60: color-mix(in srgb, var(--theme-status-error) 60%, transparent);
+    --theme-status-info-alpha-8: color-mix(in srgb, var(--theme-status-info) 8%, transparent);
+    --theme-status-info-alpha-12: color-mix(in srgb, var(--theme-status-info) 12%, transparent);
+    --theme-status-info-alpha-14: color-mix(in srgb, var(--theme-status-info) 14%, transparent);
+    --theme-status-info-alpha-18: color-mix(in srgb, var(--theme-status-info) 18%, transparent);
+    --theme-status-info-alpha-25: color-mix(in srgb, var(--theme-status-info) 25%, transparent);
+    --theme-status-info-alpha-60: color-mix(in srgb, var(--theme-status-info) 60%, transparent);
+    --theme-status-success-alpha-8: color-mix(in srgb, var(--theme-status-success) 8%, transparent);
+    --theme-status-success-alpha-12: color-mix(in srgb, var(--theme-status-success) 12%, transparent);
+    --theme-status-success-alpha-14: color-mix(in srgb, var(--theme-status-success) 14%, transparent);
+    --theme-status-success-alpha-18: color-mix(in srgb, var(--theme-status-success) 18%, transparent);
+    --theme-status-success-alpha-60: color-mix(in srgb, var(--theme-status-success) 60%, transparent);
+    --theme-status-warning-alpha-8: color-mix(in srgb, var(--theme-status-warning) 8%, transparent);
+    --theme-status-warning-alpha-12: color-mix(in srgb, var(--theme-status-warning) 12%, transparent);
+    --theme-status-warning-alpha-14: color-mix(in srgb, var(--theme-status-warning) 14%, transparent);
+    --theme-status-warning-alpha-18: color-mix(in srgb, var(--theme-status-warning) 18%, transparent);
+    --theme-status-warning-alpha-60: color-mix(in srgb, var(--theme-status-warning) 60%, transparent);
 
     // 소수점은 CSS 변수 이름에서 하이픈으로 표기합니다.
     --theme-gray-900-alpha-1-5: color-mix(in srgb, var(--theme-gray-900) 1.5%, transparent);
@@ -332,11 +267,27 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-gray-900-alpha-3-5: color-mix(in srgb, var(--theme-gray-900) 3.5%, transparent);
 
     // 버튼의 hover / active / focus 파생 색상
-    @each $name in ('primary-500', 'secondary', 'gray-700', 'status-error', 'status-warning', 'status-success', 'status-info') {
-        --theme-#{$name}-hover: color-mix(in srgb, black 10%, var(--theme-#{$name}));
-        --theme-#{$name}-active: color-mix(in srgb, black 16%, var(--theme-#{$name}));
-        --theme-#{$name}-focus: color-mix(in srgb, white 30%, var(--theme-#{$name}));
-    }
+    --theme-primary-500-hover: color-mix(in srgb, black 10%, var(--theme-primary-500));
+    --theme-primary-500-active: color-mix(in srgb, black 16%, var(--theme-primary-500));
+    --theme-primary-500-focus: color-mix(in srgb, white 30%, var(--theme-primary-500));
+    --theme-secondary-hover: color-mix(in srgb, black 10%, var(--theme-secondary));
+    --theme-secondary-active: color-mix(in srgb, black 16%, var(--theme-secondary));
+    --theme-secondary-focus: color-mix(in srgb, white 30%, var(--theme-secondary));
+    --theme-gray-700-hover: color-mix(in srgb, black 10%, var(--theme-gray-700));
+    --theme-gray-700-active: color-mix(in srgb, black 16%, var(--theme-gray-700));
+    --theme-gray-700-focus: color-mix(in srgb, white 30%, var(--theme-gray-700));
+    --theme-status-error-hover: color-mix(in srgb, black 10%, var(--theme-status-error));
+    --theme-status-error-active: color-mix(in srgb, black 16%, var(--theme-status-error));
+    --theme-status-error-focus: color-mix(in srgb, white 30%, var(--theme-status-error));
+    --theme-status-warning-hover: color-mix(in srgb, black 10%, var(--theme-status-warning));
+    --theme-status-warning-active: color-mix(in srgb, black 16%, var(--theme-status-warning));
+    --theme-status-warning-focus: color-mix(in srgb, white 30%, var(--theme-status-warning));
+    --theme-status-success-hover: color-mix(in srgb, black 10%, var(--theme-status-success));
+    --theme-status-success-active: color-mix(in srgb, black 16%, var(--theme-status-success));
+    --theme-status-success-focus: color-mix(in srgb, white 30%, var(--theme-status-success));
+    --theme-status-info-hover: color-mix(in srgb, black 10%, var(--theme-status-info));
+    --theme-status-info-active: color-mix(in srgb, black 16%, var(--theme-status-info));
+    --theme-status-info-focus: color-mix(in srgb, white 30%, var(--theme-status-info));
 }
 
 // ============================================
@@ -361,35 +312,132 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --outline-button: var(--theme-primary-300);
 
     // Button tones
-    @each $tone,
-        $token
-            in (
-                'primary': 'primary-500',
-                'secondary': 'secondary',
-                'gray': 'gray-700',
-                'danger': 'status-error',
-                'warning': 'status-warning',
-                'success': 'status-success',
-                'info': 'status-info'
-            )
-    {
-        --bg-button-#{$tone}: var(--theme-#{$token});
-        --bg-button-#{$tone}-hover: var(--theme-#{$token}-hover);
-        --bg-button-#{$tone}-active: var(--theme-#{$token}-active);
-        --color-button-#{$tone}: var(--theme-#{$token});
-        --color-button-#{$tone}-hover: var(--theme-#{$token}-hover);
-        --color-button-#{$tone}-active: var(--theme-#{$token}-active);
-        --border-button-#{$tone}: var(--theme-#{$token});
-        --border-button-#{$tone}-hover: var(--theme-#{$token}-hover);
-        --border-button-#{$tone}-active: var(--theme-#{$token}-active);
-        --outline-button-#{$tone}: var(--theme-#{$token}-focus);
-        --bg-icon-button-#{$tone}-soft: var(--theme-#{$token}-alpha-8);
-        --bg-icon-button-#{$tone}-soft-hover: var(--theme-#{$token}-alpha-12);
-        --bg-icon-button-#{$tone}-soft-active: var(--theme-#{$token}-alpha-18);
-        --border-icon-button-#{$tone}: var(--theme-#{$token}-alpha-60);
-        --bg-icon-button-#{$tone}-outline-hover: var(--theme-#{$token}-alpha-8);
-        --bg-icon-button-#{$tone}-outline-active: var(--theme-#{$token}-alpha-14);
-    }
+
+    // Primary
+    --bg-button-primary: var(--theme-primary-500);
+    --bg-button-primary-hover: var(--theme-primary-500-hover);
+    --bg-button-primary-active: var(--theme-primary-500-active);
+    --color-button-primary: var(--theme-primary-500);
+    --color-button-primary-hover: var(--theme-primary-500-hover);
+    --color-button-primary-active: var(--theme-primary-500-active);
+    --border-button-primary: var(--theme-primary-500);
+    --border-button-primary-hover: var(--theme-primary-500-hover);
+    --border-button-primary-active: var(--theme-primary-500-active);
+    --outline-button-primary: var(--theme-primary-500-focus);
+    --bg-icon-button-primary-soft: var(--theme-primary-500-alpha-8);
+    --bg-icon-button-primary-soft-hover: var(--theme-primary-500-alpha-12);
+    --bg-icon-button-primary-soft-active: var(--theme-primary-500-alpha-18);
+    --border-icon-button-primary: var(--theme-primary-500-alpha-60);
+    --bg-icon-button-primary-outline-hover: var(--theme-primary-500-alpha-8);
+    --bg-icon-button-primary-outline-active: var(--theme-primary-500-alpha-14);
+
+    // Secondary
+    --bg-button-secondary: var(--theme-secondary);
+    --bg-button-secondary-hover: var(--theme-secondary-hover);
+    --bg-button-secondary-active: var(--theme-secondary-active);
+    --color-button-secondary: var(--theme-secondary);
+    --color-button-secondary-hover: var(--theme-secondary-hover);
+    --color-button-secondary-active: var(--theme-secondary-active);
+    --border-button-secondary: var(--theme-secondary);
+    --border-button-secondary-hover: var(--theme-secondary-hover);
+    --border-button-secondary-active: var(--theme-secondary-active);
+    --outline-button-secondary: var(--theme-secondary-focus);
+    --bg-icon-button-secondary-soft: var(--theme-secondary-alpha-8);
+    --bg-icon-button-secondary-soft-hover: var(--theme-secondary-alpha-12);
+    --bg-icon-button-secondary-soft-active: var(--theme-secondary-alpha-18);
+    --border-icon-button-secondary: var(--theme-secondary-alpha-60);
+    --bg-icon-button-secondary-outline-hover: var(--theme-secondary-alpha-8);
+    --bg-icon-button-secondary-outline-active: var(--theme-secondary-alpha-14);
+
+    // Gray
+    --bg-button-gray: var(--theme-gray-700);
+    --bg-button-gray-hover: var(--theme-gray-700-hover);
+    --bg-button-gray-active: var(--theme-gray-700-active);
+    --color-button-gray: var(--theme-gray-700);
+    --color-button-gray-hover: var(--theme-gray-700-hover);
+    --color-button-gray-active: var(--theme-gray-700-active);
+    --border-button-gray: var(--theme-gray-700);
+    --border-button-gray-hover: var(--theme-gray-700-hover);
+    --border-button-gray-active: var(--theme-gray-700-active);
+    --outline-button-gray: var(--theme-gray-700-focus);
+    --bg-icon-button-gray-soft: var(--theme-gray-700-alpha-8);
+    --bg-icon-button-gray-soft-hover: var(--theme-gray-700-alpha-12);
+    --bg-icon-button-gray-soft-active: var(--theme-gray-700-alpha-18);
+    --border-icon-button-gray: var(--theme-gray-700-alpha-60);
+    --bg-icon-button-gray-outline-hover: var(--theme-gray-700-alpha-8);
+    --bg-icon-button-gray-outline-active: var(--theme-gray-700-alpha-14);
+
+    // Danger
+    --bg-button-danger: var(--theme-status-error);
+    --bg-button-danger-hover: var(--theme-status-error-hover);
+    --bg-button-danger-active: var(--theme-status-error-active);
+    --color-button-danger: var(--theme-status-error);
+    --color-button-danger-hover: var(--theme-status-error-hover);
+    --color-button-danger-active: var(--theme-status-error-active);
+    --border-button-danger: var(--theme-status-error);
+    --border-button-danger-hover: var(--theme-status-error-hover);
+    --border-button-danger-active: var(--theme-status-error-active);
+    --outline-button-danger: var(--theme-status-error-focus);
+    --bg-icon-button-danger-soft: var(--theme-status-error-alpha-8);
+    --bg-icon-button-danger-soft-hover: var(--theme-status-error-alpha-12);
+    --bg-icon-button-danger-soft-active: var(--theme-status-error-alpha-18);
+    --border-icon-button-danger: var(--theme-status-error-alpha-60);
+    --bg-icon-button-danger-outline-hover: var(--theme-status-error-alpha-8);
+    --bg-icon-button-danger-outline-active: var(--theme-status-error-alpha-14);
+
+    // Warning
+    --bg-button-warning: var(--theme-status-warning);
+    --bg-button-warning-hover: var(--theme-status-warning-hover);
+    --bg-button-warning-active: var(--theme-status-warning-active);
+    --color-button-warning: var(--theme-status-warning);
+    --color-button-warning-hover: var(--theme-status-warning-hover);
+    --color-button-warning-active: var(--theme-status-warning-active);
+    --border-button-warning: var(--theme-status-warning);
+    --border-button-warning-hover: var(--theme-status-warning-hover);
+    --border-button-warning-active: var(--theme-status-warning-active);
+    --outline-button-warning: var(--theme-status-warning-focus);
+    --bg-icon-button-warning-soft: var(--theme-status-warning-alpha-8);
+    --bg-icon-button-warning-soft-hover: var(--theme-status-warning-alpha-12);
+    --bg-icon-button-warning-soft-active: var(--theme-status-warning-alpha-18);
+    --border-icon-button-warning: var(--theme-status-warning-alpha-60);
+    --bg-icon-button-warning-outline-hover: var(--theme-status-warning-alpha-8);
+    --bg-icon-button-warning-outline-active: var(--theme-status-warning-alpha-14);
+
+    // Success
+    --bg-button-success: var(--theme-status-success);
+    --bg-button-success-hover: var(--theme-status-success-hover);
+    --bg-button-success-active: var(--theme-status-success-active);
+    --color-button-success: var(--theme-status-success);
+    --color-button-success-hover: var(--theme-status-success-hover);
+    --color-button-success-active: var(--theme-status-success-active);
+    --border-button-success: var(--theme-status-success);
+    --border-button-success-hover: var(--theme-status-success-hover);
+    --border-button-success-active: var(--theme-status-success-active);
+    --outline-button-success: var(--theme-status-success-focus);
+    --bg-icon-button-success-soft: var(--theme-status-success-alpha-8);
+    --bg-icon-button-success-soft-hover: var(--theme-status-success-alpha-12);
+    --bg-icon-button-success-soft-active: var(--theme-status-success-alpha-18);
+    --border-icon-button-success: var(--theme-status-success-alpha-60);
+    --bg-icon-button-success-outline-hover: var(--theme-status-success-alpha-8);
+    --bg-icon-button-success-outline-active: var(--theme-status-success-alpha-14);
+
+    // Info
+    --bg-button-info: var(--theme-status-info);
+    --bg-button-info-hover: var(--theme-status-info-hover);
+    --bg-button-info-active: var(--theme-status-info-active);
+    --color-button-info: var(--theme-status-info);
+    --color-button-info-hover: var(--theme-status-info-hover);
+    --color-button-info-active: var(--theme-status-info-active);
+    --border-button-info: var(--theme-status-info);
+    --border-button-info-hover: var(--theme-status-info-hover);
+    --border-button-info-active: var(--theme-status-info-active);
+    --outline-button-info: var(--theme-status-info-focus);
+    --bg-icon-button-info-soft: var(--theme-status-info-alpha-8);
+    --bg-icon-button-info-soft-hover: var(--theme-status-info-alpha-12);
+    --bg-icon-button-info-soft-active: var(--theme-status-info-alpha-18);
+    --border-icon-button-info: var(--theme-status-info-alpha-60);
+    --bg-icon-button-info-outline-hover: var(--theme-status-info-alpha-8);
+    --bg-icon-button-info-outline-active: var(--theme-status-info-alpha-14);
 
     // Checkbox / Radio / Chip
     --bg-checkbox: var(--theme-bg-white);
