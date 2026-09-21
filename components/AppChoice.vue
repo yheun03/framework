@@ -1,20 +1,31 @@
 <template>
-    <label class="app-choice" :class="[
-        `app-choice--${type}`,
-        `app-choice--${variant}`,
-        `app-choice--${size}`,
-        {
-            'is-disabled': disabled,
-            'is-readonly': readonly,
-            'is-checked': isChecked,
-            'is-indeterminate': indeterminate,
-            [`is-${state}`]: state,
-        },
-    ]">
+    <label
+        class="app-choice"
+        :class="[
+            `app-choice--${type}`,
+            `app-choice--${variant}`,
+            `app-choice--${size}`,
+            {
+                'is-disabled': disabled,
+                'is-readonly': readonly,
+                'is-checked': isChecked,
+                'is-indeterminate': indeterminate,
+                [`is-${state}`]: state,
+            },
+        ]"
+    >
         <span class="app-choice__control">
-            <input :id="id" class="app-choice__input" :type="type" :name="name" :value="value"
-                :checked="isChecked" :disabled="disabled || readonly" :aria-invalid="state === 'error'"
-                @change="handleChange" />
+            <input
+                :id="id"
+                class="app-choice__input"
+                :type="type"
+                :name="name"
+                :value="value"
+                :checked="isChecked"
+                :disabled="disabled || readonly"
+                :aria-invalid="state === 'error'"
+                @change="handleChange"
+            />
 
             <span v-if="!chipVariants.includes(variant)" class="app-choice__visual" aria-hidden="true">
                 <span v-if="isChecked || indeterminate" class="app-choice__inner">
@@ -37,44 +48,47 @@
 </template>
 
 <script setup lang="ts">
-import { IconCheck, IconMinus } from "~/components/icons";
+import { IconCheck, IconMinus } from '~/components/icons';
 
-type ChoiceType = "checkbox" | "radio";
-type ChoiceVariant = "default" | "round" | "chip" | "chip-outline" | "fill" | "ghost" | "toggle";
-type ChoiceState = "error" | "warning" | "success" | null;
-type ChoiceSize = "sm" | "md";
+type ChoiceType = 'checkbox' | 'radio';
+type ChoiceVariant = 'default' | 'round' | 'chip' | 'chip-outline' | 'fill' | 'ghost' | 'toggle';
+type ChoiceState = 'error' | 'warning' | 'success' | null;
+type ChoiceSize = 'sm' | 'md';
 
-const props = withDefaults(defineProps<{
-    type?: ChoiceType;
-    modelValue: boolean | string | number | null;
-    value?: string | number;
-    name?: string;
-    label?: string;
-    hint?: string;
-    toggleLabels?: { checked?: string; unchecked?: string };
-    disabled?: boolean;
-    readonly?: boolean;
-    indeterminate?: boolean;
-    id?: string;
-    variant?: ChoiceVariant;
-    state?: ChoiceState;
-    size?: ChoiceSize;
-}>(), {
-    type: "checkbox",
-    variant: "default",
-    state: null,
-    disabled: false,
-    readonly: false,
-    indeterminate: false,
-    size: "md",
-});
+const props = withDefaults(
+    defineProps<{
+        type?: ChoiceType;
+        modelValue: boolean | string | number | null;
+        value?: string | number;
+        name?: string;
+        label?: string;
+        hint?: string;
+        toggleLabels?: { checked?: string; unchecked?: string };
+        disabled?: boolean;
+        readonly?: boolean;
+        indeterminate?: boolean;
+        id?: string;
+        variant?: ChoiceVariant;
+        state?: ChoiceState;
+        size?: ChoiceSize;
+    }>(),
+    {
+        type: 'checkbox',
+        variant: 'default',
+        state: null,
+        disabled: false,
+        readonly: false,
+        indeterminate: false,
+        size: 'md',
+    },
+);
 
-const emit = defineEmits<{ "update:modelValue": [boolean | string | number | null] }>();
-const chipVariants: ChoiceVariant[] = ["chip", "chip-outline", "fill", "ghost", "toggle"];
-const isChecked = computed(() => props.type === "checkbox" ? Boolean(props.modelValue) : props.modelValue === props.value);
+const emit = defineEmits<{ 'update:modelValue': [boolean | string | number | null] }>();
+const chipVariants: ChoiceVariant[] = ['chip', 'chip-outline', 'fill', 'ghost', 'toggle'];
+const isChecked = computed(() => (props.type === 'checkbox' ? Boolean(props.modelValue) : props.modelValue === props.value));
 
 function handleChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    emit("update:modelValue", props.type === "checkbox" ? input.checked : (props.value ?? input.value));
+    emit('update:modelValue', props.type === 'checkbox' ? input.checked : (props.value ?? input.value));
 }
 </script>

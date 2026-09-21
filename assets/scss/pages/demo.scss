@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /* =========================================
    Demo Page Styles
@@ -198,7 +198,7 @@
         gap: 8px;
         --ag-border-radius: 8px;
 
-        >:not([class*="ag-"]) {
+        > :not([class*='ag-']) {
             min-width: 0;
             padding: 10px;
             border: 1px solid var(--theme-gray-200);
@@ -206,7 +206,7 @@
             background: var(--theme-gray-900-alpha-1-5);
         }
 
-        &>[class*="ag-"] {
+        & > [class*='ag-'] {
             grid-column: span 3;
         }
     }
@@ -401,7 +401,7 @@
                 background: var(--theme-gray-900-alpha-1-8);
             }
 
-            >[data-label]::before {
+            > [data-label]::before {
                 display: block;
                 margin-bottom: 2px;
                 color: var(--theme-gray-500);
@@ -466,7 +466,7 @@
             gap: 10px 16px;
             align-content: start;
 
-            >[data-label]::before {
+            > [data-label]::before {
                 display: block;
                 margin-bottom: 3px;
                 color: var(--theme-gray-500);
@@ -511,7 +511,7 @@
         &-grid {
             grid-template-columns: 1fr;
 
-            &>[class*="ag-"] {
+            & > [class*='ag-'] {
                 grid-column: span 1;
             }
         }

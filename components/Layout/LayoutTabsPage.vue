@@ -3,34 +3,42 @@
         <div class="route-tabs__scroller">
             <ul class="route-tabs__list" role="tablist" aria-label="최근 방문 페이지">
                 <li v-for="t in tabs" :key="t.key" class="route-tabs__item" role="presentation">
-                    <NuxtLink class="route-tabs__tab" :class="{ 'is-active': t.key === currentKey }" role="tab"
-                        :aria-selected="t.key === currentKey" :to="t.path" @click="() => handleTabClick(t.key)">
+                    <NuxtLink
+                        class="route-tabs__tab"
+                        :class="{ 'is-active': t.key === currentKey }"
+                        role="tab"
+                        :aria-selected="t.key === currentKey"
+                        :to="t.path"
+                        @click="() => handleTabClick(t.key)"
+                    >
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppIconButton class="route-tabs__close" aria-label="탭 닫기" :size="20" :icon-size="12"
-                        @click="(e) => handleTabClose(e, t.key)">
+                    <AppIconButton class="route-tabs__close" aria-label="탭 닫기" :size="20" :icon-size="12" @click="(e) => handleTabClose(e, t.key)">
                         <IconClose />
                     </AppIconButton>
                 </li>
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton class="route-tabs__action" aria-label="왼쪽 탭으로 이동" :size="24" :icon-size="16"
-                @click="handleMoveToLeftTab"><IconChevronSmallLeft /></AppIconButton>
-            <AppIconButton class="route-tabs__action" aria-label="오른쪽 탭으로 이동" :size="24" :icon-size="16"
-                @click="handleMoveToRightTab"><IconChevronSmallRight /></AppIconButton>
-            <AppIconButton class="route-tabs__action" aria-label="다른 탭 닫기" :size="24" :icon-size="16"
-                @click="handleCloseOtherTabs"><IconCloseSmall /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="왼쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToLeftTab"
+                ><IconChevronSmallLeft
+            /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="오른쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToRightTab"
+                ><IconChevronSmallRight
+            /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="다른 탭 닫기" :size="24" :icon-size="16" @click="handleCloseOtherTabs"
+                ><IconCloseSmall
+            /></AppIconButton>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useRouteTabsStore } from "~/stores/routeTabs";
-import { useI18nText } from "~/composables/useI18nText";
-import { IconChevronSmallLeft, IconChevronSmallRight, IconClose, IconCloseSmall } from "~/components/icons";
+import { storeToRefs } from 'pinia';
+import { useRouteTabsStore } from '~/stores/routeTabs';
+import { useI18nText } from '~/composables/useI18nText';
+import { IconChevronSmallLeft, IconChevronSmallRight, IconClose, IconCloseSmall } from '~/components/icons';
 
 const router = useRouter();
 const route = useRoute();
@@ -48,7 +56,7 @@ function getTabTitle(tab: { title: string; labelKey?: string }) {
     return tab.labelKey ? t(tab.labelKey, tab.title) : tab.title;
 }
 
-const HOME_PATHS = new Set(["/", "./"]);
+const HOME_PATHS = new Set(['/', './']);
 
 function isHomeTab(path: string) {
     return HOME_PATHS.has(path);
@@ -87,8 +95,7 @@ async function handleTabClose(e: MouseEvent, key: string) {
 
     const closingActive = currentKey.value === key;
     const idx = tabs.value.findIndex((t) => t.key === key);
-    const fallback =
-        tabs.value[Math.max(0, idx - 1)] ?? tabs.value[idx + 1] ?? null;
+    const fallback = tabs.value[Math.max(0, idx - 1)] ?? tabs.value[idx + 1] ?? null;
 
     store.close(key);
 

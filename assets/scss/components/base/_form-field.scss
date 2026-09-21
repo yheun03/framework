@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 .app-form-field {
     display: flex;
@@ -58,7 +58,6 @@
     }
 
     &.is-disabled {
-
         .app-form-field__label,
         .app-form-field__description,
         .app-form-field__message {

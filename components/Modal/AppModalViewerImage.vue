@@ -1,18 +1,28 @@
 <template>
     <div class="app-image-viewer" :class="{ 'app-image-viewer--gallery': isGallery }">
         <div v-if="isGallery" class="app-image-viewer__toolbar">
-            <span class="app-image-viewer__count">
-                {{ currentIndex + 1 }} / {{ imageItems.length }}
-            </span>
+            <span class="app-image-viewer__count"> {{ currentIndex + 1 }} / {{ imageItems.length }} </span>
 
             <div class="app-image-viewer__nav">
-                <AppIconButton aria-label="이전 이미지" variant="outline" :size="34" :icon-size="18"
-                    :disabled="currentIndex <= 0" @click="handlePrevious">
+                <AppIconButton
+                    aria-label="이전 이미지"
+                    variant="outline"
+                    :size="34"
+                    :icon-size="18"
+                    :disabled="currentIndex <= 0"
+                    @click="handlePrevious"
+                >
                     <IconChevronLeft />
                 </AppIconButton>
 
-                <AppIconButton aria-label="다음 이미지" variant="outline" :size="34" :icon-size="18"
-                    :disabled="currentIndex >= imageItems.length - 1" @click="handleNext">
+                <AppIconButton
+                    aria-label="다음 이미지"
+                    variant="outline"
+                    :size="34"
+                    :icon-size="18"
+                    :disabled="currentIndex >= imageItems.length - 1"
+                    @click="handleNext"
+                >
                     <IconChevronRight />
                 </AppIconButton>
             </div>
@@ -23,9 +33,15 @@
         </div>
 
         <div v-if="isGallery" class="app-image-viewer__thumbs" aria-label="이미지 목록">
-            <button v-for="(item, index) in imageItems" :key="`${item.url}-${index}`" type="button"
-                class="app-image-viewer__thumb" :class="{ 'is-active': index === currentIndex }"
-                :aria-label="`${index + 1}번 이미지 보기`" @click="setCurrentIndex(index)">
+            <button
+                v-for="(item, index) in imageItems"
+                :key="`${item.url}-${index}`"
+                type="button"
+                class="app-image-viewer__thumb"
+                :class="{ 'is-active': index === currentIndex }"
+                :aria-label="`${index + 1}번 이미지 보기`"
+                @click="setCurrentIndex(index)"
+            >
                 <img class="app-image-viewer__thumb-image" :src="item.url" :alt="item.alt" />
             </button>
         </div>
@@ -33,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconChevronLeft, IconChevronRight } from "~/components/icons";
+import { IconChevronLeft, IconChevronRight } from '~/components/icons';
 
 type ImageViewerItem = {
     url: string;

@@ -9,12 +9,12 @@ const En = {
     'settings.desc': 'Choose the app theme and display language.',
     'settings.theme.title': 'Theme',
     'settings.theme.desc': 'Switch between light and dark themes.',
-    'settings.theme.colors': 'Edit theme colors',
     'settings.locale.title': 'Language',
     'settings.locale.desc': 'Switch LNB and demo page texts between Korean and English.',
 
     'nav.home': 'Home',
     'nav.workspace': 'Workspace',
+    'nav.themeSettings': 'Theme Settings',
     'nav.demos': 'Demos',
     'nav.settings': 'Settings',
     'nav.businessDemos': 'ERP · MES Examples',

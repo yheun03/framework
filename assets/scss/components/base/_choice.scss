@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 /* =========================================
    Component: AppChoice
@@ -85,7 +85,7 @@
     /* ----------------------------------------
        Focus
     ---------------------------------------- */
-    &__input:focus-visible+.app-choice__visual {
+    &__input:focus-visible + .app-choice__visual {
         outline: 2px solid var(--outline-checkbox);
         outline-offset: 2px;
     }
@@ -173,7 +173,6 @@
        Type: Radio
     ---------------------------------------- */
     &--radio {
-
         .app-choice__visual,
         .app-choice__inner {
             border-radius: 999px;
@@ -188,7 +187,7 @@
                 background: var(--bg-checkbox);
             }
 
-            .app-choice__input:checked+.app-choice__visual,
+            .app-choice__input:checked + .app-choice__visual,
             &.is-indeterminate .app-choice__visual {
                 border-color: var(--border-checkbox-black);
                 background: var(--bg-checkbox-black);
@@ -201,7 +200,7 @@
                 background: var(--bg-checkbox);
             }
 
-            .app-choice__input:checked+.app-choice__visual {
+            .app-choice__input:checked + .app-choice__visual {
                 border-color: var(--border-checkbox-black);
                 background: var(--bg-checkbox);
 
@@ -220,7 +219,7 @@
                 background: var(--bg-checkbox);
             }
 
-            .app-choice__input:checked+.app-choice__visual,
+            .app-choice__input:checked + .app-choice__visual,
             &.is-indeterminate .app-choice__visual {
                 border-color: var(--border-checkbox-black);
                 background: var(--bg-checkbox-black);
@@ -234,7 +233,7 @@
                 background: var(--bg-checkbox);
             }
 
-            .app-choice__input:checked+.app-choice__visual {
+            .app-choice__input:checked + .app-choice__visual {
                 border-color: var(--border-checkbox-black);
                 background: var(--bg-checkbox-black);
                 box-shadow: 0 0 0 1px var(--shadow-checkbox);
@@ -249,7 +248,7 @@
     /* ----------------------------------------
        Disabled
     ---------------------------------------- */
-    &__input:disabled+.app-choice__visual {
+    &__input:disabled + .app-choice__visual {
         border-color: var(--border-checkbox-disabled);
         background: var(--bg-checkbox-regular);
 
@@ -426,7 +425,7 @@
             box-shadow 0.24s ease;
 
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 3px;
             left: 3px;

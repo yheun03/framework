@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 /* =========================================
    Component: AppTable
@@ -171,7 +171,6 @@
 
     &__inline--phone,
     &__inline--email {
-
         .app-table-field__phone-input,
         .app-table-field__email-input {
             flex: 1;

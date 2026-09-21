@@ -10,7 +10,7 @@
 }
 
 // ============================================
-// Framework Theme
+// 프레임워크 테마
 // 활성 프로젝트의 _theme.scss에 있는 대표 색상을 전체 테마에 반영합니다.
 // ============================================
 
@@ -18,7 +18,7 @@ $primary: project.$primary !default;
 $secondary: project.$secondary !default;
 $tertiary: project.$tertiary !default;
 
-// Primary palette
+// SCSS 호환용 Primary 팔레트
 // 컴포넌트에서 사용하는 기존 50~900 토큰은 primary를 기준으로 자동 생성합니다.
 $primary-50: color.mix(#ffffff, $primary, 92%) !default;
 $primary-100: color.mix(#ffffff, $primary, 84%) !default;
@@ -33,20 +33,20 @@ $primary-900: color.mix(#000000, $primary, 63%) !default;
 
 $gradient-primary: linear-gradient(to bottom, $primary-800 0%, $primary-900 100%) !default;
 
-// Header
+// SCSS 호환용 Header
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
 $header-background: project-value(project.$header-background, $primary-50) !default;
 $header-hover-color: project-value(project.$header-hover-color, rgba($secondary, 0.12)) !default;
 $header-active-color: project-value(project.$header-active-color, rgba($tertiary, 0.16)) !default;
 $header-accent-color: project-value(project.$header-accent-color, $tertiary) !default;
 
-// LNB
+// SCSS 호환용 LNB
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
 $lnb-background: project-value(project.$lnb-background, $gradient-primary) !default;
 $lnb-hover-color: project-value(project.$lnb-hover-color, rgba(#ffffff, 0.08)) !default;
 $lnb-active-color: project-value(project.$lnb-active-color, rgba(#ffffff, 0.16)) !default;
 
-// Page Navigator
+// SCSS 호환용 Page Navigator
 // 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
 $page-navigator-background: project-value(project.$page-navigator-background, $primary-50) !default;
 $page-navigator-hover-color: project-value(project.$page-navigator-hover-color, rgba(#1c2026, 0.05)) !default;
@@ -54,12 +54,13 @@ $page-navigator-active-color: project-value(project.$page-navigator-active-color
 $page-navigator-accent-color: project-value(project.$page-navigator-accent-color, #1c2026) !default;
 $page-navigator-control-active-color: project-value(project.$page-navigator-control-active-color, rgba(#1c2026, 0.08)) !default;
 
-// 런타임 테마 값. SCSS 기본값은 기존 프로젝트 설정을 그대로 사용하고,
-// 설정 페이지에서는 이 CSS 변수만 변경합니다.
+// ============================================
+// 런타임 기본 토큰
+// 설정 페이지는 아래 --theme-* 변수만 변경합니다.
+// 컴포넌트에서는 이 변수를 직접 사용하지 않습니다.
+// ============================================
 :root {
-    --color-grid-search-muted: var(--theme-gray-600);
-    --border-chart-grid: var(--theme-gray-900-alpha-6);
-
+    // 브랜드
     --theme-primary: #{$primary};
     --theme-secondary: #{$secondary};
     --theme-tertiary: #{$tertiary};
@@ -77,6 +78,54 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-primary-900: color-mix(in srgb, black 63%, var(--theme-primary));
     --theme-gradient-primary: linear-gradient(to bottom, var(--theme-primary-800), var(--theme-primary-900));
 
+    // 상태
+    --theme-status-success: #22c55e;
+    --theme-status-warning: #f59e0b;
+    --theme-status-error: #ef4444;
+    --theme-status-info: var(--theme-primary);
+
+    // 중립 팔레트
+    --theme-gray-0: #ffffff;
+    --theme-gray-50: #f7f8fa;
+    --theme-gray-100: #eff1f4;
+    --theme-gray-200: #e2e5ea;
+    --theme-gray-300: #cdd4da;
+    --theme-gray-400: #a7b0bb;
+    --theme-gray-500: #7e8894;
+    --theme-gray-600: #5e6670;
+    --theme-gray-700: #3f454f;
+    --theme-gray-800: #2a2f38;
+    --theme-gray-900: #1c2026;
+
+    // 기존 공통 토큰
+    --theme-color-01-white: #ffffff;
+    --theme-color-02-black: #111111;
+    --theme-color-03-gray: #505050;
+    --theme-color-04-gray: #767676;
+    --theme-color-05-gray-disabled: #999999;
+    --theme-line-light: #f1f1f5;
+    --theme-line-regular: #e5e5ec;
+    --theme-line-black: #111111;
+    --theme-line-white: #ffffff;
+    --theme-line-disabled: #cacad7;
+    --theme-bg-light: #f7f7fb;
+    --theme-bg-regular: #f1f1f5;
+    --theme-bg-black: #111111;
+    --theme-bg-white: #ffffff;
+    --theme-bg-black-opacity-85: rgb(0 0 0 / 85%);
+    --theme-bg-black-opacity-60: rgb(0 0 0 / 60%);
+    --theme-bg-black-opacity-30: rgb(0 0 0 / 30%);
+    --theme-bg-black-opacity-20: rgb(0 0 0 / 20%);
+    --theme-bg-black-opacity-03: rgb(0 0 0 / 3%);
+    --theme-bg-white-opacity-60: rgb(255 255 255 / 60%);
+    --theme-bg-white-opacity-20: rgb(255 255 255 / 20%);
+    --theme-bg-btn-black: #111111;
+    --theme-bg-btn-white: #ffffff;
+    --theme-bg-btn-light: #f7f7fb;
+    --theme-bg-btn-regular: #e5e5ec;
+    --theme-bg-btn-disabled: #f1f1f5;
+
+    // 레이아웃 기본값
     --theme-header-background: var(--theme-primary-50);
     --theme-header-hover-color: color-mix(in srgb, var(--theme-secondary) 12%, transparent);
     --theme-header-active-color: color-mix(in srgb, var(--theme-tertiary) 16%, transparent);
@@ -90,52 +139,197 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-page-navigator-accent-color: var(--theme-gray-900);
     --theme-page-navigator-control-active-color: color-mix(in srgb, var(--theme-gray-900) 8%, transparent);
 
-    @each $name, $value in (
-        'header-background': project.$header-background,
-        'header-hover-color': project.$header-hover-color,
-        'header-active-color': project.$header-active-color,
-        'header-accent-color': project.$header-accent-color,
-        'lnb-background': project.$lnb-background,
-        'lnb-hover-color': project.$lnb-hover-color,
-        'lnb-active-color': project.$lnb-active-color,
-        'page-navigator-background': project.$page-navigator-background,
-        'page-navigator-hover-color': project.$page-navigator-hover-color,
-        'page-navigator-active-color': project.$page-navigator-active-color,
-        'page-navigator-accent-color': project.$page-navigator-accent-color,
-        'page-navigator-control-active-color': project.$page-navigator-control-active-color
-    ) {
+    @each $name,
+        $value
+            in (
+                'header-background': project.$header-background,
+                'header-hover-color': project.$header-hover-color,
+                'header-active-color': project.$header-active-color,
+                'header-accent-color': project.$header-accent-color,
+                'lnb-background': project.$lnb-background,
+                'lnb-hover-color': project.$lnb-hover-color,
+                'lnb-active-color': project.$lnb-active-color,
+                'page-navigator-background': project.$page-navigator-background,
+                'page-navigator-hover-color': project.$page-navigator-hover-color,
+                'page-navigator-active-color': project.$page-navigator-active-color,
+                'page-navigator-accent-color': project.$page-navigator-accent-color,
+                'page-navigator-control-active-color': project.$page-navigator-control-active-color
+            )
+    {
         @if $value != null {
             --theme-#{$name}: #{$value};
         }
     }
 
-    // 컴포넌트에서 사용하는 투명 색상은 이곳에서 한 번만 정의합니다.
-    @each $name, $opacities in (
-        'gray-0': ('0': 0, '3': 3, '4': 4, '8': 8, '10': 10, '12': 12, '14': 14, '16': 16, '18': 18, '20': 20, '24': 24, '26': 26, '28': 28, '35': 35, '56': 56, '60': 60, '70': 70, '72': 72, '76': 76, '78': 78, '80': 80, '82': 82, '86': 86, '88': 88, '90': 90, '92': 92),
-        'gray-200': ('90': 90, '100': 100),
-        'gray-50': ('78': 78),
-        'gray-500': ('12': 12),
-        'gray-700': ('8': 8, '12': 12, '14': 14, '18': 18, '45': 45, '60': 60, '70': 70),
-        'gray-800': ('4': 4),
-        'gray-900': ('0': 0, '2': 2, '1-5': 1.5, '1-8': 1.8, '2-5': 2.5, '3-5': 3.5, '4': 4, '6': 6, '8': 8, '10': 10, '12': 12, '18': 18, '22': 22, '28': 28, '42': 42, '54': 54, '55': 55, '62': 62, '70': 70, '76': 76, '80': 80),
-        'primary': ('10': 10, '12': 12, '65': 65),
-        'primary-100': ('60': 60, '72': 72, '86': 86, '90': 90),
-        'primary-200': ('30': 30, '32': 32, '58': 58),
-        'primary-400': ('62': 62),
-        'primary-50': ('55': 55, '80': 80, '90': 90),
-        'primary-500': ('8': 8, '12': 12, '14': 14, '16': 16, '18': 18, '25': 25, '30': 30, '35': 35, '54': 54, '55': 55, '60': 60),
-        'primary-700': ('8': 8),
-        'primary-900': ('6': 6, '8': 8, '10': 10, '12': 12, '14': 14),
-        'secondary': ('8': 8, '12': 12, '14': 14, '18': 18, '60': 60),
-        'status-error': ('8': 8, '10': 10, '12': 12, '14': 14, '18': 18, '60': 60),
-        'status-info': ('8': 8, '12': 12, '14': 14, '18': 18, '25': 25, '60': 60),
-        'status-success': ('8': 8, '12': 12, '14': 14, '18': 18, '60': 60),
-        'status-warning': ('8': 8, '12': 12, '14': 14, '18': 18, '60': 60),
-    ) {
-        @each $suffix, $opacity in $opacities {
-            --theme-#{$name}-alpha-#{$suffix}: color-mix(in srgb, var(--theme-#{$name}) #{$opacity}%, transparent);
+    // 투명도 단계
+    @each $name,
+        $opacities
+            in (
+                'gray-0': (
+                        0,
+                        3,
+                        4,
+                        8,
+                        10,
+                        12,
+                        14,
+                        16,
+                        18,
+                        20,
+                        24,
+                        26,
+                        28,
+                        35,
+                        56,
+                        60,
+                        70,
+                        72,
+                        76,
+                        78,
+                        80,
+                        82,
+                        86,
+                        88,
+                        90,
+                        92,
+                    ),
+                'gray-50': (
+                        78,
+                    ),
+                'gray-200': (
+                        90,
+                        100,
+                    ),
+                'gray-500': (
+                        12,
+                    ),
+                'gray-700': (
+                        8,
+                        12,
+                        14,
+                        18,
+                        45,
+                        60,
+                        70,
+                    ),
+                'gray-800': (
+                        4,
+                    ),
+                'gray-900': (
+                        0,
+                        2,
+                        4,
+                        6,
+                        8,
+                        10,
+                        12,
+                        18,
+                        22,
+                        28,
+                        42,
+                        54,
+                        55,
+                        62,
+                        70,
+                        76,
+                        80,
+                    ),
+                'primary': (
+                        10,
+                        12,
+                        65,
+                    ),
+                'primary-50': (
+                        55,
+                        80,
+                        90,
+                    ),
+                'primary-100': (
+                        60,
+                        72,
+                        86,
+                        90,
+                    ),
+                'primary-200': (
+                        30,
+                        32,
+                        58,
+                    ),
+                'primary-400': (
+                        62,
+                    ),
+                'primary-500': (
+                        8,
+                        12,
+                        14,
+                        16,
+                        18,
+                        25,
+                        30,
+                        35,
+                        54,
+                        55,
+                        60,
+                    ),
+                'primary-700': (
+                        8,
+                    ),
+                'primary-900': (
+                        6,
+                        8,
+                        10,
+                        12,
+                        14,
+                    ),
+                'secondary': (
+                        8,
+                        12,
+                        14,
+                        18,
+                        60,
+                    ),
+                'status-error': (
+                        8,
+                        10,
+                        12,
+                        14,
+                        18,
+                        60,
+                    ),
+                'status-info': (
+                        8,
+                        12,
+                        14,
+                        18,
+                        25,
+                        60,
+                    ),
+                'status-success': (
+                        8,
+                        12,
+                        14,
+                        18,
+                        60,
+                    ),
+                'status-warning': (
+                        8,
+                        12,
+                        14,
+                        18,
+                        60,
+                    )
+            )
+    {
+        @each $opacity in $opacities {
+            --theme-#{$name}-alpha-#{$opacity}: color-mix(in srgb, var(--theme-#{$name}) #{$opacity}%, transparent);
         }
     }
+
+    // 소수점은 CSS 변수 이름에서 하이픈으로 표기합니다.
+    --theme-gray-900-alpha-1-5: color-mix(in srgb, var(--theme-gray-900) 1.5%, transparent);
+    --theme-gray-900-alpha-1-8: color-mix(in srgb, var(--theme-gray-900) 1.8%, transparent);
+    --theme-gray-900-alpha-2-5: color-mix(in srgb, var(--theme-gray-900) 2.5%, transparent);
+    --theme-gray-900-alpha-3-5: color-mix(in srgb, var(--theme-gray-900) 3.5%, transparent);
 
     // 버튼의 hover / active / focus 파생 색상
     @each $name in ('primary-500', 'secondary', 'gray-700', 'status-error', 'status-warning', 'status-success', 'status-info') {
@@ -145,17 +339,40 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     }
 }
 
-// 컴포넌트와 레이아웃에서 사용하는 의미 기반 색상 변수
+// ============================================
+// 컴포넌트 및 레이아웃 토큰
+// 컴포넌트에서는 아래 의미 기반 변수만 사용합니다.
+// 실제 색상 변경은 우측의 --theme-* 연결값을 수정합니다.
+// ============================================
 :root {
-    @each $tone, $token in (
-        'primary': 'primary-500',
-        'secondary': 'secondary',
-        'gray': 'gray-700',
-        'danger': 'status-error',
-        'warning': 'status-warning',
-        'success': 'status-success',
-        'info': 'status-info'
-    ) {
+    // ----------------------------------------
+    // 입력 컴포넌트
+    // ----------------------------------------
+
+    // Button
+    --bg-button: var(--theme-gray-0);
+    --bg-button-gray-0-alpha-60: var(--theme-gray-0-alpha-60);
+    --bg-button-gray-0-alpha-80: var(--theme-gray-0-alpha-80);
+    --bg-button-gray-900-alpha-10: var(--theme-gray-900-alpha-10);
+    --bg-button-gray-900-alpha-6: var(--theme-gray-900-alpha-6);
+    --color-button: var(--theme-gray-0);
+    --color-button-gray-700: var(--theme-gray-700);
+    --color-button-gray-900: var(--theme-gray-900);
+    --outline-button: var(--theme-primary-300);
+
+    // Button tones
+    @each $tone,
+        $token
+            in (
+                'primary': 'primary-500',
+                'secondary': 'secondary',
+                'gray': 'gray-700',
+                'danger': 'status-error',
+                'warning': 'status-warning',
+                'success': 'status-success',
+                'info': 'status-info'
+            )
+    {
         --bg-button-#{$tone}: var(--theme-#{$token});
         --bg-button-#{$tone}-hover: var(--theme-#{$token}-hover);
         --bg-button-#{$tone}-active: var(--theme-#{$token}-active);
@@ -174,21 +391,7 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
         --bg-icon-button-#{$tone}-outline-active: var(--theme-#{$token}-alpha-14);
     }
 
-    --bg-accordion: var(--theme-gray-0);
-    --bg-ag-grid: var(--theme-gray-200);
-    --bg-ag-grid-gray-0: var(--theme-gray-0);
-    --bg-ag-grid-gray-0-alpha-90: var(--theme-gray-0-alpha-90);
-    --bg-ag-grid-gray-200-alpha-100: var(--theme-gray-200-alpha-100);
-    --bg-ag-grid-gray-50: var(--theme-gray-50);
-    --bg-ag-grid-primary: var(--theme-primary);
-    --bg-ag-grid-primary-100-alpha-60: var(--theme-primary-100-alpha-60);
-    --bg-ag-grid-primary-50-alpha-90: var(--theme-primary-50-alpha-90);
-    --bg-button: var(--theme-gray-0);
-    --bg-button-gray-0-alpha-60: var(--theme-gray-0-alpha-60);
-    --bg-button-gray-0-alpha-80: var(--theme-gray-0-alpha-80);
-    --bg-button-gray-900-alpha-10: var(--theme-gray-900-alpha-10);
-    --bg-button-gray-900-alpha-6: var(--theme-gray-900-alpha-6);
-    --bg-chart: var(--theme-gray-0);
+    // Checkbox / Radio / Chip
     --bg-checkbox: var(--theme-bg-white);
     --bg-checkbox-05-gray-disabled: var(--theme-color-05-gray-disabled);
     --bg-checkbox-black: var(--theme-bg-black);
@@ -202,72 +405,15 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --bg-checkbox-primary-50: var(--theme-primary-50);
     --bg-checkbox-primary-500: var(--theme-primary-500);
     --bg-checkbox-regular: var(--theme-bg-regular);
-    --bg-date-picker: var(--theme-gray-100);
-    --bg-date-picker-light: var(--theme-bg-light);
-    --bg-date-picker-primary: var(--theme-primary);
-    --bg-date-picker-primary-50: var(--theme-primary-50);
-    --bg-date-picker-white: var(--theme-bg-white);
-    --bg-form-field: var(--theme-bg-white);
-    --bg-form-field-light: var(--theme-bg-light);
-    --bg-layout: var(--theme-header-background);
-    --bg-layout-gray-0: var(--theme-gray-0);
-    --bg-layout-header-active-color: var(--theme-header-active-color);
-    --bg-layout-header-hover-color: var(--theme-header-hover-color);
-    --bg-lnb: var(--theme-lnb-background);
-    --bg-lnb-gray-0-alpha-20: var(--theme-gray-0-alpha-20);
-    --bg-lnb-lnb-active-color: var(--theme-lnb-active-color);
-    --bg-lnb-lnb-hover-color: var(--theme-lnb-hover-color);
-    --bg-modal: var(--theme-primary-500-alpha-18);
-    --bg-modal-gray-0-alpha-0: var(--theme-gray-0-alpha-0);
-    --bg-modal-gray-0-alpha-70: var(--theme-gray-0-alpha-70);
-    --bg-modal-gray-0-alpha-78: var(--theme-gray-0-alpha-78);
-    --bg-modal-gray-0-alpha-92: var(--theme-gray-0-alpha-92);
-    --bg-modal-gray-900-alpha-0: var(--theme-gray-900-alpha-0);
-    --bg-modal-gray-900-alpha-4: var(--theme-gray-900-alpha-4);
-    --bg-modal-gray-900-alpha-55: var(--theme-gray-900-alpha-55);
-    --bg-modal-primary-100-alpha-90: var(--theme-primary-100-alpha-90);
-    --bg-modal-white: var(--theme-bg-white);
-    --bg-page-tabs: var(--theme-page-navigator-background);
-    --bg-page-tabs-page-navigator-active-color: var(--theme-page-navigator-active-color);
-    --bg-page-tabs-page-navigator-control-active-color: var(--theme-page-navigator-control-active-color);
-    --bg-page-tabs-page-navigator-hover-color: var(--theme-page-navigator-hover-color);
-    --bg-pagination: var(--theme-gray-0);
-    --bg-pagination-gray-50: var(--theme-gray-50);
-    --bg-pagination-primary-50: var(--theme-primary-50);
-    --bg-pagination-primary-500: var(--theme-primary-500);
-    --bg-progress: var(--theme-gray-200);
-    --bg-progress-gray-400: var(--theme-gray-400);
-    --bg-progress-primary: var(--theme-primary);
-    --bg-responsive-layout: var(--theme-gray-900-alpha-42);
-    --bg-section: var(--theme-gray-0);
-    --bg-select: var(--theme-bg-white);
-    --bg-select-light: var(--theme-bg-light);
-    --bg-select-regular: var(--theme-bg-regular);
-    --bg-table: var(--theme-bg-white);
-    --bg-table-light: var(--theme-bg-light);
-    --bg-table-regular: var(--theme-bg-regular);
-    --bg-tabs: var(--theme-gray-100);
-    --bg-tabs-gray-0: var(--theme-gray-0);
-    --bg-tabs-gray-50: var(--theme-gray-50);
-    --bg-tabs-primary-50: var(--theme-primary-50);
-    --bg-tabs-primary-500: var(--theme-primary-500);
-    --bg-textarea: var(--theme-gray-0);
-    --bg-textarea-gray-50: var(--theme-gray-50);
-    --bg-upload-file: var(--theme-bg-white);
-    --bg-upload-file-light: var(--theme-bg-light);
-    --bg-upload-file-primary-50: var(--theme-primary-50);
-    --bg-upload-image: var(--theme-bg-white);
-    --bg-upload-image-light: var(--theme-bg-light);
-    --bg-upload-image-primary-50: var(--theme-primary-50);
-    --bg-workspace-pane: var(--theme-gray-0);
-    --border-accordion: var(--theme-gray-200);
-    --border-accordion-gray-100: var(--theme-gray-100);
-    --border-ag-grid: var(--theme-gray-100);
-    --border-ag-grid-gray-200: var(--theme-gray-200);
-    --border-ag-grid-gray-300: var(--theme-gray-300);
-    --border-ag-grid-gray-900-alpha-6: var(--theme-gray-900-alpha-6);
-    --border-ag-grid-primary: var(--theme-primary);
-    --border-chart: var(--theme-gray-200);
+    --color-checkbox: var(--theme-color-03-gray);
+    --color-checkbox-gray-0: var(--theme-gray-0);
+    --color-checkbox-gray-400: var(--theme-gray-400);
+    --color-checkbox-gray-600: var(--theme-gray-600);
+    --color-checkbox-gray-700: var(--theme-gray-700);
+    --color-checkbox-primary-700: var(--theme-primary-700);
+    --color-checkbox-status-error: var(--theme-status-error);
+    --color-checkbox-status-success: var(--theme-status-success);
+    --color-checkbox-status-warning: var(--theme-status-warning);
     --border-checkbox: var(--theme-line-regular);
     --border-checkbox-black: var(--theme-bg-black);
     --border-checkbox-disabled: var(--theme-line-disabled);
@@ -280,70 +426,20 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --border-checkbox-status-error: var(--theme-status-error);
     --border-checkbox-status-success: var(--theme-status-success);
     --border-checkbox-status-warning: var(--theme-status-warning);
-    --border-date-picker: var(--theme-status-error);
-    --border-date-picker-light: var(--theme-line-light);
-    --border-date-picker-regular: var(--theme-line-regular);
-    --border-date-picker-status-success: var(--theme-status-success);
-    --border-date-picker-status-warning: var(--theme-status-warning);
-    --border-form-field: var(--theme-line-regular);
-    --border-form-field-black: var(--theme-line-black);
-    --border-form-field-status-error: var(--theme-status-error);
-    --border-form-field-status-success: var(--theme-status-success);
-    --border-form-field-status-warning: var(--theme-status-warning);
-    --border-layout: var(--theme-gray-200);
-    --border-lnb: var(--theme-gray-0-alpha-8);
-    --border-modal: var(--theme-gray-0-alpha-18);
-    --border-modal-gray-900-alpha-12: var(--theme-gray-900-alpha-12);
-    --border-modal-gray-900-alpha-8: var(--theme-gray-900-alpha-8);
-    --border-modal-primary-500: var(--theme-primary-500);
-    --border-modal-primary-500-alpha-54: var(--theme-primary-500-alpha-54);
-    --border-pagination: var(--theme-gray-200);
-    --border-pagination-primary-300: var(--theme-primary-300);
-    --border-pagination-primary-500: var(--theme-primary-500);
-    --border-progress: var(--theme-gray-0);
-    --border-section: var(--theme-gray-200);
-    --border-select: var(--theme-line-regular);
-    --border-table: var(--theme-line-regular);
-    --border-table-light: var(--theme-line-light);
-    --border-table-primary: var(--theme-primary);
-    --border-tabs: var(--theme-gray-200);
-    --border-tabs-gray-0: var(--theme-gray-0);
-    --border-textarea: var(--theme-gray-200);
-    --border-textarea-primary-500: var(--theme-primary-500);
-    --border-textarea-status-error: var(--theme-status-error);
-    --border-textarea-status-success: var(--theme-status-success);
-    --border-textarea-status-warning: var(--theme-status-warning);
-    --border-upload-file: var(--theme-line-regular);
-    --border-upload-file-primary: var(--theme-primary);
-    --border-upload-image: var(--theme-line-regular);
-    --border-upload-image-primary: var(--theme-primary);
-    --border-workspace-pane: var(--theme-gray-200-alpha-90);
-    --color-accordion: var(--theme-gray-900);
-    --color-accordion-gray-500: var(--theme-gray-500);
-    --color-accordion-gray-600: var(--theme-gray-600);
-    --color-ag-grid: var(--theme-gray-500);
-    --color-ag-grid-gray-0: var(--theme-gray-0);
-    --color-ag-grid-gray-200: var(--theme-gray-200);
-    --color-ag-grid-gray-50: var(--theme-gray-50);
-    --color-ag-grid-gray-600: var(--theme-gray-600);
-    --color-ag-grid-gray-700: var(--theme-gray-700);
-    --color-ag-grid-gray-800: var(--theme-gray-800);
-    --color-ag-grid-gray-900: var(--theme-gray-900);
-    --color-ag-grid-primary: var(--theme-primary);
-    --color-ag-grid-primary-50-alpha-80: var(--theme-primary-50-alpha-80);
-    --color-button: var(--theme-gray-0);
-    --color-button-gray-700: var(--theme-gray-700);
-    --color-button-gray-900: var(--theme-gray-900);
-    --color-chart: var(--theme-gray-700);
-    --color-checkbox: var(--theme-color-03-gray);
-    --color-checkbox-gray-0: var(--theme-gray-0);
-    --color-checkbox-gray-400: var(--theme-gray-400);
-    --color-checkbox-gray-600: var(--theme-gray-600);
-    --color-checkbox-gray-700: var(--theme-gray-700);
-    --color-checkbox-primary-700: var(--theme-primary-700);
-    --color-checkbox-status-error: var(--theme-status-error);
-    --color-checkbox-status-success: var(--theme-status-success);
-    --color-checkbox-status-warning: var(--theme-status-warning);
+    --outline-checkbox: var(--theme-primary-300);
+    --shadow-checkbox: var(--theme-gray-900-alpha-4);
+    --shadow-checkbox-gray-800-alpha-4: var(--theme-gray-800-alpha-4);
+    --shadow-checkbox-gray-900-alpha-18: var(--theme-gray-900-alpha-18);
+    --shadow-checkbox-gray-900-alpha-8: var(--theme-gray-900-alpha-8);
+    --shadow-checkbox-primary-700-alpha-8: var(--theme-primary-700-alpha-8);
+    --fill-checkbox: var(--theme-color-05-gray-disabled);
+
+    // Date Picker
+    --bg-date-picker: var(--theme-gray-100);
+    --bg-date-picker-light: var(--theme-bg-light);
+    --bg-date-picker-primary: var(--theme-primary);
+    --bg-date-picker-primary-50: var(--theme-primary-50);
+    --bg-date-picker-white: var(--theme-bg-white);
     --color-date-picker: var(--theme-gray-500);
     --color-date-picker-01-white: var(--theme-color-01-white);
     --color-date-picker-02-black: var(--theme-color-02-black);
@@ -354,6 +450,17 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --color-date-picker-primary-600: var(--theme-primary-600);
     --color-date-picker-primary-700: var(--theme-primary-700);
     --color-date-picker-status-error: var(--theme-status-error);
+    --border-date-picker: var(--theme-status-error);
+    --border-date-picker-light: var(--theme-line-light);
+    --border-date-picker-regular: var(--theme-line-regular);
+    --border-date-picker-status-success: var(--theme-status-success);
+    --border-date-picker-status-warning: var(--theme-status-warning);
+    --shadow-date-picker: var(--theme-gray-900-alpha-8);
+    --shadow-date-picker-primary-300: var(--theme-primary-300);
+
+    // Form Field
+    --bg-form-field: var(--theme-bg-white);
+    --bg-form-field-light: var(--theme-bg-light);
     --color-form-field: var(--theme-gray-800);
     --color-form-field-02-black: var(--theme-color-02-black);
     --color-form-field-05-gray-disabled: var(--theme-color-05-gray-disabled);
@@ -362,39 +469,185 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --color-form-field-status-error: var(--theme-status-error);
     --color-form-field-status-success: var(--theme-status-success);
     --color-form-field-status-warning: var(--theme-status-warning);
+    --border-form-field: var(--theme-line-regular);
+    --border-form-field-black: var(--theme-line-black);
+    --border-form-field-status-error: var(--theme-status-error);
+    --border-form-field-status-success: var(--theme-status-success);
+    --border-form-field-status-warning: var(--theme-status-warning);
+
+    // Input
+    --color-input: var(--theme-color-04-gray);
+
+    // Select
+    --bg-select: var(--theme-bg-white);
+    --bg-select-light: var(--theme-bg-light);
+    --bg-select-regular: var(--theme-bg-regular);
+    --color-select: var(--theme-color-04-gray);
+    --color-select-02-black: var(--theme-color-02-black);
+    --color-select-05-gray-disabled: var(--theme-color-05-gray-disabled);
+    --color-select-gray-700: var(--theme-gray-700);
+    --border-select: var(--theme-line-regular);
+    --shadow-select: var(--theme-gray-900-alpha-8);
+
+    // Textarea
+    --bg-textarea: var(--theme-gray-0);
+    --bg-textarea-gray-50: var(--theme-gray-50);
+    --color-textarea: var(--theme-gray-800);
+    --color-textarea-gray-400: var(--theme-gray-400);
+    --border-textarea: var(--theme-gray-200);
+    --border-textarea-primary-500: var(--theme-primary-500);
+    --border-textarea-status-error: var(--theme-status-error);
+    --border-textarea-status-success: var(--theme-status-success);
+    --border-textarea-status-warning: var(--theme-status-warning);
+    --shadow-textarea: var(--theme-primary-500-alpha-12);
+    --shadow-textarea-status-error-alpha-12: var(--theme-status-error-alpha-12);
+
+    // Upload File
+    --bg-upload-file: var(--theme-bg-white);
+    --bg-upload-file-light: var(--theme-bg-light);
+    --bg-upload-file-primary-50: var(--theme-primary-50);
+    --color-upload-file: var(--theme-primary);
+    --color-upload-file-gray-400: var(--theme-gray-400);
+    --color-upload-file-gray-600: var(--theme-gray-600);
+    --color-upload-file-gray-900: var(--theme-gray-900);
+    --border-upload-file: var(--theme-line-regular);
+    --border-upload-file-primary: var(--theme-primary);
+
+    // Upload Image
+    --bg-upload-image: var(--theme-bg-white);
+    --bg-upload-image-light: var(--theme-bg-light);
+    --bg-upload-image-primary-50: var(--theme-primary-50);
+    --color-upload-image: var(--theme-primary);
+    --color-upload-image-gray-400: var(--theme-gray-400);
+    --color-upload-image-gray-500: var(--theme-gray-500);
+    --color-upload-image-gray-600: var(--theme-gray-600);
+    --color-upload-image-gray-900: var(--theme-gray-900);
+    --border-upload-image: var(--theme-line-regular);
+    --border-upload-image-primary: var(--theme-primary);
+
+    // ----------------------------------------
+    // 데이터 및 피드백 컴포넌트
+    // ----------------------------------------
+
+    // Accordion
+    --bg-accordion: var(--theme-gray-0);
+    --color-accordion: var(--theme-gray-900);
+    --color-accordion-gray-500: var(--theme-gray-500);
+    --color-accordion-gray-600: var(--theme-gray-600);
+    --border-accordion: var(--theme-gray-200);
+    --border-accordion-gray-100: var(--theme-gray-100);
+
+    // AG Grid
+    --bg-ag-grid: var(--theme-gray-200);
+    --bg-ag-grid-gray-0: var(--theme-gray-0);
+    --bg-ag-grid-gray-0-alpha-90: var(--theme-gray-0-alpha-90);
+    --bg-ag-grid-gray-200-alpha-100: var(--theme-gray-200-alpha-100);
+    --bg-ag-grid-gray-50: var(--theme-gray-50);
+    --bg-ag-grid-primary: var(--theme-primary);
+    --bg-ag-grid-primary-100-alpha-60: var(--theme-primary-100-alpha-60);
+    --bg-ag-grid-primary-50-alpha-90: var(--theme-primary-50-alpha-90);
+    --color-ag-grid: var(--theme-gray-500);
+    --color-ag-grid-gray-0: var(--theme-gray-0);
+    --color-ag-grid-gray-200: var(--theme-gray-200);
+    --color-ag-grid-gray-50: var(--theme-gray-50);
+    --color-ag-grid-gray-600: var(--theme-gray-600);
+    --color-ag-grid-gray-700: var(--theme-gray-700);
+    --color-ag-grid-gray-800: var(--theme-gray-800);
+    --color-ag-grid-gray-900: var(--theme-gray-900);
+    --color-ag-grid-primary: var(--theme-primary);
+    --color-ag-grid-primary-50-alpha-80: var(--theme-primary-50-alpha-80);
+    --border-ag-grid: var(--theme-gray-100);
+    --border-ag-grid-gray-200: var(--theme-gray-200);
+    --border-ag-grid-gray-300: var(--theme-gray-300);
+    --border-ag-grid-gray-900-alpha-6: var(--theme-gray-900-alpha-6);
+    --border-ag-grid-primary: var(--theme-primary);
+    --shadow-ag-grid: var(--theme-gray-900-alpha-6);
+    --shadow-ag-grid-gray-900-alpha-12: var(--theme-gray-900-alpha-12);
+    --shadow-ag-grid-gray-900-alpha-2: var(--theme-gray-900-alpha-2);
+    --shadow-ag-grid-primary-alpha-10: var(--theme-primary-alpha-10);
+    --shadow-ag-grid-primary-alpha-12: var(--theme-primary-alpha-12);
+    --shadow-ag-grid-primary-alpha-65: var(--theme-primary-alpha-65);
+
+    // Grid Search
+    --color-grid-search-muted: var(--theme-gray-600);
+
+    // Chart
+    --bg-chart: var(--theme-gray-0);
+    --color-chart: var(--theme-gray-700);
+    --border-chart: var(--theme-gray-200);
+    --border-chart-grid: var(--theme-gray-900-alpha-6);
+
+    // Gauge
     --color-gauge: var(--theme-gray-200);
     --color-gauge-gray-600: var(--theme-gray-600);
     --color-gauge-gray-900: var(--theme-gray-900);
     --color-gauge-primary: var(--theme-primary);
-    --color-input: var(--theme-color-04-gray);
-    --color-layout: var(--theme-gray-800);
-    --color-layout-gray-500: var(--theme-gray-500);
-    --color-layout-gray-900: var(--theme-gray-900);
-    --color-lnb: var(--theme-gray-0);
-    --color-lnb-gray-0-alpha-76: var(--theme-gray-0-alpha-76);
-    --color-lnb-gray-0-alpha-86: var(--theme-gray-0-alpha-86);
+    --shadow-gauge: var(--theme-gray-900-alpha-18);
+    --fill-gauge: var(--theme-primary);
+    --stroke-gauge: var(--theme-gray-0);
+
+    // Modal
+    --bg-modal: var(--theme-primary-500-alpha-18);
+    --bg-modal-gray-0-alpha-0: var(--theme-gray-0-alpha-0);
+    --bg-modal-gray-0-alpha-70: var(--theme-gray-0-alpha-70);
+    --bg-modal-gray-0-alpha-78: var(--theme-gray-0-alpha-78);
+    --bg-modal-gray-0-alpha-92: var(--theme-gray-0-alpha-92);
+    --bg-modal-gray-900-alpha-0: var(--theme-gray-900-alpha-0);
+    --bg-modal-gray-900-alpha-4: var(--theme-gray-900-alpha-4);
+    --bg-modal-gray-900-alpha-55: var(--theme-gray-900-alpha-55);
+    --bg-modal-primary-100-alpha-90: var(--theme-primary-100-alpha-90);
+    --bg-modal-white: var(--theme-bg-white);
     --color-modal: var(--theme-gray-900);
     --color-modal-gray-600: var(--theme-gray-600);
     --color-modal-gray-700: var(--theme-gray-700);
     --color-modal-gray-900-alpha-76: var(--theme-gray-900-alpha-76);
-    --color-page-tabs: var(--theme-gray-700);
-    --color-page-tabs-gray-600: var(--theme-gray-600);
-    --color-page-tabs-page-navigator-accent-color: var(--theme-page-navigator-accent-color);
+    --border-modal: var(--theme-gray-0-alpha-18);
+    --border-modal-gray-900-alpha-12: var(--theme-gray-900-alpha-12);
+    --border-modal-gray-900-alpha-8: var(--theme-gray-900-alpha-8);
+    --border-modal-primary-500: var(--theme-primary-500);
+    --border-modal-primary-500-alpha-54: var(--theme-primary-500-alpha-54);
+    --shadow-modal: var(--theme-gray-900-alpha-28);
+    --shadow-modal-gray-900-alpha-18: var(--theme-gray-900-alpha-18);
+    --shadow-modal-primary-500-alpha-16: var(--theme-primary-500-alpha-16);
+
+    // Pagination
+    --bg-pagination: var(--theme-gray-0);
+    --bg-pagination-gray-50: var(--theme-gray-50);
+    --bg-pagination-primary-50: var(--theme-primary-50);
+    --bg-pagination-primary-500: var(--theme-primary-500);
     --color-pagination: var(--theme-gray-600);
     --color-pagination-gray-0: var(--theme-gray-0);
     --color-pagination-gray-300: var(--theme-gray-300);
     --color-pagination-gray-900: var(--theme-gray-900);
     --color-pagination-primary-500: var(--theme-primary-500);
+    --border-pagination: var(--theme-gray-200);
+    --border-pagination-primary-300: var(--theme-primary-300);
+    --border-pagination-primary-500: var(--theme-primary-500);
+    --outline-pagination: var(--theme-primary-500-alpha-35);
+
+    // Progress
+    --bg-progress: var(--theme-gray-200);
+    --bg-progress-gray-400: var(--theme-gray-400);
+    --bg-progress-primary: var(--theme-primary);
     --color-progress: var(--theme-gray-800);
     --color-progress-gray-500: var(--theme-gray-500);
     --color-progress-gray-600: var(--theme-gray-600);
     --color-progress-gray-900-alpha-80: var(--theme-gray-900-alpha-80);
+    --border-progress: var(--theme-gray-0);
+    --shadow-progress: var(--theme-gray-900-alpha-18);
+    --stroke-progress: var(--theme-gray-200);
+    --stroke-progress-primary: var(--theme-primary);
+
+    // Section
+    --bg-section: var(--theme-gray-0);
     --color-section: var(--theme-gray-900);
     --color-section-gray-600: var(--theme-gray-600);
-    --color-select: var(--theme-color-04-gray);
-    --color-select-02-black: var(--theme-color-02-black);
-    --color-select-05-gray-disabled: var(--theme-color-05-gray-disabled);
-    --color-select-gray-700: var(--theme-gray-700);
+    --border-section: var(--theme-gray-200);
+
+    // Table
+    --bg-table: var(--theme-bg-white);
+    --bg-table-light: var(--theme-bg-light);
+    --bg-table-regular: var(--theme-bg-regular);
     --color-table: var(--theme-gray-900);
     --color-table-05-gray-disabled: var(--theme-color-05-gray-disabled);
     --color-table-gray-500: var(--theme-gray-500);
@@ -402,6 +655,16 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --color-table-gray-700: var(--theme-gray-700);
     --color-table-gray-800: var(--theme-gray-800);
     --color-table-status-error: var(--theme-status-error);
+    --border-table: var(--theme-line-regular);
+    --border-table-light: var(--theme-line-light);
+    --border-table-primary: var(--theme-primary);
+
+    // Tabs
+    --bg-tabs: var(--theme-gray-100);
+    --bg-tabs-gray-0: var(--theme-gray-0);
+    --bg-tabs-gray-50: var(--theme-gray-50);
+    --bg-tabs-primary-50: var(--theme-primary-50);
+    --bg-tabs-primary-500: var(--theme-primary-500);
     --color-tabs: var(--theme-gray-500);
     --color-tabs-gray-300: var(--theme-gray-300);
     --color-tabs-gray-400: var(--theme-gray-400);
@@ -409,51 +672,53 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --color-tabs-gray-700: var(--theme-gray-700);
     --color-tabs-primary-500: var(--theme-primary-500);
     --color-tabs-primary-600: var(--theme-primary-600);
-    --color-textarea: var(--theme-gray-800);
-    --color-textarea-gray-400: var(--theme-gray-400);
-    --color-upload-file: var(--theme-primary);
-    --color-upload-file-gray-400: var(--theme-gray-400);
-    --color-upload-file-gray-600: var(--theme-gray-600);
-    --color-upload-file-gray-900: var(--theme-gray-900);
-    --color-upload-image: var(--theme-primary);
-    --color-upload-image-gray-400: var(--theme-gray-400);
-    --color-upload-image-gray-500: var(--theme-gray-500);
-    --color-upload-image-gray-600: var(--theme-gray-600);
-    --color-upload-image-gray-900: var(--theme-gray-900);
-    --fill-checkbox: var(--theme-color-05-gray-disabled);
-    --fill-gauge: var(--theme-primary);
-    --outline-button: var(--theme-primary-300);
-    --outline-checkbox: var(--theme-primary-300);
-    --outline-lnb: var(--theme-gray-0-alpha-35);
-    --outline-pagination: var(--theme-primary-500-alpha-35);
+    --border-tabs: var(--theme-gray-200);
+    --border-tabs-gray-0: var(--theme-gray-0);
     --outline-tabs: var(--theme-primary-500-alpha-35);
     --outline-tabs-primary-500-alpha-25: var(--theme-primary-500-alpha-25);
-    --shadow-ag-grid: var(--theme-gray-900-alpha-6);
-    --shadow-ag-grid-gray-900-alpha-12: var(--theme-gray-900-alpha-12);
-    --shadow-ag-grid-gray-900-alpha-2: var(--theme-gray-900-alpha-2);
-    --shadow-ag-grid-primary-alpha-10: var(--theme-primary-alpha-10);
-    --shadow-ag-grid-primary-alpha-12: var(--theme-primary-alpha-12);
-    --shadow-ag-grid-primary-alpha-65: var(--theme-primary-alpha-65);
-    --shadow-checkbox: var(--theme-gray-900-alpha-4);
-    --shadow-checkbox-gray-800-alpha-4: var(--theme-gray-800-alpha-4);
-    --shadow-checkbox-gray-900-alpha-18: var(--theme-gray-900-alpha-18);
-    --shadow-checkbox-gray-900-alpha-8: var(--theme-gray-900-alpha-8);
-    --shadow-checkbox-primary-700-alpha-8: var(--theme-primary-700-alpha-8);
-    --shadow-date-picker: var(--theme-gray-900-alpha-8);
-    --shadow-date-picker-primary-300: var(--theme-primary-300);
-    --shadow-gauge: var(--theme-gray-900-alpha-18);
+    --shadow-tabs: var(--theme-gray-900-alpha-8);
+
+    // ----------------------------------------
+    // 애플리케이션 레이아웃
+    // ----------------------------------------
+
+    // Layout
+    --bg-layout: var(--theme-header-background);
+    --bg-layout-gray-0: var(--theme-gray-0);
+    --bg-layout-header-active-color: var(--theme-header-active-color);
+    --bg-layout-header-hover-color: var(--theme-header-hover-color);
+    --color-layout: var(--theme-gray-800);
+    --color-layout-gray-500: var(--theme-gray-500);
+    --color-layout-gray-900: var(--theme-gray-900);
+    --border-layout: var(--theme-gray-200);
+
+    // LNB
+    --bg-lnb: var(--theme-lnb-background);
+    --bg-lnb-gray-0-alpha-20: var(--theme-gray-0-alpha-20);
+    --bg-lnb-lnb-active-color: var(--theme-lnb-active-color);
+    --bg-lnb-lnb-hover-color: var(--theme-lnb-hover-color);
+    --color-lnb: var(--theme-gray-0);
+    --color-lnb-gray-0-alpha-76: var(--theme-gray-0-alpha-76);
+    --color-lnb-gray-0-alpha-86: var(--theme-gray-0-alpha-86);
+    --border-lnb: var(--theme-gray-0-alpha-8);
+    --outline-lnb: var(--theme-gray-0-alpha-35);
     --shadow-lnb: var(--theme-gray-900-alpha-12);
     --shadow-lnb-gray-0-alpha-18: var(--theme-gray-0-alpha-18);
-    --shadow-modal: var(--theme-gray-900-alpha-28);
-    --shadow-modal-gray-900-alpha-18: var(--theme-gray-900-alpha-18);
-    --shadow-modal-primary-500-alpha-16: var(--theme-primary-500-alpha-16);
-    --shadow-progress: var(--theme-gray-900-alpha-18);
+
+    // Page Tabs
+    --bg-page-tabs: var(--theme-page-navigator-background);
+    --bg-page-tabs-page-navigator-active-color: var(--theme-page-navigator-active-color);
+    --bg-page-tabs-page-navigator-control-active-color: var(--theme-page-navigator-control-active-color);
+    --bg-page-tabs-page-navigator-hover-color: var(--theme-page-navigator-hover-color);
+    --color-page-tabs: var(--theme-gray-700);
+    --color-page-tabs-gray-600: var(--theme-gray-600);
+    --color-page-tabs-page-navigator-accent-color: var(--theme-page-navigator-accent-color);
+
+    // Responsive Layout
+    --bg-responsive-layout: var(--theme-gray-900-alpha-42);
     --shadow-responsive-layout: var(--theme-gray-900-alpha-22);
-    --shadow-select: var(--theme-gray-900-alpha-8);
-    --shadow-tabs: var(--theme-gray-900-alpha-8);
-    --shadow-textarea: var(--theme-primary-500-alpha-12);
-    --shadow-textarea-status-error-alpha-12: var(--theme-status-error-alpha-12);
-    --stroke-gauge: var(--theme-gray-0);
-    --stroke-progress: var(--theme-gray-200);
-    --stroke-progress-primary: var(--theme-primary);
+
+    // Workspace Pane
+    --bg-workspace-pane: var(--theme-gray-0);
+    --border-workspace-pane: var(--theme-gray-200-alpha-90);
 }

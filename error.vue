@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NuxtError } from "#app";
+import type { NuxtError } from '#app';
 
 const props = defineProps<{
     error: NuxtError;
@@ -39,45 +39,42 @@ const props = defineProps<{
 const isDev = import.meta.dev;
 
 const statusCode = computed(() => {
-    const code = Number(
-        (props.error as any)?.statusCode ?? (props.error as any)?.status ?? 500,
-    );
+    const code = Number((props.error as any)?.statusCode ?? (props.error as any)?.status ?? 500);
     return Number.isFinite(code) ? code : 500;
 });
 
 const title = computed(() => {
-    if (statusCode.value === 404) return "페이지를 찾을 수 없습니다";
-    if (statusCode.value >= 500) return "서버 오류가 발생했습니다";
-    return "오류가 발생했습니다";
+    if (statusCode.value === 404) return '페이지를 찾을 수 없습니다';
+    if (statusCode.value >= 500) return '서버 오류가 발생했습니다';
+    return '오류가 발생했습니다';
 });
 
 const badgeLabel = computed(() => {
-    if (statusCode.value === 404) return "Not Found";
-    if (statusCode.value >= 500) return "Server Error";
-    return "Error";
+    if (statusCode.value === 404) return 'Not Found';
+    if (statusCode.value >= 500) return 'Server Error';
+    return 'Error';
 });
 
 const message = computed(() => {
     const msg = (props.error as any)?.message;
-    if (statusCode.value === 404)
-        return "요청하신 페이지가 존재하지 않거나 이동되었습니다.";
-    if (statusCode.value >= 500) return "잠시 후 다시 시도해 주세요.";
-    return msg || "알 수 없는 오류가 발생했습니다.";
+    if (statusCode.value === 404) return '요청하신 페이지가 존재하지 않거나 이동되었습니다.';
+    if (statusCode.value >= 500) return '잠시 후 다시 시도해 주세요.';
+    return msg || '알 수 없는 오류가 발생했습니다.';
 });
 
 const debugText = computed(() => {
     const e: any = props.error;
     const parts = [
-        e?.message ? `message: ${e.message}` : "",
-        e?.url ? `url: ${e.url}` : "",
-        e?.statusCode ? `statusCode: ${e.statusCode}` : "",
-        e?.stack ? `stack:\n${e.stack}` : "",
+        e?.message ? `message: ${e.message}` : '',
+        e?.url ? `url: ${e.url}` : '',
+        e?.statusCode ? `statusCode: ${e.statusCode}` : '',
+        e?.stack ? `stack:\n${e.stack}` : '',
     ].filter(Boolean);
-    return parts.join("\n");
+    return parts.join('\n');
 });
 
 function handleGoHome() {
-    clearError({ redirect: "/" });
+    clearError({ redirect: '/' });
 }
 
 function handleGoBack() {
@@ -86,10 +83,10 @@ function handleGoBack() {
         history.back();
         setTimeout(() => {
             // 여전히 에러 상태로 남아있으면 홈으로
-            clearError({ redirect: "/" });
+            clearError({ redirect: '/' });
         }, 250);
     } catch {
-        clearError({ redirect: "/" });
+        clearError({ redirect: '/' });
     }
 }
 </script>
@@ -101,15 +98,9 @@ function handleGoBack() {
     place-items: center;
     padding: 28px 18px;
     background:
-        radial-gradient(900px 520px at 10% 12%,
-            color-mix(in srgb, var(--theme-primary-500) 38%, transparent),
-            transparent 55%),
-        radial-gradient(820px 560px at 92% 18%,
-            color-mix(in srgb, var(--theme-primary-200) 42%, transparent),
-            transparent 55%),
-        radial-gradient(760px 520px at 58% 96%,
-            color-mix(in srgb, var(--theme-status-info) 18%, transparent),
-            transparent 58%),
+        radial-gradient(900px 520px at 10% 12%, color-mix(in srgb, var(--theme-primary-500) 38%, transparent), transparent 55%),
+        radial-gradient(820px 560px at 92% 18%, color-mix(in srgb, var(--theme-primary-200) 42%, transparent), transparent 55%),
+        radial-gradient(760px 520px at 58% 96%, color-mix(in srgb, var(--theme-status-info) 18%, transparent), transparent 58%),
         linear-gradient(180deg, var(--theme-gray-0), var(--theme-primary-50));
     color: var(--theme-gray-900);
 }
@@ -119,7 +110,11 @@ function handleGoBack() {
     border: 1px solid color-mix(in srgb, var(--theme-primary-200) 90%, transparent);
     border-radius: 22px;
     padding: 22px 22px 20px;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--theme-gray-0) 78%, transparent), color-mix(in srgb, var(--theme-gray-0) 62%, transparent));
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--theme-gray-0) 78%, transparent),
+        color-mix(in srgb, var(--theme-gray-0) 62%, transparent)
+    );
     box-shadow:
         0 30px 80px color-mix(in srgb, var(--theme-primary-900) 12%, transparent),
         0 12px 30px color-mix(in srgb, var(--theme-primary-700) 10%, transparent);
@@ -160,16 +155,16 @@ function handleGoBack() {
     letter-spacing: -0.01em;
 }
 
-.app-error__badge[data-code="404"] {
+.app-error__badge[data-code='404'] {
     background: color-mix(in srgb, var(--theme-primary-500) 14%, transparent);
     border-color: color-mix(in srgb, var(--theme-primary-500) 22%, transparent);
 }
 
-.app-error__badge[data-code="500"],
-.app-error__badge[data-code="501"],
-.app-error__badge[data-code="502"],
-.app-error__badge[data-code="503"],
-.app-error__badge[data-code="504"] {
+.app-error__badge[data-code='500'],
+.app-error__badge[data-code='501'],
+.app-error__badge[data-code='502'],
+.app-error__badge[data-code='503'],
+.app-error__badge[data-code='504'] {
     background: color-mix(in srgb, var(--theme-status-error) 14%, transparent);
     border-color: color-mix(in srgb, var(--theme-status-error) 26%, transparent);
 }
@@ -187,15 +182,21 @@ function handleGoBack() {
     filter: blur(0.2px);
     opacity: 0.95;
     background:
-        radial-gradient(circle at 28% 28%,
+        radial-gradient(
+            circle at 28% 28%,
             color-mix(in srgb, var(--theme-gray-0) 92%, transparent),
-            color-mix(in srgb, var(--theme-gray-0) 0%, transparent) 56%),
-        radial-gradient(circle at 72% 72%,
+            color-mix(in srgb, var(--theme-gray-0) 0%, transparent) 56%
+        ),
+        radial-gradient(
+            circle at 72% 72%,
             color-mix(in srgb, var(--theme-primary-500) 70%, transparent),
-            color-mix(in srgb, var(--theme-primary-500) 0%, transparent) 60%),
-        radial-gradient(circle at 50% 50%,
+            color-mix(in srgb, var(--theme-primary-500) 0%, transparent) 60%
+        ),
+        radial-gradient(
+            circle at 50% 50%,
             color-mix(in srgb, var(--theme-primary-200) 60%, transparent),
-            color-mix(in srgb, var(--theme-primary-200) 0%, transparent) 62%);
+            color-mix(in srgb, var(--theme-primary-200) 0%, transparent) 62%
+        );
     box-shadow: 0 18px 46px color-mix(in srgb, var(--theme-primary-700) 24%, transparent);
 }
 

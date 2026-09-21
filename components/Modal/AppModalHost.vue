@@ -1,11 +1,21 @@
 <template>
     <Teleport to="body">
-        <div v-for="(modalItem, modalIndex) in modalStore.modals" :key="modalItem.id" :class="getModalClass(modalItem)"
-            :style="{ zIndex: String(getModalZIndex(modalIndex)) }">
+        <div
+            v-for="(modalItem, modalIndex) in modalStore.modals"
+            :key="modalItem.id"
+            :class="getModalClass(modalItem)"
+            :style="{ zIndex: String(getModalZIndex(modalIndex)) }"
+        >
             <div v-if="modalItem.overlay" class="app-modal__backdrop" @click="handleBackdropClick(modalItem)" />
 
-            <div :class="getDialogClass(modalItem)" :style="getDialogStyle(modalItem)" role="dialog" aria-modal="true"
-                :aria-label="getAriaLabel(modalItem)" @click.stop>
+            <div
+                :class="getDialogClass(modalItem)"
+                :style="getDialogStyle(modalItem)"
+                role="dialog"
+                aria-modal="true"
+                :aria-label="getAriaLabel(modalItem)"
+                @click.stop
+            >
                 <header v-if="modalItem.title || modalItem.closable" class="app-modal__header">
                     <div class="app-modal__header-left">
                         <h2 v-if="modalItem.title" class="app-modal__title">
@@ -13,8 +23,14 @@
                         </h2>
                     </div>
 
-                    <AppIconButton v-if="modalItem.closable" class="app-modal__close" aria-label="닫기" :size="34"
-                        :icon-size="18" @click="handleModalClose(modalItem.id, 'close')">
+                    <AppIconButton
+                        v-if="modalItem.closable"
+                        class="app-modal__close"
+                        aria-label="닫기"
+                        :size="34"
+                        :icon-size="18"
+                        @click="handleModalClose(modalItem.id, 'close')"
+                    >
                         <IconClose />
                     </AppIconButton>
                 </header>
@@ -48,8 +64,7 @@
                         </AppButton>
                     </div>
 
-                    <component v-else-if="modalItem.footerComponent" :is="modalItem.footerComponent"
-                        v-bind="modalItem.footerProps" />
+                    <component v-else-if="modalItem.footerComponent" :is="modalItem.footerComponent" v-bind="modalItem.footerProps" />
 
                     <div v-else-if="modalItem.footer" class="app-modal__actions app-custom-modal__actions">
                         <AppButton variant="outline" @click="handleCustomModalCancel(modalItem)">
@@ -67,18 +82,14 @@
 </template>
 
 <script setup lang="ts">
-import { IconClose } from "~/components/icons";
-import { useModalStore } from "~/stores/modal";
-import type { ModalItem, ModalViewCloseReason } from "~/types/appModal";
+import { IconClose } from '~/components/icons';
+import { useModalStore } from '~/stores/modal';
+import type { ModalItem, ModalViewCloseReason } from '~/types/appModal';
 
 const modalStore = useModalStore();
 
 const topModal = computed(() => {
-    return (
-        modalStore.modals.find(
-            (modalItem) => modalItem.id === modalStore.topModalId,
-        ) ?? null
-    );
+    return modalStore.modals.find((modalItem) => modalItem.id === modalStore.topModalId) ?? null;
 });
 
 function getModalZIndex(modalIndex: number) {
@@ -86,14 +97,11 @@ function getModalZIndex(modalIndex: number) {
 }
 
 function getModalClass(modalItem: ModalItem) {
-    return ["app-modal", getModifierClass("app-modal", modalItem.variant)];
+    return ['app-modal', getModifierClass('app-modal', modalItem.variant)];
 }
 
 function getDialogClass(modalItem: ModalItem) {
-    return [
-        "app-modal__dialog",
-        getModifierClass("app-modal__dialog", modalItem.variant),
-    ];
+    return ['app-modal__dialog', getModifierClass('app-modal__dialog', modalItem.variant)];
 }
 
 function getModifierClass(block: string, variant?: string) {
@@ -108,12 +116,12 @@ function getDialogStyle(modalItem: ModalItem) {
 }
 
 function hasFooter(modalItem: ModalItem) {
-    if (modalItem.type !== "custom") return true;
+    if (modalItem.type !== 'custom') return true;
     return Boolean(modalItem.footerComponent || modalItem.footer);
 }
 
 function getAriaLabel(modalItem: ModalItem) {
-    return modalItem.title || "모달";
+    return modalItem.title || '모달';
 }
 
 function isTopModal(modalId: number) {
@@ -123,23 +131,20 @@ function isTopModal(modalId: number) {
 function handleBackdropClick(modalItem: ModalItem) {
     if (!modalItem.closeOnBackdrop) return;
     if (!isTopModal(modalItem.id)) return;
-    handleModalClose(modalItem.id, "backdrop");
+    handleModalClose(modalItem.id, 'backdrop');
 }
 
 function handleKeydown(event: KeyboardEvent) {
     const modalItem = topModal.value;
 
     if (!modalItem?.closeOnEsc) return;
-    if (event.key !== "Escape") return;
+    if (event.key !== 'Escape') return;
 
     event.preventDefault();
-    handleModalClose(modalItem.id, "esc");
+    handleModalClose(modalItem.id, 'esc');
 }
 
-function handleModalClose(
-    modalId: number | undefined | null,
-    reason?: ModalViewCloseReason,
-) {
+function handleModalClose(modalId: number | undefined | null, reason?: ModalViewCloseReason) {
     if (modalId == null) return;
     modalStore.modalClose(modalId, reason);
 }
@@ -155,16 +160,16 @@ function handleModalConfirm(modalId: number | undefined | null) {
 }
 
 function handleCustomModalCancel(modalItem: ModalItem) {
-    if (modalItem.type !== "custom") return;
+    if (modalItem.type !== 'custom') return;
     modalItem.onCancel?.();
-    modalStore.modalClose(modalItem.id, "cancel");
+    modalStore.modalClose(modalItem.id, 'cancel');
 }
 
 function handleCustomModalConfirm(modalItem: ModalItem) {
-    if (modalItem.type !== "custom") return;
+    if (modalItem.type !== 'custom') return;
 
     if (modalItem.keepOnConfirm !== true) {
-        modalStore.modalClose(modalItem.id, "confirm");
+        modalStore.modalClose(modalItem.id, 'confirm');
     }
 
     modalItem.onConfirm?.();
@@ -172,11 +177,11 @@ function handleCustomModalConfirm(modalItem: ModalItem) {
 
 onMounted(() => {
     if (import.meta.server) return;
-    window.addEventListener("keydown", handleKeydown);
+    window.addEventListener('keydown', handleKeydown);
 });
 
 onBeforeUnmount(() => {
     if (import.meta.server) return;
-    window.removeEventListener("keydown", handleKeydown);
+    window.removeEventListener('keydown', handleKeydown);
 });
 </script>

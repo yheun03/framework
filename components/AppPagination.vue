@@ -1,54 +1,84 @@
 <template>
-    <nav class="app-pagination" :class="[
-        `app-pagination--${size}`,
-        {
-            'is-disabled': disabled,
-        },
-    ]" aria-label="페이지네이션">
+    <nav
+        class="app-pagination"
+        :class="[
+            `app-pagination--${size}`,
+            {
+                'is-disabled': disabled,
+            },
+        ]"
+        aria-label="페이지네이션"
+    >
         <div v-if="showTotal" class="app-pagination__total">
-            총 <strong>{{ total }}</strong>건
+            총 <strong>{{ total }}</strong
+            >건
         </div>
 
         <div class="app-pagination__controls">
-            <button type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
-                aria-label="첫 페이지" @click="handlePageChange(1)">
+            <button
+                type="button"
+                class="app-pagination__button"
+                :disabled="disabled || isFirstPage"
+                aria-label="첫 페이지"
+                @click="handlePageChange(1)"
+            >
                 <IconDoubleLeft />
             </button>
 
-            <button type="button" class="app-pagination__button" :disabled="disabled || isFirstPage"
-                aria-label="이전 페이지" @click="handlePageChange(page - 1)">
+            <button
+                type="button"
+                class="app-pagination__button"
+                :disabled="disabled || isFirstPage"
+                aria-label="이전 페이지"
+                @click="handlePageChange(page - 1)"
+            >
                 <IconChevronLeft />
             </button>
 
-            <button v-for="pageNumber in visiblePages" :key="pageNumber" type="button"
-                class="app-pagination__button app-pagination__page" :class="{ 'is-active': pageNumber === page }"
-                :disabled="disabled" :aria-current="pageNumber === page ? 'page' : undefined"
-                @click="handlePageChange(pageNumber)">
+            <button
+                v-for="pageNumber in visiblePages"
+                :key="pageNumber"
+                type="button"
+                class="app-pagination__button app-pagination__page"
+                :class="{ 'is-active': pageNumber === page }"
+                :disabled="disabled"
+                :aria-current="pageNumber === page ? 'page' : undefined"
+                @click="handlePageChange(pageNumber)"
+            >
                 {{ pageNumber }}
             </button>
 
-            <button type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
-                aria-label="다음 페이지" @click="handlePageChange(page + 1)">
+            <button
+                type="button"
+                class="app-pagination__button"
+                :disabled="disabled || isLastPage"
+                aria-label="다음 페이지"
+                @click="handlePageChange(page + 1)"
+            >
                 <IconChevronRight />
             </button>
 
-            <button type="button" class="app-pagination__button" :disabled="disabled || isLastPage"
-                aria-label="마지막 페이지" @click="handlePageChange(totalPages)">
+            <button
+                type="button"
+                class="app-pagination__button"
+                :disabled="disabled || isLastPage"
+                aria-label="마지막 페이지"
+                @click="handlePageChange(totalPages)"
+            >
                 <IconDoubleRight />
             </button>
         </div>
 
         <div v-if="showPageSize" class="app-pagination__size">
-            <AppSelect :model-value="pageSize" :options="pageSizeSelectOptions" :disabled="disabled"
-                @update:model-value="handlePageSizeChange" />
+            <AppSelect :model-value="pageSize" :options="pageSizeSelectOptions" :disabled="disabled" @update:model-value="handlePageSizeChange" />
         </div>
     </nav>
 </template>
 
 <script setup lang="ts">
-import { IconChevronLeft, IconChevronRight, IconDoubleLeft, IconDoubleRight } from "~/components/icons";
+import { IconChevronLeft, IconChevronRight, IconDoubleLeft, IconDoubleRight } from '~/components/icons';
 
-type AppPaginationSize = "sm" | "md";
+type AppPaginationSize = 'sm' | 'md';
 
 const props = withDefaults(
     defineProps<{
@@ -68,14 +98,14 @@ const props = withDefaults(
         showTotal: true,
         showPageSize: true,
         disabled: false,
-        size: "md",
+        size: 'md',
     },
 );
 
 const emit = defineEmits<{
-    (e: "update:page", value: number): void;
-    (e: "update:pageSize", value: number): void;
-    (e: "change", payload: { page: number; pageSize: number }): void;
+    (e: 'update:page', value: number): void;
+    (e: 'update:pageSize', value: number): void;
+    (e: 'change', payload: { page: number; pageSize: number }): void;
 }>();
 
 const totalPages = computed(() => {
@@ -128,8 +158,8 @@ watch(
     () => {
         if (props.page === normalizedPage.value) return;
 
-        emit("update:page", normalizedPage.value);
-        emit("change", {
+        emit('update:page', normalizedPage.value);
+        emit('change', {
             page: normalizedPage.value,
             pageSize: props.pageSize,
         });
@@ -141,23 +171,23 @@ function handlePageChange(nextPage: number) {
 
     if (next === props.page) return;
 
-    emit("update:page", next);
-    emit("change", {
+    emit('update:page', next);
+    emit('change', {
         page: next,
         pageSize: props.pageSize,
     });
 }
 
 function handlePageSizeChange(value: string | number | boolean | null) {
-    if (typeof value === "boolean" || value === null) return;
+    if (typeof value === 'boolean' || value === null) return;
 
     const nextPageSize = Number(value);
 
     if (!Number.isFinite(nextPageSize) || nextPageSize <= 0) return;
 
-    emit("update:pageSize", nextPageSize);
-    emit("update:page", 1);
-    emit("change", {
+    emit('update:pageSize', nextPageSize);
+    emit('update:page', 1);
+    emit('change', {
         page: 1,
         pageSize: nextPageSize,
     });

@@ -1,11 +1,15 @@
 <template>
     <div class="app-accordion">
-        <div v-for="item in items" :key="item.id" class="app-accordion__item" :class="{
-            'is-open': isOpen(item.id),
-            'is-disabled': item.disabled,
-        }">
-            <button type="button" class="app-accordion__trigger" :disabled="item.disabled"
-                :aria-expanded="isOpen(item.id)" @click="toggle(item.id)">
+        <div
+            v-for="item in items"
+            :key="item.id"
+            class="app-accordion__item"
+            :class="{
+                'is-open': isOpen(item.id),
+                'is-disabled': item.disabled,
+            }"
+        >
+            <button type="button" class="app-accordion__trigger" :disabled="item.disabled" :aria-expanded="isOpen(item.id)" @click="toggle(item.id)">
                 <div class="app-accordion__trigger-content">
                     <div class="app-accordion__text">
                         <div class="app-accordion__title">
@@ -34,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconChevronDown } from "~/components/icons";
+import { IconChevronDown } from '~/components/icons';
 
 export type AppAccordionItem = {
     id: string | number;
@@ -46,26 +50,33 @@ export type AppAccordionItem = {
     slot?: string;
 };
 
-const props = withDefaults(defineProps<{
-    items: AppAccordionItem[];
-    openIds?: Array<string | number>;
-    defaultOpenIds?: Array<string | number>;
-    type?: "single" | "multiple";
-    initialOpen?: "none" | "first" | "all";
-}>(), {
-    type: "multiple",
-    initialOpen: "none",
-});
+const props = withDefaults(
+    defineProps<{
+        items: AppAccordionItem[];
+        openIds?: Array<string | number>;
+        defaultOpenIds?: Array<string | number>;
+        type?: 'single' | 'multiple';
+        initialOpen?: 'none' | 'first' | 'all';
+    }>(),
+    {
+        type: 'multiple',
+        initialOpen: 'none',
+    },
+);
 
 const emit = defineEmits<{
-    "update:openIds": [Array<string | number>];
+    'update:openIds': [Array<string | number>];
     toggle: [{ id: string | number; open: boolean }];
 }>();
 
 const firstOpenItem = props.items.find((item) => !item.disabled);
-const initialIds = props.defaultOpenIds ?? (props.initialOpen === "all"
-    ? props.items.filter((item) => !item.disabled).map((item) => item.id)
-    : props.initialOpen === "first" && firstOpenItem ? [firstOpenItem.id] : []);
+const initialIds =
+    props.defaultOpenIds ??
+    (props.initialOpen === 'all'
+        ? props.items.filter((item) => !item.disabled).map((item) => item.id)
+        : props.initialOpen === 'first' && firstOpenItem
+          ? [firstOpenItem.id]
+          : []);
 const openedIds = ref<Array<string | number>>(initialIds);
 
 function isOpen(id: string | number) {
@@ -75,10 +86,12 @@ function isOpen(id: string | number) {
 function toggle(id: string | number) {
     const next = isOpen(id)
         ? (props.openIds ?? openedIds.value).filter((itemId) => itemId !== id)
-        : props.type === "single" ? [id] : [...(props.openIds ?? openedIds.value), id];
+        : props.type === 'single'
+          ? [id]
+          : [...(props.openIds ?? openedIds.value), id];
 
     if (!props.openIds) openedIds.value = next;
-    emit("update:openIds", next);
-    emit("toggle", { id, open: next.includes(id) });
+    emit('update:openIds', next);
+    emit('toggle', { id, open: next.includes(id) });
 }
 </script>

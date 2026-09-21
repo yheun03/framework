@@ -59,14 +59,10 @@
                             </template>
                         </AppInput>
                         <AppInput v-model="email" placeholder="이메일"
-                            ><template #iconLeft>
-                                <IconEmail /> </template
-                            ><template #iconRight>
-                                <IconCheckCircle /> </template
+                            ><template #iconLeft> <IconEmail /> </template><template #iconRight> <IconCheckCircle /> </template
                         ></AppInput>
                         <AppInput v-model="url" placeholder="https://example.com"
-                            ><template #iconLeft>
-                                <IconLink /> </template
+                            ><template #iconLeft> <IconLink /> </template
                         ></AppInput>
                     </div>
                 </PageDemoSection>

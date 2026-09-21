@@ -1,24 +1,28 @@
-@use "abstract/index" as *;
-@use "sass:map";
+@use 'abstract/index' as *;
+@use 'sass:map';
 
 /* =========================================
    Config
 ========================================= */
 
 $date-picker-sizes: (
-    xs: (height: 36px,
+    xs: (
+        height: 36px,
         padding: 12px,
         icon: 16px,
     ),
-    sm: (height: 44px,
+    sm: (
+        height: 44px,
         padding: 14px,
         icon: 18px,
     ),
-    md: (height: 48px,
+    md: (
+        height: 48px,
         padding: 16px,
         icon: 20px,
     ),
-    lg: (height: 56px,
+    lg: (
+        height: 56px,
         padding: 18px,
         icon: 22px,
     ),
@@ -279,7 +283,7 @@ $date-picker-sizes: (
             }
 
             &::after {
-                content: "년";
+                content: '년';
                 margin-left: 2px;
                 color: var(--color-date-picker-02-black);
             }

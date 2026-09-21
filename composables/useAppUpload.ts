@@ -1,4 +1,4 @@
-import {buildUploadHelperText, isAcceptedUploadType} from '~/utils/upload';
+import { buildUploadHelperText, isAcceptedUploadType } from '~/utils/upload';
 
 type UploadBaseProps = {
     disabled?: boolean;

@@ -1,4 +1,4 @@
-@use "../../../abstract" as *;
+@use '../../../abstract' as *;
 
 /* =========================================
    Component: AppProgressGauge
@@ -100,7 +100,6 @@
     }
 
     &--semi-doughnut-range {
-
         .app-progress-gauge__value,
         .app-progress-gauge__needle,
         .app-progress-gauge__needle-center {

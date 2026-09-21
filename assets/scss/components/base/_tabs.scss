@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 .app-tabs {
     display: flex;
@@ -162,7 +162,7 @@
                 left: 0;
                 height: 2px;
                 background: transparent;
-                content: "";
+                content: '';
             }
 
             &:hover:not(:disabled) {
@@ -196,7 +196,7 @@
             border-radius: 10px 10px 0 0;
             background: var(--bg-tabs-gray-50);
 
-            &+.app-tabs__tab {
+            & + .app-tabs__tab {
                 margin-left: -1px;
             }
 

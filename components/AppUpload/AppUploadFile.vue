@@ -1,13 +1,25 @@
 <template>
-    <div class="app-file-upload" :class="rootClasses" @dragenter.prevent="handleDragEnter"
-        @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop">
+    <div
+        class="app-file-upload"
+        :class="rootClasses"
+        @dragenter.prevent="handleDragEnter"
+        @dragover.prevent="handleDragOver"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
+    >
         <div class="app-file-upload__head">
             <div class="app-file-upload__dropzone">
-                <input ref="fileInput" class="app-file-upload__input" type="file" :accept="accept" :multiple="multiple"
-                    :disabled="disabled" @change="handleFileChange" />
+                <input
+                    ref="fileInput"
+                    class="app-file-upload__input"
+                    type="file"
+                    :accept="accept"
+                    :multiple="multiple"
+                    :disabled="disabled"
+                    @change="handleFileChange"
+                />
 
-                <button type="button" class="app-file-upload__trigger" :disabled="disabled"
-                    @click="handleFileOpen">
+                <button type="button" class="app-file-upload__trigger" :disabled="disabled" @click="handleFileOpen">
                     <span class="app-file-upload__trigger-icon" aria-hidden="true">
                         <IconFileUpload />
                     </span>
@@ -24,7 +36,7 @@
 
             <div class="app-file-upload__actions">
                 <AppButton variant="outline" size="sm" :disabled="disabled || !items.length" @click="handleClearAll">
-                    {{ multiple ? "전체 삭제" : "파일 삭제" }}
+                    {{ multiple ? '전체 삭제' : '파일 삭제' }}
                 </AppButton>
             </div>
         </div>
@@ -42,7 +54,7 @@
 
                     <div class="app-file-upload__meta">
                         <span class="app-file-upload__meta-item">
-                            {{ uploadItem.type || "unknown" }}
+                            {{ uploadItem.type || 'unknown' }}
                         </span>
                         <span class="app-file-upload__meta-divider">·</span>
                         <span class="app-file-upload__meta-item">
@@ -52,13 +64,13 @@
                 </div>
 
                 <div class="app-file-upload__item-actions">
-                    <AppTextButton v-if="isPdfItem(uploadItem)" size="sm" aria-label="PDF 미리보기"
-                        @click="handlePreviewPdf(uploadItem)">
+                    <AppTextButton v-if="isPdfItem(uploadItem)" size="sm" aria-label="PDF 미리보기" @click="handlePreviewPdf(uploadItem)">
                         미리보기
                     </AppTextButton>
 
-                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled"
-                        @click="handleRemoveItem(uploadItem.id)"><IconClose /></AppIconButton>
+                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled" @click="handleRemoveItem(uploadItem.id)"
+                        ><IconClose
+                    /></AppIconButton>
                 </div>
             </li>
         </ul>
@@ -70,19 +82,10 @@
 </template>
 
 <script setup lang="ts">
-import { IconClose, IconFile, IconFileUpload } from "~/components/icons";
-import { useModalViewer } from "~/composables/useModalViewer";
-import {
-    createUploadId,
-    formatBytes,
-    resolveNextUploadItems,
-} from "~/utils/upload";
-import {
-    normalizeUploadItems,
-    resolveUploadValue,
-    useAppUpload,
-    type AppUploadModelValue,
-} from "~/composables/useAppUpload";
+import { IconClose, IconFile, IconFileUpload } from '~/components/icons';
+import { useModalViewer } from '~/composables/useModalViewer';
+import { createUploadId, formatBytes, resolveNextUploadItems } from '~/utils/upload';
+import { normalizeUploadItems, resolveUploadValue, useAppUpload, type AppUploadModelValue } from '~/composables/useAppUpload';
 
 type AppUploadFileModelValue = AppUploadModelValue<AppUploadFileItem>;
 
@@ -93,7 +96,7 @@ export type AppUploadFileItem = {
     size: number;
     path?: string;
     file?: File;
-    source?: "sample" | "upload";
+    source?: 'sample' | 'upload';
 };
 
 const props = withDefaults(
@@ -112,9 +115,9 @@ const props = withDefaults(
         modelValue: null,
         disabled: false,
         multiple: false,
-        accept: "*/*",
-        hint: "",
-        triggerText: "파일 업로드",
+        accept: '*/*',
+        hint: '',
+        triggerText: '파일 업로드',
         allowDrop: true,
         maxSizeBytes: undefined,
         maxCount: undefined,
@@ -122,14 +125,11 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-    (
-        e: "update:modelValue",
-        value: AppUploadFileItem | AppUploadFileItem[] | null,
-    ): void;
-    (e: "change", value: AppUploadFileItem | AppUploadFileItem[] | null): void;
-    (e: "remove", item: AppUploadFileItem): void;
-    (e: "clear"): void;
-    (e: "error", payload: { message: string; detail?: unknown }): void;
+    (e: 'update:modelValue', value: AppUploadFileItem | AppUploadFileItem[] | null): void;
+    (e: 'change', value: AppUploadFileItem | AppUploadFileItem[] | null): void;
+    (e: 'remove', item: AppUploadFileItem): void;
+    (e: 'clear'): void;
+    (e: 'error', payload: { message: string; detail?: unknown }): void;
 }>();
 
 const { openPdfViewer } = useModalViewer();
@@ -146,15 +146,14 @@ const {
 } = useAppUpload(props, error);
 
 function createPathItem(path: string, index = 0): AppUploadFileItem {
-    const fallbackName =
-        path.split("/").pop()?.split("?")[0] || `file-${index + 1}`;
+    const fallbackName = path.split('/').pop()?.split('?')[0] || `file-${index + 1}`;
     return {
         id: `path-${index}-${path}`,
         name: fallbackName,
-        type: "file/path",
+        type: 'file/path',
         size: 0,
         path,
-        source: "sample",
+        source: 'sample',
     };
 }
 
@@ -163,40 +162,36 @@ const items = computed<AppUploadFileItem[]>(() => {
 });
 
 function createId() {
-    return createUploadId("file");
+    return createUploadId('file');
 }
 
 function emitValue(nextItems: AppUploadFileItem[]) {
     const value = resolveUploadValue(nextItems, props.multiple);
 
-    emit("update:modelValue", value);
-    emit("change", value);
+    emit('update:modelValue', value);
+    emit('change', value);
 }
 
 function error(message: string, detail?: unknown) {
-    emit("error", { message, detail });
+    emit('error', { message, detail });
 }
 
-async function createItemFromFile(
-    file: File,
-): Promise<AppUploadFileItem | null> {
+async function createItemFromFile(file: File): Promise<AppUploadFileItem | null> {
     const accepted = shouldAcceptFile(file);
     if (!accepted) return null;
 
     return {
         id: createId(),
         name: file.name,
-        type: file.type || "application/octet-stream",
+        type: file.type || 'application/octet-stream',
         size: file.size,
         file,
-        source: "upload",
+        source: 'upload',
     };
 }
 
 async function appendFiles(files: File[]) {
-    const createdItems = (
-        await Promise.all(files.map(createItemFromFile))
-    ).filter(Boolean) as AppUploadFileItem[];
+    const createdItems = (await Promise.all(files.map(createItemFromFile))).filter(Boolean) as AppUploadFileItem[];
 
     const nextItems = resolveNextUploadItems({
         currentItems: items.value,
@@ -213,18 +208,14 @@ function handleRemoveItem(id: string) {
     const target = items.value.find((uploadItem) => uploadItem.id === id);
     if (!target) return;
 
-    emit("remove", target);
+    emit('remove', target);
     emitValue(items.value.filter((uploadItem) => uploadItem.id !== id));
 }
 
 function isPdfItem(item: AppUploadFileItem) {
     const name = item.name.toLowerCase();
-    const path = item.path?.toLowerCase() ?? "";
-    return (
-        item.type === "application/pdf" ||
-        name.endsWith(".pdf") ||
-        path.endsWith(".pdf")
-    );
+    const path = item.path?.toLowerCase() ?? '';
+    return item.type === 'application/pdf' || name.endsWith('.pdf') || path.endsWith('.pdf');
 }
 
 function handlePreviewPdf(item: AppUploadFileItem) {
@@ -237,9 +228,9 @@ function handlePreviewPdf(item: AppUploadFileItem) {
 
 function handleClearAll() {
     if (items.value.length === 1) {
-        emit("remove", items.value[0]);
+        emit('remove', items.value[0]);
     }
-    emit("clear");
+    emit('clear');
     emitValue([]);
 }
 
@@ -250,7 +241,7 @@ async function handleFileChange(event: Event) {
     if (!files.length) return;
 
     await appendFiles(files);
-    target.value = "";
+    target.value = '';
 }
 
 async function handleDrop(event: DragEvent) {

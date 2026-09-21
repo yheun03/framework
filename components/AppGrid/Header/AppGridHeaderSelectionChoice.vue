@@ -1,12 +1,11 @@
 <template>
     <div class="app-grid-cell-control" @click.stop>
-        <AppChoice :model-value="checked" :indeterminate="indeterminate" type="checkbox" size="sm"
-            @update:model-value="handleChange" />
+        <AppChoice :model-value="checked" :indeterminate="indeterminate" type="checkbox" size="sm" @update:model-value="handleChange" />
     </div>
 </template>
 
 <script setup lang="ts">
-import type { IHeaderParams, IRowNode } from "ag-grid-community";
+import type { IHeaderParams, IRowNode } from 'ag-grid-community';
 
 const props = defineProps<{
     params: IHeaderParams;
@@ -40,14 +39,14 @@ function handleChange(value: boolean | string | number | null) {
 
 onMounted(() => {
     syncChecked();
-    props.params.api.addEventListener("selectionChanged", syncChecked);
-    props.params.api.addEventListener("filterChanged", syncChecked);
-    props.params.api.addEventListener("modelUpdated", syncChecked);
+    props.params.api.addEventListener('selectionChanged', syncChecked);
+    props.params.api.addEventListener('filterChanged', syncChecked);
+    props.params.api.addEventListener('modelUpdated', syncChecked);
 });
 
 onBeforeUnmount(() => {
-    props.params.api.removeEventListener("selectionChanged", syncChecked);
-    props.params.api.removeEventListener("filterChanged", syncChecked);
-    props.params.api.removeEventListener("modelUpdated", syncChecked);
+    props.params.api.removeEventListener('selectionChanged', syncChecked);
+    props.params.api.removeEventListener('filterChanged', syncChecked);
+    props.params.api.removeEventListener('modelUpdated', syncChecked);
 });
 </script>
