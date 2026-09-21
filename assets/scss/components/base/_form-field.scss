@@ -17,24 +17,24 @@
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        color: $gray-800;
+        color: var(--color-form-field);
 
         @include font(b3, sb);
     }
 
     &__required {
-        color: $status-error;
+        color: var(--color-form-field-status-error);
     }
 
     &__optional {
-        color: $gray-400;
+        color: var(--color-form-field-gray-400);
 
         @include font(c2, rg);
     }
 
     &__description {
         margin: 0;
-        color: $gray-500;
+        color: var(--color-form-field-gray-500);
 
         @include font(c2, rg);
     }
@@ -49,11 +49,11 @@
         @include font(c2, rg);
 
         &--hint {
-            color: $gray-500;
+            color: var(--color-form-field-gray-500);
         }
 
         &--error {
-            color: $status-error;
+            color: var(--color-form-field-status-error);
         }
     }
 
@@ -62,7 +62,7 @@
         .app-form-field__label,
         .app-form-field__description,
         .app-form-field__message {
-            color: $gray-400;
+            color: var(--color-form-field-gray-400);
         }
     }
 }

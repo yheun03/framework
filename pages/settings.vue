@@ -18,6 +18,9 @@
                         {{ t('theme.dark') }}
                     </AppButton>
                 </div>
+                <div class="page-demo-actions">
+                    <AppButton to="/theme" variant="outline" tone="primary">{{ t('settings.theme.colors') }}</AppButton>
+                </div>
             </section>
 
             <section class="page-demo-card">

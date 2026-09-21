@@ -44,7 +44,7 @@
 ========================================= */
 
 * {
-    @include scrollbar(rgba($gray-700, 0.45), rgba($gray-700, 0.7));
+    @include scrollbar(var(--theme-gray-700-alpha-45), var(--theme-gray-700-alpha-70));
 }
 
 /* =========================================
@@ -53,5 +53,5 @@
 
 .layout-nav,
 .layout-nav * {
-    @include scrollbar(rgba($gray-0, 0.35), rgba($gray-0, 0.6));
+    @include scrollbar(var(--theme-gray-0-alpha-35), var(--theme-gray-0-alpha-60));
 }

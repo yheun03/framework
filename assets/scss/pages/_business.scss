@@ -2,11 +2,11 @@
 @use 'sass:color';
 
 $business-status-colors: (
-    'success': $status-success,
-    'warning': $status-warning,
-    'error': $status-error,
-    'info': $status-info,
-    'gray': $gray-500,
+    'success': 'status-success',
+    'warning': 'status-warning',
+    'error': 'status-error',
+    'info': 'status-info',
+    'gray': 'gray-500',
 );
 
 .business-page {
@@ -26,20 +26,20 @@ $business-status-colors: (
 
     &__eyebrow {
         margin: 0 0 4px;
-        color: $primary-600;
+        color: var(--theme-primary-600);
         font-weight: 600;
         @include font(c2, rg);
     }
 
     &__title {
         margin: 0;
-        color: $gray-900;
+        color: var(--theme-gray-900);
         @include font(h4, sb);
     }
 
     &__desc {
         margin: 6px 0 0;
-        color: $gray-600;
+        color: var(--theme-gray-600);
         @include font(b3, rg);
     }
 
@@ -79,28 +79,28 @@ $business-status-colors: (
         gap: 6px;
         min-height: 112px;
         padding: 20px;
-        border: 1px solid $gray-200;
+        border: 1px solid var(--theme-gray-200);
         border-radius: 12px;
-        background: $gray-0;
+        background: var(--theme-gray-0);
     }
 
     &__label {
-        color: $gray-600;
+        color: var(--theme-gray-600);
         @include font(b4, rg);
     }
 
     &__value {
-        color: $gray-900;
+        color: var(--theme-gray-900);
         @include font(t4, sb);
     }
 
     &__change {
-        color: $gray-500;
+        color: var(--theme-gray-500);
         @include font(c2, rg);
 
         @each $state, $state-color in $business-status-colors {
             &--#{$state} {
-                color: $state-color;
+                color: var(--theme-#{$state-color});
             }
         }
     }
@@ -112,9 +112,9 @@ $business-status-colors: (
     align-items: center;
     gap: 12px;
     padding: 20px;
-    border: 1px solid $gray-200;
+    border: 1px solid var(--theme-gray-200);
     border-radius: 12px;
-    background: $gray-0;
+    background: var(--theme-gray-0);
 
     &__field {
         flex: 1 1 180px;
@@ -143,7 +143,7 @@ $business-status-colors: (
 .business-table-wrap {
     width: 100%;
     overflow-x: auto;
-    border: 1px solid $gray-200;
+    border: 1px solid var(--theme-gray-200);
     border-radius: 12px;
 }
 
@@ -151,22 +151,22 @@ $business-status-colors: (
     width: 100%;
     min-width: 800px;
     border-collapse: collapse;
-    color: $gray-800;
+    color: var(--theme-gray-800);
     @include font(b3, rg);
 
     th,
     td {
         height: 48px;
         padding: 12px 16px;
-        border-bottom: 1px solid $gray-200;
+        border-bottom: 1px solid var(--theme-gray-200);
         text-align: left;
         vertical-align: middle;
         white-space: nowrap;
     }
 
     th {
-        background: $gray-50;
-        color: $gray-700;
+        background: var(--theme-gray-50);
+        color: var(--theme-gray-700);
         font-weight: 600;
     }
 
@@ -176,14 +176,14 @@ $business-status-colors: (
         }
 
         &:hover td {
-            background: color.change($primary-50, $alpha: 0.55);
+            background: var(--theme-primary-50-alpha-55);
         }
     }
 
     tfoot {
         td,
         th {
-            background: $gray-50;
+            background: var(--theme-gray-50);
             font-weight: 600;
         }
     }
@@ -194,7 +194,7 @@ $business-status-colors: (
 }
 
 .business-link {
-    color: $primary-600;
+    color: var(--theme-primary-600);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -211,8 +211,8 @@ $business-status-colors: (
 
     @each $state, $state-color in $business-status-colors {
         &--#{$state} {
-            background: color.change($state-color, $alpha: 0.12);
-            color: $state-color;
+            background: var(--theme-#{$state-color}-alpha-12);
+            color: var(--theme-#{$state-color});
         }
     }
 }
@@ -233,15 +233,15 @@ $business-status-colors: (
         grid-template-columns: 100px minmax(0, 1fr);
         gap: 12px;
         padding: 14px 0;
-        border-bottom: 1px solid $gray-100;
+        border-bottom: 1px solid var(--theme-gray-100);
 
         dt {
-            color: $gray-500;
+            color: var(--theme-gray-500);
         }
 
         dd {
             margin: 0;
-            color: $gray-900;
+            color: var(--theme-gray-900);
             font-weight: 600;
         }
     }
@@ -254,12 +254,12 @@ $business-status-colors: (
     gap: 12px;
 
     strong {
-        color: $gray-900;
+        color: var(--theme-gray-900);
         @include font(h5, sb);
     }
 
     span {
-        color: $status-success;
+        color: var(--theme-status-success);
         @include font(b4, rg);
     }
 }
@@ -275,7 +275,7 @@ $business-status-colors: (
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: $status-success;
+    color: var(--theme-status-success);
     font-weight: 600;
     @include font(b4, rg);
 
@@ -283,8 +283,8 @@ $business-status-colors: (
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: $status-success;
-        box-shadow: 0 0 0 4px color.change($status-success, $alpha: 0.14);
+        background: var(--theme-status-success);
+        box-shadow: 0 0 0 4px var(--theme-status-success-alpha-14);
     }
 }
 
@@ -298,14 +298,14 @@ $business-status-colors: (
     display: grid;
     gap: 16px;
     padding: 20px;
-    border: 1px solid $gray-200;
-    border-top: 3px solid $gray-400;
+    border: 1px solid var(--theme-gray-200);
+    border-top: 3px solid var(--theme-gray-400);
     border-radius: 12px;
-    background: $gray-0;
+    background: var(--theme-gray-0);
 
     @each $state, $state-color in $business-status-colors {
         &--#{$state} {
-            border-top-color: $state-color;
+            border-top-color: var(--theme-#{$state-color});
         }
     }
 
@@ -317,13 +317,13 @@ $business-status-colors: (
     }
 
     &__code {
-        color: $gray-500;
+        color: var(--theme-gray-500);
         @include font(c2, rg);
     }
 
     &__title {
         margin: 3px 0 0;
-        color: $gray-900;
+        color: var(--theme-gray-900);
         @include font(b2, sb);
     }
 
@@ -339,13 +339,13 @@ $business-status-colors: (
         }
 
         dt {
-            color: $gray-500;
+            color: var(--theme-gray-500);
             @include font(c3, rg);
         }
 
         dd {
             margin: 0;
-            color: $gray-800;
+            color: var(--theme-gray-800);
             font-weight: 600;
             @include font(c1, rg);
         }

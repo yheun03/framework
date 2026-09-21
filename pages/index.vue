@@ -68,9 +68,9 @@ const currentYear = new Date().getFullYear();
 .home {
     min-height: 100vh;
     background:
-        radial-gradient(900px 520px at 8% 5%, rgba($primary-500, 0.25), transparent 52%),
-        radial-gradient(840px 560px at 95% 2%, rgba($primary-200, 0.3), transparent 52%), linear-gradient(180deg, $gray-0, $primary-50);
-    color: $gray-900;
+        radial-gradient(900px 520px at 8% 5%, var(--theme-primary-500-alpha-25), transparent 52%),
+        radial-gradient(840px 560px at 95% 2%, var(--theme-primary-200-alpha-30), transparent 52%), linear-gradient(180deg, var(--theme-gray-0), var(--theme-primary-50));
+    color: var(--theme-gray-900);
     padding: 22px 22px 28px;
 
     &__hero {
@@ -80,22 +80,22 @@ const currentYear = new Date().getFullYear();
         padding: 24px;
         margin-bottom: 16px;
         background:
-            radial-gradient(900px 540px at 20% 10%, rgba($primary-500, 0.55), transparent 60%),
-            radial-gradient(820px 560px at 90% 20%, rgba($primary-200, 0.58), transparent 60%),
-            radial-gradient(860px 640px at 40% 105%, rgba($status-info, 0.25), transparent 62%), linear-gradient(180deg, $primary-900, $primary-700);
-        border: 1px solid rgba($gray-0, 0.18);
+            radial-gradient(900px 540px at 20% 10%, var(--theme-primary-500-alpha-55), transparent 60%),
+            radial-gradient(820px 560px at 90% 20%, var(--theme-primary-200-alpha-58), transparent 60%),
+            radial-gradient(860px 640px at 40% 105%, var(--theme-status-info-alpha-25), transparent 62%), linear-gradient(180deg, var(--theme-primary-900), var(--theme-primary-700));
+        border: 1px solid var(--theme-gray-0-alpha-18);
         box-shadow:
-            0 24px 58px rgba($primary-900, 0.14),
-            0 10px 22px rgba($primary-900, 0.12);
-        color: $gray-0;
+            0 24px 58px var(--theme-primary-900-alpha-14),
+            0 10px 22px var(--theme-primary-900-alpha-12);
+        color: var(--theme-gray-0);
 
         &::before {
             content: '';
             position: absolute;
             inset: -1px;
             background:
-                linear-gradient(135deg, rgba($gray-0, 0.14), rgba($gray-0, 0) 35%),
-                repeating-linear-gradient(135deg, rgba($gray-0, 0.08) 0px, rgba($gray-0, 0.08) 1px, rgba($gray-0, 0) 1px, rgba($gray-0, 0) 10px);
+                linear-gradient(135deg, var(--theme-gray-0-alpha-14), var(--theme-gray-0-alpha-0) 35%),
+                repeating-linear-gradient(135deg, var(--theme-gray-0-alpha-8) 0px, var(--theme-gray-0-alpha-8) 1px, var(--theme-gray-0-alpha-0) 1px, var(--theme-gray-0-alpha-0) 10px);
             opacity: 0.45;
             pointer-events: none;
         }
@@ -135,8 +135,8 @@ const currentYear = new Date().getFullYear();
             display: inline-grid;
             place-items: center;
             border-radius: 999px;
-            background: rgba($gray-0, 0.16);
-            border: 1px solid rgba($gray-0, 0.28);
+            background: var(--theme-gray-0-alpha-16);
+            border: 1px solid var(--theme-gray-0-alpha-28);
         }
 
         &-name {
@@ -146,22 +146,22 @@ const currentYear = new Date().getFullYear();
 
     &__signin {
         @include font(btn3, sb);
-        color: rgba($gray-0, 0.92);
+        color: var(--theme-gray-0-alpha-92);
         text-decoration: none;
-        border: 1px solid rgba($gray-0, 0.28);
+        border: 1px solid var(--theme-gray-0-alpha-28);
         border-radius: 999px;
         height: 36px;
         padding: 0 14px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba($gray-0, 0.08);
+        background: var(--theme-gray-0-alpha-8);
     }
 
     &__eyebrow {
         margin: 0;
         @include font(c1, sb);
-        color: rgba($gray-0, 0.82);
+        color: var(--theme-gray-0-alpha-82);
         text-transform: uppercase;
         letter-spacing: 0.06em;
     }
@@ -175,7 +175,7 @@ const currentYear = new Date().getFullYear();
     &__desc {
         margin: 0;
         @include font(b3, rg);
-        color: rgba($gray-0, 0.82);
+        color: var(--theme-gray-0-alpha-82);
         line-height: 1.55;
         max-width: 680px;
     }
@@ -197,12 +197,12 @@ const currentYear = new Date().getFullYear();
         gap: 8px;
         padding: 18px;
         border-radius: 16px;
-        border: 1px solid rgba($gray-900, 0.1);
-        background: rgba($gray-0, 0.86);
+        border: 1px solid var(--theme-gray-900-alpha-10);
+        background: var(--theme-gray-0-alpha-86);
         text-decoration: none;
         box-shadow:
-            0 18px 44px rgba($primary-900, 0.08),
-            0 8px 18px rgba($primary-900, 0.06);
+            0 18px 44px var(--theme-primary-900-alpha-8),
+            0 8px 18px var(--theme-primary-900-alpha-6);
         transition:
             transform 0.15s ease,
             border-color 0.15s ease,
@@ -210,10 +210,10 @@ const currentYear = new Date().getFullYear();
 
         &:hover {
             transform: translateY(-2px);
-            border-color: rgba($primary-500, 0.3);
+            border-color: var(--theme-primary-500-alpha-30);
             box-shadow:
-                0 24px 54px rgba($primary-900, 0.1),
-                0 10px 20px rgba($primary-900, 0.08);
+                0 24px 54px var(--theme-primary-900-alpha-10),
+                0 10px 20px var(--theme-primary-900-alpha-8);
         }
 
         &-icon {
@@ -222,19 +222,19 @@ const currentYear = new Date().getFullYear();
             border-radius: 10px;
             display: inline-grid;
             place-items: center;
-            color: $primary-700;
-            background: rgba($primary-100, 0.9);
+            color: var(--theme-primary-700);
+            background: var(--theme-primary-100-alpha-90);
         }
 
         &-title {
             @include font(btn2, sb);
-            color: $gray-900;
+            color: var(--theme-gray-900);
         }
 
         &-desc {
             margin: 0;
             @include font(c1, rg);
-            color: rgba($gray-900, 0.62);
+            color: var(--theme-gray-900-alpha-62);
             line-height: 1.55;
         }
     }
@@ -246,7 +246,7 @@ const currentYear = new Date().getFullYear();
         p {
             margin: 0;
             @include font(c2, rg);
-            color: rgba($gray-900, 0.54);
+            color: var(--theme-gray-900-alpha-54);
         }
     }
 }

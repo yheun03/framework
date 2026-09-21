@@ -8,16 +8,16 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: minmax(420px, 0.92fr) minmax(560px, 1.08fr);
-    background: $gray-0;
+    background: var(--theme-gray-0);
 
     &__hero {
         position: relative;
         overflow: hidden;
-        color: $gray-0;
+        color: var(--theme-gray-0);
         background:
-            radial-gradient(720px 520px at 5% 5%, rgba($primary-400, 0.62), transparent 58%),
-            radial-gradient(640px 480px at 100% 30%, rgba($primary-200, 0.32), transparent 62%),
-            linear-gradient(155deg, $primary-900 5%, $primary-700 58%, $primary-600 100%);
+            radial-gradient(720px 520px at 5% 5%, var(--theme-primary-400-alpha-62), transparent 58%),
+            radial-gradient(640px 480px at 100% 30%, var(--theme-primary-200-alpha-32), transparent 62%),
+            linear-gradient(155deg, var(--theme-primary-900) 5%, var(--theme-primary-700) 58%, var(--theme-primary-600) 100%);
 
         &::before,
         &::after {
@@ -29,7 +29,7 @@
         &::before {
             inset: 0;
             opacity: 0.34;
-            background: repeating-linear-gradient(135deg, rgba($gray-0, 0.1) 0 1px, transparent 1px 12px);
+            background: repeating-linear-gradient(135deg, var(--theme-gray-0-alpha-10) 0 1px, transparent 1px 12px);
         }
 
         &::after {
@@ -37,11 +37,11 @@
             height: 340px;
             right: -120px;
             bottom: -120px;
-            border: 1px solid rgba($gray-0, 0.24);
+            border: 1px solid var(--theme-gray-0-alpha-24);
             border-radius: 50%;
             box-shadow:
-                0 0 0 70px rgba($gray-0, 0.04),
-                0 0 0 140px rgba($gray-0, 0.03);
+                0 0 0 70px var(--theme-gray-0-alpha-4),
+                0 0 0 140px var(--theme-gray-0-alpha-3);
         }
 
         &-inner {
@@ -72,7 +72,7 @@
             max-width: 460px;
             @include font(b2, rg);
             line-height: 1.7;
-            color: rgba($gray-0, 0.76);
+            color: var(--theme-gray-0-alpha-76);
         }
     }
 
@@ -81,7 +81,7 @@
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        color: $gray-0;
+        color: var(--theme-gray-0);
         text-decoration: none;
 
         &-icon {
@@ -89,9 +89,9 @@
             height: 42px;
             display: grid;
             place-items: center;
-            border: 1px solid rgba($gray-0, 0.26);
+            border: 1px solid var(--theme-gray-0-alpha-26);
             border-radius: 12px;
-            background: rgba($gray-0, 0.12);
+            background: var(--theme-gray-0-alpha-12);
             backdrop-filter: blur(8px);
             font-size: 20px;
         }
@@ -111,7 +111,7 @@
     }
 
     &__eyebrow {
-        color: rgba($primary-100, 0.86);
+        color: var(--theme-primary-100-alpha-86);
     }
 
     &__features {
@@ -127,17 +127,17 @@
         align-items: center;
         gap: 10px;
         @include font(b3, rg);
-        color: rgba($gray-0, 0.88);
+        color: var(--theme-gray-0-alpha-88);
 
         .app-icon {
-            color: $primary-100;
+            color: var(--theme-primary-100);
         }
     }
 
     &__copyright {
         margin: 0;
         @include font(c2, rg);
-        color: rgba($gray-0, 0.56);
+        color: var(--theme-gray-0-alpha-56);
     }
 
     &__panel {
@@ -145,7 +145,7 @@
         padding: 48px clamp(28px, 7vw, 108px);
         display: grid;
         place-items: center;
-        background: radial-gradient(680px 420px at 100% 0%, rgba($primary-100, 0.72), transparent 62%), linear-gradient(180deg, $gray-0, $gray-50);
+        background: radial-gradient(680px 420px at 100% 0%, var(--theme-primary-100-alpha-72), transparent 62%), linear-gradient(180deg, var(--theme-gray-0), var(--theme-gray-50));
 
         &-inner {
             width: min(520px, 100%);
@@ -162,13 +162,13 @@
 
     &__step {
         margin-bottom: 10px;
-        color: $primary-600;
+        color: var(--theme-primary-600);
     }
 
     &__title {
         margin: 0;
         @include font(t3, sb);
-        color: $gray-900;
+        color: var(--theme-gray-900);
         letter-spacing: -0.035em;
     }
 
@@ -176,10 +176,10 @@
         margin: 10px 0 0;
         @include font(b3, rg);
         line-height: 1.6;
-        color: $gray-600;
+        color: var(--theme-gray-600);
 
         strong {
-            color: $gray-800;
+            color: var(--theme-gray-800);
             font-weight: 600;
         }
     }
@@ -206,20 +206,20 @@
         padding: 18px;
         display: grid;
         gap: 12px;
-        border: 1px solid $gray-200;
+        border: 1px solid var(--theme-gray-200);
         border-radius: 10px;
-        background: rgba($gray-0, 0.72);
+        background: var(--theme-gray-0-alpha-72);
     }
 
     &__error {
         margin: -4px 0 0 30px;
         @include font(c2, rg);
-        color: $status-error;
+        color: var(--theme-status-error);
     }
 
     &__link {
         @include font(b4, sb);
-        color: $primary-700;
+        color: var(--theme-primary-700);
         text-decoration: none;
 
         &:hover {
@@ -235,11 +235,11 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        border-top: 1px solid $gray-200;
+        border-top: 1px solid var(--theme-gray-200);
 
         &-text {
             @include font(b4, rg);
-            color: $gray-600;
+            color: var(--theme-gray-600);
         }
     }
 
@@ -254,10 +254,10 @@
             display: grid;
             place-items: center;
             border-radius: 22px;
-            background: $primary-50;
-            color: $primary-600;
+            background: var(--theme-primary-50);
+            color: var(--theme-primary-600);
             font-size: 30px;
-            box-shadow: inset 0 0 0 1px $primary-100;
+            box-shadow: inset 0 0 0 1px var(--theme-primary-100);
         }
     }
 }

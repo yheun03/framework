@@ -15,9 +15,9 @@
 
     &__dropzone {
         position: relative;
-        border: 1px dashed $line-regular;
+        border: 1px dashed var(--border-upload-image);
         border-radius: 12px;
-        background: $bg-white;
+        background: var(--bg-upload-image);
         transition:
             border-color 0.16s ease,
             background-color 0.16s ease;
@@ -42,7 +42,7 @@
     &__trigger-icon {
         display: inline-flex;
         justify-content: center;
-        color: $primary;
+        color: var(--color-upload-image);
 
         svg {
             width: 24px;
@@ -51,12 +51,12 @@
     }
 
     &__trigger-text {
-        color: $gray-900;
+        color: var(--color-upload-image-gray-900);
         @include font(b3, sb);
     }
 
     &__trigger-subtext {
-        color: $gray-600;
+        color: var(--color-upload-image-gray-600);
         @include font(c2, rg);
     }
 
@@ -76,9 +76,9 @@
         gap: 12px;
         align-items: center;
         padding: 10px 12px;
-        border: 1px solid $line-regular;
+        border: 1px solid var(--border-upload-image);
         border-radius: 10px;
-        background: $bg-white;
+        background: var(--bg-upload-image);
     }
 
     &__preview {
@@ -89,7 +89,7 @@
         height: 64px;
         overflow: hidden;
         border-radius: 8px;
-        background: $bg-light;
+        background: var(--bg-upload-image-light);
 
         img {
             display: block;
@@ -100,7 +100,7 @@
     }
 
     &__preview-empty {
-        color: $gray-500;
+        color: var(--color-upload-image-gray-500);
         @include font(c3, rg);
     }
 
@@ -114,7 +114,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: $gray-900;
+        color: var(--color-upload-image-gray-900);
         @include font(b3, sb);
     }
 
@@ -122,12 +122,12 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        color: $gray-600;
+        color: var(--color-upload-image-gray-600);
         @include font(c2, rg);
     }
 
     &__meta-divider {
-        color: $gray-400;
+        color: var(--color-upload-image-gray-400);
     }
 
     &__item-actions {
@@ -137,14 +137,14 @@
     }
 
     &__hint {
-        color: $gray-600;
+        color: var(--color-upload-image-gray-600);
         @include font(c2, rg);
     }
 
     &.is-dragover {
         .app-image-upload__dropzone {
-            border-color: $primary;
-            background: $primary-50;
+            border-color: var(--border-upload-image-primary);
+            background: var(--bg-upload-image-primary-50);
         }
     }
 

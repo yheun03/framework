@@ -22,13 +22,13 @@
     &__title {
         margin: 0;
         @include font(h5, sb);
-        color: $gray-900;
+        color: var(--color-section);
     }
 
     &__desc {
         margin: 0;
         @include font(b4, rg);
-        color: $gray-600;
+        color: var(--color-section-gray-600);
     }
 
     &__body {
@@ -63,9 +63,9 @@
     gap: var(--app-section-gap, 12px);
 
     padding: 20px;
-    border: 1px solid $gray-200;
+    border: 1px solid var(--border-section);
     border-radius: 16px;
-    background: $gray-0;
+    background: var(--bg-section);
 
     &__header {
         flex: 0 0 auto;
@@ -79,13 +79,13 @@
     &__title {
         margin: 0;
         @include font(h6, sb);
-        color: $gray-900;
+        color: var(--color-section);
     }
 
     &__desc {
         margin: 0;
         @include font(b4, rg);
-        color: $gray-600;
+        color: var(--color-section-gray-600);
     }
 
     &__content {

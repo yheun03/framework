@@ -1,6 +1,5 @@
 @use '../../abstract' as *;
 @use 'sass:map';
-@use 'sass:color';
 @use 'icon';
 
 /* =========================================================
@@ -8,13 +7,13 @@
 ========================================================= */
 
 $btn-tones: (
-    'primary': $primary-500,
-    'secondary': $secondary,
-    'gray': $gray-700,
-    'danger': $status-error,
-    'warning': $status-warning,
-    'success': $status-success,
-    'info': $status-info,
+    'primary': 'primary',
+    'secondary': 'secondary',
+    'gray': 'gray',
+    'danger': 'danger',
+    'warning': 'warning',
+    'success': 'success',
+    'info': 'info',
 );
 
 $btn-sizes: (
@@ -75,67 +74,52 @@ $btn-text-sizes: (
     ),
 );
 
-$icon-button-tones: (
-    'primary': $primary-500,
-    'secondary': $secondary,
-    'gray': $gray-700,
-    'danger': $status-error,
-    'warning': $status-warning,
-    'success': $status-success,
-    'info': $status-info,
-);
+$icon-button-tones: $btn-tones;
 
 /* =========================================================
    Variant
 ========================================================= */
 
 @mixin btn-variant($variant, $color) {
-    $hover: color.adjust($color, $lightness: -6%);
-    $active: color.adjust($color, $lightness: -10%);
-    $focus: color.adjust($color, $lightness: 18%);
-
     @if $variant ==fill {
-        --btn-bg: #{$color};
-        --btn-fg: #{$gray-0};
+        --btn-bg: var(--bg-button-#{$color});
+        --btn-fg: var(--color-button);
         --btn-bd: transparent;
 
-        --btn-bg-hover: #{$hover};
-        --btn-bg-active: #{$active};
+        --btn-bg-hover: var(--bg-button-#{$color}-hover);
+        --btn-bg-active: var(--bg-button-#{$color}-active);
     } @else if $variant ==outline {
-        --btn-bg: #{$gray-0};
-        --btn-fg: #{$color};
-        --btn-bd: #{$color};
+        --btn-bg: var(--bg-button);
+        --btn-fg: var(--color-button-#{$color});
+        --btn-bd: var(--border-button-#{$color});
 
-        --btn-bg-hover: #{rgba($gray-0, 0.6)};
-        --btn-bg-active: #{rgba($gray-0, 0.8)};
-        // --btn-bg-hover:#{rgba($gray-0,.06)};
-        // --btn-bg-active:#{rgba($gray-0,.10)};
+        --btn-bg-hover: var(--bg-button-gray-0-alpha-60);
+        --btn-bg-active: var(--bg-button-gray-0-alpha-80);
+        --btn-fg-hover: var(--color-button-#{$color}-hover);
+        --btn-fg-active: var(--color-button-#{$color}-active);
 
-        --btn-fg-hover: #{$hover};
-        --btn-fg-active: #{$active};
-
-        --btn-bd-hover: #{$hover};
-        --btn-bd-active: #{$active};
+        --btn-bd-hover: var(--border-button-#{$color}-hover);
+        --btn-bd-active: var(--border-button-#{$color}-active);
     } @else if $variant ==text {
         --btn-bg: transparent;
-        --btn-fg: #{$color};
+        --btn-fg: var(--color-button-#{$color});
         --btn-bd: transparent;
 
-        --btn-fg-hover: #{$hover};
-        --btn-fg-active: #{$active};
+        --btn-fg-hover: var(--color-button-#{$color}-hover);
+        --btn-fg-active: var(--color-button-#{$color}-active);
     } @else if $variant ==underline {
         --btn-bg: transparent;
-        --btn-fg: #{$color};
+        --btn-fg: var(--color-button-#{$color});
         --btn-bd: transparent;
 
-        --btn-fg-hover: #{$hover};
-        --btn-fg-active: #{$active};
+        --btn-fg-hover: var(--color-button-#{$color}-hover);
+        --btn-fg-active: var(--color-button-#{$color}-active);
 
         text-decoration: underline;
         text-underline-offset: 3px;
     }
 
-    --btn-focus: #{$focus};
+    --btn-focus: var(--outline-button-#{$color});
 }
 
 /* =========================================================
@@ -154,7 +138,7 @@ $icon-button-tones: (
     border: 1px solid transparent;
 
     background: transparent;
-    color: $gray-900;
+    color: var(--color-button-gray-900);
 
     cursor: pointer;
     user-select: none;
@@ -174,7 +158,7 @@ $icon-button-tones: (
     /* CSS Variables */
 
     --btn-bg: transparent;
-    --btn-fg: #{$gray-900};
+    --btn-fg: var(--color-button-gray-900);
     --btn-bd: transparent;
 
     --btn-bg-hover: transparent;
@@ -186,7 +170,7 @@ $icon-button-tones: (
     --btn-bd-hover: var(--btn-bd);
     --btn-bd-active: var(--btn-bd);
 
-    --btn-focus: #{$primary-300};
+    --btn-focus: var(--outline-button);
 
     background: var(--btn-bg);
     color: var(--btn-fg);
@@ -246,19 +230,19 @@ $icon-button-tones: (
     ------------------------------------------------ */
 
     &--variant-fill {
-        @include btn-variant(fill, $primary-500);
+        @include btn-variant(fill, 'primary');
     }
 
     &--variant-outline {
-        @include btn-variant(outline, $primary-500);
+        @include btn-variant(outline, 'primary');
     }
 
     &--variant-text {
-        @include btn-variant(text, $primary-500);
+        @include btn-variant(text, 'primary');
     }
 
     &--variant-underline {
-        @include btn-variant(underline, $primary-500);
+        @include btn-variant(underline, 'primary');
     }
 
     /* ------------------------------------------------
@@ -320,13 +304,13 @@ $icon-button-tones: (
 
 .app-text-button {
     --btn-bg: transparent;
-    --btn-fg: #{$gray-700};
+    --btn-fg: var(--color-button-gray-700);
     --btn-bd: transparent;
     --btn-bg-hover: transparent;
     --btn-bg-active: transparent;
     --btn-fg-hover: var(--btn-fg);
     --btn-fg-active: var(--btn-fg);
-    --btn-focus: #{$primary-300};
+    --btn-focus: var(--outline-button);
 
     display: inline-flex;
     align-items: center;
@@ -361,11 +345,11 @@ $icon-button-tones: (
     }
 
     &--variant-text {
-        @include btn-variant(text, $gray-700);
+        @include btn-variant(text, 'gray');
     }
 
     &--variant-underline {
-        @include btn-variant(underline, $gray-700);
+        @include btn-variant(underline, 'gray');
     }
 
     @each $tone, $color in $btn-tones {
@@ -418,12 +402,12 @@ $icon-button-tones: (
 .app-icon-button {
     --icon-button-size: 32px;
     --icon-size: 16px;
-    --icon-button-color: #{$gray-700};
+    --icon-button-color: var(--color-button-gray-700);
     --icon-button-bg: transparent;
     --icon-button-border: transparent;
-    --icon-button-bg-hover: #{rgba($gray-900, 0.06)};
-    --icon-button-bg-active: #{rgba($gray-900, 0.1)};
-    --icon-button-focus: #{$primary-300};
+    --icon-button-bg-hover: var(--bg-button-gray-900-alpha-6);
+    --icon-button-bg-active: var(--bg-button-gray-900-alpha-10);
+    --icon-button-focus: var(--outline-button);
 
     display: inline-flex;
     align-items: center;
@@ -486,19 +470,19 @@ $icon-button-tones: (
 
     @each $tone, $color in $icon-button-tones {
         &--tone-#{$tone} {
-            --icon-button-color: #{$color};
-            --icon-button-focus: #{color.adjust($color, $lightness: 18%)};
+            --icon-button-color: var(--color-button-#{$color});
+            --icon-button-focus: var(--outline-button-#{$color});
 
             &.app-icon-button--variant-soft {
-                --icon-button-bg: #{rgba($color, 0.08)};
-                --icon-button-bg-hover: #{rgba($color, 0.12)};
-                --icon-button-bg-active: #{rgba($color, 0.18)};
+                --icon-button-bg: var(--bg-icon-button-#{$color}-soft);
+                --icon-button-bg-hover: var(--bg-icon-button-#{$color}-soft-hover);
+                --icon-button-bg-active: var(--bg-icon-button-#{$color}-soft-active);
             }
 
             &.app-icon-button--variant-outline {
-                --icon-button-border: #{rgba($color, 0.6)};
-                --icon-button-bg-hover: #{rgba($color, 0.08)};
-                --icon-button-bg-active: #{rgba($color, 0.14)};
+                --icon-button-border: var(--border-icon-button-#{$color});
+                --icon-button-bg-hover: var(--bg-icon-button-#{$color}-outline-hover);
+                --icon-button-bg-active: var(--bg-icon-button-#{$color}-outline-active);
             }
         }
     }

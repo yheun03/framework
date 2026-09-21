@@ -12,9 +12,9 @@
         inset: 0;
         background:
             radial-gradient(600px 420px at 20% 20%,
-                rgba($primary-500, 0.18),
-                rgba($gray-900, 0) 65%),
-            rgba($gray-900, 0.55);
+                var(--bg-modal),
+                var(--bg-modal-gray-900-alpha-0) 65%),
+            var(--bg-modal-gray-900-alpha-55);
         backdrop-filter: blur(6px);
     }
 
@@ -25,11 +25,11 @@
         width: min(520px, 100%);
         max-height: calc(100dvh - 36px);
         border-radius: 18px;
-        border: 1px solid rgba($gray-0, 0.18);
-        background: rgba($gray-0, 0.92);
+        border: 1px solid var(--border-modal);
+        background: var(--bg-modal-gray-0-alpha-92);
         box-shadow:
-            0 34px 90px rgba($gray-900, 0.28),
-            0 18px 46px rgba($gray-900, 0.18);
+            0 34px 90px var(--shadow-modal),
+            0 18px 46px var(--shadow-modal-gray-900-alpha-18);
         overflow: hidden;
     }
 
@@ -43,18 +43,18 @@
         justify-content: space-between;
         gap: 12px;
         padding: 16px 16px 12px;
-        border-bottom: 1px solid rgba($gray-900, 0.08);
+        border-bottom: 1px solid var(--border-modal-gray-900-alpha-8);
         background:
             radial-gradient(420px 140px at 10% 0%,
-                rgba($primary-100, 0.9),
-                rgba($gray-0, 0) 65%),
-            rgba($gray-0, 0.7);
+                var(--bg-modal-primary-100-alpha-90),
+                var(--bg-modal-gray-0-alpha-0) 65%),
+            var(--bg-modal-gray-0-alpha-70);
     }
 
     &__title {
         margin: 0;
         @include font(t5, sb);
-        color: $gray-900;
+        color: var(--color-modal);
     }
 
     &__close {
@@ -73,13 +73,13 @@
         overflow: auto;
         padding: 14px 16px 16px;
         @include font(b3, rg);
-        color: rgba($gray-900, 0.76);
+        color: var(--color-modal-gray-900-alpha-76);
     }
 
     &__footer {
         padding: 12px 16px 16px;
-        border-top: 1px solid rgba($gray-900, 0.08);
-        background: rgba($gray-0, 0.7);
+        border-top: 1px solid var(--border-modal-gray-900-alpha-8);
+        background: var(--bg-modal-gray-0-alpha-70);
     }
 
     &__actions {
@@ -122,7 +122,7 @@
     min-height: 320px;
     max-height: calc(80vh - 32px);
     overflow: hidden;
-    background: rgba($gray-900, 0.04);
+    background: var(--bg-modal-gray-900-alpha-4);
     border-radius: 12px;
 
     &--gallery {
@@ -136,13 +136,13 @@
         gap: 12px;
         padding: 10px 12px;
         border-radius: 10px;
-        background: rgba($gray-0, 0.78);
-        border: 1px solid rgba($gray-900, 0.08);
+        background: var(--bg-modal-gray-0-alpha-78);
+        border: 1px solid var(--border-modal-gray-900-alpha-8);
     }
 
     &__count {
         @include font(b4, sb);
-        color: $gray-700;
+        color: var(--color-modal-gray-700);
     }
 
     &__nav {
@@ -182,9 +182,9 @@
         width: 76px;
         height: 56px;
         padding: 2px;
-        border: 1px solid rgba($gray-900, 0.12);
+        border: 1px solid var(--border-modal-gray-900-alpha-12);
         border-radius: 8px;
-        background: rgba($gray-0, 0.78);
+        background: var(--bg-modal-gray-0-alpha-78);
         cursor: pointer;
         transition:
             border-color 0.15s,
@@ -192,12 +192,12 @@
             opacity 0.15s;
 
         &:hover {
-            border-color: rgba($primary-500, 0.54);
+            border-color: var(--border-modal-primary-500-alpha-54);
         }
 
         &.is-active {
-            border-color: $primary-500;
-            box-shadow: 0 0 0 2px rgba($primary-500, 0.16);
+            border-color: var(--border-modal-primary-500);
+            box-shadow: 0 0 0 2px var(--shadow-modal-primary-500-alpha-16);
         }
     }
 
@@ -218,7 +218,7 @@
         height: 100%;
         overflow: hidden;
         border-radius: 12px;
-        background: $bg-white;
+        background: var(--bg-modal-white);
     }
 
     &__frame {
@@ -227,7 +227,7 @@
         height: 100%;
         border: 0;
         border-radius: 8px;
-        background: $bg-white;
+        background: var(--bg-modal-white);
     }
 
     &__empty {
@@ -236,8 +236,8 @@
         justify-content: center;
         height: 100%;
         min-height: 320px;
-        color: $gray-600;
-        background: rgba($gray-900, 0.04);
+        color: var(--color-modal-gray-600);
+        background: var(--bg-modal-gray-900-alpha-4);
         border-radius: 12px;
     }
 }

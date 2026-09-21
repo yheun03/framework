@@ -755,7 +755,7 @@ function handleReset() {
         margin: 0;
         font-size: 0.8125rem;
         font-weight: 600;
-        color: var(--color-text-muted, #64748b);
+        color: var(--color-grid-search-muted);
         white-space: nowrap;
     }
 
@@ -806,7 +806,7 @@ function handleReset() {
 
         &-sep {
             font-size: 0.8125rem;
-            color: var(--color-text-muted, #64748b);
+            color: var(--color-grid-search-muted);
             padding: 0 0.15rem;
         }
     }
@@ -820,13 +820,13 @@ function handleReset() {
         &-sep {
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--color-text-muted, #64748b);
+            color: var(--color-grid-search-muted);
         }
     }
 
     &__suffix {
         font-size: 0.8125rem;
-        color: var(--color-text-muted, #64748b);
+        color: var(--color-grid-search-muted);
         white-space: nowrap;
     }
 }

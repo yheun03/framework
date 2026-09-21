@@ -11,12 +11,12 @@
 
     &__title {
         @include font(h4, sb);
-        color: $gray-900;
+        color: var(--color-table);
     }
 
     &__description {
         @include font(b4, rg);
-        color: $gray-600;
+        color: var(--color-table-gray-600);
     }
 
     &__content {
@@ -28,19 +28,19 @@
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
-        border-top: 1px solid $line-regular;
-        border-bottom: 1px solid $line-regular;
-        background: $bg-white;
+        border-top: 1px solid var(--border-table);
+        border-bottom: 1px solid var(--border-table);
+        background: var(--bg-table);
     }
 
     &__row {
-        border-bottom: 1px solid $line-light;
+        border-bottom: 1px solid var(--border-table-light);
     }
 
     &__th,
     &__td {
         padding: 12px 16px;
-        border-left: 1px solid $line-light;
+        border-left: 1px solid var(--border-table-light);
         vertical-align: middle;
 
         &:first-child {
@@ -50,21 +50,21 @@
 
     &__th {
         @include font(b3, sb);
-        color: $gray-900;
-        background: $bg-light;
+        color: var(--color-table);
+        background: var(--bg-table-light);
         text-align: left;
         word-break: break-word;
     }
 
     &__td {
         @include font(b3, rg);
-        color: $gray-800;
-        background: $bg-white;
+        color: var(--color-table-gray-800);
+        background: var(--bg-table);
     }
 
     &__required {
         margin-left: 2px;
-        color: $status-error;
+        color: var(--color-table-status-error);
     }
 
     &__table--stacked {
@@ -78,11 +78,11 @@
     }
 
     .is-readonly {
-        background: $bg-light;
+        background: var(--bg-table-light);
     }
 
     .is-disabled {
-        background: $bg-regular;
+        background: var(--bg-table-regular);
     }
 
     .is-textarea {
@@ -101,39 +101,39 @@
         display: inline-block;
         width: 100%;
         word-break: break-word;
-        color: $gray-800;
+        color: var(--color-table-gray-800);
     }
 
     &__textarea {
         width: 100%;
         min-height: 96px;
         padding: 12px 14px;
-        border: 1px solid $line-regular;
+        border: 1px solid var(--border-table);
         border-radius: 6px;
         resize: vertical;
-        background: $bg-white;
-        color: $gray-900;
+        background: var(--bg-table);
+        color: var(--color-table);
         outline: none;
         transition: border-color 0.15s ease;
         box-sizing: border-box;
 
         &::placeholder {
-            color: $gray-500;
+            color: var(--color-table-gray-500);
         }
 
         &:focus {
-            border-color: $primary;
+            border-color: var(--border-table-primary);
         }
 
         &:read-only {
-            background: $bg-light;
-            color: $gray-700;
+            background: var(--bg-table-light);
+            color: var(--color-table-gray-700);
             cursor: default;
         }
 
         &:disabled {
-            background: $bg-regular;
-            color: $color-05-gray-disabled;
+            background: var(--bg-table-regular);
+            color: var(--color-table-05-gray-disabled);
             cursor: not-allowed;
         }
     }
@@ -158,7 +158,7 @@
     &__range-separator,
     &__email-at {
         flex: none;
-        color: $gray-700;
+        color: var(--color-table-gray-700);
         @include font(b4, rg);
         white-space: nowrap;
     }
@@ -188,7 +188,7 @@
 
     &.is-readonly {
         .app-table-field__text {
-            color: $gray-700;
+            color: var(--color-table-gray-700);
         }
     }
 

@@ -5,9 +5,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    border: 1px solid $gray-200;
+    border: 1px solid var(--border-textarea);
     border-radius: 10px;
-    background: $gray-0;
+    background: var(--bg-textarea);
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease,
@@ -23,13 +23,13 @@
         border: 0;
         outline: 0;
         background: transparent;
-        color: $gray-800;
+        color: var(--color-textarea);
         font-family: $font-family-base;
 
         box-sizing: border-box;
 
         &::placeholder {
-            color: $gray-400;
+            color: var(--color-textarea-gray-400);
         }
 
         &:disabled {
@@ -56,46 +56,46 @@
 
     &__count {
         margin-left: auto;
-        color: $gray-400;
+        color: var(--color-textarea-gray-400);
         line-height: 1;
 
         @include font(c2, rg);
     }
 
     &.is-focused {
-        border-color: $primary-500;
-        box-shadow: 0 0 0 3px rgba($primary-500, 0.12);
+        border-color: var(--border-textarea-primary-500);
+        box-shadow: 0 0 0 3px var(--shadow-textarea);
     }
 
     &.is-error {
-        border-color: $status-error;
+        border-color: var(--border-textarea-status-error);
 
         &.is-focused {
-            box-shadow: 0 0 0 3px rgba($status-error, 0.12);
+            box-shadow: 0 0 0 3px var(--shadow-textarea-status-error-alpha-12);
         }
     }
 
     &.is-warning {
-        border-color: $status-warning;
+        border-color: var(--border-textarea-status-warning);
     }
 
     &.is-success {
-        border-color: $status-success;
+        border-color: var(--border-textarea-status-success);
     }
 
     &.is-disabled {
-        background: $gray-50;
-        border-color: $gray-200;
-        color: $gray-400;
+        background: var(--bg-textarea-gray-50);
+        border-color: var(--border-textarea);
+        color: var(--color-textarea-gray-400);
         cursor: not-allowed;
 
         .app-textarea__control {
-            color: $gray-400;
+            color: var(--color-textarea-gray-400);
         }
     }
 
     &.is-readonly {
-        background: $gray-50;
+        background: var(--bg-textarea-gray-50);
     }
 
     &--xs {

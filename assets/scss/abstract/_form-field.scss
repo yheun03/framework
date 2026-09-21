@@ -16,7 +16,7 @@
     &__label,
     &__hint {
         @include font(b3, rg);
-        color: $color-02-black;
+        color: var(--color-form-field-02-black);
         margin-bottom: 12px;
         transition: 0.15s;
     }
@@ -30,18 +30,18 @@
         position: relative;
         display: flex;
         align-items: center;
-        background-color: $bg-white;
-        border: 1px solid $line-regular;
+        background-color: var(--bg-form-field);
+        border: 1px solid var(--border-form-field);
         overflow: hidden;
         transition: 0.15s;
 
         &:hover {
-            background-color: $bg-light;
+            background-color: var(--bg-form-field-light);
         }
 
         &:focus,
         &:focus-within {
-            border-color: $line-black;
+            border-color: var(--border-form-field-black);
         }
     }
 
@@ -52,38 +52,38 @@
     &.is-disabled {
         .form-field__control {
             cursor: not-allowed;
-            background-color: $bg-light;
-            color: $color-05-gray-disabled;
+            background-color: var(--bg-form-field-light);
+            color: var(--color-form-field-05-gray-disabled);
         }
     }
 
     &.is-error {
         .form-field__control {
-            border-color: $status-error;
+            border-color: var(--border-form-field-status-error);
         }
 
         .form-field__hint {
-            color: $status-error;
+            color: var(--color-form-field-status-error);
         }
     }
 
     &.is-warning {
         .form-field__control {
-            border-color: $status-warning;
+            border-color: var(--border-form-field-status-warning);
         }
 
         .form-field__hint {
-            color: $status-warning;
+            color: var(--color-form-field-status-warning);
         }
     }
 
     &.is-success {
         .form-field__control {
-            border-color: $status-success;
+            border-color: var(--border-form-field-status-success);
         }
 
         .form-field__hint {
-            color: $status-success;
+            color: var(--color-form-field-status-success);
         }
     }
 }

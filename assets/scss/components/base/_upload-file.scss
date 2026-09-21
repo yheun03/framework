@@ -15,9 +15,9 @@
 
     &__dropzone {
         position: relative;
-        border: 1px dashed $line-regular;
+        border: 1px dashed var(--border-upload-file);
         border-radius: 12px;
-        background: $bg-white;
+        background: var(--bg-upload-file);
         transition:
             border-color 0.16s ease,
             background-color 0.16s ease;
@@ -42,7 +42,7 @@
     &__trigger-icon {
         display: inline-flex;
         justify-content: center;
-        color: $primary;
+        color: var(--color-upload-file);
 
         svg {
             width: 24px;
@@ -51,12 +51,12 @@
     }
 
     &__trigger-text {
-        color: $gray-900;
+        color: var(--color-upload-file-gray-900);
         @include font(b3, sb);
     }
 
     &__trigger-subtext {
-        color: $gray-600;
+        color: var(--color-upload-file-gray-600);
         @include font(c2, rg);
     }
 
@@ -76,9 +76,9 @@
         gap: 12px;
         align-items: center;
         padding: 10px 12px;
-        border: 1px solid $line-regular;
+        border: 1px solid var(--border-upload-file);
         border-radius: 10px;
-        background: $bg-white;
+        background: var(--bg-upload-file);
     }
 
     &__icon {
@@ -88,8 +88,8 @@
         width: 40px;
         height: 40px;
         border-radius: 8px;
-        background: $bg-light;
-        color: $primary;
+        background: var(--bg-upload-file-light);
+        color: var(--color-upload-file);
 
         svg {
             width: 20px;
@@ -107,7 +107,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: $gray-900;
+        color: var(--color-upload-file-gray-900);
         @include font(b3, sb);
     }
 
@@ -115,12 +115,12 @@
         display: flex;
         align-items: center;
         gap: 6px;
-        color: $gray-600;
+        color: var(--color-upload-file-gray-600);
         @include font(c2, rg);
     }
 
     &__meta-divider {
-        color: $gray-400;
+        color: var(--color-upload-file-gray-400);
     }
 
     &__item-actions {
@@ -130,14 +130,14 @@
     }
 
     &__hint {
-        color: $gray-600;
+        color: var(--color-upload-file-gray-600);
         @include font(c2, rg);
     }
 
     &.is-dragover {
         .app-file-upload__dropzone {
-            border-color: $primary;
-            background: $primary-50;
+            border-color: var(--border-upload-file-primary);
+            background: var(--bg-upload-file-primary-50);
         }
     }
 

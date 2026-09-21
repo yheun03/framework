@@ -59,7 +59,7 @@
 <style scoped lang="scss">
 .page-demo {
     min-height: 100%;
-    background: $gray-0;
+    background: var(--theme-gray-0);
 
     &-main {
         width: min(100%, 1180px);
@@ -72,7 +72,7 @@
 
     &__title {
         margin: 0;
-        color: $gray-900;
+        color: var(--theme-gray-900);
         font-size: 22px;
         font-weight: 700;
         line-height: 1.35;
@@ -81,17 +81,17 @@
     &__desc {
         max-width: 760px;
         margin: 10px 0 0;
-        color: $gray-600;
+        color: var(--theme-gray-600);
         font-size: 14px;
         line-height: 1.7;
     }
 }
 
 .page-demo-card {
-    border: 1px solid $gray-200;
+    border: 1px solid var(--theme-gray-200);
     border-radius: 8px;
-    background: $gray-0;
-    box-shadow: 0 1px 2px rgba($gray-900, 0.04);
+    background: var(--theme-gray-0);
+    box-shadow: 0 1px 2px var(--theme-gray-900-alpha-4);
 
     & + & {
         margin-top: 16px;
@@ -100,7 +100,7 @@
     &__title {
         margin: 0;
         padding: 18px 20px 0;
-        color: $gray-900;
+        color: var(--theme-gray-900);
         font-size: 15px;
         font-weight: 700;
         line-height: 1.4;
@@ -112,7 +112,7 @@
     gap: 8px;
     margin: 0;
     padding: 16px 20px 20px;
-    color: $gray-700;
+    color: var(--theme-gray-700);
     font-size: 14px;
     line-height: 1.55;
     list-style: none;
@@ -128,13 +128,13 @@
             width: 4px;
             height: 4px;
             border-radius: 50%;
-            background: $primary-500;
+            background: var(--theme-primary-500);
             content: '';
         }
     }
 
     a {
-        color: $primary-700;
+        color: var(--theme-primary-700);
         font-weight: 600;
         text-decoration: none;
 
@@ -149,8 +149,8 @@
         min-height: 22px;
         padding: 2px 6px;
         border-radius: 4px;
-        background: $gray-100;
-        color: $gray-800;
+        background: var(--theme-gray-100);
+        color: var(--theme-gray-800);
         font-size: 13px;
     }
 }

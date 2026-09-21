@@ -5,12 +5,12 @@
 ========================================= */
 
 .app-progress-gauge {
-    --gauge-track: #{$gray-200};
-    --gauge-range: #{$primary};
-    --gauge-value: #{$primary};
-    --gauge-needle: #{$gray-900};
-    --gauge-text: #{$gray-900};
-    --gauge-text-sub: #{$gray-600};
+    --gauge-track: var(--color-gauge);
+    --gauge-range: var(--color-gauge-primary);
+    --gauge-value: var(--color-gauge-primary);
+    --gauge-needle: var(--color-gauge-gray-900);
+    --gauge-text: var(--color-gauge-gray-900);
+    --gauge-text-sub: var(--color-gauge-gray-600);
 
     width: 100%;
 
@@ -66,9 +66,9 @@
     }
 
     &__handle {
-        stroke: $gray-0;
-        fill: $primary;
-        filter: drop-shadow(2px 2px 4px rgba(15, 23, 42, 0.18));
+        stroke: var(--stroke-gauge);
+        fill: var(--fill-gauge);
+        filter: drop-shadow(2px 2px 4px var(--shadow-gauge));
 
         cursor: grab;
     }
