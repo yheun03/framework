@@ -102,27 +102,27 @@ function handleGoBack() {
     padding: 28px 18px;
     background:
         radial-gradient(900px 520px at 10% 12%,
-            rgba($primary-500, 0.38),
+            color-mix(in srgb, var(--theme-primary-500) 38%, transparent),
             transparent 55%),
         radial-gradient(820px 560px at 92% 18%,
-            rgba($primary-200, 0.42),
+            color-mix(in srgb, var(--theme-primary-200) 42%, transparent),
             transparent 55%),
         radial-gradient(760px 520px at 58% 96%,
-            rgba($status-info, 0.18),
+            color-mix(in srgb, var(--theme-status-info) 18%, transparent),
             transparent 58%),
-        linear-gradient(180deg, $gray-0, $primary-50);
-    color: $gray-900;
+        linear-gradient(180deg, var(--theme-gray-0), var(--theme-primary-50));
+    color: var(--theme-gray-900);
 }
 
 .app-error__card {
     width: min(560px, 100%);
-    border: 1px solid rgba($primary-200, 0.9);
+    border: 1px solid color-mix(in srgb, var(--theme-primary-200) 90%, transparent);
     border-radius: 22px;
     padding: 22px 22px 20px;
-    background: linear-gradient(180deg, rgba($gray-0, 0.78), rgba($gray-0, 0.62));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--theme-gray-0) 78%, transparent), color-mix(in srgb, var(--theme-gray-0) 62%, transparent));
     box-shadow:
-        0 30px 80px rgba($primary-900, 0.12),
-        0 12px 30px rgba($primary-700, 0.1);
+        0 30px 80px color-mix(in srgb, var(--theme-primary-900) 12%, transparent),
+        0 12px 30px color-mix(in srgb, var(--theme-primary-700) 10%, transparent);
     backdrop-filter: blur(14px);
 }
 
@@ -142,11 +142,11 @@ function handleGoBack() {
     height: 32px;
     padding: 0 12px;
     border-radius: 999px;
-    background: rgba($primary-500, 0.14);
-    border: 1px solid rgba($primary-500, 0.22);
+    background: color-mix(in srgb, var(--theme-primary-500) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--theme-primary-500) 22%, transparent);
     box-shadow:
-        0 14px 30px rgba($primary-900, 0.1),
-        0 6px 14px rgba($primary-800, 0.08);
+        0 14px 30px color-mix(in srgb, var(--theme-primary-900) 10%, transparent),
+        0 6px 14px color-mix(in srgb, var(--theme-primary-800) 8%, transparent);
 }
 
 .app-error__badge-code {
@@ -156,13 +156,13 @@ function handleGoBack() {
 
 .app-error__badge-label {
     @include font(btn4, sb);
-    color: rgba($gray-900, 0.58);
+    color: color-mix(in srgb, var(--theme-gray-900) 58%, transparent);
     letter-spacing: -0.01em;
 }
 
 .app-error__badge[data-code="404"] {
-    background: rgba($primary-500, 0.14);
-    border-color: rgba($primary-500, 0.22);
+    background: color-mix(in srgb, var(--theme-primary-500) 14%, transparent);
+    border-color: color-mix(in srgb, var(--theme-primary-500) 22%, transparent);
 }
 
 .app-error__badge[data-code="500"],
@@ -170,8 +170,8 @@ function handleGoBack() {
 .app-error__badge[data-code="502"],
 .app-error__badge[data-code="503"],
 .app-error__badge[data-code="504"] {
-    background: rgba($status-error, 0.14);
-    border-color: rgba($status-error, 0.26);
+    background: color-mix(in srgb, var(--theme-status-error) 14%, transparent);
+    border-color: color-mix(in srgb, var(--theme-status-error) 26%, transparent);
 }
 
 .app-error__ornament {
@@ -188,15 +188,15 @@ function handleGoBack() {
     opacity: 0.95;
     background:
         radial-gradient(circle at 28% 28%,
-            rgba($gray-0, 0.92),
-            rgba($gray-0, 0) 56%),
+            color-mix(in srgb, var(--theme-gray-0) 92%, transparent),
+            color-mix(in srgb, var(--theme-gray-0) 0%, transparent) 56%),
         radial-gradient(circle at 72% 72%,
-            rgba($primary-500, 0.7),
-            rgba($primary-500, 0) 60%),
+            color-mix(in srgb, var(--theme-primary-500) 70%, transparent),
+            color-mix(in srgb, var(--theme-primary-500) 0%, transparent) 60%),
         radial-gradient(circle at 50% 50%,
-            rgba($primary-200, 0.6),
-            rgba($primary-200, 0) 62%);
-    box-shadow: 0 18px 46px rgba($primary-700, 0.24);
+            color-mix(in srgb, var(--theme-primary-200) 60%, transparent),
+            color-mix(in srgb, var(--theme-primary-200) 0%, transparent) 62%);
+    box-shadow: 0 18px 46px color-mix(in srgb, var(--theme-primary-700) 24%, transparent);
 }
 
 .app-error__orb--a {
@@ -231,7 +231,7 @@ function handleGoBack() {
 .app-error__message {
     margin: 0 0 18px;
     @include font(b3, rg);
-    color: rgba($gray-900, 0.68);
+    color: color-mix(in srgb, var(--theme-gray-900) 68%, transparent);
     line-height: 1.55;
 }
 
@@ -243,13 +243,13 @@ function handleGoBack() {
 
 .app-error__debug {
     margin-top: 18px;
-    border-top: 1px dashed rgba($gray-900, 0.14);
+    border-top: 1px dashed color-mix(in srgb, var(--theme-gray-900) 14%, transparent);
     padding-top: 14px;
 }
 
 .app-error__debug summary {
     cursor: pointer;
-    color: rgba($gray-900, 0.78);
+    color: color-mix(in srgb, var(--theme-gray-900) 78%, transparent);
     @include font(btn3, sb);
 }
 
@@ -257,8 +257,8 @@ function handleGoBack() {
     white-space: pre-wrap;
     word-break: break-word;
     @include font(c2, rg);
-    background: rgba($gray-900, 0.04);
-    border: 1px solid rgba($gray-900, 0.08);
+    background: color-mix(in srgb, var(--theme-gray-900) 4%, transparent);
+    border: 1px solid color-mix(in srgb, var(--theme-gray-900) 8%, transparent);
     padding: 12px;
     border-radius: 14px;
     margin: 10px 0 0;

@@ -117,6 +117,11 @@ const isLine = computed(() => resolvedType.value === "line");
 const isBar = computed(() => resolvedType.value === "bar");
 const isDoughnut = computed(() => resolvedType.value === "doughnut");
 
+function getChartThemeColor(name: string) {
+    if (!import.meta.client) return undefined;
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || undefined;
+}
+
 const resolvedHeight = computed(() => {
     if (isSemiDoughnut.value) {
         return Math.max(220, Math.floor(Number(props.height) || 260));
@@ -154,7 +159,7 @@ const defaultLineOptions = {
             beginAtZero: true,
             suggestedMax: 100,
             grid: {
-                color: "rgba(0, 0, 0, 0.05)",
+                color: getChartThemeColor("--border-chart-grid"),
             },
         },
     },
@@ -177,7 +182,7 @@ const defaultBarOptions = {
             beginAtZero: true,
             suggestedMax: 100,
             grid: {
-                color: "rgba(0, 0, 0, 0.05)",
+                color: getChartThemeColor("--border-chart-grid"),
             },
         },
     },

@@ -9,6 +9,7 @@ const En = {
     'settings.desc': 'Choose the app theme and display language.',
     'settings.theme.title': 'Theme',
     'settings.theme.desc': 'Switch between light and dark themes.',
+    'settings.theme.colors': 'Edit theme colors',
     'settings.locale.title': 'Language',
     'settings.locale.desc': 'Switch LNB and demo page texts between Korean and English.',
 

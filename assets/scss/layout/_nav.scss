@@ -18,8 +18,8 @@
     grid-template-rows: auto 1fr auto;
     min-height: 0;
 
-    background: $lnb-background;
-    color: $gray-0;
+    background: var(--bg-lnb);
+    color: var(--color-lnb);
 
     /* ----------------------------------------
        Button override
@@ -27,18 +27,18 @@
     .app-button,
     .app-icon-button {
         border-radius: 6px;
-        color: $gray-0;
+        color: var(--color-lnb);
 
         &:hover:not(:disabled) {
-            background: $lnb-hover-color;
+            background: var(--bg-lnb-lnb-hover-color);
         }
 
         &:active:not(:disabled) {
-            background: $lnb-active-color;
+            background: var(--bg-lnb-lnb-active-color);
         }
 
         &:focus-visible {
-            outline: 2px solid rgba($gray-0, 0.35);
+            outline: 2px solid var(--outline-lnb);
             outline-offset: 2px;
         }
     }
@@ -65,7 +65,7 @@
 
     &__mobile-close {
         display: none;
-        color: $gray-0;
+        color: var(--color-lnb);
     }
 
     &__actions {
@@ -92,7 +92,7 @@
 
             &-thumb {
                 border-radius: 999px;
-                background: rgba($gray-0, 0.2);
+                background: var(--bg-lnb-gray-0-alpha-20);
             }
 
             &-track {
@@ -133,7 +133,7 @@
         justify-content: flex-start;
         min-height: 56px;
         padding: 12px 20px;
-        border-top: 1px solid rgba($gray-0, 0.08);
+        border-top: 1px solid var(--border-lnb);
     }
 
     /* ----------------------------------------
@@ -180,22 +180,22 @@
         }
 
         &:hover::after {
-            background: $lnb-hover-color;
+            background: var(--bg-lnb-lnb-hover-color);
         }
 
         &:has(.router-link-active)::after,
         &:has(.router-link-exact-active)::after {
-            background: $lnb-active-color;
+            background: var(--bg-lnb-lnb-active-color);
             box-shadow:
-                0 8px 20px rgba($gray-900, 0.12),
-                inset 0 0 0 1px rgba($gray-0, 0.18);
+                0 8px 20px var(--shadow-lnb),
+                inset 0 0 0 1px var(--shadow-lnb-gray-0-alpha-18);
 
             .layout-nav__link {
-                color: $gray-0;
+                color: var(--color-lnb);
             }
 
             .layout-nav__label {
-                color: $gray-0;
+                color: var(--color-lnb);
                 font-weight: 600;
             }
 
@@ -225,13 +225,13 @@
         border: 0;
         background: transparent;
 
-        color: $gray-0;
+        color: var(--color-lnb);
         text-align: left;
         text-decoration: none;
         cursor: pointer;
 
         &:focus-visible {
-            outline: 2px solid rgba($gray-0, 0.35);
+            outline: 2px solid var(--outline-lnb);
             outline-offset: 3px;
             border-radius: 4px;
         }
@@ -268,7 +268,7 @@
         min-width: 0;
 
         overflow: hidden;
-        color: $gray-0;
+        color: var(--color-lnb);
         text-overflow: ellipsis;
         white-space: nowrap;
 
@@ -341,7 +341,7 @@
             min-height: 34px;
 
             .layout-nav__label {
-                color: rgba($gray-0, 0.86);
+                color: var(--color-lnb-gray-0-alpha-86);
                 @include font(c1, rg);
             }
         }
@@ -349,7 +349,7 @@
 
     &__item--depth-3 {
         > .layout-nav__row .layout-nav__label {
-            color: rgba($gray-0, 0.76);
+            color: var(--color-lnb-gray-0-alpha-76);
         }
     }
 }
@@ -381,7 +381,7 @@
         display: block;
         width: 40px;
         height: 40px;
-        color: $gray-0;
+        color: var(--color-lnb);
 
         path {
             fill: currentColor;
@@ -396,7 +396,7 @@
 .nav-action {
     &.app-button,
     &.app-icon-button {
-        color: $gray-0;
+        color: var(--color-lnb);
     }
 
     svg {

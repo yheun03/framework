@@ -9,12 +9,12 @@
 
     &__total {
         flex: 0 0 auto;
-        color: $gray-600;
+        color: var(--color-pagination);
 
         @include font(b3, rg);
 
         strong {
-            color: $gray-900;
+            color: var(--color-pagination-gray-900);
 
             @include font(b3, sb);
         }
@@ -32,10 +32,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid $gray-200;
+        border: 1px solid var(--border-pagination);
         border-radius: 8px;
-        background: $gray-0;
-        color: $gray-600;
+        background: var(--bg-pagination);
+        color: var(--color-pagination);
         cursor: pointer;
         transition:
             color 0.2s ease,
@@ -43,26 +43,26 @@
             background-color 0.2s ease;
 
         &:hover:not(:disabled) {
-            border-color: $primary-300;
-            color: $primary-500;
-            background: $primary-50;
+            border-color: var(--border-pagination-primary-300);
+            color: var(--color-pagination-primary-500);
+            background: var(--bg-pagination-primary-50);
         }
 
         &:focus-visible {
-            outline: 2px solid rgba($primary-500, 0.35);
+            outline: 2px solid var(--outline-pagination);
             outline-offset: 2px;
         }
 
         &:disabled {
-            color: $gray-300;
-            background: $gray-50;
+            color: var(--color-pagination-gray-300);
+            background: var(--bg-pagination-gray-50);
             cursor: not-allowed;
         }
 
         &.is-active {
-            border-color: $primary-500;
-            background: $primary-500;
-            color: $gray-0;
+            border-color: var(--border-pagination-primary-500);
+            background: var(--bg-pagination-primary-500);
+            color: var(--color-pagination-gray-0);
         }
     }
 

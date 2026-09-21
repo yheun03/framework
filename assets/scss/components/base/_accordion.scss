@@ -9,9 +9,9 @@
     gap: 10px;
 
     &__item {
-        border: 1px solid $gray-200;
+        border: 1px solid var(--border-accordion);
         border-radius: 16px;
-        background: $gray-0;
+        background: var(--bg-accordion);
         overflow: hidden;
 
         &.is-disabled {
@@ -48,13 +48,13 @@
     &__title {
         display: block;
         @include font(b3, sb);
-        color: $gray-900;
+        color: var(--color-accordion);
     }
 
     &__desc {
         margin: 0;
         @include font(c2, rg);
-        color: $gray-600;
+        color: var(--color-accordion-gray-600);
     }
 
     &__icon {
@@ -75,7 +75,7 @@
     }
 
     &__panel {
-        border-top: 1px solid $gray-100;
+        border-top: 1px solid var(--border-accordion-gray-100);
     }
 
     &__panel-inner {
@@ -84,6 +84,6 @@
 
     &__empty {
         @include font(c2, rg);
-        color: $gray-500;
+        color: var(--color-accordion-gray-500);
     }
 }

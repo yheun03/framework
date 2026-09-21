@@ -35,19 +35,19 @@
         min-width: 0;
         min-height: var(--layout-mobile-bar-height);
         padding: 6px 10px;
-        border-bottom: 1px solid $gray-200;
-        background: $header-background;
+        border-bottom: 1px solid var(--border-layout);
+        background: var(--bg-layout);
     }
 
     &__nav-toggle {
-        color: $gray-800;
+        color: var(--color-layout);
 
         &:hover {
-            background: $header-hover-color;
+            background: var(--bg-layout-header-hover-color);
         }
 
         &:active {
-            background: $header-active-color;
+            background: var(--bg-layout-header-active-color);
         }
 
         svg {
@@ -58,7 +58,7 @@
 
     &__mobile-title {
         min-width: 0;
-        color: $gray-900;
+        color: var(--color-layout-gray-900);
         @include font(b2, sb);
     }
 
@@ -118,8 +118,8 @@
     &__page-bottom-fixed {
         width: 100%;
         min-height: 0;
-        background: var(--js-color-surface-primary, #fff);
-        border-top: 1px solid $gray-200;
+        background: var(--js-color-surface-primary, var(--bg-layout-gray-0));
+        border-top: 1px solid var(--border-layout);
         z-index: 20;
 
         &__content {
@@ -144,9 +144,9 @@
         display: flex;
         justify-content: flex-end;
         padding: 6px 16px;
-        border-top: 1px solid $gray-200;
-        background: var(--js-color-surface-primary, #fff);
-        color: $gray-500;
+        border-top: 1px solid var(--border-layout);
+        background: var(--js-color-surface-primary, var(--bg-layout-gray-0));
+        color: var(--color-layout-gray-500);
         @include font(c1, rg);
 
         a {

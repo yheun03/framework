@@ -42,7 +42,7 @@ $input-sizes: (
         color: inherit;
 
         &::placeholder {
-            color: $color-04-gray;
+            color: var(--color-input);
         }
     }
 

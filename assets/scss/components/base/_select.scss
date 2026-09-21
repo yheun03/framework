@@ -71,7 +71,7 @@ $select-sizes: (
         white-space: nowrap;
 
         &--placeholder {
-            color: $color-04-gray;
+            color: var(--color-select);
         }
     }
 
@@ -100,10 +100,10 @@ $select-sizes: (
         margin: 0;
         padding: 6px 0;
         list-style: none;
-        background-color: $bg-white;
-        border: 1px solid $line-regular;
+        background-color: var(--bg-select);
+        border: 1px solid var(--border-select);
         border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 24px var(--shadow-select);
         max-height: 240px;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -121,7 +121,7 @@ $select-sizes: (
         padding: 10px 14px;
         border: 0;
         background: transparent;
-        color: $color-02-black;
+        color: var(--color-select-02-black);
         cursor: pointer;
         text-align: left;
         transition:
@@ -129,16 +129,16 @@ $select-sizes: (
             color 0.15s ease;
 
         &:hover {
-            background-color: $bg-light;
+            background-color: var(--bg-select-light);
         }
 
         &.is-selected {
-            background-color: $bg-light;
-            color: $color-02-black;
+            background-color: var(--bg-select-light);
+            color: var(--color-select-02-black);
         }
 
         &.is-disabled {
-            color: $color-05-gray-disabled;
+            color: var(--color-select-05-gray-disabled);
             cursor: not-allowed;
             background-color: transparent;
         }
@@ -226,11 +226,11 @@ $select-sizes: (
         }
 
         .app-select__control {
-            background: $bg-light;
+            background: var(--bg-select-light);
         }
 
         .app-select__value {
-            color: $gray-700;
+            color: var(--color-select-gray-700);
         }
 
         .app-select__icon {
@@ -244,11 +244,11 @@ $select-sizes: (
         }
 
         .app-select__control {
-            background: $bg-regular;
+            background: var(--bg-select-regular);
         }
 
         .app-select__value {
-            color: $color-05-gray-disabled;
+            color: var(--color-select-05-gray-disabled);
         }
 
         .app-select__icon {

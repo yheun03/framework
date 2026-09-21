@@ -29,7 +29,7 @@
     display: grid;
     grid-template-rows: 1fr;
     height: 100%;
-    background: $gray-0;
+    background: var(--bg-workspace-pane);
 
     /* grid / flex 환경에서 내부 스크롤 가능하게 하기 위한 필수 속성 */
     min-height: 0;
@@ -79,6 +79,6 @@
     ---------------------------------------- */
 
     .toastui-editor-toolbar {
-        border-bottom: 1px solid rgba($gray-200, 0.9);
+        border-bottom: 1px solid var(--border-workspace-pane);
     }
 }

@@ -25,6 +25,25 @@ $gray-700: #3f454f;
 $gray-800: #2a2f38;
 $gray-900: #1c2026;
 
+// 모든 공통 색상 토큰의 런타임 기본값
+:root {
+    --theme-status-success: #22c55e;
+    --theme-status-warning: #f59e0b;
+    --theme-status-error: #ef4444;
+    --theme-status-info: var(--theme-primary);
+    --theme-gray-0: #ffffff;
+    --theme-gray-50: #f7f8fa;
+    --theme-gray-100: #eff1f4;
+    --theme-gray-200: #e2e5ea;
+    --theme-gray-300: #cdd4da;
+    --theme-gray-400: #a7b0bb;
+    --theme-gray-500: #7e8894;
+    --theme-gray-600: #5e6670;
+    --theme-gray-700: #3f454f;
+    --theme-gray-800: #2a2f38;
+    --theme-gray-900: #1c2026;
+}
+
 // Typography
 $font-family-base: "Pretendard",
     system-ui,
@@ -67,3 +86,32 @@ $bg-btn-white: #ffffff;
 $bg-btn-light: #f7f7fb;
 $bg-btn-regular: #e5e5ec;
 $bg-btn-disabled: #f1f1f5;
+
+:root {
+    --theme-color-01-white: #ffffff;
+    --theme-color-02-black: #111111;
+    --theme-color-03-gray: #505050;
+    --theme-color-04-gray: #767676;
+    --theme-color-05-gray-disabled: #999999;
+    --theme-line-light: #f1f1f5;
+    --theme-line-regular: #e5e5ec;
+    --theme-line-black: #111111;
+    --theme-line-white: #ffffff;
+    --theme-line-disabled: #cacad7;
+    --theme-bg-light: #f7f7fb;
+    --theme-bg-regular: #f1f1f5;
+    --theme-bg-black: #111111;
+    --theme-bg-white: #ffffff;
+    --theme-bg-black-opacity-85: rgba(0, 0, 0, 0.85);
+    --theme-bg-black-opacity-60: rgba(0, 0, 0, 0.6);
+    --theme-bg-black-opacity-30: rgba(0, 0, 0, 0.3);
+    --theme-bg-black-opacity-20: rgba(0, 0, 0, 0.2);
+    --theme-bg-black-opacity-03: rgba(0, 0, 0, 0.03);
+    --theme-bg-white-opacity-60: rgba(255, 255, 255, 0.6);
+    --theme-bg-white-opacity-20: rgba(255, 255, 255, 0.2);
+    --theme-bg-btn-black: #111111;
+    --theme-bg-btn-white: #ffffff;
+    --theme-bg-btn-light: #f7f7fb;
+    --theme-bg-btn-regular: #e5e5ec;
+    --theme-bg-btn-disabled: #f1f1f5;
+}

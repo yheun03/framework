@@ -26,7 +26,7 @@
         min-width: 0;
         border: 0;
         background: transparent;
-        color: $gray-500;
+        color: var(--color-tabs);
         cursor: pointer;
         transition:
             color 0.2s ease,
@@ -35,13 +35,13 @@
             box-shadow 0.2s ease;
 
         &:focus-visible {
-            outline: 2px solid rgba($primary-500, 0.35);
+            outline: 2px solid var(--outline-tabs);
             outline-offset: 2px;
         }
 
         &:disabled,
         &.is-disabled {
-            color: $gray-300;
+            color: var(--color-tabs-gray-300);
             cursor: not-allowed;
         }
     }
@@ -71,7 +71,7 @@
         display: block;
         max-width: 100%;
         margin-top: 2px;
-        color: $gray-400;
+        color: var(--color-tabs-gray-400);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -87,8 +87,8 @@
         height: 20px;
         padding: 0 6px;
         border-radius: 999px;
-        background: $gray-100;
-        color: $gray-600;
+        background: var(--bg-tabs);
+        color: var(--color-tabs-gray-600);
 
         @include font(c2, sb);
     }
@@ -101,7 +101,7 @@
         width: 100%;
 
         &:focus-visible {
-            outline: 2px solid rgba($primary-500, 0.25);
+            outline: 2px solid var(--outline-tabs-primary-500-alpha-25);
             outline-offset: 2px;
         }
     }
@@ -111,10 +111,10 @@
         align-items: center;
         justify-content: center;
         min-height: 120px;
-        border: 1px dashed $gray-200;
+        border: 1px dashed var(--border-tabs);
         border-radius: 12px;
-        background: $gray-50;
-        color: $gray-400;
+        background: var(--bg-tabs-gray-50);
+        color: var(--color-tabs-gray-400);
 
         @include font(b3, rg);
     }
@@ -148,7 +148,7 @@
 
     &--line {
         .app-tabs__list {
-            border-bottom: 1px solid $gray-200;
+            border-bottom: 1px solid var(--border-tabs);
         }
 
         .app-tabs__tab {
@@ -166,19 +166,19 @@
             }
 
             &:hover:not(:disabled) {
-                color: $gray-700;
+                color: var(--color-tabs-gray-700);
             }
 
             &.is-active {
-                color: $primary-500;
+                color: var(--color-tabs-primary-500);
 
                 &::after {
-                    background: $primary-500;
+                    background: var(--bg-tabs-primary-500);
                 }
 
                 .app-tabs__tab-badge {
-                    background: $primary-50;
-                    color: $primary-600;
+                    background: var(--bg-tabs-primary-50);
+                    color: var(--color-tabs-primary-600);
                 }
             }
         }
@@ -187,35 +187,35 @@
     &--box {
         .app-tabs__list {
             gap: 0;
-            border-bottom: 1px solid $gray-200;
+            border-bottom: 1px solid var(--border-tabs);
         }
 
         .app-tabs__tab {
-            border: 1px solid $gray-200;
+            border: 1px solid var(--border-tabs);
             border-bottom-color: transparent;
             border-radius: 10px 10px 0 0;
-            background: $gray-50;
+            background: var(--bg-tabs-gray-50);
 
             &+.app-tabs__tab {
                 margin-left: -1px;
             }
 
             &:hover:not(:disabled) {
-                background: $gray-100;
-                color: $gray-700;
+                background: var(--bg-tabs);
+                color: var(--color-tabs-gray-700);
             }
 
             &.is-active {
                 position: relative;
                 z-index: 1;
-                background: $gray-0;
-                color: $primary-500;
-                border-color: $gray-200;
-                border-bottom-color: $gray-0;
+                background: var(--bg-tabs-gray-0);
+                color: var(--color-tabs-primary-500);
+                border-color: var(--border-tabs);
+                border-bottom-color: var(--border-tabs-gray-0);
 
                 .app-tabs__tab-badge {
-                    background: $primary-50;
-                    color: $primary-600;
+                    background: var(--bg-tabs-primary-50);
+                    color: var(--color-tabs-primary-600);
                 }
             }
         }
@@ -227,24 +227,24 @@
             width: fit-content;
             padding: 4px;
             border-radius: 999px;
-            background: $gray-100;
+            background: var(--bg-tabs);
         }
 
         .app-tabs__tab {
             border-radius: 999px;
 
             &:hover:not(:disabled) {
-                color: $gray-700;
+                color: var(--color-tabs-gray-700);
             }
 
             &.is-active {
-                background: $gray-0;
-                color: $primary-500;
-                box-shadow: 0 2px 8px rgba($gray-900, 0.08);
+                background: var(--bg-tabs-gray-0);
+                color: var(--color-tabs-primary-500);
+                box-shadow: 0 2px 8px var(--shadow-tabs);
 
                 .app-tabs__tab-badge {
-                    background: $primary-50;
-                    color: $primary-600;
+                    background: var(--bg-tabs-primary-50);
+                    color: var(--color-tabs-primary-600);
                 }
             }
         }
@@ -273,7 +273,7 @@
 
         &.app-tabs--line {
             .app-tabs__list {
-                border-right: 1px solid $gray-200;
+                border-right: 1px solid var(--border-tabs);
                 border-bottom: 0;
             }
 

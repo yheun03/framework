@@ -8,7 +8,7 @@
 ========================================= */
 
 .route-tabs {
-    background: $page-navigator-background;
+    background: var(--bg-page-tabs);
     // border-bottom: 1px solid $gray-200;
     min-height: 40px;
     display: grid;
@@ -59,11 +59,11 @@
         border-radius: 4px 4px 0 0;
 
         &:hover {
-            background: $page-navigator-hover-color;
+            background: var(--bg-page-tabs-page-navigator-hover-color);
         }
 
         &:has(.router-link-active) {
-            background: $page-navigator-active-color;
+            background: var(--bg-page-tabs-page-navigator-active-color);
         }
     }
 
@@ -78,10 +78,10 @@
         max-width: 240px;
         min-width: 0;
         text-decoration: none;
-        color: $gray-700;
+        color: var(--color-page-tabs);
 
         &.is-active {
-            color: $page-navigator-accent-color;
+            color: var(--color-page-tabs-page-navigator-accent-color);
             font-weight: 600;
         }
     }
@@ -116,7 +116,7 @@
         transition: background 0.12s ease;
 
         &:hover {
-            background: $page-navigator-hover-color;
+            background: var(--bg-page-tabs-page-navigator-hover-color);
         }
     }
 
@@ -148,9 +148,9 @@
     }
 
     &__action {
-        --icon-button-color: #{$gray-600};
-        --icon-button-bg-hover: #{$page-navigator-hover-color};
-        --icon-button-bg-active: #{$page-navigator-control-active-color};
+        --icon-button-color: var(--color-page-tabs-gray-600);
+        --icon-button-bg-hover: var(--bg-page-tabs-page-navigator-hover-color);
+        --icon-button-bg-active: var(--bg-page-tabs-page-navigator-control-active-color);
 
         border-radius: 4px;
     }

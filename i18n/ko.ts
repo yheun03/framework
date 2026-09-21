@@ -9,6 +9,7 @@ const Ko = {
     'settings.desc': '앱 테마와 표시 언어를 선택합니다.',
     'settings.theme.title': '테마 설정',
     'settings.theme.desc': '밝은 테마와 어두운 테마를 전환할 수 있습니다.',
+    'settings.theme.colors': '색상 테마 편집',
     'settings.locale.title': '언어 설정',
     'settings.locale.desc': 'LNB와 데모 페이지 문구를 한국어/영어로 전환합니다.',
 

@@ -4,41 +4,41 @@
     color-scheme: dark;
 
     body {
-        background: $gray-900;
-        color: $gray-50;
+        background: var(--theme-gray-900);
+        color: var(--theme-gray-50);
     }
 
     .layout__content {
-        background: $gray-900;
+        background: var(--theme-gray-900);
     }
 
     .page-demo-card {
-        background: $gray-800;
-        border-color: $gray-700;
+        background: var(--theme-gray-800);
+        border-color: var(--theme-gray-700);
     }
 
     .page-demo {
         &__title {
-            color: $gray-50;
+            color: var(--theme-gray-50);
         }
 
         &__desc,
         &-hint,
         &-output {
-            color: rgba($gray-50, 0.78);
+            color: var(--theme-gray-50-alpha-78);
         }
 
         &-output {
-            background: rgba($gray-0, 0.08);
+            background: var(--theme-gray-0-alpha-8);
         }
     }
 
     .page-demo-card__title {
-        color: $gray-50;
+        color: var(--theme-gray-50);
     }
 
     .home {
-        background: linear-gradient(180deg, $gray-900, #11161f);
-        color: $gray-50;
+        background: linear-gradient(180deg, var(--theme-gray-900), var(--theme-dark-home-end));
+        color: var(--theme-gray-50);
     }
 }

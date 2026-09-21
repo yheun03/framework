@@ -41,7 +41,7 @@
     &__visual {
         display: grid;
         place-items: center;
-        background: $bg-white;
+        background: var(--bg-checkbox);
         transition:
             border-color 0.12s ease,
             background-color 0.12s ease,
@@ -74,19 +74,19 @@
     }
 
     &__label {
-        color: $color-03-gray;
+        color: var(--color-checkbox);
     }
 
     &__hint {
         @include font(c2, rg);
-        color: $gray-600;
+        color: var(--color-checkbox-gray-600);
     }
 
     /* ----------------------------------------
        Focus
     ---------------------------------------- */
     &__input:focus-visible+.app-choice__visual {
-        outline: 2px solid $primary-300;
+        outline: 2px solid var(--outline-checkbox);
         outline-offset: 2px;
     }
 
@@ -154,7 +154,7 @@
     ---------------------------------------- */
     &--checkbox {
         .app-choice__inner {
-            color: $gray-0;
+            color: var(--color-checkbox-gray-0);
 
             svg {
                 display: block;
@@ -183,30 +183,30 @@
     &--default {
         &.app-choice--checkbox {
             .app-choice__visual {
-                border: 1px solid $line-regular;
+                border: 1px solid var(--border-checkbox);
                 border-radius: 0;
-                background: $bg-white;
+                background: var(--bg-checkbox);
             }
 
             .app-choice__input:checked+.app-choice__visual,
             &.is-indeterminate .app-choice__visual {
-                border-color: $bg-black;
-                background: $bg-black;
+                border-color: var(--border-checkbox-black);
+                background: var(--bg-checkbox-black);
             }
         }
 
         &.app-choice--radio {
             .app-choice__visual {
-                border: 1px solid $line-regular;
-                background: $bg-white;
+                border: 1px solid var(--border-checkbox);
+                background: var(--bg-checkbox);
             }
 
             .app-choice__input:checked+.app-choice__visual {
-                border-color: $bg-black;
-                background: $bg-white;
+                border-color: var(--border-checkbox-black);
+                background: var(--bg-checkbox);
 
                 .app-choice__dot {
-                    background: $bg-black;
+                    background: var(--bg-checkbox-black);
                 }
             }
         }
@@ -215,32 +215,32 @@
     &--round {
         &.app-choice--checkbox {
             .app-choice__visual {
-                border: 1px solid $gray-200;
+                border: 1px solid var(--border-checkbox-gray-200);
                 border-radius: 999px;
-                background: $bg-white;
+                background: var(--bg-checkbox);
             }
 
             .app-choice__input:checked+.app-choice__visual,
             &.is-indeterminate .app-choice__visual {
-                border-color: $bg-black;
-                background: $bg-black;
-                box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
+                border-color: var(--border-checkbox-black);
+                background: var(--bg-checkbox-black);
+                box-shadow: 0 0 0 1px var(--shadow-checkbox);
             }
         }
 
         &.app-choice--radio {
             .app-choice__visual {
-                border: 1px solid $gray-200;
-                background: $bg-white;
+                border: 1px solid var(--border-checkbox-gray-200);
+                background: var(--bg-checkbox);
             }
 
             .app-choice__input:checked+.app-choice__visual {
-                border-color: $bg-black;
-                background: $bg-black;
-                box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
+                border-color: var(--border-checkbox-black);
+                background: var(--bg-checkbox-black);
+                box-shadow: 0 0 0 1px var(--shadow-checkbox);
 
                 .app-choice__dot {
-                    background: $bg-white;
+                    background: var(--bg-checkbox);
                 }
             }
         }
@@ -250,17 +250,17 @@
        Disabled
     ---------------------------------------- */
     &__input:disabled+.app-choice__visual {
-        border-color: $line-disabled;
-        background: $bg-regular;
+        border-color: var(--border-checkbox-disabled);
+        background: var(--bg-checkbox-regular);
 
         .app-choice__inner {
             svg path {
-                fill: $color-05-gray-disabled;
+                fill: var(--fill-checkbox);
             }
         }
 
         .app-choice__dot {
-            background: $color-05-gray-disabled;
+            background: var(--bg-checkbox-05-gray-disabled);
         }
     }
 
@@ -274,31 +274,31 @@
     ---------------------------------------- */
     &.is-error {
         .app-choice__visual {
-            border-color: $status-error;
+            border-color: var(--border-checkbox-status-error);
         }
 
         .app-choice__hint {
-            color: $status-error;
+            color: var(--color-checkbox-status-error);
         }
     }
 
     &.is-warning {
         .app-choice__visual {
-            border-color: $status-warning;
+            border-color: var(--border-checkbox-status-warning);
         }
 
         .app-choice__hint {
-            color: $status-warning;
+            color: var(--color-checkbox-status-warning);
         }
     }
 
     &.is-success {
         .app-choice__visual {
-            border-color: $status-success;
+            border-color: var(--border-checkbox-status-success);
         }
 
         .app-choice__hint {
-            color: $status-success;
+            color: var(--color-checkbox-status-success);
         }
     }
 
@@ -349,29 +349,29 @@
     }
 
     &--chip {
-        background-color: $gray-50;
-        border-color: $gray-200;
+        background-color: var(--bg-checkbox-gray-50);
+        border-color: var(--border-checkbox-gray-200);
 
         &.is-checked {
-            background-color: $primary;
-            border-color: $primary;
+            background-color: var(--bg-checkbox-primary);
+            border-color: var(--border-checkbox-primary);
 
             .app-choice__label {
-                color: $gray-0;
+                color: var(--color-checkbox-gray-0);
             }
         }
     }
 
     &--chip-outline {
-        background-color: $gray-0;
-        border-color: $gray-300;
+        background-color: var(--bg-checkbox-gray-0);
+        border-color: var(--border-checkbox-gray-300);
 
         &.is-checked {
-            border-color: $primary;
-            background-color: $primary-50;
+            border-color: var(--border-checkbox-primary);
+            background-color: var(--bg-checkbox-primary-50);
 
             .app-choice__label {
-                color: $primary-700;
+                color: var(--color-checkbox-primary-700);
             }
         }
     }
@@ -379,15 +379,15 @@
     &--fill {
         padding-inline: 10px;
         border-radius: 8px;
-        background-color: $gray-50;
-        border-color: $gray-50;
+        background-color: var(--bg-checkbox-gray-50);
+        border-color: var(--border-checkbox-gray-50);
 
         &.is-checked {
-            background-color: $primary;
-            border-color: $primary;
+            background-color: var(--bg-checkbox-primary);
+            border-color: var(--border-checkbox-primary);
 
             .app-choice__label {
-                color: $gray-0;
+                color: var(--color-checkbox-gray-0);
             }
         }
     }
@@ -397,15 +397,15 @@
         background-color: transparent;
 
         .app-choice__label {
-            color: $gray-600;
+            color: var(--color-checkbox-gray-600);
         }
 
         &.is-checked {
-            background-color: $primary-100;
-            border-color: $primary-100;
+            background-color: var(--bg-checkbox-primary-100);
+            border-color: var(--border-checkbox-primary-100);
 
             .app-choice__label {
-                color: $primary-700;
+                color: var(--color-checkbox-primary-700);
             }
         }
     }
@@ -417,9 +417,9 @@
         padding: 0 11px;
         justify-content: flex-start;
         border-radius: 999px;
-        border-color: $gray-200;
-        background-color: $gray-200;
-        box-shadow: inset 0 0 0 1px rgba($gray-800, 0.04);
+        border-color: var(--border-checkbox-gray-200);
+        background-color: var(--bg-checkbox-gray-200);
+        box-shadow: inset 0 0 0 1px var(--shadow-checkbox-gray-800-alpha-4);
         transition:
             background-color 0.24s ease,
             border-color 0.24s ease,
@@ -433,10 +433,10 @@
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background-color: $gray-0;
+            background-color: var(--bg-checkbox-gray-0);
             box-shadow:
-                0 2px 6px rgba(0, 0, 0, 0.18),
-                0 0 0 1px rgba(0, 0, 0, 0.04);
+                0 2px 6px var(--shadow-checkbox-gray-900-alpha-18),
+                0 0 0 1px var(--shadow-checkbox);
             transform: translateX(0);
             transition:
                 transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
@@ -450,7 +450,7 @@
 
         .app-choice__label {
             width: 100%;
-            color: $gray-600;
+            color: var(--color-checkbox-gray-600);
             font-weight: 700;
             text-align: right;
             text-transform: uppercase;
@@ -463,7 +463,7 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            color: $gray-600;
+            color: var(--color-checkbox-gray-600);
             font-weight: 700;
             text-align: right;
             text-transform: uppercase;
@@ -475,51 +475,51 @@
 
         &.is-checked {
             justify-content: flex-end;
-            border-color: $primary-500;
-            background-color: $primary-500;
-            box-shadow: inset 0 0 0 1px rgba($primary-700, 0.08);
+            border-color: var(--border-checkbox-primary-500);
+            background-color: var(--bg-checkbox-primary-500);
+            box-shadow: inset 0 0 0 1px var(--shadow-checkbox-primary-700-alpha-8);
 
             &::after {
-                background-color: $gray-0;
+                background-color: var(--bg-checkbox-gray-0);
                 transform: translateX(calc(100% + 11px));
             }
 
             .app-choice__label {
-                color: $gray-0;
+                color: var(--color-checkbox-gray-0);
                 text-align: left;
             }
 
             .app-choice__toggle-text {
-                color: $gray-0;
+                color: var(--color-checkbox-gray-0);
                 text-align: left;
             }
         }
 
         &.is-disabled {
-            background-color: $gray-100;
-            border-color: $gray-200;
+            background-color: var(--bg-checkbox-gray-100);
+            border-color: var(--border-checkbox-gray-200);
             box-shadow: none;
 
             &::after {
-                background-color: $gray-0;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+                background-color: var(--bg-checkbox-gray-0);
+                box-shadow: 0 1px 3px var(--shadow-checkbox-gray-900-alpha-8);
             }
 
             .app-choice__label,
             .app-choice__toggle-text {
-                color: $gray-400;
+                color: var(--color-checkbox-gray-400);
             }
         }
     }
 
     &.is-readonly {
         .app-choice__visual {
-            background: $bg-light;
+            background: var(--bg-checkbox-light);
         }
 
         .app-choice__label,
         .app-choice__hint {
-            color: $gray-700;
+            color: var(--color-checkbox-gray-700);
         }
 
         .app-choice__input {
