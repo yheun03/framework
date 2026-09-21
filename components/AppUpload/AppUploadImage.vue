@@ -1,13 +1,25 @@
 <template>
-    <div class="app-image-upload" :class="rootClasses" @dragenter.prevent="handleDragEnter"
-        @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop">
+    <div
+        class="app-image-upload"
+        :class="rootClasses"
+        @dragenter.prevent="handleDragEnter"
+        @dragover.prevent="handleDragOver"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
+    >
         <div class="app-image-upload__head">
             <div class="app-image-upload__dropzone">
-                <input ref="fileInput" class="app-image-upload__input" type="file" :accept="accept" :multiple="multiple"
-                    :disabled="disabled" @change="handleFileChange" />
+                <input
+                    ref="fileInput"
+                    class="app-image-upload__input"
+                    type="file"
+                    :accept="accept"
+                    :multiple="multiple"
+                    :disabled="disabled"
+                    @change="handleFileChange"
+                />
 
-                <button type="button" class="app-image-upload__trigger" :disabled="disabled"
-                    @click="handleFileOpen">
+                <button type="button" class="app-image-upload__trigger" :disabled="disabled" @click="handleFileOpen">
                     <span class="app-image-upload__trigger-icon" aria-hidden="true">
                         <IconImagePlus />
                     </span>
@@ -24,7 +36,7 @@
 
             <div class="app-image-upload__actions">
                 <AppButton variant="outline" size="sm" :disabled="disabled || !items.length" @click="handleClearAll">
-                    {{ multiple ? "전체 삭제" : "이미지 삭제" }}
+                    {{ multiple ? '전체 삭제' : '이미지 삭제' }}
                 </AppButton>
             </div>
         </div>
@@ -44,7 +56,7 @@
 
                     <div class="app-image-upload__meta">
                         <span class="app-image-upload__meta-item">
-                            {{ uploadItem.type || "unknown" }}
+                            {{ uploadItem.type || 'unknown' }}
                         </span>
                         <span class="app-image-upload__meta-divider">·</span>
                         <span class="app-image-upload__meta-item">
@@ -54,13 +66,13 @@
                 </div>
 
                 <div class="app-image-upload__item-actions">
-                    <AppTextButton v-if="uploadItem.url" size="sm" aria-label="이미지 미리보기"
-                        @click="handlePreviewItem(uploadItem)">
+                    <AppTextButton v-if="uploadItem.url" size="sm" aria-label="이미지 미리보기" @click="handlePreviewItem(uploadItem)">
                         미리보기
                     </AppTextButton>
 
-                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled"
-                        @click="handleRemoveItem(uploadItem.id)"><IconClose /></AppIconButton>
+                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled" @click="handleRemoveItem(uploadItem.id)"
+                        ><IconClose
+                    /></AppIconButton>
                 </div>
             </li>
         </ul>
@@ -72,21 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { IconClose, IconImagePlus } from "~/components/icons";
-import { useModalViewer } from "~/composables/useModalViewer";
-import {
-    createUploadId,
-    formatBytes,
-    resolveNextUploadItems,
-} from "~/utils/upload";
-import {
-    normalizeUploadItems,
-    resolveUploadValue,
-    useAppUpload,
-    type AppUploadModelValue,
-} from "~/composables/useAppUpload";
+import { IconClose, IconImagePlus } from '~/components/icons';
+import { useModalViewer } from '~/composables/useModalViewer';
+import { createUploadId, formatBytes, resolveNextUploadItems } from '~/utils/upload';
+import { normalizeUploadItems, resolveUploadValue, useAppUpload, type AppUploadModelValue } from '~/composables/useAppUpload';
 
-type ReadMode = "dataUrl" | "objectUrl";
+type ReadMode = 'dataUrl' | 'objectUrl';
 type AppImageUploadModelValue = AppUploadModelValue<AppImageUploadItem>;
 
 export type AppImageUploadItem = {
@@ -97,7 +100,7 @@ export type AppImageUploadItem = {
     url: string;
     alt?: string;
     file?: File;
-    source?: "sample" | "upload";
+    source?: 'sample' | 'upload';
 };
 
 const props = withDefaults(
@@ -117,25 +120,22 @@ const props = withDefaults(
         modelValue: null,
         disabled: false,
         multiple: false,
-        accept: "image/*",
-        hint: "",
-        triggerText: "이미지 업로드",
+        accept: 'image/*',
+        hint: '',
+        triggerText: '이미지 업로드',
         allowDrop: true,
         maxSizeBytes: undefined,
         maxCount: undefined,
-        readMode: "dataUrl",
+        readMode: 'dataUrl',
     },
 );
 
 const emit = defineEmits<{
-    (
-        e: "update:modelValue",
-        value: AppImageUploadItem | AppImageUploadItem[] | null,
-    ): void;
-    (e: "change", value: AppImageUploadItem | AppImageUploadItem[] | null): void;
-    (e: "remove", item: AppImageUploadItem): void;
-    (e: "clear"): void;
-    (e: "error", payload: { message: string; detail?: unknown }): void;
+    (e: 'update:modelValue', value: AppImageUploadItem | AppImageUploadItem[] | null): void;
+    (e: 'change', value: AppImageUploadItem | AppImageUploadItem[] | null): void;
+    (e: 'remove', item: AppImageUploadItem): void;
+    (e: 'clear'): void;
+    (e: 'error', payload: { message: string; detail?: unknown }): void;
 }>();
 
 const objectUrls = ref<string[]>([]);
@@ -153,16 +153,15 @@ const {
 } = useAppUpload(props, error);
 
 function createUrlItem(url: string, index = 0): AppImageUploadItem {
-    const fallbackName =
-        url.split("/").pop()?.split("?")[0] || `image-${index + 1}`;
+    const fallbackName = url.split('/').pop()?.split('?')[0] || `image-${index + 1}`;
     return {
         id: `url-${index}-${url}`,
         name: fallbackName,
-        type: "image/url",
+        type: 'image/url',
         size: 0,
         url,
         alt: fallbackName,
-        source: "sample",
+        source: 'sample',
     };
 }
 
@@ -171,7 +170,7 @@ const items = computed<AppImageUploadItem[]>(() => {
 });
 
 function createId() {
-    return createUploadId("image");
+    return createUploadId('image');
 }
 
 function cleanupObjectUrls() {
@@ -182,12 +181,12 @@ function cleanupObjectUrls() {
 function emitValue(nextItems: AppImageUploadItem[]) {
     const value = resolveUploadValue(nextItems, props.multiple);
 
-    emit("update:modelValue", value);
-    emit("change", value);
+    emit('update:modelValue', value);
+    emit('change', value);
 }
 
 function error(message: string, detail?: unknown) {
-    emit("error", { message, detail });
+    emit('error', { message, detail });
 }
 
 function toObjectUrl(file: File) {
@@ -200,24 +199,18 @@ function readAsDataUrl(file: File) {
     return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
 
-        reader.onerror = () =>
-            reject(new Error("파일을 읽는 중 오류가 발생했습니다."));
-        reader.onload = () => resolve(String(reader.result ?? ""));
+        reader.onerror = () => reject(new Error('파일을 읽는 중 오류가 발생했습니다.'));
+        reader.onload = () => resolve(String(reader.result ?? ''));
 
         reader.readAsDataURL(file);
     });
 }
 
-async function createItemFromFile(
-    file: File,
-): Promise<AppImageUploadItem | null> {
+async function createItemFromFile(file: File): Promise<AppImageUploadItem | null> {
     const accepted = shouldAcceptFile(file);
     if (!accepted) return null;
 
-    const url =
-        props.readMode === "objectUrl"
-            ? toObjectUrl(file)
-            : await readAsDataUrl(file);
+    const url = props.readMode === 'objectUrl' ? toObjectUrl(file) : await readAsDataUrl(file);
 
     return {
         id: createId(),
@@ -227,14 +220,12 @@ async function createItemFromFile(
         url,
         alt: file.name,
         file,
-        source: "upload",
+        source: 'upload',
     };
 }
 
 async function appendFiles(files: File[]) {
-    const createdItems = (
-        await Promise.all(files.map(createItemFromFile))
-    ).filter(Boolean) as AppImageUploadItem[];
+    const createdItems = (await Promise.all(files.map(createItemFromFile))).filter(Boolean) as AppImageUploadItem[];
 
     const nextItems = resolveNextUploadItems({
         currentItems: items.value,
@@ -251,7 +242,7 @@ function handleRemoveItem(id: string) {
     const target = items.value.find((uploadItem) => uploadItem.id === id);
     if (!target) return;
 
-    emit("remove", target);
+    emit('remove', target);
     emitValue(items.value.filter((uploadItem) => uploadItem.id !== id));
 }
 
@@ -265,9 +256,9 @@ function handlePreviewItem(item: AppImageUploadItem) {
 
 function handleClearAll() {
     if (items.value.length === 1) {
-        emit("remove", items.value[0]);
+        emit('remove', items.value[0]);
     }
-    emit("clear");
+    emit('clear');
     emitValue([]);
 }
 
@@ -278,7 +269,7 @@ async function handleFileChange(event: Event) {
     if (!files.length) return;
 
     await appendFiles(files);
-    target.value = "";
+    target.value = '';
 }
 
 async function handleDrop(event: DragEvent) {
@@ -288,15 +279,11 @@ async function handleDrop(event: DragEvent) {
 watch(
     () => props.modelValue,
     () => {
-        if (props.readMode !== "objectUrl") return;
+        if (props.readMode !== 'objectUrl') return;
 
-        const validUrls = items.value
-            .filter((uploadItem) => uploadItem.source === "upload")
-            .map((uploadItem) => uploadItem.url);
+        const validUrls = items.value.filter((uploadItem) => uploadItem.source === 'upload').map((uploadItem) => uploadItem.url);
 
-        objectUrls.value = objectUrls.value.filter((url) =>
-            validUrls.includes(url),
-        );
+        objectUrls.value = objectUrls.value.filter((url) => validUrls.includes(url));
     },
     { deep: true },
 );

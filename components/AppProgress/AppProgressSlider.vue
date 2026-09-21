@@ -1,12 +1,16 @@
 <template>
-    <div class="app-progress-slider" :class="[
-        `app-progress-slider--${type}`,
-        { 'app-progress-slider--disabled': disabled },
-    ]">
+    <div class="app-progress-slider" :class="[`app-progress-slider--${type}`, { 'app-progress-slider--disabled': disabled }]">
         <div v-if="type === 'single'" class="app-progress-slider__control">
             <label v-if="label" class="app-progress-slider__label">{{ label }}</label>
-            <div ref="singleSliderEl" class="app-progress-slider__noui" role="slider" aria-orientation="horizontal"
-                :aria-valuemin="0" :aria-valuemax="100" :aria-valuenow="singleValue" />
+            <div
+                ref="singleSliderEl"
+                class="app-progress-slider__noui"
+                role="slider"
+                aria-orientation="horizontal"
+                :aria-valuemin="0"
+                :aria-valuemax="100"
+                :aria-valuenow="singleValue"
+            />
             <div v-if="showValue" class="app-progress-slider__value">{{ singleValue }}%</div>
         </div>
 
@@ -22,32 +26,30 @@
 </template>
 
 <script setup lang="ts">
-import noUiSlider from "nouislider";
-import type { API as NoUiSliderApi } from "nouislider";
-import {
-    isSameProgressRange,
-    normalizeProgressRange,
-    normalizeProgressValue,
-    type ProgressRange,
-} from "~/utils/progress";
+import noUiSlider from 'nouislider';
+import type { API as NoUiSliderApi } from 'nouislider';
+import { isSameProgressRange, normalizeProgressRange, normalizeProgressValue, type ProgressRange } from '~/utils/progress';
 
-const props = withDefaults(defineProps<{
-    value?: number;
-    range?: ProgressRange;
-    type?: "single" | "range";
-    label?: string;
-    disabled?: boolean;
-    showValue?: boolean;
-}>(), {
-    value: 0,
-    type: "single",
-    disabled: false,
-    showValue: false,
-});
+const props = withDefaults(
+    defineProps<{
+        value?: number;
+        range?: ProgressRange;
+        type?: 'single' | 'range';
+        label?: string;
+        disabled?: boolean;
+        showValue?: boolean;
+    }>(),
+    {
+        value: 0,
+        type: 'single',
+        disabled: false,
+        showValue: false,
+    },
+);
 
 const emit = defineEmits<{
-    "update:value": [number];
-    "update:range": [ProgressRange];
+    'update:value': [number];
+    'update:range': [ProgressRange];
 }>();
 
 const singleSliderEl = ref<HTMLElement | null>(null);
@@ -59,7 +61,7 @@ let rangeSlider: NoUiSliderApi | null = null;
 
 function handleSingleChange(values: (number | string)[]) {
     const value = normalizeProgressValue(Number(values[0]));
-    if (value !== singleValue.value) emit("update:value", value);
+    if (value !== singleValue.value) emit('update:value', value);
 }
 
 function handleRangeChange(values: (number | string)[]) {
@@ -67,35 +69,35 @@ function handleRangeChange(values: (number | string)[]) {
         start: Number(values[0]),
         end: Number(values[1]),
     });
-    if (!isSameProgressRange(value, normalizedRange.value)) emit("update:range", value);
+    if (!isSameProgressRange(value, normalizedRange.value)) emit('update:range', value);
 }
 
 function createSingleSlider() {
-    if (props.type !== "single" || !singleSliderEl.value) return;
+    if (props.type !== 'single' || !singleSliderEl.value) return;
 
     singleSlider = noUiSlider.create(singleSliderEl.value, {
         start: [singleValue.value],
         connect: [true, false],
         range: { min: 0, max: 100 },
         step: 1,
-        behaviour: "tap-drag",
+        behaviour: 'tap-drag',
         animate: false,
     });
-    singleSlider.on("slide", handleSingleChange);
+    singleSlider.on('slide', handleSingleChange);
 }
 
 function createRangeSlider() {
-    if (props.type !== "range" || !rangeSliderEl.value) return;
+    if (props.type !== 'range' || !rangeSliderEl.value) return;
 
     rangeSlider = noUiSlider.create(rangeSliderEl.value, {
         start: [normalizedRange.value.start, normalizedRange.value.end],
         connect: true,
         range: { min: 0, max: 100 },
         step: 1,
-        behaviour: "tap-drag",
+        behaviour: 'tap-drag',
         animate: false,
     });
-    rangeSlider.on("slide", handleRangeChange);
+    rangeSlider.on('slide', handleRangeChange);
 }
 
 function destroySliders() {
@@ -130,10 +132,13 @@ function syncValues() {
 onMounted(createSliders);
 onBeforeUnmount(destroySliders);
 
-watch(() => props.type, async () => {
-    await nextTick();
-    createSliders();
-});
+watch(
+    () => props.type,
+    async () => {
+        await nextTick();
+        createSliders();
+    },
+);
 watch(() => props.disabled, syncDisabled);
 watch([singleValue, normalizedRange], syncValues, { deep: true });
 </script>

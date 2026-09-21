@@ -69,7 +69,8 @@ const currentYear = new Date().getFullYear();
     min-height: 100vh;
     background:
         radial-gradient(900px 520px at 8% 5%, var(--theme-primary-500-alpha-25), transparent 52%),
-        radial-gradient(840px 560px at 95% 2%, var(--theme-primary-200-alpha-30), transparent 52%), linear-gradient(180deg, var(--theme-gray-0), var(--theme-primary-50));
+        radial-gradient(840px 560px at 95% 2%, var(--theme-primary-200-alpha-30), transparent 52%),
+        linear-gradient(180deg, var(--theme-gray-0), var(--theme-primary-50));
     color: var(--theme-gray-900);
     padding: 22px 22px 28px;
 
@@ -82,7 +83,8 @@ const currentYear = new Date().getFullYear();
         background:
             radial-gradient(900px 540px at 20% 10%, var(--theme-primary-500-alpha-55), transparent 60%),
             radial-gradient(820px 560px at 90% 20%, var(--theme-primary-200-alpha-58), transparent 60%),
-            radial-gradient(860px 640px at 40% 105%, var(--theme-status-info-alpha-25), transparent 62%), linear-gradient(180deg, var(--theme-primary-900), var(--theme-primary-700));
+            radial-gradient(860px 640px at 40% 105%, var(--theme-status-info-alpha-25), transparent 62%),
+            linear-gradient(180deg, var(--theme-primary-900), var(--theme-primary-700));
         border: 1px solid var(--theme-gray-0-alpha-18);
         box-shadow:
             0 24px 58px var(--theme-primary-900-alpha-14),
@@ -95,7 +97,13 @@ const currentYear = new Date().getFullYear();
             inset: -1px;
             background:
                 linear-gradient(135deg, var(--theme-gray-0-alpha-14), var(--theme-gray-0-alpha-0) 35%),
-                repeating-linear-gradient(135deg, var(--theme-gray-0-alpha-8) 0px, var(--theme-gray-0-alpha-8) 1px, var(--theme-gray-0-alpha-0) 1px, var(--theme-gray-0-alpha-0) 10px);
+                repeating-linear-gradient(
+                    135deg,
+                    var(--theme-gray-0-alpha-8) 0px,
+                    var(--theme-gray-0-alpha-8) 1px,
+                    var(--theme-gray-0-alpha-0) 1px,
+                    var(--theme-gray-0-alpha-0) 10px
+                );
             opacity: 0.45;
             pointer-events: none;
         }

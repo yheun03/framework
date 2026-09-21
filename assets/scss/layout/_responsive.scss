@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /* =========================================
    Responsive Layout
@@ -43,7 +43,6 @@
 }
 
 .layout {
-
     &__nav,
     &__main,
     &__content {
@@ -55,8 +54,7 @@
     padding: 14px;
 
     &-layout {
-        grid-template-columns: minmax(0, 1fr) minmax(280px,
-                var(--layout-aside-width));
+        grid-template-columns: minmax(0, 1fr) minmax(280px, var(--layout-aside-width));
         gap: 12px;
     }
 
@@ -100,8 +98,8 @@
         grid-template-rows: auto minmax(0, 1fr);
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas:
-            "mobile-bar"
-            "main";
+            'mobile-bar'
+            'main';
 
         &__mobile-bar {
             position: sticky;
@@ -222,8 +220,8 @@
             align-items: stretch;
         }
 
-        &-row>*,
-        &-controls>* {
+        &-row > *,
+        &-controls > * {
             min-width: 0;
         }
 

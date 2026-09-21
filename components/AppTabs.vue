@@ -1,14 +1,17 @@
 <template>
-    <div class="app-tabs" :class="[
-        `app-tabs--${variant}`,
-        `app-tabs--${size}`,
-        `app-tabs--${orientation}`,
-        { 'is-stretch': stretch },
-    ]">
+    <div class="app-tabs" :class="[`app-tabs--${variant}`, `app-tabs--${size}`, `app-tabs--${orientation}`, { 'is-stretch': stretch }]">
         <div class="app-tabs__list" role="tablist" :aria-orientation="orientation">
-            <button v-for="item in items" :key="item.id" type="button" class="app-tabs__tab" role="tab"
+            <button
+                v-for="item in items"
+                :key="item.id"
+                type="button"
+                class="app-tabs__tab"
+                role="tab"
                 :class="{ 'is-active': currentId === item.id, 'is-disabled': item.disabled }"
-                :disabled="item.disabled" :aria-selected="currentId === item.id" @click="selectTab(item)">
+                :disabled="item.disabled"
+                :aria-selected="currentId === item.id"
+                @click="selectTab(item)"
+            >
                 <span v-if="item.icon" class="app-tabs__tab-icon" aria-hidden="true">
                     <component :is="item.icon" />
                 </span>
@@ -21,8 +24,7 @@
         </div>
 
         <div class="app-tabs__panels">
-            <div v-for="item in items" v-show="currentId === item.id" :key="item.id" class="app-tabs__panel"
-                role="tabpanel">
+            <div v-for="item in items" v-show="currentId === item.id" :key="item.id" class="app-tabs__panel" role="tabpanel">
                 <slot v-if="item.slot" :name="item.slot" :item="item" />
                 <div v-else class="app-tabs__empty">내용이 없습니다.</div>
             </div>
@@ -31,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Component } from "vue";
+import type { Component } from 'vue';
 
 export type AppTabItem = {
     id: string | number;
@@ -43,36 +45,39 @@ export type AppTabItem = {
     slot?: string;
 };
 
-const props = withDefaults(defineProps<{
-    items: AppTabItem[];
-    activeId?: string | number | null;
-    defaultActiveId?: string | number | null;
-    initialActive?: "first" | "none";
-    variant?: "line" | "box" | "pill";
-    size?: "sm" | "md" | "lg";
-    orientation?: "horizontal" | "vertical";
-    stretch?: boolean;
-}>(), {
-    initialActive: "first",
-    variant: "line",
-    size: "md",
-    orientation: "horizontal",
-    stretch: false,
-});
+const props = withDefaults(
+    defineProps<{
+        items: AppTabItem[];
+        activeId?: string | number | null;
+        defaultActiveId?: string | number | null;
+        initialActive?: 'first' | 'none';
+        variant?: 'line' | 'box' | 'pill';
+        size?: 'sm' | 'md' | 'lg';
+        orientation?: 'horizontal' | 'vertical';
+        stretch?: boolean;
+    }>(),
+    {
+        initialActive: 'first',
+        variant: 'line',
+        size: 'md',
+        orientation: 'horizontal',
+        stretch: false,
+    },
+);
 
 const emit = defineEmits<{
-    "update:activeId": [string | number | null];
+    'update:activeId': [string | number | null];
     change: [{ id: string | number | null; item: AppTabItem | null }];
 }>();
 
 const firstId = props.items.find((item) => !item.disabled)?.id ?? null;
-const selectedId = ref<string | number | null>(props.defaultActiveId ?? (props.initialActive === "first" ? firstId : null));
-const currentId = computed(() => props.activeId === undefined ? selectedId.value : props.activeId);
+const selectedId = ref<string | number | null>(props.defaultActiveId ?? (props.initialActive === 'first' ? firstId : null));
+const currentId = computed(() => (props.activeId === undefined ? selectedId.value : props.activeId));
 
 function selectTab(item: AppTabItem) {
     if (item.disabled) return;
     if (props.activeId === undefined) selectedId.value = item.id;
-    emit("update:activeId", item.id);
-    emit("change", { id: item.id, item });
+    emit('update:activeId', item.id);
+    emit('change', { id: item.id, item });
 }
 </script>

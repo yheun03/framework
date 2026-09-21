@@ -6,13 +6,20 @@
                     <IconApp class="nav-logo__mark" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" aria-label="메뉴 닫기" :size="36" :icon-size="18"
-                    @click="handleClose"><IconClose /></AppIconButton>
+                <AppIconButton class="layout-nav__mobile-close" aria-label="메뉴 닫기" :size="36" :icon-size="18" @click="handleClose"
+                    ><IconClose
+                /></AppIconButton>
             </div>
 
             <div class="layout-nav__actions" :aria-label="t('nav.demos')">
-                <AppIconButton v-for="action in headerActions" :key="action.label" class="nav-action"
-                    :aria-label="action.label" size="md" icon-size="lg">
+                <AppIconButton
+                    v-for="action in headerActions"
+                    :key="action.label"
+                    class="nav-action"
+                    :aria-label="action.label"
+                    size="md"
+                    icon-size="lg"
+                >
                     <component :is="action.icon" />
                 </AppIconButton>
             </div>
@@ -27,18 +34,17 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppIconButton class="nav-action" :aria-label="t('settings.title')" size="md" icon-size="lg"
-                to="/settings"><IconCog /></AppIconButton>
+            <AppIconButton class="nav-action" :aria-label="t('settings.title')" size="md" icon-size="lg" to="/settings"><IconCog /></AppIconButton>
         </div>
     </nav>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useI18nText } from "~/composables/useI18nText";
-import { useNavigationStore } from "~/stores/navigation";
-import { NAVIGATION_HEADER_ACTIONS } from "~/types/appNavigation";
-import { IconApp, IconClose, IconCog } from "~/components/icons";
+import { storeToRefs } from 'pinia';
+import { useI18nText } from '~/composables/useI18nText';
+import { useNavigationStore } from '~/stores/navigation';
+import { NAVIGATION_HEADER_ACTIONS } from '~/types/appNavigation';
+import { IconApp, IconClose, IconCog } from '~/components/icons';
 
 const emit = defineEmits<{
     close: [];
@@ -50,8 +56,8 @@ const { menuTree } = storeToRefs(navigationStore);
 const headerActions = NAVIGATION_HEADER_ACTIONS;
 
 function handleClose() {
-    emit("close");
+    emit('close');
 }
 
-callOnce("navigation:menus", () => navigationStore.fetchMenus());
+callOnce('navigation:menus', () => navigationStore.fetchMenus());
 </script>

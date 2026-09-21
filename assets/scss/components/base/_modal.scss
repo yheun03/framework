@@ -1,4 +1,4 @@
-@use "../../abstract" as *;
+@use '../../abstract' as *;
 
 .app-modal {
     position: fixed;
@@ -10,11 +10,7 @@
     &__backdrop {
         position: absolute;
         inset: 0;
-        background:
-            radial-gradient(600px 420px at 20% 20%,
-                var(--bg-modal),
-                var(--bg-modal-gray-900-alpha-0) 65%),
-            var(--bg-modal-gray-900-alpha-55);
+        background: radial-gradient(600px 420px at 20% 20%, var(--bg-modal), var(--bg-modal-gray-900-alpha-0) 65%), var(--bg-modal-gray-900-alpha-55);
         backdrop-filter: blur(6px);
     }
 
@@ -45,9 +41,7 @@
         padding: 16px 16px 12px;
         border-bottom: 1px solid var(--border-modal-gray-900-alpha-8);
         background:
-            radial-gradient(420px 140px at 10% 0%,
-                var(--bg-modal-primary-100-alpha-90),
-                var(--bg-modal-gray-0-alpha-0) 65%),
+            radial-gradient(420px 140px at 10% 0%, var(--bg-modal-primary-100-alpha-90), var(--bg-modal-gray-0-alpha-0) 65%),
             var(--bg-modal-gray-0-alpha-70);
     }
 

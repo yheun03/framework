@@ -5,23 +5,20 @@
 
             <Bar v-else-if="isBar" class="app-chart__canvas" :data="barData" :options="barOptions" />
 
-            <Doughnut v-else-if="isDoughnut" class="app-chart__canvas" :data="doughnutData"
-                :options="doughnutOptions" />
+            <Doughnut v-else-if="isDoughnut" class="app-chart__canvas" :data="doughnutData" :options="doughnutOptions" />
 
             <Pie v-else class="app-chart__canvas" :data="pieData" :options="pieOptions" />
         </div>
 
         <template #fallback>
-            <div class="app-chart__fallback" :style="{ height: `${resolvedHeight}px` }">
-                차트 로딩 중...
-            </div>
+            <div class="app-chart__fallback" :style="{ height: `${resolvedHeight}px` }">차트 로딩 중...</div>
         </template>
     </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { Bar, Line, Doughnut, Pie } from "vue-chartjs";
+import { computed } from 'vue';
+import { Bar, Line, Doughnut, Pie } from 'vue-chartjs';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -36,24 +33,13 @@ import {
     Filler,
     type ChartData,
     type ChartOptions,
-} from "chart.js";
+} from 'chart.js';
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend,
-    Filler,
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
 
-type ChartType = "line" | "bar" | "doughnut" | "semi-doughnut" | "pie";
-type NativeChartType = Exclude<ChartType, "semi-doughnut">;
-type ChartVariant = "default" | "semi-doughnut";
+type ChartType = 'line' | 'bar' | 'doughnut' | 'semi-doughnut' | 'pie';
+type NativeChartType = Exclude<ChartType, 'semi-doughnut'>;
+type ChartVariant = 'default' | 'semi-doughnut';
 
 type AnyObject = Record<string, any>;
 
@@ -68,14 +54,14 @@ const props = withDefaults(
     }>(),
     {
         height: 260,
-        variant: "default",
-        cutout: "68%",
+        variant: 'default',
+        cutout: '68%',
         options: () => ({}),
     },
 );
 
 function isObject(value: unknown): value is AnyObject {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function deepMerge<T extends AnyObject>(...sources: T[]): T {
@@ -105,17 +91,15 @@ function deepMerge<T extends AnyObject>(...sources: T[]): T {
     return result as T;
 }
 
-const isSemiDoughnut = computed(
-    () => props.type === "semi-doughnut" || props.variant === "semi-doughnut",
-);
+const isSemiDoughnut = computed(() => props.type === 'semi-doughnut' || props.variant === 'semi-doughnut');
 
 const resolvedType = computed<NativeChartType>(() => {
-    return props.type === "semi-doughnut" ? "doughnut" : props.type;
+    return props.type === 'semi-doughnut' ? 'doughnut' : props.type;
 });
 
-const isLine = computed(() => resolvedType.value === "line");
-const isBar = computed(() => resolvedType.value === "bar");
-const isDoughnut = computed(() => resolvedType.value === "doughnut");
+const isLine = computed(() => resolvedType.value === 'line');
+const isBar = computed(() => resolvedType.value === 'bar');
+const isDoughnut = computed(() => resolvedType.value === 'doughnut');
 
 function getChartThemeColor(name: string) {
     if (!import.meta.client) return undefined;
@@ -131,7 +115,7 @@ const resolvedHeight = computed(() => {
 });
 
 const wrapperClasses = computed(() => ({
-    "app-chart--semi-doughnut": isSemiDoughnut.value,
+    'app-chart--semi-doughnut': isSemiDoughnut.value,
 }));
 
 const baseOptions = {
@@ -159,14 +143,14 @@ const defaultLineOptions = {
             beginAtZero: true,
             suggestedMax: 100,
             grid: {
-                color: getChartThemeColor("--border-chart-grid"),
+                color: getChartThemeColor('--border-chart-grid'),
             },
         },
     },
     plugins: {
         legend: {
             display: true,
-            position: "top",
+            position: 'top',
         },
     },
 } satisfies AnyObject;
@@ -182,14 +166,14 @@ const defaultBarOptions = {
             beginAtZero: true,
             suggestedMax: 100,
             grid: {
-                color: getChartThemeColor("--border-chart-grid"),
+                color: getChartThemeColor('--border-chart-grid'),
             },
         },
     },
     plugins: {
         legend: {
             display: true,
-            position: "top",
+            position: 'top',
         },
     },
 } satisfies AnyObject;
@@ -198,8 +182,8 @@ const defaultDoughnutOptions = {
     cutout: props.cutout,
     plugins: {
         legend: {
-            position: "bottom",
-            align: "center",
+            position: 'bottom',
+            align: 'center',
             labels: {
                 boxWidth: 14,
                 boxHeight: 14,
@@ -224,8 +208,8 @@ const defaultSemiDoughnutOptions = {
     },
     plugins: {
         legend: {
-            position: "bottom",
-            align: "center",
+            position: 'bottom',
+            align: 'center',
             labels: {
                 boxWidth: 14,
                 boxHeight: 14,
@@ -239,8 +223,8 @@ const defaultSemiDoughnutOptions = {
 const defaultPieOptions = {
     plugins: {
         legend: {
-            position: "bottom",
-            align: "center",
+            position: 'bottom',
+            align: 'center',
             labels: {
                 boxWidth: 14,
                 boxHeight: 14,
@@ -263,48 +247,29 @@ const chartData = computed(() => {
             borderWidth: dataset.borderWidth ?? 0,
             cutout: dataset.cutout ?? props.cutout,
         })),
-    } as ChartData<"doughnut">;
+    } as ChartData<'doughnut'>;
 });
 
-const lineData = computed(() => props.data as ChartData<"line">);
-const barData = computed(() => props.data as ChartData<"bar">);
-const doughnutData = computed(() => chartData.value as ChartData<"doughnut">);
-const pieData = computed(() => props.data as ChartData<"pie">);
+const lineData = computed(() => props.data as ChartData<'line'>);
+const barData = computed(() => props.data as ChartData<'bar'>);
+const doughnutData = computed(() => chartData.value as ChartData<'doughnut'>);
+const pieData = computed(() => props.data as ChartData<'pie'>);
 
-const lineOptions = computed<ChartOptions<"line">>(() => {
-    return deepMerge(
-        baseOptions,
-        defaultLineOptions,
-        props.options,
-    ) as ChartOptions<"line">;
+const lineOptions = computed<ChartOptions<'line'>>(() => {
+    return deepMerge(baseOptions, defaultLineOptions, props.options) as ChartOptions<'line'>;
 });
 
-const barOptions = computed<ChartOptions<"bar">>(() => {
-    return deepMerge(
-        baseOptions,
-        defaultBarOptions,
-        props.options,
-    ) as ChartOptions<"bar">;
+const barOptions = computed<ChartOptions<'bar'>>(() => {
+    return deepMerge(baseOptions, defaultBarOptions, props.options) as ChartOptions<'bar'>;
 });
 
-const doughnutOptions = computed<ChartOptions<"doughnut">>(() => {
-    const preset =
-        isSemiDoughnut.value
-            ? defaultSemiDoughnutOptions
-            : defaultDoughnutOptions;
+const doughnutOptions = computed<ChartOptions<'doughnut'>>(() => {
+    const preset = isSemiDoughnut.value ? defaultSemiDoughnutOptions : defaultDoughnutOptions;
 
-    return deepMerge(
-        baseOptions,
-        preset,
-        props.options,
-    ) as ChartOptions<"doughnut">;
+    return deepMerge(baseOptions, preset, props.options) as ChartOptions<'doughnut'>;
 });
 
-const pieOptions = computed<ChartOptions<"pie">>(() => {
-    return deepMerge(
-        baseOptions,
-        defaultPieOptions,
-        props.options,
-    ) as ChartOptions<"pie">;
+const pieOptions = computed<ChartOptions<'pie'>>(() => {
+    return deepMerge(baseOptions, defaultPieOptions, props.options) as ChartOptions<'pie'>;
 });
 </script>

@@ -1,21 +1,34 @@
 <template>
-    <div class="form-field app-select" :class="[
-        `app-select--${size}`,
-        `app-select--shape-${shape}`,
-        {
-            'app-select--open': isOpen,
-            'is-readonly': readonly,
-            'is-disabled': disabled,
-            [`is-${state}`]: state,
-        },
-    ]">
+    <div
+        class="form-field app-select"
+        :class="[
+            `app-select--${size}`,
+            `app-select--shape-${shape}`,
+            {
+                'app-select--open': isOpen,
+                'is-readonly': readonly,
+                'is-disabled': disabled,
+                [`is-${state}`]: state,
+            },
+        ]"
+    >
         <label v-if="label" class="form-field__label app-select__label" :for="inputId">{{ label }}</label>
 
         <div class="form-field__control app-select__control">
             <input v-if="name" type="hidden" :name="name" :value="String(modelValue ?? '')" />
-            <button :id="inputId" ref="triggerEl" type="button" class="app-select__trigger" :disabled="disabled"
-                :aria-expanded="isOpen" :aria-readonly="readonly || undefined" aria-haspopup="listbox"
-                :aria-controls="isOpen ? menuId : undefined" @click="toggleMenu" @keydown.esc="closeMenu">
+            <button
+                :id="inputId"
+                ref="triggerEl"
+                type="button"
+                class="app-select__trigger"
+                :disabled="disabled"
+                :aria-expanded="isOpen"
+                :aria-readonly="readonly || undefined"
+                aria-haspopup="listbox"
+                :aria-controls="isOpen ? menuId : undefined"
+                @click="toggleMenu"
+                @keydown.esc="closeMenu"
+            >
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
                     {{ selectedOption?.label ?? placeholder }}
                 </span>
@@ -26,20 +39,40 @@
         </div>
 
         <Teleport to="body">
-            <ul v-if="isOpen" :id="menuId" ref="menuEl" class="app-select__menu"
-                :class="`app-select__menu--${size}`" :style="menuStyle" role="listbox">
+            <ul
+                v-if="isOpen"
+                :id="menuId"
+                ref="menuEl"
+                class="app-select__menu"
+                :class="`app-select__menu--${size}`"
+                :style="menuStyle"
+                role="listbox"
+            >
                 <li v-if="placeholder && !required" class="app-select__option-item">
-                    <button type="button" class="app-select__option" :class="{ 'is-selected': modelValue === null }"
-                        role="option" :aria-selected="modelValue === null" @click="selectOption(null)">
+                    <button
+                        type="button"
+                        class="app-select__option"
+                        :class="{ 'is-selected': modelValue === null }"
+                        role="option"
+                        :aria-selected="modelValue === null"
+                        @click="selectOption(null)"
+                    >
                         {{ placeholder }}
                     </button>
                 </li>
                 <li v-for="option in options" :key="String(option.value)" class="app-select__option-item">
-                    <button type="button" class="app-select__option" :class="{
-                        'is-selected': modelValue === option.value,
-                        'is-disabled': option.disabled,
-                    }" role="option" :aria-selected="modelValue === option.value" :disabled="option.disabled"
-                        @click="selectOption(option)">
+                    <button
+                        type="button"
+                        class="app-select__option"
+                        :class="{
+                            'is-selected': modelValue === option.value,
+                            'is-disabled': option.disabled,
+                        }"
+                        role="option"
+                        :aria-selected="modelValue === option.value"
+                        :disabled="option.disabled"
+                        @click="selectOption(option)"
+                    >
                         {{ option.label }}
                     </button>
                 </li>
@@ -51,8 +84,8 @@
 </template>
 
 <script setup lang="ts">
-import { IconChevronDown } from "~/components/icons";
-import { getBodyOverlayStyle, useBodyOverlay } from "~/composables/useBodyOverlay";
+import { IconChevronDown } from '~/components/icons';
+import { getBodyOverlayStyle, useBodyOverlay } from '~/composables/useBodyOverlay';
 
 export type AppSelectOption = {
     value: string | number | boolean | null;
@@ -60,36 +93,39 @@ export type AppSelectOption = {
     disabled?: boolean;
 };
 
-type SelectSize = "xs" | "sm" | "md" | "lg";
-type SelectShape = "square" | "round" | "pill" | "underline";
-type SelectState = "error" | "warning" | "success" | null;
+type SelectSize = 'xs' | 'sm' | 'md' | 'lg';
+type SelectShape = 'square' | 'round' | 'pill' | 'underline';
+type SelectState = 'error' | 'warning' | 'success' | null;
 
-const props = withDefaults(defineProps<{
-    modelValue: string | number | boolean | null;
-    options: AppSelectOption[];
-    label?: string;
-    hint?: string;
-    placeholder?: string;
-    required?: boolean;
-    size?: SelectSize;
-    shape?: SelectShape;
-    state?: SelectState;
-    disabled?: boolean;
-    readonly?: boolean;
-    id?: string;
-    name?: string;
-}>(), {
-    placeholder: "선택하세요",
-    required: false,
-    size: "md",
-    shape: "round",
-    state: null,
-    disabled: false,
-    readonly: false,
-});
+const props = withDefaults(
+    defineProps<{
+        modelValue: string | number | boolean | null;
+        options: AppSelectOption[];
+        label?: string;
+        hint?: string;
+        placeholder?: string;
+        required?: boolean;
+        size?: SelectSize;
+        shape?: SelectShape;
+        state?: SelectState;
+        disabled?: boolean;
+        readonly?: boolean;
+        id?: string;
+        name?: string;
+    }>(),
+    {
+        placeholder: '선택하세요',
+        required: false,
+        size: 'md',
+        shape: 'round',
+        state: null,
+        disabled: false,
+        readonly: false,
+    },
+);
 
 const emit = defineEmits<{
-    "update:modelValue": [string | number | boolean | null];
+    'update:modelValue': [string | number | boolean | null];
     change: [Event];
 }>();
 
@@ -129,8 +165,8 @@ function closeMenu() {
 }
 
 function selectOption(option: AppSelectOption | null) {
-    emit("update:modelValue", option?.value ?? null);
-    emit("change", new Event("change"));
+    emit('update:modelValue', option?.value ?? null);
+    emit('change', new Event('change'));
     closeMenu();
 }
 </script>

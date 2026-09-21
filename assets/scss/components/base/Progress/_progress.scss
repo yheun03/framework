@@ -1,4 +1,4 @@
-@use "../../../abstract" as *;
+@use '../../../abstract' as *;
 
 /* =========================================
    Component: AppProgressBar / AppProgressSlider
@@ -52,7 +52,6 @@
     }
 
     &--disabled {
-
         .app-progress-bar__label,
         .app-progress-bar__value {
             color: var(--color-progress-gray-500);
@@ -148,7 +147,6 @@
        Disabled
     ---------------------------------------- */
     &--disabled {
-
         .app-progress-slider__label,
         .app-progress-slider__value,
         .app-progress-slider__range-value {

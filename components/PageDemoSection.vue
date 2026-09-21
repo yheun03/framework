@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AppAccordionItem } from "~/components/AppAccordion.vue";
+import type { AppAccordionItem } from '~/components/AppAccordion.vue';
 
 const props = withDefaults(
     defineProps<{
@@ -15,17 +15,17 @@ const props = withDefaults(
         description?: string;
     }>(),
     {
-        title: "",
-        description: "",
+        title: '',
+        description: '',
     },
 );
 
 const items = computed<AppAccordionItem[]>(() => [
     {
-        id: "content",
+        id: 'content',
         title: props.title,
         description: props.description,
-        slot: "content",
+        slot: 'content',
     },
 ]);
 </script>

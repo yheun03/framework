@@ -145,7 +145,9 @@
         padding: 48px clamp(28px, 7vw, 108px);
         display: grid;
         place-items: center;
-        background: radial-gradient(680px 420px at 100% 0%, var(--theme-primary-100-alpha-72), transparent 62%), linear-gradient(180deg, var(--theme-gray-0), var(--theme-gray-50));
+        background:
+            radial-gradient(680px 420px at 100% 0%, var(--theme-primary-100-alpha-72), transparent 62%),
+            linear-gradient(180deg, var(--theme-gray-0), var(--theme-gray-50));
 
         &-inner {
             width: min(520px, 100%);

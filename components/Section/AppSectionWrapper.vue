@@ -25,12 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-    buildSectionStyleVars,
-    type SectionDirection,
-    type SectionRatio,
-    type SectionGap,
-} from "~/utils/section";
+import { buildSectionStyleVars, type SectionDirection, type SectionRatio, type SectionGap } from '~/utils/section';
 
 const props = withDefaults(
     defineProps<{
@@ -41,18 +36,18 @@ const props = withDefaults(
         gap?: number | string;
     }>(),
     {
-        direction: "column",
+        direction: 'column',
         ratio: null,
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         gap: 16,
     },
 );
 
 const wrapperStyle = computed(() => {
     return buildSectionStyleVars({
-        gapVarName: "--app-section-wrapper-gap",
-        ratioVarName: "--app-section-wrapper-template",
+        gapVarName: '--app-section-wrapper-gap',
+        ratioVarName: '--app-section-wrapper-template',
         gap: props.gap as SectionGap,
         ratio: props.ratio,
     });
