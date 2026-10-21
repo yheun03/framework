@@ -1,0 +1,156 @@
+@use '../../abstract' as *;
+@use 'sass:map';
+
+/* =========================================
+   Component: AppInputNumber
+   Figma 11. ETC Component Guide - 수량 버튼 (A / B / C 타입)
+   구성: AppIconButton + AppInput + AppIconButton
+   이 파일은 base 컴포넌트를 수량 버튼 크기/모양에 맞게 조정만 합니다.
+========================================= */
+
+$input-number-sizes: (
+    xs: (
+        height: 24px,
+        field: 38px,
+        font: c1,
+    ),
+    sm: (
+        height: 36px,
+        field: 50px,
+        font: b3,
+    ),
+    md: (
+        height: 44px,
+        field: 60px,
+        font: b2,
+    ),
+    lg: (
+        height: 48px,
+        field: 68px,
+        font: b1,
+    ),
+);
+
+.app-input-number {
+    --in-height: 36px;
+    --in-field: 50px;
+
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__label {
+        @include font(b3, rg);
+        color: var(--color-input-number);
+    }
+
+    &__hint {
+        margin: 0;
+        @include font(c2, rg);
+        color: var(--color-input-number-disabled);
+    }
+
+    &__control {
+        display: inline-flex;
+        align-items: stretch;
+        width: fit-content;
+    }
+
+    // AppIconButton
+    &__button.app-icon-button {
+        --icon-button-color: var(--color-input-number);
+        --icon-button-bg: var(--bg-input-number);
+        --icon-button-border: var(--border-input-number);
+        --icon-button-bg-hover: var(--bg-input-number-disabled);
+        opacity: 1;
+
+        &:disabled,
+        &.app-icon-button--disabled {
+            --icon-button-color: var(--color-input-number-disabled);
+            --icon-button-bg: var(--bg-input-number-disabled);
+        }
+    }
+
+    // AppInput
+    &__field.app-input {
+        width: var(--in-field);
+
+        .form-field__control {
+            border-inline: 0;
+            border-radius: 0;
+            background: var(--bg-input-number);
+        }
+
+        .app-input__field {
+            height: var(--in-height);
+            padding-inline: 2px;
+            text-align: center;
+            color: var(--color-input-number);
+        }
+    }
+
+    &.is-disabled &__field.app-input .form-field__control {
+        background: var(--bg-input-number-disabled);
+
+        .app-input__field {
+            color: var(--color-input-number-disabled);
+        }
+    }
+
+    @each $size, $data in $input-number-sizes {
+        &--#{$size} {
+            --in-height: #{map.get($data, height)};
+            --in-field: #{map.get($data, field)};
+
+            .app-input__field {
+                @include font(map.get($data, font), rg);
+            }
+        }
+    }
+
+    // B타입: 원형 버튼 + 테두리 없는 입력
+    &--circle {
+        .app-input-number__control {
+            gap: 4px;
+        }
+
+        .app-input-number__field.app-input .form-field__control {
+            border: 0;
+        }
+    }
+
+    // C타입: 테두리 없음
+    &--plain {
+        .app-input-number__button.app-icon-button {
+            --icon-button-border: transparent;
+            --icon-button-bg: transparent;
+        }
+
+        .app-input-number__field.app-input .form-field__control {
+            border: 0;
+            background: transparent;
+        }
+    }
+
+    &.is-error {
+        .app-input-number__button.app-icon-button {
+            --icon-button-border: var(--border-form-field-status-error);
+        }
+
+        .app-input-number__field.app-input .form-field__control {
+            border-block-color: var(--border-form-field-status-error);
+        }
+
+        .app-input-number__hint {
+            color: var(--color-form-field-status-error);
+        }
+    }
+
+    &.is-warning .app-input-number__hint {
+        color: var(--color-form-field-status-warning);
+    }
+
+    &.is-success .app-input-number__hint {
+        color: var(--color-form-field-status-success);
+    }
+}

@@ -16,7 +16,7 @@
                 class="business-toolbar__field business-toolbar__field--wide"
                 size="sm"
                 placeholder="품목코드 또는 품목명"
-            /><AppSelect v-model="warehouse" class="business-toolbar__field" size="sm" :options="warehouses" placeholder="전체 창고" /><AppChoice
+            /><AppSelect v-model="warehouse" class="business-toolbar__field" size="sm" :items="warehouses" placeholder="전체 창고" /><AppChoice
                 v-model="onlyShortage"
                 class="business-toolbar__choice"
                 size="sm"

@@ -108,7 +108,7 @@ const props = withDefaults(
         hint?: string;
         triggerText?: string;
         allowDrop?: boolean;
-        maxSizeBytes?: number;
+        maxSize?: number;
         maxCount?: number;
     }>(),
     {
@@ -119,7 +119,7 @@ const props = withDefaults(
         hint: '',
         triggerText: '파일 업로드',
         allowDrop: true,
-        maxSizeBytes: undefined,
+        maxSize: undefined,
         maxCount: undefined,
     },
 );

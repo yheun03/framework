@@ -1,145 +1,65 @@
-@use "./variables" as *;
-@use "sass:map";
+@use './variables' as *;
+@use './tokens' as *;
+@use 'sass:map';
+@use 'sass:list';
 
 /* =========================================
-   Framework
-   Typography Token System
+   Framework Typography
+   토큰 원본: abstract/_tokens.scss ($ds-typography-pc / $ds-typography-mo)
+   CSS 변수: base/_typography-vars.scss (--ds-font-{token}-size / -lh, MO 자동 전환)
 ========================================= */
 
-/* ----------------------------------------
-   Font Weight Token
----------------------------------------- */
-$font-weight: (
-    sb: 600,
-    rg: 400,
-);
+// 기존 코드 호환용 별칭
+$font-weight: $ds-font-weight;
+$letter-spacing: map.get($ds-letter-spacing, 'kr');
 
-/* ----------------------------------------
-   Letter Spacing Token
----------------------------------------- */
-$letter-spacing: -0.025em;
+// PC 기준 스케일 (SCSS 계산이 필요할 때만 사용)
+$typography-scale: ();
 
-/* ----------------------------------------
-   Typography Scale
----------------------------------------- */
-
-$typography-scale: (
-    /* Display */
-    d1: (size: 96px,
-        lh: 120px,
-    ),
-    d2: (size: 88px,
-        lh: 114px,
-    ),
-    d3: (size: 80px,
-        lh: 100px,
-    ),
-    d4: (size: 72px,
-        lh: 90px,
-    ),
-    d5: (size: 64px,
-        lh: 80px,
-    ),
-    d6: (size: 56px,
-        lh: 72px,
-    ),
-    /* Headline */
-    h1: (size: 48px,
-        lh: 62px,
-    ),
-    h2: (size: 40px,
-        lh: 52px,
-    ),
-    h3: (size: 32px,
-        lh: 42px,
-    ),
-    h4: (size: 28px,
-        lh: 38px,
-    ),
-    h5: (size: 24px,
-        lh: 34px,
-    ),
-    h6: (size: 20px,
-        lh: 28px,
-    ),
-    /* Title */
-    t1: (size: 32px,
-        lh: 42px,
-    ),
-    t2: (size: 28px,
-        lh: 38px,
-    ),
-    t3: (size: 24px,
-        lh: 34px,
-    ),
-    t4: (size: 20px,
-        lh: 28px,
-    ),
-    t5: (size: 18px,
-        lh: 26px,
-    ),
-    /* Body */
-    b1: (size: 16px,
-        lh: 24px,
-    ),
-    b2: (size: 15px,
-        lh: 22px,
-    ),
-    b3: (size: 14px,
-        lh: 20px,
-    ),
-    b4: (size: 13px,
-        lh: 18px,
-    ),
-    /* Caption */
-    c1: (size: 13px,
-        lh: 18px,
-    ),
-    c2: (size: 12px,
-        lh: 18px,
-    ),
-    c3: (size: 11px,
-        lh: 16px,
-    ),
-    /* Button */
-    btn1: (size: 16px,
-        lh: 24px,
-    ),
-    btn2: (size: 14px,
-        lh: 20px,
-    ),
-    btn3: (size: 13px,
-        lh: 18px,
-    ),
-    btn4: (size: 12px,
-        lh: 18px,
-    )
-);
-
-/* ----------------------------------------
-   Helpers / Mixins
----------------------------------------- */
+@each $token, $value in $ds-typography-pc {
+    $typography-scale: map.merge(
+        $typography-scale,
+        (
+            $token: (
+                size: list.nth($value, 1),
+                lh: list.nth($value, 2),
+            ),
+        )
+    );
+}
 
 @function typography-scale($key) {
     $value: map.get($typography-scale, $key);
 
-    @if $value ==null {
+    @if $value == null {
         @error "Unknown typography token `#{$key}`.";
     }
 
     @return $value;
 }
 
-@mixin font($token, $weight-key, $ls: $letter-spacing) {
-    $scale: typography-scale($token);
-    $size: map.get($scale, size);
-    $lh: map.get($scale, lh);
-    $weight: map.get($font-weight, $weight-key);
+/// 디자인 시스템 폰트 적용
+/// PC / MO 크기는 CSS 변수로 자동 전환됩니다. (767px 이하 MO)
+/// @param $token  d1~d6 / h1~h6 / t1~t5 / b1~b4 / c1~c3 / btn1~btn4
+/// @param $weight-key  lt(300) / rg(400) / sb(600)
+/// @param $lang  kr(-2.5%) / en(0)  또는 직접 letter-spacing 값
+@mixin font($token, $weight-key, $lang: kr) {
+    $weight: map.get($ds-font-weight, $weight-key);
 
-    @if $weight ==null {
+    @if map.get($ds-typography-pc, $token) == null {
+        @error "Unknown typography token `#{$token}`.";
+    }
+
+    @if $weight == null {
         @error "Unknown font-weight token `#{$weight-key}`.";
     }
 
-    font: $weight #{$size}/#{$lh} $font-family-base;
+    $ls: $lang;
+
+    @if map.has-key($ds-letter-spacing, $lang) {
+        $ls: map.get($ds-letter-spacing, $lang);
+    }
+
+    font: #{$weight} var(--ds-font-#{$token}-size) / var(--ds-font-#{$token}-lh) #{$ds-font-family};
     letter-spacing: $ls;
 }

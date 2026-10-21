@@ -13,11 +13,11 @@
                 <AppInput v-model="form.orderNo" label="수주번호" readonly /><AppSelect
                     v-model="form.customer"
                     label="거래처"
-                    :options="customers"
+                    :items="customers"
                 /><AppDatePicker v-model="form.orderDate" label="수주일" /><AppDatePicker v-model="form.dueDate" label="납기일" /><AppInput
                     v-model="form.manager"
                     label="담당자"
-                /><AppSelect v-model="form.status" label="상태" :options="statuses" />
+                /><AppSelect v-model="form.status" label="상태" :items="statuses" />
             </div>
         </AppSection>
         <AppSection title="수주 품목">

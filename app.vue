@@ -8,6 +8,7 @@
     </div>
 
     <AppModalHost />
+    <AppToastHost />
 </template>
 
 <script setup lang="ts">

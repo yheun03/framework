@@ -1,5 +1,9 @@
 @use 'sass:color';
+@use 'sass:map';
+// '@project-theme' 은 nuxt.config.ts(vite alias)에서 연결되는 경로라 에디터에서 Cmd+클릭으로 열리지 않습니다.
+// 실제 파일: assets/scss/projects/{projectConfig.key}/_theme.scss  (현재: projects/framework/_theme.scss)
 @use '@project-theme' as project;
+@use '../abstract/tokens' as ds;
 
 @function project-value($value, $fallback) {
     @if $value == null {
@@ -64,6 +68,17 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-primary: #{$primary};
     --theme-secondary: #{$secondary};
     --theme-tertiary: #{$tertiary};
+
+    // Figma 01~02. 브랜드 컬러 / 그라디언트
+    // 값은 projects/{key}/_theme.scss 의 $primary / $secondary / $tertiary 를 따릅니다.
+    // (_tokens.scss 의 $ds-brand 는 Figma 원본 기본값 기록용)
+    --theme-brand-main: var(--theme-primary);
+    --theme-brand-sub-1: var(--theme-secondary);
+    --theme-brand-sub-2: var(--theme-tertiary);
+    --theme-gradient-main: linear-gradient(90deg, var(--theme-brand-main) 0%, color-mix(in srgb, var(--theme-brand-main) 0%, transparent) 100%);
+    --theme-gradient-main-sub-1: linear-gradient(90deg, var(--theme-brand-main) 0%, var(--theme-brand-sub-1) 100%);
+    --theme-gradient-main-sub-2: linear-gradient(90deg, var(--theme-brand-main) 0%, var(--theme-brand-sub-2) 100%);
+    --theme-gradient-sub-1-sub-2: linear-gradient(90deg, var(--theme-brand-sub-1) 0%, var(--theme-brand-sub-2) 100%);
     --theme-dark-home-end: #11161f;
 
     --theme-primary-50: color-mix(in srgb, white 92%, var(--theme-primary));
@@ -79,9 +94,10 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-gradient-primary: linear-gradient(to bottom, var(--theme-primary-800), var(--theme-primary-900));
 
     // 상태
-    --theme-status-success: #22c55e;
-    --theme-status-warning: #f59e0b;
-    --theme-status-error: #ef4444;
+    // Figma 09. 상태 컬러
+    --theme-status-success: #{map.get(ds.$ds-state-color, 'success')};
+    --theme-status-warning: #{map.get(ds.$ds-state-color, 'warning')};
+    --theme-status-error: #{map.get(ds.$ds-state-color, 'error')};
     --theme-status-info: var(--theme-primary);
 
     // 중립 팔레트
@@ -98,20 +114,20 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     --theme-gray-900: #1c2026;
 
     // 기존 공통 토큰
-    --theme-color-01-white: #ffffff;
-    --theme-color-02-black: #111111;
-    --theme-color-03-gray: #505050;
-    --theme-color-04-gray: #767676;
-    --theme-color-05-gray-disabled: #999999;
-    --theme-line-light: #f1f1f5;
-    --theme-line-regular: #e5e5ec;
-    --theme-line-black: #111111;
-    --theme-line-white: #ffffff;
-    --theme-line-disabled: #cacad7;
-    --theme-bg-light: #f7f7fb;
-    --theme-bg-regular: #f1f1f5;
-    --theme-bg-black: #111111;
-    --theme-bg-white: #ffffff;
+    --theme-color-01-white: #{map.get(ds.$ds-font-color, '01-white')};
+    --theme-color-02-black: #{map.get(ds.$ds-font-color, '02-black')};
+    --theme-color-03-gray: #{map.get(ds.$ds-font-color, '03-gray')};
+    --theme-color-04-gray: #{map.get(ds.$ds-font-color, '04-gray')};
+    --theme-color-05-gray-disabled: #{map.get(ds.$ds-font-color, '05-gray-disabled')};
+    --theme-line-light: #{map.get(ds.$ds-line-color, 'light')};
+    --theme-line-regular: #{map.get(ds.$ds-line-color, 'regular')};
+    --theme-line-black: #{map.get(ds.$ds-line-color, 'black')};
+    --theme-line-white: #{map.get(ds.$ds-line-color, 'white')};
+    --theme-line-disabled: #{map.get(ds.$ds-line-color, 'disabled')};
+    --theme-bg-light: #{map.get(ds.$ds-bg-color, 'light')};
+    --theme-bg-regular: #{map.get(ds.$ds-bg-color, 'regular')};
+    --theme-bg-black: #{map.get(ds.$ds-bg-color, 'black')};
+    --theme-bg-white: #{map.get(ds.$ds-bg-color, 'white')};
     --theme-bg-black-opacity-85: rgb(0 0 0 / 85%);
     --theme-bg-black-opacity-60: rgb(0 0 0 / 60%);
     --theme-bg-black-opacity-30: rgb(0 0 0 / 30%);

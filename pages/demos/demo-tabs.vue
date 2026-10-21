@@ -22,7 +22,7 @@
                         <template #basicSelect>
                             <AppSelect
                                 :model-value="null"
-                                :options="[
+                                :items="[
                                     { label: '옵션 A', value: 'a' },
                                     { label: '옵션 B', value: 'b' },
                                 ]"
@@ -84,10 +84,10 @@
                 <!-- DEFAULT ACTIVE -->
                 <PageDemoSection
                     class="page-demo-section"
-                    title="Default Active Id"
-                    description="defaultActiveId로 특정 탭을 기본 활성 상태로 지정할 수 있습니다."
+                    title="v-model"
+                    description="v-model(활성 탭 id)로 특정 탭을 활성화하고 현재 탭을 확인합니다."
                 >
-                    <AppTabs :items="defaultItems" variant="line" default-active-id="default-2">
+                    <AppTabs :items="defaultItems" variant="line" v-model="defaultTab">
                         <template #default1>Default Content 1</template>
                         <template #default2>Default Content 2</template>
                         <template #default3>Default Content 3</template>
@@ -170,6 +170,27 @@
                         </template>
                     </AppTabs>
                 </PageDemoSection>
+
+                <!-- FIGMA STYLES -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Figma Tab Styles"
+                    description="Figma 탭 디자인 스타일 5종 - group(그룹형) / button(버튼형) / grid(그룹 버튼형, columns) / text(텍스트형) / image(오브젝트 조합형)"
+                >
+                    <div class="page-demo-stack">
+                        <div class="page-demo-hint">variant = "group"</div>
+                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="group" size="sm" />
+                        <div class="page-demo-hint">variant = "button"</div>
+                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="button" size="sm" />
+                        <div class="page-demo-hint">variant = "grid" :columns="6"</div>
+                        <AppTabs v-model="figmaTab" :items="[...figmaTabs, ...extraTabs]" variant="grid" :columns="6" size="sm" />
+                        <div class="page-demo-hint">variant = "text"</div>
+                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="text" size="sm" />
+                        <div class="page-demo-hint">variant = "group" + item.image (오브젝트 조합형)</div>
+                        <AppTabs v-model="figmaTab" :items="imageTabs" variant="group" size="sm" />
+                        <p class="page-demo-output">v-model: {{ figmaTab }}</p>
+                    </div>
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -182,6 +203,22 @@
 </template>
 
 <script setup lang="ts">
+const figmaTab = ref<string | number | null>('all');
+const figmaTabs = ['전체보기', '여성', '남성', '키즈', '럭셔리', '백&슈즈', '스포츠', '골프', '라이프', '아울렛'].map((title, index) => ({
+    id: index === 0 ? 'all' : `t${index}`,
+    title,
+}));
+const extraTabs = ['털 모자', '니비 넥', '벙어리 장갑', '백&슈즈', '스포츠'].map((title, index) => ({ id: `e${index}`, title }));
+const tabIcon = (color: string) =>
+    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><circle cx="20" cy="20" r="16" fill="${color}"/></svg>`)}`;
+const imageTabs = [
+    { id: 'all', title: '전체보기', image: tabIcon('#9ca3af') },
+    { id: 't1', title: '여성', image: tabIcon('#f19c38') },
+    { id: 't2', title: '남성', image: tabIcon('#4896ec') },
+    { id: 't3', title: '키즈', image: tabIcon('#4aa63c') },
+    { id: 't4', title: '럭셔리', image: tabIcon('#8f36aa') },
+];
+const defaultTab = ref<string | number | null>('default-2');
 import type { AppTabItem } from '~/components/AppTabs.vue';
 import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from '~/components/icons';
 

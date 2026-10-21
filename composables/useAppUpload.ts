@@ -5,7 +5,7 @@ type UploadBaseProps = {
     multiple?: boolean;
     accept?: string;
     allowDrop?: boolean;
-    maxSizeBytes?: number;
+    maxSize?: number;
     maxCount?: number;
 };
 
@@ -53,9 +53,9 @@ export function useAppUpload(props: UploadBaseProps, emitError: (message: string
             return false;
         }
 
-        if (props.maxSizeBytes != null && file.size > props.maxSizeBytes) {
+        if (props.maxSize != null && file.size > props.maxSize) {
             emitError('파일 용량 제한을 초과했습니다.', {
-                maxSizeBytes: props.maxSizeBytes,
+                maxSize: props.maxSize,
                 size: file.size,
                 name: file.name,
             });

@@ -17,7 +17,7 @@ export interface NavigationMenu {
     children?: NavigationMenu[];
 }
 
-export type NavigationIconName = 'cog' | 'dashboard' | 'home' | 'info' | 'widgets';
+export type NavigationIconName = 'cog' | 'dashboard' | 'factory' | 'home' | 'info' | 'widgets';
 
 export type NavigationAction = {
     label: string;

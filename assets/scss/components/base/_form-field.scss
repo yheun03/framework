@@ -55,6 +55,14 @@
         &--error {
             color: var(--color-form-field-status-error);
         }
+
+        &--warning {
+            color: var(--color-form-field-status-warning);
+        }
+
+        &--success {
+            color: var(--color-form-field-status-success);
+        }
     }
 
     &.is-disabled {

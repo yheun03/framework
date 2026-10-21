@@ -19,7 +19,7 @@
         <AppSelect
             v-else-if="cell.type === 'select'"
             :model-value="selectValue"
-            :options="cell.options ?? []"
+            :items="cell.items ?? []"
             :placeholder="cell.placeholder"
             :readonly="readonly"
             :disabled="disabled"
@@ -90,7 +90,7 @@
 
         <div v-else-if="cell.type === 'radio'" class="app-table-field__choice-group">
             <AppChoice
-                v-for="option in cell.options ?? []"
+                v-for="option in cell.items ?? []"
                 :key="String(option.value)"
                 type="radio"
                 :model-value="modelValue[cell.key ?? ''] as string | number | boolean | null"
@@ -104,7 +104,7 @@
 
         <div v-else-if="cell.type === 'checkbox'" class="app-table-field__choice-group">
             <AppChoice
-                v-for="option in cell.options ?? []"
+                v-for="option in cell.items ?? []"
                 :key="String(option.value)"
                 type="checkbox"
                 :model-value="isChecked(option.value)"

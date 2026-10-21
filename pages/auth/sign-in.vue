@@ -44,7 +44,7 @@
                 <NuxtLink class="auth-page__link" to="/auth/find-pw">비밀번호 찾기</NuxtLink>
             </div>
 
-            <AppButton type="submit" variant="fill" tone="primary" size="xl" block>로그인</AppButton>
+            <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full">로그인</AppButton>
         </form>
 
         <div class="auth-page__footer">

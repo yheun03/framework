@@ -62,6 +62,8 @@ export default defineNuxtConfig({
         { path: '~/components/AppGrid', pathPrefix: false },
         { path: '~/components/AppProgress', pathPrefix: false },
         { path: '~/components/AppUpload', pathPrefix: false },
+        { path: '~/components/AppSearch', pathPrefix: false },
+        { path: '~/components/AppTree', pathPrefix: false },
         { path: '~/components/PageDemo', pathPrefix: false },
         { path: `~/components/projects/${projectConfig.key}`, pathPrefix: false },
         // components 루트 단일 컴포넌트만 자동 등록

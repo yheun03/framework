@@ -1,0 +1,83 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppAlert (인라인 알림 배너)
+========================================= */
+
+$alert-tones: 'primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info';
+
+.app-alert {
+    --alert-color: var(--tone-info);
+
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    @each $tone in $alert-tones {
+        &--tone-#{$tone} {
+            --alert-color: var(--tone-#{$tone});
+        }
+    }
+
+    &__icon {
+        display: inline-flex;
+        flex: 0 0 auto;
+        margin-top: 2px;
+        color: var(--alert-color);
+        font-size: 16px;
+    }
+
+    &__body {
+        display: grid;
+        flex: 1 1 auto;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    &__title {
+        @include font(b3, sb);
+        color: var(--color-alert-title);
+    }
+
+    &__desc {
+        @include font(b4, rg);
+        color: var(--color-alert-desc);
+    }
+
+    &__actions {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 6px;
+        align-self: center;
+    }
+
+    // AppIconButton
+    &__close.app-icon-button {
+        --icon-button-color: var(--color-alert-desc);
+        margin: -4px -6px 0 0;
+    }
+
+    &--soft {
+        background: color-mix(in srgb, var(--alert-color) 8%, white);
+        border-color: color-mix(in srgb, var(--alert-color) 20%, white);
+    }
+
+    &--outline {
+        background: var(--bg-tag-default);
+        border-color: var(--alert-color);
+    }
+
+    &--fill {
+        background: var(--alert-color);
+
+        .app-alert__icon,
+        .app-alert__title,
+        .app-alert__desc,
+        .app-alert__close.app-icon-button {
+            --icon-button-color: var(--color-tag-on-fill);
+        }
+    }
+}

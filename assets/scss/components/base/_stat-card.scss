@@ -1,0 +1,227 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppStatCard (KPI) / AppStatusLamp
+========================================= */
+
+$stat-tones: 'primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info';
+
+.app-stat-card {
+    --stat-color: var(--tone-primary);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--border-stat-card);
+    border-radius: 12px;
+    background: var(--bg-stat-card);
+    text-align: left;
+    font: inherit;
+
+    @each $tone in $stat-tones {
+        &--tone-#{$tone} {
+            --stat-color: var(--tone-#{$tone});
+        }
+    }
+
+    &--sm {
+        padding: 14px 16px;
+
+        .app-stat-card__value strong {
+            @include font(t4, sb);
+        }
+    }
+
+    &--md {
+        padding: 20px;
+
+        .app-stat-card__value strong {
+            @include font(t2, sb);
+        }
+    }
+
+    &--lg {
+        padding: 24px;
+
+        .app-stat-card__value strong {
+            @include font(h4, sb);
+        }
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    &__title {
+        @include font(b4, sb);
+        color: var(--color-stat-card-title);
+    }
+
+    &__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--stat-color) 10%, white);
+        color: var(--stat-color);
+        font-size: 16px;
+    }
+
+    &__value {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        color: var(--color-stat-card-value);
+    }
+
+    &__unit {
+        @include font(b3, rg);
+        color: var(--color-stat-card-title);
+    }
+
+    &__foot {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__diff {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        @include font(c2, sb);
+        color: var(--color-stat-card-title);
+
+        &.is-up {
+            color: var(--color-stat-card-up);
+        }
+
+        &.is-down {
+            color: var(--color-stat-card-down);
+        }
+    }
+
+    &__desc {
+        @include font(c2, rg);
+        color: var(--color-stat-card-title);
+    }
+
+    &__progress {
+        height: 4px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--stat-color) 12%, white);
+        overflow: hidden;
+
+        span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--stat-color);
+            transition: width 0.3s ease;
+        }
+    }
+
+    &--soft {
+        border-color: transparent;
+        background: color-mix(in srgb, var(--stat-color) 8%, white);
+    }
+
+    &--fill {
+        border-color: transparent;
+        background: var(--stat-color);
+
+        .app-stat-card__title,
+        .app-stat-card__value,
+        .app-stat-card__unit,
+        .app-stat-card__desc,
+        .app-stat-card__diff {
+            color: var(--color-tag-on-fill);
+        }
+
+        .app-stat-card__icon {
+            background: color-mix(in srgb, white 20%, transparent);
+            color: var(--color-tag-on-fill);
+        }
+    }
+
+    &.is-clickable {
+        cursor: pointer;
+        transition:
+            box-shadow 0.15s,
+            border-color 0.15s;
+
+        &:hover {
+            box-shadow: var(--shadow-level-2);
+        }
+    }
+
+    &.is-active {
+        border-color: var(--stat-color);
+        box-shadow: 0 0 0 1px var(--stat-color);
+    }
+}
+
+.app-status-lamp {
+    --lamp-color: var(--tone-success);
+    --lamp-size: 10px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    vertical-align: middle;
+
+    @each $tone in $stat-tones {
+        &--tone-#{$tone} {
+            --lamp-color: var(--tone-#{$tone});
+        }
+    }
+
+    &--sm {
+        --lamp-size: 8px;
+        @include font(c2, rg);
+    }
+
+    &--md {
+        --lamp-size: 10px;
+        @include font(b4, rg);
+    }
+
+    &--lg {
+        --lamp-size: 14px;
+        @include font(b3, sb);
+    }
+
+    &__light {
+        width: var(--lamp-size);
+        height: var(--lamp-size);
+        border-radius: 50%;
+        background: var(--lamp-color);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--lamp-color) 20%, transparent);
+    }
+
+    &.is-off &__light {
+        background: var(--color-status-lamp-off);
+        box-shadow: none;
+    }
+
+    &.is-blink &__light {
+        animation: app-lamp-blink 1s ease-in-out infinite;
+    }
+}
+
+@keyframes app-lamp-blink {
+    50% {
+        opacity: 0.25;
+    }
+}

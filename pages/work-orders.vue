@@ -14,7 +14,7 @@
                 class="business-toolbar__field business-toolbar__field--wide"
                 size="sm"
                 placeholder="작업지시 또는 품목 검색"
-            /><AppSelect v-model="status" class="business-toolbar__field" size="sm" :options="statuses" placeholder="전체 상태" /><AppDatePicker
+            /><AppSelect v-model="status" class="business-toolbar__field" size="sm" :items="statuses" placeholder="전체 상태" /><AppDatePicker
                 v-model="workDate"
                 class="business-toolbar__field"
                 size="sm"

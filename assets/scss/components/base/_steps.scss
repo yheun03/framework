@@ -1,0 +1,226 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppSteps / AppTimeline
+========================================= */
+
+.app-steps {
+    --steps-marker: 32px;
+
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &--sm {
+        --steps-marker: 24px;
+
+        .app-steps__title {
+            @include font(b4, sb);
+        }
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        flex: 1 1 0;
+        align-items: flex-start;
+        min-width: 0;
+
+        // 연결선: 단계 텍스트 뒤에서 다음 단계까지 이어집니다.
+        &:not(:last-child)::after {
+            flex: 1 1 auto;
+            min-width: 16px;
+            height: 1px;
+            margin: calc(var(--steps-marker) / 2) 12px 0;
+            background: var(--border-steps-line);
+            content: '';
+        }
+
+        &.is-done:not(:last-child)::after {
+            background: var(--tone-primary);
+        }
+
+        &:last-child {
+            flex: 0 0 auto;
+        }
+    }
+
+    // clickable 이면 AppButton(unstyled)
+    &__head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+        text-align: left;
+    }
+
+    &__marker {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: var(--steps-marker);
+        height: var(--steps-marker);
+        border: 1px solid var(--border-steps-wait);
+        border-radius: 50%;
+        background: var(--bg-steps-wait);
+        color: var(--color-steps-wait);
+        @include font(c2, sb);
+    }
+
+    &__text {
+        display: grid;
+        gap: 2px;
+        padding-top: calc((var(--steps-marker) - 20px) / 2);
+        min-width: 0;
+        white-space: nowrap;
+    }
+
+    &__title {
+        @include font(b3, sb);
+        color: var(--color-steps-wait);
+    }
+
+    &__desc {
+        @include font(c2, rg);
+        color: var(--color-steps-desc);
+    }
+
+    &__item.is-current &__marker {
+        border-color: var(--tone-primary);
+        background: var(--tone-primary);
+        color: var(--color-tag-on-fill);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone-primary) 16%, transparent);
+    }
+
+    &__item.is-done &__marker {
+        border-color: var(--tone-primary);
+        color: var(--tone-primary);
+    }
+
+    &__item.is-error &__marker {
+        border-color: var(--tone-danger);
+        background: var(--tone-danger);
+        color: var(--color-tag-on-fill);
+    }
+
+    &__item:is(.is-current, .is-done, .is-error) &__title {
+        color: var(--color-steps-title);
+    }
+
+    &__item.is-error &__title {
+        color: var(--tone-danger);
+    }
+
+    &--vertical {
+        flex-direction: column;
+
+        .app-steps__item {
+            padding-bottom: 24px;
+
+            &:not(:last-child)::after {
+                position: absolute;
+                top: calc(var(--steps-marker) + 4px);
+                bottom: 4px;
+                left: calc(var(--steps-marker) / 2);
+                width: 1px;
+                height: auto;
+                min-width: 0;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.app-timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &__item {
+        --timeline-color: var(--tone-gray);
+
+        position: relative;
+        display: flex;
+        gap: 12px;
+        padding-bottom: 20px;
+
+        &:not(:last-child)::before {
+            position: absolute;
+            top: 14px;
+            bottom: 0;
+            left: var(--timeline-line-left, 4px);
+            width: 1px;
+            background: var(--border-steps-line);
+            content: '';
+        }
+
+        @each $tone in 'primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info' {
+            &--tone-#{$tone} {
+                --timeline-color: var(--tone-#{$tone});
+            }
+        }
+    }
+
+    &:has(.app-timeline__time--left) {
+        --timeline-line-left: 88px;
+    }
+
+    &__marker {
+        position: relative;
+        z-index: 1;
+        flex: 0 0 auto;
+        width: 9px;
+        height: 9px;
+        margin-top: 5px;
+        border: 2px solid var(--timeline-color);
+        border-radius: 50%;
+        background: var(--bg-steps-wait);
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__title {
+        @include font(b3, sb);
+        color: var(--color-steps-title);
+    }
+
+    &__time {
+        margin-left: auto;
+        @include font(c2, rg);
+        color: var(--color-steps-desc);
+
+        &--left {
+            flex: 0 0 72px;
+            margin-left: 0;
+            padding-top: 1px;
+            text-align: right;
+        }
+    }
+
+    &__desc {
+        margin: 4px 0 0;
+        @include font(b4, rg);
+        color: var(--color-steps-desc);
+    }
+
+    &--sm &__title {
+        @include font(b4, sb);
+    }
+
+    &--sm &__item {
+        padding-bottom: 14px;
+    }
+}

@@ -16,7 +16,7 @@ export const projectConfig = {
     baseURL: '/framework/',
     siteUrl: 'https://yheun03.github.io/framework/',
     favicon: 'images/projects/framework/favicon.svg',
-    themeColor: '#2f6bff',
+    themeColor: '#6100ff',
     seo: {
         title: 'Framework',
         titleTemplate: '%s | Framework',

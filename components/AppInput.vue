@@ -11,6 +11,7 @@
                 [`is-${state}`]: state,
             },
         ]"
+        :style="rootStyle"
     >
         <label v-if="label" class="form-field__label app-input__label" :for="id">{{ label }}</label>
 
@@ -27,6 +28,7 @@
                 :placeholder="placeholder"
                 :name="name"
                 :autocomplete="autocomplete"
+                :maxlength="maxLength"
                 :disabled="disabled"
                 :readonly="readonly"
                 :aria-invalid="state === 'error'"
@@ -63,10 +65,8 @@
 
 <script setup lang="ts">
 import { IconClose, IconEye, IconEyeOff } from '~/components/icons';
-
-type InputSize = 'xs' | 'sm' | 'md' | 'lg';
-type InputShape = 'square' | 'round' | 'pill' | 'underline';
-type InputState = 'error' | 'warning' | 'success' | null;
+import type { AppFieldShape, AppFormSize, AppState, AppWidth } from '~/types/appCommon';
+import { toSizeStyle } from '~/utils/css';
 
 const props = withDefaults(
     defineProps<{
@@ -75,9 +75,12 @@ const props = withDefaults(
         hint?: string;
         placeholder?: string;
         type?: string;
-        size?: InputSize;
-        shape?: InputShape;
-        state?: InputState;
+        size?: AppFormSize;
+        shape?: AppFieldShape;
+        state?: AppState;
+        /** number(px) | '50%' | 'full' */
+        width?: AppWidth;
+        maxLength?: number;
         disabled?: boolean;
         readonly?: boolean;
         clearable?: boolean;
@@ -100,6 +103,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ 'update:modelValue': [string] }>();
 const showPassword = ref(false);
+const rootStyle = computed(() => toSizeStyle(props.width));
 const inputType = computed(() => (props.passwordToggle ? (showPassword.value ? 'text' : 'password') : props.type));
 
 function handleInput(event: Event) {

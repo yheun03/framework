@@ -5,8 +5,7 @@
                 <header class="page-demo__header">
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">
-                        단일/다중 이미지 업로드 필드 컴포넌트입니다. multiple, disabled, allowDrop, readMode, maxSizeBytes 등의 속성을 확인할 수
-                        있습니다.
+                        단일/다중 이미지 업로드 필드 컴포넌트입니다. multiple, disabled, allowDrop, readMode, maxSize 등의 속성을 확인할 수 있습니다.
                     </p>
                 </header>
 
@@ -117,9 +116,9 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <AppUploadImage v-model="rules.maxSizeImage" :max-size-bytes="rules.maxSizeBytes" />
+                            <AppUploadImage v-model="rules.maxSizeImage" :max-size="rules.maxSize" />
 
-                            <div class="page-demo-hint"><strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.</div>
+                            <div class="page-demo-hint"><strong>maxSize</strong> 속성으로 최대 용량을 제한합니다.</div>
                         </div>
                     </div>
                 </PageDemoSection>
@@ -174,7 +173,7 @@ const drop = reactive({
 const rules = reactive({
     imageOnly: null as ImageFieldItem | null,
     maxSizeImage: null as ImageFieldItem | null,
-    maxSizeBytes: 2 * 1024 * 1024,
+    maxSize: 2 * 1024 * 1024,
 });
 
 function toSampleImage(url: string, name = 'sample-image') {

@@ -74,9 +74,46 @@ $select-sizes: (
         text-overflow: ellipsis;
         white-space: nowrap;
 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
         &--placeholder {
             color: var(--color-select);
         }
+    }
+
+    &__value-text,
+    &__option-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    &__value-label,
+    &__option-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__value-desc,
+    &__option-desc {
+        @include font(c2, rg);
+        color: var(--color-select);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // 이미지 포함 셀렉트 (Figma 09. Select Box - 08_이미지 포함 셀렉트)
+    &__thumb {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 4px;
+        background: var(--bg-select-light);
     }
 
     &__icon {
@@ -120,7 +157,9 @@ $select-sizes: (
 
     &__option {
         @include font(b3, rg);
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         width: 100%;
         padding: 10px 14px;
         border: 0;
@@ -145,6 +184,10 @@ $select-sizes: (
             color: var(--color-select-05-gray-disabled);
             cursor: not-allowed;
             background-color: transparent;
+
+            .app-select__thumb {
+                opacity: 0.5;
+            }
         }
 
         &:disabled {

@@ -39,7 +39,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 type ChartType = 'line' | 'bar' | 'doughnut' | 'semi-doughnut' | 'pie';
 type NativeChartType = Exclude<ChartType, 'semi-doughnut'>;
-type ChartVariant = 'default' | 'semi-doughnut';
 
 type AnyObject = Record<string, any>;
 
@@ -48,13 +47,11 @@ const props = withDefaults(
         type: ChartType;
         data: ChartData<NativeChartType>;
         height?: number;
-        variant?: ChartVariant;
         cutout?: string | number;
         options?: AnyObject;
     }>(),
     {
         height: 260,
-        variant: 'default',
         cutout: '68%',
         options: () => ({}),
     },
@@ -91,7 +88,7 @@ function deepMerge<T extends AnyObject>(...sources: T[]): T {
     return result as T;
 }
 
-const isSemiDoughnut = computed(() => props.type === 'semi-doughnut' || props.variant === 'semi-doughnut');
+const isSemiDoughnut = computed(() => props.type === 'semi-doughnut');
 
 const resolvedType = computed<NativeChartType>(() => {
     return props.type === 'semi-doughnut' ? 'doughnut' : props.type;

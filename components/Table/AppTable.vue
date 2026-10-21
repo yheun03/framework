@@ -88,7 +88,7 @@
                                     :class="cell.labelClass"
                                     :colspan="cell.labelColspan"
                                     :rowspan="cell.rowspan"
-                                    :style="{ width: cell.labelColspan ? undefined : defaultLabelWidth }"
+                                    :style="{ width: cell.labelColspan ? undefined : labelWidth }"
                                     scope="row"
                                 >
                                     {{ cell.label }}
@@ -122,14 +122,14 @@ const props = withDefaults(
         rows: AppTableRow[];
         title?: string;
         description?: string;
-        defaultLabelWidth?: string;
+        labelWidth?: string;
         readonly?: boolean;
         disabled?: boolean;
     }>(),
     {
         title: '',
         description: '',
-        defaultLabelWidth: '140px',
+        labelWidth: '140px',
         readonly: false,
         disabled: false,
     },

@@ -3,13 +3,16 @@
 // ============================================
 
 @use "../base/theme" as theme;
+@use "./tokens" as *;
+@use "sass:map";
 @forward "../base/theme";
 
 // Colors (semantic 기본값)
 
-$status-success: #22c55e;
-$status-warning: #f59e0b;
-$status-error: #ef4444;
+// Figma 09. 상태 컬러
+$status-success: map.get($ds-state-color, 'success');
+$status-warning: map.get($ds-state-color, 'warning');
+$status-error: map.get($ds-state-color, 'error');
 $status-info: theme.$primary;
 
 // Gray 0~900
@@ -26,10 +29,7 @@ $gray-800: #2a2f38;
 $gray-900: #1c2026;
 
 // Typography
-$font-family-base: "Pretendard",
-    system-ui,
-    -apple-system,
-    sans-serif;
+$font-family-base: $ds-font-family;
 $font-size-base: 16px;
 $line-height-base: 1.5;
 
@@ -38,22 +38,22 @@ $line-height-base: 1.5;
     --width-sidebar: 260px;
 }
 
-$color-01-white: #ffffff;
-$color-02-black: #111111;
-$color-03-gray: #505050;
-$color-04-gray: #767676;
-$color-05-gray-disabled: #999999;
+$color-01-white: map.get($ds-font-color, '01-white');
+$color-02-black: map.get($ds-font-color, '02-black');
+$color-03-gray: map.get($ds-font-color, '03-gray');
+$color-04-gray: map.get($ds-font-color, '04-gray');
+$color-05-gray-disabled: map.get($ds-font-color, '05-gray-disabled');
 
-$line-light: #f1f1f5;
-$line-regular: #e5e5ec;
-$line-black: #111111;
-$line-white: #ffffff;
-$line-disabled: #cacad7;
+$line-light: map.get($ds-line-color, 'light');
+$line-regular: map.get($ds-line-color, 'regular');
+$line-black: map.get($ds-line-color, 'black');
+$line-white: map.get($ds-line-color, 'white');
+$line-disabled: map.get($ds-line-color, 'disabled');
 
-$bg-light: #f7f7fb;
-$bg-regular: #f1f1f5;
-$bg-black: #111111;
-$bg-white: #ffffff;
+$bg-light: map.get($ds-bg-color, 'light');
+$bg-regular: map.get($ds-bg-color, 'regular');
+$bg-black: map.get($ds-bg-color, 'black');
+$bg-white: map.get($ds-bg-color, 'white');
 $bg-black-opacity-85: rgba(0, 0, 0, 0.85);
 $bg-black-opacity-60: rgba(0, 0, 0, 0.6);
 $bg-black-opacity-30: rgba(0, 0, 0, 0.3);

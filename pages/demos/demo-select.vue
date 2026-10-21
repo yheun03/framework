@@ -15,46 +15,58 @@
                             label="부서"
                             placeholder="부서를 선택하세요"
                             hint="부서를 선택해주세요"
-                            :options="departmentOptions"
+                            :items="departmentOptions"
                         />
-                        <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :options="jobOptions" />
-                        <AppSelect v-model="basic.country" placeholder="국가 선택" :options="countryOptions" />
+                        <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :items="jobOptions" />
+                        <AppSelect v-model="basic.country" placeholder="국가 선택" :items="countryOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- SIZE -->
                 <PageDemoSection class="page-demo-section" title="Size" description="Select의 높이를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect size="xs" label="XS" v-model="sizes.xs" :options="departmentOptions" />
-                        <AppSelect size="sm" label="SM" v-model="sizes.sm" :options="departmentOptions" />
-                        <AppSelect size="md" label="MD" v-model="sizes.md" :options="departmentOptions" />
-                        <AppSelect size="lg" label="LG" v-model="sizes.lg" :options="departmentOptions" />
+                        <AppSelect size="xs" label="XS" v-model="sizes.xs" :items="departmentOptions" />
+                        <AppSelect size="sm" label="SM" v-model="sizes.sm" :items="departmentOptions" />
+                        <AppSelect size="md" label="MD" v-model="sizes.md" :items="departmentOptions" />
+                        <AppSelect size="lg" label="LG" v-model="sizes.lg" :items="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- SHAPE -->
                 <PageDemoSection class="page-demo-section" title="Shape" description="Select의 border 스타일을 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect shape="square" label="Square" v-model="shape.square" :options="departmentOptions" />
-                        <AppSelect shape="round" label="Round" v-model="shape.round" :options="departmentOptions" />
-                        <AppSelect shape="pill" label="Pill" v-model="shape.pill" :options="departmentOptions" />
-                        <AppSelect shape="underline" label="Underline" v-model="shape.underline" :options="departmentOptions" />
+                        <AppSelect shape="square" label="Square" v-model="shape.square" :items="departmentOptions" />
+                        <AppSelect shape="round" label="Round" v-model="shape.round" :items="departmentOptions" />
+                        <AppSelect shape="pill" label="Pill" v-model="shape.pill" :items="departmentOptions" />
+                        <AppSelect shape="underline" label="Underline" v-model="shape.underline" :items="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- STATE -->
                 <PageDemoSection class="page-demo-section" title="State" description="선택 상태에 따른 스타일을 제공합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지" :options="departmentOptions" />
-                        <AppSelect v-model="stateWarning" label="Warning" state="warning" hint="경고 메시지" :options="departmentOptions" />
-                        <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능" :options="departmentOptions" />
+                        <AppSelect v-model="stateError" label="Error" state="error" hint="에러 메시지" :items="departmentOptions" />
+                        <AppSelect v-model="stateWarning" label="Warning" state="warning" hint="경고 메시지" :items="departmentOptions" />
+                        <AppSelect v-model="stateSuccess" label="Success" state="success" hint="선택 가능" :items="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
                 <!-- DISABLED -->
                 <PageDemoSection class="page-demo-section" title="Disabled" description="선택 불가 상태를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" :options="departmentOptions" />
+                        <AppSelect v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" :items="departmentOptions" />
+                    </div>
+                </PageDemoSection>
+
+                <!-- IMAGE / DESCRIPTION -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Image / Description"
+                    description="Figma 이미지 포함 셀렉트 - item.image, item.description, item.disabled(품절) 를 지원합니다. width 로 가로 크기 지정"
+                >
+                    <div class="page-demo-row">
+                        <AppSelect v-model="product" :items="productItems" label="상품 선택" :width="360" size="lg" />
+                        <AppSelect v-model="product" :items="productItems" label="width='full'" width="full" />
                     </div>
                 </PageDemoSection>
             </main>
@@ -77,6 +89,16 @@ import type { AppSelectOption } from '~/components/AppSelect.vue';
 
 /* stores/composables */
 const { title, description } = useDemoI18n('select');
+
+const productThumb = (color: string) =>
+    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" rx="6" fill="${color}"/></svg>`)}`;
+const product = ref<string | number | boolean | null>('p2');
+const productItems: AppSelectOption[] = [
+    { value: 'p1', label: '스웨이드 웰티드 부츠', description: 'UGG · 268,200원', image: productThumb('#1b2679') },
+    { value: 'p2', label: '스웨이드 웰티드 부츠 (울트라짓 포미닛)', description: 'UGG · 268,200원', image: productThumb('#3b2824') },
+    { value: 'p3', label: '스웨이드 웰티드 부츠 (레드)', description: 'UGG · 268,200원', image: productThumb('#c23e38') },
+    { value: 'p4', label: '스웨이드 웰티드 부츠 (품절)', description: '(품절)', image: productThumb('#94a4ad'), disabled: true },
+];
 
 /* 예제 데이터 */
 const departmentOptions: AppSelectOption[] = [

@@ -17,6 +17,7 @@
 
                     <ul class="page-demo-hint-list">
                         <li><b>fill</b> : 배경 채움 버튼 (AppButton)</li>
+                        <li><b>soft</b> : 연한 배경 버튼 - Figma "BG 비강조" (AppButton)</li>
                         <li><b>outline</b> : 테두리 버튼 (AppButton)</li>
                         <li><b>text</b> : 배경 없는 텍스트 버튼 (AppTextButton)</li>
                         <li><b>underline</b> : 링크 스타일 버튼 (AppTextButton)</li>
@@ -24,6 +25,7 @@
 
                     <div class="page-demo-row">
                         <AppButton variant="fill">fill</AppButton>
+                        <AppButton variant="soft">soft</AppButton>
                         <AppButton variant="outline">outline</AppButton>
                         <AppTextButton>text</AppTextButton>
                         <AppTextButton variant="underline">underline </AppTextButton>
@@ -192,7 +194,8 @@
                     <ul class="page-demo-hint-list">
                         <li><b>disabled</b> : 클릭 불가</li>
                         <li><b>loading</b> : spinner 표시</li>
-                        <li><b>block</b> : width 100%</li>
+                        <li><b>active</b> : 선택/완료(Completion) 상태 유지</li>
+                        <li><b>width</b> : 공통 가로 속성 - number(px) / '50%' / 'full'(100%)</li>
                     </ul>
 
                     <div class="page-demo-row">
@@ -200,7 +203,13 @@
 
                         <AppButton loading> Loading </AppButton>
 
-                        <AppButton block> Block </AppButton>
+                        <AppButton active variant="fill" tone="primary"> Active </AppButton>
+
+                        <AppButton :width="200"> width=200 </AppButton>
+                    </div>
+
+                    <div class="page-demo-row">
+                        <AppButton width="full" variant="fill" tone="primary"> width="full" </AppButton>
                     </div>
                 </PageDemoSection>
             </main>

@@ -1,0 +1,24 @@
+@use '../abstract' as *;
+@use 'sass:list';
+
+// =====================================================================
+// Typography CSS 변수
+// font() mixin 이 아래 변수를 사용하므로, 767px 이하에서는 MO 크기로 자동 전환됩니다.
+// --ds-font-{token}-size / --ds-font-{token}-lh
+// =====================================================================
+
+:root {
+    @each $token, $value in $ds-typography-pc {
+        --ds-font-#{$token}-size: #{list.nth($value, 1)};
+        --ds-font-#{$token}-lh: #{list.nth($value, 2)};
+    }
+}
+
+@media (max-width: $ds-breakpoint-mo) {
+    :root {
+        @each $token, $value in $ds-typography-mo {
+            --ds-font-#{$token}-size: #{list.nth($value, 1)};
+            --ds-font-#{$token}-lh: #{list.nth($value, 2)};
+        }
+    }
+}

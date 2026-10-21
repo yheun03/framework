@@ -1,0 +1,198 @@
+@use '../abstract' as *;
+@use 'sass:map';
+
+// ============================================
+// 확장 테마 토큰
+// Figma 디자인 시스템 기반으로 추가된 컴포넌트의 의미 기반 변수입니다.
+// 규칙은 _theme.scss 와 동일합니다.
+//   1) --theme-*      : 원본 색상 (프로젝트/다크모드에서 교체)
+//   2) --bg|color|border|shadow-{component}-* : 컴포넌트에서 사용하는 변수
+// ============================================
+
+:root {
+    // ----------------------------------------
+    // Figma System Palette  (--theme-system-{hue}-{step})
+    // ----------------------------------------
+    @each $hue, $steps in $system-palette {
+        @each $step, $value in $steps {
+            --theme-system-#{$hue}-#{$step}: #{$value};
+        }
+    }
+
+    // ----------------------------------------
+    // Tone  (모든 컴포넌트의 tone 속성 공통 색상)
+    // semantic tone + Figma 셀링아이콘 palette tone
+    // ----------------------------------------
+    --tone-primary: var(--theme-primary-500);
+    --tone-secondary: var(--theme-secondary);
+    --tone-gray: var(--theme-gray-600);
+    --tone-danger: var(--theme-status-error);
+    --tone-warning: var(--theme-status-warning);
+    --tone-success: var(--theme-status-success);
+    --tone-info: var(--theme-status-info);
+    --tone-black: var(--theme-color-02-black);
+    --tone-red: var(--theme-system-red-700);
+    --tone-orange: var(--theme-system-dark-amber-600);
+    --tone-green: var(--theme-system-green-800);
+    --tone-blue: var(--theme-system-blue-700);
+    --tone-navy: var(--theme-system-navy-blue-800);
+    --tone-purple: var(--theme-system-purple-700);
+
+    // ----------------------------------------
+    // Shadow  (Figma 21. Shadow Guide - 수직 그림자)
+    // ----------------------------------------
+    --shadow-level-1: 0 2px 8px var(--theme-gray-900-alpha-8);
+    --shadow-level-2: 0 4px 16px var(--theme-gray-900-alpha-12);
+    --shadow-level-3: 0 8px 24px var(--theme-gray-900-alpha-18);
+
+    // Tabs (Figma 그룹형 / 버튼형 / 텍스트형)
+    --bg-tabs-strong: var(--theme-bg-black);
+    --color-tabs-strong: var(--theme-color-02-black);
+    --color-tabs-on-strong: var(--theme-color-01-white);
+    --border-tabs-regular: var(--theme-line-regular);
+    --border-tabs-strong: var(--theme-line-black);
+
+    // Accordion line (드롭 다운 테이블)
+    --border-accordion-line-strong: var(--theme-line-black);
+    --border-accordion-line: var(--theme-line-regular);
+    --bg-accordion-line-panel: var(--theme-bg-light);
+
+    // Tag / Selling icon
+    --color-tag-on-fill: var(--theme-color-01-white);
+    --bg-tag-default: var(--theme-bg-white);
+    --border-tag-default: var(--theme-line-regular);
+    --color-tag-default: var(--theme-color-02-black);
+
+    // Input Number (수량 버튼)
+    --bg-input-number: var(--theme-bg-white);
+    --bg-input-number-disabled: var(--theme-bg-light);
+    --border-input-number: var(--theme-line-regular);
+    --color-input-number: var(--theme-color-02-black);
+    --color-input-number-disabled: var(--theme-color-05-gray-disabled);
+
+    // Tooltip (말풍선)
+    --bg-tooltip: var(--theme-bg-black);
+    --color-tooltip: var(--theme-color-01-white);
+    --bg-tooltip-light: var(--theme-bg-white);
+    --color-tooltip-light: var(--theme-color-02-black);
+    --border-tooltip-outline: var(--theme-line-black);
+    --color-tooltip-accent: var(--theme-system-amber-500);
+
+    // Popover (노출 레이어)
+    --bg-popover: var(--theme-bg-white);
+    --border-popover: var(--theme-color-03-gray);
+    --color-popover: var(--theme-color-02-black);
+    --color-popover-desc: var(--theme-color-04-gray);
+    --bg-popover-box: var(--theme-bg-light);
+
+    // Rating (평점)
+    --color-rating: var(--theme-color-02-black);
+    --color-rating-empty: var(--theme-line-regular);
+    --color-rating-text: var(--theme-color-03-gray);
+
+    // Top Button
+    --bg-top-button: var(--theme-bg-white);
+    --border-top-button: var(--theme-line-regular);
+    --color-top-button: var(--theme-color-02-black);
+    --bg-top-button-fill: var(--theme-bg-black);
+    --color-top-button-fill: var(--theme-color-01-white);
+
+    // Carousel (좌우 슬라이드 버튼 / 인디케이터)
+    --bg-carousel: var(--theme-bg-light);
+    --bg-carousel-nav: color-mix(in srgb, var(--theme-color-03-gray) 80%, transparent);
+    --bg-carousel-nav-hover: var(--theme-color-03-gray);
+    --color-carousel-nav: var(--theme-color-01-white);
+    --bg-carousel-dot: var(--theme-gray-300);
+    --bg-carousel-dot-active: var(--theme-bg-black);
+    --shadow-carousel-caption: var(--theme-gray-900-alpha-42);
+    --bg-carousel-fraction: color-mix(in srgb, var(--theme-color-03-gray) 80%, transparent);
+    --color-carousel-fraction: var(--theme-color-01-white);
+
+    // Toast (토스트 팝업)
+    --bg-toast: color-mix(in srgb, var(--theme-bg-black) 90%, transparent);
+    --color-toast: var(--theme-color-01-white);
+    --shadow-toast: var(--theme-gray-900-alpha-22);
+    --color-toast-success: var(--theme-status-success);
+    --color-toast-danger: var(--theme-status-error);
+    --color-toast-warning: var(--theme-status-warning);
+    --color-toast-info: var(--theme-primary-300);
+
+    // Empty (No search result)
+    --color-empty-title: var(--theme-color-02-black);
+    --color-empty-desc: var(--theme-color-04-gray);
+    --bg-empty-icon: var(--theme-bg-regular);
+    --color-empty-icon: var(--theme-color-04-gray);
+
+    // Data Table (게시판형 테이블)
+    --bg-data-table-head: var(--theme-bg-light);
+    --color-data-table-head: var(--theme-color-02-black);
+    --color-data-table: var(--theme-color-02-black);
+    --color-data-table-sub: var(--theme-color-04-gray);
+    --border-data-table: var(--theme-line-light);
+    --border-data-table-strong: var(--theme-line-black);
+    --bg-data-table-hover: var(--theme-bg-light);
+    --bg-data-table-selected: var(--theme-primary-50);
+
+    // Alert (인라인 알림)
+    --color-alert-title: var(--theme-color-02-black);
+    --color-alert-desc: var(--theme-color-03-gray);
+
+    // Spinner
+    --bg-spinner-overlay: color-mix(in srgb, var(--theme-bg-white) 70%, transparent);
+    --border-spinner-track: var(--theme-line-regular);
+
+    // Search Panel (조회 조건)
+    --bg-search-panel: var(--theme-bg-white);
+    --border-search-panel: var(--theme-gray-200);
+    --color-search-panel-label: var(--theme-color-03-gray);
+
+    // Stat Card (KPI)
+    --bg-stat-card: var(--theme-bg-white);
+    --border-stat-card: var(--theme-gray-200);
+    --color-stat-card-title: var(--theme-color-04-gray);
+    --color-stat-card-value: var(--theme-color-02-black);
+    --color-stat-card-up: var(--theme-status-success);
+    --color-stat-card-down: var(--theme-status-error);
+
+    // Status Lamp (설비 램프)
+    --color-status-lamp-off: var(--theme-gray-300);
+
+    // Steps / Timeline
+    --color-steps-wait: var(--theme-gray-400);
+    --bg-steps-wait: var(--theme-gray-0);
+    --border-steps-wait: var(--theme-gray-300);
+    --color-steps-title: var(--theme-color-02-black);
+    --color-steps-desc: var(--theme-color-04-gray);
+    --border-steps-line: var(--theme-gray-200);
+
+    // Tree
+    --bg-tree-hover: var(--theme-gray-50);
+    --bg-tree-selected: var(--theme-primary-50);
+    --color-tree: var(--theme-gray-800);
+    --color-tree-selected: var(--theme-primary-600);
+    --color-tree-icon: var(--theme-gray-500);
+    --border-tree-guide: var(--theme-gray-200);
+
+    // Breadcrumb
+    --color-breadcrumb: var(--theme-gray-500);
+    --color-breadcrumb-current: var(--theme-gray-900);
+
+    // Drawer
+    --bg-drawer: var(--theme-bg-white);
+    --bg-drawer-backdrop: var(--theme-bg-black-opacity-60);
+    --border-drawer: var(--theme-gray-200);
+
+    // Segmented
+    --bg-segmented: var(--theme-gray-100);
+    --bg-segmented-active: var(--theme-gray-0);
+    --color-segmented: var(--theme-gray-600);
+    --color-segmented-active: var(--theme-gray-900);
+
+    // Transfer
+    --bg-transfer: var(--theme-bg-white);
+    --bg-transfer-head: var(--theme-bg-light);
+    --border-transfer: var(--theme-gray-200);
+
+    // Input Group
+    --color-input-group-separator: var(--theme-color-03-gray);
+}

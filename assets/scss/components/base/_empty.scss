@@ -1,0 +1,102 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppEmpty
+   Figma 20. No search result (PC)
+========================================= */
+
+.app-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+
+    &__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+        border-radius: 50%;
+        background: var(--bg-empty-icon);
+        color: var(--color-empty-icon);
+    }
+
+    &__title {
+        color: var(--color-empty-title);
+    }
+
+    &__desc {
+        margin: 0;
+        color: var(--color-empty-desc);
+        white-space: pre-line;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    &--sm {
+        padding: 24px 16px;
+
+        .app-empty__icon {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+        }
+
+        .app-empty__title {
+            @include font(b3, sb);
+        }
+
+        .app-empty__desc {
+            @include font(c2, rg);
+        }
+    }
+
+    &--md {
+        padding: 48px 16px;
+
+        .app-empty__icon {
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
+        }
+
+        .app-empty__title {
+            @include font(t5, sb);
+        }
+
+        .app-empty__desc {
+            @include font(b3, rg);
+        }
+    }
+
+    &--lg {
+        padding: 80px 16px;
+
+        .app-empty__icon {
+            width: 72px;
+            height: 72px;
+            font-size: 30px;
+        }
+
+        .app-empty__title {
+            @include font(t3, sb);
+        }
+
+        .app-empty__desc {
+            @include font(b2, rg);
+        }
+    }
+
+    &--maintenance .app-empty__title,
+    &--error .app-empty__title {
+        letter-spacing: -0.03em;
+    }
+}

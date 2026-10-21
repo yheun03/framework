@@ -11,6 +11,7 @@
                 [`is-${state}`]: state,
             },
         ]"
+        :style="rootStyle"
     >
         <label v-if="label" class="form-field__label app-date-picker__label" :for="inputId">{{ label }}</label>
 
@@ -71,7 +72,7 @@
                 :aria-readonly="readonly || undefined"
             />
             <span class="app-date-picker__icon app-date-picker__icon--right" aria-hidden="true">
-                <slot name="iconRight"><IconCalendar /></slot>
+                <slot name="iconRight"><IconClock v-if="type === 'time'" /><IconCalendar v-else /></slot>
             </span>
         </div>
 
@@ -84,7 +85,9 @@ import flatpickr from 'flatpickr';
 import type { Instance as FlatpickrInstance } from 'flatpickr/dist/types/instance';
 import type { Options as FlatpickrOptions } from 'flatpickr/dist/types/options';
 import { Korean } from 'flatpickr/dist/l10n/ko.js';
-import { IconCalendar } from '~/components/icons';
+import { IconCalendar, IconClock } from '~/components/icons';
+import type { AppFieldShape, AppFormSize, AppState, AppWidth } from '~/types/appCommon';
+import { toSizeStyle } from '~/utils/css';
 import { useBodyOverlay } from '~/composables/useBodyOverlay';
 
 export type DateRangeValue = {
@@ -92,10 +95,8 @@ export type DateRangeValue = {
     end: string | null;
 };
 
-type DatePickerType = 'single' | 'range' | 'multiple' | 'range-input';
-type DatePickerSize = 'xs' | 'sm' | 'md' | 'lg';
-type DatePickerShape = 'square' | 'round' | 'pill' | 'underline';
-type DatePickerState = 'error' | 'warning' | 'success' | null;
+/** single 날짜 / datetime 날짜+시간 / time 시간 / range 기간 / range-input 시작·종료 분리 / multiple 복수 날짜 */
+type DatePickerType = 'single' | 'datetime' | 'time' | 'range' | 'multiple' | 'range-input';
 
 const props = withDefaults(
     defineProps<{
@@ -112,9 +113,11 @@ const props = withDefaults(
         readonly?: boolean;
         id?: string;
         name?: string;
-        size?: DatePickerSize;
-        shape?: DatePickerShape;
-        state?: DatePickerState;
+        size?: AppFormSize;
+        shape?: AppFieldShape;
+        state?: AppState;
+        /** number(px) | '50%' | 'full' */
+        width?: AppWidth;
     }>(),
     {
         type: 'single',
@@ -151,7 +154,12 @@ const overlay = useBodyOverlay({
     close: closeActiveCalendar,
 });
 
-const dateFormat = 'Y-m-d';
+const rootStyle = computed(() => toSizeStyle(props.width));
+const isSingleValue = computed(() => props.type === 'single' || props.type === 'datetime' || props.type === 'time');
+const flatpickrMode = computed(
+    () => (isSingleValue.value ? 'single' : props.type === 'range-input' ? 'single' : props.type) as 'single' | 'range' | 'multiple',
+);
+const dateFormat = computed(() => (props.type === 'datetime' ? 'Y-m-d H:i' : props.type === 'time' ? 'H:i' : 'Y-m-d'));
 const rangeValue = computed<DateRangeValue>(() => {
     if (!props.modelValue || typeof props.modelValue === 'string' || Array.isArray(props.modelValue)) {
         return { start: null, end: null };
@@ -160,25 +168,25 @@ const rangeValue = computed<DateRangeValue>(() => {
 });
 
 const displayValue = computed(() => {
-    if (props.type === 'single') return typeof props.modelValue === 'string' ? props.modelValue : '';
+    if (isSingleValue.value) return typeof props.modelValue === 'string' ? props.modelValue : '';
     if (props.type === 'multiple') return Array.isArray(props.modelValue) ? props.modelValue.join(', ') : '';
     return [rangeValue.value.start, rangeValue.value.end].filter(Boolean).join(' ~ ');
 });
 
 function selectedValues() {
-    if (props.type === 'single') return typeof props.modelValue === 'string' ? [props.modelValue] : [];
+    if (isSingleValue.value) return typeof props.modelValue === 'string' ? [props.modelValue] : [];
     if (props.type === 'multiple') return Array.isArray(props.modelValue) ? props.modelValue : [];
     return [rangeValue.value.start, rangeValue.value.end].filter((value): value is string => Boolean(value));
 }
 
 function formatDate(date?: Date, instance = calendar) {
-    return date && instance ? instance.formatDate(date, dateFormat) : null;
+    return date && instance ? instance.formatDate(date, dateFormat.value) : null;
 }
 
 function handleChange(dates: Date[]) {
     if (props.disabled || props.readonly) return;
 
-    if (props.type === 'single') {
+    if (isSingleValue.value) {
         emit('update:modelValue', formatDate(dates[0]));
         return;
     }
@@ -225,7 +233,10 @@ function handleEndChange(dates: Date[]) {
 
 function options(onChange: (dates: Date[]) => void, option: Partial<FlatpickrOptions> = {}): Partial<FlatpickrOptions> {
     return {
-        dateFormat,
+        dateFormat: dateFormat.value,
+        enableTime: props.type === 'datetime' || props.type === 'time',
+        noCalendar: props.type === 'time',
+        time_24hr: true,
         locale: Korean,
         allowInput: false,
         disableMobile: true,
@@ -298,7 +309,7 @@ function createCalendars() {
     calendar = flatpickr(
         inputEl.value,
         options(handleChange, {
-            mode: props.type,
+            mode: flatpickrMode.value,
             minDate: props.min,
             maxDate: props.max,
         }) as FlatpickrOptions,
@@ -321,7 +332,7 @@ function syncCalendars() {
     }
 
     if (!calendar) return;
-    calendar.set('mode', props.type);
+    calendar.set('mode', flatpickrMode.value);
     calendar.set('minDate', props.min);
     calendar.set('maxDate', props.max);
     calendar.set('clickOpens', !props.disabled && !props.readonly);

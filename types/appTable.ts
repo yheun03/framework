@@ -33,12 +33,12 @@ export type AppTableCell = {
     startKey?: string;
     endKey?: string;
     type?: AppTableFieldType;
-    options?: AppTableOption[];
+    items?: AppTableOption[];
     placeholder?: string;
     placeholders?: string[];
     text?: string;
     buttonText?: string;
-    helperText?: string;
+    hint?: string;
     rows?: number;
     colspan?: number;
     rowspan?: number;

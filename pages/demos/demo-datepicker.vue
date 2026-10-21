@@ -187,6 +187,19 @@
                         </AppDatePicker>
                     </div>
                 </PageDemoSection>
+
+                <!-- DATETIME / TIME -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Datetime / Time"
+                    description="MES 작업 시작·종료 시각 입력용 type='datetime' / type='time' (24시간)"
+                >
+                    <div class="page-demo-row">
+                        <AppDatePicker v-model="dateTime" type="datetime" label="작업 시작 일시" :width="240" />
+                        <AppDatePicker v-model="timeOnly" type="time" label="교대 시각" :width="160" />
+                    </div>
+                    <p class="page-demo-output">datetime: {{ dateTime }} / time: {{ timeOnly }}</p>
+                </PageDemoSection>
             </main>
 
             <!-- STATE PANEL -->
@@ -204,6 +217,9 @@ import type { DateRangeValue } from '~/components/AppDatePicker.vue';
 import { IconCalendar } from '~/components/icons';
 
 const { title, description } = useDemoI18n('datepicker');
+
+const dateTime = ref<string | null>('2026-10-21 08:00');
+const timeOnly = ref<string | null>('20:00');
 
 const min = '2026-04-01';
 const max = '2026-12-31';

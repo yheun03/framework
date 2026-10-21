@@ -134,14 +134,14 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'select' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'select' && f.items?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppSelect
                         size="sm"
                         :name="f.field"
                         :model-value="getSelectValue(f.field)"
-                        :options="f.options"
+                        :items="f.items"
                         :placeholder="f.placeholderSelect ?? f.placeholder ?? '선택하세요'"
                         :readonly="f.readonly"
                         :disabled="f.disabled"
@@ -158,7 +158,7 @@
                         size="sm"
                         :name="f.selectInput.columnKey"
                         :model-value="getSelectValue(f.selectInput.columnKey)"
-                        :options="f.selectInput.options"
+                        :items="f.selectInput.items"
                         :placeholder="f.placeholderSelect ?? '컬럼'"
                         class="app-grid-search__select-input-select"
                         @update:model-value="(v) => handleFieldValueChange(f.selectInput!.columnKey, v)"
@@ -175,12 +175,12 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'radio' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'radio' && f.items?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
                         <AppChoice
-                            v-for="opt in f.options"
+                            v-for="opt in f.items"
                             :key="String(opt.value)"
                             size="sm"
                             :model-value="getChoiceValue(f.field)"
@@ -195,12 +195,12 @@
                 </dd>
             </dl>
 
-            <dl v-else-if="layoutType(f) === 'checkbox' && f.options?.length" class="app-grid-search__dl">
+            <dl v-else-if="layoutType(f) === 'checkbox' && f.items?.length" class="app-grid-search__dl">
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <div class="app-grid-search__choices">
                         <AppChoice
-                            v-for="opt in f.options"
+                            v-for="opt in f.items"
                             :key="String(opt.value)"
                             size="sm"
                             type="checkbox"
@@ -724,7 +724,7 @@ function handleReset() {
         for (const f of props.fields) {
             if (f.selectInput) {
                 const si = f.selectInput;
-                const first = si.options[0]?.value;
+                const first = si.items[0]?.value;
                 next[si.columnKey] = first !== undefined ? first : null;
                 next[si.textKey] = '';
                 continue;
