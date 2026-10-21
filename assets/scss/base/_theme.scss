@@ -1,62 +1,7 @@
-@use 'sass:color';
 @use 'sass:map';
-// '@project-theme' 은 nuxt.config.ts(vite alias)에서 연결되는 경로라 에디터에서 Cmd+클릭으로 열리지 않습니다.
-// 실제 파일: assets/scss/projects/{projectConfig.key}/_theme.scss  (현재: projects/framework/_theme.scss)
 @use '@project-theme' as project;
 @use '../abstract/tokens' as ds;
-
-@function project-value($value, $fallback) {
-    @if $value == null {
-        @return $fallback;
-    }
-
-    @return $value;
-}
-
-// ============================================
-// 프레임워크 테마
-// 활성 프로젝트의 _theme.scss에 있는 대표 색상을 전체 테마에 반영합니다.
-// ============================================
-
-$primary: project.$primary !default;
-$secondary: project.$secondary !default;
-$tertiary: project.$tertiary !default;
-
-// SCSS 호환용 Primary 팔레트
-// 컴포넌트에서 사용하는 기존 50~900 토큰은 primary를 기준으로 자동 생성합니다.
-$primary-50: color.mix(#ffffff, $primary, 92%) !default;
-$primary-100: color.mix(#ffffff, $primary, 84%) !default;
-$primary-200: color.mix(#ffffff, $primary, 68%) !default;
-$primary-300: color.mix(#ffffff, $primary, 48%) !default;
-$primary-400: color.mix(#ffffff, $primary, 22%) !default;
-$primary-500: $primary !default;
-$primary-600: color.mix(#000000, $primary, 15%) !default;
-$primary-700: color.mix(#000000, $primary, 30%) !default;
-$primary-800: color.mix(#000000, $primary, 45%) !default;
-$primary-900: color.mix(#000000, $primary, 63%) !default;
-
-$gradient-primary: linear-gradient(to bottom, $primary-800 0%, $primary-900 100%) !default;
-
-// SCSS 호환용 Header
-// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$header-background: project-value(project.$header-background, $primary-50) !default;
-$header-hover-color: project-value(project.$header-hover-color, rgba($secondary, 0.12)) !default;
-$header-active-color: project-value(project.$header-active-color, rgba($tertiary, 0.16)) !default;
-$header-accent-color: project-value(project.$header-accent-color, $tertiary) !default;
-
-// SCSS 호환용 LNB
-// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$lnb-background: project-value(project.$lnb-background, $gradient-primary) !default;
-$lnb-hover-color: project-value(project.$lnb-hover-color, rgba(#ffffff, 0.08)) !default;
-$lnb-active-color: project-value(project.$lnb-active-color, rgba(#ffffff, 0.16)) !default;
-
-// SCSS 호환용 Page Navigator
-// 개별 색상이 필요하면 아래 값만 별도로 변경합니다.
-$page-navigator-background: project-value(project.$page-navigator-background, $primary-50) !default;
-$page-navigator-hover-color: project-value(project.$page-navigator-hover-color, rgba(#1c2026, 0.05)) !default;
-$page-navigator-active-color: project-value(project.$page-navigator-active-color, #ffffff) !default;
-$page-navigator-accent-color: project-value(project.$page-navigator-accent-color, #1c2026) !default;
-$page-navigator-control-active-color: project-value(project.$page-navigator-control-active-color, rgba(#1c2026, 0.08)) !default;
+@use '../abstract/theme' as *;
 
 // ============================================
 // 런타임 기본 토큰
@@ -785,4 +730,11 @@ $page-navigator-control-active-color: project-value(project.$page-navigator-cont
     // Workspace Pane
     --bg-workspace-pane: var(--theme-gray-0);
     --border-workspace-pane: var(--theme-gray-200-alpha-90);
+}
+
+// ============================================
+// 레이아웃 크기
+// ============================================
+:root {
+    --width-sidebar: 260px;
 }

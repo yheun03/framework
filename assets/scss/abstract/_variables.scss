@@ -2,10 +2,10 @@
 // Framework - SCSS 변수
 // ============================================
 
-@use "../base/theme" as theme;
-@use "./tokens" as *;
-@use "sass:map";
-@forward "../base/theme";
+@use './theme' as theme;
+@use './tokens' as *;
+@use 'sass:map';
+@forward './theme';
 
 // Colors (semantic 기본값)
 
@@ -32,11 +32,6 @@ $gray-900: #1c2026;
 $font-family-base: $ds-font-family;
 $font-size-base: 16px;
 $line-height-base: 1.5;
-
-// Variables
-:root {
-    --width-sidebar: 260px;
-}
 
 $color-01-white: map.get($ds-font-color, '01-white');
 $color-02-black: map.get($ds-font-color, '02-black');
