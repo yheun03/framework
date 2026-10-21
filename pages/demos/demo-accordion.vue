@@ -11,7 +11,7 @@
 
                 <!-- CONTENT -->
                 <PageDemoSection class="page-demo-section" title="Content" description="아코디언 안에 입력, 선택, 버튼 컴포넌트를 배치한 예시입니다.">
-                    <AppAccordion :items="basicItems" type="multiple" initial-open="none">
+                    <AppAccordion :items="basicItems" initial="none">
                         <template #basicInfo>
                             <div class="page-demo-stack">
                                 <p>기본 아코디언 콘텐츠입니다.</p>
@@ -22,7 +22,7 @@
                         <template #basicSelect>
                             <AppSelect
                                 :model-value="null"
-                                :options="[
+                                :items="[
                                     { label: '옵션 A', value: 'a' },
                                     { label: '옵션 B', value: 'b' },
                                 ]"
@@ -39,14 +39,14 @@
                 <!-- TYPE -->
                 <PageDemoSection
                     class="page-demo-section"
-                    title="Type"
-                    description="한 개만 열리는 single 타입과 여러 개를 자유롭게 여는 multiple 타입을 비교합니다."
+                    title="Multiple"
+                    description=':multiple="false" 는 한 개만, 기본값(true)은 여러 개를 동시에 열 수 있습니다.'
                 >
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">single</div>
+                            <div class="page-demo-hint">:multiple="false"</div>
 
-                            <AppAccordion :items="typeItems" type="single" initial-open="first">
+                            <AppAccordion :items="typeItems" :multiple="false" initial="first">
                                 <template #panel1>Panel 1 Content</template>
                                 <template #panel2>Panel 2 Content</template>
                                 <template #panel3>Panel 3 Content</template>
@@ -54,9 +54,9 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">multiple</div>
+                            <div class="page-demo-hint">multiple (기본값)</div>
 
-                            <AppAccordion :items="typeItems" type="multiple" initial-open="none">
+                            <AppAccordion :items="typeItems" initial="none">
                                 <template #panel1>Panel 1 Content</template>
                                 <template #panel2>Panel 2 Content</template>
                                 <template #panel3>Panel 3 Content</template>
@@ -73,9 +73,9 @@
                 >
                     <div class="page-demo-stack">
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">initialOpen = "none"</div>
+                            <div class="page-demo-hint">initial = "none"</div>
 
-                            <AppAccordion :items="initialItems" type="multiple" initial-open="none">
+                            <AppAccordion :items="initialItems" initial="none">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -83,9 +83,9 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">initialOpen = "first"</div>
+                            <div class="page-demo-hint">initial = "first"</div>
 
-                            <AppAccordion :items="initialItems" type="multiple" initial-open="first">
+                            <AppAccordion :items="initialItems" initial="first">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -93,9 +93,9 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">initialOpen = "all"</div>
+                            <div class="page-demo-hint">initial = "all"</div>
 
-                            <AppAccordion :items="initialItems" type="multiple" initial-open="all">
+                            <AppAccordion :items="initialItems" initial="all">
                                 <template #initial1>Initial Content 1</template>
                                 <template #initial2>Initial Content 2</template>
                                 <template #initial3>Initial Content 3</template>
@@ -107,10 +107,10 @@
                 <!-- DEFAULT OPEN IDS -->
                 <PageDemoSection
                     class="page-demo-section"
-                    title="Default Open Ids"
-                    description="defaultOpenIds로 특정 패널만 기본 열림 상태로 지정할 수 있습니다."
+                    title="v-model"
+                    description="v-model(열린 id 배열)로 특정 패널을 열거나 현재 열린 패널을 확인합니다."
                 >
-                    <AppAccordion :items="defaultItems" type="multiple" :default-open-ids="['default-2', 'default-3']">
+                    <AppAccordion :items="defaultItems" v-model="defaultOpen">
                         <template #default1>Default Content 1</template>
                         <template #default2>Default Content 2</template>
                         <template #default3>Default Content 3</template>
@@ -119,7 +119,7 @@
 
                 <!-- DISABLED -->
                 <PageDemoSection class="page-demo-section" title="Disabled" description="disabled 항목은 열고 닫을 수 없습니다.">
-                    <AppAccordion :items="disabledItems" type="multiple" initial-open="first">
+                    <AppAccordion :items="disabledItems" initial="first">
                         <template #active1>Active Content</template>
                         <template #disabled>Disabled Content</template>
                         <template #active2>Active Content 2</template>
@@ -128,7 +128,7 @@
 
                 <!-- SLOT -->
                 <PageDemoSection class="page-demo-section" title="Slot" description="아코디언 본문을 슬롯으로 연결합니다.">
-                    <AppAccordion :items="slotItems" type="multiple" initial-open="first">
+                    <AppAccordion :items="slotItems" initial="first">
                         <template #progress>
                             <div class="page-demo-stack">
                                 <p>이 콘텐츠는 슬롯으로 렌더링됩니다.</p>
@@ -151,6 +151,15 @@
                         </template>
                     </AppAccordion>
                 </PageDemoSection>
+
+                <!-- LINE VARIANT -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="variant = line (드롭 다운 테이블 / FAQ)"
+                    description="Figma 13. Table Guide - 드롭 다운 테이블. prefix 로 'Q.' 머리글, item.content 로 간단한 본문을 넣습니다."
+                >
+                    <AppAccordion :items="faqItems" variant="line" prefix="Q." :multiple="false" initial="none" />
+                </PageDemoSection>
             </main>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -163,10 +172,25 @@
 </template>
 
 <script setup lang="ts">
+const faqItems: AppAccordionItem[] = [
+    {
+        id: 'faq-1',
+        title: '작업지시는 언제 생성되나요?',
+        content: '매일 06:00 에 생산계획 기준으로 자동 생성됩니다.\n긴급 작업은 작업지시 화면에서 수동 등록할 수 있습니다.',
+    },
+    {
+        id: 'faq-2',
+        title: '실적 수정은 어떻게 하나요?',
+        content: '작업실적 현황 > 행 클릭 > 상세 Drawer 에서 수정 후 저장합니다.\n마감된 실적은 관리자 승인이 필요합니다.',
+    },
+    { id: 'faq-3', title: '불량 사유 코드를 추가하고 싶어요.', content: '기준정보 > 공통코드 > DEFECT_REASON 그룹에 추가합니다.' },
+];
 import type { AppAccordionItem } from '~/components/AppAccordion.vue';
 
 /* stores/composables */
 const { title, description } = useDemoI18n('accordion');
+
+const defaultOpen = ref<Array<string | number>>(['default-2', 'default-3']);
 
 const basicItems: AppAccordionItem[] = [
     {

@@ -299,4 +299,132 @@
             flex: 1 1 0;
         }
     }
+
+    /* -----------------------------------------
+       Figma 08. Tap Guide - 탭 디자인 스타일
+    ----------------------------------------- */
+
+    // 오브젝트(이미지) 탭
+    &__tab-image {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        border-radius: 50%;
+    }
+
+    &__tab.has-image {
+        flex-direction: column;
+        gap: 6px;
+        padding-block: 12px;
+    }
+
+    // 그룹형 탭: 하나의 외곽선 안에서 활성 탭만 진하게
+    &--group {
+        .app-tabs__list {
+            gap: 0;
+            border: 1px solid var(--border-tabs-regular);
+        }
+
+        .app-tabs__tab {
+            flex: 1 1 0;
+            min-height: 48px;
+            padding-inline: 12px;
+            color: var(--color-tabs-strong);
+            font-weight: 400;
+
+            &:hover:not(:disabled) {
+                background: var(--bg-tabs-gray-50);
+            }
+
+            &.is-active {
+                background: var(--bg-tabs-strong);
+                color: var(--color-tabs-on-strong);
+            }
+        }
+    }
+
+    // 버튼형 탭: 개별 버튼
+    &--button {
+        .app-tabs__list {
+            flex-wrap: wrap;
+            gap: 8px;
+            overflow: visible;
+        }
+
+        .app-tabs__tab {
+            height: 36px;
+            padding-inline: 14px;
+            border: 1px solid var(--border-tabs-regular);
+            background: var(--bg-tabs-gray-0);
+            color: var(--color-tabs-strong);
+
+            &:hover:not(:disabled) {
+                border-color: var(--border-tabs-strong);
+            }
+
+            &.is-active {
+                border-color: var(--bg-tabs-strong);
+                background: var(--bg-tabs-strong);
+                color: var(--color-tabs-on-strong);
+            }
+        }
+    }
+
+    // 그룹 버튼형 탭: 칸(grid) 배치, 여러 줄
+    &--grid {
+        .app-tabs__list {
+            display: grid;
+            grid-template-columns: repeat(var(--app-tabs-columns, 6), minmax(0, 1fr));
+            gap: 0;
+            overflow: visible;
+            border-top: 1px solid var(--border-tabs-regular);
+            border-left: 1px solid var(--border-tabs-regular);
+        }
+
+        .app-tabs__tab {
+            min-height: 48px;
+            border-right: 1px solid var(--border-tabs-regular);
+            border-bottom: 1px solid var(--border-tabs-regular);
+            color: var(--color-tabs-strong);
+
+            &:hover:not(:disabled) {
+                background: var(--bg-tabs-gray-50);
+            }
+
+            &.is-active {
+                background: var(--bg-tabs-strong);
+                color: var(--color-tabs-on-strong);
+            }
+        }
+    }
+
+    // 텍스트형 탭
+    &--text {
+        .app-tabs__list {
+            gap: 20px;
+        }
+
+        .app-tabs__tab {
+            padding: 4px 0;
+            color: var(--color-tabs-gray-400);
+
+            .app-tabs__tab-title {
+                font-weight: 400;
+            }
+
+            &:hover:not(:disabled) {
+                color: var(--color-tabs-strong);
+            }
+
+            &.is-active {
+                color: var(--color-tabs-strong);
+
+                .app-tabs__tab-title {
+                    font-weight: 600;
+                    text-decoration: underline;
+                    text-underline-offset: 6px;
+                }
+            }
+        }
+    }
 }

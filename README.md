@@ -148,6 +148,7 @@ npm run generate
 ## Documents
 
 - 개발 규칙: [`DEVELOPMENT_GUIDE.md`](./DEVELOPMENT_GUIDE.md)
+- 컴포넌트 목록 / 공통 속성 규칙: [`COMPONENT_GUIDE.md`](./COMPONENT_GUIDE.md)
 - 프로젝트 노트: [`project_note.md`](./project_note.md)
 
 ## Directory

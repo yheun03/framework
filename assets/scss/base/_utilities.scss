@@ -1,0 +1,76 @@
+@use '../abstract' as *;
+@use 'sass:map';
+
+// =====================================================================
+// Design System Utility Class (퍼블리싱용)
+// 컴포넌트 밖 일반 마크업에서 Figma 토큰을 바로 적용할 때 사용합니다.
+//
+//   <h2 class="typo-t3 typo-sb">제목</h2>
+//   <p class="typo-b3 text-03-gray">설명</p>
+//   <span class="typo-c2 typo-en">ENG 1,234</span>
+//   <div class="bg-light line-regular">박스</div>
+// =====================================================================
+
+// 폰트 크기 (PC / MO 자동 전환) - 기본 굵기 Regular
+@each $token, $value in $ds-typography-pc {
+    .typo-#{$token} {
+        @include font($token, rg);
+    }
+}
+
+// 굵기
+@each $key, $weight in $ds-font-weight {
+    .typo-#{$key} {
+        font-weight: $weight;
+    }
+}
+
+// 영문/숫자 자간 (0)
+.typo-en {
+    letter-spacing: map.get($ds-letter-spacing, 'en');
+}
+
+// 폰트 컬러
+@each $key, $value in $ds-font-color {
+    .text-#{$key} {
+        color: var(--theme-color-#{$key});
+    }
+}
+
+@each $key, $value in $ds-brand {
+    .text-brand-#{$key} {
+        color: var(--theme-brand-#{$key});
+    }
+}
+
+@each $key, $value in $ds-state-color {
+    .text-#{$key} {
+        color: var(--theme-status-#{$key});
+    }
+}
+
+// 배경 컬러
+@each $key, $value in $ds-bg-color {
+    .bg-#{$key} {
+        background-color: var(--theme-bg-#{$key});
+    }
+}
+
+@each $key, $value in $ds-brand {
+    .bg-brand-#{$key} {
+        background-color: var(--theme-brand-#{$key});
+    }
+}
+
+@each $key, $value in $ds-gradient {
+    .bg-gradient-#{$key} {
+        background-image: var(--theme-gradient-#{$key});
+    }
+}
+
+// 라인 컬러 (1px solid)
+@each $key, $value in $ds-line-color {
+    .line-#{$key} {
+        border: 1px solid var(--theme-line-#{$key});
+    }
+}

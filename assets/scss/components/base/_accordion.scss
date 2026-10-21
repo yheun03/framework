@@ -87,3 +87,55 @@
         color: var(--color-accordion-gray-500);
     }
 }
+
+/* -----------------------------------------
+   Variant: line
+   Figma 13. Table Guide - 드롭 다운 테이블 (FAQ)
+----------------------------------------- */
+
+.app-accordion {
+    &__text {
+        flex: 1 1 auto;
+    }
+
+    &__prefix {
+        flex: 0 0 auto;
+        @include font(b3, sb);
+        color: var(--color-accordion);
+    }
+
+    &__content {
+        margin: 0;
+        white-space: pre-line;
+        @include font(b4, rg);
+        color: var(--color-accordion-gray-600);
+    }
+
+    &--line {
+        gap: 0;
+        border-top: 1px solid var(--border-accordion-line-strong);
+
+        .app-accordion__item {
+            border: 0;
+            border-bottom: 1px solid var(--border-accordion-line);
+            border-radius: 0;
+        }
+
+        .app-accordion__trigger {
+            padding: 20px 4px;
+        }
+
+        .app-accordion__title {
+            @include font(b3, rg);
+        }
+
+        .app-accordion__panel {
+            border-top: 0;
+            background: var(--bg-accordion-line-panel);
+        }
+
+        .app-accordion__panel-inner {
+            padding: 24px 20px;
+        }
+    }
+}

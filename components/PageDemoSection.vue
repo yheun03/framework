@@ -1,5 +1,5 @@
 <template>
-    <AppAccordion class="page-demo-section" :items="items" type="multiple" initial-open="all">
+    <AppAccordion class="page-demo-section" :items="items" initial="all">
         <template #content>
             <slot />
         </template>

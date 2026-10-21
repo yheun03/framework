@@ -31,12 +31,16 @@
                 </PageDemoSection>
 
                 <!-- ERROR -->
-                <PageDemoSection class="page-demo-section" title="Error" description="error가 있으면 hint 대신 error message가 표시됩니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="State"
+                    description="state(error / warning / success)에 따라 hint 문구 색상이 바뀝니다."
+                >
                     <AppFormField
                         label="비밀번호"
                         required
-                        hint="8자 이상 입력하세요."
-                        :error="password && password.length < 8 ? '비밀번호는 8자 이상 입력해주세요.' : ''"
+                        :hint="password && password.length < 8 ? '비밀번호는 8자 이상 입력해주세요.' : '8자 이상 입력하세요.'"
+                        :state="password && password.length < 8 ? 'error' : null"
                     >
                         <AppInput
                             v-model="password"
@@ -64,7 +68,7 @@
                         <template #label>
                             <div class="page-demo-inline">
                                 <strong>커스텀 라벨</strong>
-                                <AppBadge color="info">NEW</AppBadge>
+                                <AppTag tone="info" size="sm">NEW</AppTag>
                             </div>
                         </template>
 
@@ -84,7 +88,7 @@
                         </AppFormField>
 
                         <AppFormField label="유형" required hint="요청 유형을 선택하세요.">
-                            <AppSelect v-model="form.type" :options="formTypeOptions" placeholder="유형 선택" />
+                            <AppSelect v-model="form.type" :items="formTypeOptions" placeholder="유형 선택" />
                         </AppFormField>
 
                         <AppFormField label="우선순위" required>

@@ -20,3 +20,25 @@
 @use 'form-field';
 @use 'textarea';
 @use 'pagination';
+
+// Figma 디자인 시스템 기반 추가 컴포넌트
+@use 'tag';
+@use 'input-number';
+@use 'input-group';
+@use 'tooltip';
+@use 'rating';
+@use 'top-button';
+@use 'carousel';
+@use 'toast';
+@use 'empty';
+@use 'data-table';
+
+// MES 공통 컴포넌트
+@use 'alert';
+@use 'spinner';
+@use 'search-panel';
+@use 'stat-card';
+@use 'steps';
+@use 'tree';
+@use 'drawer';
+@use 'transfer';

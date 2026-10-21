@@ -88,7 +88,7 @@
                 <p v-if="submitted && !agreeTerms" class="auth-page__error">필수 약관에 동의해 주세요.</p>
             </div>
 
-            <AppButton type="submit" variant="fill" tone="primary" size="xl" block>계정 만들기</AppButton>
+            <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full">계정 만들기</AppButton>
         </form>
 
         <div class="auth-page__footer">

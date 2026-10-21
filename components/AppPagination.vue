@@ -70,7 +70,7 @@
         </div>
 
         <div v-if="showPageSize" class="app-pagination__size">
-            <AppSelect :model-value="pageSize" :options="pageSizeSelectOptions" :disabled="disabled" @update:model-value="handlePageSizeChange" />
+            <AppSelect :model-value="pageSize" :items="pageSizeSelectOptions" :disabled="disabled" @update:model-value="handlePageSizeChange" />
         </div>
     </nav>
 </template>

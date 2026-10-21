@@ -20,7 +20,7 @@
                 class="business-toolbar__field business-toolbar__field--wide"
                 size="sm"
                 placeholder="발주번호, 공급사 검색"
-            /><AppSelect v-model="status" class="business-toolbar__field" size="sm" :options="statusOptions" placeholder="전체 상태" />
+            /><AppSelect v-model="status" class="business-toolbar__field" size="sm" :items="statusOptions" placeholder="전체 상태" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>
         <AppSection title="발주 목록"

@@ -1,0 +1,69 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppTopButton
+   Figma 11. ETC Component Guide - 탑 버튼 (사이즈 1종)
+========================================= */
+
+.app-top-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border-top-button);
+    background: var(--bg-top-button);
+    color: var(--color-top-button);
+    font-size: 16px;
+    cursor: pointer;
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+
+    &.is-fixed {
+        position: fixed;
+        z-index: 900;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    &__label {
+        @include font(c3, sb);
+    }
+
+    &--fill {
+        border-color: var(--bg-top-button-fill);
+        background: var(--bg-top-button-fill);
+        color: var(--color-top-button-fill);
+    }
+
+    &--shadow {
+        border-color: transparent;
+        box-shadow: var(--shadow-level-2);
+    }
+
+    &--shape-round {
+        border-radius: 6px;
+    }
+
+    &--shape-circle {
+        border-radius: 50%;
+    }
+}
+
+.app-top-button-enter-active,
+.app-top-button-leave-active {
+    transition:
+        opacity 0.2s,
+        transform 0.2s;
+}
+
+.app-top-button-enter-from,
+.app-top-button-leave-to {
+    opacity: 0;
+    transform: translateY(8px);
+}

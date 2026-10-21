@@ -8,7 +8,7 @@
             :hint="imageOptions.hint"
             :trigger-text="imageOptions.triggerText"
             :allow-drop="imageOptions.allowDrop"
-            :max-size-bytes="imageOptions.maxSizeBytes"
+            :max-size="imageOptions.maxSize"
             :read-mode="imageOptions.readMode"
         />
     </div>
@@ -52,7 +52,7 @@ type ImageCellParams = {
     hint?: string;
     triggerText?: string;
     allowDrop?: boolean;
-    maxSizeBytes?: number;
+    maxSize?: number;
     readMode?: ReadMode;
 };
 
@@ -68,7 +68,7 @@ const imageOptions = computed<ImageCellParams>(() => ({
     hint: rendererParams.value.hint,
     triggerText: rendererParams.value.triggerText,
     allowDrop: rendererParams.value.allowDrop ?? true,
-    maxSizeBytes: rendererParams.value.maxSizeBytes,
+    maxSize: rendererParams.value.maxSize,
     readMode: rendererParams.value.readMode,
 }));
 </script>

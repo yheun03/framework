@@ -1,0 +1,203 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppDrawer / AppSegmented / AppBreadcrumb
+========================================= */
+
+.app-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    justify-content: flex-end;
+
+    &--left {
+        justify-content: flex-start;
+    }
+
+    &__backdrop {
+        position: absolute;
+        inset: 0;
+        background: var(--bg-drawer-backdrop);
+    }
+
+    &__panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: var(--bg-drawer);
+        box-shadow: var(--shadow-level-3);
+        outline: 0;
+    }
+
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border-drawer);
+    }
+
+    &__title {
+        margin: 0;
+        @include font(t4, sb);
+    }
+
+    &__desc {
+        margin: 4px 0 0;
+        @include font(b4, rg);
+        color: var(--color-steps-desc);
+    }
+
+    &__body {
+        flex: 1 1 auto;
+        padding: 24px;
+        overflow-y: auto;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 16px 24px;
+        border-top: 1px solid var(--border-drawer);
+    }
+}
+
+.app-drawer-enter-active,
+.app-drawer-leave-active {
+    transition: opacity 0.25s ease;
+
+    .app-drawer__panel {
+        transition: transform 0.25s ease;
+    }
+}
+
+.app-drawer-enter-from,
+.app-drawer-leave-to {
+    opacity: 0;
+
+    &.app-drawer--right .app-drawer__panel {
+        transform: translateX(100%);
+    }
+
+    &.app-drawer--left .app-drawer__panel {
+        transform: translateX(-100%);
+    }
+}
+
+html.is-drawer-open {
+    overflow: hidden;
+}
+
+/* Segmented */
+.app-segmented {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 8px;
+    background: var(--bg-segmented);
+
+    &.is-full {
+        display: flex;
+
+        .app-segmented__item {
+            flex: 1 1 0;
+        }
+    }
+
+    // AppButton(unstyled)
+    &__item {
+        padding: 0 14px;
+        border-radius: 6px;
+        color: var(--color-segmented);
+        white-space: nowrap;
+        transition:
+            background-color 0.15s,
+            color 0.15s,
+            box-shadow 0.15s;
+
+        &:hover:not(:disabled) {
+            color: var(--color-segmented-active);
+        }
+
+        &.is-active {
+            background: var(--bg-segmented-active);
+            color: var(--color-segmented-active);
+            box-shadow: var(--shadow-level-1);
+            font-weight: 600;
+        }
+
+        &:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+    }
+
+    &--sm &__item {
+        height: 26px;
+        @include font(c2, rg);
+    }
+
+    &--md &__item {
+        height: 32px;
+        @include font(b4, rg);
+    }
+
+    &--lg &__item {
+        height: 40px;
+        @include font(b3, rg);
+    }
+}
+
+/* Breadcrumb */
+.app-breadcrumb {
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--color-breadcrumb);
+    }
+
+    &__home {
+        font-size: 0.95em;
+    }
+
+    // AppTextButton
+    &__link.app-text-button {
+        --btn-fg: var(--color-breadcrumb);
+        --btn-fg-hover: var(--color-breadcrumb-current);
+        --btn-fg-active: var(--color-breadcrumb-current);
+        font: inherit;
+    }
+
+    &__item:last-child &__text {
+        color: var(--color-breadcrumb-current);
+        font-weight: 600;
+    }
+
+    &__separator {
+        display: inline-flex;
+        opacity: 0.6;
+    }
+
+    &--sm {
+        @include font(c2, rg);
+    }
+
+    &--md {
+        @include font(b4, rg);
+    }
+}

@@ -16,7 +16,7 @@
                 placeholder="수주번호 또는 거래처 검색"
                 clearable
             />
-            <AppSelect v-model="status" class="business-toolbar__field" size="sm" :options="statusOptions" placeholder="전체 상태" />
+            <AppSelect v-model="status" class="business-toolbar__field" size="sm" :items="statusOptions" placeholder="전체 상태" />
             <AppDatePicker v-model="orderDate" class="business-toolbar__field" size="sm" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton><AppButton size="md">초기화</AppButton></div>
         </section>

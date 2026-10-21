@@ -214,7 +214,7 @@ const searchFields1: AppGridSearchField[] = [
         label: '인증 여부',
         type: 'select',
         placeholderSelect: '선택',
-        options: [
+        items: [
             { label: 'Y (인증)', value: 'Y' },
             { label: 'N (미인증)', value: 'N' },
         ],
@@ -227,7 +227,7 @@ const searchFields1: AppGridSearchField[] = [
         selectInput: {
             columnKey: 'qCol',
             textKey: 'qText',
-            options: [
+            items: [
                 { label: '이름', value: 'name' },
                 { label: '이메일', value: 'email' },
                 { label: '부서', value: 'department' },
@@ -241,7 +241,7 @@ const searchFields1: AppGridSearchField[] = [
         field: 'grade',
         label: '등급',
         type: 'radio',
-        options: [
+        items: [
             { label: 'A', value: 'A' },
             { label: 'B', value: 'B' },
             { label: 'C', value: 'C' },
@@ -252,7 +252,7 @@ const searchFields1: AppGridSearchField[] = [
         filterField: 'department',
         label: '부서(다중)',
         type: 'checkbox',
-        options: deptSearchOptions,
+        items: deptSearchOptions,
     },
     {
         field: 'activeOnly',
@@ -281,7 +281,7 @@ const searchFields2: AppGridSearchField[] = [
         field: 'status',
         label: '상태',
         type: 'radio',
-        options: [
+        items: [
             { label: 'READY', value: 'READY' },
             { label: 'DELIVERY', value: 'DELIVERY' },
             { label: 'DONE', value: 'DONE' },
@@ -536,7 +536,7 @@ const columns3: ColDef[] = [
         headerName: '카테고리',
         cellRenderer: AppGridCellSelect,
         cellRendererParams: {
-            options: [
+            items: [
                 { label: '전자기기', value: '전자기기' },
                 { label: '주변기기', value: '주변기기' },
             ],
@@ -586,7 +586,7 @@ const columns3: ColDef[] = [
         filter: false,
         cellRendererParams: {
             type: 'checkbox',
-            options: [
+            items: [
                 { label: '메인', value: 'main' },
                 { label: '추천', value: 'recommend' },
             ],
@@ -613,7 +613,7 @@ const columns3: ColDef[] = [
         filter: false,
         cellRendererParams: {
             type: 'radio',
-            options: [
+            items: [
                 { label: '판매중', value: '판매중' },
                 { label: '품절', value: '품절' },
             ],
@@ -650,7 +650,7 @@ const columns4: ColDef[] = [
         width: 180,
         cellRenderer: AppGridCellSelect,
         cellRendererParams: {
-            options: [
+            items: [
                 { label: '대기', value: '대기' },
                 { label: '진행', value: '진행' },
                 { label: '완료', value: '완료' },
@@ -677,7 +677,7 @@ const columns4: ColDef[] = [
         filter: false,
         cellRendererParams: {
             type: 'radio',
-            options: [
+            items: [
                 { label: 'Y', value: 'Y' },
                 { label: 'N', value: 'N' },
             ],
@@ -694,7 +694,7 @@ const columns4: ColDef[] = [
         filter: false,
         cellRendererParams: {
             type: 'checkbox',
-            options: [
+            items: [
                 { label: 'SMS', value: 'sms' },
                 { label: 'Email', value: 'email' },
             ],

@@ -12,15 +12,15 @@ export function formatBytes(bytes: number) {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function buildUploadHelperText(options: { accept?: string; maxSizeBytes?: number; multiple?: boolean; maxCount?: number }) {
+export function buildUploadHelperText(options: { accept?: string; maxSize?: number; multiple?: boolean; maxCount?: number }) {
     const rules: string[] = [];
 
     if (options.accept) {
         rules.push(`허용 형식: ${options.accept}`);
     }
 
-    if (options.maxSizeBytes) {
-        rules.push(`최대 용량: ${formatBytes(options.maxSizeBytes)}`);
+    if (options.maxSize) {
+        rules.push(`최대 용량: ${formatBytes(options.maxSize)}`);
     }
 
     if (options.multiple && options.maxCount) {

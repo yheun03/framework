@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppSelect v-model="value" :options="options" size="sm" />
+        <AppSelect v-model="value" :items="items" size="sm" />
     </div>
 </template>
 
@@ -13,12 +13,12 @@ type SelectOption = {
     disabled?: boolean;
 };
 type SelectRendererParams = {
-    options?: SelectOption[];
+    items?: SelectOption[];
 };
 
 const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<string | number | boolean | null, SelectRendererParams>(params);
-const options = computed<SelectOption[]>(() => rendererParams.value.options ?? []);
+const items = computed<SelectOption[]>(() => rendererParams.value.items ?? []);
 </script>

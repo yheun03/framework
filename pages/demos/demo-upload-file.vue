@@ -76,9 +76,9 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <AppUploadFile v-model="rules.maxSizeFile" :max-size-bytes="rules.maxSizeBytes" />
+                            <AppUploadFile v-model="rules.maxSizeFile" :max-size="rules.maxSize" />
 
-                            <div class="page-demo-hint"><strong>maxSizeBytes</strong> 속성으로 최대 용량을 제한합니다.</div>
+                            <div class="page-demo-hint"><strong>maxSize</strong> 속성으로 최대 용량을 제한합니다.</div>
                         </div>
                     </div>
                 </PageDemoSection>
@@ -136,7 +136,7 @@ const drop = reactive({
 const rules = reactive({
     docsOnly: null as UploadFileItem | null,
     maxSizeFile: null as UploadFileItem | null,
-    maxSizeBytes: 5 * 1024 * 1024,
+    maxSize: 5 * 1024 * 1024,
 });
 
 const disabled = reactive({

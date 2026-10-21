@@ -1,0 +1,39 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppInputGroup
+   Figma 09. Select Box Guide - 07_전화번호 셀렉트
+========================================= */
+
+.app-input-group {
+    &__body {
+        display: flex;
+        align-items: center;
+        gap: var(--app-input-group-gap, 8px);
+
+        > * {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        // separator 가 지정된 경우 자식 사이에 구분 문자를 넣습니다.
+        > :not(:first-child) {
+            position: relative;
+        }
+
+        > :not(:first-child)::after {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--app-input-group-gap, 8px) / -2);
+            transform: translate(-50%, -50%);
+            color: var(--color-input-group-separator);
+            content: var(--app-input-group-separator, none);
+            @include font(b3, rg);
+        }
+
+        // label/hint 를 가진 자식 필드의 라벨은 그룹 라벨로 대체합니다.
+        .form-field__label {
+            display: none;
+        }
+    }
+}

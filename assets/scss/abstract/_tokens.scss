@@ -1,0 +1,156 @@
+// =====================================================================
+// Design System Tokens  (Figma: 2026_스타일가이드_v02_조앤)
+// ---------------------------------------------------------------------
+// 디자인 시스템의 원본 값은 이 파일 한 곳에서만 관리합니다.
+//   - 색상 : 05. Color Guide (PC/MO 공통)
+//   - 폰트 : 06. Typography Guide (PC) / 08. Typography Guide (MO)
+// 컴포넌트는 이 값을 직접 쓰지 않고, base/_theme*.scss 의 CSS 변수와
+// abstract/_typography.scss 의 font() mixin 을 사용합니다.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// Breakpoint - MO 타이포그래피가 적용되는 기준 (layout/_responsive 와 동일)
+// ---------------------------------------------------------------------
+$ds-breakpoint-mo: 767px;
+
+// ---------------------------------------------------------------------
+// 01. Brand Color
+// ---------------------------------------------------------------------
+$ds-brand: (
+    'main': #6100ff,
+    'sub-1': #39c3b6,
+    'sub-2': #f59917,
+);
+
+// 02. Brand Gradient (그라디언트는 메인 + 서브 컬러 조합을 우선 사용)
+$ds-gradient: (
+    'main': linear-gradient(90deg, #6100ff 0%, rgba(97, 0, 255, 0) 100%),
+    'main-sub-1': linear-gradient(90deg, #6100ff 0%, #39c3b6 100%),
+    'main-sub-2': linear-gradient(90deg, #6100ff 0%, #f59917 100%),
+    'sub-1-sub-2': linear-gradient(90deg, #39c3b6 0%, #f59917 100%),
+);
+
+// ---------------------------------------------------------------------
+// 06. Font Color - 접근성 4.5:1 이상 (#999999 는 비활성 전용)
+// ---------------------------------------------------------------------
+$ds-font-color: (
+    '01-white': #ffffff,
+    '02-black': #111111,
+    '03-gray': #505050,
+    '04-gray': #767676,
+    '05-gray-disabled': #999999,
+);
+
+// 07. Line Color - 버튼/인풋/셀렉트는 중간(regular) 라인 사용
+$ds-line-color: (
+    'light': #f1f1f5,
+    'regular': #e5e5ec,
+    'black': #111111,
+    'white': #ffffff,
+    'disabled': #cacad7,
+);
+
+// 08. Background Color - BG 위 폰트 컬러는 #505050 이하(더 진한 색)만 사용
+$ds-bg-color: (
+    'light': #f7f7fb,
+    'regular': #f1f1f5,
+    'black': #111111,
+    'white': #ffffff,
+);
+
+// 09. State Color
+$ds-state-color: (
+    'error': #dc0000,
+    'success': #04b014,
+    'warning': #ffaa00,
+);
+
+// ---------------------------------------------------------------------
+// Typography
+// - 폰트: Pretendard (국문 / 영문 / 숫자 공통)
+// - 자간: 국문 -2.5% / 영문 0
+// - 굵기: Light 300 / Regular 400 / SemiBold 600
+// - 같은 토큰 이름을 PC / MO 에서 다른 크기로 사용합니다. (font() mixin 이 자동 전환)
+// ---------------------------------------------------------------------
+$ds-font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+
+$ds-font-weight: (
+    'lt': 300,
+    'rg': 400,
+    'sb': 600,
+);
+
+$ds-letter-spacing: (
+    'kr': -0.025em,
+    'en': 0,
+);
+
+// (size, line-height)
+$ds-typography-pc: (
+    // Display
+    'd1': (96px, 120px),
+    'd2': (88px, 114px),
+    'd3': (80px, 100px),
+    'd4': (72px, 90px),
+    'd5': (64px, 80px),
+    'd6': (56px, 72px),
+    // Headline
+    'h1': (48px, 62px),
+    'h2': (40px, 52px),
+    'h3': (32px, 42px),
+    'h4': (28px, 38px),
+    'h5': (24px, 34px),
+    'h6': (20px, 28px),
+    // Title
+    't1': (32px, 42px),
+    't2': (28px, 38px),
+    't3': (24px, 34px),
+    't4': (20px, 28px),
+    't5': (18px, 26px),
+    // Body
+    'b1': (16px, 24px),
+    'b2': (15px, 22px),
+    'b3': (14px, 20px),
+    'b4': (13px, 18px),
+    // Caption
+    'c1': (13px, 18px),
+    'c2': (12px, 18px),
+    'c3': (11px, 16px),
+    // Button (PC/MO 공통)
+    'btn1': (16px, 24px),
+    'btn2': (14px, 20px),
+    'btn3': (13px, 18px),
+    'btn4': (12px, 18px)
+);
+
+$ds-typography-mo: (
+    'd1': (56px, 72px),
+    'd2': (48px, 62px),
+    'd3': (40px, 52px),
+    'd4': (36px, 44px),
+    'd5': (32px, 42px),
+    'd6': (28px, 38px),
+    'h1': (32px, 42px),
+    'h2': (28px, 38px),
+    'h3': (24px, 34px),
+    'h4': (20px, 28px),
+    'h5': (18px, 26px),
+    'h6': (16px, 24px),
+    't1': (24px, 34px),
+    't2': (20px, 28px),
+    't3': (18px, 26px),
+    't4': (16px, 24px),
+    // MO 에는 T5 가 없어 T4 와 같은 값을 사용합니다.
+    't5': (16px, 24px),
+    'b1': (15px, 22px),
+    'b2': (14px, 20px),
+    'b3': (13px, 18px),
+    'b4': (12px, 18px),
+    'c1': (13px, 18px),
+    'c2': (12px, 18px),
+    'c3': (11px, 16px),
+    'btn1': (16px, 24px),
+    'btn2': (14px, 20px),
+    'btn3': (13px, 18px),
+    'btn4': (12px, 18px)
+);

@@ -8,7 +8,7 @@
             :hint="fileOptions.hint"
             :trigger-text="fileOptions.triggerText"
             :allow-drop="fileOptions.allowDrop"
-            :max-size-bytes="fileOptions.maxSizeBytes"
+            :max-size="fileOptions.maxSize"
         />
     </div>
 </template>
@@ -48,7 +48,7 @@ type FileCellParams = {
     hint?: string;
     triggerText?: string;
     allowDrop?: boolean;
-    maxSizeBytes?: number;
+    maxSize?: number;
 };
 
 const props = defineProps<{ params: any }>();
@@ -63,6 +63,6 @@ const fileOptions = computed<FileCellParams>(() => ({
     hint: rendererParams.value.hint,
     triggerText: rendererParams.value.triggerText,
     allowDrop: rendererParams.value.allowDrop ?? true,
-    maxSizeBytes: rendererParams.value.maxSizeBytes,
+    maxSize: rendererParams.value.maxSize,
 }));
 </script>

@@ -1,0 +1,115 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppSearchPanel / AppSearchItem
+   MES 목록 화면 조회 조건 영역
+========================================= */
+
+.app-search-panel {
+    --app-search-row-height: 40px;
+    --app-search-row-gap: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border-search-panel);
+    border-radius: 8px;
+    background: var(--bg-search-panel);
+
+    &__grid {
+        display: grid;
+        // 공간이 부족하면 버튼 영역이 아래 줄로 내려갑니다.
+        flex: 1 1 calc(var(--app-search-columns, 4) * 220px);
+        grid-template-columns: repeat(var(--app-search-columns, 4), minmax(0, 1fr));
+        gap: var(--app-search-row-gap) 24px;
+        min-width: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease;
+    }
+
+    &.is-collapsed &__grid {
+        max-height: var(--app-search-row-height);
+    }
+
+    &__actions {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 6px;
+    }
+
+    &__toggle .app-icon {
+        transition: transform 0.2s;
+
+        &.is-open {
+            transform: rotate(180deg);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        flex-direction: column;
+        align-items: stretch;
+
+        &__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        &__actions {
+            justify-content: flex-end;
+        }
+    }
+
+    @media (max-width: 640px) {
+        &__grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+}
+
+.app-search-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: var(--app-search-row-height, 40px);
+
+    &__label {
+        flex: 0 0 var(--app-search-label-width, 80px);
+        @include font(b4, sb);
+        color: var(--color-search-panel-label);
+        white-space: nowrap;
+    }
+
+    &__required {
+        color: var(--color-form-field-status-error);
+    }
+
+    &__control {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+
+        > * {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        > .app-segmented,
+        > .app-choice {
+            flex: 0 0 auto;
+        }
+
+        .form-field__label {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        grid-column: auto !important;
+    }
+}

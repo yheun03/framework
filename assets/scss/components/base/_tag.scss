@@ -1,0 +1,158 @@
+@use '../../abstract' as *;
+@use 'sass:map';
+
+/* =========================================
+   Component: AppTag
+   Figma 11. ETC Component Guide - 태그 / 셀링아이콘
+========================================= */
+
+$tag-tones: 'primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info', 'black', 'red', 'orange', 'green', 'blue', 'navy', 'purple';
+
+$tag-sizes: (
+    xs: (
+        height: 18px,
+        padding: 4px,
+        font: c3,
+        icon: 10px,
+    ),
+    sm: (
+        height: 22px,
+        padding: 6px,
+        font: c2,
+        icon: 12px,
+    ),
+    md: (
+        height: 28px,
+        padding: 10px,
+        font: b4,
+        icon: 14px,
+    ),
+);
+
+.app-tag {
+    --tag-color: var(--tone-gray);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition:
+        background-color 0.15s,
+        border-color 0.15s,
+        color 0.15s;
+
+    &__dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    &__icon {
+        display: inline-flex;
+    }
+
+    // AppIconButton 을 태그 크기에 맞게 조정
+    &__close.app-icon-button {
+        --icon-button-color: currentColor;
+        --icon-button-bg-hover: color-mix(in srgb, currentColor 12%, transparent);
+        margin-right: -4px;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    /* Tone */
+    @each $tone in $tag-tones {
+        &--tone-#{$tone} {
+            --tag-color: var(--tone-#{$tone});
+        }
+    }
+
+    /* Variant */
+    &--fill {
+        background: var(--tag-color);
+        border-color: var(--tag-color);
+        color: var(--color-tag-on-fill);
+    }
+
+    &--soft {
+        background: color-mix(in srgb, var(--tag-color) 10%, white);
+        border-color: transparent;
+        color: var(--tag-color);
+    }
+
+    &--outline {
+        background: var(--bg-tag-default);
+        border-color: var(--tag-color);
+        color: var(--tag-color);
+    }
+
+    // 선택 태그(흰 바탕 + 회색 라인 + 검정 글자)
+    &--default {
+        background: var(--bg-tag-default);
+        border-color: var(--border-tag-default);
+        color: var(--color-tag-default);
+
+        .app-tag__dot {
+            background: var(--tag-color);
+        }
+    }
+
+    /* Size */
+    @each $size, $data in $tag-sizes {
+        &--#{$size} {
+            height: map.get($data, height);
+            padding-inline: map.get($data, padding);
+            @include font(map.get($data, font), rg);
+
+            .app-tag__icon,
+            .app-tag__close {
+                font-size: map.get($data, icon);
+            }
+
+            &.app-button-unstyled {
+                height: map.get($data, height);
+            }
+        }
+    }
+
+    /* Shape */
+    &--shape-square {
+        border-radius: 0;
+    }
+
+    &--shape-round {
+        border-radius: 4px;
+    }
+
+    &--shape-pill {
+        border-radius: 999px;
+    }
+
+    /* State */
+    &.is-clickable {
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            border-color: var(--tag-color);
+        }
+    }
+
+    &.is-active {
+        background: var(--tag-color);
+        border-color: var(--tag-color);
+        color: var(--color-tag-on-fill);
+    }
+
+    &.is-disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}

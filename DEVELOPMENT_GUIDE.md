@@ -35,6 +35,7 @@ plugins/      Nuxt 앱 초기화/주입
 - 컴포넌트는 UI 표현과 이벤트 전달에 집중합니다.
 - API 호출, 복잡한 상태, 공통 계산 로직은 컴포넌트 안에 직접 넣지 않습니다.
 - prop/event 타입은 컴포넌트 전용이면 해당 파일 안에 두고, 공유되면 `types/`로 분리합니다.
+- 속성명은 [`COMPONENT_GUIDE.md`](./COMPONENT_GUIDE.md)의 공통 속성 규칙(`width`, `state`, `items`, `tone`, `size`, `variant` 등)을 따르고, 같은 의미의 새 이름을 만들지 않습니다.
 
 ## 4. Composable 규칙
 

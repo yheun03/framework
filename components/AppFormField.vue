@@ -4,8 +4,9 @@
         :class="{
             'is-required': required,
             'is-disabled': disabled,
-            'is-error': error,
+            [`is-${state}`]: state,
         }"
+        :style="rootStyle"
     >
         <div v-if="label || $slots.label" class="app-form-field__head">
             <label v-if="label" class="app-form-field__label" :for="props.for">
@@ -19,17 +20,17 @@
         <p v-if="description" class="app-form-field__description">{{ description }}</p>
 
         <div class="app-form-field__control">
-            <slot :id="props.for" :disabled="disabled" :invalid="Boolean(error)" />
+            <slot :id="props.for" :disabled="disabled" :state="state" />
         </div>
 
-        <p v-if="error" class="app-form-field__message app-form-field__message--error">
-            {{ typeof error === 'string' ? error : '입력값을 확인해주세요.' }}
-        </p>
-        <p v-else-if="hint" class="app-form-field__message app-form-field__message--hint">{{ hint }}</p>
+        <p v-if="hint" class="app-form-field__message" :class="`app-form-field__message--${state ?? 'hint'}`">{{ hint }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
+import type { AppState, AppWidth } from '~/types/appCommon';
+import { toSizeStyle } from '~/utils/css';
+
 const props = withDefaults(
     defineProps<{
         label?: string;
@@ -37,9 +38,13 @@ const props = withDefaults(
         required?: boolean;
         disabled?: boolean;
         description?: string;
+        /** 하단 보조 문구. state가 있으면 state 색상으로 표시됩니다. */
         hint?: string;
-        error?: string | boolean | null;
+        /** 검증 상태: error | warning | success */
+        state?: AppState;
         optionalText?: string;
+        /** number(px) | '50%' | 'full' */
+        width?: AppWidth;
     }>(),
     {
         label: '',
@@ -48,8 +53,10 @@ const props = withDefaults(
         disabled: false,
         description: '',
         hint: '',
-        error: null,
+        state: null,
         optionalText: '선택',
     },
 );
+
+const rootStyle = computed(() => toSizeStyle(props.width));
 </script>

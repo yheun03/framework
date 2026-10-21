@@ -11,6 +11,7 @@
                 [`is-${state}`]: state,
             },
         ]"
+        :style="rootStyle"
     >
         <label v-if="label" class="form-field__label app-select__label" :for="inputId">{{ label }}</label>
 
@@ -30,7 +31,11 @@
                 @keydown.esc="closeMenu"
             >
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
-                    {{ selectedOption?.label ?? placeholder }}
+                    <img v-if="selectedOption?.image" class="app-select__thumb" :src="selectedOption.image" alt="" />
+                    <span class="app-select__value-text">
+                        <span class="app-select__value-label">{{ selectedOption?.label ?? placeholder }}</span>
+                        <span v-if="selectedOption?.description" class="app-select__value-desc">{{ selectedOption.description }}</span>
+                    </span>
                 </span>
                 <span class="app-select__icon app-select__icon--right" aria-hidden="true">
                     <slot name="iconRight"><IconChevronDown /></slot>
@@ -60,7 +65,7 @@
                         {{ placeholder }}
                     </button>
                 </li>
-                <li v-for="option in options" :key="String(option.value)" class="app-select__option-item">
+                <li v-for="option in items" :key="String(option.value)" class="app-select__option-item">
                     <button
                         type="button"
                         class="app-select__option"
@@ -73,7 +78,11 @@
                         :disabled="option.disabled"
                         @click="selectOption(option)"
                     >
-                        {{ option.label }}
+                        <img v-if="option.image" class="app-select__thumb" :src="option.image" alt="" />
+                        <span class="app-select__option-text">
+                            <span class="app-select__option-label">{{ option.label }}</span>
+                            <span v-if="option.description" class="app-select__option-desc">{{ option.description }}</span>
+                        </span>
                     </button>
                 </li>
             </ul>
@@ -87,27 +96,25 @@
 import { IconChevronDown } from '~/components/icons';
 import { getBodyOverlayStyle, useBodyOverlay } from '~/composables/useBodyOverlay';
 
-export type AppSelectOption = {
-    value: string | number | boolean | null;
-    label: string;
-    disabled?: boolean;
-};
+import type { AppFieldShape, AppFormSize, AppOptionItem, AppState, AppWidth } from '~/types/appCommon';
+import { toSizeStyle } from '~/utils/css';
 
-type SelectSize = 'xs' | 'sm' | 'md' | 'lg';
-type SelectShape = 'square' | 'round' | 'pill' | 'underline';
-type SelectState = 'error' | 'warning' | 'success' | null;
+/** value, label, description?, image?, disabled? */
+export type AppSelectOption = AppOptionItem;
 
 const props = withDefaults(
     defineProps<{
         modelValue: string | number | boolean | null;
-        options: AppSelectOption[];
+        items: AppSelectOption[];
         label?: string;
         hint?: string;
         placeholder?: string;
         required?: boolean;
-        size?: SelectSize;
-        shape?: SelectShape;
-        state?: SelectState;
+        size?: AppFormSize;
+        shape?: AppFieldShape;
+        state?: AppState;
+        /** number(px) | '50%' | 'full' */
+        width?: AppWidth;
         disabled?: boolean;
         readonly?: boolean;
         id?: string;
@@ -136,7 +143,8 @@ const isOpen = ref(false);
 const triggerEl = ref<HTMLElement | null>(null);
 const menuEl = ref<HTMLElement | null>(null);
 const menuStyle = ref<Record<string, string>>({});
-const selectedOption = computed(() => props.options.find((option) => option.value === props.modelValue));
+const rootStyle = computed(() => toSizeStyle(props.width));
+const selectedOption = computed(() => props.items.find((option) => option.value === props.modelValue));
 const overlay = useBodyOverlay({
     trigger: () => triggerEl.value,
     overlay: () => menuEl.value,

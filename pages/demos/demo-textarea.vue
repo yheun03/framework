@@ -15,12 +15,16 @@
                 </PageDemoSection>
 
                 <!-- WITH FORM FIELD -->
-                <PageDemoSection class="page-demo-section" title="With FormField" description="AppFormField와 함께 label, hint, error를 연결합니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="With FormField"
+                    description="AppFormField와 함께 label, hint, state를 연결합니다. (AppTextarea 단독으로도 label / hint / state 사용 가능)"
+                >
                     <AppFormField
                         label="문의 내용"
                         required
-                        hint="최대 200자까지 입력할 수 있습니다."
-                        :error="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : ''"
+                        :hint="content && content.length < 10 ? '문의 내용은 10자 이상 입력해주세요.' : '최대 200자까지 입력할 수 있습니다.'"
+                        :state="content && content.length < 10 ? 'error' : null"
                     >
                         <AppTextarea
                             v-model="content"
@@ -123,9 +127,14 @@
                         </div>
 
                         <div class="page-demo-stack">
-                            <div class="page-demo-hint">invalid</div>
+                            <div class="page-demo-hint">state="error" + hint</div>
 
-                            <AppTextarea v-model="invalidValue" invalid placeholder="invalid textarea" />
+                            <AppTextarea
+                                v-model="invalidValue"
+                                state="error"
+                                hint="오류 메시지가 hint 영역에 표시됩니다."
+                                placeholder="error textarea"
+                            />
                         </div>
                     </div>
                 </PageDemoSection>

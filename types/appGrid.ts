@@ -92,7 +92,7 @@ export type AppGridSearchSelectInputConfig = {
     columnKey: string;
     /** model 키 — 검색어 */
     textKey: string;
-    options: AppGridSearchFieldOption[];
+    items: AppGridSearchFieldOption[];
 };
 
 /** 숫자 컬럼 구간 검색(min/max 모델 키 분리) — `type: 'number_range'` */
@@ -131,7 +131,7 @@ export type AppGridSearchField = {
     placeholderInput?: string;
     /** `select` / `select_input` 셀렉트 placeholder */
     placeholderSelect?: string;
-    options?: AppGridSearchFieldOption[];
+    items?: AppGridSearchFieldOption[];
     selectInput?: AppGridSearchSelectInputConfig;
     /** `range_calendar_minmax` / 단일 `calendar`·`date` 제한 */
     min?: string;

@@ -1,63 +1,70 @@
 <template>
-    <div
-        class="app-textarea"
-        :class="[
-            `app-textarea--${size}`,
-            `app-textarea--shape-${shape}`,
-            `app-textarea--resize-${resize}`,
-            {
-                'is-focused': isFocused,
-                'is-disabled': disabled,
-                'is-readonly': readonly,
-                [`is-${state}`]: state,
-                'is-error': state === 'error' || invalid || Boolean(error),
-            },
-        ]"
-    >
-        <textarea
-            :id="id"
-            class="app-textarea__control"
-            :value="modelValue"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            :readonly="readonly"
-            :rows="rows"
-            :maxlength="maxLength"
-            :aria-invalid="state === 'error' || invalid || Boolean(error)"
-            :aria-describedby="ariaDescribedby"
-            @input="handleInput"
-            @focus="isFocused = true"
-            @blur="isFocused = false"
-        />
+    <div class="form-field app-textarea-field" :class="{ [`is-${state}`]: state, 'is-disabled': disabled }" :style="rootStyle">
+        <label v-if="label" class="form-field__label app-textarea__label" :for="id">{{ label }}</label>
 
-        <div v-if="showCount || clearable" class="app-textarea__footer">
-            <AppTextButton
-                v-if="clearable && modelValue && !disabled && !readonly"
-                type="button"
-                class="app-textarea__clear"
-                size="sm"
-                tone="gray"
-                @click="handleClear"
-            >
-                지우기
-            </AppTextButton>
+        <div
+            class="app-textarea"
+            :class="[
+                `app-textarea--${size}`,
+                `app-textarea--shape-${shape}`,
+                `app-textarea--resize-${resize}`,
+                {
+                    'is-focused': isFocused,
+                    'is-disabled': disabled,
+                    'is-readonly': readonly,
+                    [`is-${state}`]: state,
+                },
+            ]"
+        >
+            <textarea
+                :id="id"
+                class="app-textarea__control"
+                :value="modelValue"
+                :placeholder="placeholder"
+                :disabled="disabled"
+                :readonly="readonly"
+                :rows="rows"
+                :maxlength="maxLength"
+                :aria-invalid="state === 'error' || undefined"
+                :aria-describedby="ariaDescribedby"
+                @input="handleInput"
+                @focus="isFocused = true"
+                @blur="isFocused = false"
+            />
 
-            <span v-if="showCount" class="app-textarea__count">
-                {{ textLength }}<template v-if="maxLength"> / {{ maxLength }}</template>
-            </span>
+            <div v-if="showCount || clearable" class="app-textarea__footer">
+                <AppTextButton
+                    v-if="clearable && modelValue && !disabled && !readonly"
+                    type="button"
+                    class="app-textarea__clear"
+                    size="sm"
+                    tone="gray"
+                    @click="handleClear"
+                >
+                    지우기
+                </AppTextButton>
+
+                <span v-if="showCount" class="app-textarea__count">
+                    {{ textLength }}<template v-if="maxLength"> / {{ maxLength }}</template>
+                </span>
+            </div>
         </div>
+
+        <p v-if="hint" class="form-field__hint app-textarea__hint">{{ hint }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
-type AppTextareaSize = 'xs' | 'sm' | 'md' | 'lg';
-type AppTextareaShape = 'square' | 'round' | 'pill' | 'underline';
-type AppTextareaState = 'error' | 'warning' | 'success' | null;
+import type { AppFieldShape, AppFormSize, AppState, AppWidth } from '~/types/appCommon';
+import { toSizeStyle } from '~/utils/css';
+
 type AppTextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 
 const props = withDefaults(
     defineProps<{
         modelValue?: string | number | null;
+        label?: string;
+        hint?: string;
         id?: string;
         placeholder?: string;
         disabled?: boolean;
@@ -66,11 +73,11 @@ const props = withDefaults(
         maxLength?: number;
         showCount?: boolean;
         clearable?: boolean;
-        invalid?: boolean;
-        error?: string | boolean | null;
-        size?: AppTextareaSize;
-        shape?: AppTextareaShape;
-        state?: AppTextareaState;
+        size?: AppFormSize;
+        shape?: AppFieldShape;
+        state?: AppState;
+        /** number(px) | '50%' | 'full' */
+        width?: AppWidth;
         resize?: AppTextareaResize;
         ariaDescribedby?: string;
     }>(),
@@ -84,8 +91,6 @@ const props = withDefaults(
         maxLength: undefined,
         showCount: false,
         clearable: false,
-        invalid: false,
-        error: null,
         size: 'md',
         shape: 'round',
         state: null,
@@ -101,6 +106,7 @@ const emit = defineEmits<{
 }>();
 
 const isFocused = ref(false);
+const rootStyle = computed(() => toSizeStyle(props.width));
 
 const textLength = computed(() => String(props.modelValue ?? '').length);
 

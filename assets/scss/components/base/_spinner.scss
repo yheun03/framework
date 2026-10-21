@@ -1,0 +1,78 @@
+@use '../../abstract' as *;
+@use 'sass:map';
+
+/* =========================================
+   Component: AppSpinner
+========================================= */
+
+$spinner-sizes: (
+    xs: 12px,
+    sm: 16px,
+    md: 24px,
+    lg: 32px,
+    xl: 48px,
+);
+
+$spinner-tones: 'primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info';
+
+.app-spinner {
+    --spinner-color: var(--tone-primary);
+
+    display: inline-block;
+    flex: 0 0 auto;
+    border: 2px solid var(--border-spinner-track);
+    border-top-color: var(--spinner-color);
+    border-radius: 50%;
+    animation: app-spinner-rotate 0.75s linear infinite;
+
+    @each $size, $value in $spinner-sizes {
+        &--#{$size} {
+            width: $value;
+            height: $value;
+
+            @if $value >= 32px {
+                border-width: 3px;
+            }
+        }
+    }
+
+    @each $tone in $spinner-tones {
+        &--tone-#{$tone} {
+            --spinner-color: var(--tone-#{$tone});
+        }
+    }
+
+    &__label {
+        @include font(b4, rg);
+        color: var(--color-alert-desc);
+    }
+}
+
+.app-spinner-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-spinner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--bg-spinner-overlay);
+
+    &.is-fullscreen {
+        position: fixed;
+        z-index: 12000;
+    }
+}
+
+@keyframes app-spinner-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}

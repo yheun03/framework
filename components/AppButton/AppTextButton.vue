@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink v-if="to" :to="to" :class="buttonClasses" :style="{ width, height }" @click="handleClick">
+    <NuxtLink v-if="to" :to="to" :class="buttonClasses" :style="buttonStyle" @click="handleClick">
         <span v-if="loading" class="app-text-button__spinner" aria-hidden="true" />
         <i v-else-if="$slots.iconLeft" class="app-text-button__icon app-text-button__icon--left"><slot name="iconLeft" /></i>
         <span class="app-text-button__label"><slot /></span>
@@ -12,7 +12,7 @@
         :target="newTab ? '_blank' : undefined"
         :rel="newTab ? 'noopener noreferrer' : undefined"
         :class="buttonClasses"
-        :style="{ width, height }"
+        :style="buttonStyle"
         @click="handleClick"
     >
         <span v-if="loading" class="app-text-button__spinner" aria-hidden="true" />
@@ -21,7 +21,7 @@
         <i v-if="$slots.iconRight && !loading" class="app-text-button__icon app-text-button__icon--right"><slot name="iconRight" /></i>
     </a>
 
-    <button v-else :type="type" :class="buttonClasses" :style="{ width, height }" :disabled="isDisabled" @click="handleClick">
+    <button v-else :type="type" :class="buttonClasses" :style="buttonStyle" :disabled="isDisabled" @click="handleClick">
         <span v-if="loading" class="app-text-button__spinner" aria-hidden="true" />
         <i v-else-if="$slots.iconLeft" class="app-text-button__icon app-text-button__icon--left"><slot name="iconLeft" /></i>
         <span class="app-text-button__label"><slot /></span>
@@ -30,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+import { toSizeStyle } from '~/utils/css';
+
 type TextButtonType = 'button' | 'submit' | 'reset';
 type TextButtonVariant = 'text' | 'underline';
 type TextButtonTone = 'primary' | 'secondary' | 'gray' | 'danger' | 'warning' | 'success' | 'info';
@@ -61,6 +63,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ click: [MouseEvent] }>();
 const isDisabled = computed(() => props.disabled || props.loading);
+const buttonStyle = computed(() => toSizeStyle(props.width, props.height));
 const buttonClasses = computed(() => [
     'app-text-button',
     `app-text-button--variant-${props.variant}`,

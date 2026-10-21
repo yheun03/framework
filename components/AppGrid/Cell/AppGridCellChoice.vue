@@ -2,7 +2,7 @@
     <div class="app-grid-cell-control">
         <div class="app-grid-choice">
             <AppChoice
-                v-for="opt in options"
+                v-for="opt in items"
                 :key="opt.value"
                 :model-value="choiceValue(opt.value)"
                 :type="type"
@@ -26,7 +26,7 @@ type ChoiceOption = {
     value: string | number;
 };
 type ChoiceRendererParams = {
-    options?: ChoiceOption[];
+    items?: ChoiceOption[];
     type?: ChoiceType;
 };
 
@@ -34,7 +34,7 @@ const props = defineProps<{ params: any }>();
 
 const params = props.params;
 const { rendererParams, value } = useAppGridCellRendererValue<ChoiceValue | Array<string | number>, ChoiceRendererParams>(params);
-const options = computed<ChoiceOption[]>(() => rendererParams.value.options ?? []);
+const items = computed<ChoiceOption[]>(() => rendererParams.value.items ?? []);
 const type = computed<ChoiceType>(() => rendererParams.value.type ?? 'radio');
 
 const radioName = computed(() => `${params.column?.getColId?.()}-${params.node?.id}`);

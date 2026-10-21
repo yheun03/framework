@@ -100,6 +100,15 @@ $icon-button-tones: $btn-tones;
 
         --btn-bd-hover: var(--border-button-#{$color}-hover);
         --btn-bd-active: var(--border-button-#{$color}-active);
+    } @else if $variant ==soft {
+        --btn-bg: var(--bg-icon-button-#{$color}-soft);
+        --btn-fg: var(--color-button-#{$color});
+        --btn-bd: transparent;
+
+        --btn-bg-hover: var(--bg-icon-button-#{$color}-soft-hover);
+        --btn-bg-active: var(--bg-icon-button-#{$color}-soft-active);
+        --btn-fg-hover: var(--color-button-#{$color}-hover);
+        --btn-fg-active: var(--color-button-#{$color}-active);
     } @else if $variant ==text {
         --btn-bg: transparent;
         --btn-fg: var(--color-button-#{$color});
@@ -237,6 +246,10 @@ $icon-button-tones: $btn-tones;
         @include btn-variant(outline, 'primary');
     }
 
+    &--variant-soft {
+        @include btn-variant(soft, 'primary');
+    }
+
     &--variant-text {
         @include btn-variant(text, 'primary');
     }
@@ -258,6 +271,10 @@ $icon-button-tones: $btn-tones;
             &.app-button--variant-outline {
                 @include btn-variant(outline, $color);
             }
+
+            &.app-button--variant-soft {
+                @include btn-variant(soft, $color);
+            }
         }
     }
 
@@ -265,8 +282,11 @@ $icon-button-tones: $btn-tones;
        States
     ------------------------------------------------ */
 
-    &--block {
-        width: 100%;
+    // active: 선택/완료(Completion) 상태. 눌린 상태와 동일한 색상을 유지합니다.
+    &--active {
+        background: var(--btn-bg-active);
+        color: var(--btn-fg-active);
+        border-color: var(--btn-bd-active);
     }
 
     &--disabled {
@@ -295,6 +315,43 @@ $icon-button-tones: $btn-tones;
         display: inline-flex;
         align-items: center;
         min-width: 0;
+    }
+}
+
+/* =========================================================
+   Unstyled Button
+   <AppButton unstyled> : 버튼 동작(disabled, to, href, click)은 그대로,
+   모양은 사용하는 컴포넌트(탭, 세그먼트, 별점, 카드 등)가 정의합니다.
+========================================================= */
+
+.app-button-unstyled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    appearance: none;
+
+    &:disabled,
+    &[aria-disabled='true'] {
+        cursor: not-allowed;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--outline-button);
+        outline-offset: 2px;
+    }
+
+    > .app-button__label {
+        display: contents;
     }
 }
 

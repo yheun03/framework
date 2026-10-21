@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import type { NavigationMenu } from '~/types/appNavigation';
 import type { Component } from 'vue';
-import { IconCog, IconDashboard, IconHome, IconInfo, IconWidgets } from '~/components/icons';
+import { IconCog, IconDashboard, IconFactory, IconHome, IconInfo, IconWidgets } from '~/components/icons';
 
 const props = defineProps<{
     item: NavigationMenu;
@@ -70,6 +70,7 @@ const hasChildren = computed(() => Boolean(props.item.children?.length));
 const navigationIconMap: Record<NonNullable<NavigationMenu['icon']>, Component> = {
     cog: IconCog,
     dashboard: IconDashboard,
+    factory: IconFactory,
     home: IconHome,
     info: IconInfo,
     widgets: IconWidgets,

@@ -29,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+import { toSizeStyle } from '~/utils/css';
+
 type IconButtonType = 'button' | 'submit' | 'reset';
 type IconButtonVariant = 'plain' | 'soft' | 'outline';
 type IconButtonShape = 'square' | 'round' | 'pill';
@@ -77,8 +79,7 @@ const buttonClasses = computed(() => [
 ]);
 
 const buttonStyle = computed(() => ({
-    width: props.width,
-    height: props.height,
+    ...toSizeStyle(props.width, props.height),
     '--icon-button-size': toSize(props.size, controlSizes),
     '--icon-size': toSize(props.iconSize, iconSizes),
 }));
