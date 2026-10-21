@@ -85,6 +85,7 @@ const data = await api.get<MyType>('/api/example');
 - 공통 컴포넌트 스타일은 `assets/scss/components/base/`에 둡니다.
 - page 전용 스타일은 `assets/scss/pages/`에 둡니다.
 - 변수/토큰은 `assets/scss/abstract/` 기준을 따릅니다.
+- `abstract/`에는 변수·함수·mixin만 둡니다. CSS를 출력하는 코드(`:root`, 선택자, `/* */` 주석)는 `base/` 등에 둡니다. (abstract는 모든 Vue SFC에 `additionalData`로 주입되어, 출력이 있으면 컴포넌트마다 중복됩니다.)
 - 기존 class naming 방식을 유지합니다.
 - 컴포넌트 구조 변경 없이 스타일만 해결 가능한 경우 SCSS에서 처리합니다.
 
@@ -93,7 +94,7 @@ const data = await api.get<MyType>('/api/example');
 - `pages/` 파일명은 URL이 되므로 kebab-case를 사용합니다.
 - demo 페이지는 컴포넌트 사용 예시만 담당합니다.
 - 실제 업무 로직과 demo 전용 상태를 섞지 않습니다.
-- 특정 page 안에서만 쓰는 modal, renderer, content는 `components/Page_페이지명/modal`, `components/Page_페이지명/renderer`, `components/Page_페이지명/content` 폴더에 둡니다.
+- 특정 page 안에서만 쓰는 modal, renderer, content는 `components/Page{페이지명}/modal`, `renderer`, `content` 폴더에 둡니다. 예: `components/PageDemo/renderer`
 - 페이지 전용 컴포넌트 파일명은 `PageDemoModalRendererExample.vue`처럼 역할이 드러나게 작성합니다.
 - 새 페이지가 LNB에 필요하면 navigation store와 i18n label을 함께 추가합니다.
 
@@ -103,16 +104,7 @@ const data = await api.get<MyType>('/api/example');
 - 화면에서는 `useI18nText()` 또는 기존 i18n composable을 사용합니다.
 - label key는 메뉴, 탭, demo title에서 같은 기준으로 관리합니다.
 
-## 12. 공통화 기준
-
-- 같은 코드가 2곳 이상 반복되면 공통화 후보입니다.
-- Vue 상태/생명주기 필요: `composables/`
-- 전역 공유 상태 필요: `stores/`
-- 순수 계산/변환: `utils/`
-- 공유 타입: `types/`
-- UI 반복: `components/`
-
-## 13. 개발 체크리스트
+## 12. 개발 체크리스트
 
 ```text
 [ ] 기존 구조와 네이밍을 유지했는가

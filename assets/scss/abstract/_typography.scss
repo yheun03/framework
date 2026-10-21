@@ -3,11 +3,11 @@
 @use 'sass:map';
 @use 'sass:list';
 
-/* =========================================
-   Framework Typography
-   토큰 원본: abstract/_tokens.scss ($ds-typography-pc / $ds-typography-mo)
-   CSS 변수: base/_typography-vars.scss (--ds-font-{token}-size / -lh, MO 자동 전환)
-========================================= */
+// =========================================
+// Framework Typography
+// 토큰 원본: abstract/_tokens.scss ($ds-typography-pc / $ds-typography-mo)
+// CSS 변수: base/_typography-vars.scss (--ds-font-{token}-size / -lh, MO 자동 전환)
+// =========================================
 
 // 기존 코드 호환용 별칭
 $font-weight: $ds-font-weight;
@@ -21,9 +21,9 @@ $typography-scale: ();
         $typography-scale,
         (
             $token: (
-                size: list.nth($value, 1),
-                lh: list.nth($value, 2),
-            ),
+                    size: list.nth($value, 1),
+                    lh: list.nth($value, 2),
+                ),
         )
     );
 }

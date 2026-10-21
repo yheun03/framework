@@ -30,23 +30,6 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`)을 기준으로 
 | `initial`               | `none` `first` `all`                                                                  | 최초 열림/선택 (Tabs, Accordion, Tree)                                                                                  |
 | boolean                 | `disabled` `readonly` `loading` `active` `required` `clearable` `closable` `multiple` | on/off 상태·기능                                                                                                        |
 
-### 변경된 속성 (기존 화면 일괄 치환 완료)
-
-| 컴포넌트                       | 이전                                                  | 변경                                                                               |
-| ------------------------------ | ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| AppButton                      | `block`                                               | `width="full"` (+ `variant="soft"`, `active` 추가)                                 |
-| AppSelect                      | `:options`                                            | `:items` (item 에 `image`, `description` 추가)                                     |
-| AppTabs                        | `activeId` / `defaultActiveId` / `initialActive`      | `v-model` / `initial` (variant `group` `button` `grid` `text`, item `image` 추가)  |
-| AppAccordion                   | `openIds` / `defaultOpenIds` / `initialOpen` / `type` | `v-model` / `initial` / `multiple` (variant `line`, `prefix`, item `content` 추가) |
-| AppTextarea                    | `invalid` / `error`                                   | `state` + `hint` (`label`, `width` 추가)                                           |
-| AppFormField                   | `error`                                               | `state` + `hint`                                                                   |
-| AppTable                       | `defaultLabelWidth`, cell `options` / `helperText`    | `labelWidth`, cell `items` / `hint`                                                |
-| AppGrid 검색/셀 설정           | `options`                                             | `items`                                                                            |
-| AppUploadFile / Image          | `maxSizeBytes`                                        | `maxSize`                                                                          |
-| AppChart                       | `variant="semi-doughnut"`                             | `type="semi-doughnut"`                                                             |
-| AppInput / Select / DatePicker | —                                                     | `width` 추가, DatePicker `type="datetime"` · `"time"` 추가                         |
-| (미구현이던) AppBadge          | `color`                                               | `AppTag` `tone`                                                                    |
-
 ## 2. 디자인 토큰 (Figma 03. Typography / 05. Color)
 
 | 파일                             | 내용                                                                                                                               |
@@ -56,7 +39,7 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`)을 기준으로 
 | `base/_typography-vars.scss`     | `--ds-font-{token}-size` / `-lh` (PC 값, `max-width: 767px` 에서 MO 값)                                                            |
 | `base/_theme.scss`               | `--theme-brand-*`, `--theme-gradient-*`, `--theme-color-0x`, `--theme-line-*`, `--theme-bg-*`, `--theme-status-*` 를 토큰에서 생성 |
 | `base/_utilities.scss`           | `.typo-{h1..}` `.typo-sb` `.typo-en` `.text-*` `.bg-*` `.bg-gradient-*` `.line-*` 유틸 클래스                                      |
-| `projects/framework/_theme.scss` | `$primary #6100FF` / `$secondary #39C3B6` / `$tertiary #F59917`                                                                    |
+| `projects/framework/_theme.scss` | `$primary #0A7CFF` / `$secondary #39C3B6` / `$tertiary #F59917`                                                                    |
 
 - 타이포 토큰: `d1~d6` `h1~h6` `t1~t5` `b1~b4` `c1~c3` `btn1~btn4`, weight `lt`(300) `rg`(400) `sb`(600), 자간 kr -0.025em / en 0
 - 상태 색상: error `#DC0000` · success `#04B014` · warning `#FFAA00`
