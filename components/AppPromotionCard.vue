@@ -9,7 +9,7 @@
             <img v-if="image" class="app-promotion-card__image" :src="image" alt="" loading="lazy" />
         </div>
         <div class="app-promotion-card__info">
-            <span v-if="label" class="app-promotion-card__label">{{ label }}</span>
+            <span v-if="eyebrow" class="app-promotion-card__eyebrow">{{ eyebrow }}</span>
             <strong class="app-promotion-card__title">{{ title }}</strong>
             <span v-if="period" class="app-promotion-card__period">{{ period }}</span>
         </div>
@@ -27,8 +27,8 @@ import { resolveComponent } from 'vue';
 withDefaults(
     defineProps<{
         title: string;
-        /** 타이틀 위 짧은 라벨 (Exclusive) */
-        label?: string;
+        /** 타이틀 위 짧은 문구 (Exclusive) - AppBillboard · AppHeading 과 같은 이름 */
+        eyebrow?: string;
         /** 기간 (2023.11.30 ~ 2023.12.30) */
         period?: string;
         image?: string;
@@ -37,7 +37,7 @@ withDefaults(
         rounded?: boolean;
     }>(),
     {
-        label: '',
+        eyebrow: '',
         period: '',
         image: '',
         ratio: 'wide',

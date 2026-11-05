@@ -1,10 +1,10 @@
 <template>
     <div
         class="app-tabs"
-        :class="[`app-tabs--${variant}`, `app-tabs--${size}`, `app-tabs--${orientation}`, { 'is-stretch': stretch }]"
+        :class="[`app-tabs--${variant}`, `app-tabs--${size}`, `app-tabs--${direction}`, { 'is-stretch': stretch }]"
         :style="rootStyle"
     >
-        <div class="app-tabs__list" role="tablist" :aria-orientation="orientation">
+        <div class="app-tabs__list" role="tablist" :aria-orientation="direction">
             <button
                 v-for="item in items"
                 :key="item.id"
@@ -66,7 +66,8 @@ const props = withDefaults(
         /** line / box / pill / group(그룹형) / button(버튼형) / grid(그룹 버튼형) / text(텍스트형) */
         variant?: TabsVariant;
         size?: 'sm' | 'md' | 'lg';
-        orientation?: 'horizontal' | 'vertical';
+        /** 탭 배치 방향 (AppSteps 와 같은 이름) */
+        direction?: 'horizontal' | 'vertical';
         /** grid variant 의 한 줄 칸 수 */
         columns?: number;
         stretch?: boolean;
@@ -77,7 +78,7 @@ const props = withDefaults(
         initial: 'first',
         variant: 'line',
         size: 'md',
-        orientation: 'horizontal',
+        direction: 'horizontal',
         columns: 6,
         stretch: false,
     },

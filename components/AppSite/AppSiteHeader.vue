@@ -29,7 +29,7 @@
             <div class="app-site-header__inner">
                 <AppButton unstyled class="app-site-header__category" :aria-expanded="categoryOpen" @click="emit('category')">
                     <IconMenu class="app-site-header__category-icon" />
-                    <span>{{ categoryLabel }}</span>
+                    <span>{{ categoryText }}</span>
                 </AppButton>
 
                 <ul class="app-site-header__menu">
@@ -80,7 +80,7 @@ withDefaults(
         logoTo?: string;
         /** 비우면 검색창을 노출하지 않습니다. */
         searchPlaceholder?: string;
-        categoryLabel?: string;
+        categoryText?: string;
         /** 카테고리 레이어 열림 상태 (aria-expanded) */
         categoryOpen?: boolean;
         sticky?: boolean;
@@ -89,7 +89,7 @@ withDefaults(
         logo: 'LOGO NAME',
         logoTo: '/',
         searchPlaceholder: '',
-        categoryLabel: 'Category',
+        categoryText: 'Category',
         categoryOpen: false,
         sticky: false,
     },

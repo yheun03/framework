@@ -13,6 +13,7 @@ import {
     ArrowUp,
     ArrowUpToLine,
     Bell,
+    BookOpen,
     Box,
     Building2,
     Calendar,
@@ -44,6 +45,7 @@ import {
     ImagePlus,
     Info,
     LayoutGrid,
+    LayoutTemplate,
     Lightbulb,
     Link,
     ListFilter,
@@ -54,6 +56,7 @@ import {
     MessageCircleMore,
     Minus,
     Package,
+    Palette,
     Pause,
     Pencil,
     PhoneCall,
@@ -211,6 +214,10 @@ export const IconChart = createIcon(ChartColumn);
 export const IconCube = createIcon(Box);
 export const IconGlobe = createIcon(Globe);
 export const IconBuilding = createIcon(Building2);
+// LNB 그룹
+export const IconGuide = createIcon(BookOpen);
+export const IconPalette = createIcon(Palette);
+export const IconLayout = createIcon(LayoutTemplate);
 // SNS (Lucide 미제공 → 같은 규격으로 직접 정의)
 export const IconInstagram = createSvgIcon([
     ['rect', { x: 2, y: 2, width: 20, height: 20, rx: 5, ry: 5 }],

@@ -1,7 +1,7 @@
 <template>
     <article class="app-product-card" :class="[`app-product-card--${size}`, { 'app-product-card--rounded': rounded }]">
         <div class="app-product-card__thumb">
-            <img v-if="image" class="app-product-card__image" :src="image" :alt="name" loading="lazy" />
+            <img v-if="image" class="app-product-card__image" :src="image" :alt="title" loading="lazy" />
             <div class="app-product-card__actions">
                 <AppIconButton :size="40" :icon-size="28" aria-label="미리보기" @click="emit('view')"><IconSearch /></AppIconButton>
                 <AppIconButton :size="40" :icon-size="28" aria-label="장바구니 담기" @click="emit('cart')"><IconShoppingBag /></AppIconButton>
@@ -23,8 +23,8 @@
         <div class="app-product-card__info">
             <div class="app-product-card__text">
                 <strong v-if="brand" class="app-product-card__brand">{{ brand }}</strong>
-                <NuxtLink v-if="to" class="app-product-card__name" :to="to">{{ name }}</NuxtLink>
-                <p v-else class="app-product-card__name">{{ name }}</p>
+                <NuxtLink v-if="to" class="app-product-card__name" :to="to">{{ title }}</NuxtLink>
+                <p v-else class="app-product-card__name">{{ title }}</p>
             </div>
 
             <div class="app-product-card__price">
@@ -58,7 +58,8 @@ import { IconHeart, IconHeartFill, IconSearch, IconShoppingBag } from '~/compone
  */
 withDefaults(
     defineProps<{
-        name: string;
+        /** 상품명 */
+        title: string;
         price: number;
         brand?: string;
         image?: string;

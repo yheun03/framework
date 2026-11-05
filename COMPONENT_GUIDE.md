@@ -3,7 +3,9 @@
 Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`)을 기준으로 정리한 컴포넌트 목록과 공통 속성 규칙입니다.
 화면에서는 **퍼블리싱 수준(Vue 속성 + v-if / v-for + 페이지 안 temp JSON)** 으로 작성하는 것을 기본으로 합니다.
 
-- 데모: LNB `디자인시스템 컴포넌트` / `MES 컴포넌트` / `홈페이지 컴포넌트` 메뉴 (컴포넌트별 1페이지, 속성별 아코디언 + 우측 Props 패널), 공통 규칙은 `/demos/demo-guide`
+- 데모: LNB `가이드`(공통 속성 규칙 · 디자인 토큰) / `기본 컴포넌트` / `디자인시스템 컴포넌트` / `MES 컴포넌트` / `홈페이지 컴포넌트` 메뉴 (컴포넌트별 1페이지, 속성별 아코디언 + 우측 Props 패널)
+- LNB: 상단 검색(`/` 키, 메뉴명·주소 검색), 현재 페이지 그룹만 자동 펼침, 그룹별 메뉴 수 표시
+- Props 패널: 컴포넌트별 그룹, 검색, `공통`·`필수` 배지, 기본값 강조, 값 클릭 시 `속성="값"` 복사
 - 토큰: `/demos/demo-design-tokens` (PC/MO 타이포 · 굵기 · 컬러 · System 팔레트 · 여백 · 그리드 · 라운드 · 그림자)
 - 조합 예시: `/demos/demo-mes-sample` (작업실적 현황 - 조회 → 목록 → 상세 Drawer → 저장 Toast), `/demos/demo-corporate-sample` (기업 홈페이지), `/demos/demo-product-sample` (제품 홈페이지)
 
@@ -29,6 +31,12 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`)을 기준으로 
 | `placement`             | `top` `bottom` `left` `right`                                                         | 레이어 위치                                                                                                             |
 | `initial`               | `none` `first` `all`                                                                  | 최초 열림/선택 (Tabs, Accordion, Tree)                                                                                  |
 | boolean                 | `disabled` `readonly` `loading` `active` `required` `clearable` `closable` `multiple` | on/off 상태·기능                                                                                                        |
+| `show*`                 | `showValue` `showIcon` `showLabel` `showTotal` `showCount` `showHome`                 | 요소 노출 여부 boolean                                                                                                  |
+| `*Text`                 | `emptyText` `triggerText` `searchText` `resetText` `moreText` `categoryText`          | 버튼·안내 문구 (데이터 라벨은 `label`)                                                                                  |
+| `eyebrow`               | string                                                                                | 제목 위 짧은 문구 (Billboard, Heading, PromotionCard)                                                                   |
+| `direction`             | `horizontal` `vertical`                                                               | 배치 방향 (Tabs, Steps)                                                                                                 |
+| `align`                 | `left` `center` `right`                                                               | 텍스트 정렬 (Billboard, LineBanner, Heading)                                                                            |
+| `progress`              | number (0~100)                                                                        | 진행률·가동률 (StatCard, EquipmentCard)                                                                                 |
 
 ## 2. 디자인 토큰 (Figma 01. Spacing / 02~04. Layout / 05. Color / 06·08. Typography / 14. Thumbnail / 21. Shadow)
 

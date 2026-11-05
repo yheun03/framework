@@ -15,7 +15,7 @@
                 >
                     <ul class="page-demo-hint-list">
                         <li><b>status</b> : run(가동) / idle(대기) / stop(정지) / check(점검) / off(미연결)</li>
-                        <li><b>value · valueLabel</b> : 대표 지표(%) · <b>items</b> : 하단 지표 (label, value)</li>
+                        <li><b>progress · progressLabel</b> : 대표 지표(%) · <b>items</b> : 하단 지표 (label, value)</li>
                     </ul>
 
                     <div class="demo-equipment-grid">
@@ -25,7 +25,7 @@
                             :title="equipment.title"
                             :code="equipment.code"
                             :status="equipment.status"
-                            :value="equipment.value"
+                            :progress="equipment.progress"
                             :items="equipment.items"
                             :active="selected === equipment.code"
                         >
@@ -54,12 +54,18 @@ import type { AppEquipmentStatus } from '~/components/AppEquipmentCard.vue';
 const { title, description } = useDemoI18n('equipmentCard');
 
 // temp 데이터 - API 연동 시 이 영역만 교체
-const equipments: { title: string; code: string; status: AppEquipmentStatus; value: number; items: { label: string; value: string | number }[] }[] = [
+const equipments: {
+    title: string;
+    code: string;
+    status: AppEquipmentStatus;
+    progress: number;
+    items: { label: string; value: string | number }[];
+}[] = [
     {
         title: 'CNC 가공기 #1',
         code: 'EQ-CNC-001',
         status: 'run',
-        value: 92,
+        progress: 92,
         items: [
             { label: '생산', value: '1,240' },
             { label: '불량', value: 3 },
@@ -70,7 +76,7 @@ const equipments: { title: string; code: string; status: AppEquipmentStatus; val
         title: '사출 성형기 #2',
         code: 'EQ-INJ-002',
         status: 'idle',
-        value: 61,
+        progress: 61,
         items: [
             { label: '생산', value: 820 },
             { label: '불량', value: 0 },
@@ -81,7 +87,7 @@ const equipments: { title: string; code: string; status: AppEquipmentStatus; val
         title: '프레스 #3',
         code: 'EQ-PRS-003',
         status: 'stop',
-        value: 18,
+        progress: 18,
         items: [
             { label: '알람', value: 'E-204' },
             { label: '정지', value: '00:42' },
@@ -91,14 +97,14 @@ const equipments: { title: string; code: string; status: AppEquipmentStatus; val
         title: '도장 라인 #4',
         code: 'EQ-PNT-004',
         status: 'check',
-        value: 0,
+        progress: 0,
         items: [{ label: '점검 종료', value: '15:30' }],
     },
     {
         title: '포장기 #5',
         code: 'EQ-PKG-005',
         status: 'off',
-        value: 0,
+        progress: 0,
         items: [],
     },
 ];

@@ -24,7 +24,7 @@
             :style="layerStyle"
         >
             <span class="app-tooltip__text"
-                ><slot name="content">{{ text }}</slot></span
+                ><slot name="content">{{ label }}</slot></span
             >
             <AppIconButton v-if="closable" class="app-tooltip__close" :size="18" :icon-size="14" shape="pill" aria-label="닫기" @click="hide">
                 <IconCloseSmall />
@@ -48,7 +48,7 @@ defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
     defineProps<{
-        text?: string;
+        label?: string;
         placement?: AppPlacement;
         trigger?: 'hover' | 'click' | 'always';
         variant?: 'dark' | 'light' | 'outline';
@@ -58,7 +58,7 @@ const props = withDefaults(
         open?: boolean;
     }>(),
     {
-        text: '',
+        label: '',
         placement: 'top',
         trigger: 'hover',
         variant: 'dark',

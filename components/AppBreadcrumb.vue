@@ -2,7 +2,7 @@
     <nav class="app-breadcrumb" :class="`app-breadcrumb--${size}`" aria-label="breadcrumb">
         <ol class="app-breadcrumb__list">
             <li v-for="(item, index) in items" :key="index" class="app-breadcrumb__item">
-                <IconHome v-if="index === 0 && homeIcon" class="app-breadcrumb__home" />
+                <IconHome v-if="index === 0 && showHome" class="app-breadcrumb__home" />
                 <AppTextButton
                     v-if="item.to && index < items.length - 1"
                     :to="item.to"
@@ -38,12 +38,12 @@ withDefaults(
         items: AppBreadcrumbItem[];
         /** 문자 구분자 (미지정 시 > 아이콘) */
         separator?: string;
-        homeIcon?: boolean;
+        showHome?: boolean;
         size?: 'sm' | 'md';
     }>(),
     {
         separator: '',
-        homeIcon: true,
+        showHome: true,
         size: 'md',
     },
 );

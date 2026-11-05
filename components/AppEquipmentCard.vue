@@ -8,7 +8,7 @@
             <AppStatusLamp :tone="statusMap[status].tone" :off="status === 'off'" :blink="status === 'stop'" :label="statusMap[status].label" />
         </header>
 
-        <AppProgressBar v-if="value != null" :value="value" :label="valueLabel" show-value :disabled="status === 'off'" />
+        <AppProgressBar v-if="progress != null" :value="progress" :label="progressLabel" show-value :disabled="status === 'off'" />
 
         <dl v-if="items.length" class="app-equipment-card__metrics">
             <div v-for="item in items" :key="item.label" class="app-equipment-card__metric">
@@ -32,7 +32,7 @@ export type AppEquipmentStatus = 'run' | 'idle' | 'stop' | 'check' | 'off';
  * AppEquipmentCard - 설비 현황 카드 (MES 확장)
  * AppStatusLamp + AppProgressBar 조합입니다.
  * status : run(가동) / idle(대기) / stop(정지·깜빡임) / check(점검) / off(미연결)
- * value  : 가동률 등 대표 지표(%) / items : 하단 지표 목록 (label, value)
+ * progress : 가동률 등 대표 지표(%, AppStatCard 와 같은 이름) / items : 하단 지표 목록 (label, value)
  * active : 선택된 설비 강조
  */
 withDefaults(
@@ -40,16 +40,16 @@ withDefaults(
         title: string;
         code?: string;
         status?: AppEquipmentStatus;
-        value?: number | null;
-        valueLabel?: string;
+        progress?: number | null;
+        progressLabel?: string;
         items?: { label: string; value: string | number }[];
         active?: boolean;
     }>(),
     {
         code: '',
         status: 'run',
-        value: null,
-        valueLabel: '가동률',
+        progress: null,
+        progressLabel: '가동률',
         items: () => [],
         active: false,
     },

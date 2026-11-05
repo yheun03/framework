@@ -14,13 +14,13 @@
                     description="말풍선 문구입니다. 강조가 필요하면 #content 슬롯에서 &lt;em&gt; 으로 감쌉니다(Figma 오렌지 강조)."
                 >
                     <ul class="page-demo-hint-list">
-                        <li><b>text</b> : 문구 (string)</li>
+                        <li><b>label</b> : 문구 (string)</li>
                         <li><b>#content</b> : 문구 슬롯</li>
                         <li><b>default slot</b> : 말풍선을 띄울 대상</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppTooltip text="좋아요 😀"><AppButton size="sm">text</AppButton></AppTooltip>
+                        <AppTooltip label="좋아요 😀"><AppButton size="sm">label</AppButton></AppTooltip>
                         <AppTooltip>
                             <template #content><em>이 페이지를</em> 확인해 보세요</template>
                             <AppButton size="sm">#content + em</AppButton>
@@ -41,7 +41,7 @@
                             v-for="variant in ['dark', 'light', 'outline']"
                             :key="variant"
                             :variant="variant"
-                            text="이 페이지를 확인해 보세요"
+                            label="이 페이지를 확인해 보세요"
                         >
                             <AppButton size="sm">{{ variant }}</AppButton>
                         </AppTooltip>
@@ -57,7 +57,7 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppTooltip v-for="shape in ['square', 'round', 'pill']" :key="shape" :shape="shape" :text="shape">
+                        <AppTooltip v-for="shape in ['square', 'round', 'pill']" :key="shape" :shape="shape" :label="shape">
                             <AppButton size="sm" variant="soft">{{ shape }}</AppButton>
                         </AppTooltip>
                     </div>
@@ -77,7 +77,12 @@
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppTooltip v-for="placement in ['top', 'bottom', 'left', 'right']" :key="placement" :placement="placement" :text="placement">
+                        <AppTooltip
+                            v-for="placement in ['top', 'bottom', 'left', 'right']"
+                            :key="placement"
+                            :placement="placement"
+                            :label="placement"
+                        >
                             <AppButton size="sm" variant="soft">{{ placement }}</AppButton>
                         </AppTooltip>
                     </div>
@@ -92,9 +97,9 @@
                     </ul>
 
                     <div class="page-demo-row" style="padding-top: 36px">
-                        <AppTooltip text="hover"><AppButton size="sm">hover</AppButton></AppTooltip>
-                        <AppTooltip trigger="click" text="click 으로 열렸습니다"><AppButton size="sm">click</AppButton></AppTooltip>
-                        <AppTooltip trigger="always" variant="outline" text="신규 기능이 추가되었습니다"
+                        <AppTooltip label="hover"><AppButton size="sm">hover</AppButton></AppTooltip>
+                        <AppTooltip trigger="click" label="click 으로 열렸습니다"><AppButton size="sm">click</AppButton></AppTooltip>
+                        <AppTooltip trigger="always" variant="outline" label="신규 기능이 추가되었습니다"
                             ><AppTag variant="fill" tone="red" label="NEW"
                         /></AppTooltip>
                     </div>
@@ -112,7 +117,7 @@
                     </ul>
 
                     <div class="page-demo-row" style="padding-top: 36px">
-                        <AppTooltip v-model:open="open" trigger="click" closable text="X 로 닫을 수 있습니다">
+                        <AppTooltip v-model:open="open" trigger="click" closable label="X 로 닫을 수 있습니다">
                             <AppButton size="sm" tone="primary" variant="outline">closable</AppButton>
                         </AppTooltip>
                         <AppButton size="sm" @click="open = !open">외부에서 토글 (open: {{ open }})</AppButton>
