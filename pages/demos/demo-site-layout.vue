@@ -109,6 +109,9 @@
 </template>
 
 <script setup lang="ts">
+import type { AppDockBarItem } from '~/components/AppSite/AppDockBar.vue';
+import type { AppSiteFooterLink, AppSiteFooterSns } from '~/components/AppSite/AppSiteFooter.vue';
+
 const { title, description } = useDemoI18n('siteLayout');
 
 // temp 데이터 - API 연동 시 이 영역만 교체
@@ -126,7 +129,7 @@ const menus = [
     { label: 'Best', to: '#' },
 ];
 
-const footer = {
+const footer: { links: AppSiteFooterLink[]; sns: AppSiteFooterSns[]; infos: string[]; copyright: string; tel: string; hours: string } = {
     links: [
         { label: '회사소개', to: '#' },
         { label: '개인정보처리방침', to: '#', strong: true },
@@ -152,7 +155,7 @@ const footer = {
     hours: '오전 9시 ~ 오후 6시 (토요일, 공휴일 휴무)',
 };
 
-const dockItems = [
+const dockItems: AppDockBarItem[] = [
     { id: 'menu', label: '카테고리', icon: 'menu', to: '#' },
     { id: 'search', label: '검색', icon: 'search', to: '#' },
     { id: 'home', label: '홈', icon: 'home', to: '#' },

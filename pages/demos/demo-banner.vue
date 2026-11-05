@@ -87,12 +87,12 @@
                     </ul>
 
                     <AppCarousel :items="billboards" nav-variant="banner" indicator="dots" autoplay :interval="5000" :height="400">
-                        <template #default="{ item }">
+                        <template #default="{ index }">
                             <AppBillboard
-                                :image="base + item.image"
-                                :eyebrow="item.eyebrow"
-                                :title="item.title"
-                                :description="item.description"
+                                :image="base + billboards[index].image"
+                                :eyebrow="billboards[index].eyebrow"
+                                :title="billboards[index].title"
+                                :description="billboards[index].description"
                                 :height="400"
                             />
                         </template>
@@ -160,8 +160,12 @@
                     description="자동 롤링 띠배너입니다. 좌우 화살표는 48x48, 인디케이터를 함께 노출합니다."
                 >
                     <AppCarousel class="demo-banner-rolling" :items="lineBanners" nav-variant="banner" autoplay :height="120">
-                        <template #default="{ item }">
-                            <AppLineBanner :variant="item.variant" :title="item.title" :description="item.description" />
+                        <template #default="{ index }">
+                            <AppLineBanner
+                                :variant="lineBanners[index].variant"
+                                :title="lineBanners[index].title"
+                                :description="lineBanners[index].description"
+                            />
                         </template>
                     </AppCarousel>
                 </PageDemoSection>
@@ -204,7 +208,7 @@ const billboards = [
     },
 ];
 
-const lineBanners = [
+const lineBanners: { id: number; variant: 'dark' | 'light' | 'brand'; title: string; description: string }[] = [
     { id: 1, variant: 'dark', title: '진짜 혜택 오직 하루만!', description: '온라인 단독 신상 할인 20%' },
     { id: 2, variant: 'brand', title: '삼성카드 무이자 할부', description: '단 하루 이벤트' },
     { id: 3, variant: 'light', title: '우리 아이들 장난감 기획', description: '오늘만 딱 50% 할인 특가' },

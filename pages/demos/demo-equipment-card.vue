@@ -49,10 +49,12 @@
 </template>
 
 <script setup lang="ts">
+import type { AppEquipmentStatus } from '~/components/AppEquipmentCard.vue';
+
 const { title, description } = useDemoI18n('equipmentCard');
 
 // temp 데이터 - API 연동 시 이 영역만 교체
-const equipments = [
+const equipments: { title: string; code: string; status: AppEquipmentStatus; value: number; items: { label: string; value: string | number }[] }[] = [
     {
         title: 'CNC 가공기 #1',
         code: 'EQ-CNC-001',

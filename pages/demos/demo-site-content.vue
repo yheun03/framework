@@ -112,11 +112,12 @@
 
 <script setup lang="ts">
 import { IconChevronRight } from '~/components/icons';
+import type { AppFeatureCardIcon } from '~/components/AppFeatureCard.vue';
 
 const { title, description } = useDemoI18n('siteContent');
 
 // temp 데이터 - API 연동 시 이 영역만 교체
-const features = [
+const features: { icon: AppFeatureCardIcon; title: string; description: string }[] = [
     { icon: 'factory', title: '스마트 팩토리', description: '설비 · 공정 데이터를 수집해\n생산 현황을 실시간으로 보여줍니다.' },
     { icon: 'chart', title: '데이터 분석', description: '품질 · 수율 지표를 대시보드로\n한눈에 비교합니다.' },
     { icon: 'shield', title: '보안 · 인증', description: '권한별 접근 제어와 이력 관리로\n안전하게 운영합니다.' },

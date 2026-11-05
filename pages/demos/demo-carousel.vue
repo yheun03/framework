@@ -103,11 +103,11 @@
                         autoplay
                         :interval="3000"
                     >
-                        <template #default="{ item }">
+                        <template #default="{ index }">
                             <div class="demo-notice">
-                                <AppTag variant="fill" :tone="item.tone" size="sm" :label="String(item.type)" />
-                                <strong>{{ item.title }}</strong>
-                                <span class="demo-notice__date">{{ item.date }}</span>
+                                <AppTag variant="fill" :tone="notices[index].tone" size="sm" :label="notices[index].type" />
+                                <strong>{{ notices[index].title }}</strong>
+                                <span class="demo-notice__date">{{ notices[index].date }}</span>
                             </div>
                         </template>
                     </AppCarousel>
@@ -123,6 +123,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AppTagTone } from '~/components/AppTag.vue';
+
 const { title, description } = useDemoI18n('carousel');
 const current = ref(0);
 
@@ -134,7 +136,7 @@ const slides = [
     { id: 4, title: '안전 점검의 날', description: '매월 첫째 주 월요일', image: svgSlide('#8331a4', '#441d87') },
 ];
 
-const notices = [
+const notices: { id: number; type: string; tone: AppTagTone; title: string; date: string }[] = [
     { id: 1, type: '공지', tone: 'primary', title: '10/25(토) 설비 정기 점검으로 2라인 가동 중지', date: '2026-10-21' },
     { id: 2, type: '알람', tone: 'danger', title: 'EQ-0102 사출기 온도 상한 초과 (3회)', date: '2026-10-21' },
     { id: 3, type: '안내', tone: 'success', title: '신규 작업표준서 v3.2 배포 완료', date: '2026-10-20' },

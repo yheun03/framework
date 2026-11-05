@@ -48,7 +48,9 @@
 <script setup lang="ts">
 import { IconFacebook, IconInstagram, IconKakao, IconX, IconYoutube } from '~/components/icons';
 
-type SnsType = 'instagram' | 'facebook' | 'youtube' | 'kakao' | 'x';
+export type AppSiteFooterSnsType = 'instagram' | 'facebook' | 'youtube' | 'kakao' | 'x';
+export type AppSiteFooterLink = { label: string; to?: string; strong?: boolean };
+export type AppSiteFooterSns = { type: AppSiteFooterSnsType; href: string };
 
 /**
  * AppSiteFooter (Figma 19. Footer Guide - 기본 Footer / 샘플 4번 블랙 타입)
@@ -59,8 +61,8 @@ withDefaults(
     defineProps<{
         title: string;
         /** strong: 개인정보처리방침처럼 강조할 링크 */
-        links?: { label: string; to?: string; strong?: boolean }[];
-        sns?: { type: SnsType; href: string }[];
+        links?: AppSiteFooterLink[];
+        sns?: AppSiteFooterSns[];
         /** 대표자 / 주소 / 사업자 정보 등 한 줄씩 */
         infos?: string[];
         copyright?: string;
@@ -81,7 +83,7 @@ withDefaults(
 );
 
 const snsIcons = { instagram: IconInstagram, facebook: IconFacebook, youtube: IconYoutube, kakao: IconKakao, x: IconX };
-const snsLabels: Record<SnsType, string> = {
+const snsLabels: Record<AppSiteFooterSnsType, string> = {
     instagram: '인스타그램 (새 창)',
     facebook: '페이스북 (새 창)',
     youtube: '유튜브 (새 창)',

@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { AppTone } from '~/types/appCommon';
 
-type EquipmentStatus = 'run' | 'idle' | 'stop' | 'check' | 'off';
+export type AppEquipmentStatus = 'run' | 'idle' | 'stop' | 'check' | 'off';
 
 /**
  * AppEquipmentCard - 설비 현황 카드 (MES 확장)
@@ -39,7 +39,7 @@ withDefaults(
     defineProps<{
         title: string;
         code?: string;
-        status?: EquipmentStatus;
+        status?: AppEquipmentStatus;
         value?: number | null;
         valueLabel?: string;
         items?: { label: string; value: string | number }[];
@@ -55,7 +55,7 @@ withDefaults(
     },
 );
 
-const statusMap: Record<EquipmentStatus, { tone: AppTone; label: string }> = {
+const statusMap: Record<AppEquipmentStatus, { tone: AppTone; label: string }> = {
     run: { tone: 'success', label: '가동' },
     idle: { tone: 'warning', label: '대기' },
     stop: { tone: 'danger', label: '정지' },
