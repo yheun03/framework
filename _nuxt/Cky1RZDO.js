@@ -1,0 +1,1 @@
+import{b5 as n}from"./CRn_vkGr.js";function c(){const e=n();function r(o){return s=>e.show(typeof s=="string"?{message:s,tone:o}:{...s,tone:o})}return{show:e.show,success:r("success"),error:r("danger"),warning:r("warning"),info:r("info"),remove:e.remove,clear:e.clear}}export{c as u};
