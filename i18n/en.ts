@@ -1,4 +1,5 @@
 const En = {
+    'a11y.skipToContent': 'Skip to main content',
     'app.language': 'Language',
     'app.theme': 'Theme',
     'theme.light': 'Light',
@@ -140,6 +141,12 @@ const En = {
     'demo.dataTable.desc': 'AppDataTable component demo.',
     'demo.mesSample.title': 'Production Result (MES Sample)',
     'demo.mesSample.desc': 'A sample MES page composed of the new components with temp JSON data.',
+    'demo.corporateSample.title': 'Corporate Website Sample',
+    'demo.corporateSample.desc': 'A manufacturing company website built from billboard, business areas, history, news and contact sections.',
+    'demo.productSample.title': 'Product Website Sample',
+    'demo.productSample.desc': 'A shopping-style product website built from GNB, billboard, best products, promotions and dock bar.',
+    'demo.workspace.title': 'Workspace',
+    'demo.workspace.desc': 'A workspace for writing project notes with a markdown editor.',
     'demo.searchPanel.title': 'AppSearchPanel',
     'demo.searchPanel.desc': 'AppSearchPanel component demo.',
     'demo.statCard.title': 'AppStatCard',

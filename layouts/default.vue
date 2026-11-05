@@ -1,5 +1,8 @@
 <template>
     <div class="layout" :class="{ 'layout--nav-open': isNavOpen }">
+        <!-- 키보드 사용자를 위한 본문 바로가기 (Tab 첫 포커스) -->
+        <a class="skip-link" href="#main-content">{{ t('a11y.skipToContent') }}</a>
+
         <div class="layout__mobile-bar">
             <AppTextButton class="layout__nav-toggle" size="sm" aria-label="메뉴 열기" @click="handleNavOpen">
                 <template #iconLeft>
@@ -14,7 +17,7 @@
         <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" aria-label="메뉴 닫기" @click="handleNavClose" />
 
         <LayoutNav class="layout__nav" @close="handleNavClose" />
-        <main class="layout__main">
+        <main id="main-content" class="layout__main" tabindex="-1">
             <LayoutTabsPage class="layout__tabs" />
             <div class="layout__content">
                 <slot />
@@ -29,6 +32,7 @@ import { IconMenu } from '~/components/icons';
 
 const route = useRoute();
 const project = useProjectConfig();
+const { t } = useI18nText();
 const isNavOpen = ref(false);
 
 function handleNavOpen() {

@@ -7,6 +7,7 @@
                     :model-value="side.checkedCount > 0 && side.checkedCount === side.selectable.length"
                     :indeterminate="side.checkedCount > 0 && side.checkedCount < side.selectable.length"
                     :disabled="disabled || !side.selectable.length"
+                    :aria-label="`${side.title} 전체 선택`"
                     @update:model-value="toggleAll(side.key)"
                 />
                 <strong class="app-transfer__title">{{ side.title }}</strong>
@@ -14,12 +15,13 @@
             </header>
 
             <div v-if="searchable" class="app-transfer__search">
-                <AppInput v-model="keywords[side.key]" size="xs" placeholder="검색" clearable>
+                <AppInput v-model="keywords[side.key]" size="xs" placeholder="검색" :aria-label="`${side.title} 검색`" clearable>
                     <template #iconLeft><IconSearch /></template>
                 </AppInput>
             </div>
 
-            <ul class="app-transfer__list" :style="listStyle">
+            <!-- 비활성 상태에도 키보드로 스크롤할 수 있도록 목록 자체에 포커스를 둡니다. -->
+            <ul class="app-transfer__list" :style="listStyle" :tabindex="disabled ? 0 : undefined" :aria-label="`${side.title} 목록`">
                 <li v-for="item in side.filtered" :key="String(item.value)" class="app-transfer__item">
                     <AppChoice
                         size="sm"

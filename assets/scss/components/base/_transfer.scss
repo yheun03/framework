@@ -50,7 +50,7 @@
 
     &__count {
         @include font(c2, rg);
-        color: var(--color-steps-desc);
+        color: var(--color-transfer-count);
     }
 
     &__search {

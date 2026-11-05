@@ -26,6 +26,16 @@ export function useDemoI18n(key: string) {
     const title = computed(() => t(`demo.${key}.title`));
     const description = computed(() => t(`demo.${key}.desc`));
 
+    // 데모 페이지마다 문서 제목 / 설명 / 공유(OG) 메타를 지정합니다.
+    useSeoMeta({
+        title,
+        description,
+        ogTitle: title,
+        ogDescription: description,
+        twitterTitle: title,
+        twitterDescription: description,
+    });
+
     return {
         title,
         description,

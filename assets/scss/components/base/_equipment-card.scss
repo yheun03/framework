@@ -63,7 +63,7 @@
         background: var(--bg-equipment-card-metric);
 
         dt {
-            color: var(--color-equipment-card-sub);
+            color: var(--color-equipment-card-metric-label);
             @include font(c2, rg);
         }
 

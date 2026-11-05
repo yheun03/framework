@@ -1,6 +1,6 @@
 <template>
     <div class="page-demo">
-        <main class="page-demo-main">
+        <div class="page-demo-main">
             <header class="page-demo__header">
                 <h1 class="page-demo__title">{{ t('settings.title') }}</h1>
                 <p class="page-demo__desc">{{ t('settings.desc') }}</p>
@@ -33,7 +33,7 @@
                     </AppButton>
                 </div>
             </section>
-        </main>
+        </div>
     </div>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
     <ClientOnly>
         <div class="app-chart" :class="wrapperClasses" :style="{ height: `${resolvedHeight}px` }">
-            <Line v-if="isLine" class="app-chart__canvas" :data="lineData" :options="lineOptions" />
+            <Line v-if="isLine" class="app-chart__canvas" :data="lineData" :options="lineOptions" :aria-label="chartLabel" />
 
-            <Bar v-else-if="isBar" class="app-chart__canvas" :data="barData" :options="barOptions" />
+            <Bar v-else-if="isBar" class="app-chart__canvas" :data="barData" :options="barOptions" :aria-label="chartLabel" />
 
-            <Doughnut v-else-if="isDoughnut" class="app-chart__canvas" :data="doughnutData" :options="doughnutOptions" />
+            <Doughnut v-else-if="isDoughnut" class="app-chart__canvas" :data="doughnutData" :options="doughnutOptions" :aria-label="chartLabel" />
 
-            <Pie v-else class="app-chart__canvas" :data="pieData" :options="pieOptions" />
+            <Pie v-else class="app-chart__canvas" :data="pieData" :options="pieOptions" :aria-label="chartLabel" />
         </div>
 
         <template #fallback>
@@ -49,6 +49,8 @@ const props = withDefaults(
         height?: number;
         cutout?: string | number;
         options?: AnyObject;
+        /** 스크린리더용 차트 설명. 비우면 데이터셋 이름과 항목으로 자동 생성합니다. */
+        ariaLabel?: string;
     }>(),
     {
         height: 260,
@@ -56,6 +58,17 @@ const props = withDefaults(
         options: () => ({}),
     },
 );
+
+// canvas 는 내용을 읽을 수 없으므로 차트 요약을 aria-label 로 제공합니다.
+const chartLabel = computed(() => {
+    if (props.ariaLabel) return props.ariaLabel;
+    const series = props.data.datasets
+        .map((dataset) => dataset.label)
+        .filter(Boolean)
+        .join(', ');
+    const labels = (props.data.labels ?? []).join(', ');
+    return ['차트', series, labels && `항목: ${labels}`].filter(Boolean).join(' - ');
+});
 
 function isObject(value: unknown): value is AnyObject {
     return typeof value === 'object' && value !== null && !Array.isArray(value);

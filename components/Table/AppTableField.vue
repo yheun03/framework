@@ -9,6 +9,7 @@
         <AppInput
             v-else-if="cell.type === 'input'"
             class="app-table-field__inline-input"
+            :aria-label="cell.label"
             :model-value="inputValue"
             :placeholder="cell.placeholder"
             :readonly="readonly"
@@ -18,6 +19,7 @@
 
         <AppSelect
             v-else-if="cell.type === 'select'"
+            :aria-label="cell.label"
             :model-value="selectValue"
             :items="cell.items ?? []"
             :placeholder="cell.placeholder"
@@ -28,6 +30,7 @@
 
         <AppTextarea
             v-else-if="cell.type === 'textarea'"
+            :aria-label="cell.label"
             :model-value="inputValue"
             :placeholder="cell.placeholder"
             :rows="cell.rows"
@@ -43,6 +46,7 @@
         <div v-else-if="cell.type === 'input_button'" class="app-table-field__inline">
             <AppInput
                 class="app-table-field__inline-input"
+                :aria-label="cell.label"
                 :model-value="inputValue"
                 :placeholder="cell.placeholder"
                 :readonly="readonly"
@@ -57,6 +61,7 @@
         <div v-else-if="cell.type === 'input_button-text'" class="app-table-field__inline">
             <AppInput
                 class="app-table-field__inline-input"
+                :aria-label="cell.label"
                 :model-value="inputValue"
                 :placeholder="cell.placeholder"
                 :readonly="readonly"
@@ -72,6 +77,7 @@
         <div v-else-if="cell.type === 'input-text'" class="app-table-field__inline">
             <AppInput
                 class="app-table-field__inline-input"
+                :aria-label="cell.label"
                 :model-value="inputValue"
                 :placeholder="cell.placeholder"
                 :readonly="readonly"
@@ -149,6 +155,7 @@
                 v-for="(key, index) in cell.keys ?? []"
                 :key="key"
                 class="app-table-field__phone-input"
+                :aria-label="cell.label"
                 :model-value="stringValue(key)"
                 :placeholder="cell.placeholders?.[index]"
                 :readonly="readonly"
@@ -160,6 +167,7 @@
         <div v-else-if="cell.type === 'email'" class="app-table-field__inline app-table-field__inline--email">
             <AppInput
                 class="app-table-field__email-input"
+                :aria-label="cell.label"
                 :model-value="stringValue(cell.keys?.[0])"
                 :placeholder="cell.placeholders?.[0]"
                 :readonly="readonly"
@@ -169,6 +177,7 @@
             <span class="app-table-field__email-at">@</span>
             <AppInput
                 class="app-table-field__email-input"
+                :aria-label="cell.label"
                 :model-value="stringValue(cell.keys?.[1])"
                 :placeholder="cell.placeholders?.[1]"
                 :readonly="readonly"

@@ -24,7 +24,8 @@
                 class="app-select__trigger"
                 :disabled="disabled"
                 :aria-expanded="isOpen"
-                :aria-readonly="readonly || undefined"
+                :aria-disabled="readonly || undefined"
+                :aria-label="label ? undefined : (ariaLabel ?? inputGroupLabel ?? undefined)"
                 aria-haspopup="listbox"
                 :aria-controls="isOpen ? menuId : undefined"
                 @click="toggleMenu"
@@ -93,6 +94,8 @@
 </template>
 
 <script setup lang="ts">
+import { APP_FORM_FIELD_KEY } from '~/components/AppFormField.vue';
+import { APP_INPUT_GROUP_KEY } from '~/components/AppInputGroup.vue';
 import { IconChevronDown } from '~/components/icons';
 import { getBodyOverlayStyle, useBodyOverlay } from '~/composables/useBodyOverlay';
 
@@ -118,6 +121,8 @@ const props = withDefaults(
         disabled?: boolean;
         readonly?: boolean;
         id?: string;
+        /** label 이 없을 때 스크린리더용 이름 */
+        ariaLabel?: string;
         name?: string;
     }>(),
     {
@@ -137,7 +142,9 @@ const emit = defineEmits<{
 }>();
 
 const fallbackId = useId();
-const inputId = computed(() => props.id ?? `app-select-${fallbackId}`);
+const formField = inject(APP_FORM_FIELD_KEY, null);
+const inputGroupLabel = inject(APP_INPUT_GROUP_KEY, null);
+const inputId = computed(() => props.id ?? formField?.id.value ?? `app-select-${fallbackId}`);
 const menuId = computed(() => `${inputId.value}-menu`);
 const isOpen = ref(false);
 const triggerEl = ref<HTMLElement | null>(null);

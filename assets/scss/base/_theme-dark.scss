@@ -3,6 +3,13 @@
 :root[data-theme='dark'] {
     color-scheme: dark;
 
+    // 어두운 배경에서는 글자용 브랜드 / 상태 컬러를 밝게 바꿔 4.5:1 이상을 유지합니다.
+    --theme-primary-text: color-mix(in srgb, white 20%, var(--theme-primary));
+    --theme-status-error-text: color-mix(in srgb, white 35%, var(--theme-status-error));
+    --theme-status-warning-text: var(--theme-status-warning);
+    --theme-status-success-text: color-mix(in srgb, white 20%, var(--theme-status-success));
+    --theme-status-info-text: color-mix(in srgb, white 35%, var(--theme-status-info));
+
     body {
         background: var(--theme-gray-900);
         color: var(--theme-gray-50);

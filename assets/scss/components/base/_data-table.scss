@@ -30,6 +30,7 @@ $data-table-sizes: (
 
     &__head {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 12px;
         margin-bottom: 12px;
@@ -52,6 +53,7 @@ $data-table-sizes: (
 
     &__toolbar {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 8px;
         margin-left: auto;

@@ -26,7 +26,7 @@ $business-status-colors: (
 
     &__eyebrow {
         margin: 0 0 4px;
-        color: var(--theme-primary-600);
+        color: var(--theme-primary-text);
         font-weight: 600;
         @include font(c2, rg);
     }
@@ -100,7 +100,7 @@ $business-status-colors: (
 
         @each $state, $state-color in $business-status-colors {
             &--#{$state} {
-                color: var(--theme-#{$state-color});
+                color: var(--theme-#{$state-color}-text);
             }
         }
     }
@@ -194,7 +194,7 @@ $business-status-colors: (
 }
 
 .business-link {
-    color: var(--theme-primary-600);
+    color: var(--theme-primary-text);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -212,7 +212,7 @@ $business-status-colors: (
     @each $state, $state-color in $business-status-colors {
         &--#{$state} {
             background: var(--theme-#{$state-color}-alpha-12);
-            color: var(--theme-#{$state-color});
+            color: var(--theme-#{$state-color}-text);
         }
     }
 }
@@ -259,7 +259,7 @@ $business-status-colors: (
     }
 
     span {
-        color: var(--theme-status-success);
+        color: var(--theme-status-success-text);
         @include font(b4, rg);
     }
 }
@@ -275,7 +275,7 @@ $business-status-colors: (
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: var(--theme-status-success);
+    color: var(--theme-status-success-text);
     font-weight: 600;
     @include font(b4, rg);
 
@@ -305,7 +305,7 @@ $business-status-colors: (
 
     @each $state, $state-color in $business-status-colors {
         &--#{$state} {
-            border-top-color: var(--theme-#{$state-color});
+            border-top-color: var(--theme-#{$state-color}-text);
         }
     }
 

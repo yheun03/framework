@@ -2,15 +2,7 @@
     <div class="app-progress-slider" :class="[`app-progress-slider--${type}`, { 'app-progress-slider--disabled': disabled }]">
         <div v-if="type === 'single'" class="app-progress-slider__control">
             <label v-if="label" class="app-progress-slider__label">{{ label }}</label>
-            <div
-                ref="singleSliderEl"
-                class="app-progress-slider__noui"
-                role="slider"
-                aria-orientation="horizontal"
-                :aria-valuemin="0"
-                :aria-valuemax="100"
-                :aria-valuenow="singleValue"
-            />
+            <div ref="singleSliderEl" class="app-progress-slider__noui" />
             <div v-if="showValue" class="app-progress-slider__value">{{ singleValue }}%</div>
         </div>
 
@@ -82,6 +74,8 @@ function createSingleSlider() {
         step: 1,
         behaviour: 'tap-drag',
         animate: false,
+        // 조작 요소(role=slider)는 noUiSlider 핸들이므로 핸들에 이름을 붙입니다.
+        handleAttributes: [{ 'aria-label': props.label || '진행률' }],
     });
     singleSlider.on('slide', handleSingleChange);
 }
@@ -96,6 +90,7 @@ function createRangeSlider() {
         step: 1,
         behaviour: 'tap-drag',
         animate: false,
+        handleAttributes: [{ 'aria-label': `${props.label || '범위'} 시작` }, { 'aria-label': `${props.label || '범위'} 끝` }],
     });
     rangeSlider.on('slide', handleRangeChange);
 }

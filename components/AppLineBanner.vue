@@ -1,5 +1,5 @@
 <template>
-    <aside
+    <section
         v-if="!closed"
         class="app-line-banner"
         :class="[`app-line-banner--${size}`, `app-line-banner--${variant}`, `app-line-banner--align-${align}`]"
@@ -18,7 +18,7 @@
         <AppIconButton v-if="closable" class="app-line-banner__close" :size="32" :icon-size="16" aria-label="배너 닫기" @click="close">
             <IconClose />
         </AppIconButton>
-    </aside>
+    </section>
 </template>
 
 <script setup lang="ts">

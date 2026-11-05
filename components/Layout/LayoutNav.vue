@@ -127,7 +127,15 @@ const route = useRoute();
 
 function scrollToActive() {
     nextTick(() => {
-        navBody.value?.querySelector('.router-link-exact-active')?.scrollIntoView({ block: 'nearest' });
+        const body = navBody.value;
+        const active = body?.querySelector<HTMLElement>('.router-link-exact-active');
+        if (!body || !active) return;
+
+        // scrollIntoView 는 브라우저의 Tab 시작 위치까지 옮겨 '본문 바로가기'를 건너뛰게 하므로 LNB 영역만 직접 스크롤합니다.
+        const bodyRect = body.getBoundingClientRect();
+        const activeRect = active.getBoundingClientRect();
+        if (activeRect.top < bodyRect.top) body.scrollTop -= bodyRect.top - activeRect.top;
+        else if (activeRect.bottom > bodyRect.bottom) body.scrollTop += activeRect.bottom - bodyRect.bottom;
     });
 }
 

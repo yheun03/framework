@@ -8,7 +8,14 @@
             <span v-if="showValue" class="app-progress-bar__value"> {{ displayEnd }}% </span>
         </div>
 
-        <div class="app-progress-bar__track" role="progressbar" :aria-valuenow="displayEnd" aria-valuemin="0" aria-valuemax="100" :aria-label="label">
+        <div
+            class="app-progress-bar__track"
+            role="progressbar"
+            :aria-valuenow="displayEnd"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            :aria-label="label || `진행률 ${displayEnd}%`"
+        >
             <div class="app-progress-bar__fill" :style="rangeStyle" />
         </div>
     </div>

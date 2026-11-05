@@ -37,6 +37,7 @@
             :aria-valuenow="progress"
             aria-valuemin="0"
             aria-valuemax="100"
+            :aria-label="`${title} 진행률`"
         >
             <span :style="{ width: `${Math.min(100, Math.max(0, progress))}%` }" />
         </div>

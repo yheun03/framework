@@ -25,7 +25,7 @@
                 <table class="business-table">
                     <thead>
                         <tr>
-                            <th><AppChoice v-model="checkAll" /></th>
+                            <th><AppChoice v-model="checkAll" aria-label="전체 선택" /></th>
                             <th>수주번호</th>
                             <th>거래처</th>
                             <th>품목</th>
@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="row in rows" :key="row.no">
-                            <td><AppChoice v-model="row.checked" /></td>
+                            <td><AppChoice v-model="row.checked" :aria-label="`${row.no} 선택`" /></td>
                             <td>
                                 <NuxtLink :to="`/sales-order-detail?id=${row.no}`" class="business-link">{{ row.no }}</NuxtLink>
                             </td>

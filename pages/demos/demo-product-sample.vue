@@ -1,5 +1,7 @@
 <template>
     <div class="site-sample site-sample--product">
+        <!-- 빌보드가 슬라이드라 화면 제목은 스크린리더 전용으로 둡니다. -->
+        <h1 class="sr-only">{{ title }}</h1>
         <AppSiteHeader :items="menus" logo="JONSOFT STORE" search-placeholder="겨울 리빙 아이템 검색하고 쿠폰 받기" sticky>
             <template #aside>
                 <span class="site-sample__rank"><b>1.</b> 무드등 스피어 램프</span>
@@ -120,7 +122,7 @@ import type { AppFeatureCardIcon } from '~/components/AppFeatureCard.vue';
 import type { AppDockBarItem } from '~/components/AppSite/AppDockBar.vue';
 import type { AppSiteFooterLink, AppSiteFooterSns } from '~/components/AppSite/AppSiteFooter.vue';
 
-useHead({ title: '제품 홈페이지 샘플' });
+const { title } = useDemoI18n('productSample');
 const base = useRuntimeConfig().app.baseURL;
 
 // temp 데이터 - API 연동 시 이 영역만 교체

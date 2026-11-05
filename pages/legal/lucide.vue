@@ -1,6 +1,6 @@
 <template>
     <div class="page-demo">
-        <main class="page-demo-main">
+        <div class="page-demo-main">
             <header class="page-demo__header">
                 <h1 class="page-demo__title">Lucide 라이선스</h1>
                 <p class="page-demo__desc">
@@ -56,7 +56,7 @@
                     <li>Lucide 는 브랜드 로고를 제공하지 않으므로 SNS 아이콘은 같은 규격으로 직접 정의하며, 각 브랜드 가이드라인을 따릅니다.</li>
                 </ul>
             </section>
-        </main>
+        </div>
     </div>
 </template>
 

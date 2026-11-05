@@ -38,6 +38,27 @@
     --tone-navy: var(--theme-system-navy-blue-800);
     --tone-purple: var(--theme-system-purple-700);
 
+    // Tone 글자색 (soft / outline / text 처럼 tone 을 '글자'로 쓸 때 - 4.5:1 이상)
+    --tone-primary-text: var(--theme-primary-text);
+    --tone-secondary-text: var(--tone-secondary);
+    --tone-gray-text: var(--tone-gray);
+    --tone-danger-text: var(--theme-status-error-text);
+    --tone-warning-text: var(--theme-status-warning-text);
+    --tone-success-text: var(--theme-status-success-text);
+    --tone-info-text: var(--theme-status-info-text);
+    --tone-black-text: var(--tone-black);
+    --tone-red-text: color-mix(in srgb, black 20%, var(--tone-red));
+    --tone-orange-text: color-mix(in srgb, black 25%, var(--tone-orange));
+    --tone-green-text: var(--tone-green);
+    --tone-blue-text: color-mix(in srgb, black 20%, var(--tone-blue));
+    --tone-navy-text: var(--tone-navy);
+    --tone-purple-text: color-mix(in srgb, black 10%, var(--tone-purple));
+    // 면(fill) 위 글자색 - 기본 흰색, 밝은 면(warning)은 검정
+    --tone-warning-on-fill: var(--theme-color-02-black);
+
+    // 키보드 포커스 링 (흰 배경 / 검정 배경 모두 3:1 이상)
+    --color-focus-ring: var(--theme-primary-text);
+
     // ----------------------------------------
     // Shadow  (Figma 21. Shadow Guide - 수직 그림자)
     // ----------------------------------------
@@ -151,25 +172,26 @@
     --border-stat-card: var(--theme-gray-200);
     --color-stat-card-title: var(--theme-color-04-gray);
     --color-stat-card-value: var(--theme-color-02-black);
-    --color-stat-card-up: var(--theme-status-success);
-    --color-stat-card-down: var(--theme-status-error);
+    --color-stat-card-up: var(--theme-status-success-text);
+    --color-stat-card-down: var(--theme-status-error-text);
 
     // Status Lamp (설비 램프)
     --color-status-lamp-off: var(--theme-gray-300);
 
     // Steps / Timeline
-    --color-steps-wait: var(--theme-gray-400);
+    --color-steps-wait: var(--theme-gray-500);
     --bg-steps-wait: var(--theme-gray-0);
     --border-steps-wait: var(--theme-gray-300);
     --color-steps-title: var(--theme-color-02-black);
     --color-steps-desc: var(--theme-color-04-gray);
+    --color-transfer-count: var(--theme-color-03-gray); // BG Light 위 글자
     --border-steps-line: var(--theme-gray-200);
 
     // Tree
     --bg-tree-hover: var(--theme-gray-50);
     --bg-tree-selected: var(--theme-primary-50);
     --color-tree: var(--theme-gray-800);
-    --color-tree-selected: var(--theme-primary-600);
+    --color-tree-selected: var(--theme-primary-text);
     --color-tree-icon: var(--theme-gray-500);
     --border-tree-guide: var(--theme-gray-200);
 
@@ -210,7 +232,7 @@
     --border-site-header-search-focus: var(--theme-line-black);
     --color-site-header: var(--theme-color-02-black);
     --color-site-header-placeholder: var(--theme-color-04-gray);
-    --color-site-header-active: var(--theme-brand-main);
+    --color-site-header-active: var(--theme-primary-text);
     --border-site-header-divider: var(--theme-line-regular);
 
     // Site Footer (19. Footer)
@@ -255,16 +277,16 @@
     --color-product-brand: var(--theme-color-02-black);
     --color-product-name: var(--theme-color-03-gray);
     --color-product-price: var(--theme-color-02-black);
-    --color-product-discount: var(--theme-brand-main);
+    --color-product-discount: var(--theme-primary-text);
     --color-product-original: var(--theme-color-04-gray);
     --bg-product-hashtag: var(--theme-bg-light);
-    --color-product-hashtag: var(--theme-color-04-gray);
+    --color-product-hashtag: var(--theme-color-03-gray); // BG Light 위 글자 (Figma 08: #505050 이하)
     --color-promotion-label: var(--theme-color-02-black);
     --color-promotion-title: var(--theme-color-02-black);
     --color-promotion-period: var(--theme-color-04-gray);
 
     // Heading / Feature / Pricing (기업·제품 홈페이지 확장)
-    --color-heading-eyebrow: var(--theme-brand-main);
+    --color-heading-eyebrow: var(--theme-primary-text);
     --color-heading-title: var(--theme-color-02-black);
     --color-heading-desc: var(--theme-color-03-gray);
     --bg-feature-card: var(--theme-bg-white);
@@ -292,5 +314,6 @@
     --border-equipment-card-active: var(--theme-brand-main);
     --color-equipment-card-title: var(--theme-color-02-black);
     --color-equipment-card-sub: var(--theme-color-04-gray);
+    --color-equipment-card-metric-label: var(--theme-color-03-gray); // BG Light 위 글자
     --bg-equipment-card-metric: var(--theme-bg-light);
 }

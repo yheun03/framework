@@ -9,26 +9,37 @@
                 'is-disabled': item.disabled,
             }"
         >
-            <button type="button" class="app-accordion__trigger" :disabled="item.disabled" :aria-expanded="isOpen(item.id)" @click="toggle(item.id)">
-                <div class="app-accordion__trigger-content">
-                    <span v-if="prefix" class="app-accordion__prefix">{{ prefix }}</span>
-                    <div class="app-accordion__text">
-                        <div class="app-accordion__title">
-                            <slot v-if="item.titleSlot" :name="item.titleSlot" :item="item" />
-                            <strong v-else>{{ item.title }}</strong>
+            <!-- WAI-ARIA Accordion: 제목 버튼을 heading 으로 감싸 제목 목록으로 탐색할 수 있게 합니다. -->
+            <component :is="tag" class="app-accordion__heading">
+                <button
+                    :id="`${uid}-${item.id}-trigger`"
+                    type="button"
+                    class="app-accordion__trigger"
+                    :disabled="item.disabled"
+                    :aria-expanded="isOpen(item.id)"
+                    :aria-controls="`${uid}-${item.id}-panel`"
+                    @click="toggle(item.id)"
+                >
+                    <div class="app-accordion__trigger-content">
+                        <span v-if="prefix" class="app-accordion__prefix">{{ prefix }}</span>
+                        <div class="app-accordion__text">
+                            <div class="app-accordion__title">
+                                <slot v-if="item.titleSlot" :name="item.titleSlot" :item="item" />
+                                <strong v-else>{{ item.title }}</strong>
+                            </div>
+                            <p v-if="item.description" class="app-accordion__desc">{{ item.description }}</p>
+                            <div v-else-if="item.descriptionSlot" class="app-accordion__desc">
+                                <slot :name="item.descriptionSlot" :item="item" />
+                            </div>
                         </div>
-                        <p v-if="item.description" class="app-accordion__desc">{{ item.description }}</p>
-                        <div v-else-if="item.descriptionSlot" class="app-accordion__desc">
-                            <slot :name="item.descriptionSlot" :item="item" />
-                        </div>
+                        <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
+                            <IconChevronDown />
+                        </span>
                     </div>
-                    <span class="app-accordion__icon" :class="{ 'is-open': isOpen(item.id) }" aria-hidden="true">
-                        <IconChevronDown />
-                    </span>
-                </div>
-            </button>
+                </button>
+            </component>
 
-            <div v-if="isOpen(item.id)" class="app-accordion__panel">
+            <div v-if="isOpen(item.id)" :id="`${uid}-${item.id}-panel`" class="app-accordion__panel" :aria-labelledby="`${uid}-${item.id}-trigger`">
                 <div class="app-accordion__panel-inner">
                     <slot v-if="item.slot" :name="item.slot" :item="item" />
                     <p v-else-if="item.content" class="app-accordion__content">{{ item.content }}</p>
@@ -68,6 +79,8 @@ const props = withDefaults(
         variant?: 'card' | 'line';
         /** 제목 앞 머리글 (예: 'Q.') */
         prefix?: string;
+        /** 제목 버튼을 감싸는 태그 (페이지 제목 순서에 맞게 h2 / h3 / h4 지정) */
+        tag?: 'div' | 'h2' | 'h3' | 'h4';
     }>(),
     {
         modelValue: undefined,
@@ -75,8 +88,11 @@ const props = withDefaults(
         initial: 'none',
         variant: 'card',
         prefix: '',
+        tag: 'div',
     },
 );
+
+const uid = `app-accordion-${useId()}`;
 
 const emit = defineEmits<{
     'update:modelValue': [AppId[]];

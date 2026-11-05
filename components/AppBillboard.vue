@@ -44,7 +44,7 @@ withDefaults(
         /** 이미지 영역 높이 (Figma overlay 500 / card 460) */
         height?: AppWidth;
         /** 타이틀 태그 (페이지 대표 배너면 h2) */
-        tag?: 'h2' | 'h3' | 'strong';
+        tag?: 'h1' | 'h2' | 'h3' | 'strong';
     }>(),
     {
         description: '',

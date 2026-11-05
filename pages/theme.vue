@@ -1,6 +1,6 @@
 <template>
     <div class="page-demo theme-page">
-        <main class="page-demo-main">
+        <div class="page-demo-main">
             <header class="page-demo__header">
                 <h1 class="page-demo__title">{{ locale === 'ko' ? '색상 테마' : 'Color theme' }}</h1>
                 <p class="page-demo__desc">
@@ -243,7 +243,7 @@
                     {{ locale === 'ko' ? '필터 초기화' : 'Clear filters' }}
                 </AppButton>
             </div>
-        </main>
+        </div>
     </div>
 </template>
 
@@ -727,8 +727,10 @@ watch(themeColors, () => nextTick(readDefaultColors));
     &__toolbar-top,
     &__toolbar-bottom {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 12px;
+        min-width: 0;
     }
 
     &__toolbar-top {
@@ -772,7 +774,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             &.is-active {
                 background: var(--theme-gray-0);
                 box-shadow: 0 1px 4px var(--theme-gray-900-alpha-10);
-                color: var(--theme-primary);
+                color: var(--theme-primary-text);
             }
         }
     }
@@ -786,7 +788,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         font-size: 12px;
 
         strong {
-            color: var(--theme-primary);
+            color: var(--theme-primary-text);
             font-size: 18px;
         }
     }
@@ -799,8 +801,8 @@ watch(themeColors, () => nextTick(readDefaultColors));
     &__search {
         display: flex;
         align-items: center;
-        flex: 1;
-        min-width: 220px;
+        flex: 1 1 220px;
+        min-width: 0;
         height: 38px;
         padding-inline: 12px 8px;
         border: 1px solid var(--theme-gray-300);
@@ -854,7 +856,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             white-space: nowrap;
 
             span {
-                color: var(--theme-gray-400);
+                color: var(--theme-gray-500);
                 font-size: 11px;
             }
 
@@ -864,7 +866,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
                 color: var(--theme-primary-700);
 
                 span {
-                    color: var(--theme-primary-500);
+                    color: var(--theme-primary-text);
                 }
             }
         }
@@ -948,15 +950,15 @@ watch(themeColors, () => nextTick(readDefaultColors));
 
         .is-success {
             background: var(--theme-status-success-alpha-12);
-            color: var(--theme-status-success);
+            color: var(--theme-status-success-text);
         }
         .is-warning {
             background: var(--theme-status-warning-alpha-12);
-            color: var(--theme-status-warning);
+            color: var(--theme-status-warning-text);
         }
         .is-error {
             background: var(--theme-status-error-alpha-12);
-            color: var(--theme-status-error);
+            color: var(--theme-status-error-text);
         }
     }
 
@@ -1012,7 +1014,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             &.is-active {
                 background: var(--theme-gray-0);
                 box-shadow: 0 1px 3px var(--theme-gray-900-alpha-10);
-                color: var(--theme-primary);
+                color: var(--theme-primary-text);
                 font-weight: 600;
             }
         }

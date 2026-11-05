@@ -83,7 +83,7 @@ $icon-button-tones: $btn-tones;
 @mixin btn-variant($variant, $color) {
     @if $variant ==fill {
         --btn-bg: var(--bg-button-#{$color});
-        --btn-fg: var(--color-button);
+        --btn-fg: var(--color-button-#{$color}-on-fill, var(--color-button));
         --btn-bd: transparent;
 
         --btn-bg-hover: var(--bg-button-#{$color}-hover);
