@@ -1,117 +1,73 @@
 # Development Guide
 
-이 문서는 어떤 개발자가 와도 같은 기준으로 개발하기 위한 공통 가이드입니다.
+누가 작업해도 같은 결과가 나오도록 지키는 최소 규칙입니다.
 
 ## 1. 기본 원칙
 
-- 기존 코드 스타일, 네이밍, 폴더 구조를 유지합니다.
-- 중복 로직은 `utils`, `composables`, `stores`, `types` 중 알맞은 위치로 모읍니다.
-- 한 화면에서만 쓰는 로직은 page/component 내부에 둡니다.
-- 두 곳 이상에서 반복되면 공통 함수로 분리합니다.
-- 임시 코드, console, 테스트용 코드는 남기지 않습니다.
-- 대규모 구조 변경보다 최소 영향 범위 수정을 우선합니다.
+- 기존 스타일 · 네이밍 · 폴더 구조를 따릅니다.
+- 요청과 관련 없는 코드는 고치지 않습니다.
+- 한 곳에서만 쓰면 그 파일 안에, **두 곳 이상**이면 공통으로 분리합니다.
+- console · 임시 코드는 남기지 않습니다.
 
-## 2. 파일 위치 기준
+## 2. 어디에 둘까
 
-```text
-pages/        URL과 직접 연결되는 화면
-components/   재사용 UI 컴포넌트
-composables/  Vue/Nuxt 상태와 생명주기를 사용하는 재사용 로직
-stores/       여러 화면에서 공유하는 Pinia 상태
-utils/        Vue 의존성이 없는 순수 함수
-types/        여러 파일에서 공유하는 타입
-assets/scss/  스타일
-server/api/   Nitro API
-plugins/      Nuxt 앱 초기화/주입
-```
+| 폴더           | 넣는 것                            |
+| -------------- | ---------------------------------- |
+| `pages/`       | URL 화면 (파일명 kebab-case)       |
+| `components/`  | 재사용 UI (`.vue` 만)              |
+| `composables/` | Vue 기능을 쓰는 재사용 로직 `use*` |
+| `stores/`      | 여러 화면이 공유하는 상태 (Pinia)  |
+| `utils/`       | Vue 와 무관한 순수 함수            |
+| `types/`       | 여러 파일이 공유하는 타입          |
+| `assets/scss/` | 스타일 (아래 SCSS 규칙)            |
 
-## 3. Component 규칙
+## 3. 컴포넌트
 
-- 공통 컴포넌트명은 `App` prefix를 사용합니다. 예: `AppButton.vue`
-- 기능 단위 컴포넌트는 폴더로 묶습니다. 예: `components/AppGrid`, `components/AppProgress`
-- 폴더 안 컴포넌트도 파일명에 폴더명을 포함합니다. 예: `AppGridDownload.vue`, `AppGridCellInput.vue`
-- `index.vue`, `Download.vue`, `Reset.vue`처럼 단독으로 의미가 겹치는 파일명은 사용하지 않습니다.
-- `components/` 안에는 `.vue` 컴포넌트만 둡니다. 타입은 `types/`, 재사용 로직은 `composables/` 또는 `utils/`로 분리합니다.
-- 컴포넌트는 UI 표현과 이벤트 전달에 집중합니다.
-- API 호출, 복잡한 상태, 공통 계산 로직은 컴포넌트 안에 직접 넣지 않습니다.
-- prop/event 타입은 컴포넌트 전용이면 해당 파일 안에 두고, 공유되면 `types/`로 분리합니다.
-- 속성명은 [`COMPONENT_GUIDE.md`](./COMPONENT_GUIDE.md)의 공통 속성 규칙(`width`, `state`, `items`, `tone`, `size`, `variant` 등)을 따르고, 같은 의미의 새 이름을 만들지 않습니다.
+- 공통은 `App` prefix, 기능 묶음은 폴더: `AppGrid/AppGridDownload.vue`
+- 페이지 전용은 `components/Page{이름}/`: `PageDemo/content/…`
+- UI 와 이벤트에 집중하고, API · 복잡한 상태는 넣지 않습니다.
+- 속성 이름은 [COMPONENT_GUIDE](./COMPONENT_GUIDE.md#1-공통-속성) 를 따르고 같은 뜻의 새 이름을 만들지 않습니다.
 
-## 4. Composable 규칙
+## 4. 상태 · API · 타입
 
-- Vue/Nuxt 기능을 사용하는 재사용 로직은 `composables/use*.ts`로 작성합니다.
-- 이름은 `useModalViewer`처럼 역할이 드러나게 작성합니다.
-- 단순히 다른 함수를 한 번 감싸는 composable은 만들지 않습니다.
-- 화면별 composable은 특정 화면에 강하게 묶이지 않도록 입력/출력을 명확히 둡니다.
+- **Store**: 공유 상태만. 화면에서는 action / computed 로만 다룹니다.
+- **API**: `useApi()` 사용, 주소는 `/api/*`. Axios 설정은 `plugins/axios.ts` 에서만.
+- **Type**: 공유 타입은 `types/`, `any` 는 외부 라이브러리 타입이 불분명할 때만.
+- **퍼블리싱 데이터**: 페이지 안에 `// temp 데이터` JSON 으로 작성 (API 연동 시 그 영역만 교체).
 
-## 5. Store 규칙
+## 5. SCSS
 
-- 여러 화면에서 공유하는 상태만 Pinia store로 만듭니다.
-- store는 상태, computed, action 중심으로 작성합니다.
-- 컴포넌트는 store 내부 구조를 직접 가공하지 않고 action/computed를 사용합니다.
-- 단일 화면에서만 필요한 상태는 page/component 내부에 둡니다.
+| 위치               | 용도                                                        |
+| ------------------ | ----------------------------------------------------------- |
+| `abstract/`        | 변수 · 함수 · mixin 만 (CSS 출력 금지 — 모든 SFC 에 주입됨) |
+| `base/`            | 리셋 · 토큰 CSS 변수 · 유틸                                 |
+| `components/base/` | 공통 컴포넌트                                               |
+| `pages/`           | 페이지 전용                                                 |
+| `projects/{key}/`  | 기업 테마 · 전용 스타일                                     |
 
-## 6. Utils 규칙
+- 클래스는 BEM: `.app-tag__label`, `.app-tag--soft`, 상태는 `.is-active`
+- 색은 HEX 대신 의미 변수(`--color-*`, `--bg-*`, `--border-*`), 글꼴은 `@include font(b2, sb)`
+- 반응형은 `@include tablet` (≤1199) / `@include mo` (≤767)
 
-- Vue 의존성이 없는 순수 함수는 `utils/`에 둡니다.
-- 값 변환, 정규화, 포맷팅, 비교 함수는 utils로 분리합니다.
-- 예시:
-    - `utils/css.ts`: CSS size 변환
-    - `utils/progress.ts`: progress value/range 정규화
-    - `utils/upload.ts`: 파일 형식/용량 처리
-    - `utils/section.ts`: section layout 값 변환
+## 6. i18n
 
-## 7. API 규칙
+- 화면 문구는 `i18n/ko.ts` · `en.ts` 에 같은 key 로 추가하고 `useI18nText()` 로 사용합니다.
+- 새 페이지를 LNB 에 넣을 때는 `stores/navigation.ts` 메뉴 + `nav.*` 문구를 함께 추가합니다.
 
-- API 호출은 직접 Axios를 쓰지 않고 `useApi()`를 사용합니다.
-- endpoint는 `/api/*` 형식을 사용합니다.
-- Axios 설정은 `plugins/axios.ts`에서만 수정합니다.
-- 서버/클라이언트 요청 차이는 `composables/useApi.ts`에서 처리합니다.
+## 7. 접근성 · SEO
 
-```ts
-const api = useApi();
-const data = await api.get<MyType>('/api/example');
-```
+| 규칙                 | 방법                                                                             |
+| -------------------- | -------------------------------------------------------------------------------- |
+| 페이지마다 `h1` 하나 | 섹션은 `h2` → `h3` 순서 (`AppSection` · `AppAccordion` 의 `tag`)                 |
+| 입력에는 이름        | `label` 또는 `aria-label`. `AppFormField` 안에서는 자동 연결                     |
+| 아이콘 버튼          | `AppIconButton aria-label="닫기"`                                                |
+| 글자색 대비 4.5:1    | 브랜드 · 상태색을 글자에 쓸 때는 `--theme-primary-text`, `--theme-status-*-text` |
+| 포커스 표시          | 전역 `:focus-visible` 유지 (`outline: none` 금지)                                |
+| 문서 제목 · 설명     | 데모는 `useDemoI18n()`, 그 외는 `useHead({ title })` (없으면 LNB 메뉴명)         |
 
-## 8. Type 규칙
+## 8. 작업 후 확인
 
-- 두 곳 이상에서 쓰는 타입은 `types/`로 분리합니다.
-- 컴포넌트 prop/event 계약으로 공유되는 타입도 `types/`에 둡니다.
-- 한 파일에서만 쓰는 타입은 해당 파일 내부에 둡니다.
-- `any`는 외부 라이브러리 타입이 불명확한 경우에만 제한적으로 사용합니다.
-
-## 9. SCSS 규칙
-
-- 공통 컴포넌트 스타일은 `assets/scss/components/base/`에 둡니다.
-- page 전용 스타일은 `assets/scss/pages/`에 둡니다.
-- 변수/토큰은 `assets/scss/abstract/` 기준을 따릅니다.
-- `abstract/`에는 변수·함수·mixin만 둡니다. CSS를 출력하는 코드(`:root`, 선택자, `/* */` 주석)는 `base/` 등에 둡니다. (abstract는 모든 Vue SFC에 `additionalData`로 주입되어, 출력이 있으면 컴포넌트마다 중복됩니다.)
-- 기존 class naming 방식을 유지합니다.
-- 컴포넌트 구조 변경 없이 스타일만 해결 가능한 경우 SCSS에서 처리합니다.
-
-## 10. Page 규칙
-
-- `pages/` 파일명은 URL이 되므로 kebab-case를 사용합니다.
-- demo 페이지는 컴포넌트 사용 예시만 담당합니다.
-- 실제 업무 로직과 demo 전용 상태를 섞지 않습니다.
-- 특정 page 안에서만 쓰는 modal, renderer, content는 `components/Page{페이지명}/modal`, `renderer`, `content` 폴더에 둡니다. 예: `components/PageDemo/renderer`
-- 페이지 전용 컴포넌트 파일명은 `PageDemoModalRendererExample.vue`처럼 역할이 드러나게 작성합니다.
-- 새 페이지가 LNB에 필요하면 navigation store와 i18n label을 함께 추가합니다.
-
-## 11. i18n 규칙
-
-- 텍스트 key는 `i18n/ko.ts`, `i18n/en.ts`를 함께 맞춥니다.
-- 화면에서는 `useI18nText()` 또는 기존 i18n composable을 사용합니다.
-- label key는 메뉴, 탭, demo title에서 같은 기준으로 관리합니다.
-
-## 12. 개발 체크리스트
-
-```text
-[ ] 기존 구조와 네이밍을 유지했는가
-[ ] 중복 로직을 새로 만들지 않았는가
-[ ] 공통 함수/store/composable 위치가 적절한가
-[ ] page/component에 API/상태/가공 로직이 과하게 들어가지 않았는가
-[ ] 타입 위치가 적절한가
-[ ] 임시 코드와 console이 남아 있지 않은가
-[ ] 변경 범위가 요청과 직접 관련된 파일로 제한되었는가
-```
+- [ ] 관련 없는 파일을 건드리지 않았다
+- [ ] 중복 로직 · 불필요한 composable / util 을 만들지 않았다
+- [ ] 문구는 i18n, 색은 의미 변수를 썼다
+- [ ] 키보드(Tab)로 조작 가능하고, 360px 에서 가로 스크롤이 없다
