@@ -108,9 +108,26 @@ const commonProps = [
     {
         id: 16,
         name: 'boolean',
-        values: 'disabled · readonly · loading · active · required · clearable · closable · multiple',
-        desc: '상태/기능 on-off 속성',
+        values: 'disabled · readonly · loading · active · required · clearable · closable · multiple · clickable · fixed',
+        desc: '상태/기능 on-off 속성 (active = 선택·강조·찜 등 "켜짐" 상태)',
     },
+    {
+        id: 17,
+        name: 'show*',
+        values: 'showValue · showIcon · showLabel · showTotal · showCount · showHome',
+        desc: '요소 노출 여부 boolean 은 show 로 시작',
+    },
+    {
+        id: 18,
+        name: '*Text',
+        values: 'emptyText · triggerText · searchText · resetText · moreText · categoryText',
+        desc: '버튼·안내 문구 변경 (데이터 라벨이 아닌 UI 문구)',
+    },
+    { id: 19, name: 'eyebrow', values: 'string', desc: '제목 위 짧은 문구 (Billboard, Heading, PromotionCard)' },
+    { id: 20, name: 'direction', values: 'horizontal | vertical', desc: '배치 방향 (Tabs, Steps)' },
+    { id: 21, name: 'align', values: 'left | center | right', desc: '텍스트 정렬 (Billboard, LineBanner, Heading)' },
+    { id: 22, name: 'progress', values: 'number (0~100)', desc: '진행률·가동률 표시 (StatCard, EquipmentCard)' },
+    { id: 23, name: 'image · to · href', values: 'string', desc: '이미지 경로 / 내부 링크(NuxtLink) / 외부 링크' },
 ];
 
 const migrationColumns: AppDataTableColumn[] = [
@@ -131,5 +148,14 @@ const migrations = [
     { id: 9, component: 'AppUpload*', before: 'maxSizeBytes', after: 'maxSize' },
     { id: 10, component: 'AppChart', before: "variant='semi-doughnut'", after: "type='semi-doughnut'" },
     { id: 11, component: 'AppBadge (미구현)', before: 'AppBadge color', after: 'AppTag tone' },
+    { id: 12, component: 'AppTabs', before: 'orientation', after: 'direction (AppSteps 와 통일)' },
+    { id: 13, component: 'AppBreadcrumb', before: 'homeIcon', after: 'showHome' },
+    { id: 14, component: 'AppTooltip', before: 'text', after: 'label' },
+    { id: 15, component: 'AppProductCard', before: 'name', after: 'title' },
+    { id: 16, component: 'AppPromotionCard', before: 'label', after: 'eyebrow' },
+    { id: 17, component: 'AppPricingCard', before: 'features', after: 'items' },
+    { id: 18, component: 'AppFeatureCard', before: "variant='line' | 'box' / moreLabel", after: "variant='outline' | 'soft' / moreText" },
+    { id: 19, component: 'AppSiteHeader', before: 'categoryLabel', after: 'categoryText' },
+    { id: 20, component: 'AppEquipmentCard', before: 'value / valueLabel', after: 'progress / progressLabel' },
 ];
 </script>

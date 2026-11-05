@@ -9,10 +9,10 @@
             <span v-if="unit" class="app-pricing-card__unit">{{ unit }}</span>
         </p>
 
-        <ul v-if="features.length" class="app-pricing-card__features">
-            <li v-for="feature in features" :key="feature" class="app-pricing-card__feature">
+        <ul v-if="items.length" class="app-pricing-card__features">
+            <li v-for="item in items" :key="item" class="app-pricing-card__feature">
                 <IconCheck class="app-pricing-card__check" />
-                {{ feature }}
+                {{ item }}
             </li>
         </ul>
 
@@ -37,14 +37,15 @@ withDefaults(
         /** 원 / 월, 문의 등 가격 뒤 단위 */
         unit?: string;
         description?: string;
-        features?: string[];
+        /** 포함 항목 (목록 데이터는 모든 컴포넌트에서 items) */
+        items?: string[];
         badge?: string;
         active?: boolean;
     }>(),
     {
         unit: '',
         description: '',
-        features: () => [],
+        items: () => [],
         badge: '',
         active: false,
     },

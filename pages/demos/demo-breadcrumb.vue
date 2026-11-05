@@ -33,10 +33,10 @@
                 <!-- HomeIcon -->
                 <PageDemoSection class="page-demo-section" title="HomeIcon" description="첫 항목 앞 홈 아이콘입니다.">
                     <ul class="page-demo-hint-list">
-                        <li><b>homeIcon</b> : 기본값 true</li>
+                        <li><b>showHome</b> : 홈 아이콘 노출 (기본값 true)</li>
                     </ul>
 
-                    <AppBreadcrumb :items="items" :home-icon="false" />
+                    <AppBreadcrumb :items="items" :show-home="false" />
                 </PageDemoSection>
 
                 <!-- Size -->

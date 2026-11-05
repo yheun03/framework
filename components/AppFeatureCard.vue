@@ -9,7 +9,7 @@
         </h3>
         <p v-if="description" class="app-feature-card__desc">{{ description }}</p>
         <span v-if="to" class="app-feature-card__more" aria-hidden="true">
-            {{ moreLabel }}
+            {{ moreText }}
             <IconArrowRight />
         </span>
     </article>
@@ -45,7 +45,7 @@ export type AppFeatureCardIcon = keyof typeof icons;
 
 /**
  * AppFeatureCard - 사업 영역 / 제품 특징 / 서비스 소개 카드 (기업·제품 홈페이지 확장)
- * variant : line(라인, 기본) / box(BG Light 면) / plain(테두리 없음)
+ * variant : outline(라인, 기본) / soft(BG Light 면) / plain(테두리 없음) - AppButton · AppTag 와 같은 값
  * to 가 있으면 카드 전체가 클릭 영역이 되고 '자세히 보기' 가 노출됩니다.
  */
 withDefaults(
@@ -53,16 +53,16 @@ withDefaults(
         title: string;
         description?: string;
         icon?: AppFeatureCardIcon | '';
-        variant?: 'line' | 'box' | 'plain';
+        variant?: 'outline' | 'soft' | 'plain';
         to?: string;
-        moreLabel?: string;
+        moreText?: string;
     }>(),
     {
         description: '',
         icon: '',
-        variant: 'line',
+        variant: 'outline',
         to: '',
-        moreLabel: '자세히 보기',
+        moreText: '자세히 보기',
     },
 );
 </script>

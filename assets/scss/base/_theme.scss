@@ -719,6 +719,15 @@
     --bg-lnb-lnb-active-color: var(--theme-lnb-active-color);
     --bg-lnb-lnb-hover-color: var(--theme-lnb-hover-color);
     --color-lnb: var(--theme-gray-0);
+    --color-lnb-muted: var(--theme-gray-0-alpha-56);
+    --color-lnb-accent: var(--theme-primary);
+    --bg-lnb-search: var(--theme-gray-0-alpha-8);
+    --bg-lnb-search-focus: var(--theme-gray-0-alpha-12);
+    --border-lnb-search: var(--theme-gray-0-alpha-12);
+    --border-lnb-search-focus: var(--theme-gray-0-alpha-35);
+    --bg-lnb-count: var(--theme-gray-0-alpha-10);
+    --bg-lnb-mark: color-mix(in srgb, var(--theme-primary) 35%, transparent);
+    --color-lnb-mark: var(--theme-gray-0);
     --color-lnb-gray-0-alpha-76: var(--theme-gray-0-alpha-76);
     --color-lnb-gray-0-alpha-86: var(--theme-gray-0-alpha-86);
     --border-lnb: var(--theme-gray-0-alpha-8);

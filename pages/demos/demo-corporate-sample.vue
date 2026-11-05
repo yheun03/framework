@@ -84,7 +84,7 @@
                                 v-for="news in newsList"
                                 :key="news.title"
                                 :image="base + news.image"
-                                :label="news.label"
+                                :eyebrow="news.label"
                                 :title="news.title"
                                 :period="news.date"
                                 rounded

@@ -14,7 +14,7 @@
                     description="Figma 15. 상품 썸네일입니다. 마우스 오버 또는 Tab 포커스 시 미리보기 · 장바구니 · 찜 버튼이 나타납니다."
                 >
                     <ul class="page-demo-hint-list">
-                        <li><b>brand · name · price · discount · originalPrice</b> : 상품 정보 (할인율은 브랜드 컬러)</li>
+                        <li><b>brand · title · price · discount · originalPrice</b> : 상품 정보 (할인율은 브랜드 컬러)</li>
                         <li><b>rating · reviewCount</b> : AppRating(readonly) · <b>tags</b> : 해시태그</li>
                         <li><b>v-model:active</b> : 찜 상태 · <b>@view</b> / <b>@cart</b></li>
                         <li><b>size</b> : md(3·4단) / sm(5·6단, 상품명 2줄)</li>
@@ -27,7 +27,7 @@
                             v-model:active="product.wish"
                             :image="base + product.image"
                             :brand="product.brand"
-                            :name="product.name"
+                            :title="product.name"
                             :price="product.price"
                             :discount="product.discount"
                             :original-price="product.originalPrice"
@@ -62,7 +62,7 @@
                             size="sm"
                             :image="base + product.image"
                             :brand="product.brand"
-                            :name="product.name"
+                            :title="product.name"
                             :price="product.price"
                             :discount="product.discount"
                             :original-price="product.originalPrice"
@@ -89,7 +89,7 @@
                                 rounded
                                 :image="base + product.image"
                                 :brand="product.brand"
-                                :name="product.name"
+                                :title="product.name"
                                 :price="product.price"
                                 :discount="product.discount"
                             />
@@ -105,7 +105,7 @@
                 >
                     <ul class="page-demo-hint-list">
                         <li><b>ratio</b> : wide(16:9, 기본) / standard(4:3)</li>
-                        <li><b>label · title · period</b> : Exclusive / 제목 / 기간 · <b>rounded</b> · <b>to</b></li>
+                        <li><b>eyebrow · title · period</b> : Exclusive / 제목 / 기간 · <b>rounded</b> · <b>to</b></li>
                     </ul>
 
                     <div class="demo-thumb-grid demo-thumb-grid--3">
@@ -113,7 +113,7 @@
                             v-for="promo in promotions"
                             :key="promo.id"
                             :image="base + promo.image"
-                            :label="promo.label"
+                            :eyebrow="promo.label"
                             :title="promo.title"
                             :period="promo.period"
                             to="#"
@@ -126,7 +126,7 @@
                             ratio="standard"
                             rounded
                             :image="base + promo.image"
-                            :label="promo.label"
+                            :eyebrow="promo.label"
                             :title="promo.title"
                             :period="promo.period"
                         />

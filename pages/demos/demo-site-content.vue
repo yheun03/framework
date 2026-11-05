@@ -40,9 +40,9 @@
                     description="사업 영역 · 제품 특징 · 서비스 소개 카드입니다. to 가 있으면 카드 전체가 링크가 되고 hover / focus 상태가 표시됩니다."
                 >
                     <ul class="page-demo-hint-list">
-                        <li><b>variant</b> : line(기본) / box / plain</li>
+                        <li><b>variant</b> : outline(기본) / soft / plain</li>
                         <li><b>icon</b> : bulb · rocket · shield · chart · cube · globe · building · headset · factory</li>
-                        <li><b>to · moreLabel</b> : 링크 / '자세히 보기' 문구</li>
+                        <li><b>to · moreText</b> : 링크 / '자세히 보기' 문구</li>
                     </ul>
 
                     <div class="ds-grid">
@@ -57,7 +57,7 @@
                         />
                     </div>
                     <div class="ds-grid mt-24">
-                        <AppFeatureCard class="ds-col-4" variant="box" icon="globe" title="box" description="BG Light 면 타입입니다." />
+                        <AppFeatureCard class="ds-col-4" variant="soft" icon="globe" title="soft" description="BG Light 면 타입입니다." />
                         <AppFeatureCard class="ds-col-4" variant="plain" icon="cube" title="plain" description="테두리 없는 타입입니다." />
                         <AppFeatureCard class="ds-col-4" title="아이콘 없음" description="icon 을 비우면 아이콘 영역이 사라집니다." />
                     </div>
@@ -70,7 +70,7 @@
                     description="요금제 / 라이선스 카드입니다. 추천 플랜은 active 로 브랜드 라인과 badge 를 표시합니다."
                 >
                     <ul class="page-demo-hint-list">
-                        <li><b>title · description · price · unit · features</b></li>
+                        <li><b>title · description · price · unit · items</b></li>
                         <li><b>active · badge</b> : 추천 강조 · <b>#actions</b> : AppButton</li>
                     </ul>
 
@@ -83,7 +83,7 @@
                             :description="plan.description"
                             :price="plan.price"
                             :unit="plan.unit"
-                            :features="plan.features"
+                            :items="plan.items"
                             :badge="plan.badge"
                             :active="plan.active"
                         >
@@ -129,7 +129,7 @@ const plans = [
         description: '소규모 라인 도입',
         price: 290000,
         unit: '원 / 월',
-        features: ['라인 1개', '기본 대시보드', '이메일 지원'],
+        items: ['라인 1개', '기본 대시보드', '이메일 지원'],
         badge: '',
         active: false,
         action: '시작하기',
@@ -139,7 +139,7 @@ const plans = [
         description: '가장 많이 선택한 플랜',
         price: 790000,
         unit: '원 / 월',
-        features: ['라인 5개', '품질 · 설비 모듈', '전담 매니저', '월간 리포트'],
+        items: ['라인 5개', '품질 · 설비 모듈', '전담 매니저', '월간 리포트'],
         badge: '추천',
         active: true,
         action: '상담 신청',
@@ -149,7 +149,7 @@ const plans = [
         description: '전사 구축 / 온프레미스',
         price: '별도 문의',
         unit: '',
-        features: ['라인 무제한', 'ERP 연동', '커스터마이징', '24시간 지원'],
+        items: ['라인 무제한', 'ERP 연동', '커스터마이징', '24시간 지원'],
         badge: '',
         active: false,
         action: '문의하기',

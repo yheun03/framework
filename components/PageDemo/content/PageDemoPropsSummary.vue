@@ -1,37 +1,106 @@
 <template>
-    <AppAccordion v-if="summary" class="page-demo-props" :items="summaryItems" initial="all">
-        <template #props>
-            <div class="page-demo-prop-table" role="table" aria-label="컴포넌트 속성 목록">
-                <div class="page-demo-prop-head" role="row">
-                    <span role="columnheader">속성</span>
-                    <span role="columnheader">타입</span>
-                    <span role="columnheader">기본값</span>
-                    <span role="columnheader">설명</span>
-                    <span role="columnheader">사용 가능한 값</span>
-                </div>
-
-                <div v-for="prop in summary.props" :key="prop.name" class="page-demo-prop-row" role="row">
-                    <div class="page-demo-prop-title" role="cell" data-label="속성">
-                        <code class="page-demo-prop-name">{{ prop.name }}</code>
-                        <span v-if="prop.required" class="page-demo-prop-required">required</span>
-                    </div>
-                    <code class="page-demo-prop-type" role="cell" data-label="타입">{{ getPropType(prop) }}</code>
-                    <code class="page-demo-prop-default" role="cell" data-label="기본값">{{ prop.default ?? '—' }}</code>
-                    <span class="page-demo-prop-desc" role="cell" data-label="설명">{{ prop.description }}</span>
-                    <div class="page-demo-prop-chip-list" role="cell" data-label="사용 가능한 값">
-                        <code v-for="value in prop.values ?? []" :key="`${prop.name}-${value}`" class="page-demo-prop-chip">
-                            {{ value }}
-                        </code>
-                        <span v-if="!prop.values?.length">—</span>
-                    </div>
-                </div>
+    <section v-if="summary" class="page-demo-props" aria-labelledby="page-demo-props-title">
+        <header class="page-demo-props__header">
+            <div class="page-demo-props__heading">
+                <h2 id="page-demo-props-title" class="page-demo-props__title">
+                    속성 (Props)
+                    <span class="page-demo-props__total">{{ summary.props.length }}</span>
+                </h2>
+                <AppIconButton
+                    class="page-demo-props__collapse"
+                    :class="{ 'is-collapsed': collapsed }"
+                    :aria-label="collapsed ? '속성 패널 펼치기' : '속성 패널 접기'"
+                    :aria-expanded="!collapsed"
+                    aria-controls="page-demo-props-body"
+                    :size="28"
+                    :icon-size="16"
+                    @click="collapsed = !collapsed"
+                >
+                    <IconChevronDown />
+                </AppIconButton>
             </div>
-        </template>
-    </AppAccordion>
+            <p class="page-demo-props__desc">{{ summary.description }}</p>
+        </header>
+
+        <div v-show="!collapsed" id="page-demo-props-body" class="page-demo-props__body">
+            <div class="page-demo-props__search">
+                <label class="sr-only" for="page-demo-props-search">속성 검색</label>
+                <IconSearch class="page-demo-props__search-icon" />
+                <input
+                    id="page-demo-props-search"
+                    v-model="keyword"
+                    class="page-demo-props__search-input"
+                    type="search"
+                    placeholder="속성 · 값 · 설명 검색"
+                    autocomplete="off"
+                    @keydown.esc="keyword = ''"
+                />
+            </div>
+
+            <ul class="page-demo-props__legend" aria-label="표시 안내">
+                <li><span class="page-demo-props__badge page-demo-props__badge--common">공통</span> 모든 컴포넌트에서 같은 이름·값</li>
+                <li><span class="page-demo-props__chip is-default">기본값</span> 지정하지 않으면 적용</li>
+                <li>값을 누르면 <code>속성="값"</code> 이 복사됩니다.</li>
+            </ul>
+
+            <p v-if="!groups.length" class="page-demo-props__empty" role="status">'{{ keyword }}' 와 일치하는 속성이 없습니다.</p>
+
+            <section v-for="group in groups" :key="group.name || 'main'" class="page-demo-props__group">
+                <h3 v-if="group.name || groups.length > 1" class="page-demo-props__group-title">
+                    <code v-if="group.name">&lt;{{ group.name }}&gt;</code>
+                    <template v-else>위 컴포넌트 공통</template>
+                    <span>{{ group.items.length }}</span>
+                </h3>
+
+                <dl class="page-demo-props__list">
+                    <div v-for="prop in group.items" :key="prop.name" class="page-demo-props__item">
+                        <dt class="page-demo-props__name-row">
+                            <code class="page-demo-props__name">{{ prop.label }}</code>
+                            <span v-if="prop.kind" class="page-demo-props__kind">{{ prop.kind }}</span>
+                            <span v-if="prop.required" class="page-demo-props__badge page-demo-props__badge--required">필수</span>
+                            <NuxtLink
+                                v-if="prop.common"
+                                class="page-demo-props__badge page-demo-props__badge--common"
+                                to="/demos/demo-guide"
+                                title="공통 속성 규칙 보기"
+                                >공통</NuxtLink
+                            >
+                        </dt>
+                        <dd class="page-demo-props__text">{{ prop.description }}</dd>
+                        <dd class="page-demo-props__meta">
+                            <template v-if="prop.values?.length">
+                                <span class="sr-only">사용 가능한 값</span>
+                                <button
+                                    v-for="value in prop.values"
+                                    :key="value"
+                                    type="button"
+                                    class="page-demo-props__chip"
+                                    :class="{ 'is-default': isDefault(prop, value) }"
+                                    :title="`${prop.copyName}=&quot;${value}&quot; 복사`"
+                                    @click="copy(prop, value)"
+                                >
+                                    {{ value }}
+                                    <span v-if="isDefault(prop, value)" class="page-demo-props__chip-note">기본</span>
+                                </button>
+                            </template>
+                            <template v-else>
+                                <code class="page-demo-props__type">{{ prop.type || '—' }}</code>
+                                <span v-if="prop.default" class="page-demo-props__default">
+                                    기본 <code>{{ prop.default }}</code>
+                                </span>
+                            </template>
+                        </dd>
+                    </div>
+                </dl>
+            </section>
+
+            <NuxtLink class="page-demo-props__guide" to="/demos/demo-guide">공통 속성 규칙 전체 보기 <IconArrowRight /></NuxtLink>
+        </div>
+    </section>
 </template>
 
 <script setup lang="ts">
-import type { AppAccordionItem } from '~/components/AppAccordion.vue';
+import { IconArrowRight, IconChevronDown, IconSearch } from '~/components/icons';
 
 type DemoProp = {
     name: string;
@@ -91,6 +160,7 @@ const summaries: Record<string, DemoSummary> = {
         description: '홈페이지 GNB / Footer / MO 독바입니다.',
         props: [
             { name: 'AppSiteHeader.items', description: '메뉴 - label / to / active / divider', type: 'AppSiteHeaderItem[]', required: true },
+            { name: 'AppSiteHeader.categoryText', description: '카테고리 버튼 문구', type: 'string', default: "'Category'" },
             { name: 'AppSiteHeader.logo', description: '텍스트 로고 (#logo 슬롯 가능)', type: 'string', default: "'LOGO NAME'" },
             { name: 'AppSiteHeader.searchPlaceholder', description: '비우면 검색창 숨김 / @search', type: 'string' },
             { name: 'AppSiteHeader.sticky', description: '상단 고정', type: 'boolean', default: 'false' },
@@ -122,14 +192,14 @@ const summaries: Record<string, DemoSummary> = {
     'demo-thumbnail': {
         description: '상품 / 프로모션 썸네일 카드입니다.',
         props: [
-            { name: 'AppProductCard.name · price', description: '상품명 / 판매가', type: 'string / number', required: true },
+            { name: 'AppProductCard.title · price', description: '상품명 / 판매가', type: 'string / number', required: true },
             { name: 'AppProductCard.brand · discount · originalPrice', description: '브랜드 / 할인율(%) / 정가', type: 'string / number' },
             { name: 'AppProductCard.rating · reviewCount · tags', description: '평점 / 리뷰 수 / 해시태그', type: 'number / string[]' },
             { name: 'AppProductCard.size', description: 'md(3·4단) / sm(5·6단)', values: ['sm', 'md'], default: 'md' },
             { name: 'AppProductCard.rounded', description: '썸네일 크기별 라운드', type: 'boolean', default: 'false' },
             { name: 'AppProductCard v-model:active', description: '찜 상태 (@view · @cart)', type: 'boolean', default: 'false' },
             { name: 'AppPromotionCard.ratio', description: '16:9 / 4:3', values: ['wide', 'standard'], default: 'wide' },
-            { name: 'AppPromotionCard.label · title · period', description: 'Exclusive / 제목 / 기간', type: 'string' },
+            { name: 'AppPromotionCard.eyebrow · title · period', description: 'Exclusive / 제목 / 기간', type: 'string' },
         ],
     },
     'demo-site-content': {
@@ -138,15 +208,15 @@ const summaries: Record<string, DemoSummary> = {
             { name: 'AppHeading.size', description: 'T3 24 / H3 32 / H2 40', values: ['sm', 'md', 'lg'], default: 'md' },
             { name: 'AppHeading.align', description: '정렬 (#actions 는 left 에서 우측)', values: ['center', 'left'], default: 'center' },
             { name: 'AppHeading.eyebrow · description · tag', description: '라벨 / 설명 / 제목 태그', type: 'string' },
-            { name: 'AppFeatureCard.variant', description: '카드 스타일', values: ['line', 'box', 'plain'], default: 'line' },
+            { name: 'AppFeatureCard.variant', description: '카드 스타일', values: ['outline', 'soft', 'plain'], default: 'outline' },
             {
                 name: 'AppFeatureCard.icon',
                 description: '아이콘 키',
                 values: ['bulb', 'rocket', 'shield', 'chart', 'cube', 'globe', 'building', 'headset', 'factory'],
             },
-            { name: 'AppFeatureCard.to', description: '카드 전체 링크', type: 'string' },
+            { name: 'AppFeatureCard.to · moreText', description: '카드 전체 링크 / 자세히 보기 문구', type: 'string' },
             {
-                name: 'AppPricingCard.price · unit · features',
+                name: 'AppPricingCard.price · unit · items',
                 description: '가격 / 단위 / 포함 항목',
                 type: 'number | string / string[]',
                 required: true,
@@ -159,7 +229,12 @@ const summaries: Record<string, DemoSummary> = {
         props: [
             { name: 'title · code', description: '설비명 / 설비 코드', type: 'string', required: true },
             { name: 'status', description: '가동 / 대기 / 정지 / 점검 / 미연결', values: ['run', 'idle', 'stop', 'check', 'off'], default: 'run' },
-            { name: 'value · valueLabel', description: '대표 지표(%) / 라벨', type: 'number / string', default: "'가동률'" },
+            {
+                name: 'progress · progressLabel',
+                description: '대표 지표(%) / 라벨 (AppStatCard 와 같은 이름)',
+                type: 'number / string',
+                default: "'가동률'",
+            },
             { name: 'items', description: '하단 지표 (label, value)', type: 'Array' },
             { name: 'active', description: '선택 강조', type: 'boolean', default: 'false' },
             { name: '#actions', description: '하단 버튼', type: 'Vue slot' },
@@ -440,7 +515,7 @@ const summaries: Record<string, DemoSummary> = {
             },
             { name: 'columns', description: 'grid variant 한 줄 칸 수', type: 'number', default: '6' },
             { name: 'items.image', description: '오브젝트(이미지) 탭 썸네일', type: 'string' },
-            { name: 'orientation', description: '탭 배치 방향', values: ['horizontal', 'vertical'], default: 'horizontal' },
+            { name: 'direction', description: '탭 배치 방향 (AppSteps 와 같은 이름)', values: ['horizontal', 'vertical'], default: 'horizontal' },
             { name: 'size', description: '탭 크기', values: ['sm', 'md', 'lg'], default: 'md' },
             { name: 'stretch', description: '탭 너비 채움', type: 'boolean', default: 'false' },
         ],
@@ -540,7 +615,7 @@ const summaries: Record<string, DemoSummary> = {
     'demo-tooltip': {
         description: '대상에 마우스를 올리거나 클릭하면 말풍선을 띄웁니다.',
         props: [
-            { name: 'text', description: '말풍선 문구', type: 'string' },
+            { name: 'label', description: '말풍선 문구', type: 'string' },
             { name: '#content', description: '문구 슬롯 (<em> 강조)', type: 'Vue slot' },
             { name: 'variant', description: '스타일', values: ['dark', 'light', 'outline'], default: 'dark' },
             { name: 'shape', description: '모서리', values: buttonShapes, default: 'square' },
@@ -752,7 +827,7 @@ const summaries: Record<string, DemoSummary> = {
         props: [
             { name: 'items', description: '{ label, to } - to 가 있으면 AppTextButton 링크', type: 'AppBreadcrumbItem[]', required: true },
             { name: 'separator', description: '문자 구분자 (미지정 시 > 아이콘)', type: 'string' },
-            { name: 'homeIcon', description: '홈 아이콘', type: 'boolean', default: 'true' },
+            { name: 'showHome', description: '첫 항목 홈 아이콘 노출', type: 'boolean', default: 'true' },
             { name: 'size', description: '크기', values: ['sm', 'md'], default: 'md' },
         ],
     },
@@ -806,26 +881,121 @@ const summaries: Record<string, DemoSummary> = {
 const demoKey = computed(() => String(route.path.split('/').filter(Boolean).pop() ?? ''));
 const summary = computed(() => summaries[demoKey.value]);
 
-function getPropType(prop: DemoProp) {
-    if (prop.type) return prop.type;
-    if (!prop.values?.length) return '—';
-    if (prop.values.length === 2 && prop.values.includes('true') && prop.values.includes('false')) {
-        return 'boolean';
+/* ----------------------------------------
+   표시용 가공
+   - 'AppButton.variant' → <AppButton> 그룹의 variant
+   - 공통 속성(COMPONENT_GUIDE 1. 공통 속성 규칙)은 '공통' 배지
+---------------------------------------- */
+const COMMON_PROPS = new Set([
+    'v-model',
+    'v-model:open',
+    'items',
+    'label',
+    'title',
+    'description',
+    'hint',
+    'size',
+    'width',
+    'height',
+    'tone',
+    'variant',
+    'shape',
+    'state',
+    'placement',
+    'initial',
+    'direction',
+    'align',
+    'eyebrow',
+    'progress',
+    'image',
+    'to',
+    'href',
+    'disabled',
+    'readonly',
+    'loading',
+    'active',
+    'required',
+    'clearable',
+    'closable',
+    'multiple',
+    'clickable',
+    'fixed',
+]);
+
+type DisplayProp = DemoProp & {
+    label: string;
+    copyName: string;
+    kind: string;
+    common: boolean;
+};
+
+function getKind(label: string, type?: string) {
+    if (label.startsWith('#') || type === 'Vue slot') return '슬롯';
+    if (label.startsWith('@')) return '이벤트';
+    if (label.startsWith('.')) return 'CSS 클래스';
+    if (type?.startsWith('SCSS')) return 'SCSS';
+    return '';
+}
+
+function toDisplayProp(prop: DemoProp): DisplayProp & { group: string } {
+    const matched = prop.name.match(/^(App[A-Za-z]+)[.\s](.+)$/);
+    const group = matched?.[1] ?? '';
+    const label = (matched?.[2] ?? prop.name).trim();
+    const firstName = label.split(/\s*[·/]\s*/)[0];
+
+    return {
+        ...prop,
+        type: prop.type ?? getPropType(prop),
+        group,
+        label,
+        copyName: firstName.replace(/^#|^@/, ''),
+        kind: getKind(label, prop.type),
+        common: COMMON_PROPS.has(firstName) || /^show[A-Z]/.test(firstName),
+    };
+}
+
+const keyword = ref('');
+const collapsed = ref(false);
+
+const groups = computed(() => {
+    if (!summary.value) return [];
+    const query = keyword.value.trim().toLowerCase();
+    const result: { name: string; items: DisplayProp[] }[] = [];
+
+    for (const prop of summary.value.props.map(toDisplayProp)) {
+        const text = [prop.name, prop.description, prop.type, prop.default, ...(prop.values ?? [])].join(' ').toLowerCase();
+        if (query && !text.includes(query)) continue;
+
+        let group = result.find((item) => item.name === prop.group);
+        if (!group) {
+            group = { name: prop.group, items: [] };
+            result.push(group);
+        }
+        group.items.push(prop);
     }
 
+    return result;
+});
+
+function getPropType(prop: DemoProp) {
+    if (prop.type) return prop.type;
+    if (!prop.values?.length) return '';
     return prop.values.map((value) => `'${value}'`).join(' | ');
 }
 
-const summaryItems = computed<AppAccordionItem[]>(() =>
-    summary.value
-        ? [
-              {
-                  id: 'props',
-                  title: 'Props',
-                  description: summary.value.description,
-                  slot: 'props',
-              },
-          ]
-        : [],
-);
+function isDefault(prop: DemoProp, value: string) {
+    return prop.default?.replace(/'/g, '') === value;
+}
+
+const toast = useToast();
+
+async function copy(prop: DisplayProp, value: string) {
+    const text = `${prop.copyName}="${value}"`;
+    try {
+        await navigator.clipboard.writeText(text);
+        toast.success(`${text} 복사됨`);
+    } catch {
+        toast.show(text);
+    }
+}
 </script>
