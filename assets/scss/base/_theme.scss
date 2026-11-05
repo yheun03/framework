@@ -2,6 +2,7 @@
 @use '@project-theme' as project;
 @use '../abstract/tokens' as ds;
 @use '../abstract/theme' as *;
+@use '../abstract/palette' as palette;
 
 // ============================================
 // 런타임 기본 토큰
@@ -26,6 +27,15 @@
     --theme-gradient-sub-1-sub-2: linear-gradient(90deg, var(--theme-brand-sub-1) 0%, var(--theme-brand-sub-2) 100%);
     --theme-dark-home-end: #11161f;
 
+    // 브랜드 그라디언트 (projects/{key}/_theme.scss 의 $brand-gradient, 없으면 tertiary → primary 134deg)
+    // 설정 페이지에서 primary / tertiary 를 바꾸면 함께 바뀝니다.
+    --theme-gradient-brand: #{project-value(
+            project.$brand-gradient,
+            linear-gradient(134deg, var(--theme-tertiary) 1.83%, var(--theme-primary) 98.55%)
+        )};
+    --theme-gradient-brand-hover: linear-gradient(rgb(0 0 0 / 8%), rgb(0 0 0 / 8%)), var(--theme-gradient-brand);
+    --theme-gradient-brand-active: linear-gradient(rgb(0 0 0 / 16%), rgb(0 0 0 / 16%)), var(--theme-gradient-brand);
+
     --theme-primary-50: color-mix(in srgb, white 92%, var(--theme-primary));
     --theme-primary-100: color-mix(in srgb, white 84%, var(--theme-primary));
     --theme-primary-200: color-mix(in srgb, white 68%, var(--theme-primary));
@@ -43,7 +53,8 @@
     --theme-status-success: #{map.get(ds.$ds-state-color, 'success')};
     --theme-status-warning: #{map.get(ds.$ds-state-color, 'warning')};
     --theme-status-error: #{map.get(ds.$ds-state-color, 'error')};
-    --theme-status-info: var(--theme-primary);
+    // info 는 Figma 상태 컬러에 없어 System Blue 700 을 사용합니다. (오렌지 primary 와 구분)
+    --theme-status-info: #{map.get(map.get(palette.$system-palette, 'blue'), 700)};
 
     // 중립 팔레트
     --theme-gray-0: #ffffff;
@@ -231,8 +242,9 @@
     --theme-primary-500-hover: color-mix(in srgb, black 10%, var(--theme-primary-500));
     --theme-primary-500-active: color-mix(in srgb, black 16%, var(--theme-primary-500));
     --theme-primary-500-focus: color-mix(in srgb, white 30%, var(--theme-primary-500));
-    --theme-secondary-hover: color-mix(in srgb, black 10%, var(--theme-secondary));
-    --theme-secondary-active: color-mix(in srgb, black 16%, var(--theme-secondary));
+    // secondary 는 #111 (블랙) 기반이라 hover / active 를 밝게 파생합니다.
+    --theme-secondary-hover: color-mix(in srgb, white 16%, var(--theme-secondary));
+    --theme-secondary-active: color-mix(in srgb, white 26%, var(--theme-secondary));
     --theme-secondary-focus: color-mix(in srgb, white 30%, var(--theme-secondary));
     --theme-gray-700-hover: color-mix(in srgb, black 10%, var(--theme-gray-700));
     --theme-gray-700-active: color-mix(in srgb, black 16%, var(--theme-gray-700));
@@ -275,9 +287,9 @@
     // Button tones
 
     // Primary
-    --bg-button-primary: var(--theme-primary-500);
-    --bg-button-primary-hover: var(--theme-primary-500-hover);
-    --bg-button-primary-active: var(--theme-primary-500-active);
+    --bg-button-primary: var(--theme-gradient-brand);
+    --bg-button-primary-hover: var(--theme-gradient-brand-hover);
+    --bg-button-primary-active: var(--theme-gradient-brand-active);
     --color-button-primary: var(--theme-primary-500);
     --color-button-primary-hover: var(--theme-primary-500-hover);
     --color-button-primary-active: var(--theme-primary-500-active);

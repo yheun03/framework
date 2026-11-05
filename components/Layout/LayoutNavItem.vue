@@ -45,7 +45,7 @@
                 :aria-controls="`submenu-${item.id}`"
                 @click.stop="handleToggleOpen"
             >
-                <i class="fi-sr-angle-small-right fi" aria-hidden="true"></i>
+                <IconChevronSmallRight />
             </AppIconButton>
         </div>
 
@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import type { NavigationMenu } from '~/types/appNavigation';
 import type { Component } from 'vue';
-import { IconCog, IconDashboard, IconFactory, IconHome, IconInfo, IconWidgets } from '~/components/icons';
+import { IconChevronSmallRight, IconCog, IconDashboard, IconFactory, IconHome, IconInfo, IconWidgets } from '~/components/icons';
 
 const props = defineProps<{
     item: NavigationMenu;

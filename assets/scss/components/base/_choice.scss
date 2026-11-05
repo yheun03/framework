@@ -161,10 +161,7 @@
                 width: 100%;
                 height: 100%;
                 color: currentColor;
-            }
-
-            path {
-                fill: currentColor;
+                stroke-width: 3;
             }
         }
     }
@@ -253,9 +250,7 @@
         background: var(--bg-checkbox-regular);
 
         .app-choice__inner {
-            svg path {
-                fill: var(--fill-checkbox);
-            }
+            color: var(--fill-checkbox);
         }
 
         .app-choice__dot {

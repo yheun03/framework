@@ -56,7 +56,9 @@ assets/scss/projects/acme/
 └── index.scss
 ```
 
-`_theme.scss`의 `$primary`, `$secondary`, `$tertiary`를 바꾸면 50~900 팔레트와 공통 컴포넌트 색상이 자동 생성됩니다. Header, LNB, Page Navigator만 다른 색이 필요한 경우 같은 파일의 `null` 값을 실제 색상으로 변경합니다.
+`_theme.scss`의 `$primary`, `$secondary`, `$tertiary`를 바꾸면 50~900 팔레트와 공통 컴포넌트 색상이 자동 생성됩니다. Primary 버튼·강조 배지에 쓰는 브랜드 그라디언트는 `$brand-gradient`가 `null`이면 `$tertiary → $primary`(134deg)로 만들어집니다. Header, LNB, Page Navigator만 다른 색이 필요한 경우 같은 파일의 `null` 값을 실제 색상으로 변경합니다.
+
+> 기본값(조앤소프트): `$primary #ff5900` · `$secondary #111111` · `$tertiary #ff7830` → `linear-gradient(134deg, #ff7830 1.83%, #ff5900 98.55%)`, LNB `#111111`
 
 ```scss
 $primary: #0057b8;
@@ -64,6 +66,7 @@ $secondary: #4b5563;
 $tertiary: #003f87;
 
 // 별도 지정이 필요한 항목만 변경
+$brand-gradient: linear-gradient(134deg, #3d8bff 0%, #0057b8 100%);
 $lnb-background: linear-gradient(180deg, #003f87, #00295a);
 ```
 

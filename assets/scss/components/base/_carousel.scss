@@ -91,6 +91,24 @@
         --icon-button-bg-active: transparent;
     }
 
+    // banner: Figma 16. 빌보드 / 17. 띠배너 좌우 화살표 (화면 끝에 붙는 사각형, hover 시 진하게)
+    &--nav-banner &__nav.app-icon-button {
+        --icon-button-bg: var(--bg-carousel-banner-nav);
+        --icon-button-bg-hover: var(--bg-carousel-banner-nav-hover);
+        --icon-button-bg-active: var(--bg-carousel-banner-nav-hover);
+        width: var(--app-carousel-banner-nav-width, 56px);
+        height: var(--app-carousel-banner-nav-height, 80px);
+        border-radius: 0;
+    }
+
+    &--nav-banner &__nav--prev {
+        left: 0;
+    }
+
+    &--nav-banner &__nav--next {
+        right: 0;
+    }
+
     /* Indicator */
     &__indicator {
         position: absolute;

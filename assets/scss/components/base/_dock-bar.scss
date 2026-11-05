@@ -1,0 +1,91 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppDockBar
+   Figma MO 06. Dock Bar Guide - 하단 독바 (아이콘 24 / 라벨 C2)
+========================================= */
+
+.app-dock-bar {
+    width: 100%;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-top: 1px solid var(--border-dock-bar);
+    background: var(--bg-dock-bar);
+
+    &--fixed {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 30;
+    }
+
+    &__list {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__item {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        height: 64px;
+        color: var(--color-dock-bar);
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &.is-active {
+            color: var(--color-dock-bar-active);
+        }
+
+        &.is-active .app-dock-bar__label {
+            font-weight: 600;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-dock-bar-active);
+            outline-offset: -4px;
+        }
+    }
+
+    &--icon-only &__link {
+        height: 56px;
+    }
+
+    &__icon {
+        position: relative;
+        display: inline-flex;
+        font-size: 24px;
+    }
+
+    &__badge {
+        position: absolute;
+        top: -4px;
+        right: -10px;
+        min-width: 16px;
+        height: 16px;
+        padding-inline: 4px;
+        border-radius: 8px;
+        background: var(--bg-dock-bar-badge);
+        color: var(--color-dock-bar-badge);
+        text-align: center;
+        @include font(c3, sb, en);
+        line-height: 16px;
+    }
+
+    &__label {
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        @include font(c2, rg);
+    }
+}

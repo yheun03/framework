@@ -5,6 +5,7 @@
 @use './theme' as theme;
 @use './tokens' as *;
 @use 'sass:map';
+@use './palette' as palette;
 @forward './theme';
 
 // Colors (semantic 기본값)
@@ -13,7 +14,7 @@
 $status-success: map.get($ds-state-color, 'success');
 $status-warning: map.get($ds-state-color, 'warning');
 $status-error: map.get($ds-state-color, 'error');
-$status-info: theme.$primary;
+$status-info: map.get(map.get(palette.$system-palette, 'blue'), 700);
 
 // Gray 0~900
 $gray-0: #ffffff;

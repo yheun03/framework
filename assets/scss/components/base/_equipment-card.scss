@@ -1,0 +1,81 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppEquipmentCard (MES 설비 현황)
+   AppStatCard 와 같은 카드 톤 (라인 regular / 라운드 md)
+========================================= */
+
+.app-equipment-card {
+    display: flex;
+    flex-direction: column;
+    gap: space(16);
+    padding: space(20);
+    border: 1px solid var(--border-equipment-card);
+    border-radius: radius(md);
+    background: var(--bg-equipment-card);
+    transition: border-color 0.2s;
+
+    &.is-active {
+        border-color: var(--border-equipment-card-active);
+        box-shadow: 0 0 0 1px var(--border-equipment-card-active);
+    }
+
+    &__head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: space(12);
+    }
+
+    &__name {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    &__title {
+        overflow: hidden;
+        color: var(--color-equipment-card-title);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        @include font(t5, sb);
+    }
+
+    &__code {
+        color: var(--color-equipment-card-sub);
+        @include font(c2, rg, en);
+    }
+
+    &__metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+        gap: space(8);
+        margin: 0;
+    }
+
+    &__metric {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: space(8) space(12);
+        border-radius: 6px;
+        background: var(--bg-equipment-card-metric);
+
+        dt {
+            color: var(--color-equipment-card-sub);
+            @include font(c2, rg);
+        }
+
+        dd {
+            margin: 0;
+            color: var(--color-equipment-card-title);
+            @include font(b2, sb, en);
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: space(8);
+    }
+}

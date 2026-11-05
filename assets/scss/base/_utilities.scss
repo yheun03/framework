@@ -1,5 +1,6 @@
 @use '../abstract' as *;
 @use 'sass:map';
+@use 'sass:list';
 
 // =====================================================================
 // Design System Utility Class (퍼블리싱용)
@@ -9,6 +10,7 @@
 //   <p class="typo-b3 text-03-gray">설명</p>
 //   <span class="typo-c2 typo-en">ENG 1,234</span>
 //   <div class="bg-light line-regular">박스</div>
+//   <section class="ds-container mt-80"><div class="ds-grid"><div class="ds-col-6">…</div></div></section>
 // =====================================================================
 
 // 폰트 크기 (PC / MO 자동 전환) - 기본 굵기 Regular
@@ -72,5 +74,145 @@
 @each $key, $value in $ds-line-color {
     .line-#{$key} {
         border: 1px solid var(--theme-line-#{$key});
+    }
+}
+
+// ---------------------------------------------------------------------
+// 간격 (Figma 01. Spacing - 세로 간격 기준)
+// mt / mb / pt / pb / gap -{2 ~ 180}
+// ---------------------------------------------------------------------
+@each $key, $value in $ds-spacing {
+    .mt-#{$key} {
+        margin-top: var(--ds-space-#{$key});
+    }
+
+    .mb-#{$key} {
+        margin-bottom: var(--ds-space-#{$key});
+    }
+
+    .pt-#{$key} {
+        padding-top: var(--ds-space-#{$key});
+    }
+
+    .pb-#{$key} {
+        padding-bottom: var(--ds-space-#{$key});
+    }
+
+    .gap-#{$key} {
+        gap: var(--ds-space-#{$key});
+    }
+}
+
+// 라운드 (Figma 14. Thumbnail - 라운드 사용 정의)
+@each $key, $value in $ds-radius {
+    .radius-#{$key} {
+        border-radius: var(--ds-radius-#{$key});
+        overflow: hidden;
+    }
+}
+
+// ---------------------------------------------------------------------
+// 컨테이너 / 12 Column 그리드 (Figma 02. Layout Guide)
+//   .ds-container                 기본 1580 (좁은 간격)
+//   .ds-container--1920-wide …    $ds-grid 의 다른 해상도
+//   .ds-grid > .ds-col-{1~12}     PC 12 / Tablet 8 / MO 4 Column (아래 환산표, ds-col-t-* / ds-col-m-* 로 덮어쓰기)
+// ---------------------------------------------------------------------
+.ds-container {
+    width: 100%;
+    max-width: var(--ds-grid-width);
+    margin-inline: auto;
+    padding-inline: var(--ds-grid-margin);
+}
+
+@each $name, $grid in $ds-grid {
+    .ds-container--#{$name} {
+        --ds-grid-width: #{list.nth($grid, 1)};
+        --ds-grid-margin: #{list.nth($grid, 2)};
+        --ds-grid-gutter: #{list.nth($grid, 4)};
+    }
+}
+
+.ds-container--fluid {
+    max-width: none;
+}
+
+.ds-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--ds-grid-columns), minmax(0, 1fr));
+    column-gap: var(--ds-grid-gutter);
+    row-gap: var(--ds-space-40);
+}
+
+// Tablet(8) / MO(4) 에서는 PC span 을 아래 표로 환산합니다. 다르게 필요하면 ds-col-t-{1~8} / ds-col-m-{1~4} 로 지정합니다.
+//   PC span      1  2  3  4  5  6  7  8  9 10 11 12
+//   Tablet(8)    1  2  2  4  4  4  8  8  8  8  8  8   (4단 → 4개, 3단·2단 → 2개씩)
+//   MO(4)        1  2  2  4  4  4  4  4  4  4  4  4   (4단·6단 → 2개씩, 3단 이상 → 1개씩)
+$ds-col-tablet: (
+    1: 1,
+    2: 2,
+    3: 2,
+    4: 4,
+    5: 4,
+    6: 4,
+    7: 8,
+    8: 8,
+    9: 8,
+    10: 8,
+    11: 8,
+    12: 8,
+);
+$ds-col-mo: (
+    1: 1,
+    2: 2,
+    3: 2,
+    4: 4,
+    5: 4,
+    6: 4,
+    7: 4,
+    8: 4,
+    9: 4,
+    10: 4,
+    11: 4,
+    12: 4,
+);
+
+@for $span from 1 through 12 {
+    .ds-col-#{$span} {
+        grid-column: span #{$span};
+    }
+}
+
+@include tablet {
+    @each $span, $value in $ds-col-tablet {
+        .ds-col-#{$span} {
+            grid-column: span #{$value};
+        }
+    }
+
+    @for $span from 1 through 8 {
+        .ds-col-t-#{$span} {
+            grid-column: span #{$span};
+        }
+    }
+}
+
+@include mo {
+    @each $span, $value in $ds-col-mo {
+        .ds-col-#{$span} {
+            grid-column: span #{$value};
+        }
+    }
+
+    @for $span from 1 through 4 {
+        .ds-col-m-#{$span} {
+            grid-column: span #{$span};
+        }
+    }
+
+    @each $name, $grid in $ds-grid {
+        .ds-container--#{$name} {
+            --ds-grid-margin: #{map.get($ds-grid-mo-margin, 'md')};
+            --ds-grid-gutter: #{$ds-grid-mo-gutter};
+        }
     }
 }

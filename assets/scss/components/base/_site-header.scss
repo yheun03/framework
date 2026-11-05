@@ -1,0 +1,233 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppSiteHeader
+   Figma 18. GNB Guide (PC) - 기본 GNB / 04. GNB Guide (MO)
+========================================= */
+
+.app-site-header {
+    // Figma GNB 아이콘은 1.5px 세트
+    --app-icon-stroke-width: 1.5;
+    width: 100%;
+    background: var(--bg-site-header);
+    color: var(--color-site-header);
+
+    &--sticky {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+
+    // 기본 그리드(1580) 와 같은 폭
+    &__inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: var(--ds-grid-width);
+        margin-inline: auto;
+        padding-inline: var(--ds-grid-margin);
+    }
+
+    /* Top : 로고 / 검색 / 유틸 */
+    &__top &__inner {
+        gap: space(24);
+        height: 100px;
+    }
+
+    &__logo {
+        flex-shrink: 0;
+        color: inherit;
+        text-decoration: none;
+        @include font(t1, sb, en);
+        letter-spacing: -0.02em;
+    }
+
+    &__search {
+        position: absolute;
+        left: 50%;
+        display: flex;
+        align-items: center;
+        width: min(400px, 36%);
+        height: 48px;
+        padding: 0 4px 0 19px;
+        border: 1px solid var(--border-site-header-search);
+        border-radius: 100px;
+        transform: translateX(-50%);
+        transition: border-color 0.2s;
+
+        &:focus-within {
+            border-color: var(--border-site-header-search-focus);
+        }
+    }
+
+    &__search-input {
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        border: 0;
+        background: transparent;
+        color: var(--color-site-header);
+        outline: none;
+        @include font(b3, rg);
+
+        &::placeholder {
+            color: var(--color-site-header-placeholder);
+        }
+
+        &::-webkit-search-cancel-button {
+            display: none;
+        }
+    }
+
+    &__utils {
+        display: flex;
+        align-items: center;
+        gap: space(8);
+        margin-left: auto;
+    }
+
+    /* Nav : 카테고리 / 메뉴 / aside */
+    &__nav {
+        border-bottom: 1px solid var(--border-site-header);
+    }
+
+    &__nav &__inner {
+        gap: space(24);
+        height: 56px;
+    }
+
+    &__category {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: space(12);
+        color: inherit;
+        @include font(b1, rg, en);
+    }
+
+    &__category-icon {
+        font-size: 24px;
+    }
+
+    // 메뉴가 넘치면 겹치지 않고 가로 스크롤 (넘치지 않으면 가운데 정렬)
+    &__menu {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: safe center;
+        gap: space(24);
+        min-width: 0;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+        list-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__menu-item {
+        flex-shrink: 0;
+    }
+
+    &__divider {
+        flex-shrink: 0;
+        width: 1px;
+        height: 12px;
+        background: var(--border-site-header-divider);
+    }
+
+    &__link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: 56px;
+        color: inherit;
+        text-decoration: none;
+        white-space: nowrap;
+        @include font(b1, rg, en);
+        transition: color 0.2s;
+
+        &::after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: currentColor;
+            transform: scaleX(0);
+            transition: transform 0.2s;
+            content: '';
+        }
+
+        &:hover::after,
+        &.is-active::after {
+            transform: scaleX(1);
+        }
+
+        &.is-active {
+            color: var(--color-site-header-active);
+            font-weight: 600;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-site-header-active);
+            outline-offset: -2px;
+        }
+    }
+
+    &__aside {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: space(16);
+        @include font(b3, sb);
+    }
+
+    @include tablet {
+        &__aside {
+            display: none;
+        }
+    }
+
+    @include mo {
+        &__top &__inner {
+            gap: space(12);
+            height: 56px;
+        }
+
+        &__logo {
+            @include font(t3, sb, en);
+        }
+
+        &__search {
+            display: none;
+        }
+
+        &__utils {
+            gap: 0;
+        }
+
+        &__nav &__inner {
+            gap: space(16);
+            height: 48px;
+        }
+
+        &__category span {
+            display: none;
+        }
+
+        &__menu {
+            gap: space(20);
+        }
+
+        &__link {
+            height: 48px;
+            @include font(b2, rg, en);
+        }
+    }
+}

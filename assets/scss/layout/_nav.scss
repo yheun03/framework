@@ -256,11 +256,6 @@
             width: var(--layout-nav-icon-size);
             height: var(--layout-nav-icon-size);
         }
-
-        svg,
-        svg * {
-            fill: currentColor;
-        }
     }
 
     &__label {
