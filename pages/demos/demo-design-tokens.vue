@@ -1,7 +1,7 @@
 <template>
     <div class="page-demo">
         <div class="page-demo-layout">
-            <main class="page-demo-main">
+            <div class="page-demo-main">
                 <header class="page-demo__header">
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
@@ -135,9 +135,9 @@
                         </div>
                     </div>
                     <div class="page-demo-row">
-                        <AppInput :model-value="'********'" state="error" hint="비밀번호가 일치하지 않습니다." :width="240" />
-                        <AppInput :model-value="'********'" state="success" hint="사용 가능한 비밀번호입니다." :width="240" />
-                        <AppInput :model-value="'********'" state="warning" hint="보안 수준이 낮습니다." :width="240" />
+                        <AppInput aria-label="비밀번호" :model-value="'********'" state="error" hint="비밀번호가 일치하지 않습니다." :width="240" />
+                        <AppInput aria-label="비밀번호" :model-value="'********'" state="success" hint="사용 가능한 비밀번호입니다." :width="240" />
+                        <AppInput aria-label="비밀번호" :model-value="'********'" state="warning" hint="보안 수준이 낮습니다." :width="240" />
                     </div>
                 </PageDemoSection>
 
@@ -264,7 +264,7 @@
                         </div>
                     </div>
                 </PageDemoSection>
-            </main>
+            </div>
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">
                     <PageDemoPropsSummary />

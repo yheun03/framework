@@ -23,7 +23,7 @@
             </div>
         </header>
 
-        <main class="home__main" aria-label="메인 콘텐츠">
+        <div class="home__main">
             <section class="home__grid" aria-label="주요 이동">
                 <NuxtLink class="home__card" to="/workspace">
                     <span class="home__card-icon" aria-hidden="true">
@@ -53,7 +53,7 @@
             <footer class="home__footer">
                 <p>© {{ currentYear }} {{ project.companyName }}. All rights reserved.</p>
             </footer>
-        </main>
+        </div>
     </div>
 </template>
 

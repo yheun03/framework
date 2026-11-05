@@ -1,7 +1,7 @@
 <template>
     <div class="page-demo">
         <div class="page-demo-layout">
-            <main class="page-demo-main">
+            <div class="page-demo-main">
                 <header class="page-demo__header">
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 </PageDemoSection>
-            </main>
+            </div>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
                 <div class="page-demo-aside__sticky">

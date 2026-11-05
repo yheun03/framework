@@ -25,6 +25,7 @@
                 size="sm"
                 :model-value="tree.checkState(item) === 'checked'"
                 :indeterminate="tree.checkState(item) === 'partial'"
+                :aria-label="`${item.label} 선택`"
                 :disabled="item.disabled"
                 @click.stop
                 @update:model-value="tree.toggleCheck(item)"

@@ -1,6 +1,6 @@
 <template>
     <div class="form-field app-textarea-field" :class="{ [`is-${state}`]: state, 'is-disabled': disabled }" :style="rootStyle">
-        <label v-if="label" class="form-field__label app-textarea__label" :for="id">{{ label }}</label>
+        <label v-if="label" class="form-field__label app-textarea__label" :for="textareaId">{{ label }}</label>
 
         <div
             class="app-textarea"
@@ -17,7 +17,7 @@
             ]"
         >
             <textarea
-                :id="id"
+                :id="textareaId"
                 class="app-textarea__control"
                 :value="modelValue"
                 :placeholder="placeholder"
@@ -26,7 +26,8 @@
                 :rows="rows"
                 :maxlength="maxLength"
                 :aria-invalid="state === 'error' || undefined"
-                :aria-describedby="ariaDescribedby"
+                :aria-describedby="ariaDescribedby ?? formField?.describedby.value"
+                :aria-label="label ? undefined : ariaLabel"
                 @input="handleInput"
                 @focus="isFocused = true"
                 @blur="isFocused = false"
@@ -55,6 +56,7 @@
 </template>
 
 <script setup lang="ts">
+import { APP_FORM_FIELD_KEY } from '~/components/AppFormField.vue';
 import type { AppFieldShape, AppFormSize, AppState, AppWidth } from '~/types/appCommon';
 import { toSizeStyle } from '~/utils/css';
 
@@ -66,6 +68,8 @@ const props = withDefaults(
         label?: string;
         hint?: string;
         id?: string;
+        /** label 이 없을 때 스크린리더용 이름 */
+        ariaLabel?: string;
         placeholder?: string;
         disabled?: boolean;
         readonly?: boolean;
@@ -106,6 +110,10 @@ const emit = defineEmits<{
 }>();
 
 const isFocused = ref(false);
+// label 과 textarea 를 항상 연결하기 위해 id 가 없으면 자동 생성합니다.
+const fallbackId = useId();
+const formField = inject(APP_FORM_FIELD_KEY, null);
+const textareaId = computed(() => props.id ?? formField?.id.value ?? `app-textarea-${fallbackId}`);
 const rootStyle = computed(() => toSizeStyle(props.width));
 
 const textLength = computed(() => String(props.modelValue ?? '').length);

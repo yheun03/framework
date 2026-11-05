@@ -71,6 +71,13 @@
         align-items: flex-start;
         gap: space(12);
         min-width: 0;
+
+        // 좁은 카드(태블릿 4단 등)에서 별점 + 리뷰 수가 넘치지 않도록 줄바꿈합니다.
+        .app-rating {
+            flex-wrap: wrap;
+            row-gap: 2px;
+            max-width: 100%;
+        }
     }
 
     &__text {

@@ -18,7 +18,7 @@
                 :size="buttonSize.size"
                 :icon-size="buttonSize.icon"
                 :disabled="disabled || readonly || isMin"
-                aria-label="감소"
+                aria-label="수량 감소"
                 @click="step(-1)"
             >
                 <IconMinus />
@@ -27,6 +27,7 @@
             <AppInput
                 :id="inputId"
                 class="app-input-number__field"
+                :aria-label="label ? undefined : '수량'"
                 :model-value="displayValue"
                 :name="name"
                 shape="square"
@@ -45,7 +46,7 @@
                 :size="buttonSize.size"
                 :icon-size="buttonSize.icon"
                 :disabled="disabled || readonly || isMax"
-                aria-label="증가"
+                aria-label="수량 증가"
                 @click="step(1)"
             >
                 <IconPlus />

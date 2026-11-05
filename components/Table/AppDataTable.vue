@@ -27,6 +27,7 @@
                                 :model-value="isAllSelected"
                                 :indeterminate="isPartSelected"
                                 :disabled="!items.length"
+                                aria-label="전체 행 선택"
                                 @update:model-value="toggleAll"
                             />
                         </th>
@@ -53,7 +54,11 @@
                         @click="clickable && emit('row-click', row, rowIndex)"
                     >
                         <td v-if="selectable" class="app-data-table__check" @click.stop>
-                            <AppChoice :model-value="isSelected(row)" @update:model-value="toggleRow(row)" />
+                            <AppChoice
+                                :model-value="isSelected(row)"
+                                :aria-label="`${rowIndex + 1}번째 행 선택`"
+                                @update:model-value="toggleRow(row)"
+                            />
                         </td>
                         <td v-for="column in columns" :key="column.key" :class="`is-${column.align ?? 'center'}`">
                             <slot :name="`cell-${column.key}`" :row="row" :value="row[column.key]" :index="rowIndex">

@@ -24,7 +24,7 @@
     }
 
     &__rank b {
-        color: var(--theme-brand-main);
+        color: var(--theme-primary-text);
     }
 
     /* 숫자로 보는 회사 */
@@ -85,7 +85,7 @@
 
     &__form-done {
         margin: 0;
-        color: var(--theme-status-success);
+        color: var(--theme-status-success-text);
         @include font(b3, sb);
     }
 

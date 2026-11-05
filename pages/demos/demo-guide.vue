@@ -1,7 +1,7 @@
 <template>
     <div class="page-demo">
         <div class="page-demo-layout">
-            <main class="page-demo-main">
+            <div class="page-demo-main">
                 <header class="page-demo__header">
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">{{ description }}</p>
@@ -55,7 +55,7 @@
                         >
                     </AppDataTable>
                 </PageDemoSection>
-            </main>
+            </div>
         </div>
     </div>
 </template>

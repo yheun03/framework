@@ -1,20 +1,26 @@
 <template>
-    <div class="route-tabs" role="navigation" aria-label="페이지 탭">
+    <!-- 페이지 이동 링크 목록이므로 tablist 가 아닌 nav + aria-current 를 사용합니다. -->
+    <nav class="route-tabs" aria-label="최근 방문 페이지">
         <div class="route-tabs__scroller">
-            <ul class="route-tabs__list" role="tablist" aria-label="최근 방문 페이지">
-                <li v-for="t in tabs" :key="t.key" class="route-tabs__item" role="presentation">
+            <ul class="route-tabs__list">
+                <li v-for="t in tabs" :key="t.key" class="route-tabs__item">
                     <NuxtLink
                         class="route-tabs__tab"
                         :class="{ 'is-active': t.key === currentKey }"
-                        role="tab"
-                        :aria-selected="t.key === currentKey"
+                        :aria-current="t.key === currentKey ? 'page' : undefined"
                         :to="t.path"
                         @click="() => handleTabClick(t.key)"
                     >
                         <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
                     </NuxtLink>
 
-                    <AppIconButton class="route-tabs__close" aria-label="탭 닫기" :size="20" :icon-size="12" @click="(e) => handleTabClose(e, t.key)">
+                    <AppIconButton
+                        class="route-tabs__close"
+                        :aria-label="`${getTabTitle(t)} 탭 닫기`"
+                        :size="20"
+                        :icon-size="12"
+                        @click="(e) => handleTabClose(e, t.key)"
+                    >
                         <IconClose />
                     </AppIconButton>
                 </li>
@@ -31,7 +37,7 @@
                 ><IconCloseSmall
             /></AppIconButton>
         </div>
-    </div>
+    </nav>
 </template>
 
 <script setup lang="ts">

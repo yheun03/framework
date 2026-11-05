@@ -1,4 +1,5 @@
 const Ko = {
+    'a11y.skipToContent': '본문 바로가기',
     'app.language': '언어',
     'app.theme': '테마',
     'theme.light': '라이트',
@@ -140,6 +141,12 @@ const Ko = {
     'demo.dataTable.desc': 'Figma 게시판형 테이블 기반의 목록 테이블입니다. columns + items(JSON) 로 퍼블리싱합니다.',
     'demo.mesSample.title': '작업실적 현황 (MES 샘플)',
     'demo.mesSample.desc': '추가된 컴포넌트를 조합한 MES 목록/등록 화면 예시입니다. 모든 데이터는 페이지 안의 temp JSON 입니다.',
+    'demo.corporateSample.title': '기업 홈페이지 샘플',
+    'demo.corporateSample.desc': '빌보드 · 사업 영역 · 연혁 · 뉴스 · 도입 문의로 구성한 제조 기업 홈페이지 예시입니다.',
+    'demo.productSample.title': '제품 홈페이지 샘플',
+    'demo.productSample.desc': 'GNB · 빌보드 · 베스트 상품 · 프로모션 · 독바로 구성한 쇼핑형 제품 홈페이지 예시입니다.',
+    'demo.workspace.title': '워크스페이스',
+    'demo.workspace.desc': '마크다운 편집기로 프로젝트 메모를 작성하는 작업 공간입니다.',
     'demo.searchPanel.title': 'AppSearchPanel',
     'demo.searchPanel.desc': '목록 화면 상단 조회 조건 영역입니다. (AppSearchItem 과 함께 사용)',
     'demo.statCard.title': 'AppStatCard',

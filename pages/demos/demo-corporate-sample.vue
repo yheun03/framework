@@ -9,6 +9,7 @@
         </AppSiteHeader>
 
         <AppBillboard
+            tag="h1"
             :image="base + hero.image"
             :eyebrow="hero.eyebrow"
             :title="hero.title"
@@ -133,7 +134,7 @@ import type { AppFeatureCardIcon } from '~/components/AppFeatureCard.vue';
 import type { AppSiteFooterLink, AppSiteFooterSns } from '~/components/AppSite/AppSiteFooter.vue';
 import type { AppTimelineItem } from '~/components/AppTimeline.vue';
 
-useHead({ title: '기업 홈페이지 샘플' });
+useDemoI18n('corporateSample');
 const base = useRuntimeConfig().app.baseURL;
 
 // temp 데이터 - API 연동 시 이 영역만 교체

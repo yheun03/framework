@@ -500,7 +500,7 @@
 
         &--required {
             background: color-mix(in srgb, var(--theme-status-error) 10%, transparent);
-            color: var(--theme-status-error);
+            color: var(--theme-status-error-text);
         }
 
         &--common {

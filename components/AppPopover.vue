@@ -3,11 +3,12 @@
         ref="triggerEl"
         v-bind="$attrs"
         class="app-popover-trigger"
-        :aria-expanded="isOpen"
-        :aria-controls="isOpen ? layerId : undefined"
         @click="trigger === 'click' && toggle()"
         @mouseenter="trigger === 'hover' && show()"
         @mouseleave="trigger === 'hover' && scheduleHide()"
+        @focusin="trigger === 'hover' && show()"
+        @focusout="trigger === 'hover' && scheduleHide()"
+        @keydown.esc="hide"
     >
         <slot name="trigger" />
     </span>
@@ -127,4 +128,17 @@ function cancelHide() {
 }
 
 watch(isOpen, (value) => value && updatePosition());
+
+// span 에는 aria-expanded 를 쓸 수 없으므로 안쪽 버튼(trigger 슬롯)에 열림 상태를 연결합니다.
+watch(
+    [isOpen, triggerEl],
+    () => {
+        const target = triggerEl.value?.querySelector<HTMLElement>('button, a, [tabindex]');
+        if (!target) return;
+        target.setAttribute('aria-expanded', String(isOpen.value));
+        if (isOpen.value) target.setAttribute('aria-controls', layerId);
+        else target.removeAttribute('aria-controls');
+    },
+    { flush: 'post' },
+);
 </script>

@@ -1,5 +1,6 @@
 <template>
     <div class="workspace">
+        <h1 class="sr-only">{{ title }}</h1>
         <div class="workspace__content">
             <section class="workspace-pane workspace__pane">
                 <div class="workspace-pane__body">
@@ -21,6 +22,7 @@ import { useWorkspaceStore } from '~/stores/workspace';
 
 /* stores/composables */
 const ws = useWorkspaceStore();
+const { title } = useDemoI18n('workspace');
 
 /* ref/reactive state */
 const editorRoot = ref<HTMLDivElement | null>(null);

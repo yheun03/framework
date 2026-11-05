@@ -1,7 +1,7 @@
 <template>
     <div class="page-demo">
         <div class="page-demo-layout">
-            <main class="page-demo-main">
+            <div class="page-demo-main">
                 <!-- HEADER -->
                 <header class="page-demo__header">
                     <h1 class="page-demo__title">{{ title }}</h1>
@@ -83,7 +83,7 @@
                         <AppInput v-model="disabledValue" label="Disabled" disabled hint="비활성 상태" />
                     </div>
                 </PageDemoSection>
-            </main>
+            </div>
 
             <!-- STATE PANEL -->
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">

@@ -220,6 +220,7 @@
                         size="sm"
                         type="checkbox"
                         :model-value="getBooleanValue(f.field)"
+                        :aria-label="f.label"
                         :disabled="f.disabled"
                         :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"

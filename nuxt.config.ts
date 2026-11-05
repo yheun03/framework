@@ -1,3 +1,5 @@
+import { writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { projectConfig } from './project.config';
 
@@ -121,5 +123,36 @@ export default defineNuxtConfig({
     // GitHub Pages 배포 대응
     nitro: {
         preset: 'static',
+    },
+
+    hooks: {
+        // nuxt generate 후 실제로 생성된 HTML 페이지 기준으로 sitemap.xml / robots.txt 를 만듭니다.
+        // (siteUrl 은 project.config.ts 를 따르므로 프로젝트마다 따로 수정할 필요가 없습니다)
+        'nitro:init'(nitro) {
+            nitro.hooks.hook('prerender:done', async ({ prerenderedRoutes }) => {
+                const siteUrl = projectConfig.siteUrl.endsWith('/') ? projectConfig.siteUrl : `${projectConfig.siteUrl}/`;
+                const today = new Date().toISOString().slice(0, 10);
+                const routeUrls = prerenderedRoutes
+                    .filter((route) => !route.error && route.fileName?.endsWith('.html') && !/^\/(200|404)\.html$/.test(route.fileName))
+                    // route 에는 baseURL(/framework/) 이 포함되어 있어 siteUrl 기준 상대 경로로 바꿉니다.
+                    .map((route) => route.route.slice(route.route.startsWith(baseURL) ? baseURL.length : 1))
+                    .filter((path) => !path.startsWith('auth/'))
+                    .map((path) => new URL(path.replace(/([^/])$/, '$1/'), siteUrl).toString());
+                const urls = [...new Set(routeUrls)].sort();
+
+                const sitemap = [
+                    '<?xml version="1.0" encoding="UTF-8"?>',
+                    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+                    ...urls.map((url) => `  <url><loc>${url}</loc><lastmod>${today}</lastmod></url>`),
+                    '</urlset>',
+                    '',
+                ].join('\n');
+                const robots = ['User-agent: *', 'Allow: /', 'Disallow: /auth/', '', `Sitemap: ${siteUrl}sitemap.xml`, ''].join('\n');
+
+                await writeFile(join(nitro.options.output.publicDir, 'sitemap.xml'), sitemap);
+                await writeFile(join(nitro.options.output.publicDir, 'robots.txt'), robots);
+                nitro.logger.success(`sitemap.xml (${urls.length} URLs) / robots.txt generated`);
+            });
+        },
     },
 });

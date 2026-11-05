@@ -24,6 +24,8 @@
                 :checked="isChecked"
                 :disabled="disabled || readonly"
                 :aria-invalid="state === 'error'"
+                :aria-label="ariaLabel"
+                :role="variant === 'toggle' ? 'switch' : undefined"
                 @change="handleChange"
             />
 
@@ -68,6 +70,8 @@ const props = withDefaults(
         readonly?: boolean;
         indeterminate?: boolean;
         id?: string;
+        /** 화면에 label 이 없을 때 스크린리더용 이름 (표 선택 체크박스 등) */
+        ariaLabel?: string;
         variant?: ChoiceVariant;
         state?: ChoiceState;
         size?: ChoiceSize;

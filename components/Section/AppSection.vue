@@ -2,9 +2,9 @@
     <section class="app-section" :class="`app-section--${direction}`" :style="sectionStyle">
         <header v-if="title || description" class="app-section__header">
             <div class="app-section__header-text">
-                <h3 v-if="title" class="app-section__title">
+                <component :is="tag" v-if="title" class="app-section__title">
                     {{ title }}
-                </h3>
+                </component>
 
                 <p v-if="description" class="app-section__desc">
                     {{ description }}
@@ -26,6 +26,8 @@ const props = withDefaults(
         direction?: SectionDirection;
         ratio?: SectionRatio;
         title?: string;
+        /** 제목 태그 - 페이지 제목(h1) 아래 순서에 맞게 지정 (기본 h2) */
+        tag?: 'h2' | 'h3' | 'h4';
         description?: string;
         gap?: number | string;
     }>(),
@@ -33,6 +35,7 @@ const props = withDefaults(
         direction: 'column',
         ratio: null,
         title: '',
+        tag: 'h2',
         description: '',
         gap: 12,
     },

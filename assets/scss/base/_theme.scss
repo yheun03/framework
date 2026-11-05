@@ -56,6 +56,15 @@
     // info 는 Figma 상태 컬러에 없어 System Blue 700 을 사용합니다. (오렌지 primary 와 구분)
     --theme-status-info: #{map.get(map.get(palette.$system-palette, 'blue'), 700)};
 
+    // 접근성 텍스트 컬러 (WCAG 2.1 AA - 흰 배경 / 10% 틴트 배경 위 4.5:1 이상)
+    // 브랜드 / 상태 컬러를 '글자색'으로 쓸 때는 원색 대신 아래 값을 사용합니다.
+    // (원색은 면 · 테두리 · 아이콘 등 비텍스트 요소에 사용 - 3:1 기준)
+    --theme-primary-text: color-mix(in srgb, black 25%, var(--theme-primary));
+    --theme-status-error-text: color-mix(in srgb, black 10%, var(--theme-status-error));
+    --theme-status-warning-text: color-mix(in srgb, black 45%, var(--theme-status-warning));
+    --theme-status-success-text: color-mix(in srgb, black 30%, var(--theme-status-success));
+    --theme-status-info-text: color-mix(in srgb, black 10%, var(--theme-status-info));
+
     // 중립 팔레트
     --theme-gray-0: #ffffff;
     --theme-gray-50: #f7f8fa;
@@ -63,7 +72,7 @@
     --theme-gray-200: #e2e5ea;
     --theme-gray-300: #cdd4da;
     --theme-gray-400: #a7b0bb;
-    --theme-gray-500: #7e8894;
+    --theme-gray-500: #666f7a; // 보조 텍스트 - 흰 배경 5.1:1 / gray-100 4.5:1
     --theme-gray-600: #5e6670;
     --theme-gray-700: #3f454f;
     --theme-gray-800: #2a2f38;
@@ -290,9 +299,9 @@
     --bg-button-primary: var(--theme-gradient-brand);
     --bg-button-primary-hover: var(--theme-gradient-brand-hover);
     --bg-button-primary-active: var(--theme-gradient-brand-active);
-    --color-button-primary: var(--theme-primary-500);
-    --color-button-primary-hover: var(--theme-primary-500-hover);
-    --color-button-primary-active: var(--theme-primary-500-active);
+    --color-button-primary: var(--theme-primary-text);
+    --color-button-primary-hover: color-mix(in srgb, black 10%, var(--theme-primary-text));
+    --color-button-primary-active: color-mix(in srgb, black 16%, var(--theme-primary-text));
     --border-button-primary: var(--theme-primary-500);
     --border-button-primary-hover: var(--theme-primary-500-hover);
     --border-button-primary-active: var(--theme-primary-500-active);
@@ -344,9 +353,9 @@
     --bg-button-danger: var(--theme-status-error);
     --bg-button-danger-hover: var(--theme-status-error-hover);
     --bg-button-danger-active: var(--theme-status-error-active);
-    --color-button-danger: var(--theme-status-error);
-    --color-button-danger-hover: var(--theme-status-error-hover);
-    --color-button-danger-active: var(--theme-status-error-active);
+    --color-button-danger: var(--theme-status-error-text);
+    --color-button-danger-hover: color-mix(in srgb, black 10%, var(--theme-status-error-text));
+    --color-button-danger-active: color-mix(in srgb, black 16%, var(--theme-status-error-text));
     --border-button-danger: var(--theme-status-error);
     --border-button-danger-hover: var(--theme-status-error-hover);
     --border-button-danger-active: var(--theme-status-error-active);
@@ -362,9 +371,11 @@
     --bg-button-warning: var(--theme-status-warning);
     --bg-button-warning-hover: var(--theme-status-warning-hover);
     --bg-button-warning-active: var(--theme-status-warning-active);
-    --color-button-warning: var(--theme-status-warning);
-    --color-button-warning-hover: var(--theme-status-warning-hover);
-    --color-button-warning-active: var(--theme-status-warning-active);
+    // 노랑 면 위 흰 글자는 1.9:1 이므로 검정 글자를 사용합니다.
+    --color-button-warning-on-fill: var(--theme-color-02-black);
+    --color-button-warning: var(--theme-status-warning-text);
+    --color-button-warning-hover: color-mix(in srgb, black 10%, var(--theme-status-warning-text));
+    --color-button-warning-active: color-mix(in srgb, black 16%, var(--theme-status-warning-text));
     --border-button-warning: var(--theme-status-warning);
     --border-button-warning-hover: var(--theme-status-warning-hover);
     --border-button-warning-active: var(--theme-status-warning-active);
@@ -380,9 +391,9 @@
     --bg-button-success: var(--theme-status-success);
     --bg-button-success-hover: var(--theme-status-success-hover);
     --bg-button-success-active: var(--theme-status-success-active);
-    --color-button-success: var(--theme-status-success);
-    --color-button-success-hover: var(--theme-status-success-hover);
-    --color-button-success-active: var(--theme-status-success-active);
+    --color-button-success: var(--theme-status-success-text);
+    --color-button-success-hover: color-mix(in srgb, black 10%, var(--theme-status-success-text));
+    --color-button-success-active: color-mix(in srgb, black 16%, var(--theme-status-success-text));
     --border-button-success: var(--theme-status-success);
     --border-button-success-hover: var(--theme-status-success-hover);
     --border-button-success-active: var(--theme-status-success-active);
@@ -398,9 +409,9 @@
     --bg-button-info: var(--theme-status-info);
     --bg-button-info-hover: var(--theme-status-info-hover);
     --bg-button-info-active: var(--theme-status-info-active);
-    --color-button-info: var(--theme-status-info);
-    --color-button-info-hover: var(--theme-status-info-hover);
-    --color-button-info-active: var(--theme-status-info-active);
+    --color-button-info: var(--theme-status-info-text);
+    --color-button-info-hover: color-mix(in srgb, black 10%, var(--theme-status-info-text));
+    --color-button-info-active: color-mix(in srgb, black 16%, var(--theme-status-info-text));
     --border-button-info: var(--theme-status-info);
     --border-button-info-hover: var(--theme-status-info-hover);
     --border-button-info-active: var(--theme-status-info-active);
@@ -515,6 +526,7 @@
     --bg-textarea-gray-50: var(--theme-gray-50);
     --color-textarea: var(--theme-gray-800);
     --color-textarea-gray-400: var(--theme-gray-400);
+    --color-textarea-count: var(--theme-gray-500);
     --border-textarea: var(--theme-gray-200);
     --border-textarea-primary-500: var(--theme-primary-500);
     --border-textarea-status-error: var(--theme-status-error);
@@ -691,8 +703,8 @@
     --color-tabs-gray-400: var(--theme-gray-400);
     --color-tabs-gray-600: var(--theme-gray-600);
     --color-tabs-gray-700: var(--theme-gray-700);
-    --color-tabs-primary-500: var(--theme-primary-500);
-    --color-tabs-primary-600: var(--theme-primary-600);
+    --color-tabs-primary-500: var(--theme-primary-text);
+    --color-tabs-primary-600: color-mix(in srgb, black 10%, var(--theme-primary-text));
     --border-tabs: var(--theme-gray-200);
     --border-tabs-gray-0: var(--theme-gray-0);
     --outline-tabs: var(--theme-primary-500-alpha-35);

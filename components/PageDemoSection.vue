@@ -1,5 +1,5 @@
 <template>
-    <AppAccordion class="page-demo-section" :items="items" initial="all">
+    <AppAccordion class="page-demo-section" :items="items" initial="all" tag="h2">
         <template #content>
             <slot />
         </template>

@@ -777,6 +777,7 @@ export const useNavigationStore = defineStore('navigation', () => {
 
     return {
         menus,
+        localizedMenus,
         menuTree,
         isLoading,
         isLoaded,
