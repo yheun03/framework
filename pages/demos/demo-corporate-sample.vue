@@ -129,6 +129,9 @@
 
 <script setup lang="ts">
 import { IconChevronRight } from '~/components/icons';
+import type { AppFeatureCardIcon } from '~/components/AppFeatureCard.vue';
+import type { AppSiteFooterLink, AppSiteFooterSns } from '~/components/AppSite/AppSiteFooter.vue';
+import type { AppTimelineItem } from '~/components/AppTimeline.vue';
 
 useHead({ title: '기업 홈페이지 샘플' });
 const base = useRuntimeConfig().app.baseURL;
@@ -158,13 +161,13 @@ const stats = [
     { value: '24/7', label: '기술 지원' },
 ];
 
-const businesses = [
+const businesses: { icon: AppFeatureCardIcon; title: string; description: string }[] = [
     { icon: 'factory', title: 'MES', description: '작업지시부터 실적까지\n생산 전 과정을 관리합니다.' },
     { icon: 'chart', title: '품질 분석', description: 'SPC · 불량 원인을\n데이터로 추적합니다.' },
     { icon: 'globe', title: '글로벌 운영', description: '다국어 · 다공장 환경을\n하나로 통합합니다.' },
 ];
 
-const history = [
+const history: AppTimelineItem[] = [
     { title: '스마트팩토리 플랫폼 2.0 출시', time: '2026', tone: 'primary' },
     { title: '해외 법인 설립', time: '2024' },
     { title: '누적 고객사 1,000곳 돌파', time: '2022' },
@@ -185,7 +188,7 @@ const inquiryTypes = [
 const form = reactive({ company: '', name: '', email: '', type: 'demo', message: '' });
 const submitted = ref(false);
 
-const footer = {
+const footer: { links: AppSiteFooterLink[]; sns: AppSiteFooterSns[]; infos: string[]; copyright: string; tel: string; hours: string } = {
     links: [
         { label: '회사소개', to: '#' },
         { label: '개인정보처리방침', to: '#', strong: true },

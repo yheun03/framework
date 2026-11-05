@@ -7,8 +7,14 @@
         </AppSiteHeader>
 
         <AppCarousel :items="billboards" nav-variant="banner" autoplay :interval="5000" :height="500">
-            <template #default="{ item }">
-                <AppBillboard :image="base + item.image" :eyebrow="item.eyebrow" :title="item.title" :description="item.description" :height="500" />
+            <template #default="{ index }">
+                <AppBillboard
+                    :image="base + billboards[index].image"
+                    :eyebrow="billboards[index].eyebrow"
+                    :title="billboards[index].title"
+                    :description="billboards[index].description"
+                    :height="500"
+                />
             </template>
         </AppCarousel>
 
@@ -110,6 +116,9 @@
 
 <script setup lang="ts">
 import { IconChevronRight } from '~/components/icons';
+import type { AppFeatureCardIcon } from '~/components/AppFeatureCard.vue';
+import type { AppDockBarItem } from '~/components/AppSite/AppDockBar.vue';
+import type { AppSiteFooterLink, AppSiteFooterSns } from '~/components/AppSite/AppSiteFooter.vue';
 
 useHead({ title: '제품 홈페이지 샘플' });
 const base = useRuntimeConfig().app.baseURL;
@@ -226,7 +235,7 @@ const promotions = [
     },
 ];
 
-const services = [
+const services: { icon: AppFeatureCardIcon; title: string; description: string }[] = [
     { icon: 'rocket', title: '당일 출발', description: '오후 2시 이전 주문 시\n당일 출고됩니다.' },
     { icon: 'shield', title: '안심 결제', description: '모든 결제는 암호화되어\n안전하게 처리됩니다.' },
     { icon: 'cube', title: '무료 반품', description: '수령 후 7일 이내\n무료로 반품할 수 있습니다.' },
@@ -239,7 +248,7 @@ const faqs = [
     { id: 3, title: '적립금은 언제 지급되나요?', content: '구매 확정 후 다음 날 자동으로 지급됩니다.' },
 ];
 
-const dockItems = [
+const dockItems: AppDockBarItem[] = [
     { id: 'menu', label: '카테고리', icon: 'menu', to: '#' },
     { id: 'search', label: '검색', icon: 'search', to: '#' },
     { id: 'home', label: '홈', icon: 'home', to: '#' },
@@ -247,7 +256,7 @@ const dockItems = [
     { id: 'cart', label: '장바구니', icon: 'cart', to: '#', badge: 2 },
 ];
 
-const footer = {
+const footer: { links: AppSiteFooterLink[]; sns: AppSiteFooterSns[]; infos: string[]; copyright: string; tel: string; hours: string } = {
     links: [
         { label: '회사소개', to: '#' },
         { label: '개인정보처리방침', to: '#', strong: true },

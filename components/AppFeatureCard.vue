@@ -41,6 +41,8 @@ const icons = {
     factory: IconFactory,
 };
 
+export type AppFeatureCardIcon = keyof typeof icons;
+
 /**
  * AppFeatureCard - 사업 영역 / 제품 특징 / 서비스 소개 카드 (기업·제품 홈페이지 확장)
  * variant : line(라인, 기본) / box(BG Light 면) / plain(테두리 없음)
@@ -50,7 +52,7 @@ withDefaults(
     defineProps<{
         title: string;
         description?: string;
-        icon?: keyof typeof icons | '';
+        icon?: AppFeatureCardIcon | '';
         variant?: 'line' | 'box' | 'plain';
         to?: string;
         moreLabel?: string;
