@@ -83,8 +83,7 @@ const currentYear = new Date().getFullYear();
         background:
             radial-gradient(900px 540px at 20% 10%, var(--theme-primary-500-alpha-55), transparent 60%),
             radial-gradient(820px 560px at 90% 20%, var(--theme-primary-200-alpha-58), transparent 60%),
-            radial-gradient(860px 640px at 40% 105%, var(--theme-status-info-alpha-25), transparent 62%),
-            linear-gradient(180deg, var(--theme-primary-900), var(--theme-primary-700));
+            radial-gradient(860px 640px at 40% 105%, var(--theme-status-info-alpha-25), transparent 62%), var(--theme-bg-black);
         border: 1px solid var(--theme-gray-0-alpha-18);
         box-shadow:
             0 24px 58px var(--theme-primary-900-alpha-14),

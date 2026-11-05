@@ -1,0 +1,271 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppProductCard / AppPromotionCard
+   Figma 14. Thumbnail Guide (비율·라운드·그레이 BG) / 15. Thumbnail Guide (상품 썸네일)
+========================================= */
+
+.app-product-card {
+    display: flex;
+    flex-direction: column;
+    gap: space(20);
+    min-width: 0;
+
+    &__thumb {
+        position: relative;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        background: var(--bg-thumb);
+
+        // 화이트 BG 상품 이미지 위 #000 3% (Figma 썸네일 그레이 BG 효과)
+        &::after {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-thumb-tint);
+            pointer-events: none;
+            content: '';
+        }
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Hover : 흰색 70% + blur 10 / 아이콘 32 · 간격 32 */
+    &__actions {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: space(24);
+        background: var(--bg-thumb-hover);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.2s;
+
+        .app-icon-button {
+            --app-icon-stroke-width: 1.5;
+            --icon-button-color: var(--color-thumb-action);
+            --icon-button-bg-hover: transparent;
+            --icon-button-bg-active: transparent;
+        }
+    }
+
+    &:hover &__actions,
+    &__thumb:focus-within &__actions {
+        opacity: 1;
+    }
+
+    &__wish.is-active.app-icon-button {
+        --icon-button-color: var(--color-thumb-action-active);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: space(12);
+        min-width: 0;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 100%;
+    }
+
+    &__brand {
+        color: var(--color-product-brand);
+    }
+
+    &__name {
+        display: -webkit-box;
+        margin: 0;
+        overflow: hidden;
+        color: var(--color-product-name);
+        text-decoration: none;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
+
+    a.app-product-card__name:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    &__price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        column-gap: space(8);
+    }
+
+    &__discount {
+        margin-right: -2px;
+        color: var(--color-product-discount);
+    }
+
+    &__amount {
+        color: var(--color-product-price);
+    }
+
+    &__original {
+        color: var(--color-product-original);
+    }
+
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: space(4);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__tag {
+        padding: 2px 4px;
+        background: var(--bg-product-hashtag);
+        color: var(--color-product-hashtag);
+        @include font(c3, rg);
+    }
+
+    /* size md : 3·4단 */
+    &--md &__brand {
+        @include font(b2, md);
+    }
+
+    &--md &__name {
+        @include font(b2, rg);
+    }
+
+    &--md &__discount,
+    &--md &__amount {
+        @include font(h6, sb, en);
+    }
+
+    &--md &__original {
+        @include font(b1, rg, en);
+    }
+
+    /* size sm : 5·6단 (상품명 최대 2줄) */
+    &--sm &__brand {
+        @include font(b3, md);
+    }
+
+    &--sm &__name {
+        @include font(b3, rg);
+        -webkit-line-clamp: 2;
+    }
+
+    &--sm &__discount,
+    &--sm &__amount {
+        @include font(t5, sb, en);
+    }
+
+    &--sm &__original {
+        @include font(b3, rg, en);
+    }
+
+    /* rounded : 썸네일 크기별 라운드 (Figma 14. 라운드 사용 정의) */
+    &--rounded {
+        // 썸네일 폭 = 카드 폭이므로 카드를 container 로 두고 크기별 라운드를 바꿉니다.
+        container-type: inline-size;
+    }
+
+    &--rounded &__thumb {
+        border-radius: radius(lg);
+    }
+}
+
+@container (max-width: 216px) {
+    .app-product-card--rounded .app-product-card__thumb {
+        border-radius: radius(md);
+    }
+}
+
+@container (max-width: 120px) {
+    .app-product-card--rounded .app-product-card__thumb {
+        border-radius: radius(sm);
+    }
+}
+
+@container (min-width: 620px) {
+    .app-product-card--rounded .app-product-card__thumb {
+        border-radius: radius(xl);
+    }
+}
+
+/* =========================================
+   AppPromotionCard - 가로 직사각형 (16:9 / 4:3)
+========================================= */
+.app-promotion-card {
+    display: flex;
+    flex-direction: column;
+    gap: space(16);
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+
+    &__thumb {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: var(--bg-thumb);
+    }
+
+    &--standard &__thumb {
+        aspect-ratio: 4 / 3;
+    }
+
+    &--rounded &__thumb {
+        border-radius: radius(lg);
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    &:hover &__image {
+        transform: scale(1.04);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__label {
+        color: var(--color-promotion-label);
+        @include font(c2, rg, en);
+    }
+
+    &__title {
+        overflow: hidden;
+        color: var(--color-promotion-title);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        @include font(t5, rg);
+    }
+
+    &__period {
+        margin-top: space(4);
+        color: var(--color-promotion-period);
+        @include font(b4, rg, en);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-thumb-action-active);
+        outline-offset: 4px;
+    }
+}

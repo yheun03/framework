@@ -28,7 +28,7 @@ const En = {
     'nav.business.workOrderDetail': 'Work Order Detail',
     'nav.business.qualityInspection': 'Quality Inspection',
     'nav.business.equipmentMonitoring': 'Equipment Monitoring',
-    'nav.legalFlaticon': 'Flaticon Terms',
+    'nav.legalLucide': 'Lucide License',
     'nav.demo.button': 'Button Demo',
     'nav.demo.input': 'Input Demo',
     'nav.demo.grid': 'AG Grid Demo',
@@ -165,7 +165,27 @@ const En = {
     'demo.spinner.desc': 'AppSpinner component demo.',
     'nav.demo.designTokens': 'Design Tokens',
     'demo.designTokens.title': 'Design Tokens',
-    'demo.designTokens.desc': 'Typography (PC/MO) and color tokens from Figma.',
+    'demo.designTokens.desc': 'Typography (PC/MO), color, spacing, grid, radius and shadow tokens from Figma.',
+
+    // Homepage components
+    'nav.siteDemos': 'Homepage Components',
+    'nav.demo.corporateSample': 'Corporate Site Sample',
+    'nav.demo.productSample': 'Product Site Sample',
+    'nav.demo.siteLayout': 'GNB · Footer · Dock Bar',
+    'nav.demo.banner': 'Billboard · Line Banner',
+    'nav.demo.thumbnail': 'Product · Promotion Card',
+    'nav.demo.siteContent': 'Heading · Feature · Pricing',
+    'nav.demo.equipmentCard': 'Equipment Card Demo',
+    'demo.siteLayout.title': 'AppSiteHeader · AppSiteFooter · AppDockBar',
+    'demo.siteLayout.desc': 'Homepage layout components based on Figma 18. GNB / 19. Footer / MO 06. Dock Bar.',
+    'demo.banner.title': 'AppBillboard · AppLineBanner',
+    'demo.banner.desc': 'Figma 16. Billboard / 17. Line Banner. Combine with AppCarousel for multiple slides.',
+    'demo.thumbnail.title': 'AppProductCard · AppPromotionCard',
+    'demo.thumbnail.desc': 'Card components based on Figma 14·15 Thumbnail Guide (ratio, radius, gray BG, 3~6 columns).',
+    'demo.siteContent.title': 'AppHeading · AppFeatureCard · AppPricingCard',
+    'demo.siteContent.desc': 'Corporate / product homepage components extended with the same tokens (type, color, spacing, radius).',
+    'demo.equipmentCard.title': 'AppEquipmentCard',
+    'demo.equipmentCard.desc': 'MES card for equipment status, utilization and metrics. Combines AppStatusLamp and AppProgressBar.',
 };
 
 export default En;

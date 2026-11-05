@@ -1,0 +1,105 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppPricingCard (요금제 / 라이선스)
+========================================= */
+
+.app-pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: space(8);
+    height: 100%;
+    padding: space(32);
+    border: 1px solid var(--border-pricing-card);
+    border-radius: radius(md);
+    background: var(--bg-pricing-card);
+
+    &.is-active {
+        border: 2px solid var(--border-pricing-card-active);
+        padding: calc(#{space(32)} - 1px);
+        box-shadow: var(--shadow-level-2);
+    }
+
+    &__badge {
+        position: absolute;
+        top: 0;
+        right: space(24);
+        padding: space(4) space(12);
+        border-radius: 0 0 8px 8px;
+        background: var(--bg-pricing-card-badge);
+        color: var(--color-pricing-card-badge);
+        @include font(c2, sb);
+    }
+
+    &__title {
+        margin: 0;
+        color: var(--color-pricing-card-title);
+        @include font(t4, sb);
+    }
+
+    &__desc {
+        margin: 0;
+        color: var(--color-pricing-card-desc);
+        @include font(b3, rg);
+    }
+
+    &__price {
+        display: flex;
+        align-items: baseline;
+        gap: space(4);
+        margin: space(12) 0 0;
+        padding-bottom: space(24);
+        border-bottom: 1px solid var(--border-pricing-card-divider);
+        color: var(--color-pricing-card-price);
+
+        strong {
+            @include font(h3, sb, en);
+        }
+    }
+
+    &__unit {
+        color: var(--color-pricing-card-desc);
+        @include font(b2, rg);
+    }
+
+    &__features {
+        display: flex;
+        flex-direction: column;
+        gap: space(12);
+        margin: space(16) 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__feature {
+        display: flex;
+        align-items: flex-start;
+        gap: space(8);
+        color: var(--color-pricing-card-title);
+        @include font(b2, rg);
+    }
+
+    &__check {
+        flex-shrink: 0;
+        margin-top: 4px;
+        color: var(--color-pricing-card-check);
+        font-size: 14px;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: space(8);
+        margin-top: auto;
+        padding-top: space(32);
+    }
+
+    @include mo {
+        padding: space(24);
+
+        &.is-active {
+            padding: calc(#{space(24)} - 1px);
+        }
+    }
+}

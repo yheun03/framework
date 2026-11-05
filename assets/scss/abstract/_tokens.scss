@@ -1,3 +1,5 @@
+@use 'sass:list';
+
 // =====================================================================
 // Design System Tokens  (Figma: 2026_스타일가이드_v02_조앤)
 // ---------------------------------------------------------------------
@@ -69,7 +71,7 @@ $ds-state-color: (
 // Typography
 // - 폰트: Pretendard (국문 / 영문 / 숫자 공통)
 // - 자간: 국문 -2.5% / 영문 0
-// - 굵기: Light 300 / Regular 400 / SemiBold 600
+// - 굵기: Light 300 / Regular 400 / (Medium 500) / SemiBold 600
 // - 같은 토큰 이름을 PC / MO 에서 다른 크기로 사용합니다. (font() mixin 이 자동 전환)
 // ---------------------------------------------------------------------
 $ds-font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
@@ -77,6 +79,8 @@ $ds-font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
 $ds-font-weight: (
     'lt': 300,
     'rg': 400,
+    // Medium 은 썸네일 브랜드명 등 Figma 가이드 일부에서만 사용합니다.
+    'md': 500,
     'sb': 600,
 );
 
@@ -153,4 +157,81 @@ $ds-typography-mo: (
     'btn2': (14px, 20px),
     'btn3': (13px, 18px),
     'btn4': (12px, 18px)
+);
+
+// ---------------------------------------------------------------------
+// 01. Spacing (PC / MO)
+// - 세로 간격 기준이며 짝수만 사용합니다. 가로 여백은 아래 Grid 를 따릅니다.
+// - 56 은 PC, 60 은 MO 가이드에만 있는 값입니다.
+// - CSS 변수: --ds-space-{key}  /  SCSS: space(24)
+// ---------------------------------------------------------------------
+$ds-spacing: (
+    2: 2px,
+    4: 4px,
+    8: 8px,
+    12: 12px,
+    16: 16px,
+    20: 20px,
+    24: 24px,
+    28: 28px,
+    32: 32px,
+    40: 40px,
+    48: 48px,
+    56: 56px,
+    60: 60px,
+    70: 70px,
+    80: 80px,
+    100: 100px,
+    120: 120px,
+    140: 140px,
+    180: 180px,
+);
+
+// ---------------------------------------------------------------------
+// 02. Layout Guide (기본 그리드) - PC 12 Column
+// (width, margin, column, gutter)  width = margin*2 + column*12 + gutter*11
+// - 1580-narrow 를 기본 컨테이너로 사용합니다. (썸네일·띠배너 가이드 기준)
+// - 1320 이하에서는 column 이 비율대로 줄고 gutter 는 고정됩니다. (04. 반응형)
+// ---------------------------------------------------------------------
+$ds-grid: (
+    '1920-wide': (1920px, 56px, 114px, 40px),
+    '1920-narrow': (1920px, 40px, 135px, 20px),
+    '1580-narrow': (1580px, 20px, 110px, 20px),
+    '1560-wide': (1560px, 20px, 90px, 40px),
+    '1320-wide': (1320px, 20px, 70px, 40px),
+    '1280-narrow': (1280px, 20px, 85px, 20px),
+);
+$ds-grid-default: '1580-narrow';
+
+// 03~04. Resolution Guide - 분기점별 Column 수
+// Tablet(1199 이하) 8 Column, MO(767 이하) 4 Column / 좌우 마진 16·20·24 (기본 20) / gutter 12
+$ds-breakpoint-tablet: 1199px;
+$ds-grid-columns: (
+    'pc': 12,
+    'tablet': 8,
+    'mo': 4,
+);
+$ds-grid-mo-margin: (
+    'sm': 16px,
+    'md': 20px,
+    'lg': 24px,
+);
+$ds-grid-mo-gutter: 12px;
+
+// ---------------------------------------------------------------------
+// 14. Thumbnail Guide - 라운드 사용 정의 (썸네일 크기별)
+// sm 10px(~120) / md 12px(140~216) / lg 20px(240~500) / xl 28px(620~)
+// ---------------------------------------------------------------------
+$ds-radius: (
+    'sm': 10px,
+    'md': 12px,
+    'lg': 20px,
+    'xl': 28px,
+);
+
+// 14. Thumbnail Guide - 썸네일 비율
+$ds-ratio: (
+    'square': list.slash(1, 1),
+    'wide': list.slash(16, 9),
+    'standard': list.slash(4, 3),
 );

@@ -1,19 +1,23 @@
 // Framework 프로젝트 브랜드 색상
 // 신규 프로젝트에서는 이 파일의 대표 색상 3개를 먼저 변경합니다.
-// 기본값은 Figma 디자인 시스템(05. Color Guide - 01_브랜드컬러) 입니다.
-$primary: #0a7cff; // Brand Main Color
-$secondary: #39c3b6; // Brand Sub Color_1
-$tertiary: #f59917; // Brand Sub Color_2
+// 조앤소프트 기본 테마 : 오렌지 그라디언트 + #111 (블랙) 기반
+$primary: #ff5900; // Brand Main Color (그라디언트 끝 색, 단색이 필요한 곳 - 텍스트·라인·체크 등)
+$secondary: #111111; // Brand Sub Color_1 (블랙 - 보조 버튼, LNB 등 기반 색)
+$tertiary: #ff7830; // Brand Sub Color_2 (그라디언트 시작 색)
+
+// 브랜드 그라디언트 (Primary 버튼 · 강조 배지 · 브랜드 띠배너)
+// null 이면 linear-gradient(134deg, $tertiary 1.83%, $primary 98.55%) 로 자동 생성됩니다.
+$brand-gradient: null;
 
 // 영역별 색상을 별도로 지정하지 않으면 위 대표 색상에서 자동 생성됩니다.
-$header-background: null;
+$header-background: #ffffff;
 $header-hover-color: null;
 $header-active-color: null;
 $header-accent-color: null;
-$lnb-background: null;
+$lnb-background: #111111;
 $lnb-hover-color: null;
 $lnb-active-color: null;
-$page-navigator-background: null;
+$page-navigator-background: #f7f7fb;
 $page-navigator-hover-color: null;
 $page-navigator-active-color: null;
 $page-navigator-accent-color: null;

@@ -2,54 +2,58 @@
     <div class="page-demo">
         <main class="page-demo-main">
             <header class="page-demo__header">
-                <h1 class="page-demo__title">Flaticon 이용약관</h1>
+                <h1 class="page-demo__title">Lucide 라이선스</h1>
                 <p class="page-demo__desc">
-                    본 프로젝트에서 사용하는 Flaticon UIcons의 라이선스 준수 기준입니다. 공식 약관을 우선하며, 아이콘 사용 전 최신 약관을 확인합니다.
+                    본 프로젝트의 공통 아이콘은 Lucide 오픈소스 아이콘을 사용합니다. ISC License 고지문을 아래에 표기하며, 아이콘 추가 전 공식
+                    라이선스를 확인합니다.
                 </p>
             </header>
 
             <section class="page-demo-card">
                 <h2 class="page-demo-card__title">적용 기준</h2>
                 <ul class="page-demo-list">
-                    <li>기준 문서: Flaticon Terms of use</li>
-                    <li>기준 버전: April 2026</li>
+                    <li>패키지: <code>@lucide/vue</code> (Vue 3 컴포넌트)</li>
                     <li>
-                        공식 약관:
-                        <a href="https://www.flaticon.com/legal" target="_blank" rel="noopener noreferrer">https://www.flaticon.com/legal</a>
+                        라이선스: ISC License (Feather 에서 파생된 일부 아이콘 - chevron · search · x 등은 MIT License, Copyright (c) 2013-present
+                        Cole Bemis)
+                    </li>
+                    <li>
+                        공식 라이선스:
+                        <a href="https://lucide.dev/license" target="_blank" rel="noopener noreferrer">https://lucide.dev/license</a>
                     </li>
                 </ul>
             </section>
 
             <section class="page-demo-card">
-                <h2 class="page-demo-card__title">무료 사용 조건</h2>
+                <h2 class="page-demo-card__title">ISC License 고지</h2>
                 <ul class="page-demo-list">
-                    <li>무료 라이선스는 Flaticon과 저작자 출처 표기를 전제로 사용합니다.</li>
+                    <li>Copyright (c) 2026 Lucide Icons and Contributors</li>
                     <li>
-                        본 페이지에서 <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Icons by Flaticon</a> 출처를
-                        명시합니다.
+                        Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted,
+                        provided that the above copyright notice and this permission notice appear in all copies.
                     </li>
-                    <li>출처 표기 없이 사용하려면 Premium 구독 기간 중 다운로드한 콘텐츠를 사용합니다.</li>
-                    <li>편집용으로 표시된 콘텐츠는 상업 활동, 홍보, 마케팅 목적에 사용하지 않습니다.</li>
-                </ul>
-            </section>
-
-            <section class="page-demo-card">
-                <h2 class="page-demo-card__title">사용 제한</h2>
-                <ul class="page-demo-list">
-                    <li>아이콘 자체가 핵심 상품이 되는 재판매용 인쇄물, 앱, 게임, 템플릿에는 사용하지 않습니다.</li>
-                    <li>아이콘 파일을 별도 파일, 아이콘 세트, 데이터베이스 형태로 재배포하거나 재판매하지 않습니다.</li>
-                    <li>상표, 로고, 보증 표시처럼 오인될 수 있는 방식으로 사용하지 않습니다.</li>
-                    <li>AI, 머신러닝, 개인 식별 기술 학습 목적으로 사용하지 않습니다.</li>
+                    <li>
+                        THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+                        WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
+                        CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+                        NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+                    </li>
                 </ul>
             </section>
 
             <section class="page-demo-card">
                 <h2 class="page-demo-card__title">프로젝트 운영 기준</h2>
                 <ul class="page-demo-list">
-                    <li>아이콘은 <code>@flaticon/flaticon-uicons</code> 패키지의 UIcons만 사용합니다.</li>
-                    <li>컴포넌트 사용 형식은 <code>import { IconMenu } ...</code>, <code>&lt;IconMenu /&gt;</code>로 통일합니다.</li>
-                    <li>새 아이콘 추가 시 Flaticon 내 상업적 사용 가능 여부와 출처 표기 필요 여부를 먼저 확인합니다.</li>
-                    <li>약관이 변경되면 본 페이지와 아이콘 사용 정책을 함께 갱신합니다.</li>
+                    <li>
+                        아이콘은 <code>components/icons.ts</code> 에 등록한 뒤 <code>import { IconMenu } ...</code>,
+                        <code>&lt;IconMenu /&gt;</code> 로 사용합니다.
+                    </li>
+                    <li>
+                        새 아이콘은 <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer">lucide.dev/icons</a> 에서 이름을 찾아
+                        추가합니다.
+                    </li>
+                    <li>크기는 font-size, 색상은 color, 선 두께는 <code>--app-icon-stroke-width</code> (기본 2, 큰 아이콘 1.5) 로 조절합니다.</li>
+                    <li>Lucide 는 브랜드 로고를 제공하지 않으므로 SNS 아이콘은 같은 규격으로 직접 정의하며, 각 브랜드 가이드라인을 따릅니다.</li>
                 </ul>
             </section>
         </main>

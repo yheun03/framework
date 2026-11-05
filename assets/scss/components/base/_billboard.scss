@@ -1,0 +1,138 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppBillboard
+   Figma 16. Billboard Banner Guide (PC) / (MO)
+========================================= */
+
+.app-billboard {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &__visual {
+        position: relative;
+        height: var(--app-billboard-height, 500px);
+        background-color: var(--bg-billboard);
+        background-position: center;
+        background-size: cover;
+    }
+
+    &__object {
+        position: absolute;
+        right: 10%;
+        bottom: 0;
+        display: flex;
+        align-items: flex-end;
+        max-height: 100%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: space(8);
+    }
+
+    &__eyebrow {
+        @include font(b1, rg, en);
+    }
+
+    &__title {
+        margin: 0;
+    }
+
+    &__desc {
+        margin: 0;
+        white-space: pre-line;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: space(8);
+        margin-top: space(16);
+    }
+
+    /* overlay : 1920 풀 화면 - 이미지 위 텍스트 */
+    &--overlay &__visual::after {
+        position: absolute;
+        inset: 0;
+        background: var(--bg-billboard-dim);
+        content: '';
+    }
+
+    &--overlay &__content {
+        position: absolute;
+        right: 0;
+        bottom: space(48);
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        max-width: calc(800px + var(--ds-grid-margin) * 2);
+        margin-inline: auto;
+        padding-inline: var(--ds-grid-margin);
+        color: var(--color-billboard-on-image);
+    }
+
+    &--overlay &__title {
+        @include font(h1, rg);
+    }
+
+    &--overlay &__desc {
+        @include font(b1, rg);
+    }
+
+    /* card : 1580 카드형 - 이미지 아래 캡션 */
+    &--card &__content {
+        padding-top: space(24);
+    }
+
+    &--card &__eyebrow {
+        color: var(--color-billboard-title);
+        @include font(b3, rg, en);
+    }
+
+    &--card &__title {
+        color: var(--color-billboard-title);
+        @include font(h4, rg);
+    }
+
+    &--card &__desc {
+        color: var(--color-billboard-desc);
+        @include font(b3, rg);
+    }
+
+    /* align */
+    &--align-center &__content {
+        align-items: center;
+        text-align: center;
+    }
+
+    &--align-left &__content {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    &--overlay#{&}--align-left &__content {
+        max-width: var(--ds-grid-width);
+    }
+
+    /* weight : 디자인 느낌 (세련된 / 가벼운 / 무거운) */
+    &--weight-lt &__title {
+        font-weight: 300;
+    }
+
+    &--weight-sb &__title {
+        font-weight: 600;
+    }
+
+    @include mo {
+        &__visual {
+            height: min(var(--app-billboard-height, 500px), 120vw);
+        }
+
+        &--overlay &__content {
+            bottom: space(32);
+        }
+    }
+}

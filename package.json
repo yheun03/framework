@@ -17,7 +17,7 @@
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
-        "@flaticon/flaticon-uicons": "^3.3.1",
+        "@lucide/vue": "1.60.0",
         "@pinia/nuxt": "^0.5.4",
         "@toast-ui/editor": "^3.2.2",
         "ag-grid-community": "^33.3.2",

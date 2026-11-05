@@ -45,8 +45,6 @@ export default defineNuxtConfig({
     css: [
         // AG Grid 테마 CSS는 전역 link 로드로 고정 (dev 인라인 주입 최소화)
         'ag-grid-community/styles/ag-theme-quartz.css',
-        '@flaticon/flaticon-uicons/css/regular/rounded.css',
-        '@flaticon/flaticon-uicons/css/solid/rounded.css',
         'flatpickr/dist/flatpickr.css',
         'nouislider/dist/nouislider.css',
         '~/assets/scss/main.scss',
@@ -64,6 +62,7 @@ export default defineNuxtConfig({
         { path: '~/components/AppUpload', pathPrefix: false },
         { path: '~/components/AppSearch', pathPrefix: false },
         { path: '~/components/AppTree', pathPrefix: false },
+        { path: '~/components/AppSite', pathPrefix: false },
         { path: '~/components/PageDemo', pathPrefix: false },
         { path: `~/components/projects/${projectConfig.key}`, pathPrefix: false },
         // components 루트 단일 컴포넌트만 자동 등록

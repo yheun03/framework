@@ -60,6 +60,111 @@ const buttonTypes = ['button', 'submit', 'reset'];
 const placements = ['top', 'bottom', 'left', 'right'];
 
 const summaries: Record<string, DemoSummary> = {
+    'demo-design-tokens': {
+        description: 'Figma 토큰을 SCSS 함수 / mixin / 유틸 클래스로 사용합니다.',
+        props: [
+            {
+                name: 'font($token, $weight, $lang)',
+                description: '타이포 mixin - PC/MO 자동 전환',
+                values: ['lt', 'rg', 'md', 'sb'],
+                type: 'SCSS mixin',
+            },
+            {
+                name: 'space($key)',
+                description: 'Figma 01. Spacing 세로 간격',
+                values: ['2', '4', '8', '12', '16', '20', '24', '28', '32', '40', '48', '56', '60', '70', '80', '100', '120', '140', '180'],
+                type: 'SCSS function',
+            },
+            { name: 'radius($key)', description: '썸네일 크기별 라운드 10 / 12 / 20 / 28', values: ['sm', 'md', 'lg', 'xl'], type: 'SCSS function' },
+            { name: '@include tablet / mo', description: '1199px / 767px 이하 미디어쿼리', type: 'SCSS mixin' },
+            {
+                name: '.ds-container--{name}',
+                description: 'Figma 02. Layout 그리드 (기본 1580-narrow)',
+                values: ['1920-wide', '1920-narrow', '1580-narrow', '1560-wide', '1320-wide', '1280-narrow', 'fluid'],
+            },
+            { name: '.ds-grid / .ds-col-{n}', description: 'PC 12 · Tablet 8 · MO 4 Column (span 자동 환산)', type: 'class' },
+            { name: '.ds-col-t-{1~8} / .ds-col-m-{1~4}', description: 'Tablet / MO span 덮어쓰기', type: 'class' },
+            { name: '.mt|mb|pt|pb|gap-{n}', description: '간격 유틸', type: 'class' },
+        ],
+    },
+    'demo-site-layout': {
+        description: '홈페이지 GNB / Footer / MO 독바입니다.',
+        props: [
+            { name: 'AppSiteHeader.items', description: '메뉴 - label / to / active / divider', type: 'AppSiteHeaderItem[]', required: true },
+            { name: 'AppSiteHeader.logo', description: '텍스트 로고 (#logo 슬롯 가능)', type: 'string', default: "'LOGO NAME'" },
+            { name: 'AppSiteHeader.searchPlaceholder', description: '비우면 검색창 숨김 / @search', type: 'string' },
+            { name: 'AppSiteHeader.sticky', description: '상단 고정', type: 'boolean', default: 'false' },
+            { name: 'AppSiteHeader #utils / #aside', description: '우측 아이콘 / 메뉴 우측 영역', type: 'Vue slot' },
+            { name: 'AppSiteFooter.variant', description: '배경 톤', values: ['light', 'dark'], default: 'light' },
+            { name: 'AppSiteFooter.links · sns · infos', description: '정책 링크 / SNS / 회사 정보', type: 'Array' },
+            { name: 'AppSiteFooter #actions / #extra', description: '고객센터 버튼 / APP 다운로드 등', type: 'Vue slot' },
+            { name: 'AppDockBar.items', description: 'id / label / icon / to / badge', type: 'AppDockBarItem[]', required: true },
+            { name: 'AppDockBar.icon', description: '아이콘 키', values: ['home', 'menu', 'category', 'search', 'heart', 'account', 'cart'] },
+            { name: 'AppDockBar.showLabel · fixed', description: '라벨 노출 / 하단 고정', type: 'boolean' },
+        ],
+    },
+    'demo-banner': {
+        description: '메인 빌보드와 띠배너입니다.',
+        props: [
+            { name: 'AppBillboard.variant', description: 'overlay(1920 풀) / card(1580 카드형)', values: ['overlay', 'card'], default: 'overlay' },
+            { name: 'AppBillboard.weight', description: '타이틀 굵기 (세련된 / 가벼운 / 무거운)', values: ['lt', 'rg', 'sb'], default: 'rg' },
+            { name: 'AppBillboard.align', description: '텍스트 정렬', values: ['center', 'left'], default: 'center' },
+            { name: 'AppBillboard.height', description: '이미지 높이', type: 'number | string', default: '500' },
+            { name: 'AppBillboard.eyebrow · title · description · image', description: '내용', type: 'string' },
+            { name: 'AppLineBanner.size', description: '90 / 120 / 180 / 240px', values: ['sm', 'md', 'lg', 'xl'], default: 'md' },
+            { name: 'AppLineBanner.variant', description: '배경 톤', values: ['dark', 'light', 'brand'], default: 'dark' },
+            { name: 'AppLineBanner.align', description: '기본형 / 예외 케이스', values: ['center', 'right'], default: 'center' },
+            { name: 'AppLineBanner.closable', description: '닫기 버튼 / @close', type: 'boolean', default: 'false' },
+            { name: 'AppLineBanner #object / #actions', description: '오브젝트 / 버튼', type: 'Vue slot' },
+            { name: 'AppCarousel.navVariant', description: 'banner = 56x80 사각 화살표', values: ['square', 'circle', 'plain', 'banner'] },
+        ],
+    },
+    'demo-thumbnail': {
+        description: '상품 / 프로모션 썸네일 카드입니다.',
+        props: [
+            { name: 'AppProductCard.name · price', description: '상품명 / 판매가', type: 'string / number', required: true },
+            { name: 'AppProductCard.brand · discount · originalPrice', description: '브랜드 / 할인율(%) / 정가', type: 'string / number' },
+            { name: 'AppProductCard.rating · reviewCount · tags', description: '평점 / 리뷰 수 / 해시태그', type: 'number / string[]' },
+            { name: 'AppProductCard.size', description: 'md(3·4단) / sm(5·6단)', values: ['sm', 'md'], default: 'md' },
+            { name: 'AppProductCard.rounded', description: '썸네일 크기별 라운드', type: 'boolean', default: 'false' },
+            { name: 'AppProductCard v-model:active', description: '찜 상태 (@view · @cart)', type: 'boolean', default: 'false' },
+            { name: 'AppPromotionCard.ratio', description: '16:9 / 4:3', values: ['wide', 'standard'], default: 'wide' },
+            { name: 'AppPromotionCard.label · title · period', description: 'Exclusive / 제목 / 기간', type: 'string' },
+        ],
+    },
+    'demo-site-content': {
+        description: '기업·제품 홈페이지용 확장 컴포넌트입니다.',
+        props: [
+            { name: 'AppHeading.size', description: 'T3 24 / H3 32 / H2 40', values: ['sm', 'md', 'lg'], default: 'md' },
+            { name: 'AppHeading.align', description: '정렬 (#actions 는 left 에서 우측)', values: ['center', 'left'], default: 'center' },
+            { name: 'AppHeading.eyebrow · description · tag', description: '라벨 / 설명 / 제목 태그', type: 'string' },
+            { name: 'AppFeatureCard.variant', description: '카드 스타일', values: ['line', 'box', 'plain'], default: 'line' },
+            {
+                name: 'AppFeatureCard.icon',
+                description: '아이콘 키',
+                values: ['bulb', 'rocket', 'shield', 'chart', 'cube', 'globe', 'building', 'headset', 'factory'],
+            },
+            { name: 'AppFeatureCard.to', description: '카드 전체 링크', type: 'string' },
+            {
+                name: 'AppPricingCard.price · unit · features',
+                description: '가격 / 단위 / 포함 항목',
+                type: 'number | string / string[]',
+                required: true,
+            },
+            { name: 'AppPricingCard.active · badge', description: '추천 강조', type: 'boolean / string' },
+        ],
+    },
+    'demo-equipment-card': {
+        description: 'MES 설비 현황 카드입니다.',
+        props: [
+            { name: 'title · code', description: '설비명 / 설비 코드', type: 'string', required: true },
+            { name: 'status', description: '가동 / 대기 / 정지 / 점검 / 미연결', values: ['run', 'idle', 'stop', 'check', 'off'], default: 'run' },
+            { name: 'value · valueLabel', description: '대표 지표(%) / 라벨', type: 'number / string', default: "'가동률'" },
+            { name: 'items', description: '하단 지표 (label, value)', type: 'Array' },
+            { name: 'active', description: '선택 강조', type: 'boolean', default: 'false' },
+            { name: '#actions', description: '하단 버튼', type: 'Vue slot' },
+        ],
+    },
     'demo-button': {
         description: '라벨이 있는 액션 버튼과 아이콘 전용 액션 버튼을 역할별로 구분합니다.',
         props: [

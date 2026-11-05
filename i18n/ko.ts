@@ -28,7 +28,7 @@ const Ko = {
     'nav.business.workOrderDetail': '작업지시 상세',
     'nav.business.qualityInspection': '품질검사 현황',
     'nav.business.equipmentMonitoring': '설비 모니터링',
-    'nav.legalFlaticon': 'Flaticon 이용약관',
+    'nav.legalLucide': 'Lucide 라이선스',
     'nav.demo.button': '버튼 데모',
     'nav.demo.input': '인풋 데모',
     'nav.demo.grid': 'AG Grid 데모',
@@ -163,10 +163,30 @@ const Ko = {
     'demo.alert.desc': '화면 안에 고정 노출되는 알림 배너입니다.',
     'demo.spinner.title': 'AppSpinner',
     'demo.spinner.desc': '로딩 표시 컴포넌트입니다.',
-    'nav.demo.designTokens': '디자인 토큰 (폰트·컬러)',
+    'nav.demo.designTokens': '디자인 토큰 (폰트·컬러·여백)',
     'demo.designTokens.title': '디자인 토큰',
     'demo.designTokens.desc':
-        'Figma 타이포그래피(PC/MO)와 컬러 테이블을 SCSS 토큰으로 정리한 값입니다. 화면에 표시되는 값은 실제 적용된 CSS 변수입니다.',
+        'Figma 타이포그래피(PC/MO) · 컬러 · 여백 · 그리드 · 라운드 · 그림자를 SCSS 토큰으로 정리한 값입니다. 화면에 표시되는 값은 실제 적용된 CSS 변수입니다.',
+
+    // 홈페이지 컴포넌트 (Figma 14~19 / MO 06) · 기업·제품 홈페이지 · MES 확장
+    'nav.siteDemos': '홈페이지 컴포넌트',
+    'nav.demo.corporateSample': '기업 홈페이지 샘플',
+    'nav.demo.productSample': '제품 홈페이지 샘플',
+    'nav.demo.siteLayout': 'GNB · Footer · 독바',
+    'nav.demo.banner': '빌보드 · 띠배너',
+    'nav.demo.thumbnail': '상품 · 프로모션 썸네일',
+    'nav.demo.siteContent': '섹션 제목 · 특징 · 요금제',
+    'nav.demo.equipmentCard': '설비 카드 데모',
+    'demo.siteLayout.title': 'AppSiteHeader · AppSiteFooter · AppDockBar',
+    'demo.siteLayout.desc': 'Figma 18. GNB / 19. Footer / MO 06. Dock Bar 기반 홈페이지 공통 레이아웃 컴포넌트입니다.',
+    'demo.banner.title': 'AppBillboard · AppLineBanner',
+    'demo.banner.desc': 'Figma 16. 빌보드 배너 / 17. 띠배너 컴포넌트입니다. 여러 장은 AppCarousel 과 조합합니다.',
+    'demo.thumbnail.title': 'AppProductCard · AppPromotionCard',
+    'demo.thumbnail.desc': 'Figma 14·15. 썸네일 가이드(비율 · 라운드 · 그레이 BG · 3~6단) 기반 카드 컴포넌트입니다.',
+    'demo.siteContent.title': 'AppHeading · AppFeatureCard · AppPricingCard',
+    'demo.siteContent.desc': 'Figma 에 없는 기업·제품 홈페이지용 컴포넌트를 같은 토큰(타이포 · 컬러 · 여백 · 라운드)으로 확장했습니다.',
+    'demo.equipmentCard.title': 'AppEquipmentCard',
+    'demo.equipmentCard.desc': '설비 상태 · 가동률 · 지표를 보여주는 MES 카드입니다. AppStatusLamp 와 AppProgressBar 를 조합합니다.',
 };
 
 export default Ko;

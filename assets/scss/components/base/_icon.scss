@@ -2,8 +2,10 @@
 
 /* =========================================
    Component: AppIcon
-   설명: 공통 아이콘 래퍼
+   설명: 공통 아이콘 (Lucide SVG, components/icons.ts)
    사용 위치: Button / Choice / Menu / Input
+   크기: font-size(1em) / 색상: color / 선 두께: --app-icon-stroke-width
+   (Figma 22. Icon Guide - 2px 아이콘 기본, 큰 아이콘은 1.5px)
 ========================================= */
 
 .app-icon {
@@ -20,6 +22,7 @@
     height: 1em;
     font-size: 1em;
     line-height: 1;
+    stroke-width: var(--app-icon-stroke-width, 2);
 
     /* ----------------------------------------
      Icon Source
@@ -35,7 +38,7 @@
     svg {
         fill: none;
         stroke: currentColor;
-        stroke-width: 2;
+        stroke-width: var(--app-icon-stroke-width, 2);
         stroke-linecap: round;
         stroke-linejoin: round;
     }

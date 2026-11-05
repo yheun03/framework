@@ -1,0 +1,78 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: AppHeading (홈페이지 섹션 제목)
+   Figma 02 Layout Guide 'Title name' + 06. Typography 기준 확장
+========================================= */
+
+.app-heading {
+    display: flex;
+    align-items: flex-end;
+    gap: space(24);
+    margin-bottom: space(40);
+
+    &__text {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: space(8);
+        min-width: 0;
+    }
+
+    &__eyebrow {
+        color: var(--color-heading-eyebrow);
+        @include font(b3, sb, en);
+    }
+
+    &__title {
+        margin: 0;
+        color: var(--color-heading-title);
+    }
+
+    &__desc {
+        margin: space(4) 0 0;
+        color: var(--color-heading-desc);
+        white-space: pre-line;
+        @include font(b1, rg);
+    }
+
+    &__actions {
+        display: flex;
+        flex-shrink: 0;
+        gap: space(8);
+    }
+
+    &--sm &__title {
+        @include font(t3, rg);
+    }
+
+    &--md &__title {
+        @include font(h3, sb);
+    }
+
+    &--lg &__title {
+        @include font(h2, sb);
+    }
+
+    &--sm {
+        margin-bottom: space(24);
+    }
+
+    &--align-center {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &--align-center &__text {
+        align-items: center;
+    }
+
+    @include mo {
+        margin-bottom: space(24);
+
+        &--align-left {
+            flex-wrap: wrap;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+@use '../abstract' as *;
+@use 'sass:list';
+@use 'sass:map';
+
+// =====================================================================
+// Layout CSS 변수 (Figma 01. Spacing / 02. Layout / 03~04. Resolution / 14. Thumbnail)
+//   --ds-space-{key}         간격 (세로 기준)
+//   --ds-radius-{key}        썸네일 라운드
+//   --ds-grid-*              현재 분기점의 컨테이너/컬럼/거터 (PC 12 → Tablet 8 → MO 4)
+// =====================================================================
+
+$default-grid: map.get($ds-grid, $ds-grid-default);
+
+:root {
+    @each $key, $value in $ds-spacing {
+        --ds-space-#{$key}: #{$value};
+    }
+
+    @each $key, $value in $ds-radius {
+        --ds-radius-#{$key}: #{$value};
+    }
+
+    --ds-grid-width: #{list.nth($default-grid, 1)};
+    --ds-grid-margin: #{list.nth($default-grid, 2)};
+    --ds-grid-gutter: #{list.nth($default-grid, 4)};
+    --ds-grid-columns: #{map.get($ds-grid-columns, 'pc')};
+}
+
+@include tablet {
+    :root {
+        --ds-grid-columns: #{map.get($ds-grid-columns, 'tablet')};
+    }
+}
+
+@include mo {
+    :root {
+        --ds-grid-margin: #{map.get($ds-grid-mo-margin, 'md')};
+        --ds-grid-gutter: #{$ds-grid-mo-gutter};
+        --ds-grid-columns: #{map.get($ds-grid-columns, 'mo')};
+    }
+}

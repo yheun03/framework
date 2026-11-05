@@ -1,0 +1,52 @@
+<template>
+    <article class="app-pricing-card" :class="{ 'is-active': active }">
+        <span v-if="badge" class="app-pricing-card__badge">{{ badge }}</span>
+        <h3 class="app-pricing-card__title">{{ title }}</h3>
+        <p v-if="description" class="app-pricing-card__desc">{{ description }}</p>
+
+        <p class="app-pricing-card__price">
+            <strong>{{ typeof price === 'number' ? price.toLocaleString() : price }}</strong>
+            <span v-if="unit" class="app-pricing-card__unit">{{ unit }}</span>
+        </p>
+
+        <ul v-if="features.length" class="app-pricing-card__features">
+            <li v-for="feature in features" :key="feature" class="app-pricing-card__feature">
+                <IconCheck class="app-pricing-card__check" />
+                {{ feature }}
+            </li>
+        </ul>
+
+        <div v-if="$slots.actions" class="app-pricing-card__actions">
+            <slot name="actions" />
+        </div>
+    </article>
+</template>
+
+<script setup lang="ts">
+import { IconCheck } from '~/components/icons';
+
+/**
+ * AppPricingCard - 요금제 / 라이선스 카드 (제품 홈페이지 확장)
+ * active : 추천 요금제 강조 (브랜드 라인 + badge)
+ * 하단 버튼은 #actions 슬롯에 AppButton 을 배치합니다.
+ */
+withDefaults(
+    defineProps<{
+        title: string;
+        price: number | string;
+        /** 원 / 월, 문의 등 가격 뒤 단위 */
+        unit?: string;
+        description?: string;
+        features?: string[];
+        badge?: string;
+        active?: boolean;
+    }>(),
+    {
+        unit: '',
+        description: '',
+        features: () => [],
+        badge: '',
+        active: false,
+    },
+);
+</script>
