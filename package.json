@@ -1,41 +1,47 @@
 {
     "name": "framework",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "private": true,
-    "homepage": "https://yheun03.github.io/framework/",
     "type": "module",
     "engines": {
-        "node": ">=20 <23"
+        "node": ">=20.19"
     },
     "scripts": {
-        "build": "nuxt build",
-        "clean": "rm -rf .nuxt .output node_modules/.vite",
-        "dev": "nuxt dev",
-        "generate": "nuxt generate",
-        "deploy": "nuxt generate && gh-pages -d .output/public --dotfiles",
-        "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "serve": "cross-env VITE_APP_MODE=local vite --port 80",
+        "local": "cross-env VITE_APP_MODE=local vite --port 80",
+        "dev": "cross-env VITE_APP_MODE=dev vite --port 80",
+        "prd": "cross-env VITE_APP_MODE=prd vite --port 80",
+        "pub": "cross-env VITE_APP_MODE=pub vite --host 0.0.0.0 --port 3005",
+        "build": "vite build",
+        "build:pages": "cross-env VITE_BASE_URL=/framework/ vite build && cp dist/index.html dist/404.html",
+        "preview": "vite preview",
+        "deploy": "npm run build:pages && gh-pages -d dist --dotfiles",
+        "format": "prettier --write \"src/**/*.{js,vue,json,scss}\"",
+        "docker:build": "docker build -t docker.jonsoft.co.kr/framework/client:latest ."
     },
     "dependencies": {
         "@lucide/vue": "1.60.0",
-        "@pinia/nuxt": "^0.5.4",
         "@toast-ui/editor": "^3.2.2",
         "ag-grid-community": "^33.3.2",
         "ag-grid-vue3": "^33.3.2",
         "axios": "^1.7.7",
         "chart.js": "^4.5.1",
+        "cross-env": "^10.1.0",
         "flatpickr": "^4.6.13",
         "nouislider": "^15.8.1",
-        "nuxt": "^3.14.1593",
-        "pinia": "^2.2.4",
-        "vue": "^3.5.12",
+        "pinia": "^3.0.4",
+        "vue": "^3.5.45",
         "vue-chartjs": "^5.3.3",
-        "vue-router": "^4.4.5",
+        "vue-i18n": "^11.4.18",
+        "vue-router": "^5.4.0",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {
-        "@types/node": "^22.19.19",
+        "@vitejs/plugin-vue": "^6.0.10",
+        "dotenv": "^17.4.2",
         "gh-pages": "^6.3.0",
-        "sass": "^1.80.4"
+        "prettier": "^3.9.10",
+        "sass": "^1.80.4",
+        "vite": "^8.3.6"
     }
 }

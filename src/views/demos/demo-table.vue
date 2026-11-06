@@ -1,0 +1,509 @@
+<template>
+    <div class="page-demo">
+        <div class="page-demo-layout">
+            <div class="page-demo-main">
+                <header class="page-demo__header">
+                    <h1 class="page-demo__title">{{ title }}</h1>
+                    <p class="page-demo__desc">{{ description }}</p>
+                </header>
+
+                <!-- BASIC TYPES -->
+                <PageDemoSection class="page-demo-section" title="Basic Types">
+                    <p class="page-demo__desc">
+                        AppTableField가 지원하는 셀 타입들을 한 번에 확인하는 데모입니다. 각 행의 <code>th</code>에는 <code>cell.type</code>이,
+                        <code>td</code>에는 해당 타입의 컴포넌트가 렌더링됩니다.
+                    </p>
+
+                    <AppTable v-model="basicForm" :rows="basicRows" title="Basic" />
+                </PageDemoSection>
+
+                <!-- LAYOUT TYPES -->
+                <PageDemoSection class="page-demo-section" title="Layout Types" description="stacked / label-full 레이아웃 예시입니다.">
+                    <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
+                </PageDemoSection>
+
+                <!-- BUTTON TYPES -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Button Types"
+                    description="button / input_button / input_button-text / input-text / text-button 타입 예시입니다."
+                >
+                    <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants" />
+                </PageDemoSection>
+
+                <!-- CHOICE TYPES -->
+                <PageDemoSection class="page-demo-section" title="Choice Types" description="radio / checkbox 타입 예시입니다.">
+                    <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
+                </PageDemoSection>
+
+                <!-- DATE TYPES -->
+                <PageDemoSection class="page-demo-section" title="Date Types" description="date / range_date 타입 예시입니다.">
+                    <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
+                </PageDemoSection>
+
+                <!-- CONTACT TYPES -->
+                <PageDemoSection class="page-demo-section" title="Contact Types" description="phone / email 타입 예시입니다.">
+                    <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
+                </PageDemoSection>
+
+                <!-- STATE -->
+                <PageDemoSection class="page-demo-section" title="Readonly / Disabled" description="readonly / disabled 상태 확인용 예시입니다.">
+                    <div class="page-demo-stack">
+                        <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" readonly />
+
+                        <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled" disabled />
+                    </div>
+                </PageDemoSection>
+            </div>
+
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
+                <div class="page-demo-aside__sticky">
+                    <PageDemoPropsSummary />
+                </div>
+            </aside>
+        </div>
+    </div>
+</template>
+
+<script setup>
+/**
+ * 테이블 데모 화면의 셀 타입별 입력 값과 액션 상태를 관리하는 페이지 컴포넌트입니다.
+ */
+
+import { ref } from 'vue';
+import { useDemoI18n } from '@/composables/useI18nText';
+import PageDemoPropsSummary from '@/components/PageDemo/content/PageDemoPropsSummary.vue';
+import PageDemoSection from '@/components/PageDemoSection.vue';
+import AppTable from '@/components/Table/AppTable.vue';
+
+const { title, description } = useDemoI18n('table');
+
+const selectOptions = [
+    { label: '선택하세요', value: null },
+    { label: '옵션 A', value: 'a' },
+    { label: '옵션 B', value: 'b' },
+    { label: '옵션 C', value: 'c' },
+];
+
+const radioOptions = [
+    { label: '합격', value: 'pass' },
+    { label: '불합격', value: 'fail' },
+];
+
+const checkboxOptions = [
+    { label: '옵션 1', value: 'option1' },
+    { label: '옵션 2', value: 'option2' },
+    { label: '옵션 3', value: 'option3' },
+];
+
+const basicForm = ref({
+    textValue: '텍스트 값',
+    inputValue: '',
+    handleSelectValue: null,
+    textareaValue: '',
+});
+
+const layoutForm = ref({
+    stackedName: '홍길동',
+    stackedDept: '개발팀',
+    stackedRole: '관리자',
+    stackedStatus: '사용',
+    defaultName: '김철수',
+    defaultDept: '영업팀',
+    rowspanOwner: '박영희',
+    rowspanTask: '입고',
+    rowspanMemo: '검수 완료',
+    fullMemo: 'th가 가로 100%로 노출되는 행입니다.',
+});
+
+const buttonForm = ref({
+    buttonOnly: '',
+    inputButtonValue: '',
+    inputButtonTextValue: '',
+    inputTextValue: '',
+    textButtonValue: '텍스트 + 버튼',
+});
+
+const choiceForm = ref({
+    radioValue: 'pass',
+    checkboxValue: ['option1'],
+    toggleValue: true,
+});
+
+const dateForm = ref({
+    dateValue: '2026-04-27',
+    range: {
+        start: null,
+        end: null,
+    },
+});
+
+const contactForm = ref({
+    phone1: '',
+    phone2: '',
+    phone3: '',
+    emailId: '',
+    emailDomain: '',
+});
+
+const stateForm = ref({
+    readonlyInput: '읽기 전용 값',
+    readonlySelect: 'b',
+    readonlyDate: '2026-04-27',
+});
+
+const disabledForm = ref({
+    disabledInput: '비활성 값',
+    disabledRadio: 'pass',
+    disabledCheckbox: ['option1'],
+    disabledDate: '2026-04-27',
+});
+
+const basicRows = [
+    {
+        cells: [
+            {
+                label: 'text',
+                key: 'textValue',
+                type: 'text',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'input',
+                key: 'inputValue',
+                type: 'input',
+                placeholder: '입력하세요.',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'select',
+                key: 'handleSelectValue',
+                type: 'select',
+                placeholder: '선택하세요.',
+                items: selectOptions,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'textarea',
+                key: 'textareaValue',
+                type: 'textarea',
+                placeholder: '입력하세요.',
+                rows: 4,
+            },
+        ],
+    },
+];
+
+const layoutRows = [
+    {
+        layout: 'label-row',
+        cells: [
+            {
+                label: 'th 1',
+            },
+            {
+                label: 'th 2',
+            },
+            {
+                label: 'th 3',
+            },
+            {
+                label: 'th 4',
+            },
+        ],
+    },
+    {
+        layout: 'stacked',
+        cells: [
+            {
+                label: '이름',
+                key: 'stackedName',
+                type: 'input',
+            },
+            {
+                label: '부서',
+                key: 'stackedDept',
+                type: 'input',
+            },
+            {
+                label: '권한',
+                key: 'stackedRole',
+                type: 'input',
+            },
+            {
+                label: '상태',
+                key: 'stackedStatus',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: '이름',
+                key: 'defaultName',
+                type: 'input',
+            },
+            {
+                label: '부서',
+                key: 'defaultDept',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: '담당자',
+                key: 'rowspanOwner',
+                type: 'input',
+                rowspan: 2,
+            },
+            {
+                label: '작업',
+                key: 'rowspanTask',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: '메모',
+                key: 'rowspanMemo',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        layout: 'label-full',
+        cells: [
+            {
+                label: '메모',
+                key: 'fullMemo',
+                type: 'textarea',
+                rows: 3,
+            },
+        ],
+    },
+];
+
+const buttonRows = [
+    {
+        cells: [
+            {
+                label: 'button',
+                key: 'buttonOnly',
+                type: 'button',
+                buttonText: '버튼',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'input_button',
+                key: 'inputButtonValue',
+                type: 'input_button',
+                placeholder: '검색어를 입력하세요.',
+                buttonText: '검색',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'input_button-text',
+                key: 'inputButtonTextValue',
+                type: 'input_button-text',
+                placeholder: '입력하세요.',
+                buttonText: '확인',
+                text: '보조 텍스트',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'input-text',
+                key: 'inputTextValue',
+                type: 'input-text',
+                placeholder: '입력하세요.',
+                text: 'suffix',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'text-button',
+                key: 'textButtonValue',
+                type: 'text-button',
+                text: '텍스트 + 버튼',
+                buttonText: '열기',
+            },
+        ],
+    },
+];
+
+const choiceRows = [
+    {
+        cells: [
+            {
+                label: 'radio',
+                key: 'radioValue',
+                type: 'radio',
+                items: radioOptions,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'checkbox',
+                key: 'checkboxValue',
+                type: 'checkbox',
+                items: checkboxOptions,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'toggle',
+                key: 'toggleValue',
+                type: 'toggle',
+                text: '활성화',
+            },
+        ],
+    },
+];
+
+const dateRows = [
+    {
+        cells: [
+            {
+                label: 'date',
+                key: 'dateValue',
+                type: 'date',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'range_date',
+                key: 'range',
+                type: 'range_date',
+            },
+        ],
+    },
+];
+
+const contactRows = [
+    {
+        cells: [
+            {
+                label: 'phone',
+                type: 'phone',
+                keys: ['phone1', 'phone2', 'phone3'],
+                placeholders: ['010', '0000', '0000'],
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'email',
+                type: 'email',
+                keys: ['emailId', 'emailDomain'],
+                placeholders: ['id', 'domain.com'],
+            },
+        ],
+    },
+];
+
+const stateRows = [
+    {
+        cells: [
+            {
+                label: 'input',
+                key: 'readonlyInput',
+                type: 'input',
+                readonly: true,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'select',
+                key: 'readonlySelect',
+                type: 'select',
+                items: selectOptions,
+                readonly: true,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'date',
+                key: 'readonlyDate',
+                type: 'date',
+                readonly: true,
+            },
+        ],
+    },
+];
+
+const disabledRows = [
+    {
+        cells: [
+            {
+                label: 'input',
+                key: 'disabledInput',
+                type: 'input',
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'radio',
+                key: 'disabledRadio',
+                type: 'radio',
+                items: radioOptions,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'checkbox',
+                key: 'disabledCheckbox',
+                type: 'checkbox',
+                items: checkboxOptions,
+            },
+        ],
+    },
+    {
+        cells: [
+            {
+                label: 'date',
+                key: 'disabledDate',
+                type: 'date',
+            },
+        ],
+    },
+];
+</script>

@@ -1,0 +1,115 @@
+<template>
+    <!-- 페이지 이동 링크 목록이므로 tablist 가 아닌 nav + aria-current 를 사용합니다. -->
+    <nav class="route-tabs" aria-label="최근 방문 페이지">
+        <div class="route-tabs__scroller">
+            <ul class="route-tabs__list">
+                <li v-for="t in tabs" :key="t.key" class="route-tabs__item">
+                    <RouterLink
+                        class="route-tabs__tab"
+                        :class="{ 'is-active': t.key === currentKey }"
+                        :aria-current="t.key === currentKey ? 'page' : undefined"
+                        :to="t.path"
+                        @click="() => handleTabClick(t.key)"
+                    >
+                        <span class="route-tabs__title">{{ getTabTitle(t) }}</span>
+                    </RouterLink>
+
+                    <AppIconButton
+                        class="route-tabs__close"
+                        :aria-label="`${getTabTitle(t)} 탭 닫기`"
+                        :size="20"
+                        :icon-size="12"
+                        @click="(e) => handleTabClose(e, t.key)"
+                    >
+                        <IconClose />
+                    </AppIconButton>
+                </li>
+            </ul>
+        </div>
+        <div class="route-tabs__actions">
+            <AppIconButton class="route-tabs__action" aria-label="왼쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToLeftTab"
+                ><IconChevronSmallLeft
+            /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="오른쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToRightTab"
+                ><IconChevronSmallRight
+            /></AppIconButton>
+            <AppIconButton class="route-tabs__action" aria-label="다른 탭 닫기" :size="24" :icon-size="16" @click="handleCloseOtherTabs"
+                ><IconCloseSmall
+            /></AppIconButton>
+        </div>
+    </nav>
+</template>
+
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useRouteTabsStore } from '@/store/routeTabs';
+import { useI18nText } from '@/composables/useI18nText';
+import { IconChevronSmallLeft, IconChevronSmallRight, IconClose, IconCloseSmall } from '@/components/icons';
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import AppIconButton from '@/components/AppButton/AppIconButton.vue';
+
+const router = useRouter();
+const route = useRoute();
+const store = useRouteTabsStore();
+const { t } = useI18nText();
+
+const { tabs, activeKey } = storeToRefs(store);
+const currentKey = computed(() => activeKey.value ?? route.fullPath);
+
+function handleTabClick(key) {
+    store.activate(key);
+}
+
+function getTabTitle(tab) {
+    return tab.labelKey ? t(tab.labelKey, tab.title) : tab.title;
+}
+
+const HOME_PATHS = new Set(['/', './']);
+
+function isHomeTab(path) {
+    return HOME_PATHS.has(path);
+}
+
+async function handleMoveToLeftTab() {
+    const idx = tabs.value.findIndex((t) => t.key === currentKey.value);
+    if (idx <= 0) return;
+
+    const target = tabs.value[idx - 1];
+    if (!target) return;
+    store.activate(target.key);
+    await router.push(target.path);
+}
+
+async function handleMoveToRightTab() {
+    const idx = tabs.value.findIndex((t) => t.key === currentKey.value);
+    if (idx < 0 || idx >= tabs.value.length - 1) return;
+
+    const target = tabs.value[idx + 1];
+    if (!target) return;
+    store.activate(target.key);
+    await router.push(target.path);
+}
+
+function handleCloseOtherTabs() {
+    tabs.value
+        .filter((t) => t.key !== currentKey.value && !isHomeTab(t.path))
+        .map((t) => t.key)
+        .forEach((key) => store.close(key));
+}
+
+async function handleTabClose(e, key) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const closingActive = currentKey.value === key;
+    const idx = tabs.value.findIndex((t) => t.key === key);
+    const fallback = tabs.value[Math.max(0, idx - 1)] ?? tabs.value[idx + 1] ?? null;
+
+    store.close(key);
+
+    if (closingActive && fallback) {
+        await router.push(fallback.path);
+    }
+}
+</script>

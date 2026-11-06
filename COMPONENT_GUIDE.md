@@ -11,7 +11,7 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 
 ## 1. 공통 속성
 
-같은 의미는 모든 컴포넌트에서 **같은 이름 · 같은 값**을 씁니다. (타입: `types/appCommon.ts`)
+같은 의미는 모든 컴포넌트에서 **같은 이름 · 같은 값**을 씁니다. (값 목록은 각 데모 페이지 우측 Props 패널)
 
 | 속성                  | 값                                                               | 뜻                         |
 | --------------------- | ---------------------------------------------------------------- | -------------------------- |
@@ -58,8 +58,8 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 - 컴포넌트 SCSS 에는 HEX 를 쓰지 않습니다.
 - 그라디언트는 `background` 로 지정합니다. (`background-color` 불가)
 
-**아이콘** — Lucide: `import { IconSearch } from '~/components/icons'` → `<IconSearch />`
-크기 `font-size`, 색 `color`, 선 두께 `--app-icon-stroke-width`. 새 아이콘은 `icons.ts` 에 등록.
+**아이콘** — Lucide: `import { IconSearch } from '@/components/icons'` → `<IconSearch />`
+크기 `font-size`, 색 `color`, 선 두께 `--app-icon-stroke-width`. 새 아이콘은 `src/components/icons.js` 에 등록.
 
 ## 3. 컴포넌트 목록
 
@@ -72,7 +72,8 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 | 데이터 · MES | DataTable · Table · Grid · SearchPanel · StatCard · StatusLamp · EquipmentCard · Timeline · Tree · Transfer · Chart · Progress |
 | 홈페이지     | SiteHeader · SiteFooter · DockBar · Billboard · LineBanner · ProductCard · PromotionCard · Heading · FeatureCard · PricingCard |
 
-- 파일은 `components/App{이름}.vue` (묶음은 폴더), 스타일은 `assets/scss/components/base/_{이름}.scss`
+- 파일은 `src/components/App{이름}.vue` (묶음은 폴더), 스타일은 `src/assets/styles/components/base/_{이름}.scss`
+- 자동 등록이 없으므로 쓰는 컴포넌트는 `import AppButton from '@/components/AppButton/AppButton.vue'` 처럼 직접 import 합니다.
 - 새 컴포넌트는 `<button>` · `<input>` 대신 기존 base 를 조합합니다.
   `AppIconButton`(닫기 · 화살표) · `AppTextButton`(링크) · `AppInput` · `AppButton unstyled`(동작만)
 
@@ -91,7 +92,14 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
     </AppDataTable>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { ref } from 'vue';
+import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
+import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
+import AppSelect from '@/components/AppSelect.vue';
+import AppDataTable from '@/components/Table/AppDataTable.vue';
+import AppTag from '@/components/AppTag.vue';
+
 // temp 데이터 - API 연동 시 이 영역만 교체
 const lines = [{ value: 'L1', label: '1라인' }];
 const rows = ref([{ id: 1, orderNo: 'WO-001', status: '진행' }]);
