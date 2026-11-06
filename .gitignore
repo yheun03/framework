@@ -1,8 +1,6 @@
-# Nuxt
-.nuxt
-.output
-.data
+# Build
 dist
+.vite
 
 # Node
 node_modules
@@ -15,10 +13,8 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Env
-.env
-.env.*
-!.env.example
+# Env - .env / .env.dev / .env.prd / .env.pub 는 실무와 같이 커밋합니다. (비밀값은 넣지 않음)
+.env.*.local
 
 # IDE
 .idea

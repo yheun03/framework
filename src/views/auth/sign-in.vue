@@ -1,0 +1,85 @@
+<template>
+    <AuthPageShell panel-label="로그인 폼">
+        <header class="auth-page__header">
+            <p class="auth-page__step">Welcome back</p>
+            <h1 class="auth-page__title">로그인</h1>
+            <p class="auth-page__desc">{{ project.serviceName }} 워크스페이스에 로그인하세요.</p>
+        </header>
+
+        <form class="auth-page__form" novalidate @submit.prevent="handleSubmit">
+            <AppInput
+                v-model="email"
+                id="sign-in-email"
+                name="email"
+                type="email"
+                size="lg"
+                label="이메일"
+                placeholder="name@company.com"
+                autocomplete="email"
+                clearable
+                :state="emailState"
+                :hint="emailHint"
+            >
+                <template #iconLeft><IconEmail /></template>
+            </AppInput>
+
+            <AppInput
+                v-model="password"
+                id="sign-in-password"
+                name="password"
+                type="password"
+                size="lg"
+                label="비밀번호"
+                placeholder="비밀번호를 입력하세요"
+                autocomplete="current-password"
+                password-toggle
+                :state="passwordState"
+                :hint="passwordHint"
+            >
+                <template #iconLeft><IconLock /></template>
+            </AppInput>
+
+            <div class="auth-page__row">
+                <AppChoice v-model="rememberMe" type="checkbox" size="sm" variant="round" label="로그인 상태 유지" />
+                <RouterLink class="auth-page__link" to="/auth/find-pw">비밀번호 찾기</RouterLink>
+            </div>
+
+            <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full">로그인</AppButton>
+        </form>
+
+        <div class="auth-page__footer">
+            <span class="auth-page__footer-text">아직 계정이 없으신가요?</span>
+            <RouterLink class="auth-page__link" to="/auth/sign-up">회원가입</RouterLink>
+        </div>
+    </AuthPageShell>
+</template>
+
+<script setup>
+import { IconEmail, IconLock } from '@/components/icons';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useProjectConfig } from '@/composables/useProjectConfig';
+import AppButton from '@/components/AppButton/AppButton.vue';
+import AppChoice from '@/components/AppChoice.vue';
+import AppInput from '@/components/AppInput.vue';
+import AuthPageShell from '@/components/AuthPageShell.vue';
+
+const router = useRouter();
+const project = useProjectConfig();
+
+const email = ref('');
+const password = ref('');
+const rememberMe = ref(false);
+const submitted = ref(false);
+const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value));
+const emailState = computed(() => (submitted.value && !isEmailValid.value ? 'error' : null));
+const emailHint = computed(() => (submitted.value && !isEmailValid.value ? '올바른 이메일 주소를 입력해 주세요.' : undefined));
+const passwordState = computed(() => (submitted.value && !password.value ? 'error' : null));
+const passwordHint = computed(() => (submitted.value && !password.value ? '비밀번호를 입력해 주세요.' : undefined));
+
+function handleSubmit() {
+    submitted.value = true;
+    if (!isEmailValid.value || !password.value) return;
+    router.push('/');
+}
+</script>
