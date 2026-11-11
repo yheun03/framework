@@ -1,0 +1,42 @@
+@use '../../abstract' as *;
+
+/* =========================================
+   Component: LayoutSourceViewer (화면 소스 코드 보기 드로어)
+========================================= */
+
+.source-viewer {
+    display: flex;
+    flex-direction: column;
+    gap: space(12);
+    min-height: 0;
+    height: 100%;
+
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: space(12);
+    }
+
+    &__meta {
+        @include font(c1, rg);
+        color: var(--theme-color-03-gray);
+    }
+
+    &__code {
+        flex: 1;
+        min-height: 0;
+        margin: 0;
+        padding: space(16);
+        overflow: auto;
+        border: 1px solid var(--theme-line-regular);
+        border-radius: radius(sm);
+        background: var(--theme-bg-light);
+        color: var(--theme-color-02-black);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        white-space: pre;
+        tab-size: 4;
+    }
+}

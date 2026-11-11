@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 /**
  * AppTimeline - 작업/변경/알람 이력 (LOT 추적, 설비 이벤트 로그 등)
  */
@@ -32,6 +33,6 @@ defineProps({
     items: { type: Array, required: true },
     /** 시간 표시 위치 */
     timePosition: { type: String, default: 'right' },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
 });
 </script>

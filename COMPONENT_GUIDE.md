@@ -1,13 +1,17 @@
 # Component Guide
 
 Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌트 · 토큰 요약입니다.
-자세한 예시와 전체 속성은 **실행 화면의 데모 페이지 + 우측 Props 패널**에서 확인합니다.
+자세한 예시와 전체 속성은 **실행 화면의 데모 페이지**에서 확인합니다.
 
-| 보고 싶은 것                  | 데모 주소                                                           |
-| ----------------------------- | ------------------------------------------------------------------- |
-| 공통 속성 규칙                | `/demos/demo-guide`                                                 |
-| 타이포 · 컬러 · 여백 · 그리드 | `/demos/demo-design-tokens`                                         |
-| 조합 예시                     | `demo-mes-sample` · `demo-corporate-sample` · `demo-product-sample` |
+- **우측 Props 패널**: 컴포넌트의 모든 prop · 값 · 기본값. 값을 누르면 `속성="값"` 이 복사됩니다. 실제 props 와 다르면 `npm run check` 가 실패합니다.
+- **소스 코드 보기**: 상단 탭 오른쪽 `</>` 버튼 → 지금 화면의 .vue 파일 전체를 보고 복사합니다.
+- **잘못된 값 경고**: `tone="dangr"` 처럼 지원하지 않는 값을 넣으면 개발 모드 콘솔에 사용 가능한 값이 나옵니다.
+
+| 보고 싶은 것                  | 데모 주소                                       |
+| ----------------------------- | ----------------------------------------------- |
+| 공통 속성 규칙                | `/demos/demo-guide`                             |
+| 타이포 · 컬러 · 여백 · 그리드 | `/demos/demo-design-tokens`                     |
+| 조합 예시                     | `demo-mes-sample` · LNB **ERP · MES 예제 화면** |
 
 ## 1. 공통 속성
 
@@ -20,7 +24,7 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 | `label`               | string                                                           | 필드 라벨 · 짧은 텍스트    |
 | `title` `description` | string                                                           | 블록 제목 · 설명           |
 | `hint`                | string                                                           | 필드 하단 문구             |
-| `size`                | `xs` `sm` `md` `lg` `xl`                                         | 24 / 36 / 44 / 48 / 56px   |
+| `size`                | `xs` `sm` `md` `lg` `xl`                                         | 크기 (높이는 아래 표)      |
 | `width`               | `240` `'50%'` `'full'`                                           | 숫자는 px                  |
 | `tone`                | `primary` `secondary` `gray` `danger` `warning` `success` `info` | 색 의미                    |
 | `variant`             | `fill` `soft` `outline` `plain` …                                | 모양                       |
@@ -28,12 +32,38 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 | `state`               | `error` `warning` `success`                                      | **검증 상태만**            |
 | `placement`           | `top` `bottom` `left` `right`                                    | 레이어 위치                |
 | `direction`           | `horizontal` `vertical`                                          | 배치 방향                  |
-| `align`               | `left` `center` `right`                                          | 정렬                       |
 | `tag`                 | `h1` ~ `h4`                                                      | 제목 태그 (heading 순서)   |
 | `ariaLabel`           | string                                                           | 화면에 라벨이 없을 때 이름 |
 
+- 예외 (라이브러리 · 업무 의미를 따름): `AppChart` 의 `data`(Chart.js 데이터 객체), `AppEquipmentCard` 의 `status`(설비 상태 `run` `idle` `stop` `check` `off` → 색은 자동)
 - on/off 는 boolean: `disabled` `readonly` `active` `required` `clearable` `closable` …
-- 보이기 여부는 `show*` (`showValue` `showTotal` …), 버튼 문구는 `*Text` (`emptyText` `moreText` …)
+- 보이기 여부는 `show*` (`showValue` `showTotal` …), 버튼 문구는 `*Text` (`emptyText` `searchText` …)
+
+### size 별 실제 높이 (px)
+
+같은 `size` 이름이라도 컴포넌트마다 높이가 다릅니다. **표에 없는 값은 지원하지 않습니다.**
+
+| 컴포넌트                                 | xs  | sm  | md  | lg  | xl  |
+| ---------------------------------------- | --- | --- | --- | --- | --- |
+| Button · TextButton(fill/outline)        | 24  | 36  | 44  | 48  | 56  |
+| InputNumber                              | 24  | 36  | 44  | 48  | –   |
+| Input · Select · DatePicker · InputGroup | 36  | 44  | 48  | 56  | –   |
+| IconButton                               | 24  | 28  | 32  | 36  | 40  |
+| Segmented                                | 22  | 32  | 38  | 46  | –   |
+| Tag                                      | 18  | 22  | 28  | –   | –   |
+| Choice (체크 · 라디오 박스)              | –   | 18  | 22  | –   | –   |
+
+**한 줄에 입력과 버튼을 같이 둘 때** — 입력이 버튼보다 한 단계 큽니다.
+
+| 입력 (Input · Select · DatePicker) | 짝이 되는 버튼 | 높이 |
+| ---------------------------------- | -------------- | ---- |
+| `xs`                               | `sm`           | 36   |
+| `sm`                               | `md`           | 44   |
+| `md`                               | `lg`           | 48   |
+| `lg`                               | `xl`           | 56   |
+
+- 조회 영역(AppSearchPanel)은 입력 `xs` + 버튼 `sm`(36px) 이 기본입니다.
+- IconButton 은 `:size="36"` 처럼 숫자(px)도 받으므로 입력 옆에서는 숫자로 맞춥니다.
 
 ## 2. 디자인 토큰
 
@@ -63,45 +93,143 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 
 ## 3. 컴포넌트 목록
 
-| 분류         | 컴포넌트                                                                                                                       |
+LNB 메뉴 그룹과 같은 분류입니다.
+
+| 분류 (LNB)   | 컴포넌트                                                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| 입력         | Input · Textarea · Select · Choice · InputNumber · InputGroup · DatePicker · FormField · Upload                                |
+| 입력         | Input · Textarea · Select · Choice · InputNumber · InputGroup · DatePicker · FormField · UploadImage · UploadFile              |
 | 버튼 · 표시  | Button · IconButton · TextButton · TopButton · Tag · Rating · Tooltip · Popover · Empty · Spinner · Alert                      |
 | 탐색         | Tabs · Accordion · Breadcrumb · Pagination · Segmented · Steps · Carousel                                                      |
-| 레이어       | Modal · Drawer · Toast (`useToast()`)                                                                                          |
+| 레이어       | Modal (`await useModal().confirm()`) · Drawer · Toast (`useToast()`)                                                           |
+| 레이아웃     | Section · SectionWrapper · LayoutBottomBar(하단 고정 버튼)                                                                     |
 | 데이터 · MES | DataTable · Table · Grid · SearchPanel · StatCard · StatusLamp · EquipmentCard · Timeline · Tree · Transfer · Chart · Progress |
-| 홈페이지     | SiteHeader · SiteFooter · DockBar · Billboard · LineBanner · ProductCard · PromotionCard · Heading · FeatureCard · PricingCard |
 
 - 파일은 `src/components/App{이름}.vue` (묶음은 폴더), 스타일은 `src/assets/styles/components/base/_{이름}.scss`
 - 자동 등록이 없으므로 쓰는 컴포넌트는 `import AppButton from '@/components/AppButton/AppButton.vue'` 처럼 직접 import 합니다.
 - 새 컴포넌트는 `<button>` · `<input>` 대신 기존 base 를 조합합니다.
   `AppIconButton`(닫기 · 화살표) · `AppTextButton`(링크) · `AppInput` · `AppButton unstyled`(동작만)
 
-## 4. 작성 패턴
+## 4. 작성 패턴 — 기본 목록 화면
+
+조회 조건 → 목록 → 페이지 이동으로 구성한 MES 목록 화면입니다. **그대로 복사해서 `src/views/` 에 넣으면 실행됩니다.**
+
+- 실행 화면: LNB **가이드 → 화면 작성 예제** (`/demos/demo-page-example`)
+- 원본 파일: `src/views/demos/demo-page-example.vue` — 아래 코드와 같습니다. (`npm run check` 가 다르면 알려줍니다)
 
 ```vue
 <template>
-    <AppSearchPanel :columns="4" @search="search">
-        <AppSearchItem label="라인"><AppSelect v-model="filter.line" :items="lines" size="xs" /></AppSearchItem>
-    </AppSearchPanel>
+    <div class="business-page">
+        <header class="business-page__header">
+            <div>
+                <h1 class="business-page__title">작업지시 목록</h1>
+                <p class="business-page__desc">조회 조건 → 목록 → 페이지 이동으로 구성한 기본 목록 화면입니다.</p>
+            </div>
+            <div class="business-page__actions">
+                <AppButton variant="fill" tone="primary" size="sm" @click="toast.info('등록 화면으로 이동합니다.')">작업지시 등록</AppButton>
+            </div>
+        </header>
 
-    <AppDataTable v-model="checked" :columns="columns" :items="rows" selectable show-total>
-        <template #cell-status="{ value }">
-            <AppTag variant="soft" dot :tone="statusTone[value]" :label="value" />
-        </template>
-    </AppDataTable>
+        <!-- 조회 조건: 입력은 size="xs"(36px) · 버튼은 size="sm"(36px) 로 높이를 맞춥니다. -->
+        <AppSearchPanel :columns="4" :loading="loading" @search="search" @reset="reset">
+            <AppSearchItem label="작업일자" :span="2">
+                <AppDatePicker v-model="filter.period" type="range-input" size="xs" />
+            </AppSearchItem>
+            <AppSearchItem label="라인">
+                <AppSelect v-model="filter.line" :items="lines" size="xs" placeholder="전체" />
+            </AppSearchItem>
+            <AppSearchItem label="상태">
+                <AppSelect v-model="filter.status" :items="statuses" size="xs" placeholder="전체" />
+            </AppSearchItem>
+        </AppSearchPanel>
+
+        <AppSection>
+            <AppDataTable
+                v-model="checked"
+                title="작업지시"
+                caption="작업지시 목록"
+                :columns="columns"
+                :items="pagedRows"
+                :total="rows.length"
+                selectable
+                show-total
+            >
+                <template #toolbar>
+                    <AppButton size="xs" :disabled="!checked.length" @click="remove">선택 삭제</AppButton>
+                </template>
+                <template #cell-status="{ value }">
+                    <AppTag variant="soft" dot :tone="statusTone[value]" :label="value" />
+                </template>
+            </AppDataTable>
+            <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="rows.length" />
+        </AppSection>
+    </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
-import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
-import AppSelect from '@/components/AppSelect.vue';
+import { computed, reactive, ref } from 'vue';
+import { useToast } from '@/composables/useToast';
+import AppButton from '@/components/AppButton/AppButton.vue';
 import AppDataTable from '@/components/Table/AppDataTable.vue';
+import AppDatePicker from '@/components/AppDatePicker.vue';
+import AppPagination from '@/components/AppPagination.vue';
+import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
+import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
+import AppSection from '@/components/Section/AppSection.vue';
+import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
-// temp 데이터 - API 연동 시 이 영역만 교체
-const lines = [{ value: 'L1', label: '1라인' }];
-const rows = ref([{ id: 1, orderNo: 'WO-001', status: '진행' }]);
+const toast = useToast();
+
+// temp 데이터 - API 연동 시 이 영역만 교체 (const api = useApi(); rows.value = await api.get('/work-orders', { params: filter }))
+const lines = [
+    { value: 'L1', label: '1라인' },
+    { value: 'L2', label: '2라인' },
+];
+const statuses = [
+    { value: '진행', label: '진행' },
+    { value: '완료', label: '완료' },
+    { value: '정지', label: '정지' },
+];
+const allRows = [
+    { id: 1, orderNo: 'WO-2611-001', line: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
+    { id: 2, orderNo: 'WO-2611-002', line: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
+    { id: 3, orderNo: 'WO-2611-003', line: '2라인', item: '샤프트', qty: 3000, status: '정지' },
+];
+
+const columns = [
+    { key: 'orderNo', label: '작업지시', width: 140 },
+    { key: 'line', label: '라인', width: 100 },
+    { key: 'item', label: '품목', align: 'left' },
+    { key: 'qty', label: '수량', width: 100, align: 'right' },
+    { key: 'status', label: '상태', width: 100 },
+];
+const statusTone = { 진행: 'info', 완료: 'success', 정지: 'danger' };
+
+const filter = reactive({ period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null });
+const rows = ref([...allRows]);
+const checked = ref([]);
+const page = ref(1);
+const pageSize = ref(10);
+const loading = ref(false);
+
+const pagedRows = computed(() => rows.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value));
+
+function search() {
+    const lineLabel = lines.find((line) => line.value === filter.line)?.label;
+    rows.value = allRows.filter((row) => (!lineLabel || row.line === lineLabel) && (!filter.status || row.status === filter.status));
+    page.value = 1;
+    checked.value = [];
+}
+
+function reset() {
+    Object.assign(filter, { period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null });
+    search();
+}
+
+function remove() {
+    rows.value = rows.value.filter((row) => !checked.value.includes(row.id));
+    toast.success(`${checked.value.length}건을 삭제했습니다.`);
+    checked.value = [];
+}
 </script>
 ```

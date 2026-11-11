@@ -119,7 +119,8 @@ import AppTableField from '@/components/Table/AppTableField.vue';
 
 const props = defineProps({
     modelValue: { type: Object, required: true },
-    rows: { type: Array, required: true },
+    /** 행 목록 - 각 행은 { label, cells: [{ key, type, … }] } (공통 규칙: 목록 데이터는 items) */
+    items: { type: Array, required: true },
     title: { type: String, default: '' },
     description: { type: String, default: '' },
     labelWidth: { type: String, default: '140px' },
@@ -129,7 +130,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'field-action']);
 
-const visibleRows = computed(() => props.rows.filter((row) => isVisible(row.visible)));
+const visibleRows = computed(() => props.items.filter((row) => isVisible(row.visible)));
 
 const tableColspan = computed(() => Math.max(...visibleRows.value.map((row) => getRowColspan(row)), 1));
 

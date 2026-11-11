@@ -20,8 +20,8 @@
 
                 <PageDemoSection title="width 사용법" description="모든 입력/버튼/레이어 컴포넌트에서 동일하게 동작합니다.">
                     <div class="page-demo-stack">
-                        <AppInput v-model="sample" :width="240" placeholder=':width="240" (px)' />
-                        <AppSelect v-model="selected" :items="items" width="50%" placeholder='width="50%"' />
+                        <AppInput v-model="sample" :width="240" placeholder=':width="240" (px)' aria-label="너비 240px 예시" />
+                        <AppSelect v-model="selected" :items="items" width="50%" placeholder='width="50%"' aria-label="너비 50% 예시" />
                         <AppButton width="full" variant="fill" tone="primary">width="full" (100%)</AppButton>
                     </div>
                 </PageDemoSection>
@@ -96,7 +96,7 @@ const commonProps = [
         id: 3,
         name: 'items',
         values: 'Array',
-        desc: '목록 데이터 - Select, Tabs, Accordion, Segmented, Steps, Timeline, Tree, Transfer, Carousel, Breadcrumb, DataTable',
+        desc: '목록 데이터 - Select, Tabs, Accordion, Segmented, Steps, Timeline, Tree, Transfer, Carousel, Breadcrumb, DataTable, Table',
     },
     { id: 4, name: 'label', values: 'string', desc: '필드 라벨 또는 짧은 표시 텍스트 (Tag, Choice)' },
     { id: 5, name: 'title / description', values: 'string', desc: '블록 제목 / 설명 (Section, Empty, Alert, Drawer, Popover, StatCard)' },
@@ -130,14 +130,12 @@ const commonProps = [
     {
         id: 18,
         name: '*Text',
-        values: 'emptyText · triggerText · searchText · resetText · moreText · categoryText',
+        values: 'emptyText · triggerText · searchText · resetText',
         desc: '버튼·안내 문구 변경 (데이터 라벨이 아닌 UI 문구)',
     },
-    { id: 19, name: 'eyebrow', values: 'string', desc: '제목 위 짧은 문구 (Billboard, Heading, PromotionCard)' },
-    { id: 20, name: 'direction', values: 'horizontal | vertical', desc: '배치 방향 (Tabs, Steps)' },
-    { id: 21, name: 'align', values: 'left | center | right', desc: '텍스트 정렬 (Billboard, LineBanner, Heading)' },
+    { id: 20, name: 'direction', values: 'horizontal | vertical', desc: '배치 방향 (Tabs, Steps, Section)' },
     { id: 22, name: 'progress', values: 'number (0~100)', desc: '진행률·가동률 표시 (StatCard, EquipmentCard)' },
-    { id: 23, name: 'image · to · href', values: 'string', desc: '이미지 경로 / 내부 링크(RouterLink) / 외부 링크' },
+    { id: 23, name: 'to · href', values: 'string', desc: '내부 링크(RouterLink) / 외부 링크 (Button 계열)' },
 ];
 
 const migrationColumns = [
@@ -161,11 +159,8 @@ const migrations = [
     { id: 12, component: 'AppTabs', before: 'orientation', after: 'direction (AppSteps 와 통일)' },
     { id: 13, component: 'AppBreadcrumb', before: 'homeIcon', after: 'showHome' },
     { id: 14, component: 'AppTooltip', before: 'text', after: 'label' },
-    { id: 15, component: 'AppProductCard', before: 'name', after: 'title' },
-    { id: 16, component: 'AppPromotionCard', before: 'label', after: 'eyebrow' },
-    { id: 17, component: 'AppPricingCard', before: 'features', after: 'items' },
-    { id: 18, component: 'AppFeatureCard', before: "variant='line' | 'box' / moreLabel", after: "variant='outline' | 'soft' / moreText" },
-    { id: 19, component: 'AppSiteHeader', before: 'categoryLabel', after: 'categoryText' },
     { id: 20, component: 'AppEquipmentCard', before: 'value / valueLabel', after: 'progress / progressLabel' },
+    { id: 21, component: 'AppTable', before: ':rows', after: ':items' },
+    { id: 22, component: 'AppSection · AppSectionWrapper', before: "direction='column' | 'row'", after: "direction='vertical' | 'horizontal'" },
 ];
 </script>

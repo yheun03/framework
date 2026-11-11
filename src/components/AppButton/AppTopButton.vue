@@ -6,7 +6,7 @@
             class="app-top-button"
             :class="[`app-top-button--${variant}`, `app-top-button--shape-${shape}`, { 'is-fixed': fixed }]"
             :style="positionStyle"
-            aria-label="맨 위로 이동"
+            :aria-label="$t('ui.topButton')"
             @click="scrollTop"
         >
             <IconArrowUpToLine v-if="icon === 'bar'" />
@@ -18,6 +18,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { IconAngleUp, IconArrowUp, IconArrowUpToLine } from '@/components/icons';
 import { toCssSize } from '@/utils/css';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
@@ -29,8 +30,8 @@ import AppButton from '@/components/AppButton/AppButton.vue';
  * shape: square / round / circle,  icon: chevron / arrow / bar
  */
 const props = defineProps({
-    variant: { type: String, default: 'outline' },
-    shape: { type: String, default: 'square' },
+    variant: { type: String, default: 'outline', validator: oneOf(['outline', 'fill', 'shadow']) },
+    shape: { type: String, default: 'square', validator: oneOf(['square', 'round', 'circle']) },
     icon: { type: String, default: 'chevron' },
     label: { type: String, default: '' },
     /** 화면 우하단 고정 */

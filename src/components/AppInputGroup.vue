@@ -22,6 +22,7 @@ export const APP_INPUT_GROUP_KEY = Symbol('AppInputGroup');
 </script>
 
 <script setup>
+import { STATES, oneOf } from '@/utils/props';
 import { toCssSize, toSizeStyle } from '@/utils/css';
 import { computed, provide, useId } from 'vue';
 
@@ -33,7 +34,7 @@ import { computed, provide, useId } from 'vue';
 const props = defineProps({
     label: { type: String, default: '' },
     hint: { type: String, default: '' },
-    state: { type: [String, null], default: null },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** 자식 사이 구분 문자 (예: '-', '~', '@') */
     separator: { type: String, default: '' },
     /** 자식 사이 간격 (기본: separator 있으면 20, 없으면 8) */

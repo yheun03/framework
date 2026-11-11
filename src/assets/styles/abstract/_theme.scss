@@ -1,6 +1,9 @@
 @use 'sass:color';
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
 // '@project-theme' 은 vite.config.js(alias)에서 연결되는 경로라 에디터에서 Cmd+클릭으로 열리지 않습니다.
-// 실제 파일: assets/scss/projects/{projectConfig.key}/_theme.scss  (현재: projects/framework/_theme.scss)
+// 실제 파일: assets/styles/projects/{projectConfig.key}/_theme.scss  (현재: projects/framework/_theme.scss)
 @use '@project-theme' as project;
 
 // ============================================
@@ -15,6 +18,45 @@
     }
 
     @return $value;
+}
+
+// ============================================
+// 글자 대비 (WCAG 2.1) - src/utils/color.js 와 같은 계산
+// ============================================
+
+@function -channel($value) {
+    $value: math.div($value, 255);
+    @if $value <= 0.04045 {
+        @return math.div($value, 12.92);
+    }
+    @return math.pow(math.div($value + 0.055, 1.055), 2.4);
+}
+
+/// 상대 휘도 (0 ~ 1)
+@function luminance($color) {
+    $r: -channel(color.channel($color, 'red', $space: rgb));
+    $g: -channel(color.channel($color, 'green', $space: rgb));
+    $b: -channel(color.channel($color, 'blue', $space: rgb));
+    @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+
+/// 두 색의 대비 (1 ~ 21)
+@function contrast-ratio($a, $b) {
+    $la: luminance($a);
+    $lb: luminance($b);
+    @return math.div(math.max($la, $lb) + 0.05, math.min($la, $lb) + 0.05);
+}
+
+/// $background 위에서 $ratio 이상이 될 때까지 $color 에 $toward 를 5%씩 섞은 글자색
+/// 예) accessible-text(#ffd400) → 흰 배경 4.5:1 이상인 진한 노랑
+@function accessible-text($color, $background: #ffffff, $ratio: 4.5, $toward: #000000) {
+    @for $step from 0 through 20 {
+        $candidate: color.mix($toward, $color, $step * 5%);
+        @if contrast-ratio($candidate, $background) >= $ratio {
+            @return $candidate;
+        }
+    }
+    @return $toward;
 }
 
 // ============================================
@@ -38,6 +80,14 @@ $primary-600: color.mix(#000000, $primary, 15%) !default;
 $primary-700: color.mix(#000000, $primary, 30%) !default;
 $primary-800: color.mix(#000000, $primary, 45%) !default;
 $primary-900: color.mix(#000000, $primary, 63%) !default;
+
+// 글자로 쓰는 브랜드색 (흰 배경 · primary-50 틴트 위 4.5:1 / 다크 테마 gray-800 위 4.5:1)
+// 프로젝트 _theme.scss 에 $primary-text · $primary-text-dark 를 적으면 그 값을 씁니다.
+$primary-text: project-value(map.get(meta.module-variables('project'), 'primary-text'), accessible-text($primary, $primary-50)) !default;
+$primary-text-dark: project-value(
+    map.get(meta.module-variables('project'), 'primary-text-dark'),
+    accessible-text($primary, #2a2f38, 4.5, #ffffff)
+) !default;
 
 $gradient-primary: linear-gradient(to bottom, $primary-800 0%, $primary-900 100%) !default;
 

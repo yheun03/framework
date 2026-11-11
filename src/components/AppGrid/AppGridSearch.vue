@@ -5,6 +5,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppInput
+                        :aria-label="fieldName(f, f.placeholder)"
                         size="sm"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
@@ -36,11 +37,12 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
+                        :aria-label="fieldName(f, $t('ui.range.min'))"
                         size="sm"
                         type="number"
                         :name="f.numberRange.minKey"
                         :model-value="getStringValue(f.numberRange.minKey)"
-                        :placeholder="'최소'"
+                        :placeholder="$t('ui.range.min')"
                         :min="f.inputMin"
                         :max="f.inputMax"
                         :step="f.step"
@@ -51,11 +53,12 @@
                     />
                     <span class="app-grid-search__range-sep">~</span>
                     <AppInput
+                        :aria-label="fieldName(f, $t('ui.range.max'))"
                         size="sm"
                         type="number"
                         :name="f.numberRange.maxKey"
                         :model-value="getStringValue(f.numberRange.maxKey)"
-                        :placeholder="'최대'"
+                        :placeholder="$t('ui.range.max')"
                         :min="f.inputMin"
                         :max="f.inputMax"
                         :step="f.step"
@@ -72,6 +75,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <template v-for="(sk, i) in f.splitInput.keys" :key="sk">
                         <AppInput
+                            :aria-label="fieldName(f, f.splitInput.placeholders?.[i] ?? '')"
                             size="sm"
                             :name="sk"
                             :model-value="getStringValue(sk)"
@@ -90,6 +94,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
+                        :aria-label="fieldName(f, f.placeholder)"
                         size="sm"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
@@ -101,7 +106,7 @@
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
                     />
                     <AppButton size="sm" variant="outline" type="button" :disabled="f.disabled" @click="handleFieldAction(f)">
-                        {{ f.buttonText ?? '실행' }}
+                        {{ f.buttonText ?? $t('ui.run') }}
                     </AppButton>
                 </dd>
             </dl>
@@ -110,6 +115,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
+                        :aria-label="fieldName(f, f.placeholder)"
                         size="sm"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
@@ -129,7 +135,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <span class="app-grid-search__suffix">{{ f.suffixText ?? getStringValue(f.field) }}</span>
                     <AppButton size="sm" variant="outline" type="button" :disabled="f.disabled" @click="handleFieldAction(f)">
-                        {{ f.buttonText ?? '실행' }}
+                        {{ f.buttonText ?? $t('ui.run') }}
                     </AppButton>
                 </dd>
             </dl>
@@ -138,11 +144,12 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppSelect
+                        :aria-label="fieldName(f, f.placeholderSelect ?? f.placeholder ?? $t('ui.selectPlaceholder'))"
                         size="sm"
                         :name="f.field"
                         :model-value="getSelectValue(f.field)"
                         :items="f.items"
-                        :placeholder="f.placeholderSelect ?? f.placeholder ?? '선택하세요'"
+                        :placeholder="f.placeholderSelect ?? f.placeholder ?? $t('ui.selectPlaceholder')"
                         :readonly="f.readonly"
                         :disabled="f.disabled"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
@@ -155,20 +162,22 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppSelect
+                        :aria-label="fieldName(f, f.placeholderSelect ?? $t('ui.grid.column'))"
                         size="sm"
                         :name="f.selectInput.columnKey"
                         :model-value="getSelectValue(f.selectInput.columnKey)"
                         :items="f.selectInput.items"
-                        :placeholder="f.placeholderSelect ?? '컬럼'"
+                        :placeholder="f.placeholderSelect ?? $t('ui.grid.column')"
                         class="app-grid-search__select-input-select"
                         @update:model-value="(v) => handleFieldValueChange(f.selectInput.columnKey, v)"
                         @change="handleSearch"
                     />
                     <AppInput
+                        :aria-label="fieldName(f, f.placeholderInput ?? f.placeholder ?? $t('ui.searchKeyword'))"
                         size="sm"
                         :name="f.selectInput.textKey"
                         :model-value="getStringValue(f.selectInput.textKey)"
-                        :placeholder="f.placeholderInput ?? f.placeholder ?? '검색어'"
+                        :placeholder="f.placeholderInput ?? f.placeholder ?? $t('ui.searchKeyword')"
                         class="app-grid-search__select-input-text"
                         @update:model-value="(v) => handleFieldValueChange(f.selectInput.textKey, v)"
                     />
@@ -220,7 +229,7 @@
                         size="sm"
                         type="checkbox"
                         :model-value="getBooleanValue(f.field)"
-                        :aria-label="f.label"
+                        :aria-label="fieldName(f)"
                         :disabled="f.disabled"
                         :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
@@ -237,7 +246,7 @@
                         type="single"
                         :min="f.min"
                         :max="f.max"
-                        :placeholder="f.placeholder ?? '날짜 선택'"
+                        :placeholder="f.placeholder ?? $t('ui.date.placeholder')"
                         :disabled="f.disabled"
                         :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
@@ -252,7 +261,7 @@
                         size="sm"
                         :model-value="getRangeValue(f.field)"
                         type="range"
-                        :placeholder="f.placeholder ?? '기간 선택'"
+                        :placeholder="f.placeholder ?? $t('ui.date.range')"
                         :disabled="f.disabled"
                         :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
@@ -269,7 +278,7 @@
                         type="range"
                         :min="f.min"
                         :max="f.max"
-                        :placeholder="f.placeholder ?? '기간 선택 (min/max)'"
+                        :placeholder="f.placeholder ?? $t('ui.date.rangeMinMax')"
                         :disabled="f.disabled"
                         :readonly="f.readonly"
                         @update:model-value="(v) => handleFieldValueChange(f.field, v)"
@@ -281,8 +290,8 @@
         <slot />
 
         <div class="app-grid-search__actions">
-            <AppButton size="sm" variant="outline" @click="handleSearch">검색</AppButton>
-            <AppButton size="sm" variant="outline" @click="handleReset">초기화</AppButton>
+            <AppButton size="sm" variant="outline" @click="handleSearch">{{ $t('ui.search') }}</AppButton>
+            <AppButton size="sm" variant="outline" @click="handleReset">{{ $t('ui.reset') }}</AppButton>
         </div>
     </div>
 </template>
@@ -659,7 +668,7 @@ function buildFilterFromDom(managedNames) {
     inputs.forEach((input) => {
         const field = input.name;
         if (managedNames?.has(field)) return;
-        let value = '';
+        let value;
 
         if (input.type === 'radio') {
             if (!input.checked) return;
@@ -771,6 +780,11 @@ function handleReset() {
             input.value = '';
         }
     });
+}
+
+// 입력 이름: 조건 라벨 + 안내 문구 (예: '수량 최소')
+function fieldName(field, extra) {
+    return [field.label, extra].filter(Boolean).join(' ');
 }
 </script>
 

@@ -84,8 +84,8 @@ export function getFloatingStyle(trigger, overlay, placement = 'top', gap = 10) 
     else if (resolved === 'left' && rect.left - width - gap < screenGap) resolved = 'right';
     else if (resolved === 'right' && rect.right + width + gap > window.innerWidth - screenGap) resolved = 'left';
 
-    let top = 0;
-    let left = 0;
+    let top;
+    let left;
 
     if (resolved === 'top' || resolved === 'bottom') {
         top = resolved === 'top' ? rect.top - height - gap : rect.bottom + gap;

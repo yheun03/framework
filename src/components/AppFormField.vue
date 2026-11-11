@@ -13,8 +13,8 @@
                 {{ label }}
                 <span v-if="required" class="app-form-field__required" aria-hidden="true">*</span>
             </label>
-            <slot v-else name="label" />
-            <span v-if="optionalText && !required" class="app-form-field__optional">{{ optionalText }}</span>
+            <label v-else class="app-form-field__label" :for="fieldId"><slot name="label" /></label>
+            <span v-if="optionalText !== '' && !required" class="app-form-field__optional">{{ optionalText ?? $t('ui.optional') }}</span>
         </div>
 
         <p v-if="description" :id="`${fieldId}-desc`" class="app-form-field__description">{{ description }}</p>
@@ -32,6 +32,7 @@ export const APP_FORM_FIELD_KEY = Symbol('AppFormField');
 </script>
 
 <script setup>
+import { STATES, oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed, provide, useId } from 'vue';
 
@@ -44,8 +45,9 @@ const props = defineProps({
     /** 하단 보조 문구. state가 있으면 state 색상으로 표시됩니다. */
     hint: { type: String, default: '' },
     /** 검증 상태: error | warning | success */
-    state: { type: [String, null], default: null },
-    optionalText: { type: String, default: '선택' },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
+    /** 기본 '선택' (i18n ui.optional). 빈 문자열이면 숨김 */
+    optionalText: { type: String, default: undefined },
     /** number(px) | '50%' | 'full' */
     width: { type: [Number, String] },
 });

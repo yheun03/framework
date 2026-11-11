@@ -43,7 +43,7 @@
                 <div class="app-accordion__panel-inner">
                     <slot v-if="item.slot" :name="item.slot" :item="item" />
                     <p v-else-if="item.content" class="app-accordion__content">{{ item.content }}</p>
-                    <div v-else class="app-accordion__empty">내용이 없습니다.</div>
+                    <div v-else class="app-accordion__empty">{{ $t('ui.noContent') }}</div>
                 </div>
             </div>
         </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { IconChevronDown } from '@/components/icons';
 import { computed, ref, useId } from 'vue';
 
@@ -61,9 +62,9 @@ const props = defineProps({
     /** true: 여러 개 동시 열림 / false: 하나만 열림 */
     multiple: { type: Boolean, default: true },
     /** 최초 열림 규칙 (v-model 미사용 시) */
-    initial: { type: String, default: 'none' },
+    initial: { type: String, default: 'none', validator: oneOf(['none', 'first', 'all']) },
     /** card(기본) / line(드롭다운 테이블형, Figma 13. Table - 드롭 다운 테이블) */
-    variant: { type: String, default: 'card' },
+    variant: { type: String, default: 'card', validator: oneOf(['card', 'line']) },
     /** 제목 앞 머리글 (예: 'Q.') */
     prefix: { type: String, default: '' },
     /** 제목 버튼을 감싸는 태그 (페이지 제목 순서에 맞게 h2 / h3 / h4 지정) */

@@ -18,7 +18,7 @@
                     class="app-toast__close"
                     size="xs"
                     shape="pill"
-                    aria-label="닫기"
+                    :aria-label="$t('ui.close')"
                     @click="store.remove(toast.id)"
                 >
                     <IconCloseSmall />
@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { storeToRefs } from 'pinia';
 import { IconBell, IconCheckCircle, IconCloseSmall, IconCrossCircle, IconInfo, IconWarning } from '@/components/icons';
 import { useToastStore } from '@/store/toast';
@@ -40,7 +41,7 @@ import AppTextButton from '@/components/AppButton/AppTextButton.vue';
  * app.vue 에 한 번만 배치하고, 화면에서는 useToast() 로 호출합니다.
  */
 defineProps({
-    placement: { type: String, default: 'bottom' },
+    placement: { type: String, default: 'bottom', validator: oneOf(['bottom', 'top', 'bottom-right', 'top-right']) },
 });
 
 const store = useToastStore();

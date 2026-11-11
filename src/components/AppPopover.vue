@@ -27,7 +27,7 @@
         >
             <div v-if="title || closable" class="app-popover__header">
                 <strong v-if="title" class="app-popover__title">{{ title }}</strong>
-                <AppIconButton v-if="closable" class="app-popover__close" :size="24" :icon-size="12" aria-label="닫기" @click="hide">
+                <AppIconButton v-if="closable" class="app-popover__close" :size="24" :icon-size="12" :aria-label="$t('ui.close')" @click="hide">
                     <IconClose />
                 </AppIconButton>
             </div>
@@ -40,11 +40,12 @@
 </template>
 
 <script setup>
+import { PLACEMENTS, oneOf } from '@/utils/props';
 import { IconClose } from '@/components/icons';
 import { getFloatingStyle, useBodyOverlay } from '@/composables/useBodyOverlay';
 
 import { toSizeStyle } from '@/utils/css';
-import { computed, nextTick, ref, useId, watch } from 'vue';
+import { computed, nextTick, onDeactivated, ref, useId, watch } from 'vue';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 
 /**
@@ -55,7 +56,7 @@ defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
     title: { type: String, default: '' },
-    placement: { type: String, default: 'bottom' },
+    placement: { type: String, default: 'bottom', validator: oneOf(PLACEMENTS) },
     trigger: { type: String, default: 'click' },
     closable: { type: Boolean, default: true },
     width: { type: [Number, String], default: 320 },
@@ -103,6 +104,11 @@ function hide() {
     innerOpen.value = false;
     emit('update:open', false);
 }
+
+// 탭 전환(KeepAlive)으로 화면이 숨겨지면 닫습니다.
+onDeactivated(() => {
+    if (isOpen.value) hide();
+});
 
 function toggle() {
     if (isOpen.value) hide();

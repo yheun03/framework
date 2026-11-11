@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { normalizeProgressRange, normalizeProgressValue } from '@/utils/progress';
 import { computed } from 'vue';
 import AppProgressBar from '@/components/AppProgress/AppProgressBar.vue';
@@ -24,10 +25,10 @@ const props = defineProps({
     value: { type: Number, required: true },
     range: { type: Object },
     rangeSelectable: { type: Boolean, default: false },
-    type: { type: String, default: 'display' },
+    type: { type: String, default: 'display', validator: oneOf(['display', 'control-single', 'control-range']) },
     label: { type: String, default: undefined },
     disabled: { type: Boolean, default: false },
-    variant: { type: String, default: 'linear' },
+    variant: { type: String, default: 'linear', validator: oneOf(['linear']) },
     showValue: { type: Boolean, default: false },
 });
 

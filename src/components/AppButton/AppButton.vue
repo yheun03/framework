@@ -17,20 +17,21 @@
 </template>
 
 <script setup>
+import { BUTTON_TYPES, SHAPES, SIZES, TONES, oneOf } from '@/utils/props';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
 import { toSizeStyle } from '@/utils/css';
 
 const props = defineProps({
-    type: { type: String, default: 'button' },
+    type: { type: String, default: 'button', validator: oneOf(BUTTON_TYPES) },
     to: { type: String },
     href: { type: String },
     newTab: { type: Boolean },
-    variant: { type: String, default: 'outline' },
-    shape: { type: String, default: 'round' },
-    tone: { type: String, default: 'gray' },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'outline', validator: oneOf(['fill', 'soft', 'outline']) },
+    shape: { type: String, default: 'round', validator: oneOf(SHAPES) },
+    tone: { type: String, default: 'gray', validator: oneOf(TONES) },
+    size: { type: String, default: 'md', validator: oneOf(SIZES) },
     /** number(px) | '50%' | 'full'(100%) */
     width: { type: [Number, String] },
     height: { type: [Number, String] },

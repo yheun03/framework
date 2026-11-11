@@ -15,7 +15,15 @@
                 size="sm"
                 :items="lines"
                 placeholder="전체 라인"
-            /><AppSelect v-model="shift" class="business-toolbar__field" size="sm" :items="shifts" placeholder="전체 근무조" />
+                aria-label="전체 라인"
+            /><AppSelect
+                v-model="shift"
+                class="business-toolbar__field"
+                size="sm"
+                :items="shifts"
+                placeholder="전체 근무조"
+                aria-label="전체 근무조"
+            />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>
         <section class="business-summary business-summary--compact">

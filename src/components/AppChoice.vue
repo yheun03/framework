@@ -50,11 +50,12 @@
 </template>
 
 <script setup>
+import { STATES, oneOf } from '@/utils/props';
 import { IconCheck, IconMinus } from '@/components/icons';
 import { computed } from 'vue';
 
 const props = defineProps({
-    type: { type: String, default: 'checkbox' },
+    type: { type: String, default: 'checkbox', validator: oneOf(['checkbox', 'radio']) },
     modelValue: { type: [Boolean, String, Number, null], required: true },
     value: { type: [String, Number] },
     name: { type: String },
@@ -67,9 +68,9 @@ const props = defineProps({
     id: { type: String },
     /** 화면에 label 이 없을 때 스크린리더용 이름 (표 선택 체크박스 등) */
     ariaLabel: { type: String },
-    variant: { type: String, default: 'default' },
-    state: { type: [String, null], default: null },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'default', validator: oneOf(['default', 'round', 'chip', 'chip-outline', 'fill', 'ghost', 'toggle']) },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
 });
 
 const emit = defineEmits(['update:modelValue']);

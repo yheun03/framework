@@ -15,7 +15,7 @@
                         <template #basicInfo>
                             <div class="page-demo-stack">
                                 <p>기본 탭 콘텐츠입니다.</p>
-                                <AppInput model-value="sample text" placeholder="입력하세요." />
+                                <AppInput model-value="sample text" placeholder="입력하세요." aria-label="입력하세요." />
                             </div>
                         </template>
 
@@ -27,6 +27,7 @@
                                     { label: '옵션 B', value: 'b' },
                                 ]"
                                 placeholder="선택하세요."
+                                aria-label="선택하세요."
                             />
                         </template>
 

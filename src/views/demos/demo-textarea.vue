@@ -11,7 +11,7 @@
 
                 <!-- BASIC -->
                 <PageDemoSection class="page-demo-section" title="Basic" description="기본 textarea 입력 예시입니다.">
-                    <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." />
+                    <AppTextarea v-model="basicValue" placeholder="내용을 입력하세요." aria-label="내용을 입력하세요." />
                 </PageDemoSection>
 
                 <!-- WITH FORM FIELD -->
@@ -33,6 +33,7 @@
                             show-count
                             clearable
                             :state="content && content.length < 10 ? 'error' : null"
+                            aria-label="문의 내용을 입력하세요."
                         />
                     </AppFormField>
                 </PageDemoSection>
@@ -43,25 +44,25 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "xs"</div>
 
-                            <AppTextarea v-model="extraSmallValue" size="xs" placeholder="extra small textarea" />
+                            <AppTextarea v-model="extraSmallValue" size="xs" placeholder="extra small textarea" aria-label="extra small textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
 
-                            <AppTextarea v-model="smallValue" size="sm" placeholder="small textarea" />
+                            <AppTextarea v-model="smallValue" size="sm" placeholder="small textarea" aria-label="small textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "md"</div>
 
-                            <AppTextarea v-model="mediumValue" size="md" placeholder="medium textarea" />
+                            <AppTextarea v-model="mediumValue" size="md" placeholder="medium textarea" aria-label="medium textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "lg"</div>
 
-                            <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" />
+                            <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" aria-label="large textarea" />
                         </div>
                     </div>
                 </PageDemoSection>
@@ -69,10 +70,10 @@
                 <!-- SHAPE -->
                 <PageDemoSection class="page-demo-section" title="Shape" description="Input, Select, DatePicker와 같은 shape 값을 사용합니다.">
                     <div class="page-demo-grid">
-                        <AppTextarea v-model="shapeValues.square" shape="square" placeholder="square" />
-                        <AppTextarea v-model="shapeValues.round" shape="round" placeholder="round" />
-                        <AppTextarea v-model="shapeValues.pill" shape="pill" placeholder="pill" />
-                        <AppTextarea v-model="shapeValues.underline" shape="underline" placeholder="underline" />
+                        <AppTextarea v-model="shapeValues.square" shape="square" placeholder="square" aria-label="square" />
+                        <AppTextarea v-model="shapeValues.round" shape="round" placeholder="round" aria-label="round" />
+                        <AppTextarea v-model="shapeValues.pill" shape="pill" placeholder="pill" aria-label="pill" />
+                        <AppTextarea v-model="shapeValues.underline" shape="underline" placeholder="underline" aria-label="underline" />
                     </div>
                 </PageDemoSection>
 
@@ -82,25 +83,30 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "none"</div>
 
-                            <AppTextarea v-model="resizeNoneValue" resize="none" placeholder="resize none" />
+                            <AppTextarea v-model="resizeNoneValue" resize="none" placeholder="resize none" aria-label="resize none" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "vertical"</div>
 
-                            <AppTextarea v-model="resizeVerticalValue" resize="vertical" placeholder="resize vertical" />
+                            <AppTextarea v-model="resizeVerticalValue" resize="vertical" placeholder="resize vertical" aria-label="resize vertical" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "horizontal"</div>
 
-                            <AppTextarea v-model="resizeHorizontalValue" resize="horizontal" placeholder="resize horizontal" />
+                            <AppTextarea
+                                v-model="resizeHorizontalValue"
+                                resize="horizontal"
+                                placeholder="resize horizontal"
+                                aria-label="resize horizontal"
+                            />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">resize = "both"</div>
 
-                            <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" />
+                            <AppTextarea v-model="resizeBothValue" resize="both" placeholder="resize both" aria-label="resize both" />
                         </div>
                     </div>
                 </PageDemoSection>
@@ -109,21 +115,21 @@
                 <PageDemoSection class="page-demo-section" title="States" description="공통 state와 disabled, readonly 상태를 확인합니다.">
                     <div class="page-demo-stack">
                         <div class="page-demo-grid">
-                            <AppTextarea v-model="stateValues.error" state="error" placeholder="state = error" />
-                            <AppTextarea v-model="stateValues.warning" state="warning" placeholder="state = warning" />
-                            <AppTextarea v-model="stateValues.success" state="success" placeholder="state = success" />
+                            <AppTextarea v-model="stateValues.error" state="error" placeholder="state = error" aria-label="state = error" />
+                            <AppTextarea v-model="stateValues.warning" state="warning" placeholder="state = warning" aria-label="state = warning" />
+                            <AppTextarea v-model="stateValues.success" state="success" placeholder="state = success" aria-label="state = success" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">disabled</div>
 
-                            <AppTextarea v-model="disabledValue" disabled placeholder="disabled textarea" />
+                            <AppTextarea v-model="disabledValue" disabled placeholder="disabled textarea" aria-label="disabled textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">readonly</div>
 
-                            <AppTextarea v-model="readonlyValue" readonly placeholder="readonly textarea" />
+                            <AppTextarea v-model="readonlyValue" readonly placeholder="readonly textarea" aria-label="readonly textarea" />
                         </div>
 
                         <div class="page-demo-stack">
@@ -134,6 +140,7 @@
                                 state="error"
                                 hint="오류 메시지가 hint 영역에 표시됩니다."
                                 placeholder="error textarea"
+                                aria-label="error textarea"
                             />
                         </div>
                     </div>
@@ -141,7 +148,14 @@
 
                 <!-- COUNT / CLEAR -->
                 <PageDemoSection class="page-demo-section" title="Count / Clear" description="글자 수 표시와 clearable 옵션을 확인합니다.">
-                    <AppTextarea v-model="countValue" placeholder="최대 100자까지 입력하세요." :max-length="100" show-count clearable />
+                    <AppTextarea
+                        v-model="countValue"
+                        placeholder="최대 100자까지 입력하세요."
+                        :max-length="100"
+                        show-count
+                        clearable
+                        aria-label="최대 100자까지 입력하세요."
+                    />
                 </PageDemoSection>
             </div>
 

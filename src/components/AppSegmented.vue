@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed } from 'vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -33,7 +34,7 @@ import AppButton from '@/components/AppButton/AppButton.vue';
 const props = defineProps({
     items: { type: Array, required: true },
     modelValue: { type: [String, Number, Boolean, null], required: true },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     width: { type: [Number, String] },
     disabled: { type: Boolean, default: false },
 });

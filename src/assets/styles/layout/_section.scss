@@ -37,14 +37,14 @@
         gap: var(--app-section-wrapper-gap, 16px);
     }
 
-    &--row {
+    &--horizontal {
         .app-section-wrapper__body {
             grid-template-columns: var(--app-section-wrapper-template, 1fr);
             align-items: stretch;
         }
     }
 
-    &--column {
+    &--vertical {
         .app-section-wrapper__body {
             grid-template-columns: 1fr;
             grid-template-rows: auto;
@@ -94,14 +94,14 @@
         gap: var(--app-section-gap, 12px);
     }
 
-    &--row {
+    &--horizontal {
         .app-section__content {
             grid-template-columns: var(--app-section-template, 1fr);
             align-items: stretch;
         }
     }
 
-    &--column {
+    &--vertical {
         .app-section__content {
             grid-template-columns: 1fr;
         }

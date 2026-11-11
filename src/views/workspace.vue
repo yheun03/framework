@@ -31,6 +31,14 @@ const editorRoot = ref(null);
 let editor = null;
 let isSettingValue = false;
 
+// 라이브러리(@toast-ui/editor)가 만든 이름 없는 입력에 스크린리더 이름을 붙입니다.
+function labelEditorControls(root) {
+    root.querySelector('.scroll-sync input[type="checkbox"]')?.setAttribute('aria-label', '미리보기 스크롤 동기화');
+    const clipboard = root.querySelector('.toastui-editor-pseudo-clipboard');
+    clipboard?.setAttribute('aria-hidden', 'true');
+    clipboard?.setAttribute('tabindex', '-1');
+}
+
 /* lifecycle */
 onMounted(async () => {
     if (!editorRoot.value) return;
@@ -45,6 +53,8 @@ onMounted(async () => {
         initialValue: ws.leftTab.content ?? '',
         usageStatistics: false,
     });
+
+    labelEditorControls(editorRoot.value);
 
     editor.on('change', () => {
         if (!editor || isSettingValue) return;

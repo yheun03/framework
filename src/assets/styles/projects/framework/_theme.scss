@@ -5,6 +5,11 @@ $primary: #ff5900; // Brand Main Color (그라디언트 끝 색, 단색이 필�
 $secondary: #111111; // Brand Sub Color_1 (블랙 - 보조 버튼, LNB 등 기반 색)
 $tertiary: #ff7830; // Brand Sub Color_2 (그라디언트 시작 색)
 
+// 글자로 쓰는 브랜드색 (링크 · 강조 텍스트 · outline 버튼 글자)
+// null 이면 $primary 를 흰 배경 · 다크 배경 위 4.5:1 이 되도록 자동으로 진하게/밝게 만듭니다.
+$primary-text: null;
+$primary-text-dark: null;
+
 // 브랜드 그라디언트 (Primary 버튼 · 강조 배지 · 브랜드 띠배너)
 // null 이면 linear-gradient(134deg, $tertiary 1.83%, $primary 98.55%) 로 자동 생성됩니다.
 $brand-gradient: null;

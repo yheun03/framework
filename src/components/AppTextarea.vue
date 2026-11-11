@@ -42,7 +42,7 @@
                     tone="gray"
                     @click="handleClear"
                 >
-                    지우기
+                    {{ $t('ui.clear') }}
                 </AppTextButton>
 
                 <span v-if="showCount" class="app-textarea__count">
@@ -56,6 +56,8 @@
 </template>
 
 <script setup>
+import { useLabelWarning } from '@/utils/a11y';
+import { FORM_SHAPES, FORM_SIZES, STATES, oneOf } from '@/utils/props';
 import { APP_FORM_FIELD_KEY } from '@/components/AppFormField.vue';
 
 import { toSizeStyle } from '@/utils/css';
@@ -76,9 +78,9 @@ const props = defineProps({
     maxLength: { type: Number, default: undefined },
     showCount: { type: Boolean, default: false },
     clearable: { type: Boolean, default: false },
-    size: { type: String, default: 'md' },
-    shape: { type: String, default: 'round' },
-    state: { type: [String, null], default: null },
+    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */
     width: { type: [Number, String] },
     resize: { type: String, default: 'vertical' },
@@ -95,6 +97,8 @@ const textareaId = computed(() => props.id ?? formField?.id.value ?? `app-textar
 const rootStyle = computed(() => toSizeStyle(props.width));
 
 const textLength = computed(() => String(props.modelValue ?? '').length);
+
+useLabelWarning('AppTextarea', () => document.getElementById(textareaId.value));
 
 function handleInput(event) {
     const target = event.target;

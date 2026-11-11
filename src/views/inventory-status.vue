@@ -16,12 +16,15 @@
                 class="business-toolbar__field business-toolbar__field--wide"
                 size="sm"
                 placeholder="품목코드 또는 품목명"
-            /><AppSelect v-model="warehouse" class="business-toolbar__field" size="sm" :items="warehouses" placeholder="전체 창고" /><AppChoice
-                v-model="onlyShortage"
-                class="business-toolbar__choice"
+                aria-label="품목코드 또는 품목명"
+            /><AppSelect
+                v-model="warehouse"
+                class="business-toolbar__field"
                 size="sm"
-                label="부족 재고만"
-            />
+                :items="warehouses"
+                placeholder="전체 창고"
+                aria-label="전체 창고"
+            /><AppChoice v-model="onlyShortage" class="business-toolbar__choice" size="sm" label="부족 재고만" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>
         <AppSection title="재고 품목 2,418건"

@@ -25,7 +25,7 @@
                     </span>
 
                     <span class="app-file-upload__trigger-text">
-                        {{ triggerText }}
+                        {{ triggerText ?? $t('ui.upload.file') }}
                     </span>
 
                     <span class="app-file-upload__trigger-subtext">
@@ -36,7 +36,7 @@
 
             <div class="app-file-upload__actions">
                 <AppButton variant="outline" size="sm" :disabled="disabled || !items.length" @click="handleClearAll">
-                    {{ multiple ? '전체 삭제' : '파일 삭제' }}
+                    {{ multiple ? $t('ui.upload.removeAll') : $t('ui.upload.removeFile') }}
                 </AppButton>
             </div>
         </div>
@@ -64,11 +64,21 @@
                 </div>
 
                 <div class="app-file-upload__item-actions">
-                    <AppTextButton v-if="isPdfItem(uploadItem)" size="sm" aria-label="PDF 미리보기" @click="handlePreviewPdf(uploadItem)">
-                        미리보기
+                    <AppTextButton
+                        v-if="isPdfItem(uploadItem)"
+                        size="sm"
+                        :aria-label="$t('ui.upload.previewPdf')"
+                        @click="handlePreviewPdf(uploadItem)"
+                    >
+                        {{ $t('ui.preview') }}
                     </AppTextButton>
 
-                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled" @click="handleRemoveItem(uploadItem.id)"
+                    <AppIconButton
+                        :aria-label="$t('ui.upload.removeFile')"
+                        :size="28"
+                        :icon-size="16"
+                        :disabled="disabled"
+                        @click="handleRemoveItem(uploadItem.id)"
                         ><IconClose
                     /></AppIconButton>
                 </div>
@@ -97,7 +107,8 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
     accept: { type: String, default: '*/*' },
     hint: { type: String, default: '' },
-    triggerText: { type: String, default: '파일 업로드' },
+    /** 기본 '파일 업로드' (i18n ui.upload.file) */
+    triggerText: { type: String, default: undefined },
     allowDrop: { type: Boolean, default: true },
     maxSize: { type: Number, default: undefined },
     maxCount: { type: Number, default: undefined },

@@ -81,8 +81,9 @@ $input-number-sizes: (
             background: var(--bg-input-number);
         }
 
+        // 입력 칸 테두리(위·아래 1px)를 빼서 좌우 버튼과 같은 높이로 맞춥니다.
         .app-input__field {
-            height: var(--in-height);
+            height: calc(var(--in-height) - 2px);
             padding-inline: 2px;
             text-align: center;
             color: var(--color-input-number);
@@ -117,6 +118,10 @@ $input-number-sizes: (
         .app-input-number__field.app-input .form-field__control {
             border: 0;
         }
+
+        .app-input-number__field.app-input .app-input__field {
+            height: var(--in-height);
+        }
     }
 
     // C타입: 테두리 없음
@@ -129,6 +134,10 @@ $input-number-sizes: (
         .app-input-number__field.app-input .form-field__control {
             border: 0;
             background: transparent;
+        }
+
+        .app-input-number__field.app-input .app-input__field {
+            height: var(--in-height);
         }
     }
 

@@ -14,11 +14,15 @@
                 class="business-toolbar__field business-toolbar__field--wide"
                 size="sm"
                 placeholder="작업지시 또는 품목 검색"
-            /><AppSelect v-model="status" class="business-toolbar__field" size="sm" :items="statuses" placeholder="전체 상태" /><AppDatePicker
-                v-model="workDate"
+                aria-label="작업지시 또는 품목 검색"
+            /><AppSelect
+                v-model="status"
                 class="business-toolbar__field"
                 size="sm"
-            />
+                :items="statuses"
+                placeholder="전체 상태"
+                aria-label="전체 상태"
+            /><AppDatePicker v-model="workDate" class="business-toolbar__field" size="sm" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>
         <AppSection title="작업지시 42건"

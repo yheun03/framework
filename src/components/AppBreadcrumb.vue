@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { IconChevronSmallRight, IconHome } from '@/components/icons';
 import AppTextButton from '@/components/AppButton/AppTextButton.vue';
 
@@ -34,6 +35,6 @@ defineProps({
     /** 문자 구분자 (미지정 시 > 아이콘) */
     separator: { type: String, default: '' },
     showHome: { type: Boolean, default: true },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
 });
 </script>

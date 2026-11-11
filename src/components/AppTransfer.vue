@@ -7,7 +7,7 @@
                     :model-value="side.checkedCount > 0 && side.checkedCount === side.selectable.length"
                     :indeterminate="side.checkedCount > 0 && side.checkedCount < side.selectable.length"
                     :disabled="disabled || !side.selectable.length"
-                    :aria-label="`${side.title} 전체 선택`"
+                    :aria-label="$t('ui.transfer.selectAll', { title: side.title })"
                     @update:model-value="toggleAll(side.key)"
                 />
                 <strong class="app-transfer__title">{{ side.title }}</strong>
@@ -15,13 +15,24 @@
             </header>
 
             <div v-if="searchable" class="app-transfer__search">
-                <AppInput v-model="keywords[side.key]" size="xs" placeholder="검색" :aria-label="`${side.title} 검색`" clearable>
+                <AppInput
+                    v-model="keywords[side.key]"
+                    size="xs"
+                    :placeholder="$t('ui.search')"
+                    :aria-label="$t('ui.transfer.search', { title: side.title })"
+                    clearable
+                >
                     <template #iconLeft><IconSearch /></template>
                 </AppInput>
             </div>
 
             <!-- 비활성 상태에도 키보드로 스크롤할 수 있도록 목록 자체에 포커스를 둡니다. -->
-            <ul class="app-transfer__list" :style="listStyle" :tabindex="disabled ? 0 : undefined" :aria-label="`${side.title} 목록`">
+            <ul
+                class="app-transfer__list"
+                :style="listStyle"
+                :tabindex="disabled ? 0 : undefined"
+                :aria-label="$t('ui.transfer.list', { title: side.title })"
+            >
                 <li v-for="item in side.filtered" :key="String(item.value)" class="app-transfer__item">
                     <AppChoice
                         size="sm"
@@ -32,7 +43,7 @@
                         @update:model-value="toggle(side.key, item.value)"
                     />
                 </li>
-                <li v-if="!side.filtered.length" class="app-transfer__empty">항목이 없습니다.</li>
+                <li v-if="!side.filtered.length" class="app-transfer__empty">{{ $t('ui.noItems') }}</li>
             </ul>
         </section>
 
@@ -40,7 +51,7 @@
             <AppIconButton
                 variant="outline"
                 size="lg"
-                aria-label="오른쪽으로 이동"
+                :aria-label="$t('ui.transfer.toRight')"
                 :disabled="disabled || !checked.left.length"
                 @click="move('left')"
             >
@@ -49,7 +60,7 @@
             <AppIconButton
                 variant="outline"
                 size="lg"
-                aria-label="왼쪽으로 이동"
+                :aria-label="$t('ui.transfer.toLeft')"
                 :disabled="disabled || !checked.right.length"
                 @click="move('right')"
             >
@@ -60,6 +71,7 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
 import { IconChevronLeft, IconChevronRight, IconSearch } from '@/components/icons';
 
 import { toCssSize, toSizeStyle } from '@/utils/css';
@@ -76,7 +88,7 @@ const props = defineProps({
     items: { type: Array, required: true },
     modelValue: { type: Array, required: true },
     /** [왼쪽 제목, 오른쪽 제목] */
-    titles: { type: Array, default: () => ['전체 목록', '선택 목록'] },
+    titles: { type: Array, default: undefined },
     searchable: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
     width: { type: [Number, String] },
@@ -103,7 +115,14 @@ const sides = computed(() =>
         const keyword = keywords[key].trim().toLowerCase();
         const filtered = keyword ? list.filter((item) => item.label.toLowerCase().includes(keyword)) : list;
         const selectable = filtered.filter((item) => !item.disabled);
-        return { key, title: props.titles[index], list, filtered, selectable, checkedCount: checked[key].length };
+        return {
+            key,
+            title: props.titles?.[index] ?? i18n.global.t(index === 0 ? 'ui.transfer.all' : 'ui.transfer.selected'),
+            list,
+            filtered,
+            selectable,
+            checkedCount: checked[key].length,
+        };
     }),
 );
 

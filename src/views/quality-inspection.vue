@@ -15,12 +15,20 @@
             </article>
         </section>
         <section class="business-toolbar">
-            <AppSelect v-model="type" class="business-toolbar__field" size="sm" :items="types" placeholder="검사 구분" /><AppSelect
+            <AppSelect
+                v-model="type"
+                class="business-toolbar__field"
+                size="sm"
+                :items="types"
+                placeholder="검사 구분"
+                aria-label="검사 구분"
+            /><AppSelect
                 v-model="result"
                 class="business-toolbar__field"
                 size="sm"
                 :items="results"
                 placeholder="전체 판정"
+                aria-label="전체 판정"
             /><AppDatePicker v-model="date" class="business-toolbar__field" size="sm" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>

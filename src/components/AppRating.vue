@@ -3,7 +3,7 @@
         class="app-rating"
         :class="[`app-rating--${size}`, { 'is-readonly': readonly, 'is-disabled': disabled }]"
         :role="readonly ? 'img' : 'radiogroup'"
-        :aria-label="`평점 ${current} / ${max}`"
+        :aria-label="$t('ui.rating.value', { current, max })"
         @mouseleave="hoverValue = null"
     >
         <span class="app-rating__stars">
@@ -17,7 +17,7 @@
                     unstyled
                     class="app-rating__star"
                     :disabled="disabled"
-                    :aria-label="`${index}점`"
+                    :aria-label="$t('ui.rating.point', { n: index })"
                     @mouseenter="!disabled && (hoverValue = index)"
                     @click="select(index)"
                 >
@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+import { SIZES, oneOf } from '@/utils/props';
 import { IconStarFill } from '@/components/icons';
 import { computed, ref } from 'vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -46,7 +47,7 @@ import AppButton from '@/components/AppButton/AppButton.vue';
 const props = defineProps({
     modelValue: { type: Number, default: 0 },
     max: { type: Number, default: 5 },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(SIZES) },
     readonly: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     /** 숫자 평점 노출 */

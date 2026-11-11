@@ -77,8 +77,7 @@
     &__title {
         margin: 0;
         color: var(--theme-gray-900);
-        font-size: 22px;
-        font-weight: 700;
+        @include font(t4, sb);
         line-height: 1.35;
     }
 
@@ -86,7 +85,7 @@
         max-width: 760px;
         margin: 10px 0 0;
         color: var(--theme-gray-600);
-        font-size: 14px;
+        @include font(b3, rg);
         line-height: 1.7;
     }
 }
@@ -105,8 +104,7 @@
         margin: 0;
         padding: 18px 20px 0;
         color: var(--theme-gray-900);
-        font-size: 15px;
-        font-weight: 700;
+        @include font(b2, sb);
         line-height: 1.4;
     }
 }
@@ -117,7 +115,7 @@
     margin: 0;
     padding: 16px 20px 20px;
     color: var(--theme-gray-700);
-    font-size: 14px;
+    @include font(b3, rg);
     line-height: 1.55;
     list-style: none;
 

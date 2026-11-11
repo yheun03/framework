@@ -1,6 +1,6 @@
 <template>
     <!-- 페이지 이동 링크 목록이므로 tablist 가 아닌 nav + aria-current 를 사용합니다. -->
-    <nav class="route-tabs" aria-label="최근 방문 페이지">
+    <nav class="route-tabs" :aria-label="$t('ui.tabs.name')">
         <div class="route-tabs__scroller">
             <ul class="route-tabs__list">
                 <li v-for="t in tabs" :key="t.key" class="route-tabs__item">
@@ -16,7 +16,7 @@
 
                     <AppIconButton
                         class="route-tabs__close"
-                        :aria-label="`${getTabTitle(t)} 탭 닫기`"
+                        :aria-label="$t('ui.tabs.close', { title: getTabTitle(t) })"
                         :size="20"
                         :icon-size="12"
                         @click="(e) => handleTabClose(e, t.key)"
@@ -27,15 +27,16 @@
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton class="route-tabs__action" aria-label="왼쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToLeftTab"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.left')" :size="24" :icon-size="16" @click="handleMoveToLeftTab"
                 ><IconChevronSmallLeft
             /></AppIconButton>
-            <AppIconButton class="route-tabs__action" aria-label="오른쪽 탭으로 이동" :size="24" :icon-size="16" @click="handleMoveToRightTab"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.right')" :size="24" :icon-size="16" @click="handleMoveToRightTab"
                 ><IconChevronSmallRight
             /></AppIconButton>
-            <AppIconButton class="route-tabs__action" aria-label="다른 탭 닫기" :size="24" :icon-size="16" @click="handleCloseOtherTabs"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.closeOthers')" :size="24" :icon-size="16" @click="handleCloseOtherTabs"
                 ><IconCloseSmall
             /></AppIconButton>
+            <LayoutSourceViewer />
         </div>
     </nav>
 </template>
@@ -48,6 +49,7 @@ import { IconChevronSmallLeft, IconChevronSmallRight, IconClose, IconCloseSmall 
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
+import LayoutSourceViewer from '@/components/Layout/LayoutSourceViewer.vue';
 
 const router = useRouter();
 const route = useRoute();

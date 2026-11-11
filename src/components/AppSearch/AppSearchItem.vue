@@ -1,6 +1,6 @@
 <template>
     <div class="app-search-item" :style="itemStyle">
-        <label class="app-search-item__label" :for="for">
+        <label class="app-search-item__label" :for="$props.for">
             {{ label }}
             <span v-if="required" class="app-search-item__required" aria-hidden="true">*</span>
         </label>

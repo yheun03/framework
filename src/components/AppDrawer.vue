@@ -19,7 +19,7 @@
                                 <p v-if="description" class="app-drawer__desc">{{ description }}</p>
                             </div>
                         </slot>
-                        <AppIconButton aria-label="닫기" size="lg" @click="close"><IconClose /></AppIconButton>
+                        <AppIconButton :aria-label="$t('ui.close')" size="lg" @click="close"><IconClose /></AppIconButton>
                     </header>
                     <div class="app-drawer__body"><slot /></div>
                     <footer v-if="$slots.footer" class="app-drawer__footer"><slot name="footer" /></footer>
@@ -30,10 +30,11 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { IconClose } from '@/components/icons';
 
 import { toCssWidth } from '@/utils/css';
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onDeactivated, ref, watch } from 'vue';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 
 /**
@@ -44,7 +45,7 @@ const props = defineProps({
     open: { type: Boolean, required: true },
     title: { type: String, default: '' },
     description: { type: String, default: '' },
-    placement: { type: String, default: 'right' },
+    placement: { type: String, default: 'right', validator: oneOf(['right', 'left']) },
     width: { type: [Number, String], default: 480 },
     overlay: { type: Boolean, default: true },
     closeOnBackdrop: { type: Boolean, default: true },
@@ -72,4 +73,9 @@ watch(
 );
 
 onBeforeUnmount(() => document.documentElement.classList.remove('is-drawer-open'));
+
+// 탭 전환(KeepAlive)으로 화면이 숨겨지면 열린 드로어를 닫습니다.
+onDeactivated(() => {
+    if (props.open) close();
+});
 </script>

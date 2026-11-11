@@ -40,7 +40,7 @@
         />
 
         <AppButton v-else-if="cell.type === 'button'" :disabled="disabled || readonly" @click="emitAction">
-            {{ cell.buttonText ?? '버튼' }}
+            {{ cell.buttonText ?? $t('ui.button') }}
         </AppButton>
 
         <div v-else-if="cell.type === 'input_button'" class="app-table-field__inline">
@@ -54,7 +54,7 @@
                 @update:model-value="updateSingle"
             />
             <AppButton class="app-table-field__inline-button" :disabled="disabled || readonly" @click="emitAction">
-                {{ cell.buttonText ?? '버튼' }}
+                {{ cell.buttonText ?? $t('ui.button') }}
             </AppButton>
         </div>
 
@@ -69,7 +69,7 @@
                 @update:model-value="updateSingle"
             />
             <AppButton class="app-table-field__inline-button" :disabled="disabled || readonly" @click="emitAction">
-                {{ cell.buttonText ?? '버튼' }}
+                {{ cell.buttonText ?? $t('ui.button') }}
             </AppButton>
             <span class="app-table-field__suffix-text">{{ cell.text }}</span>
         </div>
@@ -90,7 +90,7 @@
         <div v-else-if="cell.type === 'text-button'" class="app-table-field__inline">
             <span class="app-table-field__text">{{ cell.text ?? displayValue }}</span>
             <AppButton class="app-table-field__inline-button" :disabled="disabled || readonly" @click="emitAction">
-                {{ cell.buttonText ?? '버튼' }}
+                {{ cell.buttonText ?? $t('ui.button') }}
             </AppButton>
         </div>
 

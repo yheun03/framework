@@ -14,7 +14,7 @@
                 ><strong class="business-summary__value">{{ item.value }}</strong>
             </article>
         </section>
-        <AppSectionWrapper class="business-page__section-wrapper" direction="row" :ratio="[1, 1]" :gap="20">
+        <AppSectionWrapper class="business-page__section-wrapper" direction="horizontal" :ratio="[1, 1]" :gap="20">
             <AppSection title="작업 정보"
                 ><dl class="business-detail">
                     <div v-for="item in details" :key="item.label" class="business-detail__item">

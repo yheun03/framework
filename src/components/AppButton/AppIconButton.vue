@@ -29,20 +29,21 @@
 </template>
 
 <script setup>
+import { BUTTON_TYPES, SHAPES, SIZES, TONES, oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed } from 'vue';
 
 const props = defineProps({
     ariaLabel: { type: String },
-    type: { type: String, default: 'button' },
+    type: { type: String, default: 'button', validator: oneOf(BUTTON_TYPES) },
     to: { type: String },
     href: { type: String },
     newTab: { type: Boolean },
-    variant: { type: String, default: 'plain' },
-    shape: { type: String, default: 'round' },
-    tone: { type: String, default: 'gray' },
-    size: { type: [String, Number], default: 'md' },
-    iconSize: { type: [String, Number], default: 'md' },
+    variant: { type: String, default: 'plain', validator: oneOf(['plain', 'soft', 'outline']) },
+    shape: { type: String, default: 'round', validator: oneOf(SHAPES) },
+    tone: { type: String, default: 'gray', validator: oneOf(TONES) },
+    size: { type: [String, Number], default: 'md', validator: oneOf(SIZES, { number: true }) },
+    iconSize: { type: [String, Number], default: 'md', validator: oneOf(SIZES, { number: true }) },
     width: { type: [String, Number] },
     height: { type: [String, Number] },
     disabled: { type: Boolean, default: false },

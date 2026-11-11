@@ -11,6 +11,8 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
+import { oneOf } from '@/utils/props';
 import { computed } from 'vue';
 import { Bar, Line, Doughnut, Pie } from 'vue-chartjs';
 import {
@@ -30,7 +32,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
 
 const props = defineProps({
-    type: { type: String, required: true },
+    type: { type: String, required: true, validator: oneOf(['line', 'bar', 'doughnut', 'semi-doughnut', 'pie']) },
     data: { type: Object, required: true },
     height: { type: Number, default: 260 },
     cutout: { type: [String, Number], default: '68%' },
@@ -47,7 +49,7 @@ const chartLabel = computed(() => {
         .filter(Boolean)
         .join(', ');
     const labels = (props.data.labels ?? []).join(', ');
-    return ['차트', series, labels && `항목: ${labels}`].filter(Boolean).join(' - ');
+    return [i18n.global.t('ui.chart.name'), series, labels && i18n.global.t('ui.chart.items', { labels })].filter(Boolean).join(' - ');
 });
 
 function isObject(value) {

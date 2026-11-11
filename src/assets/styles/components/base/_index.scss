@@ -42,17 +42,7 @@
 @use 'tree';
 @use 'drawer';
 @use 'transfer';
+@use 'source-viewer';
 
-// 홈페이지 공통 (Figma 14~19 / MO 06)
-@use 'site-header';
-@use 'site-footer';
-@use 'dock-bar';
-@use 'billboard';
-@use 'line-banner';
-@use 'product-card';
-
-// 기업·제품 홈페이지 / MES 확장 (Figma 톤 확장)
-@use 'heading';
-@use 'feature-card';
-@use 'pricing-card';
+// MES 확장 (Figma 톤 확장)
 @use 'equipment-card';

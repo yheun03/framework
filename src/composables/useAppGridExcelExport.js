@@ -2,7 +2,7 @@
  * AppGrid 데이터를 Excel 파일로 보내기 위한 composable 파일입니다.
  */
 
-import { buildGridExcelBuffer } from '@/utils/gridExcelWorkbook';
+import { buildGridExcelBlob } from '@/utils/gridExcelWorkbook';
 
 import { ensureXlsxExtension, makeTimestampedExportName } from '@/utils/exportFilename';
 
@@ -83,8 +83,7 @@ export function useAppGridExcelExport(options) {
         const sheetName = params.sheetName ?? params.gridId;
 
         // 서버 없이 브라우저에서 바로 xlsx 파일을 만듭니다.
-        const buffer = buildGridExcelBuffer({ gridId: params.gridId, columns: params.columns, rows: params.rows, sheetName, origin });
-        const res = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const res = await buildGridExcelBlob({ gridId: params.gridId, columns: params.columns, rows: params.rows, sheetName, origin });
 
         downloadBlobAsFile(res, ensureXlsxExtension(fileName));
     }

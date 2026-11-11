@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppSelect v-model="value" :items="items" size="sm" />
+        <AppSelect v-model="value" :items="items" size="sm" :aria-label="cellLabel" />
     </div>
 </template>
 
@@ -14,6 +14,6 @@ const props = defineProps({
 });
 
 const params = props.params;
-const { rendererParams, value } = useAppGridCellRendererValue(params);
+const { rendererParams, value, cellLabel } = useAppGridCellRendererValue(params);
 const items = computed(() => rendererParams.value.items ?? []);
 </script>

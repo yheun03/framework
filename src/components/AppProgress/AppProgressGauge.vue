@@ -55,6 +55,8 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
+import { oneOf } from '@/utils/props';
 import { normalizeProgressRange, normalizeProgressValue } from '@/utils/progress';
 import { computed, onBeforeUnmount, ref } from 'vue';
 
@@ -64,7 +66,7 @@ const center = { x: 60, y: 60 };
 const radius = 44;
 
 const props = defineProps({
-    variant: { type: String, default: 'gauge' },
+    variant: { type: String, default: 'gauge', validator: oneOf(['gauge', 'semi-doughnut-range']) },
     type: { type: String, default: 'display' },
     value: { type: Number, default: 0 },
     range: { type: Object },
@@ -95,7 +97,7 @@ const showRangeHandles = computed(() => isControlRange.value);
 const showContent = computed(() => props.showLabel || props.showValue || props.showRangeText);
 const ariaLabel = computed(() =>
     hasRange.value
-        ? `${props.label ?? 'range'} ${normalizedRange.value.start}에서 ${normalizedRange.value.end}`
+        ? i18n.global.t('ui.progress.rangeValue', { label: props.label ?? '', start: normalizedRange.value.start, end: normalizedRange.value.end })
         : `${props.label ?? 'progress'} ${normalizedValue.value}`,
 );
 

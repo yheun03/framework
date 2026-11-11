@@ -34,7 +34,7 @@
                 <span class="app-select__value" :class="{ 'app-select__value--placeholder': !selectedOption }">
                     <img v-if="selectedOption?.image" class="app-select__thumb" :src="selectedOption.image" alt="" />
                     <span class="app-select__value-text">
-                        <span class="app-select__value-label">{{ selectedOption?.label ?? placeholder }}</span>
+                        <span class="app-select__value-label">{{ selectedOption?.label ?? placeholderText }}</span>
                         <span v-if="selectedOption?.description" class="app-select__value-desc">{{ selectedOption.description }}</span>
                     </span>
                 </span>
@@ -54,7 +54,7 @@
                 :style="menuStyle"
                 role="listbox"
             >
-                <li v-if="placeholder && !required" class="app-select__option-item">
+                <li v-if="placeholderText && !required" class="app-select__option-item">
                     <button
                         type="button"
                         class="app-select__option"
@@ -63,7 +63,7 @@
                         :aria-selected="modelValue === null"
                         @click="selectOption(null)"
                     >
-                        {{ placeholder }}
+                        {{ placeholderText }}
                     </button>
                 </li>
                 <li v-for="option in items" :key="String(option.value)" class="app-select__option-item">
@@ -94,13 +94,16 @@
 </template>
 
 <script setup>
+import { useLabelWarning } from '@/utils/a11y';
+import i18n from '@/i18n';
+import { FORM_SHAPES, FORM_SIZES, STATES, oneOf } from '@/utils/props';
 import { APP_FORM_FIELD_KEY } from '@/components/AppFormField.vue';
 import { APP_INPUT_GROUP_KEY } from '@/components/AppInputGroup.vue';
 import { IconChevronDown } from '@/components/icons';
 import { getBodyOverlayStyle, useBodyOverlay } from '@/composables/useBodyOverlay';
 
 import { toSizeStyle } from '@/utils/css';
-import { computed, inject, nextTick, ref, useId } from 'vue';
+import { computed, inject, nextTick, onDeactivated, ref, useId } from 'vue';
 
 /** value, label, description?, image?, disabled? */
 
@@ -109,11 +112,12 @@ const props = defineProps({
     items: { type: Array, required: true },
     label: { type: String },
     hint: { type: String },
-    placeholder: { type: String, default: '선택하세요' },
+    /** 기본 '선택하세요' (i18n ui.selectPlaceholder). 빈 문자열이면 '선택 안 함' 항목을 숨김 */
+    placeholder: { type: String, default: undefined },
     required: { type: Boolean, default: false },
-    size: { type: String, default: 'md' },
-    shape: { type: String, default: 'round' },
-    state: { type: [String, null], default: null },
+    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */
     width: { type: [Number, String] },
     disabled: { type: Boolean, default: false },
@@ -131,6 +135,9 @@ const formField = inject(APP_FORM_FIELD_KEY, null);
 const inputGroupLabel = inject(APP_INPUT_GROUP_KEY, null);
 const inputId = computed(() => props.id ?? formField?.id.value ?? `app-select-${fallbackId}`);
 const menuId = computed(() => `${inputId.value}-menu`);
+const placeholderText = computed(() => props.placeholder ?? i18n.global.t('ui.selectPlaceholder'));
+
+useLabelWarning('AppSelect', () => triggerEl.value);
 const isOpen = ref(false);
 const triggerEl = ref(null);
 const menuEl = ref(null);
@@ -163,6 +170,11 @@ function closeMenu() {
     overlay.stop();
     isOpen.value = false;
 }
+
+// 탭 전환(KeepAlive)으로 화면이 숨겨지면 목록을 닫습니다.
+onDeactivated(() => {
+    if (isOpen.value) closeMenu();
+});
 
 function selectOption(option) {
     emit('update:modelValue', option?.value ?? null);

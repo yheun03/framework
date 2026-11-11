@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Jonsoft 웹 퍼블리싱 / 프론트엔드 공통 프레임워크 (Vue 3 + Vite)" />
-        <meta name="theme-color" content="#ff5900" />
-        <link rel="icon" type="image/svg+xml" href="/images/projects/framework/favicon.svg" />
+        <!-- %PROJECT_*% 는 빌드 시 src/project.config.js · _theme.scss 값으로 바뀝니다. (vite.config.js projectHtmlPlugin) -->
+        <meta name="description" content="%PROJECT_DESCRIPTION%" />
+        <meta name="theme-color" content="%PROJECT_THEME_COLOR%" />
+        <link rel="icon" type="image/svg+xml" href="/images/projects/%PROJECT_KEY%/favicon.svg" />
         <!-- 배포시 활용되는 api 동적할당 파일 (docker-compose MODE) -->
         <script src="/api-config.js"></script>
         <title>%VITE_TITLE%</title>

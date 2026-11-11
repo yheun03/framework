@@ -11,21 +11,13 @@
                 <!-- LINE -->
                 <PageDemoSection class="page-demo-section" title="Line Variants" description="기본 라인, 스텝 라인, 멀티 라인 구성을 확인합니다.">
                     <div class="page-demo-grid">
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="line" :data="lineData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="line" :data="lineData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="line" :data="steppedLineData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="line" :data="steppedLineData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="line" :data="multiLineData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="line" :data="multiLineData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="line" :data="multiLineData2" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="line" :data="multiLineData2" />
                     </div>
                 </PageDemoSection>
 
@@ -36,21 +28,13 @@
                     description="막대형, 도넛형, 반도넛형, 원형 차트 구성을 확인합니다."
                 >
                     <div class="page-demo-grid">
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="bar" :data="barData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="bar" :data="barData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="doughnut" :data="doughnutData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="doughnut" :data="doughnutData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="semi-doughnut" :data="semiDoughnutData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="semi-doughnut" :data="semiDoughnutData" />
 
-                        <client-only>
-                            <AppChart class="page-demo-chart-box" type="pie" :data="pieData" />
-                        </client-only>
+                        <AppChart class="page-demo-chart-box" type="pie" :data="pieData" />
                     </div>
                 </PageDemoSection>
             </div>
@@ -219,4 +203,4 @@ const pieData = computed(() => ({
 }));
 </script>
 
-<!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
+<!-- demo 공통 스타일: assets/styles/pages/_demo.scss -->

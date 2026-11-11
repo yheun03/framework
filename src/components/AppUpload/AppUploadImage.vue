@@ -25,7 +25,7 @@
                     </span>
 
                     <span class="app-image-upload__trigger-text">
-                        {{ triggerText }}
+                        {{ triggerText ?? $t('ui.upload.image') }}
                     </span>
 
                     <span class="app-image-upload__trigger-subtext">
@@ -36,7 +36,7 @@
 
             <div class="app-image-upload__actions">
                 <AppButton variant="outline" size="sm" :disabled="disabled || !items.length" @click="handleClearAll">
-                    {{ multiple ? '전체 삭제' : '이미지 삭제' }}
+                    {{ multiple ? $t('ui.upload.removeAll') : $t('ui.upload.removeImage') }}
                 </AppButton>
             </div>
         </div>
@@ -66,11 +66,16 @@
                 </div>
 
                 <div class="app-image-upload__item-actions">
-                    <AppTextButton v-if="uploadItem.url" size="sm" aria-label="이미지 미리보기" @click="handlePreviewItem(uploadItem)">
-                        미리보기
+                    <AppTextButton v-if="uploadItem.url" size="sm" :aria-label="$t('ui.upload.previewImage')" @click="handlePreviewItem(uploadItem)">
+                        {{ $t('ui.preview') }}
                     </AppTextButton>
 
-                    <AppIconButton aria-label="파일 삭제" :size="28" :icon-size="16" :disabled="disabled" @click="handleRemoveItem(uploadItem.id)"
+                    <AppIconButton
+                        :aria-label="$t('ui.upload.removeFile')"
+                        :size="28"
+                        :icon-size="16"
+                        :disabled="disabled"
+                        @click="handleRemoveItem(uploadItem.id)"
                         ><IconClose
                     /></AppIconButton>
                 </div>
@@ -84,6 +89,7 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
 import { IconClose, IconImagePlus } from '@/components/icons';
 import { useModalViewer } from '@/composables/useModalViewer';
 import { createUploadId, formatBytes, resolveNextUploadItems } from '@/utils/upload';
@@ -99,7 +105,8 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
     accept: { type: String, default: 'image/*' },
     hint: { type: String, default: '' },
-    triggerText: { type: String, default: '이미지 업로드' },
+    /** 기본 '이미지 업로드' (i18n ui.upload.image) */
+    triggerText: { type: String, default: undefined },
     allowDrop: { type: Boolean, default: true },
     maxSize: { type: Number, default: undefined },
     maxCount: { type: Number, default: undefined },
@@ -169,7 +176,7 @@ function readAsDataUrl(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
-        reader.onerror = () => reject(new Error('파일을 읽는 중 오류가 발생했습니다.'));
+        reader.onerror = () => reject(new Error(i18n.global.t('ui.upload.readError')));
         reader.onload = () => resolve(String(reader.result ?? ''));
 
         reader.readAsDataURL(file);

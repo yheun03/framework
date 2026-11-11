@@ -251,11 +251,9 @@
 import { storeToRefs } from 'pinia';
 import { themeColorNames, usePreferencesStore } from '@/store/preferences';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
-import { useProjectConfig } from '@/composables/useProjectConfig';
 import AppButton from '@/components/AppButton/AppButton.vue';
 
 const preferences = usePreferencesStore();
-const project = useProjectConfig();
 const { locale, theme, themeColors } = storeToRefs(preferences);
 const defaultColors = ref({});
 const searchQuery = ref('');
@@ -644,7 +642,7 @@ function collectComponentColorNames() {
 }
 
 function pickerColor(name) {
-    return themeColors.value[name] || defaultColors.value[name] || project.themeColor;
+    return themeColors.value[name] || defaultColors.value[name] || PROJECT_PRIMARY_COLOR;
 }
 
 function handleColorChange(name, event) {
@@ -679,7 +677,7 @@ function readDefaultColors() {
     for (const group of groups) {
         for (const item of group.items) {
             if (item.name === 'lnb-background') {
-                colors[item.name] = colors['primary-800'] || project.themeColor;
+                colors[item.name] = colors['primary-800'] || PROJECT_PRIMARY_COLOR;
                 continue;
             }
             probe.style.color = `var(${themeVariable(item.name)})`;
@@ -743,12 +741,12 @@ watch(themeColors, () => nextTick(readDefaultColors));
 
             strong {
                 color: var(--theme-gray-900);
-                font-size: 14px;
+                @include font(b3, sb);
             }
 
             span {
                 color: var(--theme-gray-500);
-                font-size: 12px;
+                @include font(c2, rg);
             }
         }
     }
@@ -787,11 +785,11 @@ watch(themeColors, () => nextTick(readDefaultColors));
         gap: 4px;
         min-width: 78px;
         color: var(--theme-gray-500);
-        font-size: 12px;
+        @include font(c2, rg);
 
         strong {
             color: var(--theme-primary-text);
-            font-size: 18px;
+            @include font(t5, sb);
         }
     }
 
@@ -835,7 +833,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             background: transparent;
             color: var(--theme-gray-500);
             cursor: pointer;
-            font-size: 18px;
+            @include font(t5, rg);
         }
     }
 
@@ -859,7 +857,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
 
             span {
                 color: var(--theme-gray-500);
-                font-size: 11px;
+                @include font(c3, rg);
             }
 
             &.is-active {
@@ -888,7 +886,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         p {
             margin: 4px 0 0;
             color: var(--theme-gray-500);
-            font-size: 12px;
+            @include font(c2, rg);
         }
 
         > span {
@@ -896,8 +894,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             border-radius: 999px;
             background: var(--theme-primary-50);
             color: var(--theme-primary-700);
-            font-size: 11px;
-            font-weight: 600;
+            @include font(c3, sb);
         }
     }
 
@@ -925,7 +922,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
 
         > span {
             color: var(--theme-color-04-gray);
-            font-size: 12px;
+            @include font(c2, rg);
         }
     }
 
@@ -946,8 +943,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         span {
             padding: 5px 8px;
             border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
+            @include font(c3, sb);
         }
 
         .is-success {
@@ -977,12 +973,12 @@ watch(themeColors, () => nextTick(readDefaultColors));
         }
 
         h2 {
-            font-size: 18px;
+            @include font(t5, sb);
             color: var(--theme-gray-900);
         }
 
         p {
-            font-size: 13px;
+            @include font(b4, rg);
             color: var(--theme-gray-600);
         }
     }
@@ -1000,7 +996,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         > span {
             padding-inline: 8px 4px;
             color: var(--theme-gray-500);
-            font-size: 11px;
+            @include font(c3, rg);
         }
 
         button {
@@ -1011,7 +1007,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             background: transparent;
             color: var(--theme-gray-600);
             cursor: pointer;
-            font-size: 12px;
+            @include font(c2, rg);
 
             &.is-active {
                 background: var(--theme-gray-0);
@@ -1034,7 +1030,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         p {
             margin: 4px 0 0;
             color: var(--theme-gray-500);
-            font-size: 11px;
+            @include font(c3, rg);
         }
     }
 
@@ -1076,7 +1072,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             border-radius: 999px;
             background: var(--theme-gray-100);
             color: var(--theme-gray-600);
-            font-size: 11px;
+            @include font(c3, rg);
         }
     }
 
@@ -1111,7 +1107,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             flex: 1;
             margin: 0;
             color: var(--theme-gray-800);
-            font-size: 13px;
+            @include font(b4, sb);
         }
 
         > span:last-child {
@@ -1123,7 +1119,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
             border-radius: 999px;
             background: var(--theme-gray-100);
             color: var(--theme-gray-500);
-            font-size: 10px;
+            @include font(c3, rg);
         }
     }
 
@@ -1192,13 +1188,13 @@ watch(themeColors, () => nextTick(readDefaultColors));
         gap: 2px;
 
         strong {
-            font-size: 13px;
+            @include font(b4, sb);
             color: var(--theme-gray-800);
         }
 
         small {
             overflow: hidden;
-            font-size: 11px;
+            @include font(c3, rg);
             color: var(--theme-gray-500);
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -1215,7 +1211,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         background: var(--theme-gray-50);
         color: var(--theme-gray-700);
         font-family: monospace;
-        font-size: 12px;
+        @include font(c2, rg);
         text-transform: uppercase;
 
         &:focus {
@@ -1233,7 +1229,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
         background: var(--theme-primary-50);
         color: var(--theme-primary);
         cursor: pointer;
-        font-size: 16px;
+        @include font(b1, rg);
     }
 
     &__empty {
@@ -1247,12 +1243,12 @@ watch(themeColors, () => nextTick(readDefaultColors));
         p {
             margin: 0;
             color: var(--theme-gray-500);
-            font-size: 13px;
+            @include font(b4, rg);
         }
     }
 }
 
-@media (max-width: 900px) {
+@include tablet {
     .theme-page {
         &__toolbar {
             position: static;
@@ -1288,7 +1284,7 @@ watch(themeColors, () => nextTick(readDefaultColors));
     }
 }
 
-@media (max-width: 520px) {
+@include mo {
     .theme-page {
         &__mode-switch {
             flex: 1;

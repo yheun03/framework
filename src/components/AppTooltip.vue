@@ -26,7 +26,15 @@
             <span class="app-tooltip__text"
                 ><slot name="content">{{ label }}</slot></span
             >
-            <AppIconButton v-if="closable" class="app-tooltip__close" :size="18" :icon-size="14" shape="pill" aria-label="닫기" @click="hide">
+            <AppIconButton
+                v-if="closable"
+                class="app-tooltip__close"
+                :size="18"
+                :icon-size="14"
+                shape="pill"
+                :aria-label="$t('ui.close')"
+                @click="hide"
+            >
                 <IconCloseSmall />
             </AppIconButton>
             <span class="app-tooltip__arrow" aria-hidden="true" />
@@ -35,9 +43,10 @@
 </template>
 
 <script setup>
+import { PLACEMENTS, SHAPES, oneOf } from '@/utils/props';
 import { IconCloseSmall } from '@/components/icons';
 import { getFloatingStyle, useBodyOverlay } from '@/composables/useBodyOverlay';
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onDeactivated, onMounted, ref, useId, watch } from 'vue';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 
 /**
@@ -49,10 +58,10 @@ defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
     label: { type: String, default: '' },
-    placement: { type: String, default: 'top' },
+    placement: { type: String, default: 'top', validator: oneOf(PLACEMENTS) },
     trigger: { type: String, default: 'hover' },
-    variant: { type: String, default: 'dark' },
-    shape: { type: String, default: 'square' },
+    variant: { type: String, default: 'dark', validator: oneOf(['dark', 'light', 'outline']) },
+    shape: { type: String, default: 'square', validator: oneOf(SHAPES) },
     closable: { type: Boolean, default: false },
     /** v-model:open (trigger="click" 일 때 외부 제어용) */
     open: { type: Boolean, default: undefined },
@@ -98,6 +107,11 @@ function hide() {
     overlay.stop();
     setOpen(false);
 }
+
+// 탭 전환(KeepAlive)으로 화면이 숨겨지면 닫습니다.
+onDeactivated(() => {
+    if (isOpen.value) hide();
+});
 
 function toggle() {
     if (isOpen.value) hide();

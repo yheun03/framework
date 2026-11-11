@@ -13,7 +13,7 @@
                     <div class="page-demo-grid">
                         <AppInput v-model="basic" label="이름" placeholder="이름을 입력하세요" hint="이름은 2자 이상 입력하세요" />
                         <AppInput v-model="email" label="이메일" placeholder="name@example.com" />
-                        <AppInput v-model="search" placeholder="검색" />
+                        <AppInput v-model="search" placeholder="검색" aria-label="검색" />
                     </div>
                 </PageDemoSection>
 
@@ -40,28 +40,28 @@
                 <!-- ICON -->
                 <PageDemoSection class="page-demo-section" title="Icon" description="Input 내부에 아이콘을 배치할 수 있습니다.">
                     <div class="page-demo-grid">
-                        <AppInput v-model="search" placeholder="검색어"
+                        <AppInput v-model="search" placeholder="검색어" aria-label="검색어"
                             ><template #iconLeft>
                                 <IconSearch />
                             </template>
                         </AppInput>
-                        <AppInput v-model="search" placeholder="검색" clearable />
-                        <AppInput v-model="password" placeholder="비밀번호" type="password" passwordToggle />
+                        <AppInput v-model="search" placeholder="검색" clearable aria-label="검색" />
+                        <AppInput v-model="password" placeholder="비밀번호" type="password" passwordToggle aria-label="비밀번호" />
                     </div>
                 </PageDemoSection>
 
                 <!-- ICON -->
                 <PageDemoSection class="page-demo-section" title="Icon" description="로컬 아이콘을 Input의 좌/우 슬롯에 배치하는 예제입니다.">
                     <div class="page-demo-grid">
-                        <AppInput v-model="icon" placeholder="사용자명"
+                        <AppInput v-model="icon" placeholder="사용자명" aria-label="사용자명"
                             ><template #iconLeft>
                                 <IconAccount />
                             </template>
                         </AppInput>
-                        <AppInput v-model="email" placeholder="이메일"
+                        <AppInput v-model="email" placeholder="이메일" aria-label="이메일"
                             ><template #iconLeft> <IconEmail /> </template><template #iconRight> <IconCheckCircle /> </template
                         ></AppInput>
-                        <AppInput v-model="url" placeholder="https://example.com"
+                        <AppInput v-model="url" placeholder="https://example.com" aria-label="https://example.com"
                             ><template #iconLeft> <IconLink /> </template
                         ></AppInput>
                     </div>

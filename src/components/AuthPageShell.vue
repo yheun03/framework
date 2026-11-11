@@ -1,18 +1,22 @@
 <template>
     <div class="auth-page">
-        <section class="auth-page__hero" :aria-label="`${project.serviceName} 소개`">
+        <section class="auth-page__hero" :aria-label="$t('ui.auth.intro', { name: project.serviceName })">
             <div class="auth-page__hero-inner">
-                <RouterLink class="auth-page__brand" to="/" :aria-label="`${project.serviceName} 홈으로 이동`">
+                <RouterLink class="auth-page__brand" to="/" :aria-label="$t('ui.auth.home', { name: project.serviceName })">
                     <span class="auth-page__brand-icon" aria-hidden="true"><IconApp /></span>
                     <span class="auth-page__brand-name">{{ project.serviceName }}</span>
                 </RouterLink>
 
                 <div class="auth-page__hero-content">
                     <p class="auth-page__eyebrow">{{ eyebrow }}</p>
-                    <h2 class="auth-page__hero-title">{{ heroTitle }}</h2>
-                    <p class="auth-page__hero-desc">{{ heroDescription }}</p>
+                    <h2 class="auth-page__hero-title">{{ heroTitle ?? $t('ui.auth.heroTitle') }}</h2>
+                    <p class="auth-page__hero-desc">{{ heroDescription ?? $t('ui.auth.heroDesc') }}</p>
                     <ul class="auth-page__features">
-                        <li v-for="feature in features" :key="feature" class="auth-page__feature">
+                        <li
+                            v-for="feature in features ?? [$t('ui.auth.feature1'), $t('ui.auth.feature2'), $t('ui.auth.feature3')]"
+                            :key="feature"
+                            class="auth-page__feature"
+                        >
                             <IconCheckCircle aria-hidden="true" />
                             <span>{{ feature }}</span>
                         </li>
@@ -38,9 +42,10 @@ const currentYear = new Date().getFullYear();
 
 defineProps({
     eyebrow: { type: String, default: 'Workspace + Components' },
-    heroTitle: { type: String, default: '업무에 필요한 화면을\n더 빠르고 일관되게' },
-    heroDescription: { type: String, default: '검증된 공통 컴포넌트로 팀의 업무 화면을 한곳에서 관리하세요.' },
-    features: { type: Array, default: () => ['일관된 UI 컴포넌트', '반응형 업무 환경', '빠른 워크스페이스 구성'] },
+    /** 기본 문구는 i18n ui.auth.heroTitle · heroDesc · feature1~3 */
+    heroTitle: { type: String, default: undefined },
+    heroDescription: { type: String, default: undefined },
+    features: { type: Array, default: undefined },
     panelLabel: { type: String, required: true },
 });
 </script>

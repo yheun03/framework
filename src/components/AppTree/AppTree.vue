@@ -1,11 +1,12 @@
 <template>
     <div class="app-tree" :class="[`app-tree--${size}`, { 'is-guide': guide }]" role="tree" :aria-multiselectable="checkable || undefined">
         <AppTreeNode v-for="item in visibleItems" :key="item.id" :item="item" :depth="0" />
-        <AppEmpty v-if="!visibleItems.length" size="sm" type="search" :title="emptyText" :show-icon="false" />
+        <AppEmpty v-if="!visibleItems.length" size="sm" type="search" :title="emptyText ?? $t('ui.empty.search')" :show-icon="false" />
     </div>
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { APP_TREE_KEY } from '@/constants/appTree';
 import { computed, provide, ref } from 'vue';
 import AppEmpty from '@/components/AppEmpty.vue';
@@ -21,13 +22,14 @@ const props = defineProps({
     checked: { type: Array, default: () => [] },
     checkable: { type: Boolean, default: false },
     /** 최초 펼침: none / first(1depth) / all */
-    initial: { type: String, default: 'first' },
+    initial: { type: String, default: 'first', validator: oneOf(['none', 'first', 'all']) },
     /** 라벨 검색어 - 일치 항목과 상위 경로만 노출 */
     filter: { type: String, default: '' },
     /** 들여쓰기 가이드 라인 */
     guide: { type: Boolean, default: true },
-    size: { type: String, default: 'md' },
-    emptyText: { type: String, default: '검색 결과가 없습니다.' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
+    /** 기본 '검색 결과가 없습니다.' (i18n ui.empty.search) */
+    emptyText: { type: String, default: undefined },
 });
 
 const emit = defineEmits(['update:modelValue', 'update:checked', 'select']);
