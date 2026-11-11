@@ -1,1 +1,0 @@
-import{u as e}from"./index-BTkmyE1a.js";function t(){let t=e();function n(e){return n=>t.show(typeof n==`string`?{message:n,tone:e}:{...n,tone:e})}return{show:t.show,success:n(`success`),error:n(`danger`),warning:n(`warning`),info:n(`info`),remove:t.remove,clear:t.clear}}export{t};

@@ -1,0 +1,150 @@
+var e=`<template>
+    <div class="page-demo">
+        <div class="page-demo-layout">
+            <div class="page-demo-main">
+                <!-- HEADER -->
+                <header class="page-demo__header">
+                    <h1 class="page-demo__title">{{ title }}</h1>
+
+                    <p class="page-demo__desc">{{ description }}</p>
+                </header>
+
+                <PageDemoSection class="page-demo-section" title="Progress Bar" description="표시 전용 진행률은 AppProgressBar를 사용합니다.">
+                    <div class="page-demo-stack">
+                        <AppProgressBar :value="linearDisplayValue" label="단일 값" show-value />
+
+                        <AppProgressBar :range="linearRangeDisplay" label="범위 값" show-value />
+
+                        <div class="page-demo-hint">{{ linearRangeDisplay.start }}% ~ {{ linearRangeDisplay.end }}%</div>
+                    </div>
+                </PageDemoSection>
+
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Progress Slider"
+                    description="드래그 조작이 필요한 진행률은 AppProgressSlider로 분리했습니다."
+                >
+                    <div class="page-demo-stack">
+                        <AppProgressSlider v-model:value="linearControlValue" label="단일 값" show-value />
+
+                        <AppProgressSlider
+                            :range="linearControlRange"
+                            type="range"
+                            label="범위 값"
+                            show-value
+                            @update:range="handleLinearRangeUpdate"
+                        />
+
+                        <div class="page-demo-hint">{{ linearControlRange.start }}% ~ {{ linearControlRange.end }}%</div>
+                    </div>
+                </PageDemoSection>
+
+                <!-- GAUGE DISPLAY -->
+                <PageDemoSection class="page-demo-section" title="Gauge Display" description="반원 게이지와 반도넛 범위의 기본 표시 예시입니다.">
+                    <div class="page-demo-grid">
+                        <AppProgressGauge :value="gaugeDisplayValue" variant="gauge" label="속도" />
+
+                        <AppProgressGauge :range="gaugeRangeDisplay" variant="semi-doughnut-range" label="권장 범위" />
+                    </div>
+                </PageDemoSection>
+
+                <!-- GAUGE DRAG -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Gauge Drag Control"
+                    description="드래그로 게이지 값과 반도넛 범위를 조정할 수 있습니다."
+                >
+                    <div class="page-demo-grid">
+                        <AppProgressGauge v-model:value="gaugeControlValue" variant="gauge" type="control-single" label="속도" />
+
+                        <AppProgressGauge
+                            :range="gaugeControlRange"
+                            variant="semi-doughnut-range"
+                            type="control-range"
+                            label="권장 범위"
+                            @update:range="handleGaugeRangeUpdate"
+                        />
+                    </div>
+                </PageDemoSection>
+
+                <!-- DISABLED -->
+                <PageDemoSection class="page-demo-section" title="Disabled" description="비활성 상태를 확인합니다.">
+                    <div class="page-demo-grid">
+                        <AppProgressSlider :value="disabledLinearValue" label="Disabled Linear" show-value disabled />
+
+                        <AppProgressGauge :value="disabledGaugeValue" variant="gauge" type="control-single" label="Disabled Gauge" disabled />
+                    </div>
+                </PageDemoSection>
+            </div>
+
+            <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
+                <div class="page-demo-aside__sticky">
+                    <PageDemoPropsSummary />
+                </div>
+            </aside>
+        </div>
+    </div>
+</template>
+
+<script setup>
+/**
+ * 프로그레스 데모 화면의 진행률 값과 범위 상태를 관리하는 페이지 컴포넌트입니다.
+ */
+import { reactive, ref } from 'vue';
+import { useDemoI18n } from '@/composables/useI18nText';
+import AppProgressBar from '@/components/AppProgress/AppProgressBar.vue';
+import AppProgressGauge from '@/components/AppProgress/AppProgressGauge.vue';
+import AppProgressSlider from '@/components/AppProgress/AppProgressSlider.vue';
+import PageDemoPropsSummary from '@/components/PageDemo/content/PageDemoPropsSummary.vue';
+import PageDemoSection from '@/components/PageDemoSection.vue';
+
+/* stores/composables */
+const { title, description } = useDemoI18n('progress');
+
+/* constants */
+const linearDisplayValue = 35;
+const gaugeDisplayValue = 68;
+const disabledLinearValue = 40;
+const disabledGaugeValue = 55;
+
+/* ref/reactive state */
+const linearRangeDisplay = reactive({
+    start: 20,
+    end: 70,
+});
+
+const linearControlValue = ref(42);
+
+const linearControlRange = reactive({
+    start: 25,
+    end: 75,
+});
+
+const gaugeRangeDisplay = reactive({
+    start: 20,
+    end: 70,
+});
+
+const gaugeControlValue = ref(68);
+
+const gaugeControlRange = reactive({
+    start: 20,
+    end: 70,
+});
+
+/* event handlers */
+function handleLinearRangeUpdate(value) {
+    linearControlRange.start = value.start;
+    linearControlRange.end = value.end;
+}
+
+function handleGaugeRangeUpdate(value) {
+    gaugeControlRange.start = value.start;
+    gaugeControlRange.end = value.end;
+}
+
+/* computed */
+<\/script>
+
+<!-- demo 공통 스타일: assets/styles/pages/_demo.scss -->
+`;export{e as default};
