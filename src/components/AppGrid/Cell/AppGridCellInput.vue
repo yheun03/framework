@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppInput v-model="value" size="sm" :type="inputOptions.type" :placeholder="inputOptions.placeholder" :aria-label="cellLabel" />
+        <AppInput v-model="value" size="md" :type="inputOptions.type" :placeholder="inputOptions.placeholder" :aria-label="cellLabel" />
     </div>
 </template>
 

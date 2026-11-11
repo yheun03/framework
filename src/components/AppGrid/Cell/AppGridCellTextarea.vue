@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control app-grid-cell-control--textarea">
-        <AppTextarea v-model="value" size="sm" :rows="rows" :resize="resize" :placeholder="placeholder" :aria-label="cellLabel" />
+        <AppTextarea v-model="value" size="md" :rows="rows" :resize="resize" :placeholder="placeholder" :aria-label="cellLabel" />
     </div>
 </template>
 

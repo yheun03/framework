@@ -11,7 +11,7 @@ const MODAL_DEFAULTS = {
         closeOnBackdrop: true,
         closeOnEsc: true,
         keepOnConfirm: false,
-        width: '560px',
+        width: undefined,
         height: undefined,
         variant: undefined,
     },
@@ -19,18 +19,18 @@ const MODAL_DEFAULTS = {
         title: '안내',
         message: '',
         confirmText: '확인',
-        width: '420px',
+        size: 'sm',
     },
     confirm: {
         title: '확인',
         message: '',
         confirmText: '확인',
         cancelText: '취소',
-        width: '460px',
+        size: 'sm',
     },
     custom: {
         title: '',
-        width: '560px',
+        size: 'md',
         height: undefined,
         componentProps: {},
         footer: false,
@@ -40,6 +40,9 @@ const MODAL_DEFAULTS = {
         footerProps: {},
     },
 };
+
+// 모달 너비 (Figma 12. Popup Guide): size 이름으로 고르고, 특별한 경우만 width 로 직접 지정합니다.
+export const MODAL_SIZES = { sm: '420px', md: '640px', lg: '900px' };
 
 const MODAL_TYPE_DEFAULTS = {
     alert: MODAL_DEFAULTS.alert,
@@ -67,6 +70,7 @@ export const useModalStore = defineStore('modal', () => {
             ...MODAL_TYPE_DEFAULTS[payload.type],
             ...payload,
         };
+        base.width = payload.width ?? MODAL_SIZES[base.size] ?? MODAL_SIZES.md;
 
         if (payload.type === 'alert') {
             return base;

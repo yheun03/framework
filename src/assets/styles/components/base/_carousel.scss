@@ -38,8 +38,8 @@
 
     &__caption {
         position: absolute;
-        left: 72px;
-        right: 72px;
+        left: var(--app-carousel-caption-inset, 72px);
+        right: var(--app-carousel-caption-inset, 72px);
         bottom: 44px;
         color: var(--color-carousel-nav);
         text-shadow: 0 1px 4px var(--shadow-carousel-caption);

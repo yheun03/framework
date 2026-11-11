@@ -115,7 +115,7 @@ const props = defineProps({
     /** 기본 '선택하세요' (i18n ui.selectPlaceholder). 빈 문자열이면 '선택 안 함' 항목을 숨김 */
     placeholder: { type: String, default: undefined },
     required: { type: Boolean, default: false },
-    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    size: { type: String, default: 'lg', validator: oneOf(FORM_SIZES) },
     shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
     state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */

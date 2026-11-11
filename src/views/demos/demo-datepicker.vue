@@ -66,25 +66,25 @@
                 <!-- SIZE -->
                 <PageDemoSection class="page-demo-section" title="Size" description="DatePicker의 높이를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppDatePicker v-model="sizes.xs" size="xs" label="XS">
+                        <AppDatePicker v-model="sizes.xs" size="sm" label="XS">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="sizes.sm" size="sm" label="SM">
+                        <AppDatePicker v-model="sizes.sm" size="md" label="SM">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="sizes.md" size="md" label="MD">
+                        <AppDatePicker v-model="sizes.md" size="lg" label="MD">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>
                         </AppDatePicker>
 
-                        <AppDatePicker v-model="sizes.lg" size="lg" label="LG">
+                        <AppDatePicker v-model="sizes.lg" size="xl" label="LG">
                             <template #iconRight>
                                 <IconCalendar />
                             </template>

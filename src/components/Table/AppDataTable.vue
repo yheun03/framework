@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { oneOf } from '@/utils/props';
+import { FORM_SIZES, oneOf } from '@/utils/props';
 import { toCssSize, toCssWidth, toSizeStyle } from '@/utils/css';
 import { computed, ref } from 'vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -101,7 +101,8 @@ const props = defineProps({
     caption: { type: String, default: '' },
     /** board(게시판형, 헤더 면) / line(상단 진한 라인) / stripe(짝수행 면) / border(셀 경계선) */
     variant: { type: String, default: 'board', validator: oneOf(['board', 'line', 'stripe', 'border']) },
-    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
+    /** 행 높이 sm 36 · md 44 · lg 48 · xl 56 (Button · Input 과 같은 이름) */
+    size: { type: String, default: 'lg', validator: oneOf(FORM_SIZES) },
     /** v-model: 선택된 rowKey 배열 (selectable 일 때) */
     modelValue: { type: Array, default: () => [] },
     selectable: { type: Boolean, default: false },

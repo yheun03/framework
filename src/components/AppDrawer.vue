@@ -19,7 +19,7 @@
                                 <p v-if="description" class="app-drawer__desc">{{ description }}</p>
                             </div>
                         </slot>
-                        <AppIconButton :aria-label="$t('ui.close')" size="lg" @click="close"><IconClose /></AppIconButton>
+                        <AppIconButton :aria-label="$t('ui.close')" size="sm" @click="close"><IconClose /></AppIconButton>
                     </header>
                     <div class="app-drawer__body"><slot /></div>
                     <footer v-if="$slots.footer" class="app-drawer__footer"><slot name="footer" /></footer>
@@ -46,7 +46,9 @@ const props = defineProps({
     title: { type: String, default: '' },
     description: { type: String, default: '' },
     placement: { type: String, default: 'right', validator: oneOf(['right', 'left']) },
-    width: { type: [Number, String], default: 480 },
+    /** 너비: sm 360 · md 480 · lg 640 (모달과 같은 이름). 특별한 경우만 width 로 직접 지정 */
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
+    width: { type: [Number, String], default: undefined },
     overlay: { type: Boolean, default: true },
     closeOnBackdrop: { type: Boolean, default: true },
     closeOnEsc: { type: Boolean, default: true },
@@ -54,7 +56,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:open', 'close']);
 const panelEl = ref(null);
-const panelStyle = computed(() => ({ width: `min(${toCssWidth(props.width)}, 100vw)` }));
+const DRAWER_SIZES = { sm: 360, md: 480, lg: 640 };
+const panelStyle = computed(() => ({ width: `min(${toCssWidth(props.width ?? DRAWER_SIZES[props.size])}, 100vw)` }));
 
 function close() {
     emit('update:open', false);

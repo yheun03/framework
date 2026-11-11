@@ -14,13 +14,13 @@
             <AppInput
                 v-model="keyword"
                 class="business-toolbar__field business-toolbar__field--wide"
-                size="sm"
+                size="md"
                 placeholder="품목코드 또는 품목명"
                 aria-label="품목코드 또는 품목명"
             /><AppSelect
                 v-model="warehouse"
                 class="business-toolbar__field"
-                size="sm"
+                size="md"
                 :items="warehouses"
                 placeholder="전체 창고"
                 aria-label="전체 창고"

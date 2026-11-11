@@ -25,7 +25,7 @@
                 v-if="collapsible"
                 class="app-search-panel__toggle"
                 variant="outline"
-                size="lg"
+                size="sm"
                 :aria-label="collapsed ? $t('ui.searchPanel.expand') : $t('ui.searchPanel.collapse')"
                 :aria-expanded="!collapsed"
                 @click="collapsed = !collapsed"

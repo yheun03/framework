@@ -6,7 +6,7 @@
                     <IconApp class="nav-logo__mark" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" :aria-label="$t('ui.nav.close')" :size="36" :icon-size="18" @click="handleClose"
+                <AppIconButton class="layout-nav__mobile-close" :aria-label="$t('ui.nav.close')" size="sm" :icon-size="18" @click="handleClose"
                     ><IconClose
                 /></AppIconButton>
             </div>
@@ -17,7 +17,7 @@
                     :key="action.labelKey"
                     class="nav-action"
                     :aria-label="$t(action.labelKey)"
-                    size="md"
+                    :size="32"
                     icon-size="lg"
                 >
                     <component :is="action.icon" />
@@ -43,7 +43,7 @@
                 v-else
                 class="layout-nav__search-clear"
                 :aria-label="$t('ui.nav.clearSearch')"
-                :size="24"
+                size="xs"
                 :icon-size="14"
                 @click="clearKeyword"
             >
@@ -62,7 +62,7 @@
         </div>
 
         <div class="layout-nav__footer">
-            <AppIconButton class="nav-action" :aria-label="t('settings.title')" size="md" icon-size="lg" to="/settings"><IconCog /></AppIconButton>
+            <AppIconButton class="nav-action" :aria-label="t('settings.title')" :size="32" icon-size="lg" to="/settings"><IconCog /></AppIconButton>
         </div>
     </nav>
 </template>

@@ -33,6 +33,32 @@
                 </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
+                <!-- Text Button -->
+                <!-- -------------------------------------------------- -->
+
+                <PageDemoSection class="page-demo-section" title="Text Button">
+                    <p class="page-demo-hint">Figma 텍스트 버튼 - 언더바 / 느낌표 / 화살표 / 아이콘. 크기는 글자 sm 12 · md 13 · lg 14 입니다.</p>
+
+                    <ul class="page-demo-hint-list">
+                        <li><b>variant</b> : text / underline(언더바) / info(느낌표) / arrow(화살표)</li>
+                        <li><b>아이콘형</b> : #iconLeft · #iconRight 슬롯</li>
+                        <li><b>상태</b> : 마우스오버 연한 배경 · disabled · loading</li>
+                    </ul>
+
+                    <div v-for="size in ['lg', 'md', 'sm']" :key="size" class="page-demo-row">
+                        <AppTextButton variant="underline" :size="size">새창링크호출</AppTextButton>
+                        <AppTextButton variant="info" :size="size">새창링크호출</AppTextButton>
+                        <AppTextButton variant="arrow" :size="size">새창링크호출</AppTextButton>
+                        <AppTextButton :size="size">
+                            <template #iconLeft><IconStar /></template>
+                            즐겨찾기
+                        </AppTextButton>
+                        <AppTextButton variant="info" :size="size" disabled>새창링크호출</AppTextButton>
+                        <AppTextButton variant="arrow" :size="size" loading>새창링크호출</AppTextButton>
+                    </div>
+                </PageDemoSection>
+
+                <!-- -------------------------------------------------- -->
                 <!-- Size -->
                 <!-- -------------------------------------------------- -->
 
@@ -140,6 +166,15 @@
                             </template>
                         </AppButton>
                     </div>
+
+                    <p class="page-demo-hint">더보기 버튼 (Figma 더보기) - outline + #iconRight 로 만듭니다. size · shape 는 다른 버튼과 같습니다.</p>
+
+                    <div class="page-demo-row">
+                        <AppButton v-for="shape in ['square', 'round', 'pill']" :key="shape" :shape="shape" size="lg">
+                            더보기
+                            <template #iconRight><IconChevronDown /></template>
+                        </AppButton>
+                    </div>
                 </PageDemoSection>
 
                 <!-- -------------------------------------------------- -->
@@ -224,7 +259,7 @@
 </template>
 
 <script setup>
-import { IconStar, IconTrash } from '@/components/icons';
+import { IconChevronDown, IconStar, IconTrash } from '@/components/icons';
 import { useDemoI18n } from '@/composables/useI18nText';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';

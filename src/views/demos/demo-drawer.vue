@@ -49,23 +49,24 @@
                     </AppDrawer>
                 </PageDemoSection>
 
-                <!-- Placement / Width -->
-                <PageDemoSection class="page-demo-section" title="Placement / Width" description="열리는 방향과 패널 너비입니다.">
+                <!-- Placement / Size -->
+                <PageDemoSection class="page-demo-section" title="Placement / Size" description="열리는 방향과 패널 너비(size)입니다.">
                     <ul class="page-demo-hint-list">
                         <li><b>placement</b> : right (기본값) / left</li>
-                        <li><b>width</b> : number(px) | string - 기본값 480</li>
+                        <li><b>size</b> : sm 360 · md 480 (기본값) · lg 640 - 모달과 같은 이름</li>
+                        <li><b>width</b> : size 로 안 맞을 때만 number(px) | string 으로 직접 지정</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppButton size="sm" @click="open.left = true">left · 320</AppButton>
-                        <AppButton size="sm" @click="open.wide = true">right · 800</AppButton>
+                        <AppButton size="sm" @click="open.left = true">left · sm</AppButton>
+                        <AppButton size="sm" @click="open.wide = true">right · lg</AppButton>
                     </div>
-                    <AppDrawer v-model:open="open.left" placement="left" title="상세 필터" :width="320">
+                    <AppDrawer v-model:open="open.left" placement="left" title="상세 필터" size="sm">
                         <div class="page-demo-stack">
                             <AppChoice v-for="line in ['1라인', '2라인', '3라인']" :key="line" v-model="lineFilter[line]" :label="line" />
                         </div>
                     </AppDrawer>
-                    <AppDrawer v-model:open="open.wide" title="넓은 패널" :width="800">
+                    <AppDrawer v-model:open="open.wide" title="넓은 패널" size="lg">
                         <AppDataTable :columns="detailColumns" :items="details" />
                     </AppDrawer>
                 </PageDemoSection>
@@ -103,8 +104,8 @@
                         <AppButton size="sm" @click="open.noOverlay = true">overlay false</AppButton>
                         <AppButton size="sm" @click="open.locked = true">배경·ESC 로 안 닫힘</AppButton>
                     </div>
-                    <AppDrawer v-model:open="open.noOverlay" title="overlay false" :overlay="false" :width="360">배경 딤 없이 열립니다.</AppDrawer>
-                    <AppDrawer v-model:open="open.locked" title="닫기 버튼으로만 닫힘" :close-on-backdrop="false" :close-on-esc="false" :width="360">
+                    <AppDrawer v-model:open="open.noOverlay" title="overlay false" :overlay="false" size="sm">배경 딤 없이 열립니다.</AppDrawer>
+                    <AppDrawer v-model:open="open.locked" title="닫기 버튼으로만 닫힘" :close-on-backdrop="false" :close-on-esc="false" size="sm">
                         배경 클릭이나 ESC 로 닫히지 않습니다.
                     </AppDrawer>
                 </PageDemoSection>

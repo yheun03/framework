@@ -8,8 +8,10 @@
  *   size: { type: String, default: 'md', validator: oneOf(SIZES) },
  */
 
+// 높이 기준 크기 이름 - 모든 컴포넌트에서 같은 이름 = 같은 높이 (xs 24 · sm 36 · md 44 · lg 48 · xl 56)
 export const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
-export const FORM_SIZES = ['xs', 'sm', 'md', 'lg'];
+// 입력 계열(Input · Select · DatePicker · Textarea) · Tabs · DataTable 행은 24px 이 없어 sm 부터
+export const FORM_SIZES = ['sm', 'md', 'lg', 'xl'];
 export const TONES = ['primary', 'secondary', 'gray', 'danger', 'warning', 'success', 'info'];
 export const TAG_TONES = [...TONES, 'black', 'red', 'orange', 'green', 'blue', 'navy', 'purple'];
 export const SHAPES = ['square', 'round', 'pill'];

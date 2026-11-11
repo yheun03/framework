@@ -429,6 +429,13 @@
 
     // Checkbox / Radio / Chip
     --bg-checkbox: var(--theme-bg-white);
+    // Toggle (Figma 05. ETC 토글)
+    --bg-toggle-track: var(--theme-bg-regular);
+    --bg-toggle-track-on: var(--theme-bg-black);
+    --bg-toggle-knob: var(--theme-bg-white);
+    --bg-toggle-knob-disabled: #dbdbe4; // Figma 토글 비활성 손잡이
+    --shadow-toggle-knob: rgb(0 0 0 / 10%);
+    --color-toggle-label: var(--theme-color-03-gray);
     --bg-checkbox-05-gray-disabled: var(--theme-color-05-gray-disabled);
     --bg-checkbox-black: var(--theme-bg-black);
     --bg-checkbox-gray-0: var(--theme-gray-0);
@@ -647,19 +654,12 @@
     --shadow-modal-gray-900-alpha-18: var(--theme-gray-900-alpha-18);
     --shadow-modal-primary-500-alpha-16: var(--theme-primary-500-alpha-16);
 
-    // Pagination
-    --bg-pagination: var(--theme-gray-0);
-    --bg-pagination-gray-50: var(--theme-gray-50);
-    --bg-pagination-primary-50: var(--theme-primary-50);
-    --bg-pagination-primary-500: var(--theme-primary-500);
-    --color-pagination: var(--theme-gray-600);
-    --color-pagination-gray-0: var(--theme-gray-0);
-    --color-pagination-gray-300: var(--theme-gray-300);
+    // Pagination (Figma 페이지네이션 A·B·C타입)
+    --color-pagination: var(--theme-color-04-gray);
+    --color-pagination-strong: var(--theme-color-02-black);
+    --color-pagination-disabled: var(--theme-color-05-gray-disabled);
     --color-pagination-gray-900: var(--theme-gray-900);
-    --color-pagination-primary-500: var(--theme-primary-500);
-    --border-pagination: var(--theme-gray-200);
-    --border-pagination-primary-300: var(--theme-primary-300);
-    --border-pagination-primary-500: var(--theme-primary-500);
+    --border-pagination-strong: var(--theme-line-black);
     --outline-pagination: var(--theme-primary-500-alpha-35);
 
     // Progress

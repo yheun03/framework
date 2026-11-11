@@ -17,7 +17,7 @@
             <div v-if="searchable" class="app-transfer__search">
                 <AppInput
                     v-model="keywords[side.key]"
-                    size="xs"
+                    size="sm"
                     :placeholder="$t('ui.search')"
                     :aria-label="$t('ui.transfer.search', { title: side.title })"
                     clearable
@@ -50,7 +50,7 @@
         <div class="app-transfer__actions">
             <AppIconButton
                 variant="outline"
-                size="lg"
+                size="sm"
                 :aria-label="$t('ui.transfer.toRight')"
                 :disabled="disabled || !checked.left.length"
                 @click="move('left')"
@@ -59,7 +59,7 @@
             </AppIconButton>
             <AppIconButton
                 variant="outline"
-                size="lg"
+                size="sm"
                 :aria-label="$t('ui.transfer.toLeft')"
                 :disabled="disabled || !checked.right.length"
                 @click="move('right')"

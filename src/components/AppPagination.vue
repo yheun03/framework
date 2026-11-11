@@ -1,71 +1,90 @@
 <template>
-    <nav
-        class="app-pagination"
-        :class="[
-            `app-pagination--${size}`,
-            {
-                'is-disabled': disabled,
-            },
-        ]"
-        :aria-label="$t('ui.pagination.name')"
-    >
+    <nav class="app-pagination" :class="[`app-pagination--${variant}`, { 'is-disabled': disabled }]" :aria-label="$t('ui.pagination.name')">
         <div v-if="showTotal" class="app-pagination__total">
             {{ $t('ui.totalPrefix') }} <strong>{{ total.toLocaleString() }}</strong
             >{{ $t('ui.totalSuffix') }}
         </div>
 
         <div class="app-pagination__controls">
+            <template v-if="!ellipsis">
+                <button
+                    v-if="!isFirstBlock"
+                    type="button"
+                    class="app-pagination__button app-pagination__arrow"
+                    :disabled="disabled"
+                    :aria-label="$t('ui.pagination.first')"
+                    @click="handlePageChange(1)"
+                >
+                    <IconDoubleLeft />
+                </button>
+                <button
+                    v-if="!isFirstBlock"
+                    type="button"
+                    class="app-pagination__button app-pagination__arrow"
+                    :disabled="disabled"
+                    :aria-label="$t('ui.pagination.prevBlock', { n: blockSize })"
+                    @click="handlePageChange(blockStart - 1)"
+                >
+                    <IconChevronLeft />
+                </button>
+            </template>
             <button
+                v-else-if="!isFirstPage"
                 type="button"
-                class="app-pagination__button"
-                :disabled="disabled || isFirstPage"
-                :aria-label="$t('ui.pagination.first')"
-                @click="handlePageChange(1)"
-            >
-                <IconDoubleLeft />
-            </button>
-
-            <button
-                type="button"
-                class="app-pagination__button"
-                :disabled="disabled || isFirstPage"
+                class="app-pagination__button app-pagination__arrow"
+                :disabled="disabled"
                 :aria-label="$t('ui.pagination.prev')"
-                @click="handlePageChange(page - 1)"
+                @click="handlePageChange(normalizedPage - 1)"
             >
                 <IconChevronLeft />
             </button>
 
-            <button
-                v-for="pageNumber in visiblePages"
-                :key="pageNumber"
-                type="button"
-                class="app-pagination__button app-pagination__page"
-                :class="{ 'is-active': pageNumber === page }"
-                :disabled="disabled"
-                :aria-current="pageNumber === page ? 'page' : undefined"
-                @click="handlePageChange(pageNumber)"
-            >
-                {{ pageNumber }}
-            </button>
+            <template v-for="item in pageItems" :key="item.key">
+                <span v-if="item.gap" class="app-pagination__gap" aria-hidden="true">...</span>
+                <button
+                    v-else
+                    type="button"
+                    class="app-pagination__button app-pagination__page"
+                    :class="{ 'is-active': item.page === normalizedPage }"
+                    :disabled="disabled"
+                    :aria-current="item.page === normalizedPage ? 'page' : undefined"
+                    @click="handlePageChange(item.page)"
+                >
+                    {{ item.page }}
+                </button>
+            </template>
 
+            <template v-if="!ellipsis">
+                <button
+                    v-if="!isLastBlock"
+                    type="button"
+                    class="app-pagination__button app-pagination__arrow"
+                    :disabled="disabled"
+                    :aria-label="$t('ui.pagination.nextBlock', { n: blockSize })"
+                    @click="handlePageChange(blockEnd + 1)"
+                >
+                    <IconChevronRight />
+                </button>
+                <button
+                    v-if="!isLastBlock"
+                    type="button"
+                    class="app-pagination__button app-pagination__arrow"
+                    :disabled="disabled"
+                    :aria-label="$t('ui.pagination.last')"
+                    @click="handlePageChange(totalPages)"
+                >
+                    <IconDoubleRight />
+                </button>
+            </template>
             <button
+                v-else-if="!isLastPage"
                 type="button"
-                class="app-pagination__button"
-                :disabled="disabled || isLastPage"
+                class="app-pagination__button app-pagination__arrow"
+                :disabled="disabled"
                 :aria-label="$t('ui.pagination.next')"
-                @click="handlePageChange(page + 1)"
+                @click="handlePageChange(normalizedPage + 1)"
             >
                 <IconChevronRight />
-            </button>
-
-            <button
-                type="button"
-                class="app-pagination__button"
-                :disabled="disabled || isLastPage"
-                :aria-label="$t('ui.pagination.last')"
-                @click="handlePageChange(totalPages)"
-            >
-                <IconDoubleRight />
             </button>
         </div>
 
@@ -74,6 +93,7 @@
                 :model-value="pageSize"
                 :items="pageSizeSelectOptions"
                 :disabled="disabled"
+                size="sm"
                 :aria-label="$t('ui.pagination.pageSizeLabel')"
                 @update:model-value="handlePageSizeChange"
             />
@@ -93,11 +113,21 @@ const props = defineProps({
     pageSize: { type: Number, required: true },
     total: { type: Number, required: true },
     pageSizeOptions: { type: Array, default: () => [10, 20, 50, 100] },
-    siblingCount: { type: Number, default: 1 },
+    /**
+     * 현재 페이지 표시 (Figma 페이지네이션)
+     * - text: A타입 - 현재 페이지 굵은 글자
+     * - outline: B타입 - 현재 페이지 원형 테두리
+     */
+    variant: { type: String, default: 'text', validator: oneOf(['text', 'outline']) },
+    /** false: blockSize 개씩 묶어 « ‹ › » 로 이동 (A·B타입) / true: 1 … 현재 주변 … 마지막 + ‹ › (C타입) */
+    ellipsis: { type: Boolean, default: false },
+    /** 묶음 단위 페이지 수 (ellipsis 가 false 일 때) */
+    blockSize: { type: Number, default: 10 },
+    /** 현재 페이지 앞뒤로 보여줄 페이지 수 (ellipsis 가 true 일 때) */
+    siblingCount: { type: Number, default: 2 },
     showTotal: { type: Boolean, default: true },
     showPageSize: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
-    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
 });
 
 const emit = defineEmits(['update:page', 'update:pageSize', 'change']);
@@ -115,6 +145,12 @@ const normalizedPage = computed(() => {
 const isFirstPage = computed(() => normalizedPage.value <= 1);
 const isLastPage = computed(() => normalizedPage.value >= totalPages.value);
 
+// 묶음(block) 이동 - A·B타입
+const blockStart = computed(() => Math.floor((normalizedPage.value - 1) / props.blockSize) * props.blockSize + 1);
+const blockEnd = computed(() => Math.min(blockStart.value + props.blockSize - 1, totalPages.value));
+const isFirstBlock = computed(() => blockStart.value === 1);
+const isLastBlock = computed(() => blockEnd.value >= totalPages.value);
+
 const pageSizeSelectOptions = computed(() =>
     props.pageSizeOptions.map((size) => ({
         label: i18n.global.t('ui.pagination.pageSize', { n: size }),
@@ -122,29 +158,30 @@ const pageSizeSelectOptions = computed(() =>
     })),
 );
 
-const visiblePages = computed(() => {
+// 화면에 그릴 페이지 번호 ({ page } 또는 말줄임 { gap })
+const pageItems = computed(() => {
     const total = totalPages.value;
+    const toItem = (page) => ({ key: `p${page}`, page });
+
+    if (!props.ellipsis) {
+        const pages = [];
+        for (let page = blockStart.value; page <= blockEnd.value; page += 1) pages.push(toItem(page));
+        return pages;
+    }
+
     const current = normalizedPage.value;
     const sibling = props.siblingCount;
+    const start = Math.max(1, Math.min(current - sibling, total - sibling * 2));
+    const end = Math.min(total, Math.max(current + sibling, 1 + sibling * 2));
+    const items = [];
 
-    const start = Math.max(1, current - sibling);
-    const end = Math.min(total, current + sibling);
+    if (start > 1) items.push(toItem(1));
+    if (start > 2) items.push({ key: 'gap-start', gap: true });
+    for (let page = start; page <= end; page += 1) items.push(toItem(page));
+    if (end < total - 1) items.push({ key: 'gap-end', gap: true });
+    if (end < total) items.push(toItem(total));
 
-    const pages = [];
-
-    for (let pageNumber = start; pageNumber <= end; pageNumber += 1) {
-        pages.push(pageNumber);
-    }
-
-    if (!pages.includes(1)) {
-        pages.unshift(1);
-    }
-
-    if (!pages.includes(total)) {
-        pages.push(total);
-    }
-
-    return [...new Set(pages)].sort((a, b) => a - b);
+    return items;
 });
 
 watch(

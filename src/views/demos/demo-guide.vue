@@ -162,5 +162,50 @@ const migrations = [
     { id: 20, component: 'AppEquipmentCard', before: 'value / valueLabel', after: 'progress / progressLabel' },
     { id: 21, component: 'AppTable', before: ':rows', after: ':items' },
     { id: 22, component: 'AppSection · AppSectionWrapper', before: "direction='column' | 'row'", after: "direction='vertical' | 'horizontal'" },
+    {
+        id: 23,
+        component: 'AppInput · AppSelect · AppDatePicker · AppTextarea',
+        before: "size='xs' | 'sm' | 'md' | 'lg'",
+        after: "size='sm' | 'md' | 'lg' | 'xl' (높이 그대로, 이름만 Button 과 통일)",
+    },
+    {
+        id: 24,
+        component: 'AppIconButton',
+        before: 'size 이름 xs 24 · sm 28 · md 32 · lg 36 · xl 40',
+        after: 'size 이름 = Button 높이 (24 · 36 · 44 · 48 · 56), 그 밖은 숫자(px)',
+    },
+    {
+        id: 25,
+        component: 'AppChoice',
+        before: "variant='round' / variant='toggle' / toggleLabels",
+        after: "shape='pill' / type='toggle' (variant line · bar) / label",
+    },
+    { id: 26, component: 'AppTopButton', before: "shape='circle'", after: "shape='pill'" },
+    {
+        id: 27,
+        component: 'useModal · AppDrawer',
+        before: "width: '640px' / :width='480'",
+        after: "size: 'sm' | 'md' | 'lg' (width 는 특별한 경우만)",
+    },
+    {
+        id: 28,
+        component: 'AppTabs',
+        before: "variant='group' | 'button' | 'grid' | 'pill'",
+        after: "variant='fill' | 'outline' + layout='group' | 'button' | 'grid' + shape (pill 은 AppSegmented)",
+    },
+    { id: 32, component: 'AppDataTable', before: "size='md'(48) | 'lg'(56)", after: "size='lg'(48, 기본값) | 'xl'(56) · md 는 44 추가" },
+    { id: 29, component: 'AppTabs', before: "size='lg'(52px)", after: "size='lg'(48px) · 'xl'(56px)" },
+    {
+        id: 30,
+        component: 'AppPagination',
+        before: "size='sm' | 'md'",
+        after: "삭제 (한 가지 크기) · variant='text' | 'outline' · ellipsis · blockSize",
+    },
+    {
+        id: 31,
+        component: 'AppCarousel',
+        before: "navVariant='circle' | 'square' | 'plain'",
+        after: "navVariant='fill' | 'plain' + navShape · navSize",
+    },
 ];
 </script>

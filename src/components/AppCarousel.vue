@@ -32,8 +32,8 @@
         <template v-if="arrows && items.length > 1">
             <AppIconButton
                 class="app-carousel__nav app-carousel__nav--prev"
-                :shape="navVariant === 'circle' ? 'pill' : 'square'"
-                :size="40"
+                :shape="navShape"
+                :size="navSize"
                 :icon-size="navIconSize"
                 :disabled="!loop && current === 0"
                 :aria-label="$t('ui.prev')"
@@ -43,8 +43,8 @@
             </AppIconButton>
             <AppIconButton
                 class="app-carousel__nav app-carousel__nav--next"
-                :shape="navVariant === 'circle' ? 'pill' : 'square'"
-                :size="40"
+                :shape="navShape"
+                :size="navSize"
                 :icon-size="navIconSize"
                 :disabled="!loop && current === items.length - 1"
                 :aria-label="$t('ui.next')"
@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { oneOf } from '@/utils/props';
+import { SHAPES, SIZES, oneOf } from '@/utils/props';
 import { IconChevronLeft, IconChevronRight, IconPause, IconPlay } from '@/components/icons';
 
 import { toSizeStyle } from '@/utils/css';
@@ -99,7 +99,7 @@ import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 /**
  * AppCarousel (Figma 11. ETC - 좌우 슬라이드 버튼 / 인디케이터 / 플레이 버튼)
  * indicator: dots / bar(활성 막대) / line(진행 라인) / fraction(1/10) / none
- * navVariant: square / circle / plain(배경 없는 화살표)
+ * navVariant: fill(배경 있는 화살표) / plain(배경 없는 화살표) · navShape: square / round / pill · navSize: AppIconButton 과 같은 크기
  * 자동 재생 시 재생/일시정지 버튼을 항상 함께 제공합니다. (Figma 접근성 가이드)
  * 좌우/재생 버튼은 AppIconButton, 인디케이터 점은 AppButton(unstyled) 으로 구성합니다.
  */
@@ -112,7 +112,12 @@ const props = defineProps({
     interval: { type: Number, default: 4000 },
     loop: { type: Boolean, default: true },
     arrows: { type: Boolean, default: true },
-    navVariant: { type: String, default: 'circle', validator: oneOf(['circle', 'square', 'plain']) },
+    /** 좌우 버튼 - fill: 배경 있음(Figma 좌우화살표_BG) / plain: 배경 없음(Figma 좌우화살표_NO_BG) */
+    navVariant: { type: String, default: 'fill', validator: oneOf(['fill', 'plain']) },
+    /** 좌우 버튼 모서리 (AppButton 과 같은 이름) */
+    navShape: { type: String, default: 'pill', validator: oneOf(SHAPES) },
+    /** 좌우 버튼 크기 - AppIconButton 과 같은 이름(xs 24 · sm 36 · md 44 · lg 48 · xl 56) 또는 숫자(px, 예: 72) */
+    navSize: { type: [String, Number], default: 'lg', validator: oneOf(SIZES, { number: true }) },
     indicator: { type: String, default: 'dots', validator: oneOf(['dots', 'bar', 'line', 'fraction', 'none']) },
     pauseOnHover: { type: Boolean, default: true },
     width: { type: [Number, String] },
@@ -125,8 +130,16 @@ const innerIndex = ref(0);
 const playing = ref(props.autoplay);
 const hovering = ref(false);
 const current = computed(() => props.modelValue ?? innerIndex.value);
-const navIconSize = computed(() => ({ plain: 28 })[props.navVariant] ?? 16);
-const rootStyle = computed(() => ({ ...toSizeStyle(props.width, props.height), '--app-carousel-interval': `${props.interval}ms` }));
+const NAV_PX = { xs: 24, sm: 36, md: 44, lg: 48, xl: 56 };
+const navPx = computed(() => (typeof props.navSize === 'number' ? props.navSize : NAV_PX[props.navSize]));
+// 아이콘은 버튼의 1/3 (배경 없는 화살표는 버튼 크기의 2/3)
+const navIconSize = computed(() => Math.round(navPx.value * (props.navVariant === 'plain' ? 2 / 3 : 1 / 3)));
+const rootStyle = computed(() => ({
+    ...toSizeStyle(props.width, props.height),
+    '--app-carousel-interval': `${props.interval}ms`,
+    // 캡션이 좌우 버튼과 겹치지 않도록 버튼 크기만큼 띄움
+    '--app-carousel-caption-inset': props.arrows ? `${navPx.value + 24}px` : '24px',
+}));
 let timer = null;
 
 function goTo(index) {

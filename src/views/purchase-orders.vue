@@ -18,13 +18,13 @@
             <AppInput
                 v-model="keyword"
                 class="business-toolbar__field business-toolbar__field--wide"
-                size="sm"
+                size="md"
                 placeholder="발주번호, 공급사 검색"
                 aria-label="발주번호, 공급사 검색"
             /><AppSelect
                 v-model="status"
                 class="business-toolbar__field"
-                size="sm"
+                size="md"
                 :items="statusOptions"
                 placeholder="전체 상태"
                 aria-label="전체 상태"

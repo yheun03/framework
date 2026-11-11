@@ -40,18 +40,18 @@
                     </div>
                 </PageDemoSection>
 
-                <!-- NavVariant -->
-                <PageDemoSection class="page-demo-section" title="NavVariant" description="좌우 슬라이드 버튼 모양입니다.">
+                <!-- Nav -->
+                <PageDemoSection class="page-demo-section" title="Nav" description="좌우 슬라이드 버튼 - Figma 좌우화살표 BG / NO_BG 입니다.">
                     <ul class="page-demo-hint-list">
-                        <li><b>circle</b> : 원형 (기본값)</li>
-                        <li><b>square</b> : 사각</li>
-                        <li><b>plain</b> : 배경 없는 화살표</li>
+                        <li><b>navVariant</b> : fill 배경 있음 (기본값) / plain 배경 없는 화살표</li>
+                        <li><b>navShape</b> : square / round / pill (기본값) - AppButton 과 같은 이름</li>
+                        <li><b>navSize</b> : xs ~ xl (기본값 lg 48) 또는 숫자(px) - AppIconButton 과 같은 크기</li>
                     </ul>
 
                     <div class="demo-carousel-grid">
-                        <div v-for="nav in ['circle', 'square', 'plain']" :key="nav" class="page-demo-stack">
-                            <p class="page-demo-hint">navVariant = "{{ nav }}"</p>
-                            <AppCarousel :items="slides" :nav-variant="nav" :height="150" />
+                        <div v-for="nav in navExamples" :key="nav.label" class="page-demo-stack">
+                            <p class="page-demo-hint">{{ nav.label }}</p>
+                            <AppCarousel :items="slides" v-bind="nav.props" :height="180" />
                         </div>
                     </div>
                 </PageDemoSection>
@@ -100,6 +100,7 @@
                         :height="64"
                         indicator="fraction"
                         nav-variant="plain"
+                        nav-size="xs"
                         autoplay
                         :interval="3000"
                     >
@@ -132,6 +133,13 @@ import PageDemoSection from '@/components/PageDemoSection.vue';
 
 const { title, description } = useDemoI18n('carousel');
 const current = ref(0);
+const navExamples = [
+    { label: 'navShape = "pill" (기본값)', props: {} },
+    { label: 'navShape = "round"', props: { navShape: 'round' } },
+    { label: 'navShape = "square" navSize = "md"', props: { navShape: 'square', navSize: 'md' } },
+    { label: 'navVariant = "plain"', props: { navVariant: 'plain' } },
+    { label: 'navSize = 72 (숫자 px)', props: { navSize: 72 } },
+];
 
 // temp data - image 가 없으면 caption 만 노출됩니다.
 const slides = [

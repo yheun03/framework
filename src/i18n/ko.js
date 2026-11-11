@@ -236,6 +236,8 @@ const Ko = {
     'ui.pagination.first': '첫 페이지',
     'ui.pagination.prev': '이전 페이지',
     'ui.pagination.next': '다음 페이지',
+    'ui.pagination.prevBlock': '이전 {n}페이지',
+    'ui.pagination.nextBlock': '다음 {n}페이지',
     'ui.pagination.last': '마지막 페이지',
     'ui.pagination.pageSizeLabel': '페이지당 표시 개수',
     'ui.pagination.pageSize': '{n}개씩 보기',

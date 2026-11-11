@@ -27,7 +27,7 @@
         >
             <div v-if="title || closable" class="app-popover__header">
                 <strong v-if="title" class="app-popover__title">{{ title }}</strong>
-                <AppIconButton v-if="closable" class="app-popover__close" :size="24" :icon-size="12" :aria-label="$t('ui.close')" @click="hide">
+                <AppIconButton v-if="closable" class="app-popover__close" size="xs" :icon-size="12" :aria-label="$t('ui.close')" @click="hide">
                     <IconClose />
                 </AppIconButton>
             </div>

@@ -20,10 +20,10 @@
                 <!-- SIZE -->
                 <PageDemoSection class="page-demo-section" title="Size" description="Input의 높이를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppInput size="xs" label="XS" v-model="sizes.xs" />
-                        <AppInput size="sm" label="SM" v-model="sizes.sm" />
-                        <AppInput size="md" label="MD" v-model="sizes.md" />
-                        <AppInput size="lg" label="LG" v-model="sizes.lg" />
+                        <AppInput size="sm" label="XS" v-model="sizes.xs" />
+                        <AppInput size="md" label="SM" v-model="sizes.sm" />
+                        <AppInput size="lg" label="MD" v-model="sizes.md" />
+                        <AppInput size="xl" label="LG" v-model="sizes.lg" />
                     </div>
                 </PageDemoSection>
 

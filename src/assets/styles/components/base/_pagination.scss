@@ -28,24 +28,32 @@
         flex: 1 1 auto;
     }
 
+    // Figma 페이지네이션 - 한 가지 크기 (32 × 32, 13px)
     &__button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid var(--border-pagination);
-        border-radius: 8px;
-        background: var(--bg-pagination);
+        min-width: 32px;
+        height: 32px;
+        padding: 0 4px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        background: transparent;
         color: var(--color-pagination);
         cursor: pointer;
         transition:
             color 0.2s ease,
-            border-color 0.2s ease,
-            background-color 0.2s ease;
+            border-color 0.2s ease;
+
+        @include font(b4, rg);
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
 
         &:hover:not(:disabled) {
-            border-color: var(--border-pagination-primary-300);
-            color: var(--color-pagination-primary-500);
-            background: var(--bg-pagination-primary-50);
+            color: var(--color-pagination-strong);
         }
 
         &:focus-visible {
@@ -54,40 +62,34 @@
         }
 
         &:disabled {
-            color: var(--color-pagination-gray-300);
-            background: var(--bg-pagination-gray-50);
+            color: var(--color-pagination-disabled);
             cursor: not-allowed;
         }
 
         &.is-active {
-            border-color: var(--border-pagination-primary-500);
-            background: var(--bg-pagination-primary-500);
-            color: var(--color-pagination-gray-0);
+            color: var(--color-pagination-strong);
+            font-weight: 600;
         }
+    }
+
+    &__gap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 32px;
+        color: var(--color-pagination);
+
+        @include font(b4, rg);
+    }
+
+    // B타입 : 현재 페이지 원형 테두리
+    &--outline .app-pagination__page.is-active {
+        border-color: var(--border-pagination-strong);
     }
 
     &__size {
         flex: 0 0 150px;
-    }
-
-    &--sm {
-        .app-pagination__button {
-            min-width: 30px;
-            height: 30px;
-            padding: 0 8px;
-
-            @include font(btn4, sb);
-        }
-    }
-
-    &--md {
-        .app-pagination__button {
-            min-width: 36px;
-            height: 36px;
-            padding: 0 10px;
-
-            @include font(btn3, sb);
-        }
     }
 
     &.is-disabled {

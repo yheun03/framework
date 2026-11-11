@@ -28,61 +28,62 @@
                     />
                 </PageDemoSection>
 
-                <!-- SIBLING COUNT -->
-                <PageDemoSection class="page-demo-section" title="Sibling Count" description="현재 페이지 주변에 노출할 페이지 개수를 조절합니다.">
+                <!-- VARIANT -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Variant"
+                    description="Figma 페이지네이션 A·B타입 - text(현재 페이지 굵게, 기본값) / outline(현재 페이지 원형 테두리). 크기는 한 가지(32px)입니다."
+                >
                     <div class="page-demo-stack">
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">siblingCount = 1</div>
-
+                        <template v-for="variant in ['text', 'outline']" :key="variant">
+                            <div class="page-demo-hint">variant = "{{ variant }}"</div>
                             <AppPagination
-                                v-model:page="siblingOnePage"
-                                v-model:page-size="siblingPageSize"
-                                :total="siblingTotal"
-                                :sibling-count="1"
+                                v-model:page="variantPage[variant]"
+                                :page-size="10"
+                                :total="300"
+                                :variant="variant"
+                                :show-total="false"
                                 :show-page-size="false"
                             />
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">siblingCount = 2</div>
-
-                            <AppPagination
-                                v-model:page="siblingTwoPage"
-                                v-model:page-size="siblingPageSize"
-                                :total="siblingTotal"
-                                :sibling-count="2"
-                                :show-page-size="false"
-                            />
-                        </div>
+                        </template>
                     </div>
                 </PageDemoSection>
 
-                <!-- SIZE -->
-                <PageDemoSection class="page-demo-section" title="Size" description="sm / md 크기를 비교합니다.">
+                <!-- BLOCK / ELLIPSIS -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Block / Ellipsis"
+                    description="기본은 blockSize(10)개씩 묶어 « ‹ › » 로 이동합니다(A·B타입). ellipsis 를 켜면 1 … 현재 주변(siblingCount) … 마지막 + ‹ › 로 표시합니다(C타입)."
+                >
                     <div class="page-demo-stack">
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">size = "sm"</div>
-
-                            <AppPagination
-                                v-model:page="smallPage"
-                                v-model:page-size="smallPageSize"
-                                :total="smallTotal"
-                                size="sm"
-                                :show-page-size="false"
-                            />
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">size = "md"</div>
-
-                            <AppPagination
-                                v-model:page="mediumPage"
-                                v-model:page-size="mediumPageSize"
-                                :total="mediumTotal"
-                                size="md"
-                                :show-page-size="false"
-                            />
-                        </div>
+                        <div class="page-demo-hint">:block-size="5"</div>
+                        <AppPagination
+                            v-model:page="blockPage"
+                            :page-size="10"
+                            :total="300"
+                            :block-size="5"
+                            :show-total="false"
+                            :show-page-size="false"
+                        />
+                        <div class="page-demo-hint">ellipsis (siblingCount = 2, 기본값)</div>
+                        <AppPagination
+                            v-model:page="ellipsisPage"
+                            :page-size="10"
+                            :total="300"
+                            ellipsis
+                            :show-total="false"
+                            :show-page-size="false"
+                        />
+                        <div class="page-demo-hint">ellipsis :sibling-count="1"</div>
+                        <AppPagination
+                            v-model:page="ellipsisPage"
+                            :page-size="10"
+                            :total="300"
+                            ellipsis
+                            :sibling-count="1"
+                            :show-total="false"
+                            :show-page-size="false"
+                        />
                     </div>
                 </PageDemoSection>
 
@@ -117,7 +118,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useDemoI18n } from '@/composables/useI18nText';
 import AppPagination from '@/components/AppPagination.vue';
 import PageDemoPropsSummary from '@/components/PageDemo/content/PageDemoPropsSummary.vue';
@@ -133,18 +134,9 @@ const pageSizePage = ref(1);
 const pageSize = ref(5);
 const pageSizeTotal = ref(83);
 
-const siblingOnePage = ref(8);
-const siblingTwoPage = ref(8);
-const siblingPageSize = ref(10);
-const siblingTotal = ref(230);
-
-const smallPage = ref(1);
-const smallPageSize = ref(10);
-const smallTotal = ref(80);
-
-const mediumPage = ref(1);
-const mediumPageSize = ref(10);
-const mediumTotal = ref(80);
+const variantPage = reactive({ text: 11, outline: 11 });
+const blockPage = ref(1);
+const ellipsisPage = ref(11);
 
 const simplePage = ref(3);
 const simplePageSize = ref(10);

@@ -40,13 +40,13 @@
         <!-- 4. 조회 조건 -->
         <AppSearchPanel :columns="4" :loading="loading" @search="search" @reset="reset">
             <AppSearchItem label="작업일자" :span="2">
-                <AppDatePicker v-model="filter.period" type="range-input" size="xs" />
+                <AppDatePicker v-model="filter.period" type="range-input" size="sm" />
             </AppSearchItem>
             <AppSearchItem label="라인">
-                <AppSelect v-model="filter.line" :items="lines" size="xs" placeholder="전체" />
+                <AppSelect v-model="filter.line" :items="lines" size="sm" placeholder="전체" />
             </AppSearchItem>
             <AppSearchItem label="품목">
-                <AppInput v-model="filter.keyword" size="xs" placeholder="품목명" clearable />
+                <AppInput v-model="filter.keyword" size="sm" placeholder="품목명" clearable />
             </AppSearchItem>
         </AppSearchPanel>
 
@@ -90,17 +90,16 @@
                 :page-size="pageSize"
                 :total="filteredRows.length"
                 :show-page-size="false"
-                size="sm"
             />
         </AppSection>
 
         <!-- 6. 상세 / 등록 Drawer -->
-        <AppDrawer v-model:open="drawer.open" :title="drawer.row ? '작업실적 상세' : '작업실적 등록'" :description="drawer.row?.orderNo" :width="560">
+        <AppDrawer v-model:open="drawer.open" :title="drawer.row ? '작업실적 상세' : '작업실적 등록'" :description="drawer.row?.orderNo" size="lg">
             <div class="mes-sample__drawer">
                 <AppSteps v-if="drawer.row" :model-value="stepIndex(drawer.row.status)" :items="steps" size="sm" />
                 <AppInputGroup label="작업지시 / 품목" separator="·">
-                    <AppInput :model-value="drawer.row?.orderNo ?? ''" size="sm" readonly placeholder="작업지시번호" />
-                    <AppInput :model-value="drawer.row?.item ?? ''" size="sm" readonly placeholder="품목" />
+                    <AppInput :model-value="drawer.row?.orderNo ?? ''" size="md" readonly placeholder="작업지시번호" />
+                    <AppInput :model-value="drawer.row?.item ?? ''" size="md" readonly placeholder="품목" />
                 </AppInputGroup>
                 <div class="mes-sample__row">
                     <AppInputNumber v-model="form.doneQty" label="양품 수량" size="md" :step="10" />
@@ -112,8 +111,8 @@
                         :hint="form.defectQty > 0 ? '불량 사유를 입력하세요.' : ''"
                     />
                 </div>
-                <AppSelect v-if="form.defectQty > 0" v-model="form.defectReason" label="불량 사유" :items="defectReasons" size="sm" state="warning" />
-                <AppDatePicker v-model="form.doneAt" type="datetime" label="실적 일시" size="sm" />
+                <AppSelect v-if="form.defectQty > 0" v-model="form.defectReason" label="불량 사유" :items="defectReasons" size="md" state="warning" />
+                <AppDatePicker v-model="form.doneAt" type="datetime" label="실적 일시" size="md" />
                 <AppTextarea v-model="form.memo" label="비고" :rows="3" :max-length="200" show-count />
                 <template v-if="drawer.row">
                     <strong>처리 이력</strong>

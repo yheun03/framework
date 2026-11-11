@@ -1,4 +1,44 @@
+@use 'sass:map';
+@use 'sass:math';
 @use '../../abstract' as *;
+
+// 높이 기준 크기 - AppButton 과 같은 이름 = 같은 높이 (Figma 기본형 탭 36 · 44 · 48 · 56)
+$tabs-sizes: (
+    sm: (
+        height: 36px,
+        padding: 12px,
+        font: btn3,
+    ),
+    md: (
+        height: 44px,
+        padding: 16px,
+        font: btn2,
+    ),
+    lg: (
+        height: 48px,
+        padding: 16px,
+        font: btn2,
+    ),
+    xl: (
+        height: 56px,
+        padding: 16px,
+        font: btn1,
+    ),
+);
+
+// 텍스트 탭(text · divider) 글자 크기 - Figma 텍스트 탭 16(md) · 20(xl)
+$tabs-text-sizes: (
+    sm: b3,
+    md: b1,
+    lg: t5,
+    xl: t4,
+);
+
+$tabs-radius: (
+    square: 0,
+    round: 6px,
+    pill: 999px,
+);
 
 .app-tabs {
     display: flex;
@@ -26,7 +66,7 @@
         min-width: 0;
         border: 0;
         background: transparent;
-        color: var(--color-tabs);
+        color: var(--color-tabs-default);
         cursor: pointer;
         transition:
             color 0.2s ease,
@@ -39,9 +79,13 @@
             outline-offset: 2px;
         }
 
+        &.is-active {
+            color: var(--color-tabs-strong);
+        }
+
         &:disabled,
         &.is-disabled {
-            color: var(--color-tabs-gray-300);
+            color: var(--color-tabs-disabled);
             cursor: not-allowed;
         }
     }
@@ -61,6 +105,7 @@
 
     &__tab-title {
         display: block;
+        font-weight: inherit;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -119,36 +164,28 @@
         @include font(b3, rg);
     }
 
-    &--sm {
-        .app-tabs__tab {
-            min-height: 36px;
-            padding: 7px 12px;
+    // ----------------------------------------
+    // Size
+    // ----------------------------------------
+    @each $name, $data in $tabs-sizes {
+        &--#{$name} .app-tabs__tab {
+            min-height: map.get($data, height);
+            padding: 0 map.get($data, padding);
 
-            @include font(btn3, sb);
+            @include font(map.get($data, font), rg);
+
+            &.is-active {
+                font-weight: 600;
+            }
         }
     }
 
-    &--md {
-        .app-tabs__tab {
-            min-height: 44px;
-            padding: 10px 16px;
-
-            @include font(btn2, sb);
-        }
-    }
-
-    &--lg {
-        .app-tabs__tab {
-            min-height: 52px;
-            padding: 13px 20px;
-
-            @include font(btn1, sb);
-        }
-    }
-
+    // ----------------------------------------
+    // line : 언더바 (기본형 언더바 · 타이틀형)
+    // ----------------------------------------
     &--line {
         .app-tabs__list {
-            border-bottom: 1px solid var(--border-tabs);
+            border-bottom: 1px solid var(--border-tabs-light);
         }
 
         .app-tabs__tab {
@@ -166,34 +203,220 @@
             }
 
             &:hover:not(:disabled) {
-                color: var(--color-tabs-gray-700);
+                color: var(--color-tabs-strong);
+            }
+
+            &.is-active::after {
+                background: var(--bg-tabs-strong);
+            }
+        }
+    }
+
+    // ----------------------------------------
+    // fill(면) · outline(라인) 공통
+    // ----------------------------------------
+    &--fill,
+    &--outline {
+        .app-tabs__tab {
+            border: 1px solid var(--border-tabs-cell);
+            background: var(--bg-tabs-gray-0);
+
+            &:hover:not(:disabled, .is-active) {
+                color: var(--color-tabs-strong);
+            }
+        }
+    }
+
+    &--fill {
+        --border-tabs-cell: var(--border-tabs-light);
+
+        .app-tabs__tab.is-active {
+            border-color: var(--bg-tabs-strong);
+            background: var(--bg-tabs-strong);
+            color: var(--color-tabs-on-strong);
+        }
+    }
+
+    &--outline {
+        --border-tabs-cell: var(--border-tabs-regular);
+
+        .app-tabs__tab.is-active {
+            border-color: var(--border-tabs-strong);
+            color: var(--color-tabs-strong);
+        }
+    }
+
+    // layout="group" : 붙은 기본형 (테두리 겹침)
+    &--layout-group {
+        .app-tabs__list {
+            gap: 0;
+        }
+
+        .app-tabs__tab {
+            position: relative;
+
+            & + .app-tabs__tab {
+                margin-left: -1px;
             }
 
             &.is-active {
-                color: var(--color-tabs-primary-500);
+                z-index: 1;
+            }
+        }
+    }
 
-                &::after {
-                    background: var(--bg-tabs-primary-500);
+    // 면 기본형은 칸 사이 세로선 없음 (Figma)
+    &--fill.app-tabs--layout-group.app-tabs--horizontal .app-tabs__tab:not(.is-active) {
+        &:not(:first-child) {
+            border-left-color: transparent;
+        }
+
+        &:not(:last-child) {
+            border-right-color: transparent;
+        }
+    }
+
+    // layout="button" : 떨어진 버튼형
+    &--layout-button {
+        .app-tabs__list {
+            flex-wrap: wrap;
+            gap: 12px;
+            overflow: visible;
+        }
+    }
+
+    &--layout-button.app-tabs--sm .app-tabs__list {
+        gap: 8px;
+    }
+
+    // layout="grid" : 2단 버튼형 (칸 배치, 여러 줄)
+    &--layout-grid {
+        .app-tabs__list {
+            display: grid;
+            grid-template-columns: repeat(var(--app-tabs-columns, 6), minmax(0, 1fr));
+            gap: 0;
+            overflow: hidden;
+            border-top: 1px solid var(--border-tabs-light);
+            border-left: 1px solid var(--border-tabs-light);
+        }
+
+        .app-tabs__tab {
+            border-width: 0 1px 1px 0;
+            border-color: var(--border-tabs-light);
+        }
+
+        &.app-tabs--outline .app-tabs__tab.is-active {
+            border-color: var(--border-tabs-light);
+            box-shadow: inset 0 0 0 1px var(--border-tabs-strong);
+        }
+    }
+
+    // shape : group 은 양 끝, button 은 각 탭, grid 는 목록 모서리
+    @each $shape, $radius in $tabs-radius {
+        &--shape-#{$shape} {
+            &.app-tabs--layout-group .app-tabs__tab {
+                &:first-child {
+                    border-start-start-radius: $radius;
+                    border-end-start-radius: $radius;
                 }
 
-                .app-tabs__tab-badge {
-                    background: var(--bg-tabs-primary-50);
-                    color: var(--color-tabs-primary-600);
+                &:last-child {
+                    border-start-end-radius: $radius;
+                    border-end-end-radius: $radius;
+                }
+            }
+
+            &.app-tabs--layout-button .app-tabs__tab {
+                border-radius: $radius;
+            }
+
+            &.app-tabs--layout-grid .app-tabs__list {
+                border-radius: math.min($radius, 12px);
+            }
+        }
+    }
+
+    // ----------------------------------------
+    // text : 텍스트 언더라인 / divider : 텍스트 구분자
+    // ----------------------------------------
+    &--text,
+    &--divider {
+        .app-tabs__list {
+            gap: 16px;
+        }
+
+        .app-tabs__tab {
+            min-height: 0;
+            padding: 0;
+            // Figma #999 는 흰 배경 대비 2.8:1 → 웹 접근성(4.5:1)을 위해 #767676 사용
+            color: var(--color-tabs-inactive);
+
+            &:hover:not(:disabled) {
+                color: var(--color-tabs-strong);
+            }
+
+            &.is-active {
+                color: var(--color-tabs-strong);
+            }
+        }
+
+        @each $name, $token in $tabs-text-sizes {
+            &.app-tabs--#{$name} .app-tabs__tab {
+                min-height: 0;
+                padding: 0;
+
+                @include font($token, rg);
+
+                &.is-active {
+                    font-weight: 600;
                 }
             }
         }
     }
 
+    // 구분자형은 비활성 탭도 SemiBold (Figma)
+    @each $name, $token in $tabs-text-sizes {
+        &--divider.app-tabs--#{$name} .app-tabs__tab {
+            font-weight: 600;
+        }
+    }
+
+    &--text .app-tabs__tab.is-active .app-tabs__tab-title {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    &--divider {
+        .app-tabs__tab {
+            position: relative;
+
+            & + .app-tabs__tab::before {
+                position: absolute;
+                top: 50%;
+                left: -9.5px;
+                width: 3px;
+                height: 3px;
+                border-radius: 50%;
+                background: var(--bg-tabs-divider);
+                content: '';
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    // ----------------------------------------
+    // box : 폴더형 (MES 상세 화면용 - Figma 외 확장)
+    // ----------------------------------------
     &--box {
         .app-tabs__list {
             gap: 0;
-            border-bottom: 1px solid var(--border-tabs);
+            border-bottom: 1px solid var(--border-tabs-regular);
         }
 
         .app-tabs__tab {
-            border: 1px solid var(--border-tabs);
+            border: 1px solid var(--border-tabs-regular);
             border-bottom-color: transparent;
-            border-radius: 10px 10px 0 0;
+            border-radius: 6px 6px 0 0;
             background: var(--bg-tabs-gray-50);
 
             & + .app-tabs__tab {
@@ -201,55 +424,22 @@
             }
 
             &:hover:not(:disabled) {
-                background: var(--bg-tabs);
-                color: var(--color-tabs-gray-700);
+                color: var(--color-tabs-strong);
             }
 
             &.is-active {
                 position: relative;
                 z-index: 1;
-                background: var(--bg-tabs-gray-0);
-                color: var(--color-tabs-primary-500);
-                border-color: var(--border-tabs);
+                margin-bottom: -1px;
                 border-bottom-color: var(--border-tabs-gray-0);
-
-                .app-tabs__tab-badge {
-                    background: var(--bg-tabs-primary-50);
-                    color: var(--color-tabs-primary-600);
-                }
-            }
-        }
-    }
-
-    &--pill {
-        .app-tabs__list {
-            display: inline-flex;
-            width: fit-content;
-            padding: 4px;
-            border-radius: 999px;
-            background: var(--bg-tabs);
-        }
-
-        .app-tabs__tab {
-            border-radius: 999px;
-
-            &:hover:not(:disabled) {
-                color: var(--color-tabs-gray-700);
-            }
-
-            &.is-active {
                 background: var(--bg-tabs-gray-0);
-                color: var(--color-tabs-primary-500);
-                box-shadow: 0 2px 8px var(--shadow-tabs);
-
-                .app-tabs__tab-badge {
-                    background: var(--bg-tabs-primary-50);
-                    color: var(--color-tabs-primary-600);
-                }
             }
         }
     }
 
+    // ----------------------------------------
+    // direction="vertical"
+    // ----------------------------------------
     &--vertical {
         flex-direction: row;
         align-items: flex-start;
@@ -273,20 +463,23 @@
 
         &.app-tabs--line {
             .app-tabs__list {
-                border-right: 1px solid var(--border-tabs);
+                border-right: 1px solid var(--border-tabs-light);
                 border-bottom: 0;
             }
 
-            .app-tabs__tab {
-                &::after {
-                    top: 0;
-                    right: -1px;
-                    bottom: 0;
-                    left: auto;
-                    width: 2px;
-                    height: auto;
-                }
+            .app-tabs__tab::after {
+                top: 0;
+                right: -1px;
+                bottom: 0;
+                left: auto;
+                width: 2px;
+                height: auto;
             }
+        }
+
+        &.app-tabs--layout-group .app-tabs__tab + .app-tabs__tab {
+            margin-top: -1px;
+            margin-left: 0;
         }
     }
 
@@ -300,10 +493,6 @@
         }
     }
 
-    /* -----------------------------------------
-       Figma 08. Tap Guide - 탭 디자인 스타일
-    ----------------------------------------- */
-
     // 오브젝트(이미지) 탭
     &__tab-image {
         width: 40px;
@@ -316,115 +505,5 @@
         flex-direction: column;
         gap: 6px;
         padding-block: 12px;
-    }
-
-    // 그룹형 탭: 하나의 외곽선 안에서 활성 탭만 진하게
-    &--group {
-        .app-tabs__list {
-            gap: 0;
-            border: 1px solid var(--border-tabs-regular);
-        }
-
-        .app-tabs__tab {
-            flex: 1 1 0;
-            min-height: 48px;
-            padding-inline: 12px;
-            color: var(--color-tabs-strong);
-            font-weight: 400;
-
-            &:hover:not(:disabled) {
-                background: var(--bg-tabs-gray-50);
-            }
-
-            &.is-active {
-                background: var(--bg-tabs-strong);
-                color: var(--color-tabs-on-strong);
-            }
-        }
-    }
-
-    // 버튼형 탭: 개별 버튼
-    &--button {
-        .app-tabs__list {
-            flex-wrap: wrap;
-            gap: 8px;
-            overflow: visible;
-        }
-
-        .app-tabs__tab {
-            height: 36px;
-            padding-inline: 14px;
-            border: 1px solid var(--border-tabs-regular);
-            background: var(--bg-tabs-gray-0);
-            color: var(--color-tabs-strong);
-
-            &:hover:not(:disabled) {
-                border-color: var(--border-tabs-strong);
-            }
-
-            &.is-active {
-                border-color: var(--bg-tabs-strong);
-                background: var(--bg-tabs-strong);
-                color: var(--color-tabs-on-strong);
-            }
-        }
-    }
-
-    // 그룹 버튼형 탭: 칸(grid) 배치, 여러 줄
-    &--grid {
-        .app-tabs__list {
-            display: grid;
-            grid-template-columns: repeat(var(--app-tabs-columns, 6), minmax(0, 1fr));
-            gap: 0;
-            overflow: visible;
-            border-top: 1px solid var(--border-tabs-regular);
-            border-left: 1px solid var(--border-tabs-regular);
-        }
-
-        .app-tabs__tab {
-            min-height: 48px;
-            border-right: 1px solid var(--border-tabs-regular);
-            border-bottom: 1px solid var(--border-tabs-regular);
-            color: var(--color-tabs-strong);
-
-            &:hover:not(:disabled) {
-                background: var(--bg-tabs-gray-50);
-            }
-
-            &.is-active {
-                background: var(--bg-tabs-strong);
-                color: var(--color-tabs-on-strong);
-            }
-        }
-    }
-
-    // 텍스트형 탭
-    &--text {
-        .app-tabs__list {
-            gap: 20px;
-        }
-
-        .app-tabs__tab {
-            padding: 4px 0;
-            color: var(--color-tabs);
-
-            .app-tabs__tab-title {
-                font-weight: 400;
-            }
-
-            &:hover:not(:disabled) {
-                color: var(--color-tabs-strong);
-            }
-
-            &.is-active {
-                color: var(--color-tabs-strong);
-
-                .app-tabs__tab-title {
-                    font-weight: 600;
-                    text-decoration: underline;
-                    text-underline-offset: 6px;
-                }
-            }
-        }
     }
 }

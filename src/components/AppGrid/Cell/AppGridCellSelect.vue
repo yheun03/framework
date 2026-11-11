@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppSelect v-model="value" :items="items" size="sm" :aria-label="cellLabel" />
+        <AppSelect v-model="value" :items="items" size="md" :aria-label="cellLabel" />
     </div>
 </template>
 

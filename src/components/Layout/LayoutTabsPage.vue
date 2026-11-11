@@ -27,13 +27,13 @@
             </ul>
         </div>
         <div class="route-tabs__actions">
-            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.left')" :size="24" :icon-size="16" @click="handleMoveToLeftTab"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.left')" size="xs" :icon-size="16" @click="handleMoveToLeftTab"
                 ><IconChevronSmallLeft
             /></AppIconButton>
-            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.right')" :size="24" :icon-size="16" @click="handleMoveToRightTab"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.right')" size="xs" :icon-size="16" @click="handleMoveToRightTab"
                 ><IconChevronSmallRight
             /></AppIconButton>
-            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.closeOthers')" :size="24" :icon-size="16" @click="handleCloseOtherTabs"
+            <AppIconButton class="route-tabs__action" :aria-label="$t('ui.tabs.closeOthers')" size="xs" :icon-size="16" @click="handleCloseOtherTabs"
                 ><IconCloseSmall
             /></AppIconButton>
             <LayoutSourceViewer />

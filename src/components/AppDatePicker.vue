@@ -109,7 +109,7 @@ const props = defineProps({
     readonly: { type: Boolean, default: false },
     id: { type: String },
     name: { type: String },
-    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    size: { type: String, default: 'lg', validator: oneOf(FORM_SIZES) },
     shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
     state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */

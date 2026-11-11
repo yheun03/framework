@@ -18,18 +18,18 @@
             <AppSelect
                 v-model="type"
                 class="business-toolbar__field"
-                size="sm"
+                size="md"
                 :items="types"
                 placeholder="검사 구분"
                 aria-label="검사 구분"
             /><AppSelect
                 v-model="result"
                 class="business-toolbar__field"
-                size="sm"
+                size="md"
                 :items="results"
                 placeholder="전체 판정"
                 aria-label="전체 판정"
-            /><AppDatePicker v-model="date" class="business-toolbar__field" size="sm" />
+            /><AppDatePicker v-model="date" class="business-toolbar__field" size="md" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
         </section>
         <AppSection title="검사 목록"
