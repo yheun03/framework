@@ -44,7 +44,7 @@
                 <RouterLink class="auth-page__link" to="/auth/find-pw">비밀번호 찾기</RouterLink>
             </div>
 
-            <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full">로그인</AppButton>
+            <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full" :loading="loading">로그인</AppButton>
         </form>
 
         <div class="auth-page__footer">
@@ -57,14 +57,20 @@
 <script setup>
 import { IconEmail, IconLock } from '@/components/icons';
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { useToast } from '@/composables/useToast';
+import { useAuthStore } from '@/store/auth';
 import { useProjectConfig } from '@/composables/useProjectConfig';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppChoice from '@/components/AppChoice.vue';
 import AppInput from '@/components/AppInput.vue';
 import AuthPageShell from '@/components/AuthPageShell.vue';
 
+const route = useRoute();
 const router = useRouter();
+const auth = useAuthStore();
+const toast = useToast();
+const loading = ref(false);
 const project = useProjectConfig();
 
 const email = ref('');
@@ -77,9 +83,19 @@ const emailHint = computed(() => (submitted.value && !isEmailValid.value ? '올�
 const passwordState = computed(() => (submitted.value && !password.value ? 'error' : null));
 const passwordHint = computed(() => (submitted.value && !password.value ? '비밀번호를 입력해 주세요.' : undefined));
 
-function handleSubmit() {
+async function handleSubmit() {
     submitted.value = true;
     if (!isEmailValid.value || !password.value) return;
-    router.push('/');
+
+    loading.value = true;
+    try {
+        await auth.login({ email: email.value, password: password.value });
+        const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') ? route.query.redirect : '/';
+        router.replace(redirect);
+    } catch (error) {
+        toast.error(error.message);
+    } finally {
+        loading.value = false;
+    }
 }
 </script>

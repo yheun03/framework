@@ -38,6 +38,7 @@
 </template>
 
 <script setup>
+import { DIRECTIONS, oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed, ref, useSlots } from 'vue';
 
@@ -46,12 +47,12 @@ const props = defineProps({
     /** v-model: 활성 탭 id */
     modelValue: { type: [String, Number, null], default: undefined },
     /** 최초 활성 규칙 (v-model 미사용 시) */
-    initial: { type: String, default: 'first' },
+    initial: { type: String, default: 'first', validator: oneOf(['first', 'none']) },
     /** line / box / pill / group(그룹형) / button(버튼형) / grid(그룹 버튼형) / text(텍스트형) */
-    variant: { type: String, default: 'line' },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'line', validator: oneOf(['line', 'box', 'pill', 'group', 'button', 'grid', 'text']) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     /** 탭 배치 방향 (AppSteps 와 같은 이름) */
-    direction: { type: String, default: 'horizontal' },
+    direction: { type: String, default: 'horizontal', validator: oneOf(DIRECTIONS) },
     /** grid variant 의 한 줄 칸 수 */
     columns: { type: Number, default: 6 },
     stretch: { type: Boolean, default: false },

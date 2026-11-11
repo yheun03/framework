@@ -1,19 +1,36 @@
 # Framework
 
-Jonsoft 공통 퍼블리싱 프레임워크 (Vue 3 · Vite 8 · Pinia · vue-i18n · SCSS · JavaScript)
+Jonsoft 공통 퍼블리싱 프레임워크 — **MES · ERP 같은 업무 관리 시스템 전용** (Vue 3 · Vite 8 · Pinia · vue-i18n · SCSS · JavaScript)
+
+> 기업·제품 홈페이지(GNB · 빌보드 · 상품 카드 등)는 지원 범위가 아닙니다.
 
 실무 MES 프로젝트(mti-mes/client)와 같은 구조 · 같은 실행 방식입니다.
 새 프로젝트는 이 저장소를 복사한 뒤 **설정 · 색상 · 이미지만 바꿔서** 시작합니다.
 
-## 실행
+## 처음 받은 사람 (5분)
+
+1. Node **20.19 이상** (`.nvmrc` = 22) 확인 → `npm install` → `npm run serve` → http://localhost:5173
+2. LNB **가이드 → 화면 작성 예제** 를 열고, 상단 탭 오른쪽 `</>` 버튼으로 소스를 봅니다.
+3. 아래 '첫 화면 만들기' 를 따라 화면 하나를 추가해 봅니다.
+4. 규칙은 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md), 컴포넌트는 [COMPONENT_GUIDE.md](./COMPONENT_GUIDE.md) + 데모 화면 우측 Props 패널.
+
+## 실행 · 검사
 
 ```bash
 npm install
-npm run serve      # 로컬 개발 서버 (http://localhost) - .env
+npm run serve      # 로컬 개발 서버 (http://localhost:5173) - .env
 npm run dev        # dev 모드로 실행 - .env.dev
 npm run pub        # 퍼블리싱 확인용 (같은 네트워크에서 IP:3005 로 접속)
 npm run build      # dist/ 생성
+
+npm run check      # 커밋 · PR 전 전체 검사: lint → 포맷 → 단위 테스트 → 문서 예제 → Props 패널 → 빌드
+npm run lint       # ESLint (console · 사용하지 않는 변수 등)
+npm run format     # Prettier 자동 정리
+npm test           # 단위 테스트 (tests/*.test.mjs, Node 내장 테스트 러너)
 ```
+
+- `npm install` 시 git 커밋 전 검사(lint · 포맷)가 자동 연결됩니다. (`.githooks/pre-commit`)
+- main 에 push 하면 GitHub Actions 가 같은 검사를 통과한 경우에만 데모 사이트를 배포합니다.
 
 | 파일       | 모드  | 용도                               |
 | ---------- | ----- | ---------------------------------- |
@@ -23,6 +40,16 @@ npm run build      # dist/ 생성
 | `.env.pub` | pub   | 퍼블리싱 확인                      |
 
 `VITE_API_URL`(API 주소)과 `VITE_TITLE`(브라우저 제목)을 적습니다. 비밀값은 넣지 않습니다.
+
+**API 주소가 정해지는 방식**
+
+| 실행                      | 주소                              | 전달                                                     |
+| ------------------------- | --------------------------------- | -------------------------------------------------------- |
+| `serve` (localhost 접속)  | `.env` 의 `http://localhost:8080` | 백엔드 직접 호출 (백엔드 CORS 허용 필요)                 |
+| `pub` · `dev` (개발 서버) | `/api`                            | Vite 가 `/api` 를 `VITE_PROXY_TARGET`(기본 :8080)로 전달 |
+| Docker (dev · prd)        | `/api`                            | nginx 가 `/api/` 를 `server:8080` 으로 전달              |
+
+- CORS 를 피하고 싶으면 `.env` 의 `VITE_API_URL=/server` → Vite 가 `/server` 를 떼고 로컬 백엔드로 전달합니다.
 
 ## 배포 (Docker)
 
@@ -39,19 +66,43 @@ docker compose -f docker-compose-prd.yml up -d    # 운영 서버 (MODE=prd, :re
 - 이미지 주소 · 컨테이너명 · 백엔드 서비스명은 프로젝트에 맞게 바꿉니다.
 - 데모 사이트(GitHub Pages)는 main 에 push 하면 자동 배포됩니다. (`npm run build:pages`)
 
-## 새 프로젝트 시작 (4단계)
+## 새 프로젝트 시작
 
-1. **설정** — `src/project.config.js` 의 `key` · 회사명 · 서비스명, `.env*` 의 `VITE_TITLE`, `index.html` 의 파비콘 · 설명
-2. **색상** — `src/assets/styles/projects/{key}/_theme.scss`
+```bash
+npm run init-project -- acme "ACME" "ACME MES"   # key · 회사명 · 서비스명
+```
+
+`init-project` 가 아래 1번을 한 번에 처리합니다. (기존 `framework` 폴더는 지우지 않습니다)
+
+1. **설정**
+    - 기업 폴더 3곳을 `{key}` 이름으로 복사: `src/assets/styles/projects/` · `src/components/projects/` · `public/images/projects/`
+    - `src/project.config.js` 의 `key` · `companyName` · `serviceName` (문서 제목 `메뉴명 | 서비스명` 도 함께 바뀜)
+    - `.env*` 의 `VITE_TITLE`
+    - `key` 와 폴더명이 다르면 `npm run serve` 가 바로 알려줍니다.
+2. **색상** — `src/assets/styles/projects/{key}/_theme.scss` (브랜드 색은 여기 한 곳에서만 정합니다)
 
     ```scss
-    $primary: #0057b8; // 50~900 팔레트 · 버튼 · 포커스 · 텍스트 대비 색까지 자동 생성
+    $primary: #0057b8; // 50~900 팔레트 · 버튼 · 포커스 · 글자용 대비 색 · index.html theme-color 까지 자동
     $secondary: #4b5563;
     $tertiary: #003f87; // 브랜드 그라디언트 = tertiary → primary (134deg)
     ```
 
-3. **이미지** — `public/images/projects/{key}/` (favicon 등)
+3. **이미지 · 설명** — `public/images/projects/{key}/favicon.svg` 교체, `project.config.js` 의 `description`
 4. **기업 전용 코드** — `src/components/projects/{key}/`, `src/assets/styles/projects/{key}/` 에만 둡니다.
+
+## 첫 화면 만들기
+
+예) 작업지시 목록 화면 `/work-orders` 를 추가합니다.
+
+1. **화면 파일** — `src/views/demos/demo-page-example.vue` 를 복사해 `src/views/work-orders.vue` 로 저장
+   (파일 경로가 곧 주소, 상세 화면은 `views/work-orders/[id].vue` → `/work-orders/:id`)
+2. **메뉴** — `src/store/navigation.js` 의 `MENU_SEED` 에 한 줄 추가하고, `src/i18n/ko.js` · `en.js` 에 `nav.*` 문구 추가
+3. **확인** — `npm run serve` → LNB 에서 열기 (상단 탭 · 문서 제목 `메뉴명 | 서비스명` 자동)
+4. **데이터** — `// temp 데이터` 영역을 `const api = useApi(); rows.value = await api.get('/work-orders')` 로 교체
+   (오류 토스트 · 로그인 토큰 · 401 은 공통 처리)
+5. **검사** — `npm run check`
+
+레이아웃 없는 화면(로그인 등) · 탭에서 뺄 화면은 `src/router/index.js` 의 `ROUTE_META` 에 `layout: false` · `tab: false`.
 
 ## 폴더 구조
 
@@ -66,15 +117,17 @@ src/
 ├── services/api/   axios 클라이언트
 ├── i18n/           vue-i18n (ko · en)
 ├── constants/      공용 상수
-├── utils/          순수 함수
+├── utils/          순수 함수 (props 값 검사 · 색 대비 · 샘플 이미지 …)
 └── assets/         styles(SCSS) · fonts
+scripts/            init-project · check-docs · check-props 등 노드 스크립트
+tests/              단위 테스트 (npm test)
 ```
 
 ## 문서
 
-| 문서                                           | 내용                                    |
-| ---------------------------------------------- | --------------------------------------- |
-| [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) | 코드 규칙 · 접근성 규칙                 |
-| [COMPONENT_GUIDE.md](./COMPONENT_GUIDE.md)     | 공통 속성 · 디자인 토큰 · 컴포넌트 목록 |
+| 문서                                           | 내용                                                                        |
+| ---------------------------------------------- | --------------------------------------------------------------------------- |
+| [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) | 코드 규칙 · API · 로그인 · 문구(i18n) · SCSS · 접근성 · 작업 후 확인        |
+| [COMPONENT_GUIDE.md](./COMPONENT_GUIDE.md)     | 공통 속성 · size 높이표 · 디자인 토큰 · 컴포넌트 목록 · 기본 목록 화면 예제 |
 
-화면으로 보기: 실행 후 LNB **가이드 → 공통 속성 규칙 / 디자인 토큰**
+화면으로 보기: 실행 후 LNB **가이드 → 공통 속성 규칙 / 디자인 토큰 / 화면 작성 예제**

@@ -6,7 +6,7 @@
                     <h1 class="page-demo__title">{{ title }}</h1>
                     <p class="page-demo__desc">
                         modal host + composable 기반 모달 데모입니다. 개별 모달 컴포넌트를 직접 렌더링하지 않고, handler에서
-                        <code>openAlert(...)</code>처럼 호출해 Alert / Confirm / Custom 모달을 엽니다.
+                        <code>await modal.confirm(...)</code> 또는 <code>openAlert(...)</code>처럼 호출해 Alert / Confirm / Custom 모달을 엽니다.
                     </p>
                 </header>
 
@@ -18,6 +18,17 @@
                         <AppButton variant="outline" @click="handleOpenConfirm"> Confirm 열기 </AppButton>
 
                         <AppButton variant="outline" @click="handleOpenCustom"> Custom 열기 </AppButton>
+                    </div>
+                </PageDemoSection>
+
+                <!-- AWAIT -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="결과 기다리기 (await)"
+                    description="const ok = await modal.confirm('삭제할까요?') - 확인이면 true, 취소·닫기면 false 입니다."
+                >
+                    <div class="page-demo-actions">
+                        <AppButton variant="fill" tone="danger" @click="handleAwaitConfirm"> 삭제 (await confirm) </AppButton>
                     </div>
                 </PageDemoSection>
 
@@ -111,6 +122,7 @@
 </template>
 
 <script setup>
+import { sampleImage } from '@/utils/sampleImage';
 /**
  * modal host와 composable 기반으로 Alert / Confirm / Custom 모달을 여는 데모 페이지 컴포넌트입니다.
  */
@@ -131,6 +143,11 @@ const modal = useModal();
 const { openImageViewer, openPdfViewer } = useModalViewer();
 
 /* event handlers */
+async function handleAwaitConfirm() {
+    const ok = await modal.confirm({ title: '삭제 확인', message: '선택한 항목을 삭제할까요?', confirmText: '삭제' });
+    await modal.alert(ok ? '삭제했습니다.' : '취소했습니다.');
+}
+
 function handleOpenAlert() {
     handleOpenAlertBasic();
 }
@@ -287,7 +304,7 @@ function handleOpenNestedCustom() {
 function handleOpenImageViewer() {
     openImageViewer({
         name: '샘플 이미지',
-        url: 'https://picsum.photos/1200/800?random=31',
+        url: sampleImage(31, 1200, 800),
         alt: 'modal viewer sample image',
     });
 }
@@ -297,19 +314,19 @@ function handleOpenImageGalleryViewer() {
         name: '샘플 이미지 갤러리',
         images: [
             {
-                url: 'https://picsum.photos/1200/800?random=41',
+                url: sampleImage(41, 1200, 800),
                 alt: 'sample gallery image 1',
             },
             {
-                url: 'https://picsum.photos/1200/800?random=42',
+                url: sampleImage(42, 1200, 800),
                 alt: 'sample gallery image 2',
             },
             {
-                url: 'https://picsum.photos/1200/800?random=43',
+                url: sampleImage(43, 1200, 800),
                 alt: 'sample gallery image 3',
             },
             {
-                url: 'https://picsum.photos/1200/800?random=44',
+                url: sampleImage(44, 1200, 800),
                 alt: 'sample gallery image 4',
             },
         ],

@@ -137,7 +137,7 @@ const equipments = [
         p {
             margin: 0;
             color: var(--color-stat-card-title);
-            font-size: 12px;
+            @include font(c2, rg);
         }
 
         .app-tag {

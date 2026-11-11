@@ -7,17 +7,25 @@
         "node": ">=20.19"
     },
     "scripts": {
-        "serve": "cross-env VITE_APP_MODE=local vite --port 80",
-        "local": "cross-env VITE_APP_MODE=local vite --port 80",
-        "dev": "cross-env VITE_APP_MODE=dev vite --port 80",
-        "prd": "cross-env VITE_APP_MODE=prd vite --port 80",
+        "serve": "cross-env VITE_APP_MODE=local vite",
+        "local": "cross-env VITE_APP_MODE=local vite",
+        "dev": "cross-env VITE_APP_MODE=dev vite",
+        "prd": "cross-env VITE_APP_MODE=prd vite",
         "pub": "cross-env VITE_APP_MODE=pub vite --host 0.0.0.0 --port 3005",
         "build": "vite build",
-        "build:pages": "cross-env VITE_BASE_URL=/framework/ vite build && cp dist/index.html dist/404.html",
+        "build:pages": "cross-env VITE_BASE_URL=/framework/ vite build && node scripts/copy-404.mjs",
         "preview": "vite preview",
+        "init-project": "node scripts/init-project.mjs",
         "deploy": "npm run build:pages && gh-pages -d dist --dotfiles",
-        "format": "prettier --write \"src/**/*.{js,vue,json,scss}\"",
-        "docker:build": "docker build -t docker.jonsoft.co.kr/framework/client:latest ."
+        "lint": "eslint .",
+        "format": "prettier --write \"src/**/*.{js,vue,json,scss}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,md}\"",
+        "format:check": "prettier --check \"src/**/*.{js,vue,json,scss}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,md}\"",
+        "test": "node --test \"tests/**/*.test.mjs\"",
+        "check:docs": "node scripts/check-docs.mjs",
+        "check:props": "node scripts/check-props.mjs",
+        "check": "npm run lint && npm run format:check && npm run test && npm run check:docs && npm run check:props && vite build",
+        "docker:build": "docker build -t docker.jonsoft.co.kr/framework/client:latest .",
+        "prepare": "node scripts/install-hooks.mjs"
     },
     "dependencies": {
         "@lucide/vue": "1.60.0",
@@ -34,14 +42,22 @@
         "vue-chartjs": "^5.3.3",
         "vue-i18n": "^11.4.18",
         "vue-router": "^5.4.0",
-        "xlsx": "^0.18.5"
+        "write-excel-file": "^4.1.1"
     },
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
         "@vitejs/plugin-vue": "^6.0.10",
         "dotenv": "^17.4.2",
+        "eslint": "^10.13.0",
+        "eslint-plugin-vue": "^10.12.0",
         "gh-pages": "^6.3.0",
+        "globals": "^17.13.0",
         "prettier": "^3.9.10",
         "sass": "^1.80.4",
         "vite": "^8.3.6"
+    },
+    "overrides": {
+        "dompurify": "^3.4.17",
+        "minimatch": "^11.0.7"
     }
 }

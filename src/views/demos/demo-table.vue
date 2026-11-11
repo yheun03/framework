@@ -14,12 +14,12 @@
                         <code>td</code>에는 해당 타입의 컴포넌트가 렌더링됩니다.
                     </p>
 
-                    <AppTable v-model="basicForm" :rows="basicRows" title="Basic" />
+                    <AppTable v-model="basicForm" :items="basicRows" title="Basic" />
                 </PageDemoSection>
 
                 <!-- LAYOUT TYPES -->
                 <PageDemoSection class="page-demo-section" title="Layout Types" description="stacked / label-full 레이아웃 예시입니다.">
-                    <AppTable v-model="layoutForm" :rows="layoutRows" title="Layout" />
+                    <AppTable v-model="layoutForm" :items="layoutRows" title="Layout" />
                 </PageDemoSection>
 
                 <!-- BUTTON TYPES -->
@@ -28,30 +28,30 @@
                     title="Button Types"
                     description="button / input_button / input_button-text / input-text / text-button 타입 예시입니다."
                 >
-                    <AppTable v-model="buttonForm" :rows="buttonRows" title="Button Variants" />
+                    <AppTable v-model="buttonForm" :items="buttonRows" title="Button Variants" />
                 </PageDemoSection>
 
                 <!-- CHOICE TYPES -->
                 <PageDemoSection class="page-demo-section" title="Choice Types" description="radio / checkbox 타입 예시입니다.">
-                    <AppTable v-model="choiceForm" :rows="choiceRows" title="Choice" />
+                    <AppTable v-model="choiceForm" :items="choiceRows" title="Choice" />
                 </PageDemoSection>
 
                 <!-- DATE TYPES -->
                 <PageDemoSection class="page-demo-section" title="Date Types" description="date / range_date 타입 예시입니다.">
-                    <AppTable v-model="dateForm" :rows="dateRows" title="Date" />
+                    <AppTable v-model="dateForm" :items="dateRows" title="Date" />
                 </PageDemoSection>
 
                 <!-- CONTACT TYPES -->
                 <PageDemoSection class="page-demo-section" title="Contact Types" description="phone / email 타입 예시입니다.">
-                    <AppTable v-model="contactForm" :rows="contactRows" title="Contact" />
+                    <AppTable v-model="contactForm" :items="contactRows" title="Contact" />
                 </PageDemoSection>
 
                 <!-- STATE -->
                 <PageDemoSection class="page-demo-section" title="Readonly / Disabled" description="readonly / disabled 상태 확인용 예시입니다.">
                     <div class="page-demo-stack">
-                        <AppTable v-model="stateForm" :rows="stateRows" title="Readonly" readonly />
+                        <AppTable v-model="stateForm" :items="stateRows" title="Readonly" readonly />
 
-                        <AppTable v-model="disabledForm" :rows="disabledRows" title="Disabled" disabled />
+                        <AppTable v-model="disabledForm" :items="disabledRows" title="Disabled" disabled />
                     </div>
                 </PageDemoSection>
             </div>

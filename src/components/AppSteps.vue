@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import { DIRECTIONS, oneOf } from '@/utils/props';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import { IconCheck, IconClose } from '@/components/icons';
 import { computed } from 'vue';
@@ -34,8 +35,8 @@ const props = defineProps({
     items: { type: Array, required: true },
     /** v-model: 현재 단계 index (0부터) */
     modelValue: { type: Number, default: 0 },
-    direction: { type: String, default: 'horizontal' },
-    size: { type: String, default: 'md' },
+    direction: { type: String, default: 'horizontal', validator: oneOf(DIRECTIONS) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
     /** 단계 클릭으로 이동 */
     clickable: { type: Boolean, default: false },
 });

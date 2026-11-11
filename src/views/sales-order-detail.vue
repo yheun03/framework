@@ -52,7 +52,9 @@
                 </table>
             </div>
         </AppSection>
-        <AppSection title="메모"><AppTextarea v-model="form.memo" :rows="5" placeholder="수주 관련 전달사항을 입력하세요." /></AppSection>
+        <AppSection title="메모"
+            ><AppTextarea v-model="form.memo" :rows="5" placeholder="수주 관련 전달사항을 입력하세요." aria-label="수주 관련 전달사항을 입력하세요."
+        /></AppSection>
     </div>
 </template>
 <script setup>

@@ -1,8 +1,10 @@
 <template>
     <div class="app-grid-download">
-        <AppButton size="sm" variant="outline" :loading="downloadingAll" @click="handleDownloadAll"> 엑셀 다운로드 </AppButton>
+        <AppButton size="sm" variant="outline" :loading="downloadingAll" @click="handleDownloadAll">{{ $t('ui.grid.excel') }}</AppButton>
 
-        <AppButton size="sm" variant="outline" :loading="downloadingSelected" @click="handleDownloadSelected"> 선택 엑셀 </AppButton>
+        <AppButton size="sm" variant="outline" :loading="downloadingSelected" @click="handleDownloadSelected">{{
+            $t('ui.grid.excelSelected')
+        }}</AppButton>
     </div>
 </template>
 

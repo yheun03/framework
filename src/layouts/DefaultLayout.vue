@@ -4,17 +4,17 @@
         <a class="skip-link" href="#main-content">{{ t('a11y.skipToContent') }}</a>
 
         <div class="layout__mobile-bar">
-            <AppTextButton class="layout__nav-toggle" size="sm" aria-label="메뉴 열기" @click="handleNavOpen">
+            <AppTextButton class="layout__nav-toggle" size="sm" :aria-label="$t('ui.nav.open')" @click="handleNavOpen">
                 <template #iconLeft>
                     <IconMenu />
                 </template>
-                메뉴
+                {{ $t('ui.nav.menu') }}
             </AppTextButton>
 
             <strong class="layout__mobile-title">{{ project.serviceName }}</strong>
         </div>
 
-        <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" aria-label="메뉴 닫기" @click="handleNavClose" />
+        <AppButton v-if="isNavOpen" class="layout__nav-dim" unstyled type="button" :aria-label="$t('ui.nav.close')" @click="handleNavClose" />
 
         <LayoutNav class="layout__nav" @close="handleNavClose" />
         <main id="main-content" class="layout__main" tabindex="-1">

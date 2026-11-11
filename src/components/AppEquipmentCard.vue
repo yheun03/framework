@@ -5,10 +5,16 @@
                 <strong class="app-equipment-card__title">{{ title }}</strong>
                 <span v-if="code" class="app-equipment-card__code">{{ code }}</span>
             </div>
-            <AppStatusLamp :tone="statusMap[status].tone" :off="status === 'off'" :blink="status === 'stop'" :label="statusMap[status].label" />
+            <AppStatusLamp :tone="statusMap[status].tone" :off="status === 'off'" :blink="status === 'stop'" :label="$t(`ui.equipment.${status}`)" />
         </header>
 
-        <AppProgressBar v-if="progress != null" :value="progress" :label="progressLabel" show-value :disabled="status === 'off'" />
+        <AppProgressBar
+            v-if="progress != null"
+            :value="progress"
+            :label="progressLabel ?? $t('ui.equipment.progress')"
+            show-value
+            :disabled="status === 'off'"
+        />
 
         <dl v-if="items.length" class="app-equipment-card__metrics">
             <div v-for="item in items" :key="item.label" class="app-equipment-card__metric">
@@ -24,6 +30,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 /**
  * AppEquipmentCard - 설비 현황 카드 (MES 확장)
  * AppStatusLamp + AppProgressBar 조합입니다.
@@ -37,18 +44,20 @@ import AppStatusLamp from '@/components/AppStatusLamp.vue';
 defineProps({
     title: { type: String, required: true },
     code: { type: String, default: '' },
-    status: { type: String, default: 'run' },
+    status: { type: String, default: 'run', validator: oneOf(['run', 'idle', 'stop', 'check', 'off']) },
     progress: { type: [Number, null], default: null },
-    progressLabel: { type: String, default: '가동률' },
+    /** 기본 '가동률' (i18n ui.equipment.progress) */
+    progressLabel: { type: String, default: undefined },
     items: { type: Array, default: () => [] },
     active: { type: Boolean, default: false },
 });
 
+// 상태 문구: i18n ui.equipment.{run | idle | stop | check | off}
 const statusMap = {
-    run: { tone: 'success', label: '가동' },
-    idle: { tone: 'warning', label: '대기' },
-    stop: { tone: 'danger', label: '정지' },
-    check: { tone: 'info', label: '점검' },
-    off: { tone: 'gray', label: '미연결' },
+    run: { tone: 'success' },
+    idle: { tone: 'warning' },
+    stop: { tone: 'danger' },
+    check: { tone: 'info' },
+    off: { tone: 'gray' },
 };
 </script>

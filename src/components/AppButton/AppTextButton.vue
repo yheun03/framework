@@ -30,17 +30,18 @@
 </template>
 
 <script setup>
+import { BUTTON_TYPES, TONES, oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed } from 'vue';
 
 const props = defineProps({
-    type: { type: String, default: 'button' },
+    type: { type: String, default: 'button', validator: oneOf(BUTTON_TYPES) },
     to: { type: String },
     href: { type: String },
     newTab: { type: Boolean },
-    variant: { type: String, default: 'text' },
-    tone: { type: String, default: 'gray' },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'text', validator: oneOf(['text', 'underline']) },
+    tone: { type: String, default: 'gray', validator: oneOf(TONES) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     width: { type: [String, Number] },
     height: { type: [String, Number] },
     disabled: { type: Boolean, default: false },

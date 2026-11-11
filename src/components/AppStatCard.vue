@@ -37,7 +37,7 @@
             :aria-valuenow="progress"
             aria-valuemin="0"
             aria-valuemax="100"
-            :aria-label="`${title} 진행률`"
+            :aria-label="$t('ui.progress.of', { title })"
         >
             <span :style="{ width: `${Math.min(100, Math.max(0, progress))}%` }" />
         </div>
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import { TONES, oneOf } from '@/utils/props';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import { IconTrendDown, IconTrendUp } from '@/components/icons';
 import { computed } from 'vue';
@@ -68,10 +69,10 @@ const props = defineProps({
     description: { type: String, default: '' },
     /** 하단 진행 막대 (0~100) */
     progress: { type: [Number, null], default: null },
-    tone: { type: String, default: 'primary' },
+    tone: { type: String, default: 'primary', validator: oneOf(TONES) },
     /** default(흰 카드) / soft(톤 연한 면) / fill(톤 진한 면) */
-    variant: { type: String, default: 'default' },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'default', validator: oneOf(['default', 'soft', 'fill']) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     /** 소수점 자리수 (숫자 value) */
     precision: { type: Number, default: 0 },
     clickable: { type: Boolean, default: false },

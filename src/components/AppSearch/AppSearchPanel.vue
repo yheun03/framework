@@ -15,18 +15,18 @@
             <slot name="actions" />
             <AppButton v-if="showReset" type="reset" variant="outline" tone="gray" size="sm">
                 <template #iconLeft><IconRefresh /></template>
-                {{ resetText }}
+                {{ resetText ?? $t('ui.reset') }}
             </AppButton>
             <AppButton type="submit" variant="fill" tone="primary" size="sm" :loading="loading">
                 <template #iconLeft><IconSearch /></template>
-                {{ searchText }}
+                {{ searchText ?? $t('ui.searchPanel.search') }}
             </AppButton>
             <AppIconButton
                 v-if="collapsible"
                 class="app-search-panel__toggle"
                 variant="outline"
                 size="lg"
-                :aria-label="collapsed ? '상세 조건 펼치기' : '상세 조건 접기'"
+                :aria-label="collapsed ? $t('ui.searchPanel.expand') : $t('ui.searchPanel.collapse')"
                 :aria-expanded="!collapsed"
                 @click="collapsed = !collapsed"
             >
@@ -56,8 +56,9 @@ const props = defineProps({
     collapsible: { type: Boolean, default: false },
     /** 처음 접힌 상태로 시작 */
     initialCollapsed: { type: Boolean, default: true },
-    searchText: { type: String, default: '조회' },
-    resetText: { type: String, default: '초기화' },
+    /** 기본 '조회' · '초기화' (i18n ui.searchPanel.search · ui.reset) */
+    searchText: { type: String, default: undefined },
+    resetText: { type: String, default: undefined },
     showReset: { type: Boolean, default: true },
     /** 조회 버튼 로딩 */
     loading: { type: Boolean, default: false },

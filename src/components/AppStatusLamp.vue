@@ -8,14 +8,15 @@
 </template>
 
 <script setup>
+import { TONES, oneOf } from '@/utils/props';
 /**
  * AppStatusLamp - 설비/라인 상태 표시등
  * 권장 매핑: 가동(success) / 대기(warning) / 정지(danger) / 점검(info) / 미연결(off)
  */
 defineProps({
     label: { type: String, default: '' },
-    tone: { type: String, default: 'success' },
-    size: { type: String, default: 'md' },
+    tone: { type: String, default: 'success', validator: oneOf(TONES) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     /** 깜빡임 (알람) */
     blink: { type: Boolean, default: false },
     /** 꺼짐 (미연결/전원 off) */

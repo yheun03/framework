@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control app-grid-cell-control--textarea">
-        <AppTextarea v-model="value" size="sm" :rows="rows" :resize="resize" :placeholder="placeholder" />
+        <AppTextarea v-model="value" size="sm" :rows="rows" :resize="resize" :placeholder="placeholder" :aria-label="cellLabel" />
     </div>
 </template>
 
@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const params = props.params;
-const { rendererParams, value } = useAppGridCellRendererValue(params);
+const { rendererParams, value, cellLabel } = useAppGridCellRendererValue(params);
 
 const rows = computed(() => rendererParams.value.rows ?? 2);
 const resize = computed(() => rendererParams.value.resize ?? 'none');

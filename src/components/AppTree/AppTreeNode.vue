@@ -1,5 +1,11 @@
 <template>
-    <div class="app-tree-node" role="treeitem" :aria-expanded="hasChildren ? open : undefined" :aria-selected="tree.selectedId.value === item.id">
+    <div
+        class="app-tree-node"
+        role="treeitem"
+        :aria-expanded="hasChildren ? open : undefined"
+        :aria-selected="tree.selectedId.value === item.id"
+        :aria-disabled="item.disabled || undefined"
+    >
         <div
             class="app-tree-node__row"
             :class="{ 'is-selected': tree.selectedId.value === item.id, 'is-disabled': item.disabled }"
@@ -12,7 +18,7 @@
                 :class="{ 'is-open': open }"
                 :size="18"
                 :icon-size="10"
-                :aria-label="open ? '접기' : '펼치기'"
+                :aria-label="open ? $t('ui.collapse') : $t('ui.expand')"
                 @click.stop="tree.toggleExpand(item.id)"
             >
                 <IconChevronRight />
@@ -25,7 +31,7 @@
                 size="sm"
                 :model-value="tree.checkState(item) === 'checked'"
                 :indeterminate="tree.checkState(item) === 'partial'"
-                :aria-label="`${item.label} 선택`"
+                :aria-label="$t('ui.tree.select', { label: item.label })"
                 :disabled="item.disabled"
                 @click.stop
                 @update:model-value="tree.toggleCheck(item)"

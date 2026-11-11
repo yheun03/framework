@@ -40,7 +40,7 @@
             <AppIconButton
                 v-if="clearable && modelValue"
                 class="app-input__icon app-input__icon--right"
-                aria-label="입력값 지우기"
+                :aria-label="$t('ui.input.clear')"
                 @click="emit('update:modelValue', '')"
             >
                 <IconClose />
@@ -49,7 +49,7 @@
             <AppIconButton
                 v-if="passwordToggle"
                 class="app-input__icon app-input__icon--right"
-                :aria-label="showPassword ? '비밀번호 숨기기' : '비밀번호 표시'"
+                :aria-label="showPassword ? $t('ui.input.hidePassword') : $t('ui.input.showPassword')"
                 :aria-pressed="showPassword"
                 @click="showPassword = !showPassword"
             >
@@ -67,6 +67,8 @@
 </template>
 
 <script setup>
+import { useLabelWarning } from '@/utils/a11y';
+import { FORM_SHAPES, FORM_SIZES, STATES, oneOf } from '@/utils/props';
 import { APP_FORM_FIELD_KEY } from '@/components/AppFormField.vue';
 import { APP_INPUT_GROUP_KEY } from '@/components/AppInputGroup.vue';
 import { IconClose, IconEye, IconEyeOff } from '@/components/icons';
@@ -81,9 +83,9 @@ const props = defineProps({
     hint: { type: String },
     placeholder: { type: String },
     type: { type: String, default: 'text' },
-    size: { type: String, default: 'md' },
-    shape: { type: String, default: 'round' },
-    state: { type: [String, null], default: null },
+    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */
     width: { type: [Number, String] },
     maxLength: { type: Number },
@@ -105,14 +107,20 @@ const fallbackId = useId();
 const formField = inject(APP_FORM_FIELD_KEY, null);
 const inputId = computed(() => props.id ?? formField?.id.value ?? `app-input-${fallbackId}`);
 const inputGroupLabel = inject(APP_INPUT_GROUP_KEY, null);
-// 이름 우선순위: label > ariaLabel > placeholder(브라우저 기본) > AppInputGroup label
+// 이름 우선순위: label > ariaLabel > AppSearchItem · AppInputGroup 라벨(+ placeholder) > placeholder(브라우저 기본)
+// 예) 조회 조건 '품목' 안의 placeholder '품목명' → '품목 품목명', 입력 그룹 '수량 범위' 의 '최소' → '수량 범위 최소'
 const inputAriaLabel = computed(() => {
     if (props.label) return undefined;
-    return props.ariaLabel ?? (props.placeholder ? undefined : inputGroupLabel?.value || undefined);
+    if (props.ariaLabel) return props.ariaLabel;
+    const groupLabel = inputGroupLabel?.value;
+    if (!groupLabel) return undefined;
+    return props.placeholder && props.placeholder !== groupLabel ? `${groupLabel} ${props.placeholder}` : groupLabel;
 });
 const describedby = computed(() => [formField?.describedby.value, props.hint && `${inputId.value}-hint`].filter(Boolean).join(' ') || undefined);
 const rootStyle = computed(() => toSizeStyle(props.width));
 const inputType = computed(() => (props.passwordToggle ? (showPassword.value ? 'text' : 'password') : props.type));
+
+useLabelWarning('AppInput', () => document.getElementById(inputId.value));
 
 function handleInput(event) {
     emit('update:modelValue', event.target.value);

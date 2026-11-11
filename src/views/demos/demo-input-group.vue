@@ -35,15 +35,15 @@
 
                     <div class="page-demo-stack">
                         <AppInputGroup label="이메일" separator="@" :width="420">
-                            <AppInput v-model="email.id" size="sm" placeholder="아이디" />
+                            <AppInput v-model="email.id" size="sm" placeholder="아이디" aria-label="아이디" />
                             <AppSelect v-model="email.domain" :items="domains" size="sm" />
                         </AppInputGroup>
                         <AppInputGroup label="수량 범위" separator="~" :width="420">
-                            <AppInput v-model="range.min" size="sm" placeholder="최소" />
-                            <AppInput v-model="range.max" size="sm" placeholder="최대" />
+                            <AppInput v-model="range.min" size="sm" placeholder="최소" aria-label="최소" />
+                            <AppInput v-model="range.max" size="sm" placeholder="최대" aria-label="최대" />
                         </AppInputGroup>
                         <AppInputGroup label="구분 문자 없음" :width="420">
-                            <AppInput v-model="email.id" size="sm" placeholder="코드" />
+                            <AppInput v-model="email.id" size="sm" placeholder="코드" aria-label="코드" />
                             <AppButton size="sm" variant="fill" tone="gray">검색</AppButton>
                         </AppInputGroup>
                     </div>
@@ -56,9 +56,9 @@
                     </ul>
 
                     <AppInputGroup label="gap = 4" :gap="4" :width="420">
-                        <AppInput v-model="spec.w" size="sm" placeholder="가로" />
-                        <AppInput v-model="spec.h" size="sm" placeholder="세로" />
-                        <AppInput v-model="spec.d" size="sm" placeholder="높이" />
+                        <AppInput v-model="spec.w" size="sm" placeholder="가로" aria-label="가로" />
+                        <AppInput v-model="spec.h" size="sm" placeholder="세로" aria-label="세로" />
+                        <AppInput v-model="spec.d" size="sm" placeholder="높이" aria-label="높이" />
                     </AppInputGroup>
                 </PageDemoSection>
 

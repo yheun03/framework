@@ -1,6 +1,12 @@
 <template>
     <div class="app-grid-cell-control" @click.stop>
-        <AppChoice :model-value="checked" type="checkbox" size="sm" @update:model-value="handleChange" />
+        <AppChoice
+            :model-value="checked"
+            type="checkbox"
+            size="sm"
+            :aria-label="$t('ui.table.selectRow', { n: (params.node?.rowIndex ?? 0) + 1 })"
+            @update:model-value="handleChange"
+        />
     </div>
 </template>
 

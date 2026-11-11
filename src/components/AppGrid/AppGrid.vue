@@ -3,11 +3,16 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
 defineOptions({
-    ssr: false,
     inheritAttrs: false,
 });
+// AG Grid 는 그리드를 쓰는 화면에서만 불러옵니다. (main.js 전역 등록 시 모든 화면 첫 로딩에 포함됨)
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridVue } from 'ag-grid-vue3';
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 import AppGridCellSelectionChoice from '@/components/AppGrid/Cell/AppGridCellSelectionChoice.vue';
 import AppGridHeaderSelectionChoice from '@/components/AppGrid/Header/AppGridHeaderSelectionChoice.vue';
@@ -186,9 +191,17 @@ function normalizeRowSelection(rowSelection) {
     };
 }
 
-function toLegacyRowSelection(rowSelection) {
+// AppChoice 선택 컬럼을 쓸 때: AG Grid 기본 체크박스 · 클릭 선택은 끄고, 행 클릭 선택은 onCellClicked 에서 직접 처리합니다.
+// (AG Grid v32.2+ 객체 방식 - 폐지 예정인 'single' | 'multiple' · rowMultiSelectWithClick · suppressRowClickSelection 대체)
+function toCustomColumnRowSelection(rowSelection) {
     if (!rowSelection || typeof rowSelection === 'string') return rowSelection;
-    return rowSelection.mode === 'singleRow' ? 'single' : 'multiple';
+    return {
+        mode: rowSelection.mode === 'singleRow' ? 'singleRow' : 'multiRow',
+        checkboxes: false,
+        headerCheckbox: false,
+        enableClickSelection: false,
+        ...(rowSelection.mode === 'singleRow' ? {} : { enableSelectionWithoutKeys: true }),
+    };
 }
 
 function shouldAddSelectionColumn(rowSelection) {
@@ -292,26 +305,22 @@ const gridAttrs = computed(() => {
         ? [getSelectionColumn(resolvedSelectionColumnDef), ...(normalizedColumnDefs ?? [])]
         : normalizedColumnDefs;
     const finalRowSelection = shouldUseAppChoiceSelectionColumn
-        ? toLegacyRowSelection(resolvedRowSelection)
+        ? toCustomColumnRowSelection(resolvedRowSelection)
         : normalizeRowSelection(resolvedRowSelection);
-    const shouldEnableMultiSelectWithClick =
-        shouldUseAppChoiceSelectionColumn && typeof resolvedRowSelection === 'object' && resolvedRowSelection.mode === 'multiRow';
     const shouldHandleClickSelection = shouldUseAppChoiceSelectionColumn && isClickSelectionEnabled(resolvedRowSelection);
 
     return {
         ...rest,
 
-        overlayLoadingTemplate: '<div class="ag-overlay-loading">로딩중...</div>',
+        overlayLoadingTemplate: `<div class="ag-overlay-loading">${i18n.global.t('ui.loadingOverlay')}</div>`,
 
-        overlayNoRowsTemplate: '<div class="ag-overlay-no-rows">검색된 결과가 없습니다</div>',
+        overlayNoRowsTemplate: `<div class="ag-overlay-no-rows">${i18n.global.t('ui.grid.noRows')}</div>`,
 
         domLayout: props.autoHeight ? 'autoHeight' : resolvedDomLayout,
         headerHeight: resolveNumberAttr(resolvedHeaderHeight, props.headerHeight),
         rowHeight: resolveNumberAttr(resolvedRowHeight, props.rowHeight),
         getRowHeight: resolvedGetRowHeight,
         ...(finalRowSelection ? { rowSelection: finalRowSelection } : {}),
-        ...(shouldEnableMultiSelectWithClick ? { rowMultiSelectWithClick: true } : {}),
-        ...(shouldHandleClickSelection ? { suppressRowClickSelection: true } : {}),
         ...(resolvedSelectionColumnDef && !shouldUseAppChoiceSelectionColumn ? { selectionColumnDef: resolvedSelectionColumnDef } : {}),
         defaultColDef: normalizedDefaultColDef,
         ...(resolvedColumnDefs ? { columnDefs: resolvedColumnDefs } : {}),

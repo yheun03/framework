@@ -40,7 +40,7 @@
                         class="section-demo__wrapper-demo"
                         title="Project Status"
                         description="direction='column' / gap='24'"
-                        direction="column"
+                        direction="vertical"
                         :gap="24"
                     >
                         <template #header>
@@ -79,7 +79,7 @@
                         class="section-demo__wrapper-demo"
                         title="Dashboard Layout"
                         description="direction='row' / ratio='2fr 1fr' / gap='20'"
-                        direction="row"
+                        direction="horizontal"
                         :ratio="[2, 1]"
                         :gap="20"
                     >
@@ -119,14 +119,14 @@
                         class="section-demo__wrapper-demo"
                         title="Weekly Tasks"
                         description="정적 section 예시"
-                        direction="column"
+                        direction="vertical"
                         :gap="16"
                     >
                         <AppSection
                             class="section-demo__section-demo"
                             title="Section Item 1"
                             description="첫 번째 섹션"
-                            direction="row"
+                            direction="horizontal"
                             :ratio="[1, 1]"
                             :gap="8"
                         >
@@ -149,7 +149,7 @@
                             class="section-demo__section-demo"
                             title="Section Item 2"
                             description="두 번째 섹션"
-                            direction="row"
+                            direction="horizontal"
                             :ratio="[1, 1]"
                             :gap="8"
                         >
@@ -172,7 +172,7 @@
                             class="section-demo__section-demo"
                             title="Section Item 3"
                             description="세 번째 섹션"
-                            direction="row"
+                            direction="horizontal"
                             :ratio="[1, 1]"
                             :gap="8"
                         >
@@ -202,7 +202,7 @@
                         class="section-demo__wrapper-demo"
                         title="Weekly Tasks"
                         description="반복 section 예시"
-                        direction="column"
+                        direction="vertical"
                         :gap="16"
                     >
                         <AppSection
@@ -211,7 +211,7 @@
                             class="section-demo__section-demo"
                             :title="item.title"
                             :description="item.description"
-                            direction="row"
+                            direction="horizontal"
                             :ratio="[1, 1]"
                             :gap="8"
                         >
@@ -302,12 +302,12 @@ const repeatedSections = ref([
 
     strong {
         font-weight: 700;
-        color: #0f172a;
+        color: var(--theme-color-02-black);
     }
 
     span {
-        font-size: 14px;
-        color: #475569;
+        @include font(b3, rg);
+        color: var(--theme-color-03-gray);
     }
 
     &--wrapper-header {

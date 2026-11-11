@@ -26,7 +26,7 @@
                     <AppIconButton
                         v-if="modalItem.closable"
                         class="app-modal__close"
-                        aria-label="닫기"
+                        :aria-label="$t('ui.close')"
                         :size="34"
                         :icon-size="18"
                         @click="handleModalClose(modalItem.id, 'close')"
@@ -82,6 +82,7 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
 import { IconClose } from '@/components/icons';
 import { useModalStore } from '@/store/modal';
 import { computed, onBeforeUnmount, onMounted } from 'vue';
@@ -123,7 +124,7 @@ function hasFooter(modalItem) {
 }
 
 function getAriaLabel(modalItem) {
-    return modalItem.title || '모달';
+    return modalItem.title || i18n.global.t('ui.modal.name');
 }
 
 function isTopModal(modalId) {

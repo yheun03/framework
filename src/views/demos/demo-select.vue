@@ -18,7 +18,7 @@
                             :items="departmentOptions"
                         />
                         <AppSelect v-model="basic.job" label="직무" placeholder="직무를 선택하세요" :items="jobOptions" />
-                        <AppSelect v-model="basic.country" placeholder="국가 선택" :items="countryOptions" />
+                        <AppSelect v-model="basic.country" placeholder="국가 선택" :items="countryOptions" aria-label="국가 선택" />
                     </div>
                 </PageDemoSection>
 
@@ -155,4 +155,4 @@ const stateSuccess = ref(null);
 const disabledValue = ref('dev');
 </script>
 
-<!-- demo 공통 스타일은 assets/scss/pages/demo.scss 에서 관리 -->
+<!-- demo 공통 스타일: assets/styles/pages/_demo.scss -->

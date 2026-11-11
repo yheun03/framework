@@ -36,7 +36,7 @@
                 :size="40"
                 :icon-size="navIconSize"
                 :disabled="!loop && current === 0"
-                aria-label="이전"
+                :aria-label="$t('ui.prev')"
                 @click="prev"
             >
                 <IconChevronLeft />
@@ -47,7 +47,7 @@
                 :size="40"
                 :icon-size="navIconSize"
                 :disabled="!loop && current === items.length - 1"
-                aria-label="다음"
+                :aria-label="$t('ui.next')"
                 @click="next"
             >
                 <IconChevronRight />
@@ -66,7 +66,7 @@
                     unstyled
                     class="app-carousel__dot"
                     :class="{ 'is-active': index === current }"
-                    :aria-label="`${index + 1}번 슬라이드`"
+                    :aria-label="$t('ui.carousel.slideN', { n: index + 1 })"
                     :aria-current="index === current || undefined"
                     @click="goTo(index)"
                 />
@@ -77,7 +77,7 @@
                 shape="pill"
                 :size="22"
                 :icon-size="9"
-                :aria-label="playing ? '일시정지' : '재생'"
+                :aria-label="playing ? $t('ui.carousel.pause') : $t('ui.carousel.play')"
                 @click="playing = !playing"
             >
                 <IconPause v-if="playing" />
@@ -88,6 +88,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { IconChevronLeft, IconChevronRight, IconPause, IconPlay } from '@/components/icons';
 
 import { toSizeStyle } from '@/utils/css';
@@ -98,7 +99,7 @@ import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 /**
  * AppCarousel (Figma 11. ETC - 좌우 슬라이드 버튼 / 인디케이터 / 플레이 버튼)
  * indicator: dots / bar(활성 막대) / line(진행 라인) / fraction(1/10) / none
- * navVariant: square / circle / plain(배경 없는 화살표) / banner(빌보드·띠배너 56x80 사각 화살표, Figma 16·17)
+ * navVariant: square / circle / plain(배경 없는 화살표)
  * 자동 재생 시 재생/일시정지 버튼을 항상 함께 제공합니다. (Figma 접근성 가이드)
  * 좌우/재생 버튼은 AppIconButton, 인디케이터 점은 AppButton(unstyled) 으로 구성합니다.
  */
@@ -111,8 +112,8 @@ const props = defineProps({
     interval: { type: Number, default: 4000 },
     loop: { type: Boolean, default: true },
     arrows: { type: Boolean, default: true },
-    navVariant: { type: String, default: 'circle' },
-    indicator: { type: String, default: 'dots' },
+    navVariant: { type: String, default: 'circle', validator: oneOf(['circle', 'square', 'plain']) },
+    indicator: { type: String, default: 'dots', validator: oneOf(['dots', 'bar', 'line', 'fraction', 'none']) },
     pauseOnHover: { type: Boolean, default: true },
     width: { type: [Number, String] },
     height: { type: [Number, String], default: 280 },
@@ -124,7 +125,7 @@ const innerIndex = ref(0);
 const playing = ref(props.autoplay);
 const hovering = ref(false);
 const current = computed(() => props.modelValue ?? innerIndex.value);
-const navIconSize = computed(() => ({ plain: 28, banner: 20 })[props.navVariant] ?? 16);
+const navIconSize = computed(() => ({ plain: 28 })[props.navVariant] ?? 16);
 const rootStyle = computed(() => ({ ...toSizeStyle(props.width, props.height), '--app-carousel-interval': `${props.interval}ms` }));
 let timer = null;
 

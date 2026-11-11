@@ -8,7 +8,7 @@
 
         <div v-else class="app-progress-slider__control">
             <label v-if="label" class="app-progress-slider__label">{{ label }}</label>
-            <div ref="rangeSliderEl" class="app-progress-slider__noui" role="group" aria-label="프로그레스 범위 선택" />
+            <div ref="rangeSliderEl" class="app-progress-slider__noui" role="group" :aria-label="$t('ui.progress.rangeGroup')" />
             <div v-if="showValue" class="app-progress-slider__range-value">
                 <span>{{ normalizedRange.start }}%</span>
                 <span>{{ normalizedRange.end }}%</span>
@@ -18,7 +18,9 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
 import noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
 
 import { isSameProgressRange, normalizeProgressRange, normalizeProgressValue } from '@/utils/progress';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
@@ -65,7 +67,7 @@ function createSingleSlider() {
         behaviour: 'tap-drag',
         animate: false,
         // 조작 요소(role=slider)는 noUiSlider 핸들이므로 핸들에 이름을 붙입니다.
-        handleAttributes: [{ 'aria-label': props.label || '진행률' }],
+        handleAttributes: [{ 'aria-label': props.label || i18n.global.t('ui.progress.name') }],
     });
     singleSlider.on('slide', handleSingleChange);
 }
@@ -80,7 +82,10 @@ function createRangeSlider() {
         step: 1,
         behaviour: 'tap-drag',
         animate: false,
-        handleAttributes: [{ 'aria-label': `${props.label || '범위'} 시작` }, { 'aria-label': `${props.label || '범위'} 끝` }],
+        handleAttributes: [
+            { 'aria-label': i18n.global.t('ui.progress.start', { label: props.label || i18n.global.t('ui.progress.range') }) },
+            { 'aria-label': i18n.global.t('ui.progress.end', { label: props.label || i18n.global.t('ui.progress.range') }) },
+        ],
     });
     rangeSlider.on('slide', handleRangeChange);
 }

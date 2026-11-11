@@ -1,22 +1,22 @@
 <template>
-    <nav class="layout-nav" aria-label="Sidebar navigation">
+    <nav class="layout-nav" :aria-label="$t('ui.nav.name')">
         <div class="layout-nav__header">
             <div class="layout-nav__brand">
                 <div class="layout-nav__logo nav-logo" aria-hidden="true">
                     <IconApp class="nav-logo__mark" />
                 </div>
 
-                <AppIconButton class="layout-nav__mobile-close" aria-label="메뉴 닫기" :size="36" :icon-size="18" @click="handleClose"
+                <AppIconButton class="layout-nav__mobile-close" :aria-label="$t('ui.nav.close')" :size="36" :icon-size="18" @click="handleClose"
                     ><IconClose
                 /></AppIconButton>
             </div>
 
-            <div class="layout-nav__actions" :aria-label="t('nav.demos')">
+            <div class="layout-nav__actions" :aria-label="$t('ui.nav.tools')">
                 <AppIconButton
                     v-for="action in headerActions"
-                    :key="action.label"
+                    :key="action.labelKey"
                     class="nav-action"
-                    :aria-label="action.label"
+                    :aria-label="$t(action.labelKey)"
                     size="md"
                     icon-size="lg"
                 >
@@ -26,7 +26,7 @@
         </div>
 
         <div class="layout-nav__search" role="search">
-            <label class="sr-only" for="layout-nav-search">메뉴 검색</label>
+            <label class="sr-only" for="layout-nav-search">{{ $t('ui.nav.search') }}</label>
             <IconSearch class="layout-nav__search-icon" />
             <input
                 id="layout-nav-search"
@@ -34,23 +34,30 @@
                 v-model="keyword"
                 class="layout-nav__search-input"
                 type="search"
-                placeholder="메뉴 검색 (예: 버튼, tabs)"
+                :placeholder="$t('ui.nav.searchPlaceholder')"
                 autocomplete="off"
                 @keydown.esc="keyword = ''"
             />
             <kbd v-if="!keyword" class="layout-nav__search-key" aria-hidden="true">/</kbd>
-            <AppIconButton v-else class="layout-nav__search-clear" aria-label="검색어 지우기" :size="24" :icon-size="14" @click="clearKeyword">
+            <AppIconButton
+                v-else
+                class="layout-nav__search-clear"
+                :aria-label="$t('ui.nav.clearSearch')"
+                :size="24"
+                :icon-size="14"
+                @click="clearKeyword"
+            >
                 <IconClose />
             </AppIconButton>
         </div>
 
         <div ref="navBody" class="layout-nav__body">
             <div class="layout-nav__list-wrap">
-                <p class="sr-only" aria-live="polite">{{ keyword ? `검색 결과 ${resultCount}개` : '' }}</p>
+                <p class="sr-only" aria-live="polite">{{ keyword ? $t('ui.nav.resultCount', { n: resultCount }) : '' }}</p>
                 <ul v-if="visibleTree.length" class="layout-nav__list" :aria-label="t('nav.home')">
                     <LayoutNavItem v-for="menu in visibleTree" :key="menu.id" :item="menu" :keyword="normalizedKeyword" />
                 </ul>
-                <p v-else class="layout-nav__empty">'{{ keyword }}' 와 일치하는 메뉴가 없습니다.</p>
+                <p v-else class="layout-nav__empty">{{ $t('ui.nav.noResult', { keyword }) }}</p>
             </div>
         </div>
 

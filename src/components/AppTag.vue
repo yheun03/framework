@@ -28,7 +28,7 @@
             :icon-size="closeSize.icon"
             shape="pill"
             :disabled="disabled"
-            aria-label="삭제"
+            :aria-label="$t('ui.tag.remove')"
             @click.stop="emit('close')"
         >
             <IconCloseSmall />
@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+import { SHAPES, TAG_TONES, oneOf } from '@/utils/props';
 import { IconCloseSmall } from '@/components/icons';
 import { computed } from 'vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -51,10 +52,10 @@ import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 const props = defineProps({
     label: { type: String, default: '' },
     /** fill(면) / soft(연한 면) / outline(라인) / default(흰 바탕 회색 라인 - 선택 태그) */
-    variant: { type: String, default: 'outline' },
-    tone: { type: String, default: 'gray' },
-    size: { type: String, default: 'sm' },
-    shape: { type: String, default: 'square' },
+    variant: { type: String, default: 'outline', validator: oneOf(['default', 'outline', 'soft', 'fill']) },
+    tone: { type: String, default: 'gray', validator: oneOf(TAG_TONES) },
+    size: { type: String, default: 'sm', validator: oneOf(['xs', 'sm', 'md']) },
+    shape: { type: String, default: 'square', validator: oneOf(SHAPES) },
     /** 앞쪽 상태 점 */
     dot: { type: Boolean, default: false },
     /** 삭제(X) 버튼 노출 - close 이벤트 */

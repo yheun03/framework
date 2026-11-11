@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppInput v-model="value" size="sm" :type="inputOptions.type" :placeholder="inputOptions.placeholder" />
+        <AppInput v-model="value" size="sm" :type="inputOptions.type" :placeholder="inputOptions.placeholder" :aria-label="cellLabel" />
     </div>
 </template>
 
@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const params = props.params;
-const { rendererParams, value } = useAppGridCellRendererValue(params);
+const { rendererParams, value, cellLabel } = useAppGridCellRendererValue(params);
 
 const inputOptions = computed(() => ({
     type: rendererParams.value.type ?? 'text',

@@ -25,11 +25,13 @@
 </template>
 
 <script setup>
+import { DIRECTIONS, oneOf } from '@/utils/props';
 import { buildSectionStyleVars } from '@/utils/section';
 import { computed } from 'vue';
 
 const props = defineProps({
-    direction: { type: String, default: 'column' },
+    /** vertical: 위아래로 쌓기 / horizontal: 좌우로 나란히 (ratio 로 비율) */
+    direction: { type: String, default: 'vertical', validator: oneOf(DIRECTIONS) },
     ratio: { type: [Array, String, null], default: null },
     title: { type: String, default: '' },
     description: { type: String, default: '' },

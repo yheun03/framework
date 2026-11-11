@@ -3,6 +3,7 @@
  */
 
 import { computed } from 'vue';
+import i18n from '@/i18n';
 
 export function useAppGridCellRendererValue(params) {
     const rendererParams = computed(() => params?.colDef?.cellRendererParams ?? {});
@@ -14,8 +15,17 @@ export function useAppGridCellRendererValue(params) {
         },
     });
 
+    // 셀 안 입력 요소의 스크린리더 이름 (예: '3행 상품명')
+    const cellLabel = computed(() =>
+        i18n.global.t('ui.grid.cellLabel', {
+            row: (params?.node?.rowIndex ?? 0) + 1,
+            column: params?.colDef?.headerName ?? params?.colDef?.field ?? '',
+        }),
+    );
+
     return {
         rendererParams,
         value,
+        cellLabel,
     };
 }

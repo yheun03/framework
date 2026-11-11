@@ -5,7 +5,7 @@
 
             <div class="app-image-viewer__nav">
                 <AppIconButton
-                    aria-label="이전 이미지"
+                    :aria-label="$t('ui.viewer.prevImage')"
                     variant="outline"
                     :size="34"
                     :icon-size="18"
@@ -16,7 +16,7 @@
                 </AppIconButton>
 
                 <AppIconButton
-                    aria-label="다음 이미지"
+                    :aria-label="$t('ui.viewer.nextImage')"
                     variant="outline"
                     :size="34"
                     :icon-size="18"
@@ -32,14 +32,14 @@
             <img v-if="currentItem" class="app-image-viewer__image" :src="currentItem.url" :alt="currentItem.alt" />
         </div>
 
-        <div v-if="isGallery" class="app-image-viewer__thumbs" aria-label="이미지 목록">
+        <div v-if="isGallery" class="app-image-viewer__thumbs" :aria-label="$t('ui.viewer.imageList')">
             <button
                 v-for="(item, index) in imageItems"
                 :key="`${item.url}-${index}`"
                 type="button"
                 class="app-image-viewer__thumb"
                 :class="{ 'is-active': index === currentIndex }"
-                :aria-label="`${index + 1}번 이미지 보기`"
+                :aria-label="$t('ui.viewer.imageN', { n: index + 1 })"
                 @click="setCurrentIndex(index)"
             >
                 <img class="app-image-viewer__thumb-image" :src="item.url" :alt="item.alt" />

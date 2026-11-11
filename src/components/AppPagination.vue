@@ -7,11 +7,11 @@
                 'is-disabled': disabled,
             },
         ]"
-        aria-label="페이지네이션"
+        :aria-label="$t('ui.pagination.name')"
     >
         <div v-if="showTotal" class="app-pagination__total">
-            총 <strong>{{ total }}</strong
-            >건
+            {{ $t('ui.totalPrefix') }} <strong>{{ total.toLocaleString() }}</strong
+            >{{ $t('ui.totalSuffix') }}
         </div>
 
         <div class="app-pagination__controls">
@@ -19,7 +19,7 @@
                 type="button"
                 class="app-pagination__button"
                 :disabled="disabled || isFirstPage"
-                aria-label="첫 페이지"
+                :aria-label="$t('ui.pagination.first')"
                 @click="handlePageChange(1)"
             >
                 <IconDoubleLeft />
@@ -29,7 +29,7 @@
                 type="button"
                 class="app-pagination__button"
                 :disabled="disabled || isFirstPage"
-                aria-label="이전 페이지"
+                :aria-label="$t('ui.pagination.prev')"
                 @click="handlePageChange(page - 1)"
             >
                 <IconChevronLeft />
@@ -52,7 +52,7 @@
                 type="button"
                 class="app-pagination__button"
                 :disabled="disabled || isLastPage"
-                aria-label="다음 페이지"
+                :aria-label="$t('ui.pagination.next')"
                 @click="handlePageChange(page + 1)"
             >
                 <IconChevronRight />
@@ -62,7 +62,7 @@
                 type="button"
                 class="app-pagination__button"
                 :disabled="disabled || isLastPage"
-                aria-label="마지막 페이지"
+                :aria-label="$t('ui.pagination.last')"
                 @click="handlePageChange(totalPages)"
             >
                 <IconDoubleRight />
@@ -70,12 +70,20 @@
         </div>
 
         <div v-if="showPageSize" class="app-pagination__size">
-            <AppSelect :model-value="pageSize" :items="pageSizeSelectOptions" :disabled="disabled" @update:model-value="handlePageSizeChange" />
+            <AppSelect
+                :model-value="pageSize"
+                :items="pageSizeSelectOptions"
+                :disabled="disabled"
+                :aria-label="$t('ui.pagination.pageSizeLabel')"
+                @update:model-value="handlePageSizeChange"
+            />
         </div>
     </nav>
 </template>
 
 <script setup>
+import i18n from '@/i18n';
+import { oneOf } from '@/utils/props';
 import { IconChevronLeft, IconChevronRight, IconDoubleLeft, IconDoubleRight } from '@/components/icons';
 import { computed, watch } from 'vue';
 import AppSelect from '@/components/AppSelect.vue';
@@ -89,7 +97,7 @@ const props = defineProps({
     showTotal: { type: Boolean, default: true },
     showPageSize: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md']) },
 });
 
 const emit = defineEmits(['update:page', 'update:pageSize', 'change']);
@@ -109,7 +117,7 @@ const isLastPage = computed(() => normalizedPage.value >= totalPages.value);
 
 const pageSizeSelectOptions = computed(() =>
     props.pageSizeOptions.map((size) => ({
-        label: `${size}개씩 보기`,
+        label: i18n.global.t('ui.pagination.pageSize', { n: size }),
         value: size,
     })),
 );

@@ -1,10 +1,10 @@
 <template>
     <div class="app-pdf-viewer">
         <div v-if="sourceUrl" class="app-pdf-viewer__frame-wrap">
-            <iframe class="app-pdf-viewer__frame" :src="sourceUrl" :title="fileName || 'PDF 미리보기'" />
+            <iframe class="app-pdf-viewer__frame" :src="sourceUrl" :title="fileName || $t('ui.viewer.pdfTitle')" />
         </div>
 
-        <div v-else class="app-pdf-viewer__empty">미리보기할 PDF가 없습니다.</div>
+        <div v-else class="app-pdf-viewer__empty">{{ $t('ui.viewer.noPdf') }}</div>
     </div>
 </template>
 

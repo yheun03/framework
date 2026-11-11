@@ -1,0 +1,5 @@
+#!/bin/sh
+# 커밋 전 자동 검사 (npm install 시 scripts/install-hooks.mjs 가 연결합니다)
+# 급하게 건너뛰어야 할 때만: git commit --no-verify
+echo "[pre-commit] lint · format 검사"
+npm run --silent lint && npm run --silent format:check

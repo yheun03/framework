@@ -146,4 +146,4 @@ function handleGaugeRangeUpdate(value) {
 /* computed */
 </script>
 
-<!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
+<!-- demo 공통 스타일: assets/styles/pages/_demo.scss -->

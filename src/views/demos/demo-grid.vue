@@ -132,6 +132,7 @@
 </template>
 
 <script setup>
+import { sampleImage } from '@/utils/sampleImage';
 import AppGridCellSelect from '@/components/AppGrid/Cell/AppGridCellSelect.vue';
 import AppGridCellInput from '@/components/AppGrid/Cell/AppGridCellInput.vue';
 import AppGridCellChoice from '@/components/AppGrid/Cell/AppGridCellChoice.vue';
@@ -842,8 +843,8 @@ const rows3 = [
     {
         productId: 'P-001',
         listedAt: '2026-01-08',
-        productImage: 'https://picsum.photos/80?random=101',
-        productGallery: ['https://picsum.photos/80?random=111', 'https://picsum.photos/80?random=112'],
+        productImage: sampleImage(101, 80),
+        productGallery: [sampleImage(111, 80), sampleImage(112, 80)],
         manualFile: '/samples/notebook-manual.pdf',
         attachments: ['/samples/notebook-spec.pdf', '/samples/notebook-warranty.pdf'],
         product: '노트북',
@@ -859,8 +860,8 @@ const rows3 = [
     {
         productId: 'P-002',
         listedAt: '2026-02-14',
-        productImage: 'https://picsum.photos/80?random=102',
-        productGallery: ['https://picsum.photos/80?random=121', 'https://picsum.photos/80?random=122', 'https://picsum.photos/80?random=123'],
+        productImage: sampleImage(102, 80),
+        productGallery: [sampleImage(121, 80), sampleImage(122, 80), sampleImage(123, 80)],
         manualFile: '/samples/keyboard-manual.docx',
         attachments: ['/samples/keyboard-layout.pdf', '/samples/keyboard-price.xlsx'],
         product: '키보드',
@@ -876,8 +877,8 @@ const rows3 = [
     {
         productId: 'P-003',
         listedAt: '2026-02-20',
-        productImage: 'https://picsum.photos/80?random=103',
-        productGallery: ['https://picsum.photos/80?random=131'],
+        productImage: sampleImage(103, 80),
+        productGallery: [sampleImage(131, 80)],
         manualFile: '/samples/mouse-manual.pdf',
         attachments: ['/samples/mouse-guide.pdf'],
         product: '마우스',
@@ -893,13 +894,8 @@ const rows3 = [
     {
         productId: 'P-004',
         listedAt: '2026-03-01',
-        productImage: 'https://picsum.photos/80?random=104',
-        productGallery: [
-            'https://picsum.photos/80?random=141',
-            'https://picsum.photos/80?random=142',
-            'https://picsum.photos/80?random=143',
-            'https://picsum.photos/80?random=144',
-        ],
+        productImage: sampleImage(104, 80),
+        productGallery: [sampleImage(141, 80), sampleImage(142, 80), sampleImage(143, 80), sampleImage(144, 80)],
         manualFile: '/samples/monitor-manual.pdf',
         attachments: ['/samples/monitor-install.pdf', '/samples/monitor-driver.zip', '/samples/monitor-checklist.xlsx'],
         product: '모니터',
@@ -915,7 +911,7 @@ const rows3 = [
     {
         productId: 'P-005',
         listedAt: '2026-03-15',
-        productImage: 'https://picsum.photos/80?random=105',
+        productImage: sampleImage(105, 80),
         productGallery: [],
         manualFile: '/samples/tablet-manual.pdf',
         attachments: [],

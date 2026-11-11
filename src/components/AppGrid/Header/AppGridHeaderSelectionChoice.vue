@@ -1,6 +1,13 @@
 <template>
     <div class="app-grid-cell-control" @click.stop>
-        <AppChoice :model-value="checked" :indeterminate="indeterminate" type="checkbox" size="sm" @update:model-value="handleChange" />
+        <AppChoice
+            :model-value="checked"
+            :indeterminate="indeterminate"
+            type="checkbox"
+            size="sm"
+            :aria-label="$t('ui.table.selectAll')"
+            @update:model-value="handleChange"
+        />
     </div>
 </template>
 

@@ -434,7 +434,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
 
     &__size {
         color: var(--theme-color-04-gray);
-        font-size: 12px;
+        @include font(c2, rg);
     }
 
     &__sample {
@@ -454,7 +454,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
 .demo-swatch {
     display: grid;
     gap: 4px;
-    font-size: 12px;
+    @include font(c2, rg);
 
     &__chip {
         height: 56px;
@@ -477,7 +477,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
     padding: 14px 16px;
     border-radius: 8px;
     color: var(--theme-color-01-white);
-    font-size: 12px;
+    @include font(c2, rg);
 }
 .demo-palette {
     display: grid;
@@ -493,7 +493,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
 
     &__hue {
         color: var(--theme-color-03-gray);
-        font-size: 12px;
+        @include font(c2, rg);
     }
 
     &__chip {
@@ -503,7 +503,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
         padding: 2px 4px;
         border-radius: 4px;
         color: rgb(0 0 0 / 55%);
-        font-size: 10px;
+        @include font(c3, rg);
     }
 }
 
@@ -520,7 +520,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
 
     &__token {
         color: var(--theme-color-04-gray);
-        font-size: 12px;
+        @include font(c2, rg);
     }
 
     &__bar {
@@ -533,7 +533,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
     width: 100%;
     margin-bottom: 16px;
     border-collapse: collapse;
-    font-size: 13px;
+    @include font(b4, rg);
 
     th,
     td {
@@ -557,7 +557,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
         border-radius: 4px;
         background: color-mix(in srgb, var(--theme-system-violet-400) 25%, transparent);
         color: var(--theme-color-03-gray);
-        font-size: 12px;
+        @include font(c2, rg);
         text-align: center;
     }
 }
@@ -571,7 +571,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', readTokens));
         display: grid;
         justify-items: start;
         gap: 6px;
-        font-size: 12px;
+        @include font(c2, rg);
 
         small {
             color: var(--theme-color-04-gray);

@@ -55,6 +55,9 @@
     --tone-purple-text: color-mix(in srgb, black 10%, var(--tone-purple));
     // 면(fill) 위 글자색 - 기본 흰색, 밝은 면(warning)은 검정
     --tone-warning-on-fill: var(--theme-color-02-black);
+    // 흰 글자를 올리는 fill 배경 (흰 글자 4.5:1 이상)
+    --tone-primary-fill: var(--theme-primary-fill);
+    --tone-orange-fill: var(--tone-orange-text);
 
     // 키보드 포커스 링 (흰 배경 / 검정 배경 모두 3:1 이상)
     --color-focus-ring: var(--theme-primary-text);
@@ -217,96 +220,6 @@
 
     // Input Group
     --color-input-group-separator: var(--theme-color-03-gray);
-
-    // Carousel banner nav (Figma 16·17 좌우화살표_BG : BG/Black_Opacity_20% → hover 60%)
-    --bg-carousel-banner-nav: var(--theme-bg-black-opacity-20);
-    --bg-carousel-banner-nav-hover: var(--theme-bg-black-opacity-60);
-
-    // ----------------------------------------
-    // 홈페이지 공통 (Figma 14~19 / MO 06)
-    // ----------------------------------------
-    // Site Header (18. GNB)
-    --bg-site-header: var(--theme-bg-white);
-    --border-site-header: var(--theme-line-black);
-    --border-site-header-search: var(--theme-line-regular);
-    --border-site-header-search-focus: var(--theme-line-black);
-    --color-site-header: var(--theme-color-02-black);
-    --color-site-header-placeholder: var(--theme-color-04-gray);
-    --color-site-header-active: var(--theme-primary-text);
-    --border-site-header-divider: var(--theme-line-regular);
-
-    // Site Footer (19. Footer)
-    --bg-site-footer: var(--theme-bg-white);
-    --border-site-footer: var(--theme-line-light);
-    --border-site-footer-divider: var(--theme-line-regular);
-    --color-site-footer-title: var(--theme-color-02-black);
-    --color-site-footer: var(--theme-color-03-gray);
-    --bg-site-footer-dark: var(--theme-bg-black);
-    --border-site-footer-dark: color-mix(in srgb, var(--theme-line-white) 16%, transparent);
-    --color-site-footer-dark-title: var(--theme-color-01-white);
-    --color-site-footer-dark: color-mix(in srgb, var(--theme-color-01-white) 64%, transparent);
-
-    // Dock Bar (MO 06. Dock Bar)
-    --bg-dock-bar: var(--theme-bg-white);
-    --border-dock-bar: var(--theme-line-light);
-    --color-dock-bar: var(--theme-color-04-gray);
-    --color-dock-bar-active: var(--theme-color-02-black);
-    --bg-dock-bar-badge: var(--theme-gradient-brand);
-    --color-dock-bar-badge: var(--theme-color-01-white);
-
-    // Billboard (16. Billboard Banner)
-    --bg-billboard: var(--theme-bg-black);
-    --bg-billboard-dim: linear-gradient(180deg, rgb(0 0 0 / 0%) 51%, rgb(0 0 0 / 40%) 100%);
-    --color-billboard-on-image: var(--theme-color-01-white);
-    --color-billboard-title: var(--theme-color-02-black);
-    --color-billboard-desc: var(--theme-color-04-gray);
-
-    // Line Banner (17. Line Banner)
-    --bg-line-banner-dark: var(--theme-bg-black);
-    --bg-line-banner-light: var(--theme-bg-light);
-    --bg-line-banner-brand: var(--theme-gradient-brand);
-    --color-line-banner-on-dark: var(--theme-color-01-white);
-    --color-line-banner-on-light: var(--theme-color-02-black);
-
-    // Product / Promotion Card (14·15. Thumbnail)
-    --bg-thumb: var(--theme-bg-light);
-    --bg-thumb-tint: var(--theme-bg-black-opacity-03);
-    --bg-thumb-hover: color-mix(in srgb, var(--theme-bg-white) 70%, transparent);
-    --color-thumb-action: var(--theme-color-02-black);
-    --color-thumb-action-active: var(--theme-brand-main);
-    --color-product-brand: var(--theme-color-02-black);
-    --color-product-name: var(--theme-color-03-gray);
-    --color-product-price: var(--theme-color-02-black);
-    --color-product-discount: var(--theme-primary-text);
-    --color-product-original: var(--theme-color-04-gray);
-    --bg-product-hashtag: var(--theme-bg-light);
-    --color-product-hashtag: var(--theme-color-03-gray); // BG Light 위 글자 (Figma 08: #505050 이하)
-    --color-promotion-label: var(--theme-color-02-black);
-    --color-promotion-title: var(--theme-color-02-black);
-    --color-promotion-period: var(--theme-color-04-gray);
-
-    // Heading / Feature / Pricing (기업·제품 홈페이지 확장)
-    --color-heading-eyebrow: var(--theme-primary-text);
-    --color-heading-title: var(--theme-color-02-black);
-    --color-heading-desc: var(--theme-color-03-gray);
-    --bg-feature-card: var(--theme-bg-white);
-    --bg-feature-card-box: var(--theme-bg-light);
-    --border-feature-card: var(--theme-line-regular);
-    --border-feature-card-hover: var(--theme-line-black);
-    --bg-feature-card-icon: color-mix(in srgb, var(--theme-brand-main) 8%, transparent);
-    --color-feature-card-icon: var(--theme-brand-main);
-    --color-feature-card-title: var(--theme-color-02-black);
-    --color-feature-card-desc: var(--theme-color-03-gray);
-    --bg-pricing-card: var(--theme-bg-white);
-    --border-pricing-card: var(--theme-line-regular);
-    --border-pricing-card-active: var(--theme-brand-main);
-    --color-pricing-card-title: var(--theme-color-02-black);
-    --color-pricing-card-desc: var(--theme-color-04-gray);
-    --color-pricing-card-price: var(--theme-color-02-black);
-    --color-pricing-card-check: var(--theme-brand-main);
-    --border-pricing-card-divider: var(--theme-line-light);
-    --bg-pricing-card-badge: var(--theme-gradient-brand);
-    --color-pricing-card-badge: var(--theme-color-01-white);
 
     // Equipment Card (MES 확장)
     --bg-equipment-card: var(--theme-bg-white);

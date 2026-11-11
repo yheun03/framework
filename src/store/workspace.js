@@ -10,7 +10,7 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         {
             id: 'welcome',
             title: 'Welcome',
-            content: '# Welcome\n\n옵시디언 스타일 워크스페이스 MVP입니다.\n',
+            content: '## Welcome\n\n옵시디언 스타일 워크스페이스 MVP입니다.\n',
         },
     ]);
     const activeTabId = ref('welcome');

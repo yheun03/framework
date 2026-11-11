@@ -134,6 +134,7 @@
 </template>
 
 <script setup>
+import { sampleImage } from '@/utils/sampleImage';
 import { reactive } from 'vue';
 import { useDemoI18n } from '@/composables/useI18nText';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -177,7 +178,7 @@ function toSampleImage(url, name = 'sample-image') {
     return {
         id: `sample-${name}`,
         name,
-        type: 'image/jpeg',
+        type: 'image/svg+xml',
         size: 0,
         url,
         alt: name,
@@ -186,18 +187,18 @@ function toSampleImage(url, name = 'sample-image') {
 }
 
 function handleBasicSampleSet() {
-    basic.imageUrl = toSampleImage('https://picsum.photos/240?random=11', 'basic-sample');
+    basic.imageUrl = toSampleImage(sampleImage(11, 240), 'basic-sample');
 }
 
 function handleStateSampleSet() {
-    state.imageUrl = toSampleImage('https://picsum.photos/240?random=12', 'state-sample');
+    state.imageUrl = toSampleImage(sampleImage(12, 240), 'state-sample');
 }
 
 function handleMultipleSamplesSet() {
     multiple.images = [
-        toSampleImage('https://picsum.photos/240?random=21', 'multiple-sample-1'),
-        toSampleImage('https://picsum.photos/240?random=22', 'multiple-sample-2'),
-        toSampleImage('https://picsum.photos/240?random=23', 'multiple-sample-3'),
+        toSampleImage(sampleImage(21, 240), 'multiple-sample-1'),
+        toSampleImage(sampleImage(22, 240), 'multiple-sample-2'),
+        toSampleImage(sampleImage(23, 240), 'multiple-sample-3'),
     ];
 }
 
@@ -218,4 +219,4 @@ function handleDisabledToggle() {
 }
 </script>
 
-<!-- demo 공통 스타일은 assets/scss/main.scss 로 이동 -->
+<!-- demo 공통 스타일: assets/styles/pages/_demo.scss -->

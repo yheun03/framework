@@ -3,8 +3,8 @@
         <div v-if="title || $slots.toolbar" class="app-data-table__head">
             <strong v-if="title" class="app-data-table__title">{{ title }}</strong>
             <span v-if="showTotal" class="app-data-table__total"
-                >총 <b>{{ (total ?? items.length).toLocaleString() }}</b
-                >건</span
+                >{{ $t('ui.totalPrefix') }} <b>{{ (total ?? items.length).toLocaleString() }}</b
+                >{{ $t('ui.totalSuffix') }}</span
             >
             <div v-if="$slots.toolbar" class="app-data-table__toolbar"><slot name="toolbar" /></div>
         </div>
@@ -27,7 +27,7 @@
                                 :model-value="isAllSelected"
                                 :indeterminate="isPartSelected"
                                 :disabled="!items.length"
-                                aria-label="전체 행 선택"
+                                :aria-label="$t('ui.table.selectAll')"
                                 @update:model-value="toggleAll"
                             />
                         </th>
@@ -56,7 +56,7 @@
                         <td v-if="selectable" class="app-data-table__check" @click.stop>
                             <AppChoice
                                 :model-value="isSelected(row)"
-                                :aria-label="`${rowIndex + 1}번째 행 선택`"
+                                :aria-label="$t('ui.table.selectRow', { n: rowIndex + 1 })"
                                 @update:model-value="toggleRow(row)"
                             />
                         </td>
@@ -69,7 +69,7 @@
                     <tr v-if="!items.length">
                         <td :colspan="columns.length + (selectable ? 1 : 0)" class="app-data-table__empty">
                             <slot name="empty">
-                                <AppEmpty size="sm" :title="emptyText" />
+                                <AppEmpty size="sm" :title="emptyText ?? $t('ui.empty.data')" />
                             </slot>
                         </td>
                     </tr>
@@ -80,6 +80,7 @@
 </template>
 
 <script setup>
+import { oneOf } from '@/utils/props';
 import { toCssSize, toCssWidth, toSizeStyle } from '@/utils/css';
 import { computed, ref } from 'vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -99,8 +100,8 @@ const props = defineProps({
     title: { type: String, default: '' },
     caption: { type: String, default: '' },
     /** board(게시판형, 헤더 면) / line(상단 진한 라인) / stripe(짝수행 면) / border(셀 경계선) */
-    variant: { type: String, default: 'board' },
-    size: { type: String, default: 'md' },
+    variant: { type: String, default: 'board', validator: oneOf(['board', 'line', 'stripe', 'border']) },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     /** v-model: 선택된 rowKey 배열 (selectable 일 때) */
     modelValue: { type: Array, default: () => [] },
     selectable: { type: Boolean, default: false },
@@ -109,7 +110,8 @@ const props = defineProps({
     showTotal: { type: Boolean, default: false },
     /** 총 건수 (페이지네이션 시 전체 건수, 미지정 시 items.length) */
     total: { type: Number, default: undefined },
-    emptyText: { type: String, default: '조회된 데이터가 없습니다.' },
+    /** 기본 '조회된 데이터가 없습니다.' (i18n ui.empty.data) */
+    emptyText: { type: String, default: undefined },
     width: { type: [Number, String] },
     /** 지정 시 tbody 영역 세로 스크롤 + 헤더 고정 */
     height: { type: [Number, String] },

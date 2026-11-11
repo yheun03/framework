@@ -14,7 +14,7 @@
             :aria-valuenow="displayEnd"
             aria-valuemin="0"
             aria-valuemax="100"
-            :aria-label="label || `진행률 ${displayEnd}%`"
+            :aria-label="label || $t('ui.progress.value', { n: displayEnd })"
         >
             <div class="app-progress-bar__fill" :style="rangeStyle" />
         </div>

@@ -20,13 +20,14 @@
             </div>
         </div>
         <div v-if="$slots.actions" class="app-alert__actions"><slot name="actions" /></div>
-        <AppIconButton v-if="closable" class="app-alert__close" size="sm" shape="pill" aria-label="닫기" @click="close">
+        <AppIconButton v-if="closable" class="app-alert__close" size="sm" shape="pill" :aria-label="$t('ui.close')" @click="close">
             <IconCloseSmall />
         </AppIconButton>
     </div>
 </template>
 
 <script setup>
+import { TONES, oneOf } from '@/utils/props';
 import { IconCheckCircle, IconCloseSmall, IconCrossCircle, IconInfo, IconWarning } from '@/components/icons';
 import { ref } from 'vue';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
@@ -38,9 +39,9 @@ import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 defineProps({
     title: { type: String, default: '' },
     description: { type: String, default: '' },
-    tone: { type: String, default: 'info' },
+    tone: { type: String, default: 'info', validator: oneOf(TONES) },
     /** soft(연한 면) / outline(라인) / fill(진한 면) */
-    variant: { type: String, default: 'soft' },
+    variant: { type: String, default: 'soft', validator: oneOf(['soft', 'outline', 'fill']) },
     closable: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: true },
 });

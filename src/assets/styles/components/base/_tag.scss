@@ -76,13 +76,15 @@ $tag-sizes: (
             --tag-color: var(--tone-#{$tone});
             --tag-text: var(--tone-#{$tone}-text);
             --tag-on-fill: var(--tone-#{$tone}-on-fill, var(--color-tag-on-fill));
+            // fill 배경: 흰 글자와 4.5:1 이 안 되는 톤은 --tone-*-fill 로 진한 색을 씁니다.
+            --tag-fill: var(--tone-#{$tone}-fill, var(--tone-#{$tone}));
         }
     }
 
     /* Variant */
     &--fill {
-        background: var(--tag-color);
-        border-color: var(--tag-color);
+        background: var(--tag-fill, var(--tag-color));
+        border-color: var(--tag-fill, var(--tag-color));
         color: var(--tag-on-fill);
     }
 

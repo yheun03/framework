@@ -17,7 +17,7 @@
             </article>
         </section>
 
-        <AppSectionWrapper class="business-page__section-wrapper" direction="row" :ratio="[1, 1]" :gap="20">
+        <AppSectionWrapper class="business-page__section-wrapper" direction="horizontal" :ratio="[1, 1]" :gap="20">
             <AppSection title="월 매출 달성률" description="목표 12억 원">
                 <AppProgressBar :value="78" label="현재 매출" show-value />
                 <div class="business-kpi"><strong>9.4억</strong><span>전월 대비 +8.2%</span></div>

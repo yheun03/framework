@@ -18,8 +18,8 @@
                 :size="buttonSize.size"
                 :icon-size="buttonSize.icon"
                 :disabled="disabled || readonly || isMin"
-                aria-label="수량 감소"
-                @click="step(-1)"
+                :aria-label="$t('ui.inputNumber.decrease')"
+                @click="stepBy(-1)"
             >
                 <IconMinus />
             </AppIconButton>
@@ -27,7 +27,7 @@
             <AppInput
                 :id="inputId"
                 class="app-input-number__field"
-                :aria-label="label ? undefined : '수량'"
+                :aria-label="label ? undefined : $t('ui.inputNumber.name')"
                 :model-value="displayValue"
                 :name="name"
                 shape="square"
@@ -35,8 +35,8 @@
                 :readonly="readonly"
                 :state="state"
                 @change="handleInput"
-                @keydown.up.prevent="step(1)"
-                @keydown.down.prevent="step(-1)"
+                @keydown.up.prevent="stepBy(1)"
+                @keydown.down.prevent="stepBy(-1)"
             />
 
             <AppIconButton
@@ -46,8 +46,8 @@
                 :size="buttonSize.size"
                 :icon-size="buttonSize.icon"
                 :disabled="disabled || readonly || isMax"
-                aria-label="수량 증가"
-                @click="step(1)"
+                :aria-label="$t('ui.inputNumber.increase')"
+                @click="stepBy(1)"
             >
                 <IconPlus />
             </AppIconButton>
@@ -58,6 +58,7 @@
 </template>
 
 <script setup>
+import { FORM_SIZES, STATES, oneOf } from '@/utils/props';
 import { IconMinus, IconPlus } from '@/components/icons';
 
 import { toSizeStyle } from '@/utils/css';
@@ -78,11 +79,11 @@ const props = defineProps({
     step: { type: Number, default: 1 },
     /** 소수점 자리수 */
     precision: { type: Number, default: 0 },
-    variant: { type: String, default: 'box' },
-    size: { type: String, default: 'sm' },
+    variant: { type: String, default: 'box', validator: oneOf(['box', 'circle', 'plain']) },
+    size: { type: String, default: 'sm', validator: oneOf(FORM_SIZES) },
     label: { type: String, default: '' },
     hint: { type: String, default: '' },
-    state: { type: [String, null], default: null },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     width: { type: [Number, String] },
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
@@ -97,7 +98,7 @@ const inputId = computed(() => props.id ?? `app-input-number-${fallbackId}`);
 const rootStyle = computed(() => toSizeStyle(props.width));
 // Figma 수량 버튼 높이 (24 / 36 / 44 / 48px) 에 맞춘 AppIconButton 크기
 const BUTTON_SIZES = { xs: { size: 24, icon: 10 }, sm: { size: 36, icon: 12 }, md: { size: 44, icon: 14 }, lg: { size: 48, icon: 16 } };
-const buttonSize = computed(() => BUTTON_SIZES[props.size]);
+const buttonSize = computed(() => BUTTON_SIZES[props.size] ?? BUTTON_SIZES.sm);
 const current = computed(() => props.modelValue ?? props.min);
 const isMin = computed(() => current.value <= props.min);
 const isMax = computed(() => current.value >= props.max);
@@ -114,7 +115,8 @@ function update(value) {
     emit('change', next);
 }
 
-function step(direction) {
+// prop step 과 이름이 겹치지 않게 stepBy 로 씁니다.
+function stepBy(direction) {
     if (props.disabled || props.readonly) return;
     update(current.value + props.step * direction);
 }

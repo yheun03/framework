@@ -78,6 +78,11 @@
        Toolbar
     ---------------------------------------- */
 
+    // 라이브러리 기본 탭 글자색(#969aa5)은 대비 2.66:1 → 4.5:1 이상인 보조 글자색으로
+    .toastui-editor-mode-switch .tab-item {
+        color: var(--theme-color-03-gray);
+    }
+
     .toastui-editor-toolbar {
         border-bottom: 1px solid var(--border-workspace-pane);
     }

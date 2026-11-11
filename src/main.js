@@ -1,18 +1,13 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import App from './App.vue';
 import router from './router';
 import i18n from './i18n';
+import { setupApi } from './services/api/setupApi';
 import { usePreferencesStore } from './store/preferences';
 
-import 'ag-grid-community/styles/ag-theme-quartz.css';
-import 'flatpickr/dist/flatpickr.css';
-import 'nouislider/dist/nouislider.css';
 import './assets/styles/main.scss';
 import '@project-theme-entry';
-
-ModuleRegistry.registerModules([AllCommunityModule]);
 
 const app = createApp(App);
 
@@ -22,5 +17,7 @@ app.use(router);
 
 // 저장된 언어 · 테마 적용 (화면 그리기 전)
 usePreferencesStore().hydrate();
+// API 공통 처리(토큰 · 401 · 오류 토스트) 연결
+setupApi(router);
 
 router.isReady().then(() => app.mount('#app'));

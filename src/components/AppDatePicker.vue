@@ -24,10 +24,10 @@
                     type="text"
                     :value="rangeValue.start ?? ''"
                     :name="name ? `${name}Start` : undefined"
-                    :placeholder="startPlaceholder"
+                    :placeholder="startPlaceholder ?? $t('ui.date.start')"
                     :disabled="disabled"
                     readonly
-                    :aria-label="label ? `${label} 시작일` : '시작일'"
+                    :aria-label="label ? $t('ui.date.labelStart', { label }) : $t('ui.date.start')"
                     :aria-readonly="readonly || undefined"
                 />
                 <span class="app-date-picker__icon app-date-picker__icon--right" aria-hidden="true">
@@ -45,10 +45,10 @@
                     type="text"
                     :value="rangeValue.end ?? ''"
                     :name="name ? `${name}End` : undefined"
-                    :placeholder="endPlaceholder"
+                    :placeholder="endPlaceholder ?? $t('ui.date.end')"
                     :disabled="disabled || !rangeValue.start"
                     readonly
-                    :aria-label="label ? `${label} 종료일` : '종료일'"
+                    :aria-label="label ? $t('ui.date.labelEnd', { label }) : $t('ui.date.end')"
                     :aria-readonly="readonly || undefined"
                 />
                 <span class="app-date-picker__icon app-date-picker__icon--right" aria-hidden="true">
@@ -65,7 +65,7 @@
                 type="text"
                 :value="displayValue"
                 :name="name"
-                :placeholder="placeholder"
+                :placeholder="placeholder ?? $t('ui.date.placeholder')"
                 :disabled="disabled"
                 readonly
                 :aria-invalid="state === 'error'"
@@ -81,14 +81,16 @@
 </template>
 
 <script setup>
+import { FORM_SHAPES, FORM_SIZES, STATES, oneOf } from '@/utils/props';
 import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.css';
 
 import { Korean } from 'flatpickr/dist/l10n/ko.js';
 import { IconCalendar, IconClock } from '@/components/icons';
 
 import { toSizeStyle } from '@/utils/css';
 import { useBodyOverlay } from '@/composables/useBodyOverlay';
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onDeactivated, onMounted, ref, useId, watch } from 'vue';
 
 /** single 날짜 / datetime 날짜+시간 / time 시간 / range 기간 / range-input 시작·종료 분리 / multiple 복수 날짜 */
 
@@ -96,19 +98,20 @@ const props = defineProps({
     modelValue: { type: null, required: true },
     label: { type: String },
     hint: { type: String },
-    placeholder: { type: String, default: '날짜 선택' },
-    startPlaceholder: { type: String, default: '시작일' },
-    endPlaceholder: { type: String, default: '종료일' },
-    type: { type: String, default: 'single' },
+    /** 기본 '날짜 선택' · '시작일' · '종료일' (i18n ui.date.*) */
+    placeholder: { type: String, default: undefined },
+    startPlaceholder: { type: String, default: undefined },
+    endPlaceholder: { type: String, default: undefined },
+    type: { type: String, default: 'single', validator: oneOf(['single', 'datetime', 'time', 'range', 'range-input', 'multiple']) },
     min: { type: String },
     max: { type: String },
     disabled: { type: Boolean, default: false },
     readonly: { type: Boolean, default: false },
     id: { type: String },
     name: { type: String },
-    size: { type: String, default: 'md' },
-    shape: { type: String, default: 'round' },
-    state: { type: [String, null], default: null },
+    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
+    state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */
     width: { type: [Number, String] },
 });
@@ -318,6 +321,12 @@ function syncCalendars() {
 
 onMounted(createCalendars);
 onBeforeUnmount(destroyCalendars);
+
+// 탭 전환(KeepAlive)으로 화면이 숨겨지면 열린 달력을 닫습니다.
+onDeactivated(() => {
+    startCalendar?.close();
+    endCalendar?.close();
+});
 
 watch(
     () => props.type,

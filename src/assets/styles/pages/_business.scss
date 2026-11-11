@@ -416,7 +416,7 @@ $business-status-colors: (
         grid-template-columns: 1fr;
     }
 
-    .business-page__section-wrapper.app-section-wrapper--row {
+    .business-page__section-wrapper.app-section-wrapper--horizontal {
         .app-section-wrapper__body {
             grid-template-columns: 1fr;
         }

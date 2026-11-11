@@ -66,10 +66,10 @@
                 <PageDemoSection class="page-demo-section" title="Label Slot" description="label slot으로 커스텀 라벨을 렌더링할 수 있습니다.">
                     <AppFormField hint="slot label 예시입니다.">
                         <template #label>
-                            <div class="page-demo-inline">
+                            <span class="page-demo-inline">
                                 <strong>커스텀 라벨</strong>
                                 <AppTag tone="info" size="sm">NEW</AppTag>
-                            </div>
+                            </span>
                         </template>
 
                         <AppInput v-model="customLabelValue" placeholder="값 입력" />

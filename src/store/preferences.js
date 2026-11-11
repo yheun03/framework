@@ -4,6 +4,7 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { setI18nLocale } from '@/i18n';
+import { accessibleTextColor, primaryTextColor } from '@/utils/color';
 
 const LOCALE_KEY = 'framework:locale';
 const THEME_KEY = 'framework:theme';
@@ -81,6 +82,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
         theme.value = next;
         applyTheme(next);
         applyThemeColors(themeColors.value);
+        syncPrimaryText();
         localStorage.setItem(THEME_KEY, next);
     }
 
@@ -111,6 +113,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
 
         applyTheme(theme.value);
         applyThemeColors(themeColors.value);
+        syncPrimaryText();
     }
 
     function setThemeColor(name, color, targetTheme = theme.value) {
@@ -125,6 +128,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
             const property = getThemeColorProperty(name);
             if (color) document.documentElement.style.setProperty(property, color);
             else document.documentElement.style.removeProperty(property);
+            if (name === 'primary') syncPrimaryText();
         }
         persistThemeColors();
     }
@@ -132,7 +136,21 @@ export const usePreferencesStore = defineStore('preferences', () => {
     function resetThemeColors(targetTheme = theme.value) {
         if (targetTheme === theme.value) clearThemeColors(themeColorsByMode.value[targetTheme]);
         themeColorsByMode.value = { ...themeColorsByMode.value, [targetTheme]: {} };
+        if (targetTheme === theme.value) syncPrimaryText();
         persistThemeColors();
+    }
+
+    // primary 를 바꾸면 글자용 브랜드색 · 흰 글자용 면 색도 같은 대비 규칙(4.5:1)으로 다시 계산합니다. (utils/color.js)
+    function syncPrimaryText() {
+        const primary = themeColors.value.primary;
+        const style = document.documentElement.style;
+        if (primary) {
+            style.setProperty('--theme-primary-text', primaryTextColor(primary, theme.value));
+            style.setProperty('--theme-primary-fill', accessibleTextColor(primary));
+        } else {
+            style.removeProperty('--theme-primary-text');
+            style.removeProperty('--theme-primary-fill');
+        }
     }
 
     function applyTheme(next) {

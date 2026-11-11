@@ -51,7 +51,14 @@
                     </ul>
 
                     <div class="page-demo-stack">
-                        <AppInput v-model="keyword" size="xs" placeholder="품목 검색 (예: 볼트, S45C)" clearable :width="320">
+                        <AppInput
+                            v-model="keyword"
+                            size="xs"
+                            placeholder="품목 검색 (예: 볼트, S45C)"
+                            clearable
+                            :width="320"
+                            aria-label="품목 검색 (예: 볼트, S45C)"
+                        >
                             <template #iconLeft><IconSearch /></template>
                         </AppInput>
                         <AppTree :items="bom" :filter="keyword" />

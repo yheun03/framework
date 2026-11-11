@@ -260,7 +260,7 @@ const currentYear = new Date().getFullYear();
     }
 }
 
-@media (max-width: 980px) {
+@include tablet {
     .home {
         padding: 14px 14px 20px;
 

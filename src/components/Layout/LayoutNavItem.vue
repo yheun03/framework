@@ -18,7 +18,7 @@
                         <template v-else>{{ part.text }}</template>
                     </template>
                 </span>
-                <span class="sr-only">(새 창)</span>
+                <span class="sr-only">{{ $t('ui.nav.newWindow') }}</span>
             </a>
 
             <RouterLink v-else-if="hasLink" :to="item.to" class="layout-nav__link">
@@ -51,7 +51,7 @@
                         <template v-else>{{ part.text }}</template>
                     </template>
                 </span>
-                <span v-if="hasChildren" class="layout-nav__count" :aria-label="`하위 메뉴 ${item.children?.length}개`">{{
+                <span v-if="hasChildren" class="layout-nav__count" :aria-label="$t('ui.nav.childCount', { n: item.children?.length ?? 0 })">{{
                     item.children?.length
                 }}</span>
                 <span v-if="hasChildren" class="layout-nav__toggle" :class="{ 'is-open': isOpen }" aria-hidden="true">
@@ -70,16 +70,18 @@
 
 <script setup>
 import {
+    IconApp,
+    IconChart,
     IconChevronSmallRight,
     IconCog,
     IconDashboard,
     IconFactory,
-    IconGlobe,
+    IconForm,
     IconGuide,
     IconHome,
     IconInfo,
     IconLayout,
-    IconPalette,
+    IconMenu,
     IconWidgets,
 } from '@/components/icons';
 import { computed, ref, watch } from 'vue';
@@ -97,17 +99,20 @@ const props = defineProps({
 });
 
 const route = useRoute();
+// store/navigation.js 의 icon 값 → 아이콘 컴포넌트 (새 그룹 아이콘은 여기에 추가)
 const navigationIconMap = {
+    app: IconApp,
+    chart: IconChart,
     cog: IconCog,
     dashboard: IconDashboard,
     factory: IconFactory,
+    form: IconForm,
+    guide: IconGuide,
     home: IconHome,
     info: IconInfo,
-    widgets: IconWidgets,
-    guide: IconGuide,
-    palette: IconPalette,
-    globe: IconGlobe,
     layout: IconLayout,
+    menu: IconMenu,
+    widgets: IconWidgets,
 };
 
 const hasChildren = computed(() => Boolean(props.item.children?.length));

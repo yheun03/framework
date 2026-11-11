@@ -23,6 +23,8 @@
 </template>
 
 <script setup>
+import i18n from '@/i18n';
+import { oneOf } from '@/utils/props';
 import { IconBox, IconCog, IconMagnify, IconWarning } from '@/components/icons';
 import { computed } from 'vue';
 
@@ -32,20 +34,14 @@ import { computed } from 'vue';
  * 버튼이 필요하면 #actions 슬롯을 사용합니다. (버튼 없는 / 있는 / 아이콘 포함 타입)
  */
 const props = defineProps({
-    type: { type: String, default: 'data' },
+    type: { type: String, default: 'data', validator: oneOf(['data', 'search', 'error', 'maintenance']) },
     title: { type: String, default: '' },
     description: { type: String, default: '' },
-    size: { type: String, default: 'md' },
+    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
     /** false 면 아이콘 없는 타입 */
     showIcon: { type: Boolean, default: true },
 });
 
-const defaultTitles = {
-    data: '조회된 데이터가 없습니다.',
-    search: '검색 결과가 없습니다.',
-    error: '데이터를 불러오지 못했습니다.',
-    maintenance: '시스템 정기 점검 중입니다.',
-};
-
-const defaultTitle = computed(() => defaultTitles[props.type]);
+// 기본 문구: i18n ui.empty.{data | search | error | maintenance}
+const defaultTitle = computed(() => i18n.global.t(`ui.empty.${props.type}`));
 </script>
