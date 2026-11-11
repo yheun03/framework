@@ -1,6 +1,6 @@
 <template>
     <template v-if="sourceFile">
-        <AppIconButton class="route-tabs__action" aria-label="이 화면 소스 코드 보기" :size="24" :icon-size="16" @click="openViewer">
+        <AppIconButton class="route-tabs__action" aria-label="이 화면 소스 코드 보기" size="xs" :icon-size="16" @click="openViewer">
             <IconCode />
         </AppIconButton>
 

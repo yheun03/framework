@@ -12,7 +12,7 @@
             <AppInput
                 v-model="keyword"
                 class="business-toolbar__field business-toolbar__field--wide"
-                size="sm"
+                size="md"
                 placeholder="수주번호 또는 거래처 검색"
                 clearable
                 aria-label="수주번호 또는 거래처 검색"
@@ -20,12 +20,12 @@
             <AppSelect
                 v-model="status"
                 class="business-toolbar__field"
-                size="sm"
+                size="md"
                 :items="statusOptions"
                 placeholder="전체 상태"
                 aria-label="전체 상태"
             />
-            <AppDatePicker v-model="orderDate" class="business-toolbar__field" size="sm" />
+            <AppDatePicker v-model="orderDate" class="business-toolbar__field" size="md" />
             <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton><AppButton size="md">초기화</AppButton></div>
         </section>
         <AppSection title="수주 128건" description="납기 임박 순으로 표시합니다.">

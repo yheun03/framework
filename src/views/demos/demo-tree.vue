@@ -53,7 +53,7 @@
                     <div class="page-demo-stack">
                         <AppInput
                             v-model="keyword"
-                            size="xs"
+                            size="sm"
                             placeholder="품목 검색 (예: 볼트, S45C)"
                             clearable
                             :width="320"

@@ -69,12 +69,21 @@
     --shadow-level-2: 0 4px 16px var(--theme-gray-900-alpha-12);
     --shadow-level-3: 0 8px 24px var(--theme-gray-900-alpha-18);
 
-    // Tabs (Figma 그룹형 / 버튼형 / 텍스트형)
+    // Tabs (Figma 기본형 / 버튼형 / 2단 버튼형 / 텍스트 / 타이틀형)
     --bg-tabs-strong: var(--theme-bg-black);
     --color-tabs-strong: var(--theme-color-02-black);
     --color-tabs-on-strong: var(--theme-color-01-white);
     --border-tabs-regular: var(--theme-line-regular);
     --border-tabs-strong: var(--theme-line-black);
+    --border-tabs-light: var(--theme-line-light);
+    --color-tabs-default: var(--theme-color-03-gray);
+    --color-tabs-disabled: var(--theme-color-05-gray-disabled);
+    --color-tabs-inactive: var(--theme-color-04-gray);
+    --bg-tabs-divider: var(--theme-line-disabled);
+
+    // Text button (Figma 08 텍스트 버튼 - 마우스오버 배경 / 느낌표 배경)
+    --bg-text-button-hover: var(--theme-line-light);
+    --bg-text-button-mark: var(--theme-line-regular);
 
     // Accordion line (드롭 다운 테이블)
     --border-accordion-line-strong: var(--theme-line-black);

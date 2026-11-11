@@ -25,11 +25,11 @@
                     <ul class="page-demo-hint-list">
                         <li><b>square</b> : 사각 (기본값)</li>
                         <li><b>round</b> : 6px 라운드</li>
-                        <li><b>circle</b> : 원형</li>
+                        <li><b>pill</b> : 원형 (써클)</li>
                     </ul>
 
                     <div class="page-demo-row">
-                        <AppTopButton v-for="shape in ['square', 'round', 'circle']" :key="shape" :shape="shape" variant="fill" :fixed="false" />
+                        <AppTopButton v-for="shape in ['square', 'round', 'pill']" :key="shape" :shape="shape" variant="fill" :fixed="false" />
                     </div>
                 </PageDemoSection>
 
@@ -54,7 +54,7 @@
 
                     <div class="page-demo-row">
                         <AppTopButton label="TOP" :fixed="false" />
-                        <AppTopButton label="TOP" variant="shadow" shape="circle" icon="arrow" :fixed="false" />
+                        <AppTopButton label="TOP" variant="shadow" shape="pill" icon="arrow" :fixed="false" />
                     </div>
                 </PageDemoSection>
 
@@ -81,7 +81,7 @@
             </aside>
         </div>
 
-        <AppTopButton variant="shadow" shape="circle" icon="arrow" label="TOP" />
+        <AppTopButton variant="shadow" shape="pill" icon="arrow" label="TOP" />
     </div>
 </template>
 

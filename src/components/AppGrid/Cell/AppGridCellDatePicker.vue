@@ -1,6 +1,6 @@
 <template>
     <div class="app-grid-cell-control">
-        <AppDatePicker v-model="value" size="sm" :type="type" :min="min" :max="max" :placeholder="placeholder" />
+        <AppDatePicker v-model="value" size="md" :type="type" :min="min" :max="max" :placeholder="placeholder" />
     </div>
 </template>
 

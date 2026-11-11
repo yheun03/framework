@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { oneOf } from '@/utils/props';
+import { SHAPES, oneOf } from '@/utils/props';
 import { IconAngleUp, IconArrowUp, IconArrowUpToLine } from '@/components/icons';
 import { toCssSize } from '@/utils/css';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
@@ -27,12 +27,12 @@ import AppButton from '@/components/AppButton/AppButton.vue';
 /**
  * AppTopButton (Figma 11. ETC - 탑 버튼) - AppButton(unstyled) 기반
  * variant: outline(흰 바탕 라인) / fill(검정) / shadow(흰 바탕 그림자)
- * shape: square / round / circle,  icon: chevron / arrow / bar
+ * shape: square / round / pill(써클) - 다른 컴포넌트와 같은 값,  icon: chevron(A) / arrow(B) / bar(C)
  */
 const props = defineProps({
     variant: { type: String, default: 'outline', validator: oneOf(['outline', 'fill', 'shadow']) },
-    shape: { type: String, default: 'square', validator: oneOf(['square', 'round', 'circle']) },
-    icon: { type: String, default: 'chevron' },
+    shape: { type: String, default: 'square', validator: oneOf(SHAPES) },
+    icon: { type: String, default: 'chevron', validator: oneOf(['chevron', 'arrow', 'bar']) },
     label: { type: String, default: '' },
     /** 화면 우하단 고정 */
     fixed: { type: Boolean, default: true },

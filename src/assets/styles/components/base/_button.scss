@@ -311,6 +311,11 @@ $icon-button-tones: $btn-tones;
         flex-shrink: 0;
     }
 
+    &--variant-arrow &__icon--right svg {
+        width: 0.9em;
+        height: 0.9em;
+    }
+
     &__label {
         display: inline-flex;
         align-items: center;
@@ -409,9 +414,44 @@ $icon-button-tones: $btn-tones;
         @include btn-variant(underline, 'gray');
     }
 
+    &--variant-info,
+    &--variant-arrow {
+        @include btn-variant(text, 'gray');
+    }
+
+    // Figma 마우스오버 · 완료 : 글자 영역 연한 배경 (레이아웃 변화 없이 box-shadow 로 2px 확장)
+    &:hover:not(.app-text-button--disabled),
+    &:active:not(.app-text-button--disabled) {
+        background: var(--bg-text-button-hover);
+        box-shadow: 0 0 0 2px var(--bg-text-button-hover);
+    }
+
+    // 느낌표 표시 (variant="info")
+    &__mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.15em;
+        height: 1.15em;
+        border-radius: 3px;
+        background: var(--bg-text-button-mark);
+        font-style: normal;
+        font-size: 0.8em;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    &--disabled .app-text-button__mark {
+        border: 1px solid currentColor;
+        border-radius: 50%;
+        background: transparent;
+    }
+
     @each $tone, $color in $btn-tones {
         &--tone-#{$tone} {
-            &.app-text-button--variant-text {
+            &.app-text-button--variant-text,
+            &.app-text-button--variant-info,
+            &.app-text-button--variant-arrow {
                 @include btn-variant(text, $color);
             }
 
@@ -443,6 +483,11 @@ $icon-button-tones: $btn-tones;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+    }
+
+    &--variant-arrow &__icon--right svg {
+        width: 0.9em;
+        height: 0.9em;
     }
 
     &__label {

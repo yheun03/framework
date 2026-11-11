@@ -14,9 +14,9 @@
                     description="여러 입력 컴포넌트(AppInput, AppSelect 등)를 하나의 필드로 묶습니다. Figma 전화번호 셀렉트 패턴입니다."
                 >
                     <AppInputGroup label="연락처" separator="-" :width="420">
-                        <AppSelect v-model="phone.first" :items="phonePrefixes" size="sm" />
-                        <AppInput v-model="phone.middle" size="sm" :max-length="4" />
-                        <AppInput v-model="phone.last" size="sm" :max-length="4" />
+                        <AppSelect v-model="phone.first" :items="phonePrefixes" size="md" />
+                        <AppInput v-model="phone.middle" size="md" :max-length="4" />
+                        <AppInput v-model="phone.last" size="md" :max-length="4" />
                     </AppInputGroup>
                 </PageDemoSection>
 
@@ -35,15 +35,15 @@
 
                     <div class="page-demo-stack">
                         <AppInputGroup label="이메일" separator="@" :width="420">
-                            <AppInput v-model="email.id" size="sm" placeholder="아이디" aria-label="아이디" />
-                            <AppSelect v-model="email.domain" :items="domains" size="sm" />
+                            <AppInput v-model="email.id" size="md" placeholder="아이디" aria-label="아이디" />
+                            <AppSelect v-model="email.domain" :items="domains" size="md" />
                         </AppInputGroup>
                         <AppInputGroup label="수량 범위" separator="~" :width="420">
-                            <AppInput v-model="range.min" size="sm" placeholder="최소" aria-label="최소" />
-                            <AppInput v-model="range.max" size="sm" placeholder="최대" aria-label="최대" />
+                            <AppInput v-model="range.min" size="md" placeholder="최소" aria-label="최소" />
+                            <AppInput v-model="range.max" size="md" placeholder="최대" aria-label="최대" />
                         </AppInputGroup>
                         <AppInputGroup label="구분 문자 없음" :width="420">
-                            <AppInput v-model="email.id" size="sm" placeholder="코드" aria-label="코드" />
+                            <AppInput v-model="email.id" size="md" placeholder="코드" aria-label="코드" />
                             <AppButton size="sm" variant="fill" tone="gray">검색</AppButton>
                         </AppInputGroup>
                     </div>
@@ -56,9 +56,9 @@
                     </ul>
 
                     <AppInputGroup label="gap = 4" :gap="4" :width="420">
-                        <AppInput v-model="spec.w" size="sm" placeholder="가로" aria-label="가로" />
-                        <AppInput v-model="spec.h" size="sm" placeholder="세로" aria-label="세로" />
-                        <AppInput v-model="spec.d" size="sm" placeholder="높이" aria-label="높이" />
+                        <AppInput v-model="spec.w" size="md" placeholder="가로" aria-label="가로" />
+                        <AppInput v-model="spec.h" size="md" placeholder="세로" aria-label="세로" />
+                        <AppInput v-model="spec.d" size="md" placeholder="높이" aria-label="높이" />
                     </AppInputGroup>
                 </PageDemoSection>
 
@@ -75,9 +75,9 @@
                     </ul>
 
                     <AppInputGroup label="규격 (가로 x 세로 x 높이)" separator="x" :width="420" state="error" hint="규격을 모두 입력하세요.">
-                        <AppInput v-model="spec.w" size="sm" />
-                        <AppInput v-model="spec.h" size="sm" />
-                        <AppInput v-model="spec.d" size="sm" />
+                        <AppInput v-model="spec.w" size="md" />
+                        <AppInput v-model="spec.h" size="md" />
+                        <AppInput v-model="spec.d" size="md" />
                     </AppInputGroup>
                 </PageDemoSection>
 
@@ -88,9 +88,9 @@
                     </ul>
 
                     <AppInputGroup label="width = full" separator="-" width="full">
-                        <AppSelect v-model="phone.first" :items="phonePrefixes" size="sm" />
-                        <AppInput v-model="phone.middle" size="sm" />
-                        <AppInput v-model="phone.last" size="sm" />
+                        <AppSelect v-model="phone.first" :items="phonePrefixes" size="md" />
+                        <AppInput v-model="phone.middle" size="md" />
+                        <AppInput v-model="phone.last" size="md" />
                     </AppInputGroup>
                 </PageDemoSection>
             </div>

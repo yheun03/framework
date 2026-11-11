@@ -12,7 +12,7 @@
                 id="sign-in-email"
                 name="email"
                 type="email"
-                size="lg"
+                size="xl"
                 label="이메일"
                 placeholder="name@company.com"
                 autocomplete="email"
@@ -28,7 +28,7 @@
                 id="sign-in-password"
                 name="password"
                 type="password"
-                size="lg"
+                size="xl"
                 label="비밀번호"
                 placeholder="비밀번호를 입력하세요"
                 autocomplete="current-password"
@@ -40,7 +40,7 @@
             </AppInput>
 
             <div class="auth-page__row">
-                <AppChoice v-model="rememberMe" type="checkbox" size="sm" variant="round" label="로그인 상태 유지" />
+                <AppChoice v-model="rememberMe" type="checkbox" size="sm" shape="pill" label="로그인 상태 유지" />
                 <RouterLink class="auth-page__link" to="/auth/find-pw">비밀번호 찾기</RouterLink>
             </div>
 

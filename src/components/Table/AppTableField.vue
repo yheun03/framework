@@ -123,7 +123,7 @@
 
         <AppChoice
             v-else-if="cell.type === 'toggle'"
-            type="checkbox"
+            type="toggle"
             :model-value="Boolean(modelValue[cell.key ?? ''])"
             :label="cell.text"
             :disabled="disabled"

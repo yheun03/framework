@@ -10,16 +10,16 @@
             </div>
         </header>
 
-        <!-- 조회 조건: 입력은 size="xs"(36px) · 버튼은 size="sm"(36px) 로 높이를 맞춥니다. -->
+        <!-- 조회 조건: 입력 · 버튼 모두 size="sm"(36px) - 같은 이름 = 같은 높이 -->
         <AppSearchPanel :columns="4" :loading="loading" @search="search" @reset="reset">
             <AppSearchItem label="작업일자" :span="2">
-                <AppDatePicker v-model="filter.period" type="range-input" size="xs" />
+                <AppDatePicker v-model="filter.period" type="range-input" size="sm" />
             </AppSearchItem>
             <AppSearchItem label="라인">
-                <AppSelect v-model="filter.line" :items="lines" size="xs" placeholder="전체" />
+                <AppSelect v-model="filter.line" :items="lines" size="sm" placeholder="전체" />
             </AppSearchItem>
             <AppSearchItem label="상태">
-                <AppSelect v-model="filter.status" :items="statuses" size="xs" placeholder="전체" />
+                <AppSelect v-model="filter.status" :items="statuses" size="sm" placeholder="전체" />
             </AppSearchItem>
         </AppSearchPanel>
 

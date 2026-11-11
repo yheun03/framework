@@ -16,11 +16,11 @@
                     description="선택 방식은 type, 모양은 variant, 크기는 size로 제어합니다. disabled / readonly / state는 모든 variant에서 공통으로 사용합니다."
                 >
                     <div class="page-demo-stack">
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="guide.checkbox" type="checkbox" label="type=checkbox" />
                             <AppChoice v-model="guide.radio" type="radio" name="guide-type" value="radio" label="type=radio" />
                             <AppChoice v-model="guide.chip" type="checkbox" variant="chip" label="variant=chip" />
-                            <AppChoice v-model="guide.toggle" type="checkbox" variant="toggle" :toggle-labels="{ checked: 'ON', unchecked: 'OFF' }" />
+                            <AppChoice v-model="guide.toggle" type="toggle" label="type=toggle" />
                         </div>
                     </div>
                 </PageDemoSection>
@@ -29,13 +29,13 @@
                 <PageDemoSection
                     class="page-demo-section"
                     title="Checkbox"
-                    description="checkbox는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 각진 형태, round는 둥근 형태를 제공합니다."
+                    description="checkbox는 shape(square 직각 / pill 써클)와 size(sm 18 / md 22) 조합으로 사용합니다. (Figma 05. ETC 체크박스)"
                 >
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / MD</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice v-model="checkbox.defaultMd.default" type="checkbox" size="md" label="기본상태" />
                                 <AppChoice v-model="checkbox.defaultMd.checked" type="checkbox" size="md" label="체크상태" />
                                 <AppChoice v-model="checkbox.defaultMd.disabled" type="checkbox" size="md" label="비활성화" disabled />
@@ -46,7 +46,7 @@
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / SM</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice v-model="checkbox.defaultSm.default" type="checkbox" size="sm" label="기본상태" />
                                 <AppChoice v-model="checkbox.defaultSm.checked" type="checkbox" size="sm" label="체크상태" />
                                 <AppChoice v-model="checkbox.defaultSm.disabled" type="checkbox" size="sm" label="비활성화" disabled />
@@ -55,16 +55,16 @@
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">Round / MD</h3>
+                            <h3 class="page-demo-compare__title">Pill · Line / MD</h3>
 
-                            <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.roundMd.default" type="checkbox" variant="round" size="md" label="기본상태" />
-                                <AppChoice v-model="checkbox.roundMd.checked" type="checkbox" variant="round" size="md" label="체크상태" />
-                                <AppChoice v-model="checkbox.roundMd.disabled" type="checkbox" variant="round" size="md" label="비활성화" disabled />
+                            <div class="page-demo-actions">
+                                <AppChoice v-model="checkbox.roundMd.default" type="checkbox" shape="pill" size="md" label="기본상태" />
+                                <AppChoice v-model="checkbox.roundMd.checked" type="checkbox" shape="pill" size="md" label="체크상태" />
+                                <AppChoice v-model="checkbox.roundMd.disabled" type="checkbox" shape="pill" size="md" label="비활성화" disabled />
                                 <AppChoice
                                     v-model="checkbox.roundMd.checkedDisabled"
                                     type="checkbox"
-                                    variant="round"
+                                    shape="pill"
                                     size="md"
                                     label="체크 비활성화"
                                     disabled
@@ -73,16 +73,16 @@
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">Round / SM</h3>
+                            <h3 class="page-demo-compare__title">Pill · Line / SM</h3>
 
-                            <div class="page-demo-row">
-                                <AppChoice v-model="checkbox.roundSm.default" type="checkbox" variant="round" size="sm" label="기본상태" />
-                                <AppChoice v-model="checkbox.roundSm.checked" type="checkbox" variant="round" size="sm" label="체크상태" />
-                                <AppChoice v-model="checkbox.roundSm.disabled" type="checkbox" variant="round" size="sm" label="비활성화" disabled />
+                            <div class="page-demo-actions">
+                                <AppChoice v-model="checkbox.roundSm.default" type="checkbox" shape="pill" size="sm" label="기본상태" />
+                                <AppChoice v-model="checkbox.roundSm.checked" type="checkbox" shape="pill" size="sm" label="체크상태" />
+                                <AppChoice v-model="checkbox.roundSm.disabled" type="checkbox" shape="pill" size="sm" label="비활성화" disabled />
                                 <AppChoice
                                     v-model="checkbox.roundSm.checkedDisabled"
                                     type="checkbox"
-                                    variant="round"
+                                    shape="pill"
                                     size="sm"
                                     label="체크 비활성화"
                                     disabled
@@ -96,13 +96,13 @@
                 <PageDemoSection
                     class="page-demo-section"
                     title="Radio"
-                    description="radio는 variant(default / round)와 size(md / sm) 조합으로 사용할 수 있습니다. default는 흰 배경 + 검은 dot, round는 검은 배경 + 흰 dot 구조입니다."
+                    description="radio는 variant(default 기본형 / line 라인형)와 size(sm 18 / md 22) 조합으로 사용합니다. (Figma 05. ETC 라디오버튼)"
                 >
                     <div class="page-demo-stack">
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / MD</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice v-model="radio.defaultMd" type="radio" name="radio-a-md" value="default" size="md" label="기본상태" />
                                 <AppChoice v-model="radio.defaultMd" type="radio" name="radio-a-md" value="checked" size="md" label="체크상태" />
                                 <AppChoice
@@ -129,7 +129,7 @@
                         <div class="page-demo-compare">
                             <h3 class="page-demo-compare__title">Default / SM</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice v-model="radio.defaultSm" type="radio" name="radio-a-sm" value="default" size="sm" label="기본상태" />
                                 <AppChoice v-model="radio.defaultSm" type="radio" name="radio-a-sm" value="checked" size="sm" label="체크상태" />
                                 <AppChoice
@@ -154,15 +154,15 @@
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">Round / MD</h3>
+                            <h3 class="page-demo-compare__title">Pill · Line / MD</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice
                                     v-model="radio.roundMd"
                                     type="radio"
                                     name="radio-b-md"
                                     value="default"
-                                    variant="round"
+                                    variant="line"
                                     size="md"
                                     label="기본상태"
                                 />
@@ -171,7 +171,7 @@
                                     type="radio"
                                     name="radio-b-md"
                                     value="checked"
-                                    variant="round"
+                                    variant="line"
                                     size="md"
                                     label="체크상태"
                                 />
@@ -180,7 +180,7 @@
                                     type="radio"
                                     name="radio-b-md-disabled"
                                     value="default"
-                                    variant="round"
+                                    variant="line"
                                     size="md"
                                     label="비활성화"
                                     disabled
@@ -190,7 +190,7 @@
                                     type="radio"
                                     name="radio-b-md-disabled-checked"
                                     value="checked"
-                                    variant="round"
+                                    variant="line"
                                     size="md"
                                     label="체크 비활성화"
                                     disabled
@@ -199,15 +199,15 @@
                         </div>
 
                         <div class="page-demo-compare">
-                            <h3 class="page-demo-compare__title">Round / SM</h3>
+                            <h3 class="page-demo-compare__title">Pill · Line / SM</h3>
 
-                            <div class="page-demo-row">
+                            <div class="page-demo-actions">
                                 <AppChoice
                                     v-model="radio.roundSm"
                                     type="radio"
                                     name="radio-b-sm"
                                     value="default"
-                                    variant="round"
+                                    variant="line"
                                     size="sm"
                                     label="기본상태"
                                 />
@@ -216,7 +216,7 @@
                                     type="radio"
                                     name="radio-b-sm"
                                     value="checked"
-                                    variant="round"
+                                    variant="line"
                                     size="sm"
                                     label="체크상태"
                                 />
@@ -225,7 +225,7 @@
                                     type="radio"
                                     name="radio-b-sm-disabled"
                                     value="default"
-                                    variant="round"
+                                    variant="line"
                                     size="sm"
                                     label="비활성화"
                                     disabled
@@ -235,7 +235,7 @@
                                     type="radio"
                                     name="radio-b-sm-disabled-checked"
                                     value="checked"
-                                    variant="round"
+                                    variant="line"
                                     size="sm"
                                     label="체크 비활성화"
                                     disabled
@@ -252,13 +252,13 @@
                     description="다중 선택 가능한 태그/필터 UI 패턴입니다. checkbox + chip variant 조합으로 사용합니다."
                 >
                     <div class="page-demo-stack">
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="chipFilter.development" type="checkbox" variant="chip" label="개발" />
                             <AppChoice v-model="chipFilter.design" type="checkbox" variant="chip" label="디자인" />
                             <AppChoice v-model="chipFilter.planning" type="checkbox" variant="chip" label="기획" />
                         </div>
 
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="chipFilter.outlineA" type="checkbox" variant="chip-outline" label="Outline A" />
                             <AppChoice v-model="chipFilter.outlineB" type="checkbox" variant="chip-outline" label="Outline B" />
                         </div>
@@ -272,13 +272,13 @@
                     description="탭, 세그먼트 버튼, 단일 선택 필터처럼 사용하는 패턴입니다. radio + chip variant 조합으로 사용합니다."
                 >
                     <div class="page-demo-stack">
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="chipRadio.category" type="radio" name="chip-category" value="all" variant="fill" label="전체" />
                             <AppChoice v-model="chipRadio.category" type="radio" name="chip-category" value="news" variant="fill" label="뉴스" />
                             <AppChoice v-model="chipRadio.category" type="radio" name="chip-category" value="notice" variant="fill" label="공지" />
                         </div>
 
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="chipRadio.view" type="radio" name="chip-view" value="card" variant="ghost" label="카드형" />
                             <AppChoice v-model="chipRadio.view" type="radio" name="chip-view" value="list" variant="ghost" label="리스트형" />
                         </div>
@@ -286,14 +286,18 @@
                 </PageDemoSection>
 
                 <!-- TOGGLE -->
-                <PageDemoSection class="page-demo-section" title="Toggle" description="ON/OFF 스위치 형태의 checkbox variant입니다.">
-                    <div class="page-demo-row">
-                        <AppChoice v-model="toggle.basic" type="checkbox" variant="toggle" label="ON" />
-                        <AppChoice v-model="toggle.off" type="checkbox" variant="toggle" label="OFF" />
-                        <AppChoice v-model="toggle.custom" type="checkbox" variant="toggle" :toggle-labels="{ checked: '사용', unchecked: '중지' }" />
-                        <AppChoice v-model="toggle.pure" type="checkbox" variant="toggle" aria-label="알림 수신" />
-                        <AppChoice v-model="toggle.disabled" type="checkbox" variant="toggle" label="ON" disabled />
-                        <AppChoice v-model="toggle.disabledOff" type="checkbox" variant="toggle" label="OFF" disabled />
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Toggle"
+                    description='type="toggle" - variant default(A타입) · line(B타입) · bar(C타입). (Figma 05. ETC 토글)'
+                >
+                    <div class="page-demo-stack">
+                        <div v-for="kind in ['default', 'line', 'bar']" :key="kind" class="page-demo-actions">
+                            <AppChoice v-model="toggle[kind]" type="toggle" :variant="kind" :label="`variant=&quot;${kind}&quot;`" />
+                            <AppChoice :model-value="true" type="toggle" :variant="kind" label="선택" />
+                            <AppChoice :model-value="false" type="toggle" :variant="kind" label="비활성화" disabled />
+                            <AppChoice :model-value="true" type="toggle" :variant="kind" label="선택 비활성화" disabled />
+                        </div>
                     </div>
                 </PageDemoSection>
 
@@ -317,7 +321,7 @@
                     <div class="page-demo-stack">
                         <AppChoice v-model="disabled.checkbox" type="checkbox" label="Disabled Checkbox" hint="선택 불가" disabled />
 
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice
                                 v-model="disabled.radio"
                                 type="radio"
@@ -339,7 +343,7 @@
                             />
                         </div>
 
-                        <div class="page-demo-row">
+                        <div class="page-demo-actions">
                             <AppChoice v-model="disabledChip.chip" type="checkbox" variant="chip" label="Disabled Chip" disabled />
 
                             <AppChoice
@@ -458,12 +462,9 @@ const chipRadio = reactive({
 });
 
 const toggle = reactive({
-    basic: true,
-    off: false,
-    custom: true,
-    pure: false,
-    disabled: true,
-    disabledOff: false,
+    default: false,
+    line: false,
+    bar: false,
 });
 
 const state = reactive({

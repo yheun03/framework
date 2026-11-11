@@ -20,7 +20,7 @@
             </div>
         </div>
         <div v-if="$slots.actions" class="app-alert__actions"><slot name="actions" /></div>
-        <AppIconButton v-if="closable" class="app-alert__close" size="sm" shape="pill" :aria-label="$t('ui.close')" @click="close">
+        <AppIconButton v-if="closable" class="app-alert__close" :size="28" shape="pill" :aria-label="$t('ui.close')" @click="close">
             <IconCloseSmall />
         </AppIconButton>
     </div>

@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { FORM_SIZES, STATES, oneOf } from '@/utils/props';
+import { STATES, oneOf } from '@/utils/props';
 import { IconMinus, IconPlus } from '@/components/icons';
 
 import { toSizeStyle } from '@/utils/css';
@@ -80,7 +80,7 @@ const props = defineProps({
     /** 소수점 자리수 */
     precision: { type: Number, default: 0 },
     variant: { type: String, default: 'box', validator: oneOf(['box', 'circle', 'plain']) },
-    size: { type: String, default: 'sm', validator: oneOf(FORM_SIZES) },
+    size: { type: String, default: 'sm', validator: oneOf(['xs', 'sm', 'md', 'lg']) },
     label: { type: String, default: '' },
     hint: { type: String, default: '' },
     state: { type: [String, null], default: null, validator: oneOf(STATES) },

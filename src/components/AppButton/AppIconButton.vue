@@ -51,7 +51,8 @@ const props = defineProps({
 
 defineEmits(['click']);
 
-const controlSizes = { xs: 24, sm: 28, md: 32, lg: 36, xl: 40 };
+// 이름 크기는 AppButton 과 같은 높이 (xs 24 · sm 36 · md 44 · lg 48 · xl 56). 그 밖의 크기는 숫자(px)로 지정합니다.
+const controlSizes = { xs: 24, sm: 36, md: 44, lg: 48, xl: 56 };
 const iconSizes = { xs: 12, sm: 14, md: 16, lg: 18, xl: 20 };
 const toSize = (value, sizes) => `${typeof value === 'number' ? value : sizes[value]}px`;
 

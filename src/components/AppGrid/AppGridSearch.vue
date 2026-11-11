@@ -6,7 +6,7 @@
                 <dd class="app-grid-search__dd">
                     <AppInput
                         :aria-label="fieldName(f, f.placeholder)"
-                        size="sm"
+                        size="md"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
                         :type="inputNativeType(f)"
@@ -22,7 +22,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppTextarea
-                        size="sm"
+                        size="md"
                         :model-value="getStringValue(f.field)"
                         :rows="f.rows ?? 3"
                         :placeholder="f.placeholder"
@@ -38,7 +38,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
                         :aria-label="fieldName(f, $t('ui.range.min'))"
-                        size="sm"
+                        size="md"
                         type="number"
                         :name="f.numberRange.minKey"
                         :model-value="getStringValue(f.numberRange.minKey)"
@@ -54,7 +54,7 @@
                     <span class="app-grid-search__range-sep">~</span>
                     <AppInput
                         :aria-label="fieldName(f, $t('ui.range.max'))"
-                        size="sm"
+                        size="md"
                         type="number"
                         :name="f.numberRange.maxKey"
                         :model-value="getStringValue(f.numberRange.maxKey)"
@@ -76,7 +76,7 @@
                     <template v-for="(sk, i) in f.splitInput.keys" :key="sk">
                         <AppInput
                             :aria-label="fieldName(f, f.splitInput.placeholders?.[i] ?? '')"
-                            size="sm"
+                            size="md"
                             :name="sk"
                             :model-value="getStringValue(sk)"
                             :placeholder="f.splitInput.placeholders?.[i] ?? ''"
@@ -95,7 +95,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
                         :aria-label="fieldName(f, f.placeholder)"
-                        size="sm"
+                        size="md"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
                         :type="inputNativeType(f)"
@@ -116,7 +116,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppInput
                         :aria-label="fieldName(f, f.placeholder)"
-                        size="sm"
+                        size="md"
                         :name="f.field"
                         :model-value="getStringValue(f.field)"
                         :type="inputNativeType(f)"
@@ -145,7 +145,7 @@
                 <dd class="app-grid-search__dd">
                     <AppSelect
                         :aria-label="fieldName(f, f.placeholderSelect ?? f.placeholder ?? $t('ui.selectPlaceholder'))"
-                        size="sm"
+                        size="md"
                         :name="f.field"
                         :model-value="getSelectValue(f.field)"
                         :items="f.items"
@@ -163,7 +163,7 @@
                 <dd class="app-grid-search__dd app-grid-search__dd--inline">
                     <AppSelect
                         :aria-label="fieldName(f, f.placeholderSelect ?? $t('ui.grid.column'))"
-                        size="sm"
+                        size="md"
                         :name="f.selectInput.columnKey"
                         :model-value="getSelectValue(f.selectInput.columnKey)"
                         :items="f.selectInput.items"
@@ -174,7 +174,7 @@
                     />
                     <AppInput
                         :aria-label="fieldName(f, f.placeholderInput ?? f.placeholder ?? $t('ui.searchKeyword'))"
-                        size="sm"
+                        size="md"
                         :name="f.selectInput.textKey"
                         :model-value="getStringValue(f.selectInput.textKey)"
                         :placeholder="f.placeholderInput ?? f.placeholder ?? $t('ui.searchKeyword')"
@@ -227,7 +227,7 @@
                 <dd class="app-grid-search__dd">
                     <AppChoice
                         size="sm"
-                        type="checkbox"
+                        type="toggle"
                         :model-value="getBooleanValue(f.field)"
                         :aria-label="fieldName(f)"
                         :disabled="f.disabled"
@@ -241,7 +241,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker
-                        size="sm"
+                        size="md"
                         :model-value="getDateValue(f.field)"
                         type="single"
                         :min="f.min"
@@ -258,7 +258,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker
-                        size="sm"
+                        size="md"
                         :model-value="getRangeValue(f.field)"
                         type="range"
                         :placeholder="f.placeholder ?? $t('ui.date.range')"
@@ -273,7 +273,7 @@
                 <dt class="app-grid-search__dt">{{ f.label }}</dt>
                 <dd class="app-grid-search__dd">
                     <AppDatePicker
-                        size="sm"
+                        size="md"
                         :model-value="getRangeValue(f.field)"
                         type="range"
                         :min="f.min"

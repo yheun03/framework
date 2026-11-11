@@ -44,25 +44,25 @@
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "xs"</div>
 
-                            <AppTextarea v-model="extraSmallValue" size="xs" placeholder="extra small textarea" aria-label="extra small textarea" />
+                            <AppTextarea v-model="extraSmallValue" size="sm" placeholder="extra small textarea" aria-label="extra small textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "sm"</div>
 
-                            <AppTextarea v-model="smallValue" size="sm" placeholder="small textarea" aria-label="small textarea" />
+                            <AppTextarea v-model="smallValue" size="md" placeholder="small textarea" aria-label="small textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "md"</div>
 
-                            <AppTextarea v-model="mediumValue" size="md" placeholder="medium textarea" aria-label="medium textarea" />
+                            <AppTextarea v-model="mediumValue" size="lg" placeholder="medium textarea" aria-label="medium textarea" />
                         </div>
 
                         <div class="page-demo-stack">
                             <div class="page-demo-hint">size = "lg"</div>
 
-                            <AppTextarea v-model="largeValue" size="lg" placeholder="large textarea" aria-label="large textarea" />
+                            <AppTextarea v-model="largeValue" size="xl" placeholder="large textarea" aria-label="large textarea" />
                         </div>
                     </div>
                 </PageDemoSection>

@@ -25,10 +25,10 @@
                 <!-- SIZE -->
                 <PageDemoSection class="page-demo-section" title="Size" description="Select의 높이를 제어합니다.">
                     <div class="page-demo-grid">
-                        <AppSelect size="xs" label="XS" v-model="sizes.xs" :items="departmentOptions" />
-                        <AppSelect size="sm" label="SM" v-model="sizes.sm" :items="departmentOptions" />
-                        <AppSelect size="md" label="MD" v-model="sizes.md" :items="departmentOptions" />
-                        <AppSelect size="lg" label="LG" v-model="sizes.lg" :items="departmentOptions" />
+                        <AppSelect size="sm" label="XS" v-model="sizes.xs" :items="departmentOptions" />
+                        <AppSelect size="md" label="SM" v-model="sizes.sm" :items="departmentOptions" />
+                        <AppSelect size="lg" label="MD" v-model="sizes.md" :items="departmentOptions" />
+                        <AppSelect size="xl" label="LG" v-model="sizes.lg" :items="departmentOptions" />
                     </div>
                 </PageDemoSection>
 
@@ -65,7 +65,7 @@
                     description="Figma 이미지 포함 셀렉트 - item.image, item.description, item.disabled(품절) 를 지원합니다. width 로 가로 크기 지정"
                 >
                     <div class="page-demo-row">
-                        <AppSelect v-model="product" :items="productItems" label="상품 선택" :width="360" size="lg" />
+                        <AppSelect v-model="product" :items="productItems" label="상품 선택" :width="360" size="xl" />
                         <AppSelect v-model="product" :items="productItems" label="width='full'" width="full" />
                     </div>
                 </PageDemoSection>

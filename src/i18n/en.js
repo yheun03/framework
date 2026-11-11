@@ -235,6 +235,8 @@ const En = {
     'ui.pagination.first': 'First page',
     'ui.pagination.prev': 'Previous page',
     'ui.pagination.next': 'Next page',
+    'ui.pagination.prevBlock': 'Previous {n} pages',
+    'ui.pagination.nextBlock': 'Next {n} pages',
     'ui.pagination.last': 'Last page',
     'ui.pagination.pageSizeLabel': 'Rows per page',
     'ui.pagination.pageSize': '{n} per page',

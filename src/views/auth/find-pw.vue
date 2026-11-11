@@ -18,7 +18,7 @@
                     id="find-password-email"
                     name="email"
                     type="email"
-                    size="lg"
+                    size="xl"
                     label="이메일"
                     placeholder="name@company.com"
                     autocomplete="email"

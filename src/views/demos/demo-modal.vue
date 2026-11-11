@@ -250,7 +250,7 @@ function handleOpenNestedConfirm() {
 function handleOpenCustom() {
     modal.openCustom(PageDemoModalRendererExample, {
         title: '커스텀 모달',
-        width: '640px',
+        size: 'md',
         componentProps: {
             onAction: () => {
                 modal.closeTop();
@@ -268,7 +268,7 @@ function handleOpenCustom() {
 function handleOpenCustomFooter() {
     modal.openCustom(PageDemoModalRendererExample, {
         title: 'Footer가 있는 Custom',
-        width: '640px',
+        size: 'md',
         variant: 'form',
         footer: true,
         confirmText: '적용하기',
@@ -291,7 +291,7 @@ function handleOpenNestedCustom() {
             onNestedAlert: () => {
                 modal.openCustom(PageDemoModalRendererExample, {
                     title: '2차 Custom',
-                    width: '520px',
+                    size: 'sm',
                     componentProps: {
                         onAction: () => modal.closeTop(),
                     },

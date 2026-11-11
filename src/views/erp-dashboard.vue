@@ -6,7 +6,7 @@
                 <h1 class="business-page__title">경영 현황 대시보드</h1>
                 <p class="business-page__desc">매출, 발주, 재고 현황을 한눈에 확인합니다.</p>
             </div>
-            <div class="business-page__tools"><AppDatePicker v-model="baseDate" size="md" /></div>
+            <div class="business-page__tools"><AppDatePicker v-model="baseDate" size="lg" /></div>
         </header>
 
         <section class="business-summary">

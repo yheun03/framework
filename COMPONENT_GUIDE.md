@@ -41,29 +41,29 @@ Figma 디자인 시스템(`2026_스타일가이드_v02_조앤`) 기준 컴포넌
 
 ### size 별 실제 높이 (px)
 
-같은 `size` 이름이라도 컴포넌트마다 높이가 다릅니다. **표에 없는 값은 지원하지 않습니다.**
+**같은 `size` 이름 = 같은 높이**입니다. 한 컴포넌트의 크기 이름을 알면 다른 컴포넌트도 같은 이름으로 맞춥니다. (Figma 디자인 시스템 기준)
 
-| 컴포넌트                                 | xs  | sm  | md  | lg  | xl  |
-| ---------------------------------------- | --- | --- | --- | --- | --- |
-| Button · TextButton(fill/outline)        | 24  | 36  | 44  | 48  | 56  |
-| InputNumber                              | 24  | 36  | 44  | 48  | –   |
-| Input · Select · DatePicker · InputGroup | 36  | 44  | 48  | 56  | –   |
-| IconButton                               | 24  | 28  | 32  | 36  | 40  |
-| Segmented                                | 22  | 32  | 38  | 46  | –   |
-| Tag                                      | 18  | 22  | 28  | –   | –   |
-| Choice (체크 · 라디오 박스)              | –   | 18  | 22  | –   | –   |
+| 이름 | `xs` | `sm` | `md` | `lg` | `xl` |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 높이 | 24   | 36   | 44   | 48   | 56   |
 
-**한 줄에 입력과 버튼을 같이 둘 때** — 입력이 버튼보다 한 단계 큽니다.
+| 컴포넌트                               | 쓰는 이름          | 기본값 |
+| -------------------------------------- | ------------------ | ------ |
+| Button · IconButton                    | `xs` ~ `xl`        | `md`   |
+| Input · Select · DatePicker · Textarea | `sm` ~ `xl`        | `lg`   |
+| Tabs (line · fill · outline · box)     | `sm` ~ `xl`        | `md`   |
+| DataTable (행 높이)                    | `sm` ~ `xl`        | `lg`   |
+| InputNumber                            | `xs` ~ `lg`        | `sm`   |
+| Segmented                              | `sm` ~ `lg`        | `md`   |
+| Carousel `navSize` (좌우 버튼)         | `xs` ~ `xl` · 숫자 | `lg`   |
 
-| 입력 (Input · Select · DatePicker) | 짝이 되는 버튼 | 높이 |
-| ---------------------------------- | -------------- | ---- |
-| `xs`                               | `sm`           | 36   |
-| `sm`                               | `md`           | 44   |
-| `md`                               | `lg`           | 48   |
-| `lg`                               | `xl`           | 56   |
-
-- 조회 영역(AppSearchPanel)은 입력 `xs` + 버튼 `sm`(36px) 이 기본입니다.
-- IconButton 은 `:size="36"` 처럼 숫자(px)도 받으므로 입력 옆에서는 숫자로 맞춥니다.
+- 한 줄에 입력과 버튼을 같이 둘 때는 **같은 이름**을 씁니다. (조회 영역 AppSearchPanel 은 입력 · 버튼 모두 `sm` 36px)
+- IconButton 은 표에 없는 크기만 숫자(px)로 지정합니다. (예: `:size="32"`)
+- 높이가 아닌 크기 (이름은 같지만 글자 · 아이콘 크기 기준)
+    - TextButton · Tabs `text` `divider` : 글자 크기 (TextButton `sm` 12 · `md` 13 · `lg` 14 / Tabs 14 · 16 · 18 · 20)
+    - Tag `xs` 18 · `sm` 22 · `md` 28, Choice(체크 · 라디오 박스) `sm` 18 · `md` 22
+- 모달 · 드로어 너비도 이름으로 지정합니다: Modal `sm` 420 · `md` 640 · `lg` 900 / Drawer `sm` 360 · `md` 480 · `lg` 640 (특별한 경우만 `width`)
+- 모양(`shape`)은 모든 컴포넌트에서 `square` `round` `pill` 같은 이름입니다. (입력 계열은 `underline` 추가)
 
 ## 2. 디자인 토큰
 
@@ -129,16 +129,16 @@ LNB 메뉴 그룹과 같은 분류입니다.
             </div>
         </header>
 
-        <!-- 조회 조건: 입력은 size="xs"(36px) · 버튼은 size="sm"(36px) 로 높이를 맞춥니다. -->
+        <!-- 조회 조건: 입력 · 버튼 모두 size="sm"(36px) - 같은 이름 = 같은 높이 -->
         <AppSearchPanel :columns="4" :loading="loading" @search="search" @reset="reset">
             <AppSearchItem label="작업일자" :span="2">
-                <AppDatePicker v-model="filter.period" type="range-input" size="xs" />
+                <AppDatePicker v-model="filter.period" type="range-input" size="sm" />
             </AppSearchItem>
             <AppSearchItem label="라인">
-                <AppSelect v-model="filter.line" :items="lines" size="xs" placeholder="전체" />
+                <AppSelect v-model="filter.line" :items="lines" size="sm" placeholder="전체" />
             </AppSearchItem>
             <AppSearchItem label="상태">
-                <AppSelect v-model="filter.status" :items="statuses" size="xs" placeholder="전체" />
+                <AppSelect v-model="filter.status" :items="statuses" size="sm" placeholder="전체" />
             </AppSearchItem>
         </AppSearchPanel>
 

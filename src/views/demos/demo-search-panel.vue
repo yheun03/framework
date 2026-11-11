@@ -19,12 +19,12 @@
                     </ul>
 
                     <AppSearchPanel @search="search" @reset="reset">
-                        <AppSearchItem label="라인"><AppSelect v-model="form.line" :items="lines" size="xs" placeholder="전체" /></AppSearchItem>
+                        <AppSearchItem label="라인"><AppSelect v-model="form.line" :items="lines" size="sm" placeholder="전체" /></AppSearchItem>
                         <AppSearchItem label="품목"
-                            ><AppInput v-model="form.keyword" size="xs" placeholder="품목코드/품목명" clearable
+                            ><AppInput v-model="form.keyword" size="sm" placeholder="품목코드/품목명" clearable
                         /></AppSearchItem>
-                        <AppSearchItem label="상태"><AppSelect v-model="form.status" :items="statuses" size="xs" placeholder="전체" /></AppSearchItem>
-                        <AppSearchItem label="작업자"><AppInput v-model="form.worker" size="xs" /></AppSearchItem>
+                        <AppSearchItem label="상태"><AppSelect v-model="form.status" :items="statuses" size="sm" placeholder="전체" /></AppSearchItem>
+                        <AppSearchItem label="작업자"><AppInput v-model="form.worker" size="sm" /></AppSearchItem>
                     </AppSearchPanel>
                     <p class="page-demo-output">{{ lastEvent }}</p>
                 </PageDemoSection>
@@ -41,8 +41,8 @@
                     </ul>
 
                     <AppSearchPanel :columns="3" @search="search" @reset="reset">
-                        <AppSearchItem label="작업일자" :span="2"><AppDatePicker v-model="form.period" type="range-input" size="xs" /></AppSearchItem>
-                        <AppSearchItem label="라인"><AppSelect v-model="form.line" :items="lines" size="xs" placeholder="전체" /></AppSearchItem>
+                        <AppSearchItem label="작업일자" :span="2"><AppDatePicker v-model="form.period" type="range-input" size="sm" /></AppSearchItem>
+                        <AppSearchItem label="라인"><AppSelect v-model="form.line" :items="lines" size="sm" placeholder="전체" /></AppSearchItem>
                     </AppSearchPanel>
                 </PageDemoSection>
 
@@ -54,8 +54,8 @@
                     </ul>
 
                     <AppSearchPanel :columns="2" :label-width="120" @search="search" @reset="reset">
-                        <AppSearchItem label="공장" required><AppSelect v-model="form.plant" :items="plants" size="xs" required /></AppSearchItem>
-                        <AppSearchItem label="설비코드"><AppInput v-model="form.equipment" size="xs" /></AppSearchItem>
+                        <AppSearchItem label="공장" required><AppSelect v-model="form.plant" :items="plants" size="sm" required /></AppSearchItem>
+                        <AppSearchItem label="설비코드"><AppInput v-model="form.equipment" size="sm" /></AppSearchItem>
                     </AppSearchPanel>
                 </PageDemoSection>
 
@@ -72,7 +72,7 @@
 
                     <AppSearchPanel collapsible @search="search" @reset="reset">
                         <AppSearchItem v-for="field in manyFields" :key="field" :label="field"
-                            ><AppInput v-model="form.extra[field]" size="xs"
+                            ><AppInput v-model="form.extra[field]" size="sm"
                         /></AppSearchItem>
                     </AppSearchPanel>
                 </PageDemoSection>
@@ -86,7 +86,7 @@
                     </ul>
 
                     <AppSearchPanel :columns="2" :loading="loading" search-text="검색" :show-reset="false" @search="searchWithLoading">
-                        <AppSearchItem label="LOT 번호"><AppInput v-model="form.lot" size="xs" /></AppSearchItem>
+                        <AppSearchItem label="LOT 번호"><AppInput v-model="form.lot" size="sm" /></AppSearchItem>
                     </AppSearchPanel>
                 </PageDemoSection>
 
@@ -97,7 +97,7 @@
                     </ul>
 
                     <AppSearchPanel :columns="2" @search="search" @reset="reset">
-                        <AppSearchItem label="품목"><AppInput v-model="form.keyword" size="xs" /></AppSearchItem>
+                        <AppSearchItem label="품목"><AppInput v-model="form.keyword" size="sm" /></AppSearchItem>
                         <template #actions>
                             <AppButton size="sm">
                                 <template #iconLeft><IconFileUpload /></template>

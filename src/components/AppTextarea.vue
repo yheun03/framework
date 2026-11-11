@@ -78,7 +78,7 @@ const props = defineProps({
     maxLength: { type: Number, default: undefined },
     showCount: { type: Boolean, default: false },
     clearable: { type: Boolean, default: false },
-    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    size: { type: String, default: 'lg', validator: oneOf(FORM_SIZES) },
     shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
     state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */

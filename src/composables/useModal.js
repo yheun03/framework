@@ -11,9 +11,9 @@
  *    modal.close(id);
  *
  * 3) 직접 만든 컴포넌트를 모달 본문으로
- *    modal.openCustom(MyForm, { title: '등록', componentProps: { id: 1 }, footer: true, onConfirm });
+ *    modal.openCustom(MyForm, { title: '등록', size: 'lg', componentProps: { id: 1 }, footer: true, onConfirm });
  *
- * 옵션: title · message · width · height · closable · closeOnEsc · closeOnBackdrop · overlay
+ * 옵션: title · message · size(sm 420 · md 640 · lg 900) · width(직접 지정 시) · height · closable · closeOnEsc · closeOnBackdrop · overlay
  *       confirmText · cancelText · keepOnConfirm(확인 후 닫지 않음)
  *       onConfirm · onCancel · onClose(reason: 'confirm' | 'cancel' | 'close')
  *       custom 전용: componentProps · footer · footerComponent · footerProps

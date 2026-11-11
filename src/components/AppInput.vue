@@ -38,6 +38,7 @@
             />
 
             <AppIconButton
+                :size="32"
                 v-if="clearable && modelValue"
                 class="app-input__icon app-input__icon--right"
                 :aria-label="$t('ui.input.clear')"
@@ -47,6 +48,7 @@
             </AppIconButton>
 
             <AppIconButton
+                :size="32"
                 v-if="passwordToggle"
                 class="app-input__icon app-input__icon--right"
                 :aria-label="showPassword ? $t('ui.input.hidePassword') : $t('ui.input.showPassword')"
@@ -83,7 +85,7 @@ const props = defineProps({
     hint: { type: String },
     placeholder: { type: String },
     type: { type: String, default: 'text' },
-    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
+    size: { type: String, default: 'lg', validator: oneOf(FORM_SIZES) },
     shape: { type: String, default: 'round', validator: oneOf(FORM_SHAPES) },
     state: { type: [String, null], default: null, validator: oneOf(STATES) },
     /** number(px) | '50%' | 'full' */

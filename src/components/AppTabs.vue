@@ -1,7 +1,12 @@
 <template>
     <div
         class="app-tabs"
-        :class="[`app-tabs--${variant}`, `app-tabs--${size}`, `app-tabs--${direction}`, { 'is-stretch': stretch }]"
+        :class="[
+            `app-tabs--${variant}`,
+            `app-tabs--${size}`,
+            `app-tabs--${direction}`,
+            { [`app-tabs--layout-${layout}`]: isBlock, [`app-tabs--shape-${shape}`]: isBlock, 'is-stretch': stretch },
+        ]"
         :style="rootStyle"
     >
         <div class="app-tabs__list" role="tablist" :aria-orientation="direction">
@@ -38,7 +43,7 @@
 </template>
 
 <script setup>
-import { DIRECTIONS, oneOf } from '@/utils/props';
+import { DIRECTIONS, FORM_SIZES, SHAPES, oneOf } from '@/utils/props';
 import { toSizeStyle } from '@/utils/css';
 import { computed, ref, useSlots } from 'vue';
 
@@ -48,13 +53,25 @@ const props = defineProps({
     modelValue: { type: [String, Number, null], default: undefined },
     /** 최초 활성 규칙 (v-model 미사용 시) */
     initial: { type: String, default: 'first', validator: oneOf(['first', 'none']) },
-    /** line / box / pill / group(그룹형) / button(버튼형) / grid(그룹 버튼형) / text(텍스트형) */
-    variant: { type: String, default: 'line', validator: oneOf(['line', 'box', 'pill', 'group', 'button', 'grid', 'text']) },
-    size: { type: String, default: 'md', validator: oneOf(['sm', 'md', 'lg']) },
+    /**
+     * 스타일 (Figma 탭 가이드)
+     * - line: 언더바 (기본형 언더바 · 타이틀형)
+     * - fill: 면 (활성 탭 검정 채움) / outline: 라인 (활성 탭 검정 테두리) - layout · shape 적용
+     * - text: 텍스트 언더라인 / divider: 텍스트 구분자(·)
+     * - box: 폴더형 (MES 상세 화면용)
+     */
+    variant: { type: String, default: 'line', validator: oneOf(['line', 'fill', 'outline', 'text', 'divider', 'box']) },
+    /** fill · outline 배치: group(붙은 기본형) / button(떨어진 버튼형) / grid(2단 버튼형, columns) */
+    layout: { type: String, default: 'group', validator: oneOf(['group', 'button', 'grid']) },
+    /** fill · outline 모서리 (AppButton 과 같은 이름) */
+    shape: { type: String, default: 'square', validator: oneOf(SHAPES) },
+    /** 높이 sm 36 · md 44 · lg 48 · xl 56 (text · divider 는 글자 크기 14 · 16 · 18 · 20) */
+    size: { type: String, default: 'md', validator: oneOf(FORM_SIZES) },
     /** 탭 배치 방향 (AppSteps 와 같은 이름) */
     direction: { type: String, default: 'horizontal', validator: oneOf(DIRECTIONS) },
-    /** grid variant 의 한 줄 칸 수 */
+    /** layout="grid" 의 한 줄 칸 수 */
     columns: { type: Number, default: 6 },
+    /** 탭 너비 균등 분할 (타이틀형 A타입 = stretch, B타입 = 기본) */
     stretch: { type: Boolean, default: false },
     width: { type: [Number, String] },
 });
@@ -66,6 +83,7 @@ const firstId = props.items.find((item) => !item.disabled)?.id ?? null;
 const selectedId = ref(props.initial === 'first' ? firstId : null);
 const currentId = computed(() => (props.modelValue === undefined ? selectedId.value : props.modelValue));
 const hasPanels = computed(() => Boolean(slots.default) || props.items.some((item) => item.slot && slots[item.slot]));
+const isBlock = computed(() => props.variant === 'fill' || props.variant === 'outline');
 const rootStyle = computed(() => ({ ...toSizeStyle(props.width), '--app-tabs-columns': String(props.columns) }));
 
 function selectTab(item) {

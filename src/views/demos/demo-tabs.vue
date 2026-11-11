@@ -38,48 +38,104 @@
                 </PageDemoSection>
 
                 <!-- VARIANT -->
-                <PageDemoSection class="page-demo-section" title="Variant" description="line / box / pill / vertical 스타일을 비교합니다.">
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Variant"
+                    description="Figma 탭 스타일 - line(언더바) / fill(면) / outline(라인) / text(텍스트 언더라인) / divider(텍스트 구분자) / box(폴더형, MES 확장)"
+                >
                     <div class="page-demo-stack">
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">variant = "line"</div>
-
-                            <AppTabs :items="variantItems" variant="line">
-                                <template #account>Account Content</template>
-                                <template #profile>Profile Content</template>
-                                <template #security>Security Content</template>
-                            </AppTabs>
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">variant = "box"</div>
-
-                            <AppTabs :items="variantItems" variant="box">
-                                <template #account>Account Content</template>
-                                <template #profile>Profile Content</template>
-                                <template #security>Security Content</template>
-                            </AppTabs>
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">variant = "pill"</div>
-
-                            <AppTabs :items="variantItems" variant="pill">
-                                <template #account>Account Content</template>
-                                <template #profile>Profile Content</template>
-                                <template #security>Security Content</template>
-                            </AppTabs>
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">variant = "vertical"</div>
-
-                            <AppTabs :items="verticalItems" variant="line" direction="vertical">
-                                <template #overview>Overview Content</template>
-                                <template #members>Members Content</template>
-                                <template #settings>Settings Content</template>
-                            </AppTabs>
-                        </div>
+                        <template v-for="variant in ['line', 'fill', 'outline', 'text', 'divider', 'box']" :key="variant">
+                            <div class="page-demo-hint">variant = "{{ variant }}"</div>
+                            <AppTabs
+                                v-model="figmaTab"
+                                :items="figmaTabs"
+                                :variant="variant"
+                                :stretch="['line', 'fill', 'outline'].includes(variant)"
+                            />
+                        </template>
+                        <p class="page-demo-output">v-model: {{ figmaTab }}</p>
                     </div>
+                </PageDemoSection>
+
+                <!-- LAYOUT -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Layout"
+                    description="fill · outline 의 배치 - group(붙은 기본형) / button(떨어진 버튼형) / grid(2단 버튼형, columns 로 한 줄 칸 수)"
+                >
+                    <div class="page-demo-stack">
+                        <template v-for="variant in ['fill', 'outline']" :key="variant">
+                            <div class="page-demo-hint">variant = "{{ variant }}" layout = "group" stretch</div>
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" :variant="variant" layout="group" stretch />
+                            <div class="page-demo-hint">variant = "{{ variant }}" layout = "button"</div>
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" :variant="variant" layout="button" />
+                            <div class="page-demo-hint">variant = "{{ variant }}" layout = "grid" :columns="6"</div>
+                            <AppTabs
+                                v-model="figmaTab"
+                                :items="[...figmaTabs.slice(0, 6), ...extraTabs]"
+                                :variant="variant"
+                                layout="grid"
+                                :columns="6"
+                            />
+                        </template>
+                    </div>
+                </PageDemoSection>
+
+                <!-- SHAPE -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Shape"
+                    description="fill · outline 의 모서리 - square(직각, 기본값) / round(라운드) / pill(써클). AppButton 과 같은 이름입니다."
+                >
+                    <div class="page-demo-stack">
+                        <template v-for="shape in ['square', 'round', 'pill']" :key="shape">
+                            <div class="page-demo-hint">shape = "{{ shape }}"</div>
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" variant="fill" :shape="shape" stretch />
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" variant="outline" layout="button" :shape="shape" />
+                        </template>
+                    </div>
+                </PageDemoSection>
+
+                <!-- SIZE -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Size"
+                    description="높이 sm 36 · md 44 (기본값) · lg 48 · xl 56 - AppButton · AppInput 과 같은 이름 = 같은 높이. text · divider 는 글자 크기 14 · 16 · 18 · 20"
+                >
+                    <div class="page-demo-stack">
+                        <template v-for="size in ['sm', 'md', 'lg', 'xl']" :key="size">
+                            <div class="page-demo-hint">size = "{{ size }}"</div>
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" variant="fill" shape="round" :size="size" stretch />
+                        </template>
+                        <template v-for="size in ['md', 'xl']" :key="`text-${size}`">
+                            <div class="page-demo-hint">variant = "text" / "divider" size = "{{ size }}"</div>
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" variant="text" :size="size" />
+                            <AppTabs v-model="figmaTab" :items="figmaTabs" variant="divider" :size="size" />
+                        </template>
+                    </div>
+                </PageDemoSection>
+
+                <!-- STRETCH -->
+                <PageDemoSection
+                    class="page-demo-section"
+                    title="Stretch (타이틀형)"
+                    description="stretch 는 탭 너비를 균등하게 나눕니다. 타이틀형 A타입 = stretch, B타입 = 기본(글자 너비)"
+                >
+                    <div class="page-demo-stack">
+                        <div class="page-demo-hint">variant = "line" stretch (A타입)</div>
+                        <AppTabs :items="titleTabs" variant="line" size="xl" stretch />
+                        <div class="page-demo-hint">variant = "line" (B타입)</div>
+                        <AppTabs :items="titleTabs.slice(0, 2)" variant="line" size="xl" />
+                    </div>
+                </PageDemoSection>
+
+                <!-- DIRECTION -->
+                <PageDemoSection class="page-demo-section" title="Direction" description='direction="vertical" 은 탭을 왼쪽 세로로 배치합니다.'>
+                    <AppTabs :items="verticalItems" variant="line" direction="vertical">
+                        <template #overview>Overview Content</template>
+                        <template #members>Members Content</template>
+                        <template #settings>Settings Content</template>
+                    </AppTabs>
                 </PageDemoSection>
 
                 <!-- DEFAULT ACTIVE -->
@@ -104,43 +160,8 @@
                     </AppTabs>
                 </PageDemoSection>
 
-                <!-- SIZE -->
-                <PageDemoSection class="page-demo-section" title="Size" description="sm / md / lg 크기를 비교합니다.">
-                    <div class="page-demo-stack">
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">size = "sm"</div>
-
-                            <AppTabs :items="sizeItems" size="sm" variant="pill">
-                                <template #small>Small Content</template>
-                                <template #medium>Medium Content</template>
-                                <template #large>Large Content</template>
-                            </AppTabs>
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">size = "md"</div>
-
-                            <AppTabs :items="sizeItems" size="md" variant="pill">
-                                <template #small>Small Content</template>
-                                <template #medium>Medium Content</template>
-                                <template #large>Large Content</template>
-                            </AppTabs>
-                        </div>
-
-                        <div class="page-demo-stack">
-                            <div class="page-demo-hint">size = "lg"</div>
-
-                            <AppTabs :items="sizeItems" size="lg" variant="pill">
-                                <template #small>Small Content</template>
-                                <template #medium>Medium Content</template>
-                                <template #large>Large Content</template>
-                            </AppTabs>
-                        </div>
-                    </div>
-                </PageDemoSection>
-
                 <!-- SLOT -->
-                <PageDemoSection class="page-demo-section" title="Slot" description="탭 본문을 슬롯으로 연결합니다.">
+                <PageDemoSection class="page-demo-section" title="Slot" description="탭 본문을 슬롯으로 연결합니다. item.badge 로 건수를 표시합니다.">
                     <AppTabs :items="slotItems" variant="line">
                         <template #progress>
                             <div class="page-demo-stack">
@@ -171,27 +192,6 @@
                         </template>
                     </AppTabs>
                 </PageDemoSection>
-
-                <!-- FIGMA STYLES -->
-                <PageDemoSection
-                    class="page-demo-section"
-                    title="Figma Tab Styles"
-                    description="Figma 탭 디자인 스타일 5종 - group(그룹형) / button(버튼형) / grid(그룹 버튼형, columns) / text(텍스트형) / image(오브젝트 조합형)"
-                >
-                    <div class="page-demo-stack">
-                        <div class="page-demo-hint">variant = "group"</div>
-                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="group" size="sm" />
-                        <div class="page-demo-hint">variant = "button"</div>
-                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="button" size="sm" />
-                        <div class="page-demo-hint">variant = "grid" :columns="6"</div>
-                        <AppTabs v-model="figmaTab" :items="[...figmaTabs, ...extraTabs]" variant="grid" :columns="6" size="sm" />
-                        <div class="page-demo-hint">variant = "text"</div>
-                        <AppTabs v-model="figmaTab" :items="figmaTabs" variant="text" size="sm" />
-                        <div class="page-demo-hint">variant = "group" + item.image (오브젝트 조합형)</div>
-                        <AppTabs v-model="figmaTab" :items="imageTabs" variant="group" size="sm" />
-                        <p class="page-demo-output">v-model: {{ figmaTab }}</p>
-                    </div>
-                </PageDemoSection>
             </div>
 
             <aside class="page-demo-aside" aria-label="컴포넌트 속성 패널">
@@ -205,20 +205,12 @@
 
 <script setup>
 const figmaTab = ref('all');
-const figmaTabs = ['전체보기', '여성', '남성', '키즈', '럭셔리', '백&슈즈', '스포츠', '골프', '라이프', '아울렛'].map((title, index) => ({
+const figmaTabs = ['전체', '1라인', '2라인', '3라인', '4라인', '포장', '검사', '출하', '설비', '자재'].map((title, index) => ({
     id: index === 0 ? 'all' : `t${index}`,
     title,
 }));
-const extraTabs = ['털 모자', '니비 넥', '벙어리 장갑', '백&슈즈', '스포츠'].map((title, index) => ({ id: `e${index}`, title }));
-const tabIcon = (color) =>
-    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><circle cx="20" cy="20" r="16" fill="${color}"/></svg>`)}`;
-const imageTabs = [
-    { id: 'all', title: '전체보기', image: tabIcon('#9ca3af') },
-    { id: 't1', title: '여성', image: tabIcon('#f19c38') },
-    { id: 't2', title: '남성', image: tabIcon('#4896ec') },
-    { id: 't3', title: '키즈', image: tabIcon('#4aa63c') },
-    { id: 't4', title: '럭셔리', image: tabIcon('#8f36aa') },
-];
+const extraTabs = ['원자재', '반제품', '완제품', '부자재', '소모품'].map((title, index) => ({ id: `e${index}`, title }));
+const titleTabs = ['상세정보', '작업이력 (100)', '불량이력 (12)', '설비정보', '첨부파일'].map((title, index) => ({ id: `title-${index}`, title }));
 const defaultTab = ref('default-2');
 
 import { IconAccountGroup, IconCog, IconDashboard, IconForm, IconInfo, IconTap } from '@/components/icons';
@@ -255,25 +247,6 @@ const basicItems = [
         description: '버튼 예시',
         icon: IconTap,
         slot: 'basicButton',
-    },
-];
-
-const variantItems = [
-    {
-        id: 'variant-1',
-        title: 'Account',
-        badge: 3,
-        slot: 'account',
-    },
-    {
-        id: 'variant-2',
-        title: 'Profile',
-        slot: 'profile',
-    },
-    {
-        id: 'variant-3',
-        title: 'Security',
-        slot: 'security',
     },
 ];
 
@@ -317,24 +290,6 @@ const disabledItems = [
     },
 ];
 
-const sizeItems = [
-    {
-        id: 'size-1',
-        title: 'Small',
-        slot: 'small',
-    },
-    {
-        id: 'size-2',
-        title: 'Medium',
-        slot: 'medium',
-    },
-    {
-        id: 'size-3',
-        title: 'Large',
-        slot: 'large',
-    },
-];
-
 const verticalItems = [
     {
         id: 'vertical-1',
@@ -363,6 +318,7 @@ const slotItems = [
     {
         id: 'slot-1',
         title: '진행 상태',
+        badge: 3,
         description: 'slot으로 내용 연결',
         slot: 'progress',
     },

@@ -111,7 +111,6 @@
                         v-model:page-size="paginationPageSize"
                         :total="rowsPagination.length"
                         :page-size-options="[5, 10, 20]"
-                        size="sm"
                     />
                 </PageDemoSection>
             </div>

@@ -43,12 +43,13 @@
                 <PageDemoSection class="page-demo-section" title="Size" description="행 높이입니다.">
                     <ul class="page-demo-hint-list">
                         <li><b>sm</b> : 36px</li>
-                        <li><b>md</b> : 48px (기본값)</li>
-                        <li><b>lg</b> : 56px</li>
+                        <li><b>md</b> : 44px</li>
+                        <li><b>lg</b> : 48px (기본값)</li>
+                        <li><b>xl</b> : 56px</li>
                     </ul>
 
                     <div class="page-demo-stack">
-                        <AppDataTable v-for="size in ['sm', 'lg']" :key="size" :size="size" :columns="eventColumns" :items="events.slice(0, 2)" />
+                        <AppDataTable v-for="size in ['sm', 'xl']" :key="size" :size="size" :columns="eventColumns" :items="events.slice(0, 2)" />
                     </div>
                 </PageDemoSection>
 

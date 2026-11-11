@@ -304,8 +304,7 @@
     &--chip,
     &--chip-outline,
     &--fill,
-    &--ghost,
-    &--toggle {
+    &--ghost {
         align-items: center;
         gap: 6px;
         padding: 4px 12px;
@@ -404,106 +403,116 @@
         }
     }
 
+    /* ----------------------------------------
+       Toggle (type="toggle") - Figma 05. ETC 토글 A · B · C타입
+       트랙 = .app-choice__visual, 손잡이 = ::after
+    ---------------------------------------- */
     &--toggle {
-        position: relative;
-        min-width: 72px;
-        height: 34px;
-        padding: 0 11px;
-        justify-content: flex-start;
-        border-radius: 999px;
-        border-color: var(--border-checkbox-gray-200);
-        background-color: var(--bg-checkbox-gray-200);
-        box-shadow: inset 0 0 0 1px var(--shadow-checkbox-gray-800-alpha-4);
-        transition:
-            background-color 0.24s ease,
-            border-color 0.24s ease,
-            box-shadow 0.24s ease;
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background-color: var(--bg-checkbox-gray-0);
-            box-shadow:
-                0 2px 6px var(--shadow-checkbox-gray-900-alpha-18),
-                0 0 0 1px var(--shadow-checkbox);
-            transform: translateX(0);
-            transition:
-                transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
-                background-color 0.24s ease,
-                box-shadow 0.24s ease;
-        }
-
-        .app-choice__body {
-            width: 100%;
-        }
+        align-items: center;
+        gap: 12px;
 
         .app-choice__label {
-            width: 100%;
-            color: var(--color-checkbox-gray-600);
-            font-weight: 700;
-            text-align: right;
-            text-transform: uppercase;
-            transition:
-                color 0.2s ease,
-                opacity 0.2s ease;
+            @include font(b3, rg);
+            color: var(--color-toggle-label);
         }
 
-        .app-choice__toggle-text {
+        .app-choice__visual {
             position: relative;
-            z-index: 2;
-            width: 100%;
-            color: var(--color-checkbox-gray-600);
-            font-weight: 700;
-            text-align: right;
-            text-transform: uppercase;
-            pointer-events: none;
-            transition:
-                color 0.2s ease,
-                opacity 0.2s ease;
-        }
-
-        &.is-checked {
-            justify-content: flex-end;
-            border-color: var(--border-checkbox-primary-500);
-            background-color: var(--bg-checkbox-primary-500);
-            box-shadow: inset 0 0 0 1px var(--shadow-checkbox-primary-700-alpha-8);
+            display: block;
+            border: 0;
+            border-radius: 100px;
+            background: var(--bg-toggle-track);
+            transition: background-color 0.2s ease;
 
             &::after {
-                background-color: var(--bg-checkbox-gray-0);
-                transform: translateX(calc(100% + 11px));
-            }
-
-            .app-choice__label {
-                color: var(--color-checkbox-gray-0);
-                text-align: left;
-            }
-
-            .app-choice__toggle-text {
-                color: var(--color-checkbox-gray-0);
-                text-align: left;
+                content: '';
+                position: absolute;
+                width: 18px;
+                height: 18px;
+                border-radius: 100px;
+                background: var(--bg-toggle-knob);
+                transition:
+                    transform 0.2s ease,
+                    background-color 0.2s ease;
             }
         }
 
+        // 비활성: 흐리게 하지 않고 손잡이만 회색 (Figma)
         &.is-disabled {
-            background-color: var(--bg-checkbox-gray-100);
-            border-color: var(--border-checkbox-gray-200);
-            box-shadow: none;
-
-            &::after {
-                background-color: var(--bg-checkbox-gray-0);
-                box-shadow: 0 1px 3px var(--shadow-checkbox-gray-900-alpha-8);
-            }
-
-            .app-choice__label,
-            .app-choice__toggle-text {
-                color: var(--color-checkbox-gray-400);
-            }
+            opacity: 1;
         }
+
+        .app-choice__input:disabled + .app-choice__visual {
+            background: var(--bg-toggle-track);
+        }
+
+        &.is-disabled .app-choice__visual::after {
+            background: var(--bg-toggle-knob-disabled);
+        }
+    }
+
+    // A타입: 38 x 20 트랙, 켜지면 트랙이 검정
+    &--toggle-default .app-choice__visual {
+        width: 38px;
+        height: 20px;
+
+        &::after {
+            top: 1px;
+            left: 1px;
+        }
+    }
+
+    &--toggle-default.is-checked:not(.is-disabled) .app-choice__visual {
+        background: var(--bg-toggle-track-on);
+    }
+
+    &--toggle-default.is-checked .app-choice__visual::after {
+        transform: translateX(18px);
+    }
+
+    // B타입(얇은 선 4px) · C타입(막대 10px): 트랙은 그대로, 손잡이가 검정으로
+    &--toggle-line .app-choice__visual,
+    &--toggle-bar .app-choice__visual,
+    &--toggle-line .app-choice__input:disabled + .app-choice__visual,
+    &--toggle-bar .app-choice__input:disabled + .app-choice__visual {
+        width: 36px;
+        height: 18px;
+        background: transparent;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            border-radius: 100px;
+            background: var(--bg-toggle-track);
+            transform: translateY(-50%);
+        }
+
+        &::after {
+            top: 0;
+            left: 0;
+            box-shadow: 1px 1px 3px var(--shadow-toggle-knob);
+        }
+    }
+
+    &--toggle-line .app-choice__visual::before {
+        height: 4px;
+    }
+
+    &--toggle-bar .app-choice__visual::before {
+        height: 10px;
+    }
+
+    &--toggle-line.is-checked .app-choice__visual::after,
+    &--toggle-bar.is-checked .app-choice__visual::after {
+        transform: translateX(18px);
+    }
+
+    &--toggle-line.is-checked:not(.is-disabled) .app-choice__visual::after,
+    &--toggle-bar.is-checked:not(.is-disabled) .app-choice__visual::after {
+        background: var(--bg-toggle-track-on);
     }
 
     &.is-readonly {

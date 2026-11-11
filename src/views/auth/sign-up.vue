@@ -18,7 +18,7 @@
                     v-model="name"
                     id="sign-up-name"
                     name="name"
-                    size="lg"
+                    size="xl"
                     label="이름"
                     placeholder="홍길동"
                     autocomplete="name"
@@ -33,7 +33,7 @@
                     id="sign-up-email"
                     name="email"
                     type="email"
-                    size="lg"
+                    size="xl"
                     label="이메일"
                     placeholder="name@company.com"
                     autocomplete="email"
@@ -50,7 +50,7 @@
                 id="sign-up-password"
                 name="password"
                 type="password"
-                size="lg"
+                size="xl"
                 label="비밀번호"
                 placeholder="8자 이상 입력하세요"
                 autocomplete="new-password"
@@ -65,7 +65,7 @@
                 id="sign-up-password-confirm"
                 name="passwordConfirm"
                 type="password"
-                size="lg"
+                size="xl"
                 label="비밀번호 확인"
                 placeholder="비밀번호를 한 번 더 입력하세요"
                 autocomplete="new-password"
@@ -80,11 +80,11 @@
                 <AppChoice
                     v-model="agreeTerms"
                     type="checkbox"
-                    variant="round"
+                    shape="pill"
                     label="이용약관 및 개인정보 처리방침에 동의합니다."
                     :state="submitted && !agreeTerms ? 'error' : null"
                 />
-                <AppChoice v-model="agreeMarketing" type="checkbox" variant="round" label="새로운 소식과 혜택을 이메일로 받습니다. (선택)" />
+                <AppChoice v-model="agreeMarketing" type="checkbox" shape="pill" label="새로운 소식과 혜택을 이메일로 받습니다. (선택)" />
                 <p v-if="submitted && !agreeTerms" class="auth-page__error">필수 약관에 동의해 주세요.</p>
             </div>
 
