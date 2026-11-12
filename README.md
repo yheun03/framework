@@ -29,7 +29,7 @@ npm run format     # Prettier 자동 정리
 npm test           # 단위 테스트 (tests/*.test.mjs, Node 내장 테스트 러너)
 ```
 
-- `npm install` 시 git 커밋 전 검사(lint · 포맷)가 자동 연결됩니다. (`.githooks/pre-commit`)
+- `npm install` 시 git 커밋 전 검사(lint · 포맷)와 AI 공동 작성자 줄 제거가 자동 연결됩니다. (`.githooks/pre-commit` · `commit-msg`)
 - main 에 push 하면 GitHub Actions 가 같은 검사를 통과한 경우에만 데모 사이트를 배포합니다.
 
 | 파일       | 모드  | 용도                               |

@@ -127,4 +127,4 @@
 - [ ] 키보드(Tab)로 조작 가능하고, 360px 에서 가로 스크롤이 없다
 - [ ] `npm run check` 가 성공한다 (lint · 포맷 · 테스트 · 문서 예제 · Props 패널 · 빌드)
 
-커밋 시 lint · 포맷 검사가 자동으로 돌고(`.githooks/pre-commit`), main 배포 전 GitHub Actions 가 `check` 와 같은 검사를 합니다.
+커밋 시 lint · 포맷 검사가 자동으로 돌고(`.githooks/pre-commit`), AI 도구가 넣는 `Co-authored-by: Cursor · Claude` 줄은 자동으로 지워지며(`.githooks/commit-msg`), main 배포 전 GitHub Actions 가 `check` 와 같은 검사를 합니다.

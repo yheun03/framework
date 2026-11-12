@@ -1,0 +1,7 @@
+#!/bin/sh
+# 커밋 메시지에서 AI 도구가 자동으로 넣는 공동 작성자 줄을 지웁니다. (GitHub Contributors 에 도구 계정이 뜨지 않도록)
+# 대상: Co-authored-by: Cursor / Claude, Claude-Session:
+msg_file="$1"
+tmp_file="$msg_file.tmp"
+grep -viE '^[[:space:]]*(co-authored-by:[[:space:]]*(cursor|claude)|claude-session:)' "$msg_file" > "$tmp_file"
+mv "$tmp_file" "$msg_file"
