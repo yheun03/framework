@@ -111,16 +111,18 @@ LNB 메뉴 그룹과 같은 분류입니다.
 
 ## 4. 작성 패턴 — 표준 화면 유형
 
-ERP · MES · TMS 업무 화면은 거의 모두 아래 4가지 유형의 조합입니다. **새 화면은 가장 가까운 템플릿을 복사해서 시작합니다.**
+ERP · MES · TMS 업무 화면은 거의 모두 아래 5가지 유형의 조합입니다. **새 화면은 `npm run new:page` 로 가장 가까운 템플릿에서 시작합니다.**
 실행 화면은 LNB **가이드 → 화면 템플릿 · …**, 소스는 상단 탭 오른쪽 `</>` 버튼.
 
-| 유형            | 템플릿 (`src/views/demos/`)   | 구성                                                | 공통 로직                          |
-| --------------- | ----------------------------- | --------------------------------------------------- | ---------------------------------- |
-| 목록 (조회)     | `demo-page-example.vue`       | AppSearchPanel → AppDataTable → AppPagination       | `useSearchList`                    |
-| 등록 · 수정     | `demo-page-form.vue`          | AppSection + `business-form-grid` → LayoutBottomBar | `useForm` (`required` · `isDirty`) |
-| 마스터 · 디테일 | `demo-page-master-detail.vue` | 왼쪽 목록(clickable) → 오른쪽 상세 + 하위 목록      | `useSearchList`                    |
-| 선택 팝업       | `demo-page-picker.vue`        | 찾기 버튼 → `await useModal().pick(찾기 컴포넌트)`  | `useModal().pick`                  |
+| 유형 (`new:page`)               | 템플릿                                    | 구성                                                           | 공통 로직                                   |
+| ------------------------------- | ----------------------------------------- | -------------------------------------------------------------- | ------------------------------------------- |
+| 목록 `list`                     | `views/demos/demo-page-example.vue`       | AppSearchPanel → AppDataTable → AppPagination                  | `useSearchList` · `useCodes`                |
+| 등록 · 수정 `form`              | `views/demos/demo-page-form.vue`          | AppSection + `business-form-grid` → LayoutBottomBar            | `useForm` (`required` · `isDirty`)          |
+| 상세 보기 `detail`              | `views/work-orders/[id].vue`              | 요약(`business-summary`) → 정보(`business-detail`) → 하위 목록 | `useRoute().params.id`                      |
+| 마스터 · 디테일 `master-detail` | `views/demos/demo-page-master-detail.vue` | 왼쪽 목록(clickable) → 오른쪽 상세 + 하위 목록                 | `useSearchList`                             |
+| 선택 팝업 `picker`              | `components/PageDemo/picker/…Picker.vue`  | 찾기 버튼 → `await useModal().pick(찾기 컴포넌트)`             | `useModal().pick` (본문은 `emit('select')`) |
 
+- **화면 스크립트 순서**: 모든 템플릿은 `import` → `── 코드 목록` → `── temp 데이터` → `── 목록/폼` → `── 동작` 순서입니다. 다른 사람 화면도 같은 자리에서 찾습니다.
 - **주소 규칙**: 목록 `views/work-orders.vue` → `/work-orders`, 상세 `views/work-orders/[id].vue` → `/work-orders/:id` (쿼리 `?id=` 를 쓰지 않음). 상세는 LNB 메뉴 대신 `ROUTE_META` 에 `title` 을 적습니다.
 - **목록 표**: 기본은 `AppDataTable`. 셀 편집 · 엑셀 다운로드 · 수천 행 · 열 고정이 필요하면 `AppGrid`(AG Grid). HTML `<table>` 을 직접 만들지 않습니다.
 - **상태 표시**: `AppTag variant="soft" dot :tone="…"` (tone 은 `success` `info` `warning` `danger` `gray`)
@@ -186,6 +188,7 @@ ERP · MES · TMS 업무 화면은 거의 모두 아래 4가지 유형의 조합
 
 <script setup>
 import { ref } from 'vue';
+import { useCodes } from '@/composables/useCodes';
 import { useModal } from '@/composables/useModal';
 import { useSearchList } from '@/composables/useSearchList';
 import { useToast } from '@/composables/useToast';
@@ -202,18 +205,26 @@ import AppTag from '@/components/AppTag.vue';
 const modal = useModal();
 const toast = useToast();
 
-// temp 데이터 - API 연동 시 이 영역만 교체
-//   const api = useApi();
-//   fetch: (params) => api.get('/work-orders', { params })   → 서버가 { items, total } 를 주면 페이지 이동 시 자동 재조회
-const lines = [
-    { value: 'L1', label: '1라인' },
-    { value: 'L2', label: '2라인' },
-];
-const statuses = [
-    { value: '진행', label: '진행' },
-    { value: '완료', label: '완료' },
-    { value: '정지', label: '정지' },
-];
+// ── 코드 목록 ─────────────────────────────────────────────
+// project.config.js 의 codeUrl 이 비어 있으면 temp, 적으면 서버 공통코드를 씁니다. (화면 코드는 그대로)
+const { items: lines } = useCodes('LINE', {
+    temp: [
+        { value: 'L1', label: '1라인' },
+        { value: 'L2', label: '2라인' },
+    ],
+});
+const { items: statuses } = useCodes('WORK_STATUS', {
+    temp: [
+        { value: '진행', label: '진행' },
+        { value: '완료', label: '완료' },
+        { value: '정지', label: '정지' },
+    ],
+});
+
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// import { workOrderApi } from '@/services/api/workOrderApi';
+// const fetchWorkOrders = ({ period, ...params }) => workOrderApi.list({ ...params, fromDate: period.start, toDate: period.end });
+// → 서버가 { items, total } (또는 Spring { content, totalElements }) 를 주면 페이지 이동 때 자동으로 다시 조회
 let tempRows = [
     { id: 1, orderNo: 'WO-2611-001', line: 'L1', lineName: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
     { id: 2, orderNo: 'WO-2611-002', line: 'L1', lineName: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
@@ -222,6 +233,7 @@ let tempRows = [
 const fetchWorkOrders = async ({ line, status }) => tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'orderNo', label: '작업지시', width: 140 },
     { key: 'lineName', label: '라인', width: 100 },
@@ -237,16 +249,37 @@ const { filter, items, total, page, pageSize, loading, search, reset, reload } =
 });
 const checked = ref([]);
 
+// ── 동작 ──────────────────────────────────────────────────
+/** 행 클릭 → 상세 (실제: router.push(`/work-orders/${row.id}`)) */
 function openDetail(row) {
     toast.info(`${row.orderNo} 상세로 이동합니다.`);
 }
 
+/** 선택 삭제 → 확인 → 삭제 → 다시 조회 */
 async function remove() {
     if (!(await modal.confirm(`선택한 ${checked.value.length}건을 삭제할까요?`))) return;
-    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await api.delete('/work-orders', { data: checked.value })
+    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await workOrderApi.remove(checked.value)
     toast.success(`${checked.value.length}건을 삭제했습니다.`);
     checked.value = [];
     reload();
 }
 </script>
 ```
+
+## 5. 화면 레이아웃 클래스 (퍼블리셔)
+
+업무 화면의 바깥 틀은 아래 클래스로만 짭니다. (`src/assets/styles/pages/_business.scss`) 화면마다 새 틀 클래스를 만들지 않습니다.
+
+| 클래스                                                                        | 쓰는 곳                                  | 반응형 (tablet ≤1199 · mo ≤767) |
+| ----------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------- |
+| `business-page`                                                               | 화면 최상위 (최대 1440px · 안쪽 여백 24) | mo: 여백 16                     |
+| `business-page__header` · `__title` · `__desc` · `__actions`                  | 제목 줄 (h1 하나) · 오른쪽 버튼          | mo: 세로 쌓기, 버튼 꽉 채움     |
+| `business-page__eyebrow`                                                      | 제목 위 작은 분류 (`MES · 작업관리`)     |                                 |
+| `business-summary` (`--compact` = 3칸)                                        | 상단 숫자 카드 4칸                       | tablet 2칸 · mo 1칸             |
+| `business-form-grid`                                                          | 입력 폼 3칸                              | tablet 2칸 · mo 1칸             |
+| `business-detail` · `__item`                                                  | 상세 정보 `dl` 2칸 (dt · dd)             | mo 1칸                          |
+| `business-page__section-wrapper` + `AppSectionWrapper direction="horizontal"` | 좌우 2단                                 | mo: 1단                         |
+| `equipment-grid`                                                              | 설비 카드 4칸                            | tablet 2칸 · mo 1칸             |
+
+- 한 화면에서만 쓰는 스타일은 그 화면의 `<style scoped lang="scss">` 에 둡니다. 두 화면 이상이 쓰면 `_business.scss` 로 옮깁니다.
+- 표 · 조회 조건 · 상태 표시는 클래스가 아니라 컴포넌트(`AppDataTable` · `AppSearchPanel` · `AppTag`)를 씁니다.

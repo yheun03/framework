@@ -56,7 +56,8 @@ import AppTag from '@/components/AppTag.vue';
 const route = useRoute();
 const id = computed(() => route.params.id);
 
-// temp 데이터 - 실제: detail.value = await api.get(`/work-orders/${id.value}`)
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: detail.value = await api.get(`/work-orders/${id.value}`)
 const detail = { item: '모터 하우징 A' };
 const summary = [
     { label: '지시수량', value: '1,200 EA' },
@@ -84,6 +85,7 @@ const processes = [
 ];
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const processColumns = [
     { key: 'step', label: '순서', width: 70 },
     { key: 'name', label: '공정명', align: 'left' },

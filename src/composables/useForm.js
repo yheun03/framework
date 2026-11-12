@@ -20,6 +20,11 @@ export const required =
     (value) =>
         (Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined && String(value).trim() !== '') || message;
 
+/**
+ * @template {Record<string, any>} T
+ * @param {() => T} createForm 빈 폼을 만드는 함수 (등록 화면의 처음 값 · setForm 의 기본값)
+ * @param {Partial<Record<keyof T, Array<(value: any, form: T) => true | string>>>} [rules] 칸별 검사 규칙
+ */
 export function useForm(createForm, rules = {}) {
     const form = reactive(createForm());
     const errors = reactive({});

@@ -39,7 +39,8 @@ import AppEquipmentCard from '@/components/AppEquipmentCard.vue';
 import AppSection from '@/components/Section/AppSection.vue';
 import AppTag from '@/components/AppTag.vue';
 
-// temp 데이터 - 실제: 주기 조회(setInterval + api.get) 또는 웹소켓으로 갱신. 화면을 떠나면(onDeactivated · onUnmounted) 꼭 멈춥니다.
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: 주기 조회(setInterval + api.get) 또는 웹소켓으로 갱신. 화면을 떠나면(onDeactivated · onUnmounted) 꼭 멈춥니다.
 const summary = [
     { label: '전체 설비', value: '24대', desc: '정상 20대' },
     { label: '평균 가동률', value: '84.6%', desc: '목표 82%' },
@@ -95,6 +96,7 @@ const alarms = [
 ];
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const alarmColumns = [
     { key: 'time', label: '발생시각', width: 110 },
     { key: 'machine', label: '설비', width: 110 },

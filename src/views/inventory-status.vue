@@ -48,7 +48,8 @@ import AppTag from '@/components/AppTag.vue';
 
 const toast = useToast();
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/inventories', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: fetch: (params) => api.get('/inventories', { params })
 const warehouses = [
     { label: '원자재 창고', value: 'raw' },
     { label: '반제품 창고', value: 'wip' },
@@ -86,6 +87,7 @@ const fetchInventories = async ({ keyword, warehouse, onlyShortage }) =>
     );
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const withUnit = (value, row) => `${value.toLocaleString()} ${row.unit}`;
 const columns = [
     { key: 'code', label: '품목코드', width: 120 },

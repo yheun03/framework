@@ -8,12 +8,13 @@
  *   - 그 외: 서버 메시지(message · error)로 오류 토스트를 띄우고 reject 합니다.
  *   - 토스트 없이 화면에서 직접 처리하려면 요청 옵션에 { toast: false }
  *     예) await api.get('/orders', { params, toast: false })
- * - 화면에서는 useApi() 로 사용합니다. (composables/useApi.js)
+ * - 조회 조건(params)의 빈 값(null · '' · 빈 배열)은 보내지 않습니다. (전체 = 조건 없음)
+ * - 화면에서는 useApi() 로 사용합니다. (composables/useApi.js) 서버와의 약속은 API_GUIDE.md
  */
 import axios from 'axios';
 import i18n from '@/i18n';
 import { projectConfig } from '@/project.config';
-import { getApiUrl } from '@/utils/common';
+import { getApiUrl, omitEmptyParams } from '@/utils/common';
 
 const axiosClient = axios.create({
     baseURL: getApiUrl(),
@@ -34,6 +35,7 @@ export function setApiHandlers(next) {
 
 axiosClient.interceptors.request.use((config) => {
     config.headers['Accept-Language'] = i18n.global.locale.value;
+    if (config.params) config.params = omitEmptyParams(config.params);
     if (!(config.data instanceof FormData)) config.headers['Content-Type'] = 'application/json';
 
     const token = handlers.getToken();
@@ -76,7 +78,12 @@ function unwrap(response) {
     return body && typeof body === 'object' && !(body instanceof Blob) && 'data' in body ? body.data : body;
 }
 
+/**
+ * 화면에서 쓰는 API 함수 - 모두 응답 본문(또는 { data } 의 data)을 돌려주는 Promise 입니다.
+ * config 는 axios 옵션 + { toast: false } (오류 토스트 끄기)
+ */
 const apiClient = {
+    /** @type {(url: string, config?: import('axios').AxiosRequestConfig & { toast?: boolean }) => Promise<any>} */
     get: (url, config) => axiosClient.get(url, config).then(unwrap),
     post: (url, body, config) => axiosClient.post(url, body, config).then(unwrap),
     put: (url, body, config) => axiosClient.put(url, body, config).then(unwrap),

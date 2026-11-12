@@ -33,3 +33,18 @@ export function getApiUrl() {
 export function getAppTitle() {
     return ALL_ENV_CONFIGS[getAppMode()].VITE_TITLE || document.title;
 }
+
+/**
+ * 조회 조건에서 빈 값(null · undefined · '' · 빈 배열)을 뺍니다. (apiClient 가 모든 GET params 에 적용)
+ * - '전체' 선택(null)을 보내지 않아야 서버가 '조건 없음'으로 처리합니다. (Spring 은 line= 를 '' 로 받음)
+ * - false · 0 은 값이므로 그대로 보냅니다.
+ * @param {Record<string, any>} params
+ * @returns {Record<string, any>}
+ */
+export function omitEmptyParams(params) {
+    return Object.fromEntries(
+        Object.entries(params).filter(
+            ([, value]) => value !== null && value !== undefined && value !== '' && !(Array.isArray(value) && !value.length),
+        ),
+    );
+}

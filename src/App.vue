@@ -4,7 +4,7 @@
             탭 화면 유지 (KeepAlive)
             - 열린 탭(store/routeTabs)의 화면은 입력값 · 스크롤 · 조회 결과를 그대로 유지합니다.
             - 탭을 닫으면 캐시도 지웁니다. 다시 보일 때 새로 조회하려면 화면에서 onActivated 를 씁니다.
-            - 주소(fullPath)마다 별도 화면입니다. (예: /work-order-detail?id=1 과 ?id=2 는 서로 다른 탭)
+            - 주소(fullPath)마다 별도 화면입니다. (예: /work-orders/WO-1 과 /work-orders/WO-2 는 서로 다른 탭)
         -->
         <RouterView v-slot="{ Component, route: viewRoute }">
             <KeepAlive :include="cachedViewNames" :max="TAB_CACHE_MAX">
@@ -29,6 +29,7 @@ import { getRouteTitle, isVisibleRoute } from '@/router/routeTabs';
 import { getAppTitle } from '@/utils/common';
 import { useNavigationStore } from '@/store/navigation';
 import { useRouteTabsStore } from '@/store/routeTabs';
+import { useAuthStore } from '@/store/auth';
 
 const TAB_CACHE_MAX = 20;
 
@@ -36,8 +37,14 @@ const route = useRoute();
 const project = useProjectConfig();
 const navigationStore = useNavigationStore();
 const routeTabsStore = useRouteTabsStore();
+const authStore = useAuthStore();
 
-navigationStore.fetchMenus();
+// 메뉴는 로그인된 상태에서 불러옵니다. (서버 메뉴는 사용자 권한마다 다를 수 있음 · 로그인 기능이 꺼져 있으면 항상 로그인 상태)
+watch(
+    () => authStore.isLoggedIn,
+    (isLoggedIn) => (isLoggedIn ? navigationStore.fetchMenus(true) : navigationStore.reset()),
+    { immediate: true },
+);
 
 // meta.layout === false 인 화면(로그인 등)은 LNB · 탭 없이 단독으로 보여줍니다.
 const useLayout = computed(() => route.meta?.layout !== false);

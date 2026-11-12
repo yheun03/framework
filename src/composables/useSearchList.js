@@ -7,6 +7,9 @@
  *     fetch: (params) => api.get('/work-orders', { params }),    // params = { ...filter, page, size }
  * });
  *
+ * - params 의 page 는 1부터 시작합니다. (Spring Pageable 은 0부터 → API_GUIDE.md 3장)
+ * - 기간(AppDatePicker range)처럼 객체인 조건은 서버 이름으로 풀어서 보냅니다.
+ *     fetch: ({ period, ...params }) => api.get('/work-orders', { params: { ...params, fromDate: period?.start, toDate: period?.end } })
  * - fetch 결과
  *   - 배열이면 화면에서 페이지를 나눕니다. (퍼블리싱 temp 데이터 · 건수가 적은 코드성 목록)
  *   - { items | list | content, total | totalCount | totalElements } 면 서버 페이지로 봅니다. (페이지 이동 시 다시 조회)
@@ -17,6 +20,14 @@
 import { computed, reactive, ref, shallowRef, watch } from 'vue';
 import { normalizeListResponse, slicePage } from '@/utils/list';
 
+/**
+ * @template {Record<string, any>} F
+ * @param {object} options
+ * @param {() => F} [options.filter] 초기 조회 조건을 만드는 함수 (초기화 때 다시 호출)
+ * @param {(params: F & { page: number, size: number }) => Promise<any[] | { items?: any[], content?: any[], total?: number, totalElements?: number }>} options.fetch 조회 함수
+ * @param {number} [options.pageSize=10] 한 페이지 건수
+ * @param {boolean} [options.immediate=true] 화면을 열 때 바로 조회
+ */
 export function useSearchList({ filter: createFilter = () => ({}), fetch, pageSize: initialPageSize = 10, immediate = true }) {
     const filter = reactive(createFilter());
     const page = ref(1);

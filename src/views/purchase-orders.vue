@@ -46,7 +46,8 @@ import AppSection from '@/components/Section/AppSection.vue';
 import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/purchase-orders', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: fetch: (params) => api.get('/purchase-orders', { params })
 const statusOptions = [
     { label: '부분입고', value: 'partial' },
     { label: '입고지연', value: 'delayed' },
@@ -96,6 +97,7 @@ const fetchPurchaseOrders = async ({ keyword, status }) =>
     tempRows.filter((row) => (!keyword || `${row.no} ${row.vendor}`.includes(keyword)) && (!status || row.state === status));
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'no', label: '발주번호', width: 140 },
     { key: 'vendor', label: '공급사', align: 'left' },

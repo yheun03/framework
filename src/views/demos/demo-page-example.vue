@@ -51,6 +51,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useCodes } from '@/composables/useCodes';
 import { useModal } from '@/composables/useModal';
 import { useSearchList } from '@/composables/useSearchList';
 import { useToast } from '@/composables/useToast';
@@ -67,18 +68,26 @@ import AppTag from '@/components/AppTag.vue';
 const modal = useModal();
 const toast = useToast();
 
-// temp 데이터 - API 연동 시 이 영역만 교체
-//   const api = useApi();
-//   fetch: (params) => api.get('/work-orders', { params })   → 서버가 { items, total } 를 주면 페이지 이동 시 자동 재조회
-const lines = [
-    { value: 'L1', label: '1라인' },
-    { value: 'L2', label: '2라인' },
-];
-const statuses = [
-    { value: '진행', label: '진행' },
-    { value: '완료', label: '완료' },
-    { value: '정지', label: '정지' },
-];
+// ── 코드 목록 ─────────────────────────────────────────────
+// project.config.js 의 codeUrl 이 비어 있으면 temp, 적으면 서버 공통코드를 씁니다. (화면 코드는 그대로)
+const { items: lines } = useCodes('LINE', {
+    temp: [
+        { value: 'L1', label: '1라인' },
+        { value: 'L2', label: '2라인' },
+    ],
+});
+const { items: statuses } = useCodes('WORK_STATUS', {
+    temp: [
+        { value: '진행', label: '진행' },
+        { value: '완료', label: '완료' },
+        { value: '정지', label: '정지' },
+    ],
+});
+
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// import { workOrderApi } from '@/services/api/workOrderApi';
+// const fetchWorkOrders = ({ period, ...params }) => workOrderApi.list({ ...params, fromDate: period.start, toDate: period.end });
+// → 서버가 { items, total } (또는 Spring { content, totalElements }) 를 주면 페이지 이동 때 자동으로 다시 조회
 let tempRows = [
     { id: 1, orderNo: 'WO-2611-001', line: 'L1', lineName: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
     { id: 2, orderNo: 'WO-2611-002', line: 'L1', lineName: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
@@ -87,6 +96,7 @@ let tempRows = [
 const fetchWorkOrders = async ({ line, status }) => tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'orderNo', label: '작업지시', width: 140 },
     { key: 'lineName', label: '라인', width: 100 },
@@ -102,13 +112,16 @@ const { filter, items, total, page, pageSize, loading, search, reset, reload } =
 });
 const checked = ref([]);
 
+// ── 동작 ──────────────────────────────────────────────────
+/** 행 클릭 → 상세 (실제: router.push(`/work-orders/${row.id}`)) */
 function openDetail(row) {
     toast.info(`${row.orderNo} 상세로 이동합니다.`);
 }
 
+/** 선택 삭제 → 확인 → 삭제 → 다시 조회 */
 async function remove() {
     if (!(await modal.confirm(`선택한 ${checked.value.length}건을 삭제할까요?`))) return;
-    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await api.delete('/work-orders', { data: checked.value })
+    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await workOrderApi.remove(checked.value)
     toast.success(`${checked.value.length}건을 삭제했습니다.`);
     checked.value = [];
     reload();

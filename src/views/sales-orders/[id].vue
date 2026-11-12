@@ -34,8 +34,9 @@
     </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, shallowRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useCodes } from '@/composables/useCodes';
 import { required, useForm } from '@/composables/useForm';
 import { useModal } from '@/composables/useModal';
 import { useToast } from '@/composables/useToast';
@@ -54,23 +55,42 @@ const router = useRouter();
 const modal = useModal();
 const toast = useToast();
 
-// temp 데이터 - 실제: setForm(await api.get(`/sales-orders/${route.params.id}`))
-const customers = [
-    { label: '한빛전자', value: 'hanbit' },
-    { label: '대성모터스', value: 'daesung' },
-    { label: '유진테크', value: 'eugene' },
-];
-const statuses = [
-    { label: '확정', value: 'confirmed' },
-    { label: '생산중', value: 'working' },
-    { label: '완료', value: 'done' },
-];
-const lines = [
-    { code: 'FG-10021', name: '모터 하우징 A', spec: 'AL6061 / 120mm', qty: 800, price: 40000 },
-    { code: 'FG-10022', name: '하우징 커버', spec: 'AL6061 / 118mm', qty: 800, price: 20000 },
-];
+// ── 코드 목록 ─────────────────────────────────────────────
+const { items: customers } = useCodes('CUSTOMER', {
+    temp: [
+        { label: '한빛전자', value: 'hanbit' },
+        { label: '대성모터스', value: 'daesung' },
+        { label: '유진테크', value: 'eugene' },
+    ],
+});
+const { items: statuses } = useCodes('SALES_ORDER_STATUS', {
+    temp: [
+        { label: '확정', value: 'confirmed' },
+        { label: '생산중', value: 'working' },
+        { label: '완료', value: 'done' },
+    ],
+});
+
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// const fetchSalesOrder = (id) => salesOrderApi.get(id);          // → { ...기본 정보, lines: [...] }
+// const saveSalesOrder = (form) => salesOrderApi.save(form);
+const fetchSalesOrder = async (id) => ({
+    orderNo: id,
+    customer: 'hanbit',
+    orderDate: '2026-08-14',
+    dueDate: '2026-08-20',
+    manager: '김영업',
+    status: 'working',
+    memo: '포장 라벨에 고객사 LOT 번호 표기',
+    lines: [
+        { code: 'FG-10021', name: '모터 하우징 A', spec: 'AL6061 / 120mm', qty: 800, price: 40000 },
+        { code: 'FG-10022', name: '하우징 커버', spec: 'AL6061 / 118mm', qty: 800, price: 20000 },
+    ],
+});
+const saveSalesOrder = () => new Promise((resolve) => setTimeout(resolve, 400));
 // temp 데이터 끝
 
+// ── 폼 · 품목 ─────────────────────────────────────────────
 const won = (value) => `₩${value.toLocaleString()}`;
 const lineColumns = [
     { key: 'code', label: '품목코드', width: 110 },
@@ -80,36 +100,40 @@ const lineColumns = [
     { key: 'price', label: '단가', width: 110, align: 'right', format: won },
     { key: 'amount', label: '공급가액', width: 130, align: 'right', format: (_, row) => won(row.qty * row.price) },
 ];
-const totalAmount = computed(() => lines.reduce((sum, row) => sum + row.qty * row.price, 0));
+const lines = shallowRef([]);
+const totalAmount = computed(() => lines.value.reduce((sum, row) => sum + row.qty * row.price, 0));
 
 const { form, field, validate, isDirty, setForm } = useForm(
     () => ({ orderNo: '', customer: null, orderDate: '', dueDate: '', manager: '', status: 'confirmed', memo: '' }),
     { customer: [required('거래처를 선택하세요.')], dueDate: [required('납기일을 선택하세요.')] },
 );
-setForm({
-    orderNo: route.params.id,
-    customer: 'hanbit',
-    orderDate: '2026-08-14',
-    dueDate: '2026-08-20',
-    manager: '김영업',
-    status: 'working',
-    memo: '포장 라벨에 고객사 LOT 번호 표기',
-});
-const customerName = computed(() => customers.find((customer) => customer.value === form.customer)?.label ?? '');
+const customerName = computed(() => customers.value.find((customer) => customer.value === form.customer)?.label ?? '');
 
+/** 주소의 id 로 수주를 불러와 폼 · 품목에 넣습니다. (불러온 값이 '변경 없음' 기준) */
+async function load() {
+    const { lines: orderLines = [], ...order } = await fetchSalesOrder(route.params.id);
+    setForm(order);
+    lines.value = orderLines;
+}
+load();
+
+// ── 동작 ──────────────────────────────────────────────────
 const saving = ref(false);
+
+/** 저장: 검사 → 저장 (저장 중 버튼 로딩 · 중복 클릭 방지) */
 async function save() {
     if (!validate()) return;
     saving.value = true;
     try {
-        await new Promise((resolve) => setTimeout(resolve, 400)); // 실제: await api.put(`/sales-orders/${route.params.id}`, form)
-        setForm(form);
+        await saveSalesOrder(form);
+        setForm(form); // 저장한 값이 새 기준 (isDirty = false)
         toast.success('저장했습니다.');
     } finally {
         saving.value = false;
     }
 }
 
+/** 목록: 바뀐 내용이 있으면 한 번 묻고 이동 */
 async function goList() {
     if (isDirty.value && !(await modal.confirm('저장하지 않은 내용이 있습니다. 목록으로 갈까요?'))) return;
     router.push('/sales-orders');

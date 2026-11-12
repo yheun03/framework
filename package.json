@@ -16,6 +16,7 @@
         "build:pages": "cross-env VITE_BASE_URL=/framework/ vite build && node scripts/copy-404.mjs",
         "preview": "vite preview",
         "init-project": "node scripts/init-project.mjs",
+        "new:page": "node scripts/new-page.mjs",
         "deploy": "npm run build:pages && gh-pages -d dist --dotfiles",
         "lint": "eslint .",
         "format": "prettier --write \"src/**/*.{js,vue,json,scss}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,md}\"",

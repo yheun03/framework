@@ -69,7 +69,9 @@ import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
 import AppSection from '@/components/Section/AppSection.vue';
 import AppSectionWrapper from '@/components/Section/AppSectionWrapper.vue';
 
-// temp 데이터 - 실제: fetchOrders = (params) => api.get('/sales-orders', { params }), fetchLines = (no) => api.get(`/sales-orders/${no}/lines`)
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// const fetchOrders = (params) => salesOrderApi.list(params);
+// const fetchLines = (orderNo) => salesOrderApi.lines(orderNo);   // GET /sales-orders/{no}/lines
 const tempOrders = [
     { orderNo: 'SO-2611-001', customer: '한빛전자', orderDate: '2026-11-03', dueDate: '2026-11-20', amount: 48000000 },
     { orderNo: 'SO-2611-002', customer: '대성모터스', orderDate: '2026-11-05', dueDate: '2026-11-22', amount: 16400000 },
@@ -87,6 +89,7 @@ const fetchOrders = async ({ keyword }) => tempOrders.filter((order) => !keyword
 const fetchLines = async (orderNo) => tempLines[orderNo] ?? [];
 // temp 데이터 끝
 
+// ── 목록 · 상세 ───────────────────────────────────────────
 const won = (value) => `₩${value.toLocaleString()}`;
 const masterColumns = [
     { key: 'orderNo', label: '수주번호', width: 130 },
@@ -116,6 +119,8 @@ const detailInfo = computed(() => [
     { label: '수주금액', value: won(selected.value.amount) },
 ]);
 
+// ── 동작 ──────────────────────────────────────────────────
+/** 왼쪽 행 선택 → 오른쪽 상세 + 하위 목록 조회 */
 async function select(row) {
     selected.value = row;
     detailLoading.value = true;

@@ -36,6 +36,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useCodes } from '@/composables/useCodes';
 import { required, useForm } from '@/composables/useForm';
 import { useModal } from '@/composables/useModal';
 import { useToast } from '@/composables/useToast';
@@ -53,21 +54,34 @@ const router = useRouter();
 const modal = useModal();
 const toast = useToast();
 
-// 파일 위치 예) 등록 views/work-orders/new.vue · 수정 views/work-orders/[id]/edit.vue → 같은 화면을 쓰려면 id 유무로 구분
+// 파일 위치 예) 등록 views/work-orders/new.vue · 수정 views/work-orders/[id]/edit.vue
+// 한 파일로 등록 · 수정을 함께 쓰려면 주소의 id 유무로 구분합니다.
 const isEdit = computed(() => Boolean(route.params.id));
 const LIST_PATH = '/demos/demo-page-example'; // 실제: '/work-orders'
 
-// temp 데이터 - API 연동 시 이 영역만 교체
-const lines = [
-    { value: 'L1', label: '1라인' },
-    { value: 'L2', label: '2라인' },
-];
-const priorities = [
-    { value: 'normal', label: '보통' },
-    { value: 'urgent', label: '긴급' },
-];
+// ── 코드 목록 ─────────────────────────────────────────────
+const { items: lines } = useCodes('LINE', {
+    temp: [
+        { value: 'L1', label: '1라인' },
+        { value: 'L2', label: '2라인' },
+    ],
+});
+const { items: priorities } = useCodes('PRIORITY', {
+    temp: [
+        { value: 'normal', label: '보통' },
+        { value: 'urgent', label: '긴급' },
+    ],
+});
+
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// import { workOrderApi } from '@/services/api/workOrderApi';
+// const fetchWorkOrder = (id) => workOrderApi.get(id);
+// const saveWorkOrder = (form) => workOrderApi.save(form);   // id 가 있으면 PUT, 없으면 POST
+const fetchWorkOrder = async () => ({ orderNo: 'WO-2611-001', line: 'L1', item: '브래킷 A형', qty: 1200 });
+const saveWorkOrder = () => new Promise((resolve) => setTimeout(resolve, 400));
 // temp 데이터 끝
 
+// ── 폼 ────────────────────────────────────────────────────
 const { form, field, validate, isDirty, setForm } = useForm(
     () => ({ orderNo: '', line: null, workDate: '2026-11-12', item: '', qty: 0, priority: 'normal', memo: '' }),
     {
@@ -78,17 +92,21 @@ const { form, field, validate, isDirty, setForm } = useForm(
     },
 );
 
-// 수정 화면: 조회 결과를 폼에 넣습니다. (실제: setForm(await api.get(`/work-orders/${route.params.id}`)))
-if (isEdit.value) setForm({ orderNo: 'WO-2611-001', line: 'L1', item: '브래킷 A형', qty: 1200 });
+/** 수정 화면이면 저장된 값을 불러와 폼에 넣습니다. (불러온 값이 '변경 없음' 기준) */
+async function load() {
+    setForm(await fetchWorkOrder(route.params.id));
+}
+if (isEdit.value) load();
 
+// ── 동작 ──────────────────────────────────────────────────
 const saving = ref(false);
 
+/** 저장: 검사 → 저장 → 목록으로 (저장 중에는 버튼 로딩 · 중복 클릭 방지) */
 async function save() {
     if (!validate()) return;
     saving.value = true;
     try {
-        // 실제: isEdit ? await api.put(`/work-orders/${route.params.id}`, form) : await api.post('/work-orders', form)
-        await new Promise((resolve) => setTimeout(resolve, 400));
+        await saveWorkOrder(form);
         setForm(form); // 저장한 값이 새 기준 (isDirty = false)
         toast.success('저장했습니다.');
         router.push(LIST_PATH);
@@ -97,6 +115,7 @@ async function save() {
     }
 }
 
+/** 취소: 바뀐 내용이 있으면 한 번 묻고 목록으로 */
 async function cancel() {
     if (isDirty.value && !(await modal.confirm('저장하지 않은 내용이 있습니다. 나갈까요?'))) return;
     router.push(LIST_PATH);

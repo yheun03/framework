@@ -47,7 +47,8 @@ import AppSection from '@/components/Section/AppSection.vue';
 import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/quality-inspections', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: fetch: (params) => api.get('/quality-inspections', { params })
 const types = [
     { label: '수입검사', value: 'incoming' },
     { label: '공정검사', value: 'process' },
@@ -108,6 +109,7 @@ const tempRows = [
 const fetchInspections = async ({ type, result }) => tempRows.filter((row) => (!type || row.type === type) && (!result || row.result === result));
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'no', label: '검사번호', width: 140 },
     { key: 'typeName', label: '구분', width: 100 },

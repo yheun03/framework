@@ -99,7 +99,7 @@ const props = defineProps({
 });
 
 const route = useRoute();
-// store/navigation.js 의 icon 값 → 아이콘 컴포넌트 (새 그룹 아이콘은 여기에 추가)
+// constants/menus.js 의 icon 값 → 아이콘 컴포넌트 (새 그룹 아이콘은 여기에 추가)
 const navigationIconMap = {
     app: IconApp,
     chart: IconChart,

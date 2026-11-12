@@ -56,7 +56,8 @@ import AppSection from '@/components/Section/AppSection.vue';
 import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/production-plans', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: fetch: (params) => api.get('/production-plans', { params })
 const lines = [
     { label: '가공 1라인', value: 'line-1' },
     { label: '가공 2라인', value: 'line-2' },
@@ -110,6 +111,7 @@ const tempRows = [
 const fetchPlans = async ({ line }) => tempRows.filter((row) => !line || row.lineCode === line);
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'line', label: '라인', width: 120 },
     { key: 'order', label: '작업지시', width: 140 },

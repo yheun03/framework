@@ -38,7 +38,8 @@ const props = defineProps({
 });
 const emit = defineEmits(['select']);
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/items', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// const fetchItems = (params) => itemApi.list(params);
 const tempItems = Array.from({ length: 24 }, (_, index) => ({
     code: `FG-${String(10001 + index)}`,
     name: ['모터 하우징', '샤프트', '브래킷', '하우징 커버'][index % 4] + ` ${String.fromCharCode(65 + (index % 6))}형`,

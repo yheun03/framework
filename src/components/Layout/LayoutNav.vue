@@ -153,6 +153,4 @@ onMounted(() => {
     setTimeout(scrollToActive, 300);
 });
 onBeforeUnmount(() => window.removeEventListener('keydown', handleShortcut));
-
-navigationStore.fetchMenus();
 </script>

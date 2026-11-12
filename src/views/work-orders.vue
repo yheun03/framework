@@ -57,7 +57,8 @@ import AppTag from '@/components/AppTag.vue';
 
 const router = useRouter();
 
-// temp 데이터 - 실제: fetch: (params) => api.get('/work-orders', { params })
+// ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 실제: fetch: (params) => api.get('/work-orders', { params })
 const statuses = [
     { label: '대기', value: 'waiting' },
     { label: '작업중', value: 'working' },
@@ -82,6 +83,7 @@ const fetchWorkOrders = async ({ keyword, status }) =>
     tempRows.filter((row) => (!keyword || `${row.no} ${row.item}`.includes(keyword)) && (!status || row.state === status));
 // temp 데이터 끝
 
+// ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'no', label: '작업지시', width: 140 },
     { key: 'line', label: '라인', width: 110 },
