@@ -14,68 +14,42 @@
                 ><strong class="business-summary__value">{{ item.value }}</strong>
             </article>
         </section>
-        <section class="business-toolbar">
-            <AppInput
-                v-model="keyword"
-                class="business-toolbar__field business-toolbar__field--wide"
-                size="md"
-                placeholder="발주번호, 공급사 검색"
-                aria-label="발주번호, 공급사 검색"
-            /><AppSelect
-                v-model="status"
-                class="business-toolbar__field"
-                size="md"
-                :items="statusOptions"
-                placeholder="전체 상태"
-                aria-label="전체 상태"
-            />
-            <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
-        </section>
-        <AppSection title="발주 목록"
-            ><div class="business-table-wrap">
-                <table class="business-table">
-                    <thead>
-                        <tr>
-                            <th>발주번호</th>
-                            <th>공급사</th>
-                            <th>발주일</th>
-                            <th>입고예정일</th>
-                            <th>발주금액</th>
-                            <th>입고율</th>
-                            <th>상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="row in rows" :key="row.no">
-                            <td>{{ row.no }}</td>
-                            <td>{{ row.vendor }}</td>
-                            <td>{{ row.orderDate }}</td>
-                            <td>{{ row.dueDate }}</td>
-                            <td>{{ row.amount }}</td>
-                            <td class="business-table__progress"><AppProgressBar :value="row.progress" show-value /></td>
-                            <td>
-                                <span class="business-status" :class="`business-status--${row.state}`">{{ row.status }}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div></AppSection
-        >
+
+        <AppSearchPanel :columns="3" :loading="loading" @search="search" @reset="reset">
+            <AppSearchItem label="검색어" :span="2">
+                <AppInput v-model="filter.keyword" size="sm" placeholder="발주번호, 공급사" />
+            </AppSearchItem>
+            <AppSearchItem label="상태">
+                <AppSelect v-model="filter.status" :items="statusOptions" size="sm" placeholder="전체" />
+            </AppSearchItem>
+        </AppSearchPanel>
+
+        <AppSection>
+            <AppDataTable title="발주 목록" caption="발주 목록" :columns="columns" :items="items" :total="total" row-key="no" show-total>
+                <template #cell-progress="{ value }"><AppProgressBar :value="value" show-value /></template>
+                <template #cell-status="{ row }"><AppTag variant="soft" dot :tone="row.tone" :label="row.status" /></template>
+            </AppDataTable>
+            <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="total" />
+        </AppSection>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useSearchList } from '@/composables/useSearchList';
 import AppButton from '@/components/AppButton/AppButton.vue';
+import AppDataTable from '@/components/Table/AppDataTable.vue';
 import AppInput from '@/components/AppInput.vue';
+import AppPagination from '@/components/AppPagination.vue';
 import AppProgressBar from '@/components/AppProgress/AppProgressBar.vue';
-import AppSelect from '@/components/AppSelect.vue';
+import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
+import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
 import AppSection from '@/components/Section/AppSection.vue';
+import AppSelect from '@/components/AppSelect.vue';
+import AppTag from '@/components/AppTag.vue';
 
-const keyword = ref('');
-const status = ref(null);
+// temp 데이터 - 실제: fetch: (params) => api.get('/purchase-orders', { params })
 const statusOptions = [
-    { label: '승인대기', value: 'waiting' },
-    { label: '발주완료', value: 'ordered' },
+    { label: '부분입고', value: 'partial' },
+    { label: '입고지연', value: 'delayed' },
     { label: '입고완료', value: 'done' },
 ];
 const summary = [
@@ -83,36 +57,57 @@ const summary = [
     { label: '입고 예정', value: '18건' },
     { label: '지연 발주', value: '3건' },
 ];
-const rows = [
+const tempRows = [
     {
         no: 'PO-260814-04',
         vendor: '대한소재',
         orderDate: '2026-08-14',
         dueDate: '2026-08-19',
-        amount: '₩72,000,000',
+        amount: 72000000,
         progress: 40,
+        state: 'partial',
         status: '부분입고',
-        state: 'info',
+        tone: 'info',
     },
     {
         no: 'PO-260813-11',
         vendor: '세진금속',
         orderDate: '2026-08-13',
         dueDate: '2026-08-17',
-        amount: '₩38,500,000',
+        amount: 38500000,
         progress: 10,
+        state: 'delayed',
         status: '입고지연',
-        state: 'warning',
+        tone: 'warning',
     },
     {
         no: 'PO-260812-07',
         vendor: '미래패킹',
         orderDate: '2026-08-12',
         dueDate: '2026-08-16',
-        amount: '₩12,400,000',
+        amount: 12400000,
         progress: 100,
+        state: 'done',
         status: '입고완료',
-        state: 'success',
+        tone: 'success',
     },
 ];
+const fetchPurchaseOrders = async ({ keyword, status }) =>
+    tempRows.filter((row) => (!keyword || `${row.no} ${row.vendor}`.includes(keyword)) && (!status || row.state === status));
+// temp 데이터 끝
+
+const columns = [
+    { key: 'no', label: '발주번호', width: 140 },
+    { key: 'vendor', label: '공급사', align: 'left' },
+    { key: 'orderDate', label: '발주일', width: 110 },
+    { key: 'dueDate', label: '입고예정일', width: 110 },
+    { key: 'amount', label: '발주금액', width: 140, align: 'right', format: (value) => `₩${value.toLocaleString()}` },
+    { key: 'progress', label: '입고율', width: 170 },
+    { key: 'status', label: '상태', width: 110 },
+];
+
+const { filter, items, total, page, pageSize, loading, search, reset } = useSearchList({
+    filter: () => ({ keyword: '', status: null }),
+    fetch: fetchPurchaseOrders,
+});
 </script>

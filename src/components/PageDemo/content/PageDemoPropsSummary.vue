@@ -438,6 +438,11 @@ const summaries = {
                 description: '직접 만든 컴포넌트를 본문으로 (componentProps 로 props 전달)',
                 type: 'function → id',
             },
+            {
+                name: 'await pick(컴포넌트, 옵션)',
+                description: "선택 팝업 - 본문이 emit('select', 값) 하면 닫히고 값, 닫기 · 취소는 null",
+                type: 'Promise<값 | null>',
+            },
             { name: 'close(id) / closeTop() / clearAll()', description: '닫기', type: 'function' },
             { name: 'title · message', description: '헤더 문구 / 본문 문구', type: 'string' },
             { name: 'confirmText · cancelText', description: '버튼 문구', type: 'string', default: "'확인' / '취소'" },

@@ -11,6 +11,8 @@
  *    - public/images/projects/{key}
  * 2. src/project.config.js 의 key · companyName · serviceName 을 바꾸고, 데모용 showSourceViewer 를 끕니다.
  * 3. .env* 의 VITE_TITLE 을 서비스명으로 바꿉니다.
+ * 4. Docker 이미지 · 컨테이너 이름을 key 로 바꿉니다. (docker-compose-dev/prd.yml · package.json docker:build)
+ *    docker.jonsoft.co.kr/{key}/client:latest|release · {key}-client
  *
  * 기존 폴더는 지우지 않습니다. 확인 후 필요 없으면 직접 정리하세요.
  */
@@ -74,9 +76,25 @@ if (serviceName) {
     console.log('· 수정함: .env · .env.dev · .env.prd · .env.pub (VITE_TITLE)');
 }
 
+// Docker 이미지 · 컨테이너 이름 (실무 예: docker.jonsoft.co.kr/orc-mes/client · orchem-client 처럼 다르면 직접 수정)
+const dockerFiles = ['docker-compose-dev.yml', 'docker-compose-prd.yml', 'package.json'];
+for (const file of dockerFiles) {
+    const filePath = path.join(root, file);
+    if (!fs.existsSync(filePath)) continue;
+    const before = fs.readFileSync(filePath, 'utf8');
+    const after = before
+        .replace(/docker\.jonsoft\.co\.kr\/[a-z0-9-]+\/client/g, `docker.jonsoft.co.kr/${key}/client`)
+        .replace(/container_name:\s*[a-z0-9-]+-client/g, `container_name: ${key}-client`);
+    if (after !== before) fs.writeFileSync(filePath, after);
+}
+console.log(
+    `· 수정함: docker-compose-dev.yml · docker-compose-prd.yml · package.json (이미지 docker.jonsoft.co.kr/${key}/client, 컨테이너 ${key}-client)`,
+);
+
 console.log(`
 다음 단계
 1. 색상: src/assets/styles/projects/${key}/_theme.scss 의 $primary · $secondary · $tertiary
 2. 이미지: public/images/projects/${key}/favicon.svg 교체
 3. 설명: src/project.config.js 의 description (index.html 에 자동 반영)
-4. npm run serve 로 확인`);
+4. nginx.conf 의 백엔드 주소(server:8080) 가 다르면 수정
+5. npm run serve 로 확인`);

@@ -26,6 +26,7 @@ import AppToastHost from '@/components/AppToastHost.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import { useProjectConfig } from '@/composables/useProjectConfig';
 import { getRouteTitle, isVisibleRoute } from '@/router/routeTabs';
+import { getAppTitle } from '@/utils/common';
 import { useNavigationStore } from '@/store/navigation';
 import { useRouteTabsStore } from '@/store/routeTabs';
 
@@ -74,8 +75,8 @@ const currentMenu = computed(() => {
     return navigationStore.localizedMenus.find((menu) => menu.to === path);
 });
 
-// 문서 제목: 화면 meta.title → LNB 메뉴명 → 기본(VITE_TITLE)
-const defaultTitle = document.title;
+// 문서 제목: 화면 meta.title → LNB 메뉴명 → 기본(실행 모드 .env* 의 VITE_TITLE)
+const defaultTitle = getAppTitle();
 watch(
     () => [route.fullPath, currentMenu.value?.label],
     () => {

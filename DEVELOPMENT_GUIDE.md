@@ -9,6 +9,18 @@
 - 한 곳에서만 쓰면 그 파일 안에, **두 곳 이상**이면 공통으로 분리합니다.
 - console · 임시 코드는 남기지 않습니다.
 
+## 1-1. 화면 개발 순서
+
+| 단계           | 하는 일                                                                                                                                  | 결과                      |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| 1. 유형 고르기 | 목록 · 등록/수정 · 마스터-디테일 · 선택 팝업 중 가장 가까운 것 ([COMPONENT_GUIDE 4장](./COMPONENT_GUIDE.md#4-작성-패턴--표준-화면-유형)) | 복사할 템플릿             |
+| 2. 퍼블리싱    | 템플릿 복사 → 메뉴(`MENU_SEED` + `nav.*`) → `// temp 데이터` 로 화면 완성                                                                | 백엔드 없이 동작하는 화면 |
+| 3. API 연동    | `// temp 데이터` ~ `// temp 데이터 끝` 만 교체 (`fetch` · `setForm` · `api.post`)                                                        | 화면 구조는 그대로        |
+| 4. 확인        | 아래 8장 체크리스트 + `npm run check`                                                                                                    | 커밋 · PR                 |
+
+- 퍼블리셔와 개발자가 나눠 작업해도 2 → 3 경계가 `// temp 데이터` 주석 하나로 정해집니다. temp 영역 밖에 임시 코드를 두지 않습니다.
+- 화면 유형에 없는 새 패턴이 두 화면 이상에서 필요하면 템플릿(`views/demos/demo-page-*.vue`)과 이 문서에 먼저 추가합니다.
+
 ## 2. 어디에 둘까 (모두 `src/` 아래)
 
 | 폴더             | 넣는 것                                       |
@@ -24,6 +36,7 @@
 
 - 언어는 **JavaScript** 입니다. (`.js`, `<script setup>`) — TypeScript 를 쓰지 않습니다.
 - import 는 자동이 아니므로 **쓰는 것은 모두 직접 import** 합니다. 경로는 `@/` (= `src/`)
+- 상세 화면은 `views/{목록}/[id].vue` (주소 `/{목록}/:id`, 화면에서 `useRoute().params.id`). `?id=` 쿼리로 상세를 만들지 않습니다.
 - 레이아웃 없이 보여줄 화면(로그인 등)은 `router/index.js` 의 `ROUTE_META` 에 `layout: false` 를 적습니다.
 - 상단 탭(최근 방문)은 레이아웃이 있는 화면을 모두 기록합니다. 탭에서 빼려면 `ROUTE_META` 에 `tab: false` 를 적습니다.
 - 화면 하단 고정 버튼(저장 · 취소 등)은 `components/Layout/LayoutBottomBar.vue` 를 씁니다. (`#left` · `#right` 슬롯)
@@ -42,6 +55,16 @@
 
 - **Store**: 공유 상태만. 화면에서는 action / computed 로만 다룹니다.
 - **API**: `useApi()` 사용 (`services/api/apiClient.js`). 주소는 실행 모드의 `.env` `VITE_API_URL`.
+    - 여러 화면이 같은 API 를 쓰면 도메인별 파일로 모읍니다. (`services/api/workOrderApi.js`)
+
+        ```js
+        export const workOrderApi = {
+            list: (params) => apiClient.get('/work-orders', { params }),
+            get: (id) => apiClient.get(`/work-orders/${id}`),
+            save: (form) => (form.id ? apiClient.put(`/work-orders/${form.id}`, form) : apiClient.post('/work-orders', form)),
+        };
+        ```
+
     - `{ data }` 로 감싼 응답은 `data` 만 돌려줍니다.
     - 오류는 서버 `message` 로 **오류 토스트를 자동으로** 띄웁니다. 화면에서 직접 처리하려면 `{ toast: false }` 후 `error.message` 사용
     - 로그인 토큰이 있으면 `Authorization: Bearer` 자동 첨부, `401` 은 로그인 화면으로 이동
@@ -49,7 +72,10 @@
     - true 면 `ROUTE_META` 에 `public: true` 가 없는 화면은 로그인 필요 (`router/guard.js`)
     - 로그인 API 주소 · 응답 형식은 `auth.loginUrl` (`{ accessToken, user }`), 상태는 `store/auth.js`
 - **퍼블리싱 데이터**: 화면 안에 `// temp 데이터` 로 작성 (API 연동 시 그 영역만 교체). 이미지는 외부 주소 대신 `utils/sampleImage.js` 의 `sampleImage(seed, w, h)` (폐쇄망에서도 표시).
+- **목록 조회**: `useSearchList({ filter, fetch })` — 조회 조건 · 목록 · 건수 · 페이지 · 로딩 · 조회/초기화를 한 번에. 화면마다 직접 만들지 않습니다.
+- **등록 · 수정**: `useForm(빈 폼, 규칙)` — `field('키')` 로 오류 표시, 저장 전 `validate()`, 나가기 전 `isDirty` 확인.
 - **모달**: `const ok = await useModal().confirm('삭제할까요?')` (확인 true / 취소 false)
+- **선택 팝업**: `const item = await useModal().pick(찾기컴포넌트, { title })` — 찾기 컴포넌트는 `emit('select', 값)`. 여러 화면이 쓰는 찾기 팝업은 `components/projects/{key}/Picker{대상}.vue`
 - **탭 화면 유지**: 열린 탭의 화면은 입력값이 유지됩니다(KeepAlive). 탭으로 돌아올 때마다 새로 조회하려면 `onActivated` 를 씁니다.
 
 ## 5. SCSS

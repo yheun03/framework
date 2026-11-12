@@ -17,9 +17,12 @@ const viewModules = import.meta.glob(['@/views/**/*.vue', '!@/views/NotFoundPage
 // title         → LNB 메뉴에 없는 화면의 문서 제목
 // public: true  → 로그인 없이 볼 수 있는 화면 (project.config.js auth.enabled 일 때만 의미 있음)
 const ROUTE_META = {
-    '/auth/sign-in': { layout: false, public: true, title: '로그인' },
+    '/login': { layout: false, public: true, title: '로그인' },
     '/auth/sign-up': { layout: false, public: true, title: '회원가입' },
     '/auth/find-pw': { layout: false, public: true, title: '비밀번호 찾기' },
+    // 상세 화면은 LNB 메뉴가 없으므로 제목을 적습니다.
+    '/work-orders/:id': { title: '작업지시 상세' },
+    '/sales-orders/:id': { title: '수주 상세' },
 };
 const routes = Object.entries(viewModules).map(([file, component]) => {
     const path = toRoutePath(file);

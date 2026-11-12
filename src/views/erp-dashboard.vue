@@ -31,42 +31,32 @@
         </AppSectionWrapper>
 
         <AppSection title="최근 수주 현황">
-            <div class="business-table-wrap">
-                <table class="business-table">
-                    <thead>
-                        <tr>
-                            <th>수주번호</th>
-                            <th>거래처</th>
-                            <th>납기일</th>
-                            <th>금액</th>
-                            <th>상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="row in orders" :key="row.no">
-                            <td>
-                                <RouterLink :to="`/sales-order-detail?id=${row.no}`" class="business-link">{{ row.no }}</RouterLink>
-                            </td>
-                            <td>{{ row.customer }}</td>
-                            <td>{{ row.date }}</td>
-                            <td>{{ row.amount }}</td>
-                            <td>
-                                <span class="business-status" :class="`business-status--${row.state}`">{{ row.status }}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <AppDataTable
+                caption="최근 수주 - 행을 누르면 수주 상세"
+                :columns="orderColumns"
+                :items="orders"
+                row-key="no"
+                size="md"
+                clickable
+                @row-click="(row) => router.push(`/sales-orders/${row.no}`)"
+            >
+                <template #cell-status="{ row }"><AppTag variant="soft" dot :tone="row.tone" :label="row.status" /></template>
+            </AppDataTable>
         </AppSection>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import AppDataTable from '@/components/Table/AppDataTable.vue';
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import AppProgressBar from '@/components/AppProgress/AppProgressBar.vue';
 import AppSection from '@/components/Section/AppSection.vue';
 import AppSectionWrapper from '@/components/Section/AppSectionWrapper.vue';
+import AppTag from '@/components/AppTag.vue';
+
+const router = useRouter();
 
 const baseDate = ref('2026-08-14');
 const summary = [
@@ -81,8 +71,15 @@ const inventory = [
     { label: '완제품', value: 84 },
 ];
 const orders = [
-    { no: 'SO-260814-01', customer: '한빛전자', date: '2026-08-20', amount: '₩48,000,000', status: '생산중', state: 'info' },
-    { no: 'SO-260814-02', customer: '대성모터스', date: '2026-08-22', amount: '₩32,500,000', status: '확정', state: 'success' },
-    { no: 'SO-260813-08', customer: '유진테크', date: '2026-08-18', amount: '₩19,800,000', status: '납기주의', state: 'warning' },
+    { no: 'SO-260814-01', customer: '한빛전자', date: '2026-08-20', amount: 48000000, status: '생산중', tone: 'info' },
+    { no: 'SO-260814-02', customer: '대성모터스', date: '2026-08-22', amount: 32500000, status: '확정', tone: 'success' },
+    { no: 'SO-260813-08', customer: '유진테크', date: '2026-08-18', amount: 19800000, status: '납기주의', tone: 'warning' },
+];
+const orderColumns = [
+    { key: 'no', label: '수주번호', width: 140 },
+    { key: 'customer', label: '거래처', align: 'left' },
+    { key: 'date', label: '납기일', width: 120 },
+    { key: 'amount', label: '금액', width: 150, align: 'right', format: (value) => `₩${value.toLocaleString()}` },
+    { key: 'status', label: '상태', width: 110 },
 ];
 </script>

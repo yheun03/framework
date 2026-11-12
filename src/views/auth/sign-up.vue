@@ -93,7 +93,7 @@
 
         <div class="auth-page__footer">
             <span class="auth-page__footer-text">이미 계정이 있으신가요?</span>
-            <RouterLink class="auth-page__link" to="/auth/sign-in">로그인</RouterLink>
+            <RouterLink class="auth-page__link" to="/login">로그인</RouterLink>
         </div>
     </AuthPageShell>
 </template>
@@ -142,6 +142,6 @@ function handleSubmit() {
     submitted.value = true;
     if (!name.value.trim() || !isEmailValid.value || password.value.length < 8 || password.value !== passwordConfirm.value || !agreeTerms.value)
         return;
-    router.push('/auth/sign-in');
+    router.push('/login');
 }
 </script>

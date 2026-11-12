@@ -13,6 +13,10 @@
  * 3) 직접 만든 컴포넌트를 모달 본문으로
  *    modal.openCustom(MyForm, { title: '등록', size: 'lg', componentProps: { id: 1 }, footer: true, onConfirm });
  *
+ * 4) 선택 팝업 (품목 · 거래처 찾기 등) - 본문 컴포넌트가 emit('select', 값) 하면 닫히고 값을 돌려줍니다. 그냥 닫으면 null
+ *    const item = await modal.pick(ItemPicker, { title: '품목 찾기', size: 'lg', componentProps: { keyword } });
+ *    if (item) form.itemCode = item.code;
+ *
  * 옵션: title · message · size(sm 420 · md 640 · lg 900) · width(직접 지정 시) · height · closable · closeOnEsc · closeOnBackdrop · overlay
  *       confirmText · cancelText · keepOnConfirm(확인 후 닫지 않음)
  *       onConfirm · onCancel · onClose(reason: 'confirm' | 'cancel' | 'close')
@@ -71,6 +75,26 @@ export function useModal() {
         });
     }
 
+    /** 선택 팝업: 본문의 emit('select', 값) → 값, 닫기 · 취소 → null */
+    function pick(component, options = {}) {
+        return new Promise((resolve) => {
+            const id = modalStore.custom(component, {
+                ...options,
+                componentProps: {
+                    ...options.componentProps,
+                    onSelect: (value) => {
+                        resolve(value);
+                        modalStore.modalClose(id, 'confirm');
+                    },
+                },
+                onClose: (reason) => {
+                    options.onClose?.(reason);
+                    resolve(null);
+                },
+            });
+        });
+    }
+
     return {
         modals,
         topModalId,
@@ -79,6 +103,7 @@ export function useModal() {
         openAlert,
         openConfirm,
         openCustom,
+        pick,
         close,
         closeTop: modalStore.modalCloseTop,
         clearAll: modalStore.clearAllModals,

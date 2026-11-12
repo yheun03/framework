@@ -1,33 +1,32 @@
 services:
-    # 1. front service, expose 80(nginx)
-    client:
-        # 이미지 주소는 프로젝트마다 변경 (docker.jonsoft.co.kr/{프로젝트}/client)
-        image: docker.jonsoft.co.kr/framework/client:release
-        container_name: framework-client
-        restart: always
-        expose:
-            - '80' # host:docker
-        environment:
-            - TZ=Asia/Seoul
-            - MODE=prd
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-        command:
-            - /bin/sh
-            - -c
-            - |
-                echo "client_max_body_size 200M;" > /etc/nginx/conf.d/upload_size.conf
-                echo "window.VITE_APP_MODE = '$$MODE';" > /usr/share/nginx/html/api-config.js
-                nginx -g "daemon off;"
-        healthcheck:
-            test: ['CMD', 'curl', '-f', 'http://localhost:80/']
-            interval: 30s
-            timeout: 10s
-            retries: 5
-            start_period: 40s
-        networks:
-            - default-network
+  # 1. front service, expose 80(nginx)
+  client:
+    image: docker.jonsoft.co.kr/framework/client:release
+    container_name: framework-client
+    restart: always
+    expose:
+      - '80' # host:docker
+    environment:
+      - TZ=Asia/Seoul
+      - MODE=prd
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "client_max_body_size 200M;" > /etc/nginx/conf.d/upload_size.conf
+        echo "window.VITE_APP_MODE = '$$MODE';" > /usr/share/nginx/html/api-config.js
+        nginx -g "daemon off;"
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:80/login']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - default-network
 
 networks:
-    default-network:
-        external: true
+  default-network:
+    external: true
