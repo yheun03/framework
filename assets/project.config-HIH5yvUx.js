@@ -1,1 +1,0 @@
-var e=`Framework`,t={key:`framework`,companyName:`Jonsoft`,serviceName:e,description:`Jonsoft MES · ERP 업무 관리 시스템 공통 프레임워크 (Vue 3 + Vite)`,showSourceViewer:!0,menuUrl:``,codeUrl:``,auth:{enabled:!1,loginPath:`/login`,loginUrl:`/auth/login`,logoutUrl:`/auth/logout`},titleTemplate:`%s | ${e}`};export{t};
