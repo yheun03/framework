@@ -16,7 +16,7 @@ function hasAccessibleName(element) {
 
 /**
  * @param {string} componentName 경고에 표시할 컴포넌트 이름
- * @param {() => HTMLElement | null} getControl 이름을 확인할 입력 요소
+ * @param {Function} getControl 이름을 확인할 입력 요소(HTMLElement 또는 null)를 돌려주는 함수
  */
 export function useLabelWarning(componentName, getControl) {
     if (!import.meta.env?.DEV) return;

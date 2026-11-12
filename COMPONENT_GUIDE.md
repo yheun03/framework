@@ -111,18 +111,19 @@ LNB 메뉴 그룹과 같은 분류입니다.
 
 ## 4. 작성 패턴 — 표준 화면 유형
 
-ERP · MES · TMS 업무 화면은 거의 모두 아래 5가지 유형의 조합입니다. **새 화면은 `npm run new:page` 로 가장 가까운 템플릿에서 시작합니다.**
+ERP · MES · TMS 업무 화면은 거의 모두 아래 5가지 유형의 조합입니다. **새 화면은 가장 가까운 템플릿 파일을 복사해서 시작합니다.**
 실행 화면은 LNB **가이드 → 화면 템플릿 · …**, 소스는 상단 탭 오른쪽 `</>` 버튼.
 
-| 유형 (`new:page`)               | 템플릿                                    | 구성                                                           | 공통 로직                                   |
-| ------------------------------- | ----------------------------------------- | -------------------------------------------------------------- | ------------------------------------------- |
-| 목록 `list`                     | `views/demos/demo-page-example.vue`       | AppSearchPanel → AppDataTable → AppPagination                  | `useSearchList` · `useCodes`                |
-| 등록 · 수정 `form`              | `views/demos/demo-page-form.vue`          | AppSection + `business-form-grid` → LayoutBottomBar            | `useForm` (`required` · `isDirty`)          |
-| 상세 보기 `detail`              | `views/work-orders/[id].vue`              | 요약(`business-summary`) → 정보(`business-detail`) → 하위 목록 | `useRoute().params.id`                      |
-| 마스터 · 디테일 `master-detail` | `views/demos/demo-page-master-detail.vue` | 왼쪽 목록(clickable) → 오른쪽 상세 + 하위 목록                 | `useSearchList`                             |
-| 선택 팝업 `picker`              | `components/PageDemo/picker/…Picker.vue`  | 찾기 버튼 → `await useModal().pick(찾기 컴포넌트)`             | `useModal().pick` (본문은 `emit('select')`) |
+| 유형            | 템플릿                                                                                   | 구성                                                            |
+| --------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 목록            | `views/demos/demo-page-example.vue`                                                      | AppSearchPanel → AppDataTable → AppPagination (`useSearchList`) |
+| 등록 · 수정     | `views/demos/demo-page-form.vue`                                                         | AppSection + `business-form-grid` → LayoutBottomBar             |
+| 상세 보기       | `views/work-orders/[id].vue`                                                             | 요약(`business-summary`) → 정보(`business-detail`) → 하위 목록  |
+| 마스터 · 디테일 | `views/demos/demo-page-master-detail.vue`                                                | 왼쪽 목록(clickable) → 오른쪽 상세 + 하위 목록                  |
+| 선택 팝업       | `views/demos/demo-page-picker.vue` + `components/PageDemo/picker/PageDemoItemPicker.vue` | 찾기 버튼 → `await useModal().pick(찾기 컴포넌트)`              |
 
-- **화면 스크립트 순서**: 모든 템플릿은 `import` → `── 코드 목록` → `── temp 데이터` → `── 목록/폼` → `── 동작` 순서입니다. 다른 사람 화면도 같은 자리에서 찾습니다.
+- **검증**: 등록 · 수정 화면은 `errors` 객체와 `validate()` 함수를 화면 안에 그대로 씁니다. (칸마다 한 줄, 별도 검증 모듈 없음)
+- **화면 스크립트 순서**: 모든 템플릿은 `import` → `── temp 데이터` → `── 목록/폼` → `── 동작` 순서입니다. 다른 사람 화면도 같은 자리에서 찾습니다.
 - **주소 규칙**: 목록 `views/work-orders.vue` → `/work-orders`, 상세 `views/work-orders/[id].vue` → `/work-orders/:id` (쿼리 `?id=` 를 쓰지 않음). 상세는 LNB 메뉴 대신 `ROUTE_META` 에 `title` 을 적습니다.
 - **목록 표**: 기본은 `AppDataTable`. 셀 편집 · 엑셀 다운로드 · 수천 행 · 열 고정이 필요하면 `AppGrid`(AG Grid). HTML `<table>` 을 직접 만들지 않습니다.
 - **상태 표시**: `AppTag variant="soft" dot :tone="…"` (tone 은 `success` `info` `warning` `danger` `gray`)
@@ -132,7 +133,7 @@ ERP · MES · TMS 업무 화면은 거의 모두 아래 5가지 유형의 조합
 ### 목록 템플릿
 
 - 원본 파일: `src/views/demos/demo-page-example.vue` — 아래 코드와 같습니다. (`npm run check` 가 다르면 알려줍니다)
-- API 연동은 `fetch` 한 줄만 바꿉니다. 서버가 `{ items, total }`(또는 Spring `{ content, totalElements }`)를 주면 페이지 이동 시 자동으로 다시 조회합니다.
+- API 연동은 temp 영역의 `fetchWorkOrders` 만 바꿉니다. `{ items, total }` 을 돌려주면 페이지를 바꿀 때 자동으로 다시 조회합니다.
 
 ```vue
 <template>
@@ -188,7 +189,6 @@ ERP · MES · TMS 업무 화면은 거의 모두 아래 5가지 유형의 조합
 
 <script setup>
 import { ref } from 'vue';
-import { useCodes } from '@/composables/useCodes';
 import { useModal } from '@/composables/useModal';
 import { useSearchList } from '@/composables/useSearchList';
 import { useToast } from '@/composables/useToast';
@@ -205,32 +205,28 @@ import AppTag from '@/components/AppTag.vue';
 const modal = useModal();
 const toast = useToast();
 
-// ── 코드 목록 ─────────────────────────────────────────────
-// project.config.js 의 codeUrl 이 비어 있으면 temp, 적으면 서버 공통코드를 씁니다. (화면 코드는 그대로)
-const { items: lines } = useCodes('LINE', {
-    temp: [
-        { value: 'L1', label: '1라인' },
-        { value: 'L2', label: '2라인' },
-    ],
-});
-const { items: statuses } = useCodes('WORK_STATUS', {
-    temp: [
-        { value: '진행', label: '진행' },
-        { value: '완료', label: '완료' },
-        { value: '정지', label: '정지' },
-    ],
-});
-
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// import { workOrderApi } from '@/services/api/workOrderApi';
-// const fetchWorkOrders = ({ period, ...params }) => workOrderApi.list({ ...params, fromDate: period.start, toDate: period.end });
-// → 서버가 { items, total } (또는 Spring { content, totalElements }) 를 주면 페이지 이동 때 자동으로 다시 조회
+// const api = useApi();
+// const fetchWorkOrders = ({ period, ...params }) => api.get('/work-orders', { params: { ...params, fromDate: period.start, toDate: period.end } });
+// 코드 목록도 서버에서 받으면: const lines = ref([]); onMounted(async () => (lines.value = await api.get('/codes/LINE')));
+const lines = [
+    { value: 'L1', label: '1라인' },
+    { value: 'L2', label: '2라인' },
+];
+const statuses = [
+    { value: '진행', label: '진행' },
+    { value: '완료', label: '완료' },
+    { value: '정지', label: '정지' },
+];
 let tempRows = [
     { id: 1, orderNo: 'WO-2611-001', line: 'L1', lineName: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
     { id: 2, orderNo: 'WO-2611-002', line: 'L1', lineName: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
     { id: 3, orderNo: 'WO-2611-003', line: 'L2', lineName: '2라인', item: '샤프트', qty: 3000, status: '정지' },
 ];
-const fetchWorkOrders = async ({ line, status }) => tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
+const fetchWorkOrders = async ({ line, status, page, size }) => {
+    const rows = tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────
@@ -258,7 +254,7 @@ function openDetail(row) {
 /** 선택 삭제 → 확인 → 삭제 → 다시 조회 */
 async function remove() {
     if (!(await modal.confirm(`선택한 ${checked.value.length}건을 삭제할까요?`))) return;
-    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await workOrderApi.remove(checked.value)
+    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await api.delete('/work-orders', { data: checked.value })
     toast.success(`${checked.value.length}건을 삭제했습니다.`);
     checked.value = [];
     reload();

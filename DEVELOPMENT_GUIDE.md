@@ -7,11 +7,10 @@
 ```text
 [화면] views/*.vue ─── 템플릿: 목록 · 등록/수정 · 상세 · 마스터-디테일 · 선택 팝업
    │  조회 조건 · 목록 · 페이지        → composables/useSearchList
-   │  입력 · 검증 · 변경 여부          → composables/useForm
-   │  선택 목록(공통코드)              → composables/useCodes        (project.config codeUrl)
    │  확인 · 알림 · 찾기 팝업          → composables/useModal · useToast
+   │  입력 검증 · 변경 여부            → 화면 안에 직접 (errors 객체 + validate 함수)
    ▼
-[API 함수] services/api/{도메인}Api.js   (화면은 URL 을 직접 쓰지 않고 이 함수만 부름)
+[API 호출] const api = useApi();  api.get · post · put · patch · delete
    ▼
 [공통 클라이언트] services/api/apiClient.js
    · 주소: 실행 모드(.env*)          · 토큰 Authorization: Bearer 자동
@@ -23,7 +22,7 @@
 | 무엇이              | 어디서 정해지나                                                              |
 | ------------------- | ---------------------------------------------------------------------------- |
 | 화면 주소           | `src/views` 파일 경로 (`work-orders/[id].vue` → `/work-orders/:id`)          |
-| LNB 메뉴            | `constants/menus.js` 또는 서버(`menuUrl`) → `store/navigation.js`            |
+| LNB 메뉴            | `constants/menus.js` (한 줄 = 메뉴 하나) → `store/navigation.js`             |
 | 상단 탭 · 화면 유지 | `App.vue` (KeepAlive, 탭 주소마다 화면 1개) · `store/routeTabs.js`           |
 | 문서 제목           | 메뉴 이름 → `ROUTE_META.title` → `.env*` 의 `VITE_TITLE`                     |
 | 로그인 · 권한       | `project.config.js` 의 `auth` → `router/guard.js` · `store/auth.js`          |
@@ -31,19 +30,20 @@
 
 ## 1. 기본 원칙
 
+- **필요할 때만 공통으로 뺍니다.** 두 화면 이상이 같은 코드를 실제로 쓸 때 composable · util 을 만들고, '나중에 쓸지도' 는 만들지 않습니다.
+- 설정으로 동작을 바꾸는 스위치 · 한 번만 쓰는 util 파일 · API 를 한 번 더 감싸는 도메인 함수 파일을 만들지 않습니다. 화면 안에 몇 줄로 쓰는 편이 읽기 쉽습니다.
 - 기존 스타일 · 네이밍 · 폴더 구조를 따릅니다.
 - 요청과 관련 없는 코드는 고치지 않습니다.
-- 한 곳에서만 쓰면 그 파일 안에, **두 곳 이상**이면 공통으로 분리합니다.
 - console · 임시 코드는 남기지 않습니다.
 
 ## 1-1. 화면 개발 순서
 
-| 단계           | 하는 일                                                                                                                                  | 결과                      |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| 1. 유형 고르기 | 목록 · 등록/수정 · 마스터-디테일 · 선택 팝업 중 가장 가까운 것 ([COMPONENT_GUIDE 4장](./COMPONENT_GUIDE.md#4-작성-패턴--표준-화면-유형)) | 복사할 템플릿             |
-| 2. 퍼블리싱    | `npm run new:page` (템플릿 복사 + 메뉴 한 줄) → `// ── temp 데이터` 로 화면 완성                                                         | 백엔드 없이 동작하는 화면 |
-| 3. API 연동    | `// temp 데이터` ~ `// temp 데이터 끝` 만 교체 (`fetch` · `setForm` · `api.post`)                                                        | 화면 구조는 그대로        |
-| 4. 확인        | 아래 8장 체크리스트 + `npm run check`                                                                                                    | 커밋 · PR                 |
+| 단계           | 하는 일                                                                                                                                         | 결과                      |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| 1. 유형 고르기 | 목록 · 등록/수정 · 상세 · 마스터-디테일 · 선택 팝업 중 가장 가까운 것 ([COMPONENT_GUIDE 4장](./COMPONENT_GUIDE.md#4-작성-패턴--표준-화면-유형)) | 복사할 템플릿             |
+| 2. 퍼블리싱    | 템플릿 복사 → `constants/menus.js` 에 메뉴 한 줄 → `// ── temp 데이터` 로 화면 완성                                                             | 백엔드 없이 동작하는 화면 |
+| 3. API 연동    | `// temp 데이터` ~ `// temp 데이터 끝` 만 교체 (`fetch…` · `save…` 함수)                                                                        | 화면 구조는 그대로        |
+| 4. 확인        | 아래 8장 체크리스트 + `npm run check`                                                                                                           | 커밋 · PR                 |
 
 - 퍼블리셔와 개발자가 나눠 작업해도 2 → 3 경계가 `// temp 데이터` 주석 하나로 정해집니다. temp 영역 밖에 임시 코드를 두지 않습니다.
 - 화면 유형에 없는 새 패턴이 두 화면 이상에서 필요하면 템플릿(`views/demos/demo-page-*.vue`)과 이 문서에 먼저 추가합니다.
@@ -81,9 +81,8 @@
 ## 4. 상태 · API · 로그인
 
 - **Store**: 공유 상태만. 화면에서는 action / computed 로만 다룹니다.
-- **API**: `useApi()` 사용 (`services/api/apiClient.js`). 주소는 실행 모드의 `.env` `VITE_API_URL`.
-    - 화면은 URL 을 직접 쓰지 않고 도메인별 API 함수(`services/api/workOrderApi.js`)를 부릅니다. → [API_GUIDE 9장](./API_GUIDE.md#9-프론트에서-api-함수-만들기)
-    - 조회 조건의 빈 값(null · '' · 빈 배열)은 보내지 않습니다. (`utils/common.js` 의 `omitEmptyParams`)
+- **API**: `const api = useApi()` → `api.get` · `post` · `put` · `patch` · `delete` (`services/api/apiClient.js`). 주소는 실행 모드의 `.env` `VITE_API_URL`. → [API_GUIDE 7장](./API_GUIDE.md#7-프론트에서-부르기-useapi)
+    - 조회 조건의 빈 값(null · '' · 빈 배열)은 보내지 않습니다. (`apiClient.js` 요청 인터셉터)
     - `{ data }` 로 감싼 응답은 `data` 만 돌려줍니다.
     - 오류는 서버 `message` 로 **오류 토스트를 자동으로** 띄웁니다. 화면에서 직접 처리하려면 `{ toast: false }` 후 `error.message` 사용
     - 로그인 토큰이 있으면 `Authorization: Bearer` 자동 첨부, `401` 은 로그인 화면으로 이동
@@ -92,8 +91,7 @@
     - 로그인 API 주소 · 응답 형식은 `auth.loginUrl` (`{ accessToken, user }`), 상태는 `store/auth.js`
 - **퍼블리싱 데이터**: 화면 안에 `// temp 데이터` 로 작성 (API 연동 시 그 영역만 교체). 이미지는 외부 주소 대신 `utils/sampleImage.js` 의 `sampleImage(seed, w, h)` (폐쇄망에서도 표시).
 - **목록 조회**: `useSearchList({ filter, fetch })` — 조회 조건 · 목록 · 건수 · 페이지 · 로딩 · 조회/초기화를 한 번에. 화면마다 직접 만들지 않습니다.
-- **선택 목록(공통코드)**: `useCodes('LINE', { temp: [...] })` — `codeUrl` 이 비어 있으면 temp, 적으면 서버 값. 같은 그룹은 1번만 요청.
-- **등록 · 수정**: `useForm(빈 폼, 규칙)` — `field('키')` 로 오류 표시, 저장 전 `validate()`, 나가기 전 `isDirty` 확인.
+- **등록 · 수정**: 화면 안에 `form` · `errors`(reactive) 와 `validate()` 를 직접 씁니다. 입력에는 `:state="errors.x ? 'error' : null" :hint="errors.x"`, 나가기 전 `isDirty` 확인. (등록 · 수정 템플릿)
 - **모달**: `const ok = await useModal().confirm('삭제할까요?')` (확인 true / 취소 false)
 - **선택 팝업**: `const item = await useModal().pick(찾기컴포넌트, { title })` — 찾기 컴포넌트는 `emit('select', 값)`. 여러 화면이 쓰는 찾기 팝업은 `components/projects/{key}/Picker{대상}.vue`
 - **탭 화면 유지**: 열린 탭의 화면은 입력값이 유지됩니다(KeepAlive). 탭으로 돌아올 때마다 새로 조회하려면 `onActivated` 를 씁니다.
@@ -125,7 +123,7 @@
 - 문구는 `i18n/ko.js` · `en.js` 에 같은 key 로 추가합니다. (`'ui.close'`, `'nav.home'`)
 - 템플릿은 `$t('ui.table.selectRow', { n: 3 })`, 스크립트는 `useI18nText().t(key)` 또는 `i18n.global.t(key, params)`.
 - 컴포넌트 기본 문구를 화면에서 바꾸려면 `*Text` · `placeholder` prop 을 씁니다. (`searchText="검색"`)
-- 새 화면을 LNB 에 넣을 때는 `constants/menus.js` 에 한 줄 추가합니다. (`npm run new:page --menu` 가 대신 해 줌) 서버 메뉴를 쓰면 `project.config.js` 의 `menuUrl`.
+- 새 화면을 LNB 에 넣을 때는 `constants/menus.js` 에 한 줄 추가합니다.
 
 ## 7. 접근성
 
@@ -169,6 +167,8 @@
 - **왜**를 적습니다. 코드가 말하는 **무엇**은 적지 않습니다. (`// 1 더하기` ✗ · `// 서버 page 는 1부터` ○)
 - 파일 맨 위 블록 주석: 이 파일이 무엇이고, 어떻게 쓰는지 예시 1~2줄. (composable · util · store · 스크립트 필수)
 - 밖에서 쓰는 함수에는 `/** 한 줄 설명 */` + 필요하면 `@param` · `@returns` (VS Code 가 호출하는 곳에서 보여 줌)
+    - 타입은 JavaScript 기본 이름만: `{string}` `{number}` `{boolean}` `{Object}` `{Array}` `{Function}` `{Promise}`. 모양은 설명에 적습니다. (`@param {Object} [options.temp] [{ value, label }] 목록`)
+    - TypeScript 문법(`@template` · `Record<…>` · `import('…')` · `() => T`)은 쓰지 않습니다. (`npm test` 가 검사)
 - 화면 스크립트는 구역 주석으로 나눕니다: `// ── 코드 목록 ──` · `// ── temp 데이터 ──` · `// ── 목록 ──` · `// ── 동작 ──`
 - `TODO` 는 담당 · 날짜와 함께: `// TODO(홍길동, 2026-12-01): 서버 정렬 파라미터 확정 후 교체`
 - 주석 처리한 옛 코드를 남기지 않습니다. (git 기록에 있음)

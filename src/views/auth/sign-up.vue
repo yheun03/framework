@@ -102,14 +102,13 @@
 import { IconAccount, IconEmail, IconLock } from '@/components/icons';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppChoice from '@/components/AppChoice.vue';
 import AppInput from '@/components/AppInput.vue';
 import AuthPageShell from '@/components/AuthPageShell.vue';
 
 const router = useRouter();
-const project = useProjectConfig();
 
 const name = ref('');
 const email = ref('');

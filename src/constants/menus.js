@@ -1,7 +1,5 @@
 /**
- * LNB 메뉴 목록 (project.config.js 의 menuUrl 이 비어 있을 때 사용)
- *
- * 한 줄 = 메뉴 하나. 서버 메뉴 테이블과 같은 모양이라, 나중에 menuUrl 로 바꿔도 화면 코드는 그대로입니다.
+ * LNB 메뉴 목록 - 한 줄 = 메뉴 하나 (서버 메뉴 테이블과 같은 모양)
  *
  * | 키        | 필수 | 설명                                                                  |
  * | --------- | ---- | --------------------------------------------------------------------- |
@@ -14,8 +12,6 @@
  * | icon      |      | 1단계 메뉴 아이콘 이름 (components/Layout/LayoutNavItem.vue 목록)      |
  * | newTab    |      | true 면 새 창으로 엽니다.                                             |
  * | isActive  |      | false 면 숨깁니다. (기본 true)                                        |
- *
- * 새 화면은 npm run new:page 가 이 파일 맨 아래에 한 줄을 추가해 줍니다.
  */
 export const MENU_ROWS = [
     { id: 'MENU_010000', order: 1, to: '/', labelKey: 'nav.home', icon: 'home' },

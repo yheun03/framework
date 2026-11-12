@@ -9,12 +9,12 @@
  *   - 토스트 없이 화면에서 직접 처리하려면 요청 옵션에 { toast: false }
  *     예) await api.get('/orders', { params, toast: false })
  * - 조회 조건(params)의 빈 값(null · '' · 빈 배열)은 보내지 않습니다. (전체 = 조건 없음)
- * - 화면에서는 useApi() 로 사용합니다. (composables/useApi.js) 서버와의 약속은 API_GUIDE.md
+ * - 화면에서는 useApi() 로 씁니다. (composables/useApi.js) 서버와의 약속은 API_GUIDE.md
  */
 import axios from 'axios';
 import i18n from '@/i18n';
 import { projectConfig } from '@/project.config';
-import { getApiUrl, omitEmptyParams } from '@/utils/common';
+import { getApiUrl } from '@/utils/common';
 
 const axiosClient = axios.create({
     baseURL: getApiUrl(),
@@ -33,9 +33,12 @@ export function setApiHandlers(next) {
     Object.assign(handlers, next);
 }
 
+// 조회 조건의 빈 값(null · '' · 빈 배열)은 보내지 않습니다. '전체'(null)를 서버가 '조건 없음'으로 받도록. (false · 0 은 보냄)
+const isEmpty = (value) => value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length);
+
 axiosClient.interceptors.request.use((config) => {
     config.headers['Accept-Language'] = i18n.global.locale.value;
-    if (config.params) config.params = omitEmptyParams(config.params);
+    if (config.params) config.params = Object.fromEntries(Object.entries(config.params).filter(([, value]) => !isEmpty(value)));
     if (!(config.data instanceof FormData)) config.headers['Content-Type'] = 'application/json';
 
     const token = handlers.getToken();
@@ -83,7 +86,6 @@ function unwrap(response) {
  * config 는 axios 옵션 + { toast: false } (오류 토스트 끄기)
  */
 const apiClient = {
-    /** @type {(url: string, config?: import('axios').AxiosRequestConfig & { toast?: boolean }) => Promise<any>} */
     get: (url, config) => axiosClient.get(url, config).then(unwrap),
     post: (url, body, config) => axiosClient.post(url, body, config).then(unwrap),
     put: (url, body, config) => axiosClient.put(url, body, config).then(unwrap),

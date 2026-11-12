@@ -3,7 +3,6 @@
  */
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { resolveFallbackTabId } from '@/utils/tab';
 
 export const useWorkspaceStore = defineStore('workspace', () => {
     const tabs = ref([
@@ -50,10 +49,8 @@ export const useWorkspaceStore = defineStore('workspace', () => {
         if (idx < 0) return;
         tabs.value.splice(idx, 1);
 
-        const fallback = resolveFallbackTabId(
-            tabs.value.map((tab) => tab.id),
-            idx,
-        );
+        // 닫은 탭 자리의 바로 왼쪽 탭(없으면 첫 탭)
+        const fallback = tabs.value[Math.max(0, idx - 1)]?.id ?? null;
         if (!fallback) return;
 
         if (activeTabId.value === id) activeTabId.value = fallback;

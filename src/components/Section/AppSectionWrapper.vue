@@ -26,7 +26,7 @@
 
 <script setup>
 import { DIRECTIONS, oneOf } from '@/utils/props';
-import { buildSectionStyleVars } from '@/utils/section';
+import { toCssSize, toGridTemplate } from '@/utils/css';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -38,12 +38,8 @@ const props = defineProps({
     gap: { type: [Number, String], default: 16 },
 });
 
-const wrapperStyle = computed(() => {
-    return buildSectionStyleVars({
-        gapVarName: '--app-section-wrapper-gap',
-        ratioVarName: '--app-section-wrapper-template',
-        gap: props.gap,
-        ratio: props.ratio,
-    });
-});
+const wrapperStyle = computed(() => ({
+    '--app-section-wrapper-gap': toCssSize(props.gap),
+    '--app-section-wrapper-template': toGridTemplate(props.ratio),
+}));
 </script>

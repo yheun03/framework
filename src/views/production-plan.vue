@@ -57,7 +57,8 @@ import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/production-plans', { params })
+// const api = useApi();
+// const fetchPlans = (params) => api.get('/production-plans', { params });
 const lines = [
     { label: '가공 1라인', value: 'line-1' },
     { label: '가공 2라인', value: 'line-2' },
@@ -108,7 +109,10 @@ const tempRows = [
         tone: 'warning',
     },
 ];
-const fetchPlans = async ({ line }) => tempRows.filter((row) => !line || row.lineCode === line);
+const fetchPlans = async ({ line, page, size }) => {
+    const rows = tempRows.filter((row) => !line || row.lineCode === line);
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

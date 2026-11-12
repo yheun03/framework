@@ -70,8 +70,9 @@ import AppSection from '@/components/Section/AppSection.vue';
 import AppSectionWrapper from '@/components/Section/AppSectionWrapper.vue';
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// const fetchOrders = (params) => salesOrderApi.list(params);
-// const fetchLines = (orderNo) => salesOrderApi.lines(orderNo);   // GET /sales-orders/{no}/lines
+// const api = useApi();
+// const fetchOrders = (params) => api.get('/sales-orders', { params });
+// const fetchLines = (orderNo) => api.get(`/sales-orders/${orderNo}/lines`);
 const tempOrders = [
     { orderNo: 'SO-2611-001', customer: '한빛전자', orderDate: '2026-11-03', dueDate: '2026-11-20', amount: 48000000 },
     { orderNo: 'SO-2611-002', customer: '대성모터스', orderDate: '2026-11-05', dueDate: '2026-11-22', amount: 16400000 },
@@ -85,7 +86,10 @@ const tempLines = {
     'SO-2611-002': [{ code: 'FG-10031', name: '샤프트 B', qty: 820, price: 20000 }],
     'SO-2611-003': [{ code: 'FG-10044', name: '브래킷 C', qty: 2400, price: 4000 }],
 };
-const fetchOrders = async ({ keyword }) => tempOrders.filter((order) => !keyword || order.customer.includes(keyword));
+const fetchOrders = async ({ keyword, page, size }) => {
+    const rows = tempOrders.filter((order) => !keyword || order.customer.includes(keyword));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 const fetchLines = async (orderNo) => tempLines[orderNo] ?? [];
 // temp 데이터 끝
 

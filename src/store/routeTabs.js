@@ -1,9 +1,9 @@
 /**
- * 라우트 탭 목록과 활성 탭 상태를 관리하는 Pinia store 파일입니다.
+ * 상단 탭(최근 방문 화면) 목록과 현재 탭 (Pinia)
+ * - 기록 규칙(어떤 화면을 탭으로 남기나)은 router/routeTabs.js, 화면 유지(KeepAlive)는 App.vue
  */
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { resolveFallbackTabId } from '@/utils/tab';
 
 export const useRouteTabsStore = defineStore('route-tabs', () => {
     const tabs = ref([]);
@@ -35,11 +35,8 @@ export const useRouteTabsStore = defineStore('route-tabs', () => {
         tabs.value.splice(idx, 1);
 
         if (activeKey.value !== key) return;
-        const fallback = resolveFallbackTabId(
-            tabs.value.map((tab) => tab.key),
-            idx,
-        );
-        activeKey.value = fallback;
+        // 닫은 탭이 현재 탭이면 바로 왼쪽 탭(없으면 첫 탭)으로
+        activeKey.value = tabs.value[Math.max(0, idx - 1)]?.key ?? null;
     }
 
     function reset() {

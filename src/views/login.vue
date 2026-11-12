@@ -60,7 +60,7 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from '@/composables/useToast';
 import { useAuthStore } from '@/store/auth';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppChoice from '@/components/AppChoice.vue';
 import AppInput from '@/components/AppInput.vue';
@@ -71,7 +71,6 @@ const router = useRouter();
 const auth = useAuthStore();
 const toast = useToast();
 const loading = ref(false);
-const project = useProjectConfig();
 
 const email = ref('');
 const password = ref('');

@@ -35,9 +35,8 @@
 
 <script setup>
 import { IconApp, IconCheckCircle } from '@/components/icons';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 
-const project = useProjectConfig();
 const currentYear = new Date().getFullYear();
 
 defineProps({

@@ -24,7 +24,8 @@ export const BUTTON_TYPES = ['button', 'submit', 'reset'];
 /**
  * 값 목록 검사 validator
  * @param {Array} values 허용 값
- * @param {{ number?: boolean }} [options] number: true 면 숫자(px)도 허용
+ * @param {Object} [options]
+ * @param {boolean} [options.number] true 면 숫자(px)도 허용
  */
 export function oneOf(values, { number = false } = {}) {
     return (value) => {

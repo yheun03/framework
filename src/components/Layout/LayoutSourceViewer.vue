@@ -24,7 +24,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IconCode, IconCopy } from '@/components/icons';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import { useToast } from '@/composables/useToast';
 import { toRoutePath } from '@/router/routePath';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -43,7 +43,6 @@ const sourceByPath = Object.fromEntries(
 );
 
 const route = useRoute();
-const project = useProjectConfig();
 const toast = useToast();
 
 const isOpen = ref(false);

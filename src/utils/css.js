@@ -31,3 +31,9 @@ export function toSizeStyle(width, height) {
 
     return style;
 }
+
+/** 비율 → grid-template-columns 값. [1, 2] → '1fr 2fr', 문자열은 그대로 (AppSection · AppSectionWrapper) */
+export function toGridTemplate(ratio) {
+    if (!ratio) return undefined;
+    return Array.isArray(ratio) ? ratio.map((item) => `${item}fr`).join(' ') : ratio;
+}

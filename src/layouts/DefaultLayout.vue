@@ -32,14 +32,13 @@ import { IconMenu } from '@/components/icons';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18nText } from '@/composables/useI18nText';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppTextButton from '@/components/AppButton/AppTextButton.vue';
 import LayoutNav from '@/components/Layout/LayoutNav.vue';
 import LayoutTabsPage from '@/components/Layout/LayoutTabsPage.vue';
 
 const route = useRoute();
-const project = useProjectConfig();
 const { t } = useI18nText();
 const isNavOpen = ref(false);
 

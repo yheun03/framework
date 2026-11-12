@@ -48,7 +48,8 @@ import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/quality-inspections', { params })
+// const api = useApi();
+// const fetchInspections = (params) => api.get('/quality-inspections', { params });
 const types = [
     { label: '수입검사', value: 'incoming' },
     { label: '공정검사', value: 'process' },
@@ -106,7 +107,10 @@ const tempRows = [
         tone: 'danger',
     },
 ];
-const fetchInspections = async ({ type, result }) => tempRows.filter((row) => (!type || row.type === type) && (!result || row.result === result));
+const fetchInspections = async ({ type, result, page, size }) => {
+    const rows = tempRows.filter((row) => (!type || row.type === type) && (!result || row.result === result));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

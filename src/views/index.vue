@@ -59,10 +59,9 @@
 
 <script setup>
 import { IconAccountPlus, IconApp, IconDashboard, IconWidgets } from '@/components/icons';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import AppButton from '@/components/AppButton/AppButton.vue';
 
-const project = useProjectConfig();
 const currentYear = new Date().getFullYear();
 </script>
 

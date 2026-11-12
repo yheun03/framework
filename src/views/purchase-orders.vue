@@ -47,7 +47,8 @@ import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/purchase-orders', { params })
+// const api = useApi();
+// const fetchPurchaseOrders = (params) => api.get('/purchase-orders', { params });
 const statusOptions = [
     { label: '부분입고', value: 'partial' },
     { label: '입고지연', value: 'delayed' },
@@ -93,8 +94,10 @@ const tempRows = [
         tone: 'success',
     },
 ];
-const fetchPurchaseOrders = async ({ keyword, status }) =>
-    tempRows.filter((row) => (!keyword || `${row.no} ${row.vendor}`.includes(keyword)) && (!status || row.state === status));
+const fetchPurchaseOrders = async ({ keyword, status, page, size }) => {
+    const rows = tempRows.filter((row) => (!keyword || `${row.no} ${row.vendor}`.includes(keyword)) && (!status || row.state === status));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

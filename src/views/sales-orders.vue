@@ -62,7 +62,8 @@ import AppTag from '@/components/AppTag.vue';
 const router = useRouter();
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/sales-orders', { params })
+// const api = useApi();
+// const fetchSalesOrders = (params) => api.get('/sales-orders', { params });
 const statusOptions = [
     { label: '확정', value: 'confirmed' },
     { label: '생산중', value: 'working' },
@@ -103,10 +104,12 @@ const tempRows = [
         tone: 'warning',
     },
 ];
-const fetchSalesOrders = async ({ keyword, status }) =>
-    tempRows
+const fetchSalesOrders = async ({ keyword, status, page, size }) => {
+    const rows = tempRows
         .filter((row) => (!keyword || `${row.no} ${row.customer}`.includes(keyword)) && (!status || row.state === status))
         .sort((a, b) => a.date.localeCompare(b.date));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

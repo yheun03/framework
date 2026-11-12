@@ -39,14 +39,18 @@ const props = defineProps({
 const emit = defineEmits(['select']);
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// const fetchItems = (params) => itemApi.list(params);
+// const api = useApi();
+// const fetchItems = (params) => api.get('/items', { params });
 const tempItems = Array.from({ length: 24 }, (_, index) => ({
     code: `FG-${String(10001 + index)}`,
     name: ['모터 하우징', '샤프트', '브래킷', '하우징 커버'][index % 4] + ` ${String.fromCharCode(65 + (index % 6))}형`,
     spec: `AL6061 / ${100 + index * 2}mm`,
     unit: 'EA',
 }));
-const fetchItems = async ({ keyword }) => tempItems.filter((item) => !keyword || `${item.code} ${item.name}`.includes(keyword));
+const fetchItems = async ({ keyword, page, size }) => {
+    const rows = tempItems.filter((item) => !keyword || `${item.code} ${item.name}`.includes(keyword));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 const columns = [

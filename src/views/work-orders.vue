@@ -58,7 +58,8 @@ import AppTag from '@/components/AppTag.vue';
 const router = useRouter();
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/work-orders', { params })
+// const api = useApi();
+// const fetchWorkOrders = (params) => api.get('/work-orders', { params });
 const statuses = [
     { label: '대기', value: 'waiting' },
     { label: '작업중', value: 'working' },
@@ -79,8 +80,10 @@ const tempRows = [
     { no: 'WO-260814-02', line: '가공 2라인', item: '샤프트 B', plan: 800, good: 800, progress: 100, state: 'done', status: '완료', tone: 'success' },
     { no: 'WO-260814-05', line: '조립 라인', item: '모터 ASSY', plan: 600, good: 0, progress: 0, state: 'waiting', status: '대기', tone: 'gray' },
 ];
-const fetchWorkOrders = async ({ keyword, status }) =>
-    tempRows.filter((row) => (!keyword || `${row.no} ${row.item}`.includes(keyword)) && (!status || row.state === status));
+const fetchWorkOrders = async ({ keyword, status, page, size }) => {
+    const rows = tempRows.filter((row) => (!keyword || `${row.no} ${row.item}`.includes(keyword)) && (!status || row.state === status));
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

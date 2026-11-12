@@ -10,9 +10,16 @@
         <AppSection title="기본 정보">
             <div class="business-form-grid">
                 <AppInput v-model="form.orderNo" label="수주번호" readonly />
-                <AppSelect v-model="form.customer" label="거래처" :items="customers" required v-bind="field('customer')" />
+                <AppSelect
+                    v-model="form.customer"
+                    label="거래처"
+                    :items="customers"
+                    required
+                    :state="errors.customer ? 'error' : null"
+                    :hint="errors.customer"
+                />
                 <AppDatePicker v-model="form.orderDate" label="수주일" />
-                <AppDatePicker v-model="form.dueDate" label="납기일" v-bind="field('dueDate')" />
+                <AppDatePicker v-model="form.dueDate" label="납기일" :state="errors.dueDate ? 'error' : null" :hint="errors.dueDate" />
                 <AppInput v-model="form.manager" label="담당자" />
                 <AppSelect v-model="form.status" label="상태" :items="statuses" />
             </div>
@@ -34,10 +41,8 @@
     </div>
 </template>
 <script setup>
-import { computed, ref, shallowRef } from 'vue';
+import { computed, reactive, ref, shallowRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useCodes } from '@/composables/useCodes';
-import { required, useForm } from '@/composables/useForm';
 import { useModal } from '@/composables/useModal';
 import { useToast } from '@/composables/useToast';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -55,25 +60,20 @@ const router = useRouter();
 const modal = useModal();
 const toast = useToast();
 
-// ── 코드 목록 ─────────────────────────────────────────────
-const { items: customers } = useCodes('CUSTOMER', {
-    temp: [
-        { label: '한빛전자', value: 'hanbit' },
-        { label: '대성모터스', value: 'daesung' },
-        { label: '유진테크', value: 'eugene' },
-    ],
-});
-const { items: statuses } = useCodes('SALES_ORDER_STATUS', {
-    temp: [
-        { label: '확정', value: 'confirmed' },
-        { label: '생산중', value: 'working' },
-        { label: '완료', value: 'done' },
-    ],
-});
-
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// const fetchSalesOrder = (id) => salesOrderApi.get(id);          // → { ...기본 정보, lines: [...] }
-// const saveSalesOrder = (form) => salesOrderApi.save(form);
+// const api = useApi();
+// const fetchSalesOrder = (id) => api.get(`/sales-orders/${id}`);           // → { ...기본 정보, lines: [...] }
+// const saveSalesOrder = (form) => api.put(`/sales-orders/${form.orderNo}`, form);
+const customers = [
+    { label: '한빛전자', value: 'hanbit' },
+    { label: '대성모터스', value: 'daesung' },
+    { label: '유진테크', value: 'eugene' },
+];
+const statuses = [
+    { label: '확정', value: 'confirmed' },
+    { label: '생산중', value: 'working' },
+    { label: '완료', value: 'done' },
+];
 const fetchSalesOrder = async (id) => ({
     orderNo: id,
     customer: 'hanbit',
@@ -103,16 +103,27 @@ const lineColumns = [
 const lines = shallowRef([]);
 const totalAmount = computed(() => lines.value.reduce((sum, row) => sum + row.qty * row.price, 0));
 
-const { form, field, validate, isDirty, setForm } = useForm(
-    () => ({ orderNo: '', customer: null, orderDate: '', dueDate: '', manager: '', status: 'confirmed', memo: '' }),
-    { customer: [required('거래처를 선택하세요.')], dueDate: [required('납기일을 선택하세요.')] },
-);
-const customerName = computed(() => customers.value.find((customer) => customer.value === form.customer)?.label ?? '');
+const emptyForm = () => ({ orderNo: '', customer: null, orderDate: '', dueDate: '', manager: '', status: 'confirmed', memo: '' });
+const form = reactive(emptyForm());
+const errors = reactive({ customer: '', dueDate: '' });
+const customerName = computed(() => customers.find((customer) => customer.value === form.customer)?.label ?? '');
 
-/** 주소의 id 로 수주를 불러와 폼 · 품목에 넣습니다. (불러온 값이 '변경 없음' 기준) */
+// 마지막으로 불러오거나 저장한 값 - 지금 값과 다르면 '저장하지 않은 변경'
+const savedSnapshot = ref(JSON.stringify(form));
+const isDirty = computed(() => JSON.stringify(form) !== savedSnapshot.value);
+
+/** 저장 전 검사 - 칸마다 오류 문구를 넣고(없으면 ''), 하나라도 있으면 false */
+function validate() {
+    errors.customer = form.customer ? '' : '거래처를 선택하세요.';
+    errors.dueDate = form.dueDate ? '' : '납기일을 선택하세요.';
+    return !Object.values(errors).some(Boolean);
+}
+
+/** 주소의 id 로 수주를 불러와 폼 · 품목에 넣습니다. */
 async function load() {
     const { lines: orderLines = [], ...order } = await fetchSalesOrder(route.params.id);
-    setForm(order);
+    Object.assign(form, emptyForm(), order);
+    savedSnapshot.value = JSON.stringify(form);
     lines.value = orderLines;
 }
 load();
@@ -126,7 +137,7 @@ async function save() {
     saving.value = true;
     try {
         await saveSalesOrder(form);
-        setForm(form); // 저장한 값이 새 기준 (isDirty = false)
+        savedSnapshot.value = JSON.stringify(form);
         toast.success('저장했습니다.');
     } finally {
         saving.value = false;

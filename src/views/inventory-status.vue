@@ -49,7 +49,8 @@ import AppTag from '@/components/AppTag.vue';
 const toast = useToast();
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// 실제: fetch: (params) => api.get('/inventories', { params })
+// const api = useApi();
+// const fetchInventories = (params) => api.get('/inventories', { params });
 const warehouses = [
     { label: '원자재 창고', value: 'raw' },
     { label: '반제품 창고', value: 'wip' },
@@ -78,13 +79,15 @@ const tempRows = [
         unit: 'EA',
     },
 ].map((row) => ({ ...row, ...(row.available < row.safety ? { status: '부족', tone: 'warning' } : { status: '정상', tone: 'success' }) }));
-const fetchInventories = async ({ keyword, warehouse, onlyShortage }) =>
-    tempRows.filter(
+const fetchInventories = async ({ keyword, warehouse, onlyShortage, page, size }) => {
+    const rows = tempRows.filter(
         (row) =>
             (!keyword || `${row.code} ${row.name}`.includes(keyword)) &&
             (!warehouse || row.warehouse === warehouse) &&
             (!onlyShortage || row.status === '부족'),
     );
+    return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
+};
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────

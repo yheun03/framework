@@ -30,6 +30,8 @@ export default [
             'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' }],
             // views/ 파일명이 곧 주소(kebab-case)이므로 컴포넌트 이름 규칙은 끕니다.
             'vue/multi-word-component-names': 'off',
+            // JavaScript 전용: <script lang="ts"> 등 다른 언어 블록 금지 (lang 생략 = JS)
+            'vue/block-lang': ['error', { script: { allowNoLang: true } }],
         },
     },
     {

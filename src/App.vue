@@ -24,27 +24,17 @@ import { useRoute } from 'vue-router';
 import AppModalHost from '@/components/Modal/AppModalHost.vue';
 import AppToastHost from '@/components/AppToastHost.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import { useProjectConfig } from '@/composables/useProjectConfig';
+import { projectConfig as project } from '@/project.config';
 import { getRouteTitle, isVisibleRoute } from '@/router/routeTabs';
 import { getAppTitle } from '@/utils/common';
 import { useNavigationStore } from '@/store/navigation';
 import { useRouteTabsStore } from '@/store/routeTabs';
-import { useAuthStore } from '@/store/auth';
 
 const TAB_CACHE_MAX = 20;
 
 const route = useRoute();
-const project = useProjectConfig();
 const navigationStore = useNavigationStore();
 const routeTabsStore = useRouteTabsStore();
-const authStore = useAuthStore();
-
-// 메뉴는 로그인된 상태에서 불러옵니다. (서버 메뉴는 사용자 권한마다 다를 수 있음 · 로그인 기능이 꺼져 있으면 항상 로그인 상태)
-watch(
-    () => authStore.isLoggedIn,
-    (isLoggedIn) => (isLoggedIn ? navigationStore.fetchMenus(true) : navigationStore.reset()),
-    { immediate: true },
-);
 
 // meta.layout === false 인 화면(로그인 등)은 LNB · 탭 없이 단독으로 보여줍니다.
 const useLayout = computed(() => route.meta?.layout !== false);

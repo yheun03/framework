@@ -20,7 +20,7 @@
 
 <script setup>
 import { DIRECTIONS, oneOf } from '@/utils/props';
-import { buildSectionStyleVars } from '@/utils/section';
+import { toCssSize, toGridTemplate } from '@/utils/css';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -34,12 +34,8 @@ const props = defineProps({
     gap: { type: [Number, String], default: 12 },
 });
 
-const sectionStyle = computed(() => {
-    return buildSectionStyleVars({
-        gapVarName: '--app-section-gap',
-        ratioVarName: '--app-section-template',
-        gap: props.gap,
-        ratio: props.ratio,
-    });
-});
+const sectionStyle = computed(() => ({
+    '--app-section-gap': toCssSize(props.gap),
+    '--app-section-template': toGridTemplate(props.ratio),
+}));
 </script>

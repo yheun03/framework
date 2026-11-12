@@ -10,10 +10,18 @@
         <AppSection title="기본 정보">
             <div class="business-form-grid">
                 <AppInput v-model="form.orderNo" label="작업지시번호" placeholder="자동 채번" readonly />
-                <AppSelect v-model="form.line" label="라인" :items="lines" placeholder="선택" required v-bind="field('line')" />
-                <AppDatePicker v-model="form.workDate" label="작업일자" v-bind="field('workDate')" />
-                <AppInput v-model="form.item" label="품목" placeholder="품목명 입력" v-bind="field('item')" />
-                <AppInputNumber v-model="form.qty" label="지시수량" :min="0" v-bind="field('qty')" />
+                <AppSelect
+                    v-model="form.line"
+                    label="라인"
+                    :items="lines"
+                    placeholder="선택"
+                    required
+                    :state="errors.line ? 'error' : null"
+                    :hint="errors.line"
+                />
+                <AppDatePicker v-model="form.workDate" label="작업일자" :state="errors.workDate ? 'error' : null" :hint="errors.workDate" />
+                <AppInput v-model="form.item" label="품목" placeholder="품목명 입력" :state="errors.item ? 'error' : null" :hint="errors.item" />
+                <AppInputNumber v-model="form.qty" label="지시수량" :min="0" :state="errors.qty ? 'error' : null" :hint="errors.qty" />
                 <AppSelect v-model="form.priority" label="우선순위" :items="priorities" />
             </div>
         </AppSection>
@@ -34,10 +42,8 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useCodes } from '@/composables/useCodes';
-import { required, useForm } from '@/composables/useForm';
 import { useModal } from '@/composables/useModal';
 import { useToast } from '@/composables/useToast';
 import AppButton from '@/components/AppButton/AppButton.vue';
@@ -59,42 +65,44 @@ const toast = useToast();
 const isEdit = computed(() => Boolean(route.params.id));
 const LIST_PATH = '/demos/demo-page-example'; // 실제: '/work-orders'
 
-// ── 코드 목록 ─────────────────────────────────────────────
-const { items: lines } = useCodes('LINE', {
-    temp: [
-        { value: 'L1', label: '1라인' },
-        { value: 'L2', label: '2라인' },
-    ],
-});
-const { items: priorities } = useCodes('PRIORITY', {
-    temp: [
-        { value: 'normal', label: '보통' },
-        { value: 'urgent', label: '긴급' },
-    ],
-});
-
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
-// import { workOrderApi } from '@/services/api/workOrderApi';
-// const fetchWorkOrder = (id) => workOrderApi.get(id);
-// const saveWorkOrder = (form) => workOrderApi.save(form);   // id 가 있으면 PUT, 없으면 POST
+// const api = useApi();
+// const fetchWorkOrder = (id) => api.get(`/work-orders/${id}`);
+// const saveWorkOrder = (form) => (isEdit.value ? api.put(`/work-orders/${route.params.id}`, form) : api.post('/work-orders', form));
+const lines = [
+    { value: 'L1', label: '1라인' },
+    { value: 'L2', label: '2라인' },
+];
+const priorities = [
+    { value: 'normal', label: '보통' },
+    { value: 'urgent', label: '긴급' },
+];
 const fetchWorkOrder = async () => ({ orderNo: 'WO-2611-001', line: 'L1', item: '브래킷 A형', qty: 1200 });
 const saveWorkOrder = () => new Promise((resolve) => setTimeout(resolve, 400));
 // temp 데이터 끝
 
 // ── 폼 ────────────────────────────────────────────────────
-const { form, field, validate, isDirty, setForm } = useForm(
-    () => ({ orderNo: '', line: null, workDate: '2026-11-12', item: '', qty: 0, priority: 'normal', memo: '' }),
-    {
-        line: [required('라인을 선택하세요.')],
-        workDate: [required('작업일자를 선택하세요.')],
-        item: [required('품목을 입력하세요.')],
-        qty: [(value) => value > 0 || '지시수량은 1 이상 입력하세요.'],
-    },
-);
+const emptyForm = () => ({ orderNo: '', line: null, workDate: '2026-11-12', item: '', qty: 0, priority: 'normal', memo: '' });
+const form = reactive(emptyForm());
+const errors = reactive({ line: '', workDate: '', item: '', qty: '' });
 
-/** 수정 화면이면 저장된 값을 불러와 폼에 넣습니다. (불러온 값이 '변경 없음' 기준) */
+// 마지막으로 불러오거나 저장한 값 - 지금 값과 다르면 '저장하지 않은 변경'
+const savedSnapshot = ref(JSON.stringify(form));
+const isDirty = computed(() => JSON.stringify(form) !== savedSnapshot.value);
+
+/** 저장 전 검사 - 칸마다 오류 문구를 넣고(없으면 ''), 하나라도 있으면 false */
+function validate() {
+    errors.line = form.line ? '' : '라인을 선택하세요.';
+    errors.workDate = form.workDate ? '' : '작업일자를 선택하세요.';
+    errors.item = form.item.trim() ? '' : '품목을 입력하세요.';
+    errors.qty = form.qty > 0 ? '' : '지시수량은 1 이상 입력하세요.';
+    return !Object.values(errors).some(Boolean);
+}
+
+/** 수정 화면이면 저장된 값을 불러옵니다. */
 async function load() {
-    setForm(await fetchWorkOrder(route.params.id));
+    Object.assign(form, emptyForm(), await fetchWorkOrder(route.params.id));
+    savedSnapshot.value = JSON.stringify(form);
 }
 if (isEdit.value) load();
 
@@ -107,7 +115,7 @@ async function save() {
     saving.value = true;
     try {
         await saveWorkOrder(form);
-        setForm(form); // 저장한 값이 새 기준 (isDirty = false)
+        savedSnapshot.value = JSON.stringify(form);
         toast.success('저장했습니다.');
         router.push(LIST_PATH);
     } finally {

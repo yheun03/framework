@@ -20,10 +20,6 @@ export const projectConfig = {
     description: 'Jonsoft MES · ERP 업무 관리 시스템 공통 프레임워크 (Vue 3 + Vite)',
     // 상단 탭 오른쪽 '소스 코드 보기' 버튼 (프레임워크 데모용 - 실제 프로젝트는 false)
     showSourceViewer: true,
-    // LNB 메뉴: 비어 있으면 src/constants/menus.js, 주소를 적으면 로그인 후 서버에서 받습니다. (예: '/menus' · 응답 형식 API_GUIDE.md)
-    menuUrl: '',
-    // 공통코드(composables/useCodes.js): 비어 있으면 화면의 temp 목록, 적으면 서버에서 받습니다. (예: '/codes/{group}')
-    codeUrl: '',
     // 로그인 (store/auth.js · router/guard.js · services/api/apiClient.js)
     // enabled: false → 로그인 없이 모든 화면 열람 (퍼블리싱 · 데모)
     auth: {
