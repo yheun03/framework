@@ -51,7 +51,9 @@
                         v-for="(row, rowIndex) in sortedItems"
                         :key="String(row[rowKey] ?? rowIndex)"
                         :class="{ 'is-selected': isSelected(row), 'is-clickable': clickable }"
+                        :tabindex="clickable ? 0 : undefined"
                         @click="clickable && emit('row-click', row, rowIndex)"
+                        @keydown.enter.self="clickable && emit('row-click', row, rowIndex)"
                     >
                         <td v-if="selectable" class="app-data-table__check" @click.stop>
                             <AppChoice

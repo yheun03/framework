@@ -1,13 +1,35 @@
 /**
- * 실행 모드별 API 주소를 돌려줍니다.
- * - 배포: nginx 컨테이너가 만든 /api-config.js 의 window.VITE_APP_MODE (dev / prd)
- * - 개발 서버: npm 스크립트의 VITE_APP_MODE
- * - localhost 접속은 항상 local(.env) 주소를 사용합니다.
+ * 실행 모드(local · dev · prd · pub)별 환경값(.env*)을 고릅니다.
+ *
+ * 모드 결정 순서
+ * 1. 개발 서버: npm 스크립트의 VITE_APP_MODE (npm run dev · prd · pub)
+ * 2. 배포: nginx 컨테이너가 만든 /api-config.js 의 window.VITE_APP_MODE (docker-compose 의 MODE = dev / prd)
+ * 3. 없으면 local
+ * - 배포 이미지는 모드 없이 한 번만 빌드합니다. (npm run build) 빌드에 VITE_APP_MODE 를 넣으면 그 모드로 고정됩니다.
+ * - API 주소는 localhost 접속이면 모드와 관계없이 항상 local(.env) 값을 씁니다.
  */
-export function getApiUrl() {
-    const mode = window.VITE_APP_MODE || import.meta.env.VITE_APP_MODE || 'local';
-    const isLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
-    const configs = ALL_ENV_CONFIGS;
 
-    return (isLocalhost ? configs.local : (configs[mode] ?? configs.local)).VITE_API_URL;
+/** 순수 함수 (테스트용) - 실제 화면에서는 아래 getAppMode · getApiUrl · getAppTitle 을 씁니다. */
+export function resolveAppMode({ configs, buildMode, runtimeMode }) {
+    const mode = buildMode || runtimeMode;
+    return configs[mode] ? mode : 'local';
+}
+
+export function resolveApiUrl({ configs, mode, hostname }) {
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(hostname);
+    return configs[isLocalhost ? 'local' : mode].VITE_API_URL;
+}
+
+export function getAppMode() {
+    return resolveAppMode({ configs: ALL_ENV_CONFIGS, buildMode: import.meta.env.VITE_APP_MODE, runtimeMode: window.VITE_APP_MODE });
+}
+
+/** 실행 모드의 API 주소 (.env* 의 VITE_API_URL) */
+export function getApiUrl() {
+    return resolveApiUrl({ configs: ALL_ENV_CONFIGS, mode: getAppMode(), hostname: location.hostname });
+}
+
+/** 실행 모드의 기본 문서 제목 (.env* 의 VITE_TITLE) - 메뉴에 없는 화면에서 씁니다. */
+export function getAppTitle() {
+    return ALL_ENV_CONFIGS[getAppMode()].VITE_TITLE || document.title;
 }

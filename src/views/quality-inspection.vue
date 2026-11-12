@@ -14,68 +14,40 @@
                 ><strong class="business-summary__value">{{ item.value }}</strong>
             </article>
         </section>
-        <section class="business-toolbar">
-            <AppSelect
-                v-model="type"
-                class="business-toolbar__field"
-                size="md"
-                :items="types"
-                placeholder="검사 구분"
-                aria-label="검사 구분"
-            /><AppSelect
-                v-model="result"
-                class="business-toolbar__field"
-                size="md"
-                :items="results"
-                placeholder="전체 판정"
-                aria-label="전체 판정"
-            /><AppDatePicker v-model="date" class="business-toolbar__field" size="md" />
-            <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
-        </section>
-        <AppSection title="검사 목록"
-            ><div class="business-table-wrap">
-                <table class="business-table">
-                    <thead>
-                        <tr>
-                            <th>검사번호</th>
-                            <th>구분</th>
-                            <th>품목</th>
-                            <th>LOT</th>
-                            <th>검사수량</th>
-                            <th>불량수량</th>
-                            <th>검사자</th>
-                            <th>판정</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="row in rows" :key="row.no">
-                            <td>{{ row.no }}</td>
-                            <td>{{ row.type }}</td>
-                            <td>{{ row.item }}</td>
-                            <td>{{ row.lot }}</td>
-                            <td>{{ row.qty }}</td>
-                            <td>{{ row.defect }}</td>
-                            <td>{{ row.inspector }}</td>
-                            <td>
-                                <span class="business-status" :class="`business-status--${row.state}`">{{ row.result }}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div></AppSection
-        >
+
+        <AppSearchPanel :columns="3" :loading="loading" @search="search" @reset="reset">
+            <AppSearchItem label="검사 구분">
+                <AppSelect v-model="filter.type" :items="types" size="sm" placeholder="전체" />
+            </AppSearchItem>
+            <AppSearchItem label="판정">
+                <AppSelect v-model="filter.result" :items="results" size="sm" placeholder="전체" />
+            </AppSearchItem>
+            <AppSearchItem label="검사일">
+                <AppDatePicker v-model="filter.date" size="sm" />
+            </AppSearchItem>
+        </AppSearchPanel>
+
+        <AppSection>
+            <AppDataTable title="검사 목록" caption="품질검사 목록" :columns="columns" :items="items" :total="total" row-key="no" show-total>
+                <template #cell-result="{ row }"><AppTag variant="soft" dot :tone="row.tone" :label="row.resultName" /></template>
+            </AppDataTable>
+            <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="total" />
+        </AppSection>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useSearchList } from '@/composables/useSearchList';
 import AppButton from '@/components/AppButton/AppButton.vue';
+import AppDataTable from '@/components/Table/AppDataTable.vue';
 import AppDatePicker from '@/components/AppDatePicker.vue';
-import AppSelect from '@/components/AppSelect.vue';
+import AppPagination from '@/components/AppPagination.vue';
+import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
+import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
 import AppSection from '@/components/Section/AppSection.vue';
+import AppSelect from '@/components/AppSelect.vue';
+import AppTag from '@/components/AppTag.vue';
 
-const type = ref(null);
-const result = ref(null);
-const date = ref('2026-08-14');
+// temp 데이터 - 실제: fetch: (params) => api.get('/quality-inspections', { params })
 const types = [
     { label: '수입검사', value: 'incoming' },
     { label: '공정검사', value: 'process' },
@@ -92,39 +64,63 @@ const summary = [
     { label: '부적합', value: '2건' },
     { label: '검사 대기', value: '7건' },
 ];
-const rows = [
+const tempRows = [
     {
         no: 'QI-260814-31',
-        type: '공정검사',
+        type: 'process',
+        typeName: '공정검사',
         item: '모터 하우징 A',
         lot: 'LOT-260814-A01',
-        qty: '120',
-        defect: '1',
+        qty: 120,
+        defect: 1,
         inspector: '최품질',
-        result: '합격',
-        state: 'success',
+        result: 'pass',
+        resultName: '합격',
+        tone: 'success',
     },
     {
         no: 'QI-260814-29',
-        type: '수입검사',
+        type: 'incoming',
+        typeName: '수입검사',
         item: 'S45C 환봉',
         lot: 'RM-260813-S14',
-        qty: '40',
-        defect: '3',
+        qty: 40,
+        defect: 3,
         inspector: '정검사',
-        result: '조건부',
-        state: 'warning',
+        result: 'conditional',
+        resultName: '조건부',
+        tone: 'warning',
     },
     {
         no: 'QI-260814-24',
-        type: '출하검사',
+        type: 'outgoing',
+        typeName: '출하검사',
         item: '브래킷 C',
         lot: 'LOT-260812-C03',
-        qty: '200',
-        defect: '8',
+        qty: 200,
+        defect: 8,
         inspector: '최품질',
-        result: '불합격',
-        state: 'error',
+        result: 'fail',
+        resultName: '불합격',
+        tone: 'danger',
     },
 ];
+const fetchInspections = async ({ type, result }) => tempRows.filter((row) => (!type || row.type === type) && (!result || row.result === result));
+// temp 데이터 끝
+
+const columns = [
+    { key: 'no', label: '검사번호', width: 140 },
+    { key: 'typeName', label: '구분', width: 100 },
+    { key: 'item', label: '품목', align: 'left' },
+    { key: 'lot', label: 'LOT', width: 150 },
+    { key: 'qty', label: '검사수량', width: 100, align: 'right' },
+    { key: 'defect', label: '불량수량', width: 100, align: 'right' },
+    { key: 'inspector', label: '검사자', width: 100 },
+    { key: 'result', label: '판정', width: 100 },
+];
+
+const { filter, items, total, page, pageSize, loading, search, reset } = useSearchList({
+    filter: () => ({ type: null, result: null, date: '2026-08-14' }),
+    fetch: fetchInspections,
+});
 </script>

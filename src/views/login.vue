@@ -90,7 +90,10 @@ async function handleSubmit() {
     loading.value = true;
     try {
         await auth.login({ email: email.value, password: password.value });
-        const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') ? route.query.redirect : '/';
+        const redirect =
+            typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') && !route.query.redirect.startsWith('//')
+                ? route.query.redirect
+                : '/';
         router.replace(redirect);
     } catch (error) {
         toast.error(error.message);

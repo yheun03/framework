@@ -39,7 +39,10 @@ npm test           # 단위 테스트 (tests/*.test.mjs, Node 내장 테스트 �
 | `.env.prd` | prd   | 운영 서버                          |
 | `.env.pub` | pub   | 퍼블리싱 확인                      |
 
-`VITE_API_URL`(API 주소)과 `VITE_TITLE`(브라우저 제목)을 적습니다. 비밀값은 넣지 않습니다.
+`VITE_API_URL`(API 주소)과 `VITE_TITLE`(기본 문서 제목)을 적습니다. 비밀값은 넣지 않습니다.
+
+- 모드 결정: npm 스크립트의 `VITE_APP_MODE`(serve · dev · prd · pub) → 없으면 컨테이너가 만든 `/api-config.js`(docker-compose `MODE`) → 없으면 local
+- 배포 이미지는 모드 없이 한 번만 빌드합니다. (`npm run build`) 같은 이미지가 dev · prd 컨테이너에서 각각의 `.env.dev` · `.env.prd` 값을 씁니다.
 
 **API 주소가 정해지는 방식**
 
@@ -61,9 +64,16 @@ docker compose -f docker-compose-dev.yml up -d    # 개발 서버 (MODE=dev, :la
 docker compose -f docker-compose-prd.yml up -d    # 운영 서버 (MODE=prd, :release)
 ```
 
+| 파일                     | 이미지 태그 | MODE  | 실무와 같은 점                                                             |
+| ------------------------ | ----------- | ----- | -------------------------------------------------------------------------- |
+| `docker-compose-dev.yml` | `:latest`   | `dev` | 2칸 들여쓰기 · `expose 80` · 외부 네트워크 `default-network` · 업로드 200M |
+| `docker-compose-prd.yml` | `:release`  | `prd` | 헬스체크 `curl -f http://localhost:80/login` (30s · 5회 · 시작 40s)        |
+
 - 이미지는 한 번만 빌드하고, 컨테이너가 시작할 때 `MODE` 값으로 `/api-config.js` 를 만들어 API 주소를 고릅니다.
 - `nginx.conf`: SPA 새로고침 대응, `/api/` → 백엔드(`server:8080`) 프록시.
-- 이미지 주소 · 컨테이너명 · 백엔드 서비스명은 프로젝트에 맞게 바꿉니다.
+- 이미지 주소 · 컨테이너명은 `init-project` 가 `{key}` 로 바꿉니다. (실무처럼 이름이 다르면 직접 수정) 백엔드 서비스명은 `nginx.conf` 에서 바꿉니다.
+- `index.html` 은 캐시하지 않고(`no-cache`), 해시가 붙은 `/assets/` 는 1년 캐시합니다. 배포 직후에도 새 화면이 바로 보입니다.
+- `Dockerfile` 은 `npm ci --ignore-scripts` 로 설치합니다. (git 훅 연결 스크립트가 빌드 단계에는 없음)
 - 데모 사이트(GitHub Pages)는 main 에 push 하면 자동 배포됩니다. (`npm run build:pages`)
 
 ## 새 프로젝트 시작
@@ -72,7 +82,7 @@ docker compose -f docker-compose-prd.yml up -d    # 운영 서버 (MODE=prd, :re
 npm run init-project -- acme "ACME" "ACME MES"   # key · 회사명 · 서비스명
 ```
 
-`init-project` 가 아래 1번을 한 번에 처리합니다. (기존 `framework` 폴더는 지우지 않습니다)
+`init-project` 가 아래 1번과 Docker 이미지 · 컨테이너 이름을 한 번에 처리합니다. (기존 `framework` 폴더는 지우지 않습니다)
 
 1. **설정**
     - 기업 폴더 3곳을 `{key}` 이름으로 복사: `src/assets/styles/projects/` · `src/components/projects/` · `public/images/projects/`
@@ -92,14 +102,16 @@ npm run init-project -- acme "ACME" "ACME MES"   # key · 회사명 · 서비스
 
 ## 첫 화면 만들기
 
+화면 유형(목록 · 등록/수정 · 마스터-디테일 · 선택 팝업)을 고르고 해당 템플릿을 복사합니다. → [COMPONENT_GUIDE 4장](./COMPONENT_GUIDE.md#4-작성-패턴--표준-화면-유형)
+
 예) 작업지시 목록 화면 `/work-orders` 를 추가합니다.
 
 1. **화면 파일** — `src/views/demos/demo-page-example.vue` 를 복사해 `src/views/work-orders.vue` 로 저장
-   (파일 경로가 곧 주소, 상세 화면은 `views/work-orders/[id].vue` → `/work-orders/:id`)
+   (파일 경로가 곧 주소, 상세 화면은 `views/work-orders/[id].vue` → `/work-orders/:id`, 예제: LNB **ERP · MES 예제 화면 → 작업지시 목록**)
 2. **메뉴** — `src/store/navigation.js` 의 `MENU_SEED` 에 한 줄 추가하고, `src/i18n/ko.js` · `en.js` 에 `nav.*` 문구 추가
 3. **확인** — `npm run serve` → LNB 에서 열기 (상단 탭 · 문서 제목 `메뉴명 | 서비스명` 자동)
-4. **데이터** — `// temp 데이터` 영역을 `const api = useApi(); rows.value = await api.get('/work-orders')` 로 교체
-   (오류 토스트 · 로그인 토큰 · 401 은 공통 처리)
+4. **데이터** — `// temp 데이터` ~ `// temp 데이터 끝` 영역만 교체: `useSearchList({ fetch: (params) => workOrderApi.list(params) })`
+   (오류 토스트 · 로그인 토큰 · 401 은 공통 처리, API 함수는 `services/api/{도메인}Api.js`)
 5. **검사** — `npm run check`
 
 레이아웃 없는 화면(로그인 등) · 탭에서 뺄 화면은 `src/router/index.js` 의 `ROUTE_META` 에 `layout: false` · `tab: false`.
@@ -113,8 +125,8 @@ src/
 ├── layouts/        DefaultLayout (LNB · 탭)
 ├── router/         라우터 · 화면별 옵션(ROUTE_META)
 ├── store/          Pinia
-├── composables/    use* 재사용 로직
-├── services/api/   axios 클라이언트
+├── composables/    use* 재사용 로직 (useSearchList · useForm · useModal · useApi …)
+├── services/api/   axios 클라이언트 · 도메인별 API 함수 ({도메인}Api.js)
 ├── i18n/           vue-i18n (ko · en)
 ├── constants/      공용 상수
 ├── utils/          순수 함수 (props 값 검사 · 색 대비 · 샘플 이미지 …)

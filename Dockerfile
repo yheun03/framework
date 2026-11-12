@@ -5,7 +5,8 @@ FROM node:22-alpine AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+# --ignore-scripts: prepare(git 훅 연결)는 이 단계에 scripts/ 가 없어 실패하므로 건너뜁니다.
+RUN npm ci --ignore-scripts
 
 COPY . .
 RUN npm run build

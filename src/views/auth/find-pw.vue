@@ -31,7 +31,7 @@
                 <AppButton type="submit" variant="fill" tone="primary" size="xl" width="full">재설정 링크 보내기</AppButton>
             </form>
             <div class="auth-page__footer">
-                <RouterLink class="auth-page__link" to="/auth/sign-in">로그인으로 돌아가기</RouterLink>
+                <RouterLink class="auth-page__link" to="/login">로그인으로 돌아가기</RouterLink>
             </div>
         </template>
 
@@ -44,7 +44,7 @@
                     <strong>{{ email }}</strong> 주소로 비밀번호 재설정 링크를 보냈습니다.
                 </p>
             </div>
-            <AppButton to="/auth/sign-in" variant="fill" tone="primary" size="xl" width="full">로그인으로 돌아가기</AppButton>
+            <AppButton to="/login" variant="fill" tone="primary" size="xl" width="full">로그인으로 돌아가기</AppButton>
             <AppButton variant="outline" tone="gray" size="lg" width="full" @click="isSent = false">이메일 다시 입력</AppButton>
         </section>
     </AuthPageShell>

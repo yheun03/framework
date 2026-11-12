@@ -8,7 +8,7 @@
                     </span>
                     <span class="home__brand-name">{{ project.serviceName }}</span>
                 </div>
-                <RouterLink class="home__signin" to="/auth/sign-in">Sign in</RouterLink>
+                <RouterLink class="home__signin" to="/login">Sign in</RouterLink>
             </div>
             <div class="home__hero-content">
                 <p class="home__eyebrow">Workspace + Components</p>
