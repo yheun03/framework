@@ -8,73 +8,55 @@
             </div>
             <div class="business-page__actions"><AppButton size="md" variant="fill">계획 등록</AppButton></div>
         </header>
-        <section class="business-toolbar">
-            <AppDatePicker v-model="planDate" class="business-toolbar__field" size="md" /><AppSelect
-                v-model="line"
-                class="business-toolbar__field"
-                size="md"
-                :items="lines"
-                placeholder="전체 라인"
-                aria-label="전체 라인"
-            /><AppSelect
-                v-model="shift"
-                class="business-toolbar__field"
-                size="md"
-                :items="shifts"
-                placeholder="전체 근무조"
-                aria-label="전체 근무조"
-            />
-            <div class="business-toolbar__actions"><AppButton size="md" variant="fill">조회</AppButton></div>
-        </section>
+
+        <AppSearchPanel :columns="3" :loading="loading" @search="search" @reset="reset">
+            <AppSearchItem label="계획일">
+                <AppDatePicker v-model="filter.planDate" size="sm" />
+            </AppSearchItem>
+            <AppSearchItem label="라인">
+                <AppSelect v-model="filter.line" :items="lines" size="sm" placeholder="전체" />
+            </AppSearchItem>
+            <AppSearchItem label="근무조">
+                <AppSelect v-model="filter.shift" :items="shifts" size="sm" placeholder="전체" />
+            </AppSearchItem>
+        </AppSearchPanel>
+
         <section class="business-summary business-summary--compact">
             <article v-for="item in summary" :key="item.label" class="business-summary__item">
                 <span class="business-summary__label">{{ item.label }}</span
                 ><strong class="business-summary__value">{{ item.value }}</strong>
             </article>
         </section>
-        <AppSection title="2026년 8월 14일 생산계획"
-            ><div class="business-table-wrap">
-                <table class="business-table">
-                    <thead>
-                        <tr>
-                            <th>라인</th>
-                            <th>작업지시</th>
-                            <th>품목</th>
-                            <th>계획수량</th>
-                            <th>계획시간</th>
-                            <th>부하율</th>
-                            <th>상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="row in rows" :key="row.order">
-                            <td>{{ row.line }}</td>
-                            <td>{{ row.order }}</td>
-                            <td>{{ row.item }}</td>
-                            <td>{{ row.qty }}</td>
-                            <td>{{ row.time }}</td>
-                            <td class="business-table__progress"><AppProgressBar :value="row.load" show-value /></td>
-                            <td>
-                                <span class="business-status" :class="`business-status--${row.state}`">{{ row.status }}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div></AppSection
-        >
+
+        <AppSection>
+            <AppDataTable
+                :title="`${filter.planDate} 생산계획`"
+                caption="생산계획 목록"
+                :columns="columns"
+                :items="items"
+                :total="total"
+                row-key="order"
+                show-total
+            >
+                <template #cell-load="{ value }"><AppProgressBar :value="value" show-value /></template>
+                <template #cell-status="{ row }"><AppTag variant="soft" dot :tone="row.tone" :label="row.status" /></template>
+            </AppDataTable>
+        </AppSection>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { useSearchList } from '@/composables/useSearchList';
 import AppButton from '@/components/AppButton/AppButton.vue';
+import AppDataTable from '@/components/Table/AppDataTable.vue';
 import AppDatePicker from '@/components/AppDatePicker.vue';
 import AppProgressBar from '@/components/AppProgress/AppProgressBar.vue';
-import AppSelect from '@/components/AppSelect.vue';
+import AppSearchItem from '@/components/AppSearch/AppSearchItem.vue';
+import AppSearchPanel from '@/components/AppSearch/AppSearchPanel.vue';
 import AppSection from '@/components/Section/AppSection.vue';
+import AppSelect from '@/components/AppSelect.vue';
+import AppTag from '@/components/AppTag.vue';
 
-const planDate = ref('2026-08-14');
-const line = ref(null);
-const shift = ref(null);
+// temp 데이터 - 실제: fetch: (params) => api.get('/production-plans', { params })
 const lines = [
     { label: '가공 1라인', value: 'line-1' },
     { label: '가공 2라인', value: 'line-2' },
@@ -90,8 +72,9 @@ const summary = [
     { label: '평균 부하율', value: '82%' },
     { label: '미배정', value: '2건' },
 ];
-const rows = [
+const tempRows = [
     {
+        lineCode: 'line-1',
         line: '가공 1라인',
         order: 'WO-260814-01',
         item: '모터 하우징 A',
@@ -99,10 +82,21 @@ const rows = [
         time: '08:00 ~ 14:00',
         load: 86,
         status: '확정',
-        state: 'success',
+        tone: 'success',
     },
-    { line: '가공 2라인', order: 'WO-260814-02', item: '샤프트 B', qty: '800 EA', time: '08:00 ~ 12:30', load: 72, status: '확정', state: 'success' },
     {
+        lineCode: 'line-2',
+        line: '가공 2라인',
+        order: 'WO-260814-02',
+        item: '샤프트 B',
+        qty: '800 EA',
+        time: '08:00 ~ 12:30',
+        load: 72,
+        status: '확정',
+        tone: 'success',
+    },
+    {
+        lineCode: 'assembly',
         line: '조립 라인',
         order: 'WO-260814-05',
         item: '모터 ASSY',
@@ -110,7 +104,25 @@ const rows = [
         time: '13:00 ~ 20:00',
         load: 94,
         status: '부하주의',
-        state: 'warning',
+        tone: 'warning',
     },
 ];
+const fetchPlans = async ({ line }) => tempRows.filter((row) => !line || row.lineCode === line);
+// temp 데이터 끝
+
+const columns = [
+    { key: 'line', label: '라인', width: 120 },
+    { key: 'order', label: '작업지시', width: 140 },
+    { key: 'item', label: '품목', align: 'left' },
+    { key: 'qty', label: '계획수량', width: 110, align: 'right' },
+    { key: 'time', label: '계획시간', width: 140 },
+    { key: 'load', label: '부하율', width: 170 },
+    { key: 'status', label: '상태', width: 100 },
+];
+
+const { filter, items, total, loading, search, reset } = useSearchList({
+    filter: () => ({ planDate: '2026-08-14', line: null, shift: null }),
+    fetch: fetchPlans,
+    pageSize: 100,
+});
 </script>

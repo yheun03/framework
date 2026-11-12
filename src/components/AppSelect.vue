@@ -25,6 +25,7 @@
                 :disabled="disabled"
                 :aria-expanded="isOpen"
                 :aria-disabled="readonly || undefined"
+                :aria-invalid="state === 'error' || undefined"
                 :aria-label="label ? undefined : (ariaLabel ?? inputGroupLabel ?? undefined)"
                 aria-haspopup="listbox"
                 :aria-controls="isOpen ? menuId : undefined"

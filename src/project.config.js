@@ -24,7 +24,7 @@ export const projectConfig = {
     // enabled: false → 로그인 없이 모든 화면 열람 (퍼블리싱 · 데모)
     auth: {
         enabled: false,
-        loginPath: '/auth/sign-in',
+        loginPath: '/login',
         loginUrl: '/auth/login', // POST { email, password } → { accessToken, user }
         logoutUrl: '/auth/logout',
     },

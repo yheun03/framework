@@ -6,7 +6,7 @@
                 <p class="business-page__desc">조회 조건 → 목록 → 페이지 이동으로 구성한 기본 목록 화면입니다.</p>
             </div>
             <div class="business-page__actions">
-                <AppButton variant="fill" tone="primary" size="sm" @click="toast.info('등록 화면으로 이동합니다.')">작업지시 등록</AppButton>
+                <AppButton variant="fill" tone="primary" size="sm" to="/demos/demo-page-form">작업지시 등록</AppButton>
             </div>
         </header>
 
@@ -24,15 +24,18 @@
         </AppSearchPanel>
 
         <AppSection>
+            <!-- 행을 누르면 상세로 (실제 화면: router.push(`/work-orders/${row.id}`) → views/work-orders/[id].vue) -->
             <AppDataTable
                 v-model="checked"
                 title="작업지시"
                 caption="작업지시 목록"
                 :columns="columns"
-                :items="pagedRows"
-                :total="rows.length"
+                :items="items"
+                :total="total"
                 selectable
+                clickable
                 show-total
+                @row-click="openDetail"
             >
                 <template #toolbar>
                     <AppButton size="xs" :disabled="!checked.length" @click="remove">선택 삭제</AppButton>
@@ -41,13 +44,15 @@
                     <AppTag variant="soft" dot :tone="statusTone[value]" :label="value" />
                 </template>
             </AppDataTable>
-            <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="rows.length" />
+            <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="total" />
         </AppSection>
     </div>
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { ref } from 'vue';
+import { useModal } from '@/composables/useModal';
+import { useSearchList } from '@/composables/useSearchList';
 import { useToast } from '@/composables/useToast';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppDataTable from '@/components/Table/AppDataTable.vue';
@@ -59,9 +64,12 @@ import AppSection from '@/components/Section/AppSection.vue';
 import AppSelect from '@/components/AppSelect.vue';
 import AppTag from '@/components/AppTag.vue';
 
+const modal = useModal();
 const toast = useToast();
 
-// temp 데이터 - API 연동 시 이 영역만 교체 (const api = useApi(); rows.value = await api.get('/work-orders', { params: filter }))
+// temp 데이터 - API 연동 시 이 영역만 교체
+//   const api = useApi();
+//   fetch: (params) => api.get('/work-orders', { params })   → 서버가 { items, total } 를 주면 페이지 이동 시 자동 재조회
 const lines = [
     { value: 'L1', label: '1라인' },
     { value: 'L2', label: '2라인' },
@@ -71,45 +79,38 @@ const statuses = [
     { value: '완료', label: '완료' },
     { value: '정지', label: '정지' },
 ];
-const allRows = [
-    { id: 1, orderNo: 'WO-2611-001', line: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
-    { id: 2, orderNo: 'WO-2611-002', line: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
-    { id: 3, orderNo: 'WO-2611-003', line: '2라인', item: '샤프트', qty: 3000, status: '정지' },
+let tempRows = [
+    { id: 1, orderNo: 'WO-2611-001', line: 'L1', lineName: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
+    { id: 2, orderNo: 'WO-2611-002', line: 'L1', lineName: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
+    { id: 3, orderNo: 'WO-2611-003', line: 'L2', lineName: '2라인', item: '샤프트', qty: 3000, status: '정지' },
 ];
+const fetchWorkOrders = async ({ line, status }) => tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
+// temp 데이터 끝
 
 const columns = [
     { key: 'orderNo', label: '작업지시', width: 140 },
-    { key: 'line', label: '라인', width: 100 },
+    { key: 'lineName', label: '라인', width: 100 },
     { key: 'item', label: '품목', align: 'left' },
     { key: 'qty', label: '수량', width: 100, align: 'right' },
     { key: 'status', label: '상태', width: 100 },
 ];
 const statusTone = { 진행: 'info', 완료: 'success', 정지: 'danger' };
 
-const filter = reactive({ period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null });
-const rows = ref([...allRows]);
+const { filter, items, total, page, pageSize, loading, search, reset, reload } = useSearchList({
+    filter: () => ({ period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null }),
+    fetch: fetchWorkOrders,
+});
 const checked = ref([]);
-const page = ref(1);
-const pageSize = ref(10);
-const loading = ref(false);
 
-const pagedRows = computed(() => rows.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value));
-
-function search() {
-    const lineLabel = lines.find((line) => line.value === filter.line)?.label;
-    rows.value = allRows.filter((row) => (!lineLabel || row.line === lineLabel) && (!filter.status || row.status === filter.status));
-    page.value = 1;
-    checked.value = [];
+function openDetail(row) {
+    toast.info(`${row.orderNo} 상세로 이동합니다.`);
 }
 
-function reset() {
-    Object.assign(filter, { period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null });
-    search();
-}
-
-function remove() {
-    rows.value = rows.value.filter((row) => !checked.value.includes(row.id));
+async function remove() {
+    if (!(await modal.confirm(`선택한 ${checked.value.length}건을 삭제할까요?`))) return;
+    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await api.delete('/work-orders', { data: checked.value })
     toast.success(`${checked.value.length}건을 삭제했습니다.`);
     checked.value = [];
+    reload();
 }
 </script>

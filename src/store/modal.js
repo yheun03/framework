@@ -1,7 +1,7 @@
 /**
  * 모달 표시 상태와 모달 옵션을 관리하는 Pinia store 파일입니다.
  */
-import { computed, ref } from 'vue';
+import { computed, markRaw, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 const MODAL_DEFAULTS = {
@@ -120,10 +120,12 @@ export const useModalStore = defineStore('modal', () => {
     }
 
     function custom(component, options = {}) {
+        // 컴포넌트는 반응형으로 감싸지 않습니다. (Vue 경고 · 성능)
         return modalOpen({
             type: 'custom',
-            component,
             ...options,
+            component: markRaw(component),
+            ...(options.footerComponent && { footerComponent: markRaw(options.footerComponent) }),
         });
     }
 
