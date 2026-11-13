@@ -8,7 +8,7 @@ import pluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
 
 export default [
-    { ignores: ['dist/**', 'node_modules/**', 'public/**'] },
+    { ignores: ['dist/**', 'node_modules/**', 'public/**', 'test-results/**', 'playwright-report/**'] },
     js.configs.recommended,
     ...pluginVue.configs['flat/essential'],
     {
@@ -35,8 +35,14 @@ export default [
         },
     },
     {
+        // 화면 맨 아래 <script> 의 '데모 데이터'(서버 JSON 응답 예시)는 Vue 가 빌드할 때 <script setup> 보다 먼저 실행합니다.
+        // ESLint 는 파일 순서대로 읽어 '아래에서 선언 = 안 씀' 으로 잘못 알리므로 .vue 에서만 끕니다. (DEVELOPMENT_GUIDE 4장)
+        files: ['src/**/*.vue'],
+        rules: { 'no-useless-assignment': 'off' },
+    },
+    {
         // 노드에서 실행하는 설정 · 스크립트 · 테스트
-        files: ['vite.config.js', 'eslint.config.js', 'scripts/**/*.mjs', 'tests/**/*.mjs'],
+        files: ['vite.config.js', 'eslint.config.js', 'playwright.config.js', 'scripts/**/*.mjs', 'tests/**/*.js'],
         languageOptions: { globals: { ...globals.node } },
         rules: { 'no-console': 'off' },
     },

@@ -45,6 +45,7 @@ import {
     Link,
     ListFilter,
     Lock,
+    LogOut,
     Mail,
     Menu,
     Minus,
@@ -97,6 +98,7 @@ export const IconAccountGroup = createIcon(Users);
 export const IconAccountPlus = createIcon(UserPlus);
 export const IconApp = createIcon(LayoutGrid);
 export const IconCalendar = createIcon(Calendar);
+export const IconLogout = createIcon(LogOut);
 export const IconCheck = createIcon(Check);
 export const IconCheckCircle = createIcon(CircleCheck);
 export const IconChevronDown = createIcon(ChevronDown);

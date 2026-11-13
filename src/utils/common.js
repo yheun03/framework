@@ -12,10 +12,13 @@ export function getAppMode() {
     return ALL_ENV_CONFIGS[mode] ? mode : 'local';
 }
 
-/** API 주소 (.env* 의 VITE_API_URL) - localhost 로 접속하면 모드와 관계없이 항상 local(.env) 값 */
+/**
+ * API 주소 (실행 모드의 .env* VITE_API_URL)
+ * - 백엔드 API 는 모두 /api 아래에 있습니다. (예: GET /api/work-orders) → API_GUIDE.md 1장
+ * - local: http://localhost:8080/api (직접 호출) · dev · prd · pub: /api (Vite 프록시 · nginx 가 /api 그대로 전달)
+ */
 export function getApiUrl() {
-    const isLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
-    return ALL_ENV_CONFIGS[isLocalhost ? 'local' : getAppMode()].VITE_API_URL;
+    return ALL_ENV_CONFIGS[getAppMode()].VITE_API_URL;
 }
 
 /** 기본 문서 제목 (.env* 의 VITE_TITLE) - 메뉴에 없는 화면에서 씁니다. */

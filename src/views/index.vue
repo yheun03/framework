@@ -11,13 +11,11 @@
                 <RouterLink class="home__signin" to="/login">Sign in</RouterLink>
             </div>
             <div class="home__hero-content">
-                <p class="home__eyebrow">Workspace + Components</p>
-                <h1 class="home__title">팀이 바로 시작할 수 있는<br />Vue · Vite 프레임워크</h1>
-                <p class="home__desc">
-                    인증/에러 페이지와 동일한 톤으로 구성한 메인 화면입니다. 워크스페이스, 컴포넌트 데모, 가이드 페이지로 빠르게 이동할 수 있습니다.
-                </p>
+                <p class="home__eyebrow">MES · ERP Framework</p>
+                <h1 class="home__title">팀이 바로 시작할 수 있는<br />업무 화면 프레임워크</h1>
+                <p class="home__desc">표준 화면 템플릿을 복사해 시작합니다. 화면 파일 맨 아래의 데모 데이터가 곧 서버 JSON 응답 예시입니다.</p>
                 <div class="home__hero-actions">
-                    <AppButton to="/workspace" size="lg" variant="fill">워크스페이스 시작</AppButton>
+                    <AppButton to="/demos/demo-page-example" size="lg" variant="fill">화면 템플릿 보기</AppButton>
                     <AppButton to="/demos/demo-button" size="lg" variant="outline">UI 데모 보기</AppButton>
                 </div>
             </div>
@@ -25,12 +23,12 @@
 
         <div class="home__main">
             <section class="home__grid" aria-label="주요 이동">
-                <RouterLink class="home__card" to="/workspace">
+                <RouterLink class="home__card" to="/work-orders">
                     <span class="home__card-icon" aria-hidden="true">
                         <IconDashboard />
                     </span>
-                    <strong class="home__card-title">Workspace</strong>
-                    <p class="home__card-desc">프로젝트 탭, 작업 흐름, 생산성 도구를 한 화면에서 관리합니다.</p>
+                    <strong class="home__card-title">ERP · MES 예제</strong>
+                    <p class="home__card-desc">목록 · 상세 · 대시보드 예제 화면을 같은 규칙으로 만들어 두었습니다.</p>
                 </RouterLink>
 
                 <RouterLink class="home__card" to="/demos/demo-button">
@@ -41,12 +39,12 @@
                     <p class="home__card-desc">AppInput, AppChoice 등 공통 UI를 예제로 빠르게 검증합니다.</p>
                 </RouterLink>
 
-                <RouterLink class="home__card" to="/auth/sign-up">
+                <RouterLink class="home__card" to="/kiosk/work-result">
                     <span class="home__card-icon" aria-hidden="true">
                         <IconAccountPlus />
                     </span>
-                    <strong class="home__card-title">Get Started</strong>
-                    <p class="home__card-desc">새 계정으로 가입하고 팀 워크스페이스를 바로 생성할 수 있습니다.</p>
+                    <strong class="home__card-title">현장 키오스크</strong>
+                    <p class="home__card-desc">터치 단말용 큰 글자 · 큰 버튼 레이아웃(KioskLayout) 예제입니다.</p>
                 </RouterLink>
             </section>
 

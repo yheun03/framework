@@ -293,7 +293,6 @@ const componentDefinitions = [
     ['lnb', '사이드 메뉴', 'LNB'],
     ['page-tabs', '페이지 탭', 'Page Tabs'],
     ['responsive-layout', '반응형 레이아웃', 'Responsive Layout'],
-    ['workspace-pane', '워크스페이스 패널', 'Workspace Pane'],
 ];
 
 const componentColorNames = ref([]);

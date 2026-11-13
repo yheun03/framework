@@ -1,4 +1,5 @@
 <template>
+    <!-- 키오스크 화면(ROUTE_META layout: 'kiosk')은 화면 파일이 KioskLayout 을 직접 씁니다. -->
     <DefaultLayout v-if="useLayout">
         <!--
             탭 화면 유지 (KeepAlive)
@@ -36,8 +37,8 @@ const route = useRoute();
 const navigationStore = useNavigationStore();
 const routeTabsStore = useRouteTabsStore();
 
-// meta.layout === false 인 화면(로그인 등)은 LNB · 탭 없이 단독으로 보여줍니다.
-const useLayout = computed(() => route.meta?.layout !== false);
+// meta.layout === false 인 화면(로그인 등) · 'kiosk' 인 현장 단말 화면은 LNB · 탭 없이 단독으로 보여줍니다.
+const useLayout = computed(() => route.meta?.layout !== false && route.meta?.layout !== 'kiosk');
 
 // KeepAlive 는 컴포넌트 name 으로 캐시를 고르므로, 탭 주소(fullPath)를 name 으로 갖는 감싸기 컴포넌트를 만듭니다.
 const tabViews = new Map();

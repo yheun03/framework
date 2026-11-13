@@ -40,7 +40,7 @@ import { projectConfig as project } from '@/project.config';
 const currentYear = new Date().getFullYear();
 
 defineProps({
-    eyebrow: { type: String, default: 'Workspace + Components' },
+    eyebrow: { type: String, default: 'MES · ERP Framework' },
     /** 기본 문구는 i18n ui.auth.heroTitle · heroDesc · feature1~3 */
     heroTitle: { type: String, default: undefined },
     heroDescription: { type: String, default: undefined },

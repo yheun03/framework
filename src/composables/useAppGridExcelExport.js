@@ -1,5 +1,11 @@
 /**
- * AppGrid 데이터를 Excel 파일로 보내기 위한 composable 파일입니다.
+ * 목록을 Excel(xlsx) 파일로 내려받습니다. (서버 없이 브라우저에서 생성 - write-excel-file)
+ *
+ * const { exportRows } = useAppGridExcelExport();
+ * // 서버 페이지 목록: 현재 페이지가 아니라 조회 조건 전체를 받아서 → useSearchList 의 fetchAllRows()
+ * await exportRows({ name: '재고현황', columns: [{ field: 'itemCode', headerName: '품목코드' }], rows: await fetchAllRows() });
+ *
+ * - AppGrid: exportDisplayed(gridId, api) · exportDisplayedSelected(gridId, api) (AppGridDownload 버튼이 사용)
  */
 
 import { buildGridExcelBlob } from '@/utils/gridExcelWorkbook';
@@ -108,8 +114,19 @@ export function useAppGridExcelExport(options) {
         });
     }
 
+    /** 행 배열을 그대로 xlsx 로 - columns: [{ field, headerName }] (화면 표에 보이는 순서) */
+    async function exportRows({ name, columns, rows }) {
+        if (!columns?.length || !rows?.length) return;
+        await requestExcelDownload({
+            gridId: name,
+            columns,
+            rows: rows.map((row) => Object.fromEntries(columns.map((col) => [col.field, normalizeExportValue(row[col.field])]))),
+        });
+    }
+
     return {
         exportDisplayed,
         exportDisplayedSelected,
+        exportRows,
     };
 }

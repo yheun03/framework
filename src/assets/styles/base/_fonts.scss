@@ -1,6 +1,10 @@
 @use '../abstract' as *;
 
-/* typography.tokens.scss (예: assets/styles/abstract/_typography.scss) */
+/*
+ * Pretendard 1.3.9 서브셋 woff2 (KS X 1001 한글 2,350자 + 라틴 · 기호, 굵기마다 약 270 kB)
+ * - 전체 글자 woff(굵기마다 1.1 MB) 대비 1/4. 서브셋에 없는 드문 한글은 시스템 글꼴로 표시됩니다.
+ * - 원본: npm pretendard 패키지 dist/web/static/woff2-subset
+ */
 /*
 Copyright (c) 2021 Kil Hyung-jin, with Reserved Font Name Pretendard.
 https://github.com/orioncactus/pretendard
@@ -16,7 +20,7 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src:
         local('Pretendard Light'),
-        url('../../fonts/Pretendard-Light.woff') format('woff');
+        url('../../fonts/Pretendard-Light.subset.woff2') format('woff2');
 }
 
 @font-face {
@@ -25,7 +29,7 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src:
         local('Pretendard Regular'),
-        url('../../fonts/Pretendard-Regular.woff') format('woff');
+        url('../../fonts/Pretendard-Regular.subset.woff2') format('woff2');
 }
 
 @font-face {
@@ -34,7 +38,7 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src:
         local('Pretendard Medium'),
-        url('../../fonts/Pretendard-Medium.woff') format('woff');
+        url('../../fonts/Pretendard-Medium.subset.woff2') format('woff2');
 }
 
 @font-face {
@@ -43,7 +47,7 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src:
         local('Pretendard SemiBold'),
-        url('../../fonts/Pretendard-SemiBold.woff') format('woff');
+        url('../../fonts/Pretendard-SemiBold.subset.woff2') format('woff2');
 }
 
 @font-face {
@@ -52,5 +56,5 @@ http://scripts.sil.org/OFL
     font-display: swap;
     src:
         local('Pretendard Bold'),
-        url('../../fonts/Pretendard-Bold.woff') format('woff');
+        url('../../fonts/Pretendard-Bold.subset.woff2') format('woff2');
 }

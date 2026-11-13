@@ -10,7 +10,7 @@
         </div>
 
         <div class="app-data-table__scroll" :style="scrollStyle">
-            <table class="app-data-table__table">
+            <table class="app-data-table__table" :style="tableStyle">
                 <caption v-if="caption" class="sr-only">
                     {{
                         caption
@@ -36,11 +36,15 @@
                             :key="column.key"
                             scope="col"
                             :class="[`is-${column.align ?? 'center'}`, { 'is-sortable': column.sortable }]"
-                            :aria-sort="sortKey === column.key ? (sortOrder === 'asc' ? 'ascending' : 'descending') : undefined"
+                            :aria-sort="currentSort.key === column.key ? (currentSort.order === 'asc' ? 'ascending' : 'descending') : undefined"
                         >
                             <AppButton v-if="column.sortable" unstyled class="app-data-table__sort-button" @click="toggleSort(column.key)">
                                 {{ column.label }}
-                                <span class="app-data-table__sort" :class="sortKey === column.key && `is-${sortOrder}`" aria-hidden="true" />
+                                <span
+                                    class="app-data-table__sort"
+                                    :class="currentSort.key === column.key && `is-${currentSort.order}`"
+                                    aria-hidden="true"
+                                />
                             </AppButton>
                             <template v-else>{{ column.label }}</template>
                         </th>
@@ -71,7 +75,7 @@
                     <tr v-if="!items.length">
                         <td :colspan="columns.length + (selectable ? 1 : 0)" class="app-data-table__empty">
                             <slot name="empty">
-                                <AppEmpty size="sm" :title="emptyText ?? $t('ui.empty.data')" />
+                                <AppEmpty size="sm" :title="error ? $t('ui.table.loadError') : (emptyText ?? $t('ui.empty.data'))" />
                             </slot>
                         </td>
                     </tr>
@@ -93,6 +97,8 @@ import AppEmpty from '@/components/AppEmpty.vue';
  * AppDataTable (Figma 13. Table Guide - 게시판 형태의 테이블 / 라인·면 구분 테이블)
  * AG Grid 없이 HTML table 로 가볍게 쓰는 목록 테이블입니다.
  * 셀 커스텀: <template #cell-{key}="{ row, value }">
+ * 정렬: v-model:sort 를 주면 서버 정렬(헤더 클릭 → sort 값만 바꾸고 행은 그대로), 없으면 지금 받은 행만 화면에서 정렬합니다.
+ *       서버 페이지 목록은 반드시 v-model:sort (useSearchList 의 sort) - 화면 정렬은 현재 페이지 안에서만 정렬되기 때문입니다.
  */
 const props = defineProps({
     columns: { type: Array, required: true },
@@ -118,19 +124,33 @@ const props = defineProps({
     width: { type: [Number, String] },
     /** 지정 시 tbody 영역 세로 스크롤 + 헤더 고정 */
     height: { type: [Number, String] },
+    /** v-model:sort - { key, order: 'asc' | 'desc' } | null. 주면 서버 정렬 (행을 직접 정렬하지 않음) */
+    sort: { type: Object, default: undefined },
+    /** 조회 실패 - 빈 목록 대신 '목록을 불러오지 못했습니다.' (useSearchList 의 error) */
+    error: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['update:modelValue', 'row-click', 'sort']);
+const emit = defineEmits(['update:modelValue', 'update:sort', 'row-click', 'sort']);
 
-const sortKey = ref(null);
-const sortOrder = ref('asc');
+// 화면 정렬일 때만 쓰는 내부 상태 (v-model:sort 가 없을 때)
+const localSort = ref({ key: null, order: 'asc' });
+const isServerSort = computed(() => props.sort !== undefined);
+const currentSort = computed(() => (isServerSort.value ? (props.sort ?? { key: null, order: 'asc' }) : localSort.value));
 const rootStyle = computed(() => toSizeStyle(props.width));
+
+// 좁은 화면(태블릿)에서 너비 없는 컬럼이 0 으로 줄어들지 않게 최소 너비를 두고, 넘치면 가로 스크롤합니다.
+const AUTO_COLUMN_MIN_WIDTH = 160;
+const tableStyle = computed(() => {
+    const fixed = props.columns.reduce((sum, column) => sum + (typeof column.width === 'number' ? column.width : 0), 0);
+    const autoCount = props.columns.filter((column) => typeof column.width !== 'number').length;
+    return { minWidth: `${fixed + autoCount * AUTO_COLUMN_MIN_WIDTH + (props.selectable ? 48 : 0)}px` };
+});
 const scrollStyle = computed(() => (props.height ? { maxHeight: toCssSize(props.height) } : undefined));
 
 const sortedItems = computed(() => {
-    if (!sortKey.value) return props.items;
-    const key = sortKey.value;
-    const direction = sortOrder.value === 'asc' ? 1 : -1;
+    if (isServerSort.value || !localSort.value.key) return props.items;
+    const { key } = localSort.value;
+    const direction = localSort.value.order === 'asc' ? 1 : -1;
     return [...props.items].sort((a, b) => {
         const left = a[key];
         const right = b[key];
@@ -158,12 +178,11 @@ function toggleAll() {
 }
 
 function toggleSort(key) {
-    if (sortKey.value === key) sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
-    else {
-        sortKey.value = key;
-        sortOrder.value = 'asc';
-    }
-    emit('sort', { key, order: sortOrder.value });
+    const { key: currentKey, order } = currentSort.value;
+    const next = { key, order: currentKey === key && order === 'asc' ? 'desc' : 'asc' };
+    if (isServerSort.value) emit('update:sort', next);
+    else localSort.value = next;
+    emit('sort', next);
 }
 
 function formatCell(row, column) {

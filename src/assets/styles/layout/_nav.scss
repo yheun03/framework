@@ -69,14 +69,6 @@
         color: var(--color-lnb);
     }
 
-    &__actions {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        min-height: 32px;
-    }
-
     /* ----------------------------------------
        Search (메뉴 검색)
     ---------------------------------------- */
@@ -222,6 +214,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        gap: 8px;
         min-height: 56px;
         padding: 12px 20px;
         border-top: 1px solid var(--border-lnb);

@@ -25,9 +25,13 @@ export const projectConfig = {
     auth: {
         enabled: false,
         loginPath: '/login',
-        loginUrl: '/auth/login', // POST { email, password } → { accessToken, user }
+        loginUrl: '/auth/login', // POST { email, password } → { accessToken, refreshToken?, user: { name, permissions: [] } }
         logoutUrl: '/auth/logout',
+        // 토큰 갱신 (선택) - 401 이면 한 번 갱신 후 원래 요청을 다시 보냄. null 이면 바로 로그인 화면
+        refreshUrl: null, // 예) '/auth/refresh' : POST { refreshToken } → { accessToken, refreshToken? }
     },
+    // LNB 메뉴를 서버에서 받을 때 주소 (null = src/constants/menus.js). 응답은 menus.js 와 같은 행 배열 → API_GUIDE 4장
+    menuUrl: null, // 예) '/menus'
     // 문서 제목: 메뉴명 | serviceName (serviceName 만 바꾸면 함께 바뀝니다)
     titleTemplate: `%s | ${serviceName}`,
 };

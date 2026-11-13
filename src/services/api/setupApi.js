@@ -12,6 +12,8 @@ export function setupApi(router) {
 
     setApiHandlers({
         getToken: () => auth.token,
+        // 토큰 갱신 주소가 있을 때만 (없으면 401 → 바로 로그인 화면)
+        refresh: projectConfig.auth.refreshUrl ? () => auth.refresh() : null,
         // 401: 로그아웃 후 로그인 화면으로 (돌아올 주소는 ?redirect=)
         onUnauthorized: async () => {
             await auth.logout({ callApi: false });

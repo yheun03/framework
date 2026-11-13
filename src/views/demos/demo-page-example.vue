@@ -24,13 +24,15 @@
         </AppSearchPanel>
 
         <AppSection>
-            <!-- 행을 누르면 상세로 (실제 화면: router.push(`/work-orders/${row.id}`) → views/work-orders/[id].vue) -->
+            <!-- v-model:sort: 헤더(수량)를 누르면 서버 정렬(sort=qty,asc)로 다시 조회 · 행을 누르면 상세로 (실제 화면: router.push(`/work-orders/${row.id}`) → views/work-orders/[id].vue) -->
             <AppDataTable
                 v-model="checked"
                 title="작업지시"
                 caption="작업지시 목록"
                 :columns="columns"
                 :items="items"
+                :error="Boolean(error)"
+                v-model:sort="sort"
                 :total="total"
                 selectable
                 clickable
@@ -40,8 +42,8 @@
                 <template #toolbar>
                     <AppButton size="xs" :disabled="!checked.length" @click="remove">선택 삭제</AppButton>
                 </template>
-                <template #cell-status="{ value }">
-                    <AppTag variant="soft" dot :tone="statusTone[value]" :label="value" />
+                <template #cell-status="{ row }">
+                    <AppTag variant="soft" dot :tone="codeTone('WO_STATUS', row.status)" :label="row.statusName" />
                 </template>
             </AppDataTable>
             <AppPagination v-model:page="page" v-model:page-size="pageSize" :total="total" />
@@ -54,6 +56,7 @@ import { ref } from 'vue';
 import { useModal } from '@/composables/useModal';
 import { useSearchList } from '@/composables/useSearchList';
 import { useToast } from '@/composables/useToast';
+import { codeTone } from '@/constants/codeTone';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import AppDataTable from '@/components/Table/AppDataTable.vue';
 import AppDatePicker from '@/components/AppDatePicker.vue';
@@ -68,40 +71,34 @@ const modal = useModal();
 const toast = useToast();
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 응답 모양은 파일 맨 아래 '데모 데이터' 블록 = 서버 JSON 응답 예시입니다.
 // const api = useApi();
+// const lines = useCodes('LINE'); // import { useCodes } from '@/composables/useCodes'
 // const fetchWorkOrders = ({ period, ...params }) => api.get('/work-orders', { params: { ...params, fromDate: period.start, toDate: period.end } });
-// 코드 목록도 서버에서 받으면: const lines = ref([]); onMounted(async () => (lines.value = await api.get('/codes/LINE')));
-const lines = [
-    { value: 'L1', label: '1라인' },
-    { value: 'L2', label: '2라인' },
-];
-const statuses = [
-    { value: '진행', label: '진행' },
-    { value: '완료', label: '완료' },
-    { value: '정지', label: '정지' },
-];
-let tempRows = [
-    { id: 1, orderNo: 'WO-2611-001', line: 'L1', lineName: '1라인', item: '브래킷 A형', qty: 1200, status: '진행' },
-    { id: 2, orderNo: 'WO-2611-002', line: 'L1', lineName: '1라인', item: '하우징 커버', qty: 800, status: '완료' },
-    { id: 3, orderNo: 'WO-2611-003', line: 'L2', lineName: '2라인', item: '샤프트', qty: 3000, status: '정지' },
-];
-const fetchWorkOrders = async ({ line, status, page, size }) => {
-    const rows = tempRows.filter((row) => (!line || row.line === line) && (!status || row.status === status));
+// const deleteWorkOrders = (ids) => api.delete('/work-orders', { data: ids });
+const lines = ref(DEMO_CODES.LINE);
+const statuses = ref(DEMO_CODES.WO_STATUS);
+let tempRows = DEMO_WORK_ORDERS.items;
+const fetchWorkOrders = async ({ line, status, page, size, sort }) => {
+    const [sortKey, sortOrder] = sort?.split(',') ?? []; // 'qty,desc' - 서버라면 서버가 정렬
+    const rows = tempRows
+        .filter((row) => (!line || row.line === line) && (!status || row.status === status))
+        .sort((a, b) => (sortKey ? (a[sortKey] > b[sortKey] ? 1 : -1) * (sortOrder === 'desc' ? -1 : 1) : 0));
     return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
 };
+const deleteWorkOrders = async (ids) => (tempRows = tempRows.filter((row) => !ids.includes(row.id)));
 // temp 데이터 끝
 
 // ── 목록 ──────────────────────────────────────────────────
 const columns = [
     { key: 'orderNo', label: '작업지시', width: 140 },
     { key: 'lineName', label: '라인', width: 100 },
-    { key: 'item', label: '품목', align: 'left' },
-    { key: 'qty', label: '수량', width: 100, align: 'right' },
+    { key: 'itemName', label: '품목', align: 'left' },
+    { key: 'qty', label: '수량', width: 100, align: 'right', sortable: true },
     { key: 'status', label: '상태', width: 100 },
 ];
-const statusTone = { 진행: 'info', 완료: 'success', 정지: 'danger' };
 
-const { filter, items, total, page, pageSize, loading, search, reset, reload } = useSearchList({
+const { filter, items, total, page, pageSize, sort, loading, error, search, reset, reload } = useSearchList({
     filter: () => ({ period: { start: '2026-11-01', end: '2026-11-30' }, line: null, status: null }),
     fetch: fetchWorkOrders,
 });
@@ -116,9 +113,68 @@ function openDetail(row) {
 /** 선택 삭제 → 확인 → 삭제 → 다시 조회 */
 async function remove() {
     if (!(await modal.confirm(`선택한 ${checked.value.length}건을 삭제할까요?`))) return;
-    tempRows = tempRows.filter((row) => !checked.value.includes(row.id)); // 실제: await api.delete('/work-orders', { data: checked.value })
+    await deleteWorkOrders(checked.value);
     toast.success(`${checked.value.length}건을 삭제했습니다.`);
     checked.value = [];
     reload();
 }
+</script>
+
+<script>
+// ── 데모 데이터 = 서버 JSON 응답 예시 ─────────────────────
+// - 백엔드: 아래 모양 그대로 JSON 으로 응답합니다. (키 이름 · 코드 값 · 숫자는 숫자로) → API_GUIDE.md
+// - 프론트: API 를 연결하면 위 temp 영역을 api 호출로 바꾸고 이 블록을 지웁니다.
+
+/** GET /api/codes/LINE · GET /api/codes/WO_STATUS (공통코드: [{ value, label }]) */
+const DEMO_CODES = {
+    LINE: [
+        { value: 'L1', label: '1라인' },
+        { value: 'L2', label: '2라인' },
+    ],
+    WO_STATUS: [
+        { value: 'working', label: '진행' },
+        { value: 'done', label: '완료' },
+        { value: 'stopped', label: '정지' },
+    ],
+};
+
+/** GET /api/work-orders?fromDate=2026-11-01&toDate=2026-11-30&line=L1&status=working&page=1&size=10 → { items, total } */
+const DEMO_WORK_ORDERS = {
+    items: [
+        {
+            id: 1,
+            orderNo: 'WO-2611-001',
+            line: 'L1',
+            lineName: '1라인',
+            itemCode: 'FG-10011',
+            itemName: '브래킷 A형',
+            qty: 1200,
+            status: 'working',
+            statusName: '진행',
+        },
+        {
+            id: 2,
+            orderNo: 'WO-2611-002',
+            line: 'L1',
+            lineName: '1라인',
+            itemCode: 'FG-10022',
+            itemName: '하우징 커버',
+            qty: 800,
+            status: 'done',
+            statusName: '완료',
+        },
+        {
+            id: 3,
+            orderNo: 'WO-2611-003',
+            line: 'L2',
+            lineName: '2라인',
+            itemCode: 'FG-10031',
+            itemName: '샤프트',
+            qty: 3000,
+            status: 'stopped',
+            statusName: '정지',
+        },
+    ],
+    total: 3,
+};
 </script>

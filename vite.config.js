@@ -63,25 +63,25 @@ export default defineConfig(({ mode }) => {
             // 1024 미만 포트는 Linux · WSL 에서 관리자 권한이 필요하므로 Vite 기본 포트를 씁니다.
             port: 5173,
             proxy: {
-                // 개발 서버의 /api 요청을 로컬 백엔드로 그대로 전달합니다. (운영 nginx.conf 의 /api/ 프록시와 같은 동작)
-                // - npm run pub · dev 처럼 VITE_API_URL=/api 인 모드에서 API 를 호출할 수 있습니다.
+                // 개발 서버의 /api 요청을 백엔드로 그대로 전달합니다. (운영 nginx.conf 의 /api/ 프록시와 같은 동작 - /api 를 떼지 않음)
+                // - npm run pub · dev 처럼 VITE_API_URL=/api 인 모드, 또는 .env 를 /api 로 바꿔 CORS 없이 쓸 때 동작합니다.
+                // - 다른 PC 의 백엔드: VITE_PROXY_TARGET=http://192.168.0.10:8080 npm run dev
                 // '^/api/' 정규식: /api-config.js 같은 정적 파일은 프록시하지 않습니다.
                 '^/api/': {
                     target: env.VITE_PROXY_TARGET || 'http://localhost:8080',
                     changeOrigin: true,
                 },
-                // (선택) CORS 회피용: .env 의 VITE_API_URL 을 /server 로 바꾸면 '/server' 를 떼고 로컬 백엔드로 전달합니다.
-                '/server': {
-                    target: ALL_ENV_CONFIGS.local.VITE_API_URL || 'http://localhost:8080',
-                    changeOrigin: true,
-                    rewrite: (url) => url.replace(/^\/server/, ''),
-                },
             },
         },
         build: {
-            // 큰 조각은 AG Grid(그리드를 쓰는 화면, 약 1MB)와 마크다운 에디터(워크스페이스)뿐이며, 해당 화면에서만 불러옵니다.
+            // 큰 조각은 AG Grid(그리드를 쓰는 화면, 약 870kB - AppGrid.vue 에서 쓰는 모듈만 등록)뿐이며, 그 화면에서만 불러옵니다.
             // 첫 화면 공통 조각(index)은 약 180kB 입니다.
-            chunkSizeWarningLimit: 1100,
+            chunkSizeWarningLimit: 900,
+        },
+        // 단위 테스트 (npm test) - E2E 는 playwright.config.js
+        test: {
+            environment: 'happy-dom',
+            include: ['tests/unit/**/*.test.js'],
         },
         define: {
             ALL_ENV_CONFIGS: JSON.stringify(ALL_ENV_CONFIGS),

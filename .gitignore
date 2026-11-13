@@ -21,3 +21,7 @@ Thumbs.db
 .vscode
 *.swp
 *.swo
+
+# 테스트 결과 (npm run test:e2e)
+test-results/
+playwright-report/

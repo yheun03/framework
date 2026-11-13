@@ -85,6 +85,56 @@
     }
 }
 
+/* 태블릿 세로(≤1023) · 모바일: LNB 를 서랍(drawer)으로 - 상단 바의 '메뉴' 버튼으로 열고, 화면을 고르면 닫힘 */
+@media (max-width: 1023px) {
+    .layout {
+        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            'mobile-bar'
+            'main';
+
+        &__mobile-bar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+        }
+
+        &__nav {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: var(--layout-nav-z-index);
+            width: min(284px, calc(100vw - 24px));
+            transform: translateX(calc(-100% - 1px));
+            transition: transform 0.22s ease;
+            box-shadow: 18px 0 36px var(--shadow-responsive-layout);
+        }
+
+        &--nav-open .layout__nav {
+            transform: translateX(0);
+        }
+
+        &__nav-dim {
+            position: fixed;
+            inset: 0;
+            z-index: calc(var(--layout-nav-z-index) - 1);
+            display: block;
+            border: 0;
+            background: var(--bg-responsive-layout);
+        }
+    }
+
+    .layout-nav {
+        min-height: 100dvh;
+
+        &__mobile-close {
+            display: inline-flex;
+        }
+    }
+}
+
 @media (max-width: 767px) {
     :root {
         --width-sidebar: min(284px, calc(100vw - 24px));

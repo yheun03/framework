@@ -12,10 +12,10 @@
  * | icon      |      | 1단계 메뉴 아이콘 이름 (components/Layout/LayoutNavItem.vue 목록)      |
  * | newTab    |      | true 면 새 창으로 엽니다.                                             |
  * | isActive  |      | false 면 숨깁니다. (기본 true)                                        |
+ * | permission|      | 권한 코드 (예: 'WO.READ'). 로그인 사용자 permissions 에 없으면 숨김 · /forbidden |
  */
 export const MENU_ROWS = [
     { id: 'MENU_010000', order: 1, to: '/', labelKey: 'nav.home', icon: 'home' },
-    { id: 'MENU_010100', order: 2, to: '/workspace', labelKey: 'nav.workspace', icon: 'dashboard' },
     { id: 'MENU_015000', order: 3, to: '/theme', labelKey: 'nav.themeSettings', icon: 'cog' },
 
     { id: 'MENU_018000', order: 4, labelKey: 'nav.guideGroup', icon: 'guide' },
@@ -25,6 +25,7 @@ export const MENU_ROWS = [
     { id: 'MENU_018004', parentId: 'MENU_018000', order: 4, to: '/demos/demo-page-form', labelKey: 'nav.demo.pageForm' },
     { id: 'MENU_018005', parentId: 'MENU_018000', order: 5, to: '/demos/demo-page-master-detail', labelKey: 'nav.demo.pageMasterDetail' },
     { id: 'MENU_018006', parentId: 'MENU_018000', order: 6, to: '/demos/demo-page-picker', labelKey: 'nav.demo.pagePicker' },
+    { id: 'MENU_018007', parentId: 'MENU_018000', order: 7, to: '/demos/demo-page-grid', labelKey: 'nav.demo.pageGrid' },
 
     { id: 'MENU_020000', order: 5, labelKey: 'nav.group.input', icon: 'form' },
     { id: 'MENU_020001', parentId: 'MENU_020000', order: 1, to: '/demos/demo-input', labelKey: 'nav.demo.input' },
@@ -87,9 +88,10 @@ export const MENU_ROWS = [
     { id: 'MENU_026004', parentId: 'MENU_026000', order: 3, to: '/purchase-orders', labelKey: 'nav.business.purchaseOrders' },
     { id: 'MENU_026005', parentId: 'MENU_026000', order: 4, to: '/inventory-status', labelKey: 'nav.business.inventoryStatus' },
     { id: 'MENU_026006', parentId: 'MENU_026000', order: 5, to: '/production-plan', labelKey: 'nav.business.productionPlan' },
-    { id: 'MENU_026007', parentId: 'MENU_026000', order: 6, to: '/work-orders', labelKey: 'nav.business.workOrders' },
+    { id: 'MENU_026007', parentId: 'MENU_026000', order: 6, to: '/work-orders', labelKey: 'nav.business.workOrders', permission: 'WO.READ' },
     { id: 'MENU_026009', parentId: 'MENU_026000', order: 7, to: '/quality-inspection', labelKey: 'nav.business.qualityInspection' },
     { id: 'MENU_026010', parentId: 'MENU_026000', order: 8, to: '/equipment-monitoring', labelKey: 'nav.business.equipmentMonitoring' },
+    { id: 'MENU_026011', parentId: 'MENU_026000', order: 9, to: '/kiosk/work-result', labelKey: 'nav.business.kioskWorkResult' },
     { id: 'MENU_030000', order: 12, to: '/settings', labelKey: 'nav.settings', icon: 'cog' },
     { id: 'MENU_040000', order: 13, to: '/legal/lucide', labelKey: 'nav.legalLucide', icon: 'info' },
 ];

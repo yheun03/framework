@@ -66,18 +66,14 @@ const isEdit = computed(() => Boolean(route.params.id));
 const LIST_PATH = '/demos/demo-page-example'; // 실제: '/work-orders'
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 응답 모양은 파일 맨 아래 '데모 데이터' 블록 = 서버 JSON 응답 예시입니다.
 // const api = useApi();
+// const lines = useCodes('LINE'); // import { useCodes } from '@/composables/useCodes'
 // const fetchWorkOrder = (id) => api.get(`/work-orders/${id}`);
 // const saveWorkOrder = (form) => (isEdit.value ? api.put(`/work-orders/${route.params.id}`, form) : api.post('/work-orders', form));
-const lines = [
-    { value: 'L1', label: '1라인' },
-    { value: 'L2', label: '2라인' },
-];
-const priorities = [
-    { value: 'normal', label: '보통' },
-    { value: 'urgent', label: '긴급' },
-];
-const fetchWorkOrder = async () => ({ orderNo: 'WO-2611-001', line: 'L1', item: '브래킷 A형', qty: 1200 });
+const lines = ref(DEMO_CODES.LINE);
+const priorities = ref(DEMO_CODES.PRIORITY);
+const fetchWorkOrder = async () => structuredClone(DEMO_WORK_ORDER);
 const saveWorkOrder = () => new Promise((resolve) => setTimeout(resolve, 400));
 // temp 데이터 끝
 
@@ -128,4 +124,36 @@ async function cancel() {
     if (isDirty.value && !(await modal.confirm('저장하지 않은 내용이 있습니다. 나갈까요?'))) return;
     router.push(LIST_PATH);
 }
+</script>
+
+<script>
+// ── 데모 데이터 = 서버 JSON 응답 예시 ─────────────────────
+// - 백엔드: 아래 모양 그대로 JSON 으로 응답합니다. 등록 · 수정 요청 본문도 같은 키를 씁니다. → API_GUIDE.md
+// - 프론트: API 를 연결하면 위 temp 영역을 api 호출로 바꾸고 이 블록을 지웁니다.
+
+/** GET /api/codes/LINE · GET /api/codes/PRIORITY (공통코드: [{ value, label }]) */
+const DEMO_CODES = {
+    LINE: [
+        { value: 'L1', label: '1라인' },
+        { value: 'L2', label: '2라인' },
+    ],
+    PRIORITY: [
+        { value: 'normal', label: '보통' },
+        { value: 'urgent', label: '긴급' },
+    ],
+};
+
+/**
+ * GET /api/work-orders/{id} (수정 화면에서 불러오기)
+ * POST /api/work-orders · PUT /api/work-orders/{id} 요청 본문도 같은 모양 (orderNo 는 서버가 채번)
+ */
+const DEMO_WORK_ORDER = {
+    orderNo: 'WO-2611-001',
+    line: 'L1',
+    workDate: '2026-11-12',
+    item: '브래킷 A형',
+    qty: 1200,
+    priority: 'normal',
+    memo: '',
+};
 </script>

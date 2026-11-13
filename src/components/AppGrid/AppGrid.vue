@@ -8,11 +8,56 @@ defineOptions({
     inheritAttrs: false,
 });
 // AG Grid 는 그리드를 쓰는 화면에서만 불러옵니다. (main.js 전역 등록 시 모든 화면 첫 로딩에 포함됨)
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import {
+    CellStyleModule,
+    ClientSideRowModelApiModule,
+    ClientSideRowModelModule,
+    ColumnApiModule,
+    ColumnAutoSizeModule,
+    DateFilterModule,
+    EventApiModule,
+    LocaleModule,
+    ModuleRegistry,
+    NumberEditorModule,
+    NumberFilterModule,
+    RenderApiModule,
+    RowApiModule,
+    RowAutoHeightModule,
+    RowSelectionModule,
+    RowStyleModule,
+    ScrollApiModule,
+    TextEditorModule,
+    TextFilterModule,
+    TooltipModule,
+    ValidationModule,
+} from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { AgGridVue } from 'ag-grid-vue3';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+// 쓰는 기능만 등록합니다. (AllCommunityModule 전체 대비 그리드 조각이 작아짐)
+// 새 기능을 쓰면 개발 모드 콘솔의 'AG Grid: error #200 … Module' 안내대로 여기 한 줄 추가합니다. (ValidationModule 은 개발 모드에서만)
+ModuleRegistry.registerModules([
+    ClientSideRowModelModule,
+    ClientSideRowModelApiModule,
+    RowSelectionModule,
+    TextFilterModule,
+    NumberFilterModule,
+    DateFilterModule,
+    TextEditorModule,
+    NumberEditorModule,
+    CellStyleModule,
+    RowStyleModule,
+    RowAutoHeightModule,
+    ColumnAutoSizeModule,
+    TooltipModule,
+    LocaleModule,
+    RowApiModule,
+    ColumnApiModule,
+    ScrollApiModule,
+    RenderApiModule,
+    EventApiModule,
+    ...(import.meta.env.DEV ? [ValidationModule] : []),
+]);
 
 import AppGridCellSelectionChoice from '@/components/AppGrid/Cell/AppGridCellSelectionChoice.vue';
 import AppGridHeaderSelectionChoice from '@/components/AppGrid/Header/AppGridHeaderSelectionChoice.vue';
@@ -58,13 +103,23 @@ function scheduleRemoveAgHeaderCheckboxPlaceholders() {
     });
 }
 
+// 헤더 영역만 감시하고, 한 프레임에 한 번만 정리합니다. (그리드 전체를 감시하면 스크롤로 행이 그려질 때마다 실행되어 느려짐)
+let cleanupFrame = 0;
+function scheduleCleanupInFrame() {
+    if (cleanupFrame) return;
+    cleanupFrame = requestAnimationFrame(() => {
+        cleanupFrame = 0;
+        removeAgHeaderCheckboxPlaceholders();
+    });
+}
+
 function observeAgHeaderCheckboxPlaceholders() {
     const el = gridRef.value?.$el;
 
     if (!el || headerCheckboxObserver) return;
 
-    headerCheckboxObserver = new MutationObserver(removeAgHeaderCheckboxPlaceholders);
-    headerCheckboxObserver.observe(el, {
+    headerCheckboxObserver = new MutationObserver(scheduleCleanupInFrame);
+    headerCheckboxObserver.observe(el.querySelector('.ag-header') ?? el, {
         childList: true,
         subtree: true,
     });
@@ -86,6 +141,7 @@ onBeforeUnmount(() => {
     gridApi.value?.removeEventListener('newColumnsLoaded', scheduleRemoveAgHeaderCheckboxPlaceholders);
     headerCheckboxObserver?.disconnect();
     headerCheckboxObserver = null;
+    cancelAnimationFrame(cleanupFrame);
 });
 
 function getAlignClass(align) {
@@ -123,7 +179,9 @@ function mergeCellClass(col) {
 function normalizeColumnDefs(columnDefs) {
     if (!Array.isArray(columnDefs)) return columnDefs;
 
-    return columnDefs.map((col) => {
+    return columnDefs.map((rawCol) => {
+        // cellAlign · cellVerticalAlign 은 AppGrid 전용 속성 → cellClass 로 바꾸고 AG Grid 에는 넘기지 않음 (invalid colDef 경고 방지)
+        const { cellAlign: _cellAlign, cellVerticalAlign: _cellVerticalAlign, ...col } = rawCol;
         const usesAgCheckbox = Boolean(col.checkboxSelection) || Boolean(col.headerCheckboxSelection);
         const normalizedCol = {
             ...col,
@@ -139,7 +197,7 @@ function normalizeColumnDefs(columnDefs) {
                       filter: false,
                   }
                 : {}),
-            cellClass: mergeCellClass(col),
+            cellClass: mergeCellClass(rawCol),
         };
 
         if (!normalizedCol.cellRenderer || normalizedCol.cellDataType !== undefined) return normalizedCol;
@@ -235,9 +293,10 @@ function toggleRowSelection(params, rowSelection) {
 }
 
 function normalizeDefaultColDef(defaultColDef) {
+    const { cellAlign: _cellAlign, cellVerticalAlign: _cellVerticalAlign, ...rest } = defaultColDef ?? {};
     return {
         cellDataType: false,
-        ...defaultColDef,
+        ...rest,
         cellClass: defaultColDef ? mergeCellClass(defaultColDef) : undefined,
     };
 }

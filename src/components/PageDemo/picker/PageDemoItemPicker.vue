@@ -14,7 +14,9 @@
             caption="품목 목록"
             :columns="columns"
             :items="items"
+            :error="Boolean(error)"
             :total="total"
+            row-key="code"
             size="sm"
             height="320"
             clickable
@@ -39,16 +41,11 @@ const props = defineProps({
 const emit = defineEmits(['select']);
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 응답 모양은 파일 맨 아래 '데모 데이터' 블록 = 서버 JSON 응답 예시입니다.
 // const api = useApi();
 // const fetchItems = (params) => api.get('/items', { params });
-const tempItems = Array.from({ length: 24 }, (_, index) => ({
-    code: `FG-${String(10001 + index)}`,
-    name: ['모터 하우징', '샤프트', '브래킷', '하우징 커버'][index % 4] + ` ${String.fromCharCode(65 + (index % 6))}형`,
-    spec: `AL6061 / ${100 + index * 2}mm`,
-    unit: 'EA',
-}));
 const fetchItems = async ({ keyword, page, size }) => {
-    const rows = tempItems.filter((item) => !keyword || `${item.code} ${item.name}`.includes(keyword));
+    const rows = DEMO_ITEMS.items.filter((item) => !keyword || `${item.code} ${item.name}`.includes(keyword));
     return { items: rows.slice((page - 1) * size, page * size), total: rows.length }; // 서버라면 서버가 잘라서 줌
 };
 // temp 데이터 끝
@@ -60,7 +57,7 @@ const columns = [
     { key: 'unit', label: '단위', width: 70 },
 ];
 
-const { filter, items, total, page, pageSize, loading, search, reset } = useSearchList({
+const { filter, items, total, page, pageSize, loading, error, search, reset } = useSearchList({
     filter: () => ({ keyword: props.keyword }),
     fetch: fetchItems,
 });
@@ -72,3 +69,31 @@ const { filter, items, total, page, pageSize, loading, search, reset } = useSear
     gap: 12px;
 }
 </style>
+
+<script>
+// ── 데모 데이터 = 서버 JSON 응답 예시 ─────────────────────
+// - 백엔드: 아래 모양 그대로 JSON 으로 응답합니다. → API_GUIDE.md
+// - 프론트: API 를 연결하면 위 temp 영역을 api 호출로 바꾸고 이 블록을 지웁니다.
+
+/** GET /api/items?keyword=하우징&page=1&size=10 → { items, total } (품목 찾기 팝업) */
+const DEMO_ITEMS = {
+    items: [
+        { code: 'FG-10001', name: '모터 하우징 A형', spec: 'AL6061 / 100mm', unit: 'EA' },
+        { code: 'FG-10002', name: '샤프트 B형', spec: 'S45C / Ø20 × 102mm', unit: 'EA' },
+        { code: 'FG-10003', name: '브래킷 C형', spec: 'SPCC / t2.0', unit: 'EA' },
+        { code: 'FG-10004', name: '하우징 커버 D형', spec: 'AL6061 / 106mm', unit: 'EA' },
+        { code: 'FG-10005', name: '모터 하우징 E형', spec: 'AL6061 / 108mm', unit: 'EA' },
+        { code: 'FG-10006', name: '샤프트 F형', spec: 'S45C / Ø22 × 110mm', unit: 'EA' },
+        { code: 'FG-10007', name: '브래킷 A형', spec: 'SPCC / t1.6', unit: 'EA' },
+        { code: 'FG-10008', name: '하우징 커버 B형', spec: 'AL6061 / 114mm', unit: 'EA' },
+        { code: 'FG-10009', name: '모터 하우징 C형', spec: 'AL6061 / 116mm', unit: 'EA' },
+        { code: 'FG-10010', name: '샤프트 D형', spec: 'S45C / Ø25 × 118mm', unit: 'EA' },
+        { code: 'FG-10011', name: '브래킷 E형', spec: 'SPCC / t2.3', unit: 'EA' },
+        { code: 'FG-10012', name: '하우징 커버 F형', spec: 'AL6061 / 122mm', unit: 'EA' },
+        { code: 'RM-AL-001', name: '알루미늄 봉재', spec: 'AL6061 / Ø60', unit: 'KG' },
+        { code: 'RM-ST-014', name: 'S45C 환봉', spec: 'S45C / Ø30', unit: 'KG' },
+        { code: 'PK-BOX-01', name: '포장 박스 (소)', spec: '300 × 200 × 150', unit: 'EA' },
+    ],
+    total: 15,
+};
+</script>

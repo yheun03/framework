@@ -1,14 +1,14 @@
 /**
- * 순수 함수 단위 테스트 (Node 내장 테스트 러너 - 추가 설치 없음)
+ * 순수 함수 단위 테스트 (Vitest)
  *   npm test
  */
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
-import { accessibleTextColor, contrastRatio, primaryTextColor } from '../src/utils/color.js';
-import { oneOf, SIZES } from '../src/utils/props.js';
-import { toRoutePath } from '../src/router/routePath.js';
-import { isVisibleRoute } from '../src/router/routeTabs.js';
-import { sampleImage } from '../src/utils/sampleImage.js';
+import { test } from 'vitest';
+import { accessibleTextColor, contrastRatio, primaryTextColor } from '@/utils/color.js';
+import { oneOf, SIZES } from '@/utils/props.js';
+import { toRoutePath } from '@/router/routePath.js';
+import { isVisibleRoute } from '@/router/routeTabs.js';
+import { sampleImage } from '@/utils/sampleImage.js';
 
 test('대비 계산: 흰색-검정 21:1, 같은 색 1:1', () => {
     assert.equal(Math.round(contrastRatio('#ffffff', '#000000')), 21);
@@ -48,6 +48,7 @@ test('탭 기록: 레이아웃 화면은 기록, 로그인 · 404 · tab:false �
     assert.equal(isVisibleRoute({ path: '/login', meta: { layout: false } }), false);
     assert.equal(isVisibleRoute({ path: '/x', name: 'not-found', meta: {} }), false);
     assert.equal(isVisibleRoute({ path: '/popup', meta: { tab: false } }), false);
+    assert.equal(isVisibleRoute({ path: '/kiosk/work-result', meta: { layout: 'kiosk' } }), false);
 });
 
 test('샘플 이미지는 외부 주소가 아닌 data URI', () => {

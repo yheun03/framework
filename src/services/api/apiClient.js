@@ -4,7 +4,8 @@
  * - 응답이 { data } 로 감싸져 오면 data 만 꺼내서 돌려줍니다.
  * - 로그인 토큰이 있으면 Authorization: Bearer 를 붙입니다. (store/auth.js)
  * - 오류
- *   - 401: 로그아웃 후 로그인 화면으로 이동 (project.config.js auth.enabled 일 때)
+ *   - 401: (auth.refreshUrl 이 있으면) 토큰을 한 번 갱신해 원래 요청을 다시 보내고, 안 되면 로그아웃 후 로그인 화면 (auth.enabled 일 때)
+ *          여러 요청이 동시에 401 이어도 갱신 · 로그인 화면 이동은 한 번만 합니다.
  *   - 그 외: 서버 메시지(message · error)로 오류 토스트를 띄우고 reject 합니다.
  *   - 토스트 없이 화면에서 직접 처리하려면 요청 옵션에 { toast: false }
  *     예) await api.get('/orders', { params, toast: false })
@@ -25,9 +26,16 @@ const axiosClient = axios.create({
 // 토큰 · 401 · 오류 표시는 앱 시작 시 services/api/setupApi.js 가 연결합니다. (store · router 와 순환 참조 방지)
 const handlers = {
     getToken: () => null,
+    refresh: null, // () => Promise<새 토큰> (auth.refreshUrl 이 있을 때만)
     onUnauthorized: () => {},
     onError: () => {},
 };
+
+// 동시에 여러 요청이 401 이어도 갱신 · 로그아웃은 한 번만 (진행 중인 Promise 를 함께 기다림)
+let refreshing = null;
+let unauthorizing = null;
+const refreshOnce = () => (refreshing ??= Promise.resolve(handlers.refresh()).finally(() => (refreshing = null)));
+const unauthorizedOnce = (error) => (unauthorizing ??= Promise.resolve(handlers.onUnauthorized(error)).finally(() => (unauthorizing = null)));
 
 export function setApiHandlers(next) {
     Object.assign(handlers, next);
@@ -66,8 +74,18 @@ axiosClient.interceptors.response.use(
         const config = error?.config ?? {};
         error.message = getErrorMessage(error);
 
-        if (status === 401 && projectConfig.auth?.enabled) {
-            await handlers.onUnauthorized(error);
+        if (status === 401 && projectConfig.auth?.enabled && !config.skipAuthRefresh) {
+            if (handlers.refresh && !config.retried) {
+                try {
+                    const token = await refreshOnce();
+                    config.retried = true;
+                    config.headers.Authorization = `Bearer ${token}`;
+                    return axiosClient(config);
+                } catch {
+                    // 갱신 실패 → 아래 로그인 화면으로
+                }
+            }
+            await unauthorizedOnce(error);
             return Promise.reject(error);
         }
 
@@ -83,7 +101,7 @@ function unwrap(response) {
 
 /**
  * 화면에서 쓰는 API 함수 - 모두 응답 본문(또는 { data } 의 data)을 돌려주는 Promise 입니다.
- * config 는 axios 옵션 + { toast: false } (오류 토스트 끄기)
+ * config 는 axios 옵션 + { toast: false } (오류 토스트 끄기) · { skipAuthRefresh: true } (401 갱신 · 이동 안 함 - 로그인 API 등)
  */
 const apiClient = {
     get: (url, config) => axiosClient.get(url, config).then(unwrap),

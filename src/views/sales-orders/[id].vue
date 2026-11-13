@@ -11,7 +11,7 @@
             <div class="business-form-grid">
                 <AppInput v-model="form.orderNo" label="수주번호" readonly />
                 <AppSelect
-                    v-model="form.customer"
+                    v-model="form.customerCode"
                     label="거래처"
                     :items="customers"
                     required
@@ -20,12 +20,12 @@
                 />
                 <AppDatePicker v-model="form.orderDate" label="수주일" />
                 <AppDatePicker v-model="form.dueDate" label="납기일" :state="errors.dueDate ? 'error' : null" :hint="errors.dueDate" />
-                <AppInput v-model="form.manager" label="담당자" />
+                <AppInput v-model="form.managerName" label="담당자" />
                 <AppSelect v-model="form.status" label="상태" :items="statuses" />
             </div>
         </AppSection>
         <AppSection title="수주 품목">
-            <AppDataTable caption="수주 품목" :columns="lineColumns" :items="lines" row-key="code" size="md" />
+            <AppDataTable caption="수주 품목" :columns="lineColumns" :items="lines" row-key="itemCode" size="md" />
             <p class="sales-order-detail__sum">
                 합계 <strong>{{ won(totalAmount) }}</strong>
             </p>
@@ -61,40 +61,23 @@ const modal = useModal();
 const toast = useToast();
 
 // ── temp 데이터 (API 연동 시 이 영역만 교체) ──────────────
+// 응답 모양은 파일 맨 아래 '데모 데이터' 블록 = 서버 JSON 응답 예시입니다.
 // const api = useApi();
-// const fetchSalesOrder = (id) => api.get(`/sales-orders/${id}`);           // → { ...기본 정보, lines: [...] }
+// const customers = ref([]);  api.get('/customers/options').then((options) => (customers.value = options));
+// const statuses = useCodes('SO_STATUS'); // import { useCodes } from '@/composables/useCodes'
+// const fetchSalesOrder = (orderNo) => api.get(`/sales-orders/${orderNo}`);
 // const saveSalesOrder = (form) => api.put(`/sales-orders/${form.orderNo}`, form);
-const customers = [
-    { label: '한빛전자', value: 'hanbit' },
-    { label: '대성모터스', value: 'daesung' },
-    { label: '유진테크', value: 'eugene' },
-];
-const statuses = [
-    { label: '확정', value: 'confirmed' },
-    { label: '생산중', value: 'working' },
-    { label: '완료', value: 'done' },
-];
-const fetchSalesOrder = async (id) => ({
-    orderNo: id,
-    customer: 'hanbit',
-    orderDate: '2026-08-14',
-    dueDate: '2026-08-20',
-    manager: '김영업',
-    status: 'working',
-    memo: '포장 라벨에 고객사 LOT 번호 표기',
-    lines: [
-        { code: 'FG-10021', name: '모터 하우징 A', spec: 'AL6061 / 120mm', qty: 800, price: 40000 },
-        { code: 'FG-10022', name: '하우징 커버', spec: 'AL6061 / 118mm', qty: 800, price: 20000 },
-    ],
-});
+const customers = ref(DEMO_CUSTOMER_OPTIONS);
+const statuses = ref(DEMO_STATUS_CODES);
+const fetchSalesOrder = async (orderNo) => ({ ...structuredClone(DEMO_SALES_ORDER), orderNo });
 const saveSalesOrder = () => new Promise((resolve) => setTimeout(resolve, 400));
 // temp 데이터 끝
 
 // ── 폼 · 품목 ─────────────────────────────────────────────
 const won = (value) => `₩${value.toLocaleString()}`;
 const lineColumns = [
-    { key: 'code', label: '품목코드', width: 110 },
-    { key: 'name', label: '품목명', align: 'left' },
+    { key: 'itemCode', label: '품목코드', width: 110 },
+    { key: 'itemName', label: '품목명', align: 'left' },
     { key: 'spec', label: '규격', align: 'left' },
     { key: 'qty', label: '수량', width: 90, align: 'right' },
     { key: 'price', label: '단가', width: 110, align: 'right', format: won },
@@ -103,10 +86,10 @@ const lineColumns = [
 const lines = shallowRef([]);
 const totalAmount = computed(() => lines.value.reduce((sum, row) => sum + row.qty * row.price, 0));
 
-const emptyForm = () => ({ orderNo: '', customer: null, orderDate: '', dueDate: '', manager: '', status: 'confirmed', memo: '' });
+const emptyForm = () => ({ orderNo: '', customerCode: null, orderDate: '', dueDate: '', managerName: '', status: 'confirmed', memo: '' });
 const form = reactive(emptyForm());
 const errors = reactive({ customer: '', dueDate: '' });
-const customerName = computed(() => customers.find((customer) => customer.value === form.customer)?.label ?? '');
+const customerName = computed(() => customers.value.find((customer) => customer.value === form.customerCode)?.label ?? '');
 
 // 마지막으로 불러오거나 저장한 값 - 지금 값과 다르면 '저장하지 않은 변경'
 const savedSnapshot = ref(JSON.stringify(form));
@@ -114,7 +97,7 @@ const isDirty = computed(() => JSON.stringify(form) !== savedSnapshot.value);
 
 /** 저장 전 검사 - 칸마다 오류 문구를 넣고(없으면 ''), 하나라도 있으면 false */
 function validate() {
-    errors.customer = form.customer ? '' : '거래처를 선택하세요.';
+    errors.customer = form.customerCode ? '' : '거래처를 선택하세요.';
     errors.dueDate = form.dueDate ? '' : '납기일을 선택하세요.';
     return !Object.values(errors).some(Boolean);
 }
@@ -165,3 +148,40 @@ async function goList() {
     }
 }
 </style>
+
+<script>
+// ── 데모 데이터 = 서버 JSON 응답 예시 ─────────────────────
+// - 백엔드: 아래 모양 그대로 JSON 으로 응답합니다. (키 이름 · 코드 값 · 숫자는 숫자로) → API_GUIDE.md
+// - 프론트: API 를 연결하면 위 temp 영역을 api 호출로 바꾸고 이 블록을 지웁니다.
+
+/** GET /api/customers/options · GET /api/codes/SO_STATUS (선택 목록: [{ value, label }]) */
+const DEMO_CUSTOMER_OPTIONS = [
+    { value: 'C-0001', label: '한빛전자' },
+    { value: 'C-0002', label: '대성모터스' },
+    { value: 'C-0003', label: '유진테크' },
+];
+const DEMO_STATUS_CODES = [
+    { value: 'confirmed', label: '확정' },
+    { value: 'working', label: '생산중' },
+    { value: 'warning', label: '납기주의' },
+    { value: 'done', label: '완료' },
+];
+
+/**
+ * GET /api/sales-orders/{orderNo} → 수주 1건 + 품목(lines)
+ * PUT /api/sales-orders/{orderNo} 요청 본문: lines 를 뺀 같은 모양 (customerCode · dueDate · managerName · status · memo …)
+ */
+const DEMO_SALES_ORDER = {
+    orderNo: 'SO-260814-01',
+    customerCode: 'C-0001',
+    orderDate: '2026-08-14',
+    dueDate: '2026-08-20',
+    managerName: '김영업',
+    status: 'working',
+    memo: '포장 라벨에 고객사 LOT 번호 표기',
+    lines: [
+        { itemCode: 'FG-10021', itemName: '모터 하우징 A', spec: 'AL6061 / 120mm', qty: 800, price: 40000 },
+        { itemCode: 'FG-10022', itemName: '하우징 커버', spec: 'AL6061 / 118mm', qty: 800, price: 20000 },
+    ],
+};
+</script>

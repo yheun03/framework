@@ -29,13 +29,20 @@ import { useRouter } from 'vue-router';
 import AppButton from '@/components/AppButton/AppButton.vue';
 
 /**
- * 404 화면 (router 의 '/:pathMatch(.*)*' 에 연결)
+ * 오류 화면 - 404 (router 의 '/:pathMatch(.*)*') · 403 (/forbidden, 권한 없음 - router/guard.js)
  */
+const props = defineProps({
+    /** 404 페이지 없음 · 403 권한 없음 */
+    code: { type: Number, default: 404 },
+});
+
+const TEXTS = {
+    403: { title: '접근 권한이 없습니다', badge: 'Forbidden', message: '이 화면을 볼 권한이 없습니다. 필요하면 관리자에게 권한을 요청하세요.' },
+    404: { title: '페이지를 찾을 수 없습니다', badge: 'Not Found', message: '요청하신 페이지가 존재하지 않거나 이동되었습니다.' },
+};
 const router = useRouter();
-const statusCode = 404;
-const title = '페이지를 찾을 수 없습니다';
-const badgeLabel = 'Not Found';
-const message = '요청하신 페이지가 존재하지 않거나 이동되었습니다.';
+const statusCode = props.code;
+const { title, badge: badgeLabel, message } = TEXTS[props.code] ?? TEXTS[404];
 
 function handleGoHome() {
     router.push('/');

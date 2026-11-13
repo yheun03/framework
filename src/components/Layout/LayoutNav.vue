@@ -10,19 +10,6 @@
                     ><IconClose
                 /></AppIconButton>
             </div>
-
-            <div class="layout-nav__actions" :aria-label="$t('ui.nav.tools')">
-                <AppIconButton
-                    v-for="action in headerActions"
-                    :key="action.labelKey"
-                    class="nav-action"
-                    :aria-label="$t(action.labelKey)"
-                    :size="32"
-                    icon-size="lg"
-                >
-                    <component :is="action.icon" />
-                </AppIconButton>
-            </div>
         </div>
 
         <div class="layout-nav__search" role="search">
@@ -63,6 +50,15 @@
 
         <div class="layout-nav__footer">
             <AppIconButton class="nav-action" :aria-label="t('settings.title')" :size="32" icon-size="lg" to="/settings"><IconCog /></AppIconButton>
+            <AppIconButton
+                v-if="auth.isEnabled && auth.user"
+                class="nav-action"
+                :aria-label="t('ui.nav.logout')"
+                :size="32"
+                icon-size="lg"
+                @click="logout"
+                ><IconLogout
+            /></AppIconButton>
         </div>
     </nav>
 </template>
@@ -71,10 +67,11 @@
 import { storeToRefs } from 'pinia';
 import { useI18nText } from '@/composables/useI18nText';
 import { useNavigationStore } from '@/store/navigation';
-import { NAVIGATION_HEADER_ACTIONS } from '@/constants/navigation';
-import { IconApp, IconClose, IconCog, IconSearch } from '@/components/icons';
+import { useAuthStore } from '@/store/auth';
+import { IconApp, IconClose, IconCog, IconLogout, IconSearch } from '@/components/icons';
+import { projectConfig } from '@/project.config';
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import AppIconButton from '@/components/AppButton/AppIconButton.vue';
 import LayoutNavItem from '@/components/Layout/LayoutNavItem.vue';
 
@@ -83,10 +80,17 @@ const emit = defineEmits(['close']);
 const { t } = useI18nText();
 const navigationStore = useNavigationStore();
 const { menuTree } = storeToRefs(navigationStore);
-const headerActions = NAVIGATION_HEADER_ACTIONS;
+const auth = useAuthStore();
+const router = useRouter();
 
 function handleClose() {
     emit('close');
+}
+
+/** 로그아웃 → 로그인 화면 (project.config.js auth.enabled 일 때만 버튼이 보임) */
+async function logout() {
+    await auth.logout();
+    router.push(projectConfig.auth.loginPath);
 }
 
 /* ----------------------------------------

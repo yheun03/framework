@@ -3,7 +3,8 @@
  */
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { setI18nLocale } from '@/i18n';
+import { clearCodes } from '@/composables/useCodes';
+import { SUPPORTED_LOCALES, setI18nLocale } from '@/i18n';
 import { accessibleTextColor, primaryTextColor } from '@/utils/color';
 
 const LOCALE_KEY = 'framework:locale';
@@ -74,6 +75,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
     function setLocale(next) {
         locale.value = next;
         setI18nLocale(next);
+        clearCodes(); // 공통코드 이름은 Accept-Language 에 따라 다르므로 다음 화면부터 새로 받음
         localStorage.setItem(LOCALE_KEY, next);
     }
 
@@ -90,7 +92,7 @@ export const usePreferencesStore = defineStore('preferences', () => {
         const savedLocale = localStorage.getItem(LOCALE_KEY);
         const savedTheme = localStorage.getItem(THEME_KEY);
 
-        if (savedLocale === 'ko' || savedLocale === 'en') locale.value = savedLocale;
+        if (SUPPORTED_LOCALES.includes(savedLocale)) locale.value = savedLocale;
         setI18nLocale(locale.value);
         if (savedTheme === 'light' || savedTheme === 'dark') theme.value = savedTheme;
 

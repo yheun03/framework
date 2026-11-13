@@ -25,11 +25,13 @@
                 <p class="page-demo-hint">{{ t('settings.locale.desc') }}</p>
 
                 <div class="page-demo-actions">
-                    <AppButton :variant="locale === 'ko' ? 'fill' : 'outline'" @click="handleLocaleChange('ko')">
-                        {{ t('lang.ko') }}
-                    </AppButton>
-                    <AppButton :variant="locale === 'en' ? 'fill' : 'outline'" @click="handleLocaleChange('en')">
-                        {{ t('lang.en') }}
+                    <AppButton
+                        v-for="code in SUPPORTED_LOCALES"
+                        :key="code"
+                        :variant="locale === code ? 'fill' : 'outline'"
+                        @click="handleLocaleChange(code)"
+                    >
+                        {{ t(`lang.${code}`) }}
                     </AppButton>
                 </div>
             </section>
@@ -46,6 +48,7 @@
 import { storeToRefs } from 'pinia';
 
 import { useI18nText } from '@/composables/useI18nText';
+import { SUPPORTED_LOCALES } from '@/i18n';
 import { usePreferencesStore } from '@/store/preferences';
 import AppButton from '@/components/AppButton/AppButton.vue';
 

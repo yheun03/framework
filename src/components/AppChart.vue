@@ -264,3 +264,8 @@ const pieOptions = computed(() => {
     return deepMerge(baseOptions, defaultPieOptions, props.options);
 });
 </script>
+
+<!-- 이 컴포넌트를 쓰는 화면에서만 불러오는 스타일 (전역 CSS 를 줄이기 위해 컴포넌트 조각으로 분리) -->
+<style lang="scss">
+@use 'components/base/chart';
+</style>
